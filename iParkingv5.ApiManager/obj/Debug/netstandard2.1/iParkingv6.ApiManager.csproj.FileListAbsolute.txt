@@ -1,0 +1,13 @@
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.ApiManager\bin\Debug\netstandard2.1\iParkingv6.ApiManager.deps.json
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.ApiManager\bin\Debug\netstandard2.1\iParkingv6.ApiManager.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.ApiManager\bin\Debug\netstandard2.1\iParkingv6.ApiManager.pdb
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.ApiManager\bin\Debug\netstandard2.1\iParkingv6.Objects.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.ApiManager\bin\Debug\netstandard2.1\iParkingv6.Objects.pdb
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.ApiManager\obj\Debug\netstandard2.1\iParkingv6.ApiManager.csproj.AssemblyReference.cache
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.ApiManager\obj\Debug\netstandard2.1\iParkingv6.ApiManager.GeneratedMSBuildEditorConfig.editorconfig
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.ApiManager\obj\Debug\netstandard2.1\iParkingv6.ApiManager.AssemblyInfoInputs.cache
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.ApiManager\obj\Debug\netstandard2.1\iParkingv6.ApiManager.AssemblyInfo.cs
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.ApiManager\obj\Debug\netstandard2.1\iParkingv6.ApiManager.csproj.CoreCompileInputs.cache
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.ApiManager\obj\Debug\netstandard2.1\iParkingv6.ApiManager.csproj.CopyComplete
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.ApiManager\obj\Debug\netstandard2.1\iParkingv6.ApiManager.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.ApiManager\obj\Debug\netstandard2.1\iParkingv6.ApiManager.pdb

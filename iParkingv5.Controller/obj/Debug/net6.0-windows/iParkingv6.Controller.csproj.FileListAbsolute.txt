@@ -1,0 +1,4 @@
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.Controller\obj\Debug\net6.0-windows\iParkingv6.Controller.GeneratedMSBuildEditorConfig.editorconfig
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.Controller\obj\Debug\net6.0-windows\iParkingv6.Controller.AssemblyInfoInputs.cache
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.Controller\obj\Debug\net6.0-windows\iParkingv6.Controller.AssemblyInfo.cs
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.Controller\obj\Debug\net6.0-windows\iParkingv6.Controller.csproj.CoreCompileInputs.cache

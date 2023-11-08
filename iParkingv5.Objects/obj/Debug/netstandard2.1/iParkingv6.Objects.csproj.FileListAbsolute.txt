@@ -1,0 +1,9 @@
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.Objects\bin\Debug\netstandard2.1\iParkingv6.Objects.deps.json
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.Objects\bin\Debug\netstandard2.1\iParkingv6.Objects.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.Objects\bin\Debug\netstandard2.1\iParkingv6.Objects.pdb
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.Objects\obj\Debug\netstandard2.1\iParkingv6.Objects.GeneratedMSBuildEditorConfig.editorconfig
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.Objects\obj\Debug\netstandard2.1\iParkingv6.Objects.AssemblyInfoInputs.cache
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.Objects\obj\Debug\netstandard2.1\iParkingv6.Objects.AssemblyInfo.cs
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.Objects\obj\Debug\netstandard2.1\iParkingv6.Objects.csproj.CoreCompileInputs.cache
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.Objects\obj\Debug\netstandard2.1\iParkingv6.Objects.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.Objects\obj\Debug\netstandard2.1\iParkingv6.Objects.pdb
