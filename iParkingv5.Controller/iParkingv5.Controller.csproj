@@ -9,4 +9,12 @@
     <Platforms>x64</Platforms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="KztekDevices\KZE02NETControllerv2\" />
+    <Folder Include="KztekDevices\KZE02NETController\" />
+    <Folder Include="KztekDevices\KZE05NETController\" />
+    <Folder Include="KztekDevices\KZE16AccessControl\" />
+    <Folder Include="KztekDevices\MT166_CardDispenser\" />
+  </ItemGroup>
+
 </Project>
