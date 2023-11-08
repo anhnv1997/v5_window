@@ -16,8 +16,6 @@ namespace v6_window
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             LogHelper.SaveLogFolder = Application.StartupPath;
-
-            KzParkingApiHelper.StartPollingAuthorize();
             Application.Run(new frmMain());
         }
     }
