@@ -137,7 +137,7 @@ namespace iParkingv6.ApiManager
                         request.AddHeader(item.Key, item.Value);
                     }
                 }
-                if (headerValues != null)
+                if (requiredParams != null)
                 {
                     foreach (KeyValuePair<string, string> kvp in requiredParams)
                     {

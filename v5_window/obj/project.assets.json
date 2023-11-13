@@ -92,14 +92,14 @@
           "buildTransitive/net6.0/System.Text.Json.targets": {}
         }
       },
-      "iParkingv5.ApiManager/1.0.0": {
+      "iParkingv5.ApiManager/1.0.0.1": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
           "Kztek.Tool": "1.0.0.1",
           "Newtonsoft.Json": "13.0.3",
           "RestSharp": "110.2.0",
-          "iParkingv5.Objects": "1.0.0"
+          "iParkingv5.Objects": "1.0.0.1"
         },
         "compile": {
           "bin/placeholder/iParkingv5.ApiManager.dll": {}
@@ -108,12 +108,12 @@
           "bin/placeholder/iParkingv5.ApiManager.dll": {}
         }
       },
-      "iParkingv5.Controller/1.0.0": {
+      "iParkingv5.Controller/1.0.0.1": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
           "Kztek.Tool": "1.0.0.1",
-          "iParkingv5.Objects": "1.0.0"
+          "iParkingv5.Objects": "1.0.0.1"
         },
         "compile": {
           "bin/placeholder/iParkingv5.Controller.dll": {}
@@ -125,7 +125,7 @@
           "Microsoft.WindowsDesktop.App.WindowsForms"
         ]
       },
-      "iParkingv5.Objects/1.0.0": {
+      "iParkingv5.Objects/1.0.0.1": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "compile": {
@@ -329,17 +329,17 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "iParkingv5.ApiManager/1.0.0": {
+    "iParkingv5.ApiManager/1.0.0.1": {
       "type": "project",
       "path": "../iParkingv5.ApiManager/iParkingv5.ApiManager.csproj",
       "msbuildProject": "../iParkingv5.ApiManager/iParkingv5.ApiManager.csproj"
     },
-    "iParkingv5.Controller/1.0.0": {
+    "iParkingv5.Controller/1.0.0.1": {
       "type": "project",
       "path": "../iParkingv5.Controller/iParkingv5.Controller.csproj",
       "msbuildProject": "../iParkingv5.Controller/iParkingv5.Controller.csproj"
     },
-    "iParkingv5.Objects/1.0.0": {
+    "iParkingv5.Objects/1.0.0.1": {
       "type": "project",
       "path": "../iParkingv5.Objects/iParkingv5.Objects.csproj",
       "msbuildProject": "../iParkingv5.Objects/iParkingv5.Objects.csproj"
@@ -353,8 +353,8 @@
   "projectFileDependencyGroups": {
     "net6.0-windows7.0": [
       "Kztek.Tool >= 1.0.0.1",
-      "iParkingv5.ApiManager >= 1.0.0",
-      "iParkingv5.Controller >= 1.0.0"
+      "iParkingv5.ApiManager >= 1.0.0.1",
+      "iParkingv5.Controller >= 1.0.0.1"
     ]
   },
   "packageFolders": {
@@ -363,7 +363,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.0",
+    "version": "1.0.0.1",
     "restore": {
       "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\v5_window\\iParkingv5_window.csproj",
       "projectName": "iParkingv5_window",

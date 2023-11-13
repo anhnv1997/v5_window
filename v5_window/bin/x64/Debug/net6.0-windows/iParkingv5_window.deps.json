@@ -6,11 +6,11 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {
-      "iParkingv5_window/1.0.0": {
+      "iParkingv5_window/1.0.0.1": {
         "dependencies": {
           "Kztek.Tool": "1.0.0.1",
-          "iParkingv5.ApiManager": "1.0.0",
-          "iParkingv5.Controller": "1.0.0"
+          "iParkingv5.ApiManager": "1.0.0.1",
+          "iParkingv5.Controller": "1.0.0.1"
         },
         "runtime": {
           "iParkingv5_window.dll": {}
@@ -67,27 +67,27 @@
           }
         }
       },
-      "iParkingv5.ApiManager/1.0.0": {
+      "iParkingv5.ApiManager/1.0.0.1": {
         "dependencies": {
           "Kztek.Tool": "1.0.0.1",
           "Newtonsoft.Json": "13.0.3",
           "RestSharp": "110.2.0",
-          "iParkingv5.Objects": "1.0.0"
+          "iParkingv5.Objects": "1.0.0.1"
         },
         "runtime": {
           "iParkingv5.ApiManager.dll": {}
         }
       },
-      "iParkingv5.Controller/1.0.0": {
+      "iParkingv5.Controller/1.0.0.1": {
         "dependencies": {
           "Kztek.Tool": "1.0.0.1",
-          "iParkingv5.Objects": "1.0.0"
+          "iParkingv5.Objects": "1.0.0.1"
         },
         "runtime": {
           "iParkingv5.Controller.dll": {}
         }
       },
-      "iParkingv5.Objects/1.0.0": {
+      "iParkingv5.Objects/1.0.0.1": {
         "runtime": {
           "iParkingv5.Objects.dll": {}
         }
@@ -112,7 +112,7 @@
     }
   },
   "libraries": {
-    "iParkingv5_window/1.0.0": {
+    "iParkingv5_window/1.0.0.1": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -152,17 +152,17 @@
       "path": "system.text.json/7.0.3",
       "hashPath": "system.text.json.7.0.3.nupkg.sha512"
     },
-    "iParkingv5.ApiManager/1.0.0": {
+    "iParkingv5.ApiManager/1.0.0.1": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "iParkingv5.Controller/1.0.0": {
+    "iParkingv5.Controller/1.0.0.1": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "iParkingv5.Objects/1.0.0": {
+    "iParkingv5.Objects/1.0.0.1": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

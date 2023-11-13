@@ -6,10 +6,10 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {
-      "iParkingv5.Controller/1.0.0": {
+      "iParkingv5.Controller/1.0.0.1": {
         "dependencies": {
           "Kztek.Tool": "1.0.0.1",
-          "iParkingv5.Objects": "1.0.0",
+          "iParkingv5.Objects": "1.0.0.1",
           "Ingressus": "1.0.0.8"
         },
         "runtime": {
@@ -56,7 +56,7 @@
           }
         }
       },
-      "iParkingv5.Objects/1.0.0": {
+      "iParkingv5.Objects/1.0.0.1": {
         "runtime": {
           "iParkingv5.Objects.dll": {}
         }
@@ -81,7 +81,7 @@
     }
   },
   "libraries": {
-    "iParkingv5.Controller/1.0.0": {
+    "iParkingv5.Controller/1.0.0.1": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -114,7 +114,7 @@
       "path": "system.text.json/7.0.3",
       "hashPath": "system.text.json.7.0.3.nupkg.sha512"
     },
-    "iParkingv5.Objects/1.0.0": {
+    "iParkingv5.Objects/1.0.0.1": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

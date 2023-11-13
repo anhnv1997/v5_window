@@ -24,9 +24,7 @@ namespace v6_window
 
         StartApp:
             {
-                //ClientZCU  clientZCU= new ClientZCU(new IPGS.Object.Objects.AppDatas.ZCU());
-                //clientZCU.GetSensorStatus();
-                using (Mutex mutex = new Mutex(true, "iPGSCCU.Server", out bool ownmutex))
+                using (Mutex mutex = new Mutex(true, "v5_window", out bool ownmutex))
                 {
                     if (ownmutex)
                     {
@@ -57,11 +55,6 @@ namespace v6_window
                     }
                 }
             }
-        }
-
-        private static async void KzE02_CardEvent(object sender, iParkingv5.Objects.Events.CardEventArgs e)
-        {
-            await Task.Delay(10000);
         }
     }
 }
