@@ -9,7 +9,8 @@
       "iParkingv5_window/1.0.0": {
         "dependencies": {
           "Kztek.Tool": "1.0.0.1",
-          "iParkingv5.ApiManager": "1.0.0"
+          "iParkingv5.ApiManager": "1.0.0",
+          "iParkingv5.Controller": "1.0.0"
         },
         "runtime": {
           "iParkingv5_window.dll": {}
@@ -77,6 +78,15 @@
           "iParkingv5.ApiManager.dll": {}
         }
       },
+      "iParkingv5.Controller/1.0.0": {
+        "dependencies": {
+          "Kztek.Tool": "1.0.0.1",
+          "iParkingv5.Objects": "1.0.0"
+        },
+        "runtime": {
+          "iParkingv5.Controller.dll": {}
+        }
+      },
       "iParkingv5.Objects/1.0.0": {
         "runtime": {
           "iParkingv5.Objects.dll": {}
@@ -89,6 +99,14 @@
         },
         "runtime": {
           "Kztek.Tool.dll": {}
+        }
+      },
+      "Ingressus/1.0.0.8": {
+        "runtime": {
+          "Ingressus.dll": {
+            "assemblyVersion": "1.0.0.8",
+            "fileVersion": "1.0.0.8"
+          }
         }
       }
     }
@@ -139,6 +157,11 @@
       "serviceable": false,
       "sha512": ""
     },
+    "iParkingv5.Controller/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "iParkingv5.Objects/1.0.0": {
       "type": "project",
       "serviceable": false,
@@ -146,6 +169,11 @@
     },
     "Kztek.Tool/1.0.0.1": {
       "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Ingressus/1.0.0.8": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }

@@ -6,6 +6,7 @@ namespace iParkingv6.Objects.Datas
 {
     public class Bdk
     {
+        public bool IsConnect { get; set; } = false;
         public string Id { get; set; } = string.Empty;
         public string Code { get; set; }
         public string Name { get; set; }

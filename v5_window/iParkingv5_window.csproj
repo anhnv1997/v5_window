@@ -10,12 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Forms\" />
+    <Folder Include="Forms\DataForms\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\Kztek.Tool\Kztek.Tool.csproj" />
     <ProjectReference Include="..\iParkingv5.ApiManager\iParkingv5.ApiManager.csproj" />
+    <ProjectReference Include="..\iParkingv5.Controller\iParkingv5.Controller.csproj" />
   </ItemGroup>
 
 </Project>

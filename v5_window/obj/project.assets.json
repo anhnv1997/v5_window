@@ -108,6 +108,23 @@
           "bin/placeholder/iParkingv5.ApiManager.dll": {}
         }
       },
+      "iParkingv5.Controller/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Kztek.Tool": "1.0.0.1",
+          "iParkingv5.Objects": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/iParkingv5.Controller.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/iParkingv5.Controller.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WindowsForms"
+        ]
+      },
       "iParkingv5.Objects/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
@@ -317,6 +334,11 @@
       "path": "../iParkingv5.ApiManager/iParkingv5.ApiManager.csproj",
       "msbuildProject": "../iParkingv5.ApiManager/iParkingv5.ApiManager.csproj"
     },
+    "iParkingv5.Controller/1.0.0": {
+      "type": "project",
+      "path": "../iParkingv5.Controller/iParkingv5.Controller.csproj",
+      "msbuildProject": "../iParkingv5.Controller/iParkingv5.Controller.csproj"
+    },
     "iParkingv5.Objects/1.0.0": {
       "type": "project",
       "path": "../iParkingv5.Objects/iParkingv5.Objects.csproj",
@@ -331,7 +353,8 @@
   "projectFileDependencyGroups": {
     "net6.0-windows7.0": [
       "Kztek.Tool >= 1.0.0.1",
-      "iParkingv5.ApiManager >= 1.0.0"
+      "iParkingv5.ApiManager >= 1.0.0",
+      "iParkingv5.Controller >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -373,6 +396,9 @@
             },
             "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.ApiManager\\iParkingv5.ApiManager.csproj": {
               "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.ApiManager\\iParkingv5.ApiManager.csproj"
+            },
+            "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Controller\\iParkingv5.Controller.csproj": {
+              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Controller\\iParkingv5.Controller.csproj"
             }
           }
         }

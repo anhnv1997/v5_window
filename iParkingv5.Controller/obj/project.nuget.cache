@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "Wgpb4JCX7U8zIHvPpjIyVo8NEonzqZuppufZxAr4l1hAef0jT9mLrIkQUZXf329PXx4fRg2lIooIYFr//ZJ9tQ==",
+  "dgSpecHash": "CG580mTMnvQaj2cExwFv9E38VcGhJ7FNeZcsT6L4AWzXTSfTdIe0t4taDNSxPLPoDelt+OUZWfp8p11I+Xu3cg==",
   "success": true,
   "projectFilePath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Controller\\iParkingv5.Controller.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\restsharp\\106.11.7\\restsharp.106.11.7.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\system.text.json\\7.0.3\\system.text.json.7.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

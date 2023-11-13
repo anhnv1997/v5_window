@@ -32,8 +32,8 @@
             panel1 = new Panel();
             panel2 = new Panel();
             panel3 = new Panel();
-            button2 = new Button();
             button1 = new Button();
+            button2 = new Button();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
             SuspendLayout();
@@ -48,6 +48,7 @@
             lblLaneName.TabIndex = 0;
             lblLaneName.Text = "label1";
             lblLaneName.TextAlign = ContentAlignment.MiddleCenter;
+            lblLaneName.MouseClick += lblLaneName_MouseClick;
             // 
             // panel1
             // 
@@ -63,7 +64,7 @@
             panel2.Dock = DockStyle.Left;
             panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(184, 416);
+            panel2.Size = new Size(210, 416);
             panel2.TabIndex = 0;
             // 
             // panel3
@@ -76,32 +77,32 @@
             panel3.Size = new Size(547, 72);
             panel3.TabIndex = 2;
             // 
-            // button2
-            // 
-            button2.Location = new Point(395, 14);
-            button2.Name = "button2";
-            button2.Size = new Size(118, 45);
-            button2.TabIndex = 0;
-            button2.Text = "CHỤP LẠI";
-            button2.UseVisualStyleBackColor = true;
-            // 
             // button1
             // 
-            button1.Location = new Point(271, 14);
+            button1.Location = new Point(302, 14);
             button1.Name = "button1";
             button1.Size = new Size(118, 45);
             button1.TabIndex = 1;
             button1.Text = "GHI VÉ VÀO";
             button1.UseVisualStyleBackColor = true;
             // 
-            // ucLane
+            // button2
+            // 
+            button2.Location = new Point(426, 14);
+            button2.Name = "button2";
+            button2.Size = new Size(118, 45);
+            button2.TabIndex = 0;
+            button2.Text = "CHỤP LẠI";
+            button2.UseVisualStyleBackColor = true;
+            // 
+            // ucLaneIn
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panel1);
             Controls.Add(panel3);
             Controls.Add(lblLaneName);
-            Name = "ucLane";
+            Name = "ucLaneIn";
             Size = new Size(547, 531);
             panel1.ResumeLayout(false);
             panel3.ResumeLayout(false);

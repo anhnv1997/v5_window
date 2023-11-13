@@ -10,11 +10,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="KztekDevices\KZE02NETControllerv2\" />
-    <Folder Include="KztekDevices\KZE02NETController\" />
-    <Folder Include="KztekDevices\KZE05NETController\" />
-    <Folder Include="KztekDevices\KZE16AccessControl\" />
     <Folder Include="KztekDevices\MT166_CardDispenser\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\Kztek.Tool\Kztek.Tool.csproj" />
+    <ProjectReference Include="..\iParkingv5.Objects\iParkingv5.Objects.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Ingressus">
+      <HintPath>..\..\..\..\..\..\3.Devices\3.FIngertec\DebugINGRESS\Debug\Ingressus.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
