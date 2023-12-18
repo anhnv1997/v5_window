@@ -13,41 +13,54 @@ namespace iParkingv6.Objects.Datas
 
     public class CameraInLane
     {
-        public string CameraID { get; set; }
-        public int CameraPurpose { get; set; } = 0;
-        public int SideIndex { get; set; } = 0;
-        public int DisplayIndex { get; set; } = 0;
+        public string id { get; set; }
+        public string laneId { get; set; }
+        public string cameraId { get; set; }
+        public int cameraPurpose { get; set; }
+        public int sideIndex { get; set; }
+        public int displayIndex { get; set; }
     }
 
     public class ControllerInLane
     {
-        private int[] readers;
-        private int[] inputs;
-        private int[] barriers;
-        private int[] alarms;
-        public string ControllerId { get; set; }
-        public string ControllerName { get; set; }
-        public int[] Readers { get => readers; set => readers = value ?? Array.Empty<int>(); }
-        public int[] Inputs { get => inputs; set => inputs = value ?? Array.Empty<int>(); }
-        public int[] Barriers { get => barriers; set => barriers = value ?? Array.Empty<int>(); }
-        public int[] Alarms { get => alarms; set => alarms = value ?? Array.Empty<int>(); }
-    }
-    public class Lane
-    {
-        public string Id { get; set; }
-        public string LaneCode { get; set; }
-        public string LaneName { get; set; }
-        public string ComputerId { get; set; }
-        public int? LaneType { get; set; }
-        public bool IsLoop { get; set; }
-        public int CheckPlateLevelIn { get; set; }
-        public int CheckPlateLevelOut { get; set; }
-        public bool IsPrint { get; set; }
-        public List<CameraInLane> CameraList { get; set; }
-        public List<ControllerInLane> ControllerList { get; set; }
-        public bool Inactive { get; set; }
-        public bool IsLed { get; set; }
-        public bool IsFree { get; set; }
+        public string id { get; set; }
+        public string laneId { get; set; }
+        public string controlUnitId { get; set; }
+        public string controlUnitName { get; set; }
+        public string readers { get; set; }
+        public string inputs { get; set; }
+        public string barriers { get; set; }
+        public string alarms { get; set; }
+        public int[] readerIds { get; set; }
+        public int[] inputIds { get; set; }
+        public int[] barrierIds { get; set; }
+        public int[] alarmIds { get; set; }
     }
 
+    public class Lane
+    {
+        public string id { get; set; }
+        public string code { get; set; }
+        public string name { get; set; }
+        public string computerId { get; set; }
+        public int type { get; set; }
+        public object reverseLaneId { get; set; }
+        public bool loop { get; set; }
+        public bool autoPrintInvoice { get; set; }
+        public bool displayLed { get; set; }
+        public bool freeForPriority { get; set; }
+        public bool enabled { get; set; }
+        public bool deleted { get; set; }
+        public string createdUtc { get; set; }
+        public string createdBy { get; set; }
+        public object updatedUtc { get; set; }
+        public object updatedBy { get; set; }
+        public object computer { get; set; }
+        public CameraInLane[] cameras { get; set; }
+        public ControllerInLane[] controlUnits { get; set; }
+        public object[] identityGroupLaneMaps { get; set; }
+        public object[] eventIns { get; set; }
+        public object[] eventOuts { get; set; }
+        public object[] eventOutDays { get; set; }
+    }
 }

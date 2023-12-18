@@ -6,18 +6,11 @@ namespace iParkingv6.Objects.Datas
 {
     public class Gate
     {
-        public string Id { get; set; }
-        public string GateId { get; set; }
-        public string GateCode { get; set; }
-        public string GateName { get; set; }
-        public string Description { get; set; }
-        public bool Inactive { get; set; }
-        public int SortOrder { get; set; }
-
-        public Gate()
-        {
-            Id = string.Empty;
-            GateId = Id;
-        }
+        public string id { get; set; }
+        public string name { get; set; }
+        public string code { get; set; }
+        public string description { get; set; }
+        public bool enabled { get; set; }
+        public bool deleted { get; set; }
     }
 }

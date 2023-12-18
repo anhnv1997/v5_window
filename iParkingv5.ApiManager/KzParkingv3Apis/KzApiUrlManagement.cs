@@ -6,116 +6,120 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
 {
     public class KzApiUrlManagement
     {
-        public const string BaseRoute = "api";
+        public static string BaseRoute => "api";
 
         #region AuthorizedRelated
-        public const string PostLoginRoute = "login";
-        public string GetPerrmissionById(string userId) => "login/UserPermissions/" + userId;
+        public static string PostLoginRoute => "user/login";
         #endregion End AuthorizedRelated
 
         #region Card Related
+        //--CardGroup
+        public static string GetCardGroupByListRoute => "tblCardGroup/byList";
+        public static string GetAllCardGroupRoute => "tblCardGroup";
+        public static string GetCardGroupByIdRoute => "tblCardGroup/byId";
 
+        //--Card
+        public static string GetCardByIdRoute => "tblCard/byId";
+        public static string GetCardByPlateRoute => "tblCard/byPlate";
+        public static string GetCardByPagingRoute => "tblCard/byPaging";
+        public static string GetCardByCardNumberRoute => "tblCard/byCardNumber";
         #endregion End Card Related
 
         #region System Config Related
         //--PC
-        public const string GetPCByListRoute = "tblPC/byList";
-        public const string GetPCByIdRoute = "tblPC/byId";
+        public static string GetPCByIpAddressRoute(string key) => "Computer/byIPAddress/" + key;
+        public static string GetPCByIdRoute(string key) => "Computer/byid/" + key;
 
         //--Controller
-        public const string GetControllerByListRoute = "tblController/byList";
-        public const string GetControllerByIdRoute = "tblController/byId";
+        public static string GetControllerByIdRoute(string key) => "controlunit/byid/"+key;
+        public static string GetControllerByComputerIdRoute(string key) => "controlunit/bycomputerid/" + key;
 
         //--Camera
-        public const string GetCameraByListRoute = "tblCamera/byList";
-        public const string GetCameraByIdRoute = "tblCamera/byId";
+        public static string GetCameraByIdRoute(string key) => $"camera/byid/{key}";
+        public static string GetCameraByComputerIdRoute(string key) => "camera/bycomputerid/" +key;
 
         //--Lane
-        public const string GetLaneByListRoute = "tblLane/byList";
-        public const string GetLaneByIdRoute = "tblLane/byId";
+        public static string GetLaneByIdRoute(string key) => "lane/byid/" + key;
+        public static string GetLaneByComputerIdRoute(string key) => "lane/bycomputerid/" + key;
 
         //--Gate
-        public const string GetGateByListRoute = "tblGate/byList";
-        public const string GetGateByIdRoute = "tblGate/byId";
+        public static string GetGateByListRoute => "gate/allactive/";
+        public static string GetGateByIdRoute(string key) => "gate/byid/" + key;
 
         //--Led
-        public const string GetLedByListRoute = "tblLED/byList";
-        public const string GetLedByIdRoute = "tblLED/byId";
-
-        //--System Config
-        public const string GetSystemConfigRoute = "tblSystemConfig";
-        public const string GetServerTimeRoute = "Server/time";
+        public static string GetLedByIdRoute(string key) => "parkingled/byId/" + key;
+        public static string GetLedByComputerIdRoute(string key) => "parkingled/bycomputerid/" + key;
         #endregion End System Config Related
 
         #region Event Related
         //--Card Event
-        public const string PostParkingVehiclesPagingRoute = "tblCardEvent/ParkingVehiclesPaging";
-        public const string GetCardEventByPagingInOutRoute = "tblcardevent/byPagingInOut";
-        public const string GetCardEventByIdRoute = "tblCardEvent/byId";
-        public const string PostNewCardEventByIdRoute = "tblCardEvent";
-        public const string DeleteOneCardEventByIdRoute = "tblCardEvent";
-        public const string GetParkingVehicleByCardNumberRoute = "tblCardEvent/parkingVehiceByCardNumber";
-        public const string GetParkingVehicleByPlateNumberRoute = "tblCardEvent/parkingVehiceByPlateNumber";
-        public const string PostParkingFeeRoute = "blCardEvent/parkingFee";
+        public static string PostParkingVehiclesPagingRoute => "tblCardEvent/ParkingVehiclesPaging";
+        public static string GetCardEventByPagingInOutRoute => "tblcardevent/byPagingInOut";
+        public static string GetCardEventByIdRoute => "tblCardEvent/byId";
+        public static string PostNewCardEventByIdRoute => "tblCardEvent";
+        public static string DeleteOneCardEventByIdRoute => "tblCardEvent";
+        public static string GetParkingVehicleByCardNumberRoute => "tblCardEvent/parkingVehiceByCardNumber";
+        public static string GetParkingVehicleByPlateNumberRoute => "tblCardEvent/parkingVehiceByPlateNumber";
+        public static string PostParkingFeeRoute => "blCardEvent/parkingFee";
         //--Parking Event
-        public const string PutGoneOutEventCardGroupIdRoute = "parkingevent/Update/GoneOutEventCardGroupId";
-        public const string PostCheckInRoute = "parkingevent/checkin";
-        public const string PostCheckOutRoute = "parkingevent/checkout";
+        public static string PutGoneOutEventCardGroupIdRoute => "parkingevent/Update/GoneOutEventCardGroupId";
+        public static string PostCheckInRoute => "parkingevent/checkin";
+        public static string PostCheckOutRoute => "parkingevent/checkout";
         #endregion End Event Related
 
         #region Other
         //--Fee
-        public const string GetFeeByIdRoute = "tblFee/byId";
-        public const string GetFeeByListRoute = "tblFee/byList";
-        public const string PostNewFeeByIdRoute = "tblFee";
-        public const string PutOneFeeByIdRoute = "tblFee";
-        public const string DeleteOneFeeByIdRoute = "tblFee";
+        public static string GetFeeByIdRoute => "tblFee/byId";
+        public static string GetFeeByListRoute => "tblFee/byList";
+        public static string PostNewFeeByIdRoute => "tblFee";
+        public static string PutOneFeeByIdRoute => "tblFee";
+        public static string DeleteOneFeeByIdRoute => "tblFee";
 
         //--User
-        public const string GetUserByIdRoute = "temp/User/byId";
-        public const string GetUserByUsernameRoute = "temp/User/byUserName";
-        public const string PostNewUserByIdRoute = "temp/User";
-        public const string PutUserById = "temp/User";
+        public static string GetUserByIdRoute => "temp/User/byId";
+        public static string GetUserByUsernameRoute => "temp/User/byUserName";
+        public static string PostNewUserByIdRoute => "temp/User";
+        public static string PutUserById => "temp/User";
 
         //--License
-        public const string GetLicenseRoute = "License/getlicense";
+        public static string GetLicenseRoute => "License/getlicense";
         #endregion End Other
 
         #region Vehicle Group
-        public const string GetVehicleGroupByIdRoute = "tblVehicleGroup/byId";
-        public const string GetVehicleGroupByListRoute = "tblVehicleGroup/byList";
-        public const string PostNewVehicleGroupByIdRoute = "tblVehicleGroup";
-        public const string PutVehicleGroupByIdRoute = "tblVehicleGroup";
-        public const string DeleteOneVehicleGroupByIdRoute = "tblVehicleGroup";
+        public static string GetVehicleGroupByIdRoute => "tblVehicleGroup/byId";
+        public static string GetVehicleGroupByListRoute => "tblVehicleGroup/byList";
+        public static string PostNewVehicleGroupByIdRoute => "tblVehicleGroup";
+        public static string PutVehicleGroupByIdRoute => "tblVehicleGroup";
+        public static string DeleteOneVehicleGroupByIdRoute => "tblVehicleGroup";
         #endregion End Vehicle Group
 
         #region Customer Related
         //--Customer
-        public const string GetCustomerByIdRoute = "tblCustomer/byId";
-        public const string GetCustomerByPagingRoute = "tblCustomer/byPaging";
-        public const string GetCustomerByCodeRoute = "tblCustomer/byCode";
-        public const string GetCustomerByPlateRoute = "tblCustomer/byPlate";
-        public const string PostNewCustomerById = "tblCustomer";
-        public const string PutCustomerById = "tblCustomer";
-        public const string DeleteCustomerById = "tblCustomer";
+        public static string GetCustomerByIdRoute => "tblCustomer/byId";
+        public static string GetCustomerByPagingRoute => "tblCustomer/byPaging";
+        public static string GetCustomerByCodeRoute => "tblCustomer/byCode";
+        public static string GetCustomerByPlateRoute => "tblCustomer/byPlate";
+        public static string PostNewCustomerById => "tblCustomer";
+        public static string PutCustomerById => "tblCustomer";
+        public static string DeleteCustomerById => "tblCustomer";
 
         //--CustomerGroup
-        public const string GetCustomerGroupByIdRoute = "tblCustomerGroup/byId";
-        public const string PostCustomerGroupByIdRoute = "tblCustomerGroup";
-        public const string PutCustomerGroupByIdRoute = "tblCustomerGroup";
-        public const string DeleteCustomerGroupByIdRoute = "tblCustomerGroup";
+        public static string GetCustomerGroupByIdRoute => "tblCustomerGroup/byId";
+        public static string PostCustomerGroupByIdRoute => "tblCustomerGroup";
+        public static string PutCustomerGroupByIdRoute => "tblCustomerGroup";
+        public static string DeleteCustomerGroupByIdRoute => "tblCustomerGroup";
         #endregion End Customer Related
 
         #region Alarm
-        public const string GetAlarmByPagingRoute = "tblAlarm/byPaging";
-        public const string GetAlarmByIdRoute = "tblAlarm/byId";
-        public const string PostAlarmByIdRoute = "tblAlarm";
-        public const string PitAlarmByIdRoute = "tblAlarm";
-        public const string DeleteAlarmByIdRoute = "tblAlarm";
+        public static string GetAlarmByPagingRoute => "tblAlarm/byPaging";
+        public static string GetAlarmByIdRoute => "tblAlarm/byId";
+        public static string PostAlarmByIdRoute => "tblAlarm";
+        public static string PitAlarmByIdRoute => "tblAlarm";
+        public static string DeleteAlarmByIdRoute => "tblAlarm";
         #endregion End Alarm
 
         #region Black List
-        public const string GetBlackListRoute = "tblBlackList";
+        public static string GetBlackListRoute => "tblBlackList";
         #endregion End Black List
     }
 }

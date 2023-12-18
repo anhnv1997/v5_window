@@ -11,17 +11,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="KztekDevices\MT166_CardDispenser\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\Kztek.Tool\Kztek.Tool.csproj" />
     <ProjectReference Include="..\iParkingv5.Objects\iParkingv5.Objects.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Aopu_Controller">
+      <HintPath>..\..\..\..\..\Kztek.Libaries\Kztek.AccessControl_NetStandard\refs\Aopu_Controller.dll</HintPath>
+    </Reference>
     <Reference Include="Ingressus">
       <HintPath>..\..\..\..\..\..\3.Devices\3.FIngertec\DebugINGRESS\Debug\Ingressus.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.AccessTcp">
+      <HintPath>..\..\..\..\..\..\4..Library Reference\New folder\Interop.AccessTcp.dll</HintPath>
     </Reference>
   </ItemGroup>
 

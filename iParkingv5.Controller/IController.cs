@@ -53,5 +53,9 @@ namespace iParkingv5.Controller
         Task<bool> RestartDevice();
         Task<bool> ResetDefault();
         #endregion End System
+
+        #region Door Control
+        Task<bool> OpenDoor(int timeInMilisecond, int relayIndex);
+        #endregion End Region
     }
 }

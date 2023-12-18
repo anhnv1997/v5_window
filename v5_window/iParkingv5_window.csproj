@@ -11,12 +11,68 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Forms\DataForms\" />
+    <PackageReference Include="Minio" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\IPGS.Ultility\IPGS.Ultility.csproj" />
     <ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\Kztek.Tool\Kztek.Tool.csproj" />
     <ProjectReference Include="..\iParkingv5.ApiManager\iParkingv5.ApiManager.csproj" />
     <ProjectReference Include="..\iParkingv5.Controller\iParkingv5.Controller.csproj" />
+    <ProjectReference Include="..\iParkingv5.Objects\iParkingv5.Objects.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="AForge.Imaging">
+      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\AForge.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video.DirectShowEx">
+      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\AForge.Video.DirectShowEx.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.VideoEx">
+      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\AForge.VideoEx.dll</HintPath>
+    </Reference>
+    <Reference Include="Kztek.Cameras">
+      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\Kztek.Cameras.dll</HintPath>
+    </Reference>
+    <Reference Include="Kztek.LPR">
+      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\Kztek.LPR.dll</HintPath>
+    </Reference>
+    <Reference Include="Kztek.RtspPlayer">
+      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\Kztek.RtspPlayer.dll</HintPath>
+    </Reference>
+    <Reference Include="RtspClientSharp">
+      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\RtspClientSharp.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Update="Usercontrols\ucLaneOut.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 </Project>

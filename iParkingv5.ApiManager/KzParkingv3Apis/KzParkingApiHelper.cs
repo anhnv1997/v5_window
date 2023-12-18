@@ -1,20 +1,22 @@
-﻿using iParkingv6.ApiManager.KzParkingv3Apis.Responses;
+﻿using iParkingv5.Objects.Datas;
+using iParkingv5.Objects.EventDatas;
+using iParkingv6.ApiManager.KzParkingv3Apis.Responses;
 using iParkingv6.Objects.Datas;
 using Kztek.Tools;
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.NetworkInformation;
-using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+using Kztek.Tool;
+using iParkingv5.Objects;
 
 namespace iParkingv6.ApiManager.KzParkingv3Apis
 {
     public static class KzParkingApiHelper
     {
-        public static string server = "http://192.168.20.52:2100";
+        public static string server = "http://192.168.20.135:13000";
         public static string defaultRoute = "api/";
         public static string username = "admin";
         public static string password = "123456";
@@ -25,22 +27,14 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         public static CancellationTokenSource cts;
 
         #region PUBLIC FUNCTION
+
         #region -- Authorize Related Done
         public static async Task<string> GetToken(string _username, string _password)
         {
             StandardlizeServerName();
             string apiUrl = server + defaultRoute + KzApiUrlManagement.PostLoginRoute;
-
-            //Check PING
-            Ping ping = new Ping();
-            Uri uri = new Uri(apiUrl);
-            IPStatus pingStatus = (await ping.SendPingAsync(uri.Host, 100)).Status;
-            if (pingStatus != IPStatus.Success)
-            {
-                LogHelper.Logger_API_Error($"{apiUrl} Ping Error With Status {pingStatus}", LogHelper.SaveLogFolder);
-                return string.Empty;
-            }
-
+            username = _username;
+            password = _password;
             //Gửi API
             var login = new
             {
@@ -52,31 +46,23 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             {
                 try
                 {
-                    KzBaseResponse kzBaseResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<KzBaseResponse>(response.Item1);
+                    KzBaseResponse<LoginResponse> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<LoginResponse>>.GetBaseResponse(response.Item1);
                     if (kzBaseResponse == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't convert BaseRespose With: " + response.Item1, LogHelper.SaveLogFolder);
                         return string.Empty;
-                    }
-
-                    LoginResponse loginResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<LoginResponse>(kzBaseResponse.Result);
-                    if (loginResponse == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't Convert To LoginResponse With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return string.Empty;
-                    }
-                    expireTime = loginResponse.Expires_In;
-                    token = loginResponse.Token;
+                    StaticPool.userId = kzBaseResponse.data.identifier;
+                    token =  kzBaseResponse.data?.token;
                     return token;
                 }
                 catch (Exception ex)
                 {
-                    LogHelper.Logger_API_Error(apiUrl + $"Get Exception: \r\n--Error: {ex.Message} \r\n--Ex: {ex.InnerException?.Message} \r\n--Response" + response.Item1, LogHelper.SaveLogFolder);
+                    LogHelper.Log(logType: LogHelper.EmLogType.ERROR,
+                              doi_tuong_tac_dong: LogHelper.EmObjectLogType.Api,
+                              obj: ex);
                 }
             }
             return response.Item1;
         }
-        public static async void StartPollingAuthorize()
+        public static void StartPollingAuthorize()
         {
             cts = new CancellationTokenSource();
             _ = Task.Run(() => PollingAuthorize(cts.Token), cts.Token);
@@ -105,7 +91,9 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
                 }
                 catch (Exception ex)
                 {
-                    LogHelper.Logger_API_Error("AUTHORIZE PARKING ERROR: " + ex.Message, LogHelper.SaveLogFolder);
+                    LogHelper.Log(logType: LogHelper.EmLogType.ERROR,
+                            doi_tuong_tac_dong: LogHelper.EmObjectLogType.Api,
+                            obj: ex);
                 }
                 finally
                 {
@@ -117,25 +105,11 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         #endregion END -- Authorize Related
 
         #region -- Card Related
-
-        #endregion END -- Card Related
-
-        #region -- System Config Related
-        //--PC
-        public static async Task<List<Computer>> GetComputersAsync()
+        //--Card Group
+        public static async Task<List<CardGroup>> GetCardGroupsAsync()
         {
             StandardlizeServerName();
-            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetPCByListRoute;
-
-            //Check PING
-            Ping ping = new Ping();
-            Uri uri = new Uri(apiUrl);
-            IPStatus pingStatus = (await ping.SendPingAsync(uri.Host, 100)).Status;
-            if (pingStatus != IPStatus.Success)
-            {
-                LogHelper.Logger_API_Error($"{apiUrl} Ping Error With Status {pingStatus}", LogHelper.SaveLogFolder);
-                return null;
-            }
+            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetAllCardGroupRoute;
 
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
@@ -145,47 +119,19 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, RestSharp.Method.Get);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                try
-                {
-                    KzBaseResponse kzBaseResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<KzBaseResponse>(response.Item1);
-                    if (kzBaseResponse == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't convert BaseRespose With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
+                KzBaseResponse<List<CardGroup>> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<List<CardGroup>>>.GetBaseResponse(response.Item1);
+                if (kzBaseResponse == null)
+                    return null;
 
-                    List<Computer> computers = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Computer>>(kzBaseResponse.Result);
-                    if (computers == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't Convert To computers With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-                    else
-                    {
-                        return computers;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LogHelper.Logger_API_Error(apiUrl + $"Get Exception: \r\n--Error: {ex.Message} \r\n--Ex: {ex.InnerException?.Message} \r\n--Response" + response.Item1, LogHelper.SaveLogFolder);
-                }
+                return kzBaseResponse.data;
             }
             return null;
         }
-        public static async Task<Computer> GetComputerByIdAsync(string pcId)
+        public static async Task<Tuple<CardGroup, string>> GetCardGroupByIdAsync(string cardGroupId)
         {
             StandardlizeServerName();
-            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetPCByIdRoute;
-
-            //Check PING
-            Ping ping = new Ping();
-            Uri uri = new Uri(apiUrl);
-            IPStatus pingStatus = (await ping.SendPingAsync(uri.Host, 100)).Status;
-            if (pingStatus != IPStatus.Success)
-            {
-                LogHelper.Logger_API_Error($"{apiUrl} Ping Error With Status {pingStatus}", LogHelper.SaveLogFolder);
-                return null;
-            }
+            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetCardGroupByIdRoute;
+            string errorMessage = string.Empty;
 
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
@@ -194,55 +140,28 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             };
             Dictionary<string, string> parameters = new Dictionary<string, string>()
             {
-                {"id", pcId}
+                {"id", cardGroupId}
             };
 
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Get);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                try
+                KzBaseResponse<Tuple<CardGroup, string>> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<Tuple<CardGroup, string>>>.GetBaseResponse(response.Item1);
+                if (kzBaseResponse == null)
                 {
-                    KzBaseResponse kzBaseResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<KzBaseResponse>(response.Item1);
-                    if (kzBaseResponse == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't convert BaseRespose With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-
-                    Computer computer = Newtonsoft.Json.JsonConvert.DeserializeObject<Computer>(kzBaseResponse.Result);
-                    if (computer == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't Convert To computer With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-                    else
-                    {
-                        return computer;
-                    }
+                    errorMessage = response.Item1;
+                    return Tuple.Create<CardGroup, string>(null, errorMessage);
                 }
-                catch (Exception ex)
-                {
-                    LogHelper.Logger_API_Error(apiUrl + $"Get Exception: \r\n--Error: {ex.Message} \r\n--Ex: {ex.InnerException?.Message} \r\n--Response" + response.Item1, LogHelper.SaveLogFolder);
-                }
+                return kzBaseResponse.data;
             }
-            return null;
+            return Tuple.Create<CardGroup, string>(null, errorMessage);
         }
 
-        //--Controller
-        public static async Task<List<Bdk>> GetBdksAsync()
+        //--Vehicle Group
+        public static async Task<List<VehicleGroup>> GetVehicleGroupsAsync()
         {
             StandardlizeServerName();
-            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetControllerByListRoute;
-
-            //Check PING
-            Ping ping = new Ping();
-            Uri uri = new Uri(apiUrl);
-            IPStatus pingStatus = (await ping.SendPingAsync(uri.Host, 100)).Status;
-            if (pingStatus != IPStatus.Success)
-            {
-                LogHelper.Logger_API_Error($"{apiUrl} Ping Error With Status {pingStatus}", LogHelper.SaveLogFolder);
-                return null;
-            }
+            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetVehicleGroupByListRoute;
 
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
@@ -252,85 +171,262 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, RestSharp.Method.Get);
             if (!string.IsNullOrEmpty(response.Item1))
             {
+                KzBaseResponse<List<VehicleGroup>> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<List<VehicleGroup>>>.GetBaseResponse(response.Item1);
+                if (kzBaseResponse == null)
+                {
+                    return null;
+                }
+                return kzBaseResponse.data;
+            }
+            return null;
+        }
+        public static async Task<Tuple<VehicleGroup, string>> GetVehicleGroupByIdAsync(string vehicleGroupId)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetVehicleGroupByIdRoute;
+            string errorMessage = string.Empty;
+
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            Dictionary<string, string> parameters = new Dictionary<string, string>()
+            {
+                {"id", vehicleGroupId}
+            };
+
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Get);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                KzBaseResponse<Tuple<VehicleGroup, string>> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<Tuple<VehicleGroup, string>>>.GetBaseResponse(response.Item1);
+                if (kzBaseResponse == null)
+                {
+                    errorMessage = response.Item1;
+                    return Tuple.Create<VehicleGroup, string>(null, errorMessage);
+                }
+                return kzBaseResponse.data;
+            }
+            return Tuple.Create<VehicleGroup, string>(null, errorMessage);
+        }
+
+        //--Card
+        public static async Task<Tuple<Card, string>> GetCardByIdAsync(string cardId)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetCardByIdRoute;
+            string errorMessage = string.Empty;
+
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            Dictionary<string, string> parameters = new Dictionary<string, string>()
+            {
+                {"id", cardId}
+            };
+
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Get);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                KzBaseResponse<Tuple<Card, string>> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<Tuple<Card, string>>>.GetBaseResponse(response.Item1);
+                if (kzBaseResponse == null)
+                {
+                    errorMessage = response.Item1;
+                    return Tuple.Create<Card, string>(null, errorMessage);
+                }
+                return kzBaseResponse.data;
+            }
+            return Tuple.Create<Card, string>(null, errorMessage);
+        }
+        public static async Task<Tuple<Card, string>> GetCardByPlateAsync(string plate)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetCardByPlateRoute;
+            string errorMessage = string.Empty;
+
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            Dictionary<string, string> parameters = new Dictionary<string, string>()
+            {
+                {"plate", plate}
+            };
+
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Get);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                KzBaseResponse<Tuple<Card, string>> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<Tuple<Card, string>>>.GetBaseResponse(response.Item1);
+                if (kzBaseResponse == null)
+                {
+                    errorMessage = response.Item1;
+                    return Tuple.Create<Card, string>(null, errorMessage);
+                }
+                return kzBaseResponse.data;
+            }
+            return Tuple.Create<Card, string>(null, errorMessage);
+        }
+        public static async Task<Tuple<Card, string>> GetCardByCardNumberAsync(string cardnumber)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetCardByCardNumberRoute;
+            string errorMessage = string.Empty;
+
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            Dictionary<string, string> parameters = new Dictionary<string, string>()
+            {
+                {"cardnumber", cardnumber}
+            };
+
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Get);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
                 try
                 {
-                    KzBaseResponse kzBaseResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<KzBaseResponse>(response.Item1);
+                    KzBaseResponse<Tuple<Card, string>> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<Tuple<Card, string>>>.GetBaseResponse(response.Item1);
                     if (kzBaseResponse == null)
                     {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't convert BaseRespose With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
+                        errorMessage = response.Item1;
+                        return Tuple.Create<Card, string>(null, errorMessage);
                     }
-
-                    List<Bdk> bdks = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Bdk>>(kzBaseResponse.Result);
-                    if (bdks == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't Convert To Bdks With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-                    else
-                    {
-                        return bdks;
-                    }
+                    return kzBaseResponse.data;
                 }
                 catch (Exception ex)
                 {
-                    LogHelper.Logger_API_Error(apiUrl + $"Get Exception: \r\n--Error: {ex.Message} \r\n--Ex: {ex.InnerException?.Message} \r\n--Response" + response.Item1, LogHelper.SaveLogFolder);
+                    errorMessage = ex.Message;
                 }
+            }
+            return Tuple.Create<Card, string>(null, errorMessage);
+        }
+        public static async Task<Card> GetCardByPagingAsync(string key, int pageIndex, int pageSize, bool desc = true, int active = 1)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetAlarmByPagingRoute;
+
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            Dictionary<string, string> parameters = new Dictionary<string, string>()
+            {
+                {"key", key},
+                {"pageindex" , pageIndex.ToString() },
+                {"pagesize" , pageSize.ToString() },
+                {"desc" , desc.ToString() },
+                {"active" , active.ToString() },
+            };
+
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Get);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                KzBaseResponse<Card> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<Card>>.GetBaseResponse(response.Item1);
+                if (kzBaseResponse == null)
+                {
+                    return null;
+                }
+                return kzBaseResponse.data;
+            }
+            return null;
+        }
+
+        #endregion END -- Card Related
+
+        #region -- System Config Related
+        //--PC
+        public static async Task<Computer> GetComputerByIPAddressAsync(string ipAddress)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetPCByIpAddressRoute(ipAddress);
+
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, RestSharp.Method.Get);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                KzBaseResponse<Computer> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<Computer>>.GetBaseResponse(response.Item1);
+                if (kzBaseResponse == null)
+                {
+                    return null;
+                }
+                return kzBaseResponse.data;
+            }
+            return null;
+        }
+        public static async Task<Computer> GetComputerByIdAsync(string id)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetPCByIdRoute(id);
+
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, RestSharp.Method.Get);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                KzBaseResponse<Computer> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<Computer>>.GetBaseResponse(response.Item1);
+                if (kzBaseResponse == null)
+                {
+                    return null;
+                }
+                return kzBaseResponse.data;
+            }
+            return null;
+        }
+
+        //--Controller
+        public static async Task<List<Bdk>> GetControllerByPCId(string pcId)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetControllerByComputerIdRoute(pcId);
+
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, RestSharp.Method.Get);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                KzBaseResponse<List<Bdk>> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<List<Bdk>>>.GetBaseResponse(response.Item1);
+                if (kzBaseResponse == null)
+                {
+                    return null;
+                }
+                return kzBaseResponse.data;
             }
             return null;
         }
         public static async Task<Bdk> GetBdkByIdAsync(string controllerId)
         {
             StandardlizeServerName();
-            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetControllerByIdRoute;
-
-            //Check PING
-            Ping ping = new Ping();
-            Uri uri = new Uri(apiUrl);
-            IPStatus pingStatus = (await ping.SendPingAsync(uri.Host, 100)).Status;
-            if (pingStatus != IPStatus.Success)
-            {
-                LogHelper.Logger_API_Error($"{apiUrl} Ping Error With Status {pingStatus}", LogHelper.SaveLogFolder);
-                return null;
-            }
+            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetControllerByIdRoute(controllerId);
 
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
                 { "Authorization","Bearer " + token  }
             };
-            Dictionary<string, string> parameters = new Dictionary<string, string>()
-            {
-                {"id", controllerId}
-            };
 
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Get);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, RestSharp.Method.Get);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                try
-                {
-                    KzBaseResponse kzBaseResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<KzBaseResponse>(response.Item1);
-                    if (kzBaseResponse == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't convert BaseRespose With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-
-                    Bdk bdk = Newtonsoft.Json.JsonConvert.DeserializeObject<Bdk>(kzBaseResponse.Result);
-                    if (bdk == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't Convert To BDK With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-                    else
-                    {
-                        return bdk;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LogHelper.Logger_API_Error(apiUrl + $"Get Exception: \r\n--Error: {ex.Message} \r\n--Ex: {ex.InnerException?.Message} \r\n--Response" + response.Item1, LogHelper.SaveLogFolder);
-                }
+                KzBaseResponse<Bdk> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<Bdk>>.GetBaseResponse(response.Item1);
+                return kzBaseResponse.data;
             }
             return null;
         }
@@ -342,137 +438,50 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         /// <param name="pcId"></param>
         /// <param name="cameraFunction">Để trống thì sẽ tìm tất cả</param>
         /// <returns></returns>
-        public static async Task<List<Camera>> GetCamerasAsync(string pcId, string cameraFunction)
-        {
-            StandardlizeServerName();
-            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetCameraByListRoute;
-
-            //Check PING
-            Ping ping = new Ping();
-            Uri uri = new Uri(apiUrl);
-            IPStatus pingStatus = (await ping.SendPingAsync(uri.Host, 100)).Status;
-            if (pingStatus != IPStatus.Success)
-            {
-                LogHelper.Logger_API_Error($"{apiUrl} Ping Error With Status {pingStatus}", LogHelper.SaveLogFolder);
-                return null;
-            }
-
-            //Gửi API
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-            {
-                { "Authorization","Bearer " + token  }
-            };
-            Dictionary<string, string> parameters = new Dictionary<string, string>()
-            {
-                {"pcid", pcId},
-            };
-            if (!string.IsNullOrEmpty(cameraFunction))
-            {
-                parameters.Add("key", cameraFunction);
-            }
-
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Get);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                try
-                {
-                    KzBaseResponse kzBaseResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<KzBaseResponse>(response.Item1);
-                    if (kzBaseResponse == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't convert BaseRespose With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-
-                    List<Camera> cameras = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Camera>>(kzBaseResponse.Result);
-                    if (cameras == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't Convert To Cameras With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-                    else
-                    {
-                        return cameras;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LogHelper.Logger_API_Error(apiUrl + $"Get Exception: \r\n--Error: {ex.Message} \r\n--Ex: {ex.InnerException?.Message} \r\n--Response" + response.Item1, LogHelper.SaveLogFolder);
-                }
-            }
-            return null;
-        }
         public static async Task<Camera> GetCameraAsync(string cameraId)
         {
             StandardlizeServerName();
-            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetCameraByIdRoute;
-
-            //Check PING
-            Ping ping = new Ping();
-            Uri uri = new Uri(apiUrl);
-            IPStatus pingStatus = (await ping.SendPingAsync(uri.Host, 100)).Status;
-            if (pingStatus != IPStatus.Success)
-            {
-                LogHelper.Logger_API_Error($"{apiUrl} Ping Error With Status {pingStatus}", LogHelper.SaveLogFolder);
-                return null;
-            }
+            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetCameraByIdRoute(cameraId);
 
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
                 { "Authorization","Bearer " + token  }
             };
-            Dictionary<string, string> parameters = new Dictionary<string, string>()
-            {
-                {"id", cameraId}
-            };
 
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Get);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, RestSharp.Method.Get);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                try
-                {
-                    KzBaseResponse kzBaseResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<KzBaseResponse>(response.Item1);
-                    if (kzBaseResponse == null)
-                    {
+                KzBaseResponse<Camera> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<Camera>>.GetBaseResponse(response.Item1);
+                return kzBaseResponse.data;
+            }
+            return null;
+        }
+        public static async Task<List<Camera>> GetCameraByComputerIdAsync(string computerId)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetCameraByComputerIdRoute(computerId);
 
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't convert BaseRespose With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
 
-                    Camera camera = Newtonsoft.Json.JsonConvert.DeserializeObject<Camera>(kzBaseResponse.Result);
-                    if (camera == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't Convert To Camera With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-                    else
-                    {
-                        return camera;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LogHelper.Logger_API_Error(apiUrl + $"Get Exception: \r\n--Error: {ex.Message} \r\n--Ex: {ex.InnerException?.Message} \r\n--Response" + response.Item1, LogHelper.SaveLogFolder);
-                }
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, RestSharp.Method.Get);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                KzBaseResponse<List<Camera>> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<List<Camera>>>.GetBaseResponse(response.Item1);
+                return kzBaseResponse.data;
             }
             return null;
         }
 
         //--Lane
-        public static async Task<List<Lane>> GetLanesAsync(string pcId, string key)
+        public static async Task<List<Lane>> GetLanesAsync(string pcId, string key = "")
         {
             StandardlizeServerName();
-            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetLaneByListRoute;
-
-            //Check PING
-            Ping ping = new Ping();
-            Uri uri = new Uri(apiUrl);
-            IPStatus pingStatus = (await ping.SendPingAsync(uri.Host, 100)).Status;
-            if (pingStatus != IPStatus.Success)
-            {
-                LogHelper.Logger_API_Error($"{apiUrl} Ping Error With Status {pingStatus}", LogHelper.SaveLogFolder);
-                return null;
-            }
+            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetLaneByComputerIdRoute(pcId);
 
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
@@ -484,93 +493,29 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             {
                 parameters.Add("pcId", pcId);
             }
-            if (!string.IsNullOrWhiteSpace(key))
-            {
-                parameters.Add("key", key);
-            }
-
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Get);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                try
-                {
-                    KzBaseResponse kzBaseResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<KzBaseResponse>(response.Item1);
-                    if (kzBaseResponse == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't convert BaseRespose With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-
-                    List<Lane> lanes = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Lane>>(kzBaseResponse.Result);
-                    if (lanes == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't Convert To Lanes With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-                    else
-                    {
-                        return lanes;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LogHelper.Logger_API_Error(apiUrl + $"Get Exception: \r\n--Error: {ex.Message} \r\n--Ex: {ex.InnerException?.Message} \r\n--Response" + response.Item1, LogHelper.SaveLogFolder);
-                }
+                KzBaseResponse<List<Lane>> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<List<Lane>>>.GetBaseResponse(response.Item1);
+                return kzBaseResponse.data;
             }
             return null;
         }
         public static async Task<Lane> GetLaneByIdAsync(string laneId)
         {
             StandardlizeServerName();
-            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetLaneByIdRoute;
-
-            //Check PING
-            Ping ping = new Ping();
-            Uri uri = new Uri(apiUrl);
-            IPStatus pingStatus = (await ping.SendPingAsync(uri.Host, 100)).Status;
-            if (pingStatus != IPStatus.Success)
-            {
-                LogHelper.Logger_API_Error($"{apiUrl} Ping Error With Status {pingStatus}", LogHelper.SaveLogFolder);
-                return null;
-            }
+            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetLaneByIdRoute(laneId);
 
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
                 { "Authorization","Bearer " + token  }
             };
-            Dictionary<string, string> parameters = new Dictionary<string, string>()
-            {
-                {"id", laneId}
-            };
-
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Get);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, RestSharp.Method.Get);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                try
-                {
-                    KzBaseResponse kzBaseResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<KzBaseResponse>(response.Item1);
-                    if (kzBaseResponse == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't convert BaseRespose With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-
-                    Lane lane = Newtonsoft.Json.JsonConvert.DeserializeObject<Lane>(kzBaseResponse.Result);
-                    if (lane == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't Convert To Lane With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-                    else
-                    {
-                        return lane;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LogHelper.Logger_API_Error(apiUrl + $"Get Exception: \r\n--Error: {ex.Message} \r\n--Ex: {ex.InnerException?.Message} \r\n--Response" + response.Item1, LogHelper.SaveLogFolder);
-                }
+                KzBaseResponse<Lane> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<Lane>>.GetBaseResponse(response.Item1);
+                return kzBaseResponse.data;
             }
             return null;
         }
@@ -581,16 +526,6 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             StandardlizeServerName();
             string apiUrl = server + defaultRoute + KzApiUrlManagement.GetGateByListRoute;
 
-            //Check PING
-            Ping ping = new Ping();
-            Uri uri = new Uri(apiUrl);
-            IPStatus pingStatus = (await ping.SendPingAsync(uri.Host, 100)).Status;
-            if (pingStatus != IPStatus.Success)
-            {
-                LogHelper.Logger_API_Error($"{apiUrl} Ping Error With Status {pingStatus}", LogHelper.SaveLogFolder);
-                return null;
-            }
-
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
@@ -600,105 +535,35 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, RestSharp.Method.Get);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                try
-                {
-                    KzBaseResponse kzBaseResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<KzBaseResponse>(response.Item1);
-                    if (kzBaseResponse == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't convert BaseRespose With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-
-                    List<Gate> gates = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Gate>>(kzBaseResponse.Result);
-                    if (gates == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't Convert To Gates With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-                    else
-                    {
-                        return gates;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LogHelper.Logger_API_Error(apiUrl + $"Get Exception: \r\n--Error: {ex.Message} \r\n--Ex: {ex.InnerException?.Message} \r\n--Response" + response.Item1, LogHelper.SaveLogFolder);
-                }
+                KzBaseResponse<List<Gate>> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<List<Gate>>>.GetBaseResponse(response.Item1);
+                return kzBaseResponse.data;
             }
             return null;
         }
         public static async Task<Gate> GetGateByIdAsync(string gateId)
         {
             StandardlizeServerName();
-            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetGateByIdRoute;
-
-            //Check PING
-            Ping ping = new Ping();
-            Uri uri = new Uri(apiUrl);
-            IPStatus pingStatus = (await ping.SendPingAsync(uri.Host, 100)).Status;
-            if (pingStatus != IPStatus.Success)
-            {
-                LogHelper.Logger_API_Error($"{apiUrl} Ping Error With Status {pingStatus}", LogHelper.SaveLogFolder);
-                return null;
-            }
+            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetGateByIdRoute(gateId);
 
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
                 { "Authorization","Bearer " + token  }
             };
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            if (!string.IsNullOrWhiteSpace(gateId))
-            {
-                parameters.Add("id", gateId);
-            }
-
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Get);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, RestSharp.Method.Get);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                try
-                {
-                    KzBaseResponse kzBaseResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<KzBaseResponse>(response.Item1);
-                    if (kzBaseResponse == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't convert BaseRespose With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-
-                    Gate lanes = Newtonsoft.Json.JsonConvert.DeserializeObject<Gate>(kzBaseResponse.Result);
-                    if (lanes == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't Convert To Gate With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-                    else
-                    {
-                        return lanes;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LogHelper.Logger_API_Error(apiUrl + $"Get Exception: \r\n--Error: {ex.Message} \r\n--Ex: {ex.InnerException?.Message} \r\n--Response" + response.Item1, LogHelper.SaveLogFolder);
-                }
+                KzBaseResponse<Gate> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<Gate>>.GetBaseResponse(response.Item1);
+                return kzBaseResponse.data;
             }
             return null;
         }
 
         //--LED
-        public static async Task<List<Led>> GetLedsAsync(string pcId, string key)
+        public static async Task<List<Led>> GetLedsAsync(string pcId)
         {
             StandardlizeServerName();
-            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetLedByListRoute;
-
-            //Check PING
-            Ping ping = new Ping();
-            Uri uri = new Uri(apiUrl);
-            IPStatus pingStatus = (await ping.SendPingAsync(uri.Host, 100)).Status;
-            if (pingStatus != IPStatus.Success)
-            {
-                LogHelper.Logger_API_Error($"{apiUrl} Ping Error With Status {pingStatus}", LogHelper.SaveLogFolder);
-                return null;
-            }
+            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetLedByComputerIdRoute(pcId);
 
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
@@ -706,117 +571,18 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
                 { "Authorization","Bearer " + token  }
             };
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            if (!string.IsNullOrWhiteSpace(pcId))
-            {
-                parameters.Add("pcId", pcId);
-            }
-            if (!string.IsNullOrWhiteSpace(key))
-            {
-                parameters.Add("key", key);
-            }
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, RestSharp.Method.Get);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                try
-                {
-                    KzBaseResponse kzBaseResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<KzBaseResponse>(response.Item1);
-                    if (kzBaseResponse == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't convert BaseRespose With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-
-                    List<Led> leds = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Led>>(kzBaseResponse.Result);
-                    if (leds == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't Convert To Leds With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-                    else
-                    {
-                        return leds;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LogHelper.Logger_API_Error(apiUrl + $"Get Exception: \r\n--Error: {ex.Message} \r\n--Ex: {ex.InnerException?.Message} \r\n--Response" + response.Item1, LogHelper.SaveLogFolder);
-                }
+                KzBaseResponse<List<Led>> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<List<Led>>>.GetBaseResponse(response.Item1);
+                return kzBaseResponse.data;
             }
             return null;
         }
         public static async Task<Led> GetLedByIdAsync(string ledId)
         {
             StandardlizeServerName();
-            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetLedByIdRoute;
-
-            //Check PING
-            Ping ping = new Ping();
-            Uri uri = new Uri(apiUrl);
-            IPStatus pingStatus = (await ping.SendPingAsync(uri.Host, 100)).Status;
-            if (pingStatus != IPStatus.Success)
-            {
-                LogHelper.Logger_API_Error($"{apiUrl} Ping Error With Status {pingStatus}", LogHelper.SaveLogFolder);
-                return null;
-            }
-
-            //Gửi API
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-            {
-                { "Authorization","Bearer " + token  }
-            };
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            if (!string.IsNullOrWhiteSpace(ledId))
-            {
-                parameters.Add("id", ledId);
-            }
-
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Get);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                try
-                {
-                    KzBaseResponse kzBaseResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<KzBaseResponse>(response.Item1);
-                    if (kzBaseResponse == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't convert BaseRespose With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-
-                    Led leds = Newtonsoft.Json.JsonConvert.DeserializeObject<Led>(kzBaseResponse.Result);
-                    if (leds == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't Convert To Led With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-                    else
-                    {
-                        return leds;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LogHelper.Logger_API_Error(apiUrl + $"Get Exception: \r\n--Error: {ex.Message} \r\n--Ex: {ex.InnerException?.Message} \r\n--Response" + response.Item1, LogHelper.SaveLogFolder);
-                }
-            }
-            return null;
-        }
-
-        //--System Config
-        public static async Task<SystemConfig> GetSystemConfigAsync()
-        {
-            StandardlizeServerName();
-            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetSystemConfigRoute;
-
-            //Check PING
-            Ping ping = new Ping();
-            Uri uri = new Uri(apiUrl);
-            IPStatus pingStatus = (await ping.SendPingAsync(uri.Host, 100)).Status;
-            if (pingStatus != IPStatus.Success)
-            {
-                LogHelper.Logger_API_Error($"{apiUrl} Ping Error With Status {pingStatus}", LogHelper.SaveLogFolder);
-                return null;
-            }
+            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetLedByIdRoute(ledId);
 
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
@@ -826,40 +592,19 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, RestSharp.Method.Get);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                try
-                {
-                    KzBaseResponse kzBaseResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<KzBaseResponse>(response.Item1);
-                    if (kzBaseResponse == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't convert BaseRespose With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-
-                    SystemConfig systemConfig = Newtonsoft.Json.JsonConvert.DeserializeObject<SystemConfig>(kzBaseResponse.Result);
-                    if (systemConfig == null)
-                    {
-                        LogHelper.Logger_API_Error(apiUrl + "Error: Can't Convert To SystemConfig With: " + response.Item1, LogHelper.SaveLogFolder);
-                        return null;
-                    }
-                    else
-                    {
-                        return systemConfig;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LogHelper.Logger_API_Error(apiUrl + $"Get Exception: \r\n--Error: {ex.Message} \r\n--Ex: {ex.InnerException?.Message} \r\n--Response" + response.Item1, LogHelper.SaveLogFolder);
-                }
+                KzBaseResponse<Led> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<Led>>.GetBaseResponse(response.Item1);
+                return kzBaseResponse.data;
             }
             return null;
         }
+
         #endregion END -- System Config Related
 
         #region -- Event Related
-        public static async Task PostCheckInAsync()
+        public static async Task PostCheckInAsync(CardEvent cardEvent)
         {
         }
-        public static async Task PostCheckOutAsync()
+        public static async Task PostCheckOutAsync(CardEvent cardEvent)
         {
         }
         #endregion End -- Event Related
@@ -872,7 +617,61 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
 
         //-- Customer Related
 
-        //-- Alarm
+        #region -- Alarm
+        public static async Task<List<Alarm>> GetAlarmByPagingAsync()
+        {
+            StandardlizeServerName();
+            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetAlarmByPagingRoute;
+
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, RestSharp.Method.Get);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                KzBaseResponse<List<Alarm>> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<List<Alarm>>>.GetBaseResponse(response.Item1);
+                return kzBaseResponse.data;
+            }
+            return null;
+        }
+        public static async Task<Alarm> GetAlarmByIdAsync(string alarmId)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + defaultRoute + KzApiUrlManagement.GetAlarmByIdRoute;
+
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, RestSharp.Method.Get);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                KzBaseResponse<Alarm> kzBaseResponse = NewtonSoftHelper<KzBaseResponse<Alarm>>.GetBaseResponse(response.Item1);
+                return kzBaseResponse.data;
+            }
+            return null;
+        }
+        public static async Task<bool> CreateAlarmAsync(Alarm alarm)
+        {
+            //StandardlizeServerName();
+            //string apiUrl = server + defaultRoute + KzApiUrlManagement.PostLoginRoute;
+            //Dictionary<string, string> headers = new Dictionary<string, string>()
+            //{
+            //    { "Authorization","Bearer " + token  }
+            //};
+            //var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, alarm, headers, null, timeOut, RestSharp.Method.Post);
+            //if (!string.IsNullOrEmpty(response.Item1))
+            //{
+            //    KzBaseResponse kzBaseResponse = NewtonSoftHelper<KzBaseResponse>.GetBaseResponse(response.Item1);
+            //    return kzBaseResponse.data;
+            //}
+            return false;
+        }
+        #endregion End Alarm
 
         //-- Black List
 
@@ -881,14 +680,15 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         //-- Voucher
 
         //-- Client Status
+
         #endregion END PUBLIC FUNCTION
 
         #region PRIVATE FUNCTION
         private static void StandardlizeServerName()
         {
-            if (server[server.Length - 1] != '/' && server[server.Length - 1] != '\\')
+            if (server[^1] != '/' && server[^1] != '\\')
             {
-                server = server + "/";
+                server += "/";
             }
         }
         #endregion END PRIVATE FUNCTION

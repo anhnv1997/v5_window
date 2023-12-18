@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "XyKMq0VcZU55ExknKuiP+r0WU4B/GszHpIbxU2KntRB5uqKcUbPUZplCNDISUq4PsZomvdLHWeqzoGbjgXM+QA==",
+  "dgSpecHash": "a31LGQ/6fB6oQcvPN6l1IWmppp949ou/o5t2kjw61bQh93RPovw4KwZvXqe/IPToE8XMMjuEhyL84tW13oaoRQ==",
   "success": true,
   "projectFilePath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

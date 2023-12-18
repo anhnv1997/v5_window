@@ -1,4 +1,6 @@
-﻿using Kztek.Tool.NetworkTools;
+﻿using iParkingv6.ApiManager.KzParkingv3Apis.Responses;
+using Kztek.Tool.NetworkTools;
+using Kztek.Tool.TextFormatingTools;
 using Kztek.Tools;
 using RestSharp;
 using System;
@@ -111,12 +113,10 @@ namespace iParkingv6.ApiManager
         /// <returns></returns>
         public static async Task<Tuple<string, string>> GeneralJsonAPIAsync(string apiUrl, object data, Dictionary<string, string>? headerValues, Dictionary<string, string>? requiredParams, int timeOut, Method method)
         {
-            Uri uri = new Uri(apiUrl);
-            if (!NetWorkTools.IsPingSuccess(uri.Host, 100))
+            if (!IsValidHost(apiUrl))
             {
                 return Tuple.Create<string, string>(string.Empty, "PING ERROR");
             }
-
             string errorMessage = string.Empty;
             for (int i = 0; i < max_send_times; i++)
             {
@@ -130,13 +130,14 @@ namespace iParkingv6.ApiManager
                 if (data != null)
                     request.AddJsonBody(data);
 
-                if (headerValues!=null)
+                if (headerValues != null)
                 {
                     foreach (KeyValuePair<string, string> item in headerValues)
                     {
                         request.AddHeader(item.Key, item.Value);
                     }
                 }
+
                 if (requiredParams != null)
                 {
                     foreach (KeyValuePair<string, string> kvp in requiredParams)
@@ -144,19 +145,53 @@ namespace iParkingv6.ApiManager
                         request.AddQueryParameter(kvp.Key, kvp.Value);
                     }
                 }
-                  
+
                 var response = await client.ExecuteAsync(request);
                 if (!response.IsSuccessful)
                 {
-                    errorMessage = $"Error {apiUrl} + Lần {i + 1} + \r\nError Message: {response.ErrorMessage} \r\nError Exception: {response.ErrorException}";
-                    LogHelper.Logger_API_Error(errorMessage, LogHelper.SaveLogFolder, data);
+                    var logResponse = response;
+                    logResponse.Request = null;
+                    LogHelper.Log(logType: LogHelper.EmLogType.ERROR,
+                              doi_tuong_tac_dong: LogHelper.EmObjectLogType.Api,
+                              hanh_dong: method.ToString(),
+                              noi_dung_hanh_dong: $"Gửi {apiUrl} lần {i + 1}",
+                              mo_ta_them: TextFormatingTool.BeautyJson(new
+                              {
+                                  _url = apiUrl,
+                                  _method = method.ToString(),
+                                  _headerValues = headerValues,
+                                  _parameters = requiredParams,
+                                  _obj = data,
+                              }),
+                              obj: logResponse);
                     continue;
                 }
-                LogHelper.Logger_API_Infor($"{apiUrl} Success: " + response.Content, LogHelper.SaveLogFolder, data);
+                LogHelper.Log(logType: LogHelper.EmLogType.INFOR,
+                              doi_tuong_tac_dong: LogHelper.EmObjectLogType.Api,
+                              hanh_dong: method.ToString(),
+                              noi_dung_hanh_dong: apiUrl,
+                              mo_ta_them: response.Content);
                 return Tuple.Create<string, string>(response.Content, string.Empty);
             }
             return Tuple.Create<string, string>(string.Empty, errorMessage);
         }
         #endregion END JSON API HELPER
+
+
+        private static bool IsValidHost(string apiUrl)
+        {
+            Uri uri = new Uri(apiUrl);
+            if (!NetWorkTools.IsPingSuccess(uri.Host, 100))
+            {
+                LogHelper.Log(logType: LogHelper.EmLogType.ERROR,
+                              doi_tuong_tac_dong: LogHelper.EmObjectLogType.Api,
+                              hanh_dong: "PING",
+                              noi_dung_hanh_dong: "Kiểm tra ping đến host " + uri.Host,
+                              mo_ta_them: "PING ERROR",
+                              obj: uri);
+                return false;
+            }
+            return true;
+        }
     }
 }
