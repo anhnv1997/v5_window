@@ -33,6 +33,8 @@ namespace iParkingv5_window.Usercontrols
         ucCameraView? ucCarLpr = null;
 
         CardEvent? lastEvent = null;
+        public List<CardEventArgs> lastCardEventDatas { get; set; } = new List<CardEventArgs>();
+        public List<InputEventArgs> lastInputEventDatas { get; set; } = new List<InputEventArgs>();
         #endregion
 
         #region Forms
@@ -178,7 +180,7 @@ namespace iParkingv5_window.Usercontrols
                 return;
             }
         }
-        #endregion
+        #endregion End Controls In Form
 
         #region Public Function
         public bool SaveUIConfig()
@@ -205,7 +207,7 @@ namespace iParkingv5_window.Usercontrols
                 semaphoreSlim.Release();
             }
         }
-        #endregion
+        #endregion End Public Function
 
         #region Private Function
         private static Kztek.Cameras.Camera? GetCameraConfig(CameraPurposeType.EmCameraPurposeType key, Dictionary<CameraPurposeType.EmCameraPurposeType, List<Camera>> cameras)
@@ -250,7 +252,7 @@ namespace iParkingv5_window.Usercontrols
                 pictureBox.Refresh();
             }));
         }
-        #endregion END Private Function
+        #endregion End Private Function
 
         #region EVENT
         private readonly SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
@@ -370,172 +372,167 @@ namespace iParkingv5_window.Usercontrols
 
         public async Task ExcecuteCardEvent(CardEventArgs ce)
         {
-            foreach (ControllerInLane controllerInLane in lane.controlUnits)
+            if (!this.CheckNewCardEvent(this.lane, ce, out ControllerInLane? controllerInLane, out int thoiGianCho))
             {
-                if (controllerInLane.controlUnitId.ToLower() != ce.DeviceId.ToLower())
+                if (thoiGianCho > 0)
                 {
-                    continue;
+                    UpdateResultMessage($"Đang trong thời gian chờ, vui lòng quẹt lại sau {thoiGianCho}s", Color.DarkBlue);
                 }
+                return;
+            }
 
-                //Danh sách đăng ký có không có reader của sự kiện ==> Bỏ qua
-                if (!controllerInLane.readers.Contains(ce.ReaderIndex.ToString()))
+            //Danh sách biến sử dụng
+            Image? overviewImg = null;
+            Image? vehicleImg = null;
+            List<Image?> optionalImages = new();
+            Card? card = null;
+            CardGroup? cardGroup = null;
+            VehicleGroup? vehicleGroup = null;
+
+            DateTime eventTime = DateTime.Now;
+            UpdateResultMessage("Đang kiểm trang thông tin sự kiện quẹt thẻ..." + ce.AllCardFormats[0], Color.DarkBlue);
+
+            //Đọc thông tin thẻ
+            var cardInfo = await KzParkingApiHelper.GetCardByCardNumberAsync(ce.AllCardFormats[0]);
+            if (cardInfo.Item1 == null)
+            {
+                UpdateResultMessage("Đọc thông tin thẻ lỗi: " + cardInfo.Item2, Color.DarkRed);
+                return;
+            }
+            card = cardInfo.Item1;
+
+            //Đọc thông tin nhóm thẻ
+            //--Để lại
+            //var cardGroupInfo = await KzParkingApiHelper.GetCardGroupByIdAsync(card.CardGroupId);
+            UpdateResultMessage("Đọc thông tin nhóm thẻ...", Color.DarkBlue);
+            var cardGroups = await KzParkingApiHelper.GetCardGroupsAsync();
+            if (cardGroups == null)
+            {
+                UpdateResultMessage("Đọc thông tin nhóm thẻ lỗi", Color.DarkRed);
+                return;
+            }
+            foreach (CardGroup item in cardGroups)
+            {
+                if (item.Id.ToLower() == card.CardGroupId.ToLower())
                 {
-                    continue;
+                    cardGroup = item;
+                    break;
                 }
+            }
+            if (cardGroup == null)
+            {
+                UpdateResultMessage("Không lấy được thông tin nhóm thẻ", Color.DarkRed);
+                return;
+            }
 
-                //Danh sách biến sử dụng
-                Image? overviewImg = null;
-                Image? vehicleImg = null;
-                List<Image?> optionalImages = new();
-                Card? card = null;
-                CardGroup? cardGroup = null;
-                VehicleGroup? vehicleGroup = null;
+            //Đọc thông tin loại phương tiện
+            UpdateResultMessage("Đang kiểm trang thông tin sự kiện quẹt thẻ..." + ce.AllCardFormats[0], Color.DarkBlue);
+            //Đọc thông tin thẻ
+            var vehicleGroupInfo = await KzParkingApiHelper.GetVehicleGroupByIdAsync(cardGroup.VehicleGroupId);
+            if (vehicleGroupInfo.Item1 == null)
+            {
+                UpdateResultMessage("Đọc thông tin loại phương tiện lỗi: " + vehicleGroupInfo.Item2, Color.DarkRed);
+                return;
+            }
+            vehicleGroup = vehicleGroupInfo.Item1;
 
-                DateTime eventTime = DateTime.Now;
-                UpdateResultMessage("Đang kiểm trang thông tin sự kiện quẹt thẻ..." + ce.AllCardFormats[0], Color.DarkBlue);
-
-                //Đọc thông tin thẻ
-                var cardInfo = await KzParkingApiHelper.GetCardByCardNumberAsync(ce.AllCardFormats[0]);
-                if (cardInfo.Item1 == null)
+            //Lấy hình ảnh sự kiện
+            UpdateResultMessage("Lấy hình ảnh sự kiện...", Color.DarkBlue);
+            foreach (KeyValuePair<CameraPurposeType.EmCameraPurposeType, List<Camera>> kvp in cameras)
+            {
+                switch (kvp.Key)
                 {
-                    UpdateResultMessage("Đọc thông tin thẻ lỗi: " + cardInfo.Item2, Color.DarkRed);
-                    return;
+                    case CameraPurposeType.EmCameraPurposeType.MainOverView:
+                        overviewImg = ucOverView?.GetFullCurrentImage();
+                        break;
+                    case CameraPurposeType.EmCameraPurposeType.CarLPR:
+                        if (vehicleGroup.VehicleType == (int)VehicleType.EmVehicleType.Car)
+                        {
+                            vehicleImg = ucCarLpr?.GetFullCurrentImage();
+                        }
+                        break;
+                    case CameraPurposeType.EmCameraPurposeType.MotorLPR:
+                        if (vehicleGroup.VehicleType != (int)VehicleType.EmVehicleType.Car)
+                        {
+                            vehicleImg = ucMotoLpr?.GetFullCurrentImage();
+                        }
+                        break;
+                    case CameraPurposeType.EmCameraPurposeType.SubOverView:
+                        break;
+                    default:
+                        break;
                 }
-                card = cardInfo.Item1;
+            }
+            //Hiển thị hình ảnh sự kiện
+            UpdateResultMessage("Hiển thị hình ảnh sự kiện...", Color.DarkBlue);
+            ShowImage(picOverviewImage, overviewImg);
+            ShowImage(picVehicleImage, vehicleImg);
 
-                //Đọc thông tin nhóm thẻ
-                //--Để lại
-                //var cardGroupInfo = await KzParkingApiHelper.GetCardGroupByIdAsync(card.CardGroupId);
-                UpdateResultMessage("Đọc thông tin nhóm thẻ...", Color.DarkBlue);
-                var cardGroups = await KzParkingApiHelper.GetCardGroupsAsync();
-                if (cardGroups == null)
+            //Đọc biển số
+            UpdateResultMessage("Đọc biển số...", Color.DarkBlue);
+            string plate = LprDetect.GetPlateNumber(LPRDetecter.EmLprDetecter.KztekLpr, vehicleImg, out Image? lprImage);
+            ShowImage(picLprImage, lprImage);
+            txtPlate.Invoke(new Action(() =>
+            {
+                txtPlate.Text = plate;
+                txtPlate.Refresh();
+            }));
+
+            //Gửi API Check In
+            //--Cập nhật lại đường dẫn có thêm thông tin biển số xe
+            string overviewPath = ImageHelper.CreateSaveFileName(eventTime, false, plate, lane.id, "OVERVIEW");
+            string vehiclePath = ImageHelper.CreateSaveFileName(eventTime, false, plate, lane.id, "VEHICLE");
+            string lprPath = ImageHelper.CreateSaveFileName(eventTime, false, plate, lane.id, "LPR");
+            CardEvent? cardEvent = new CardEvent()
+            {
+            };
+            UpdateResultMessage("Check In...", Color.DarkBlue);
+            await KzParkingApiHelper.PostCheckInAsync(cardEvent);
+
+            //Kiểm tra mở barrie
+            bool isOpenBarrie = true;
+            if (isOpenBarrie)
+            {
+                foreach (IController item in frmMain.controllers)
                 {
-                    UpdateResultMessage("Đọc thông tin nhóm thẻ lỗi", Color.DarkRed);
-                    return;
-                }
-                foreach (CardGroup item in cardGroups)
-                {
-                    if (item.Id.ToLower() == card.CardGroupId.ToLower())
+                    if (item.ControllerInfo.id.ToLower() == ce.DeviceId.ToLower())
                     {
-                        cardGroup = item;
+                        for (int i = 0; i < controllerInLane?.barriers.Length; i++)
+                        {
+                            bool isOpenSuccess = false;
+                            if (!await item.OpenDoor(100, controllerInLane.barriers[i]))
+                            {
+                                isOpenSuccess = await item.OpenDoor(100, controllerInLane.barriers[i]);
+                                if (!isOpenSuccess)
+                                {
+                                }
+                            }
+                            else
+                            {
+                            }
+                            if (isOpenSuccess)
+                            {
+                            }
+                        }
                         break;
                     }
                 }
-                if (cardGroup == null)
-                {
-                    UpdateResultMessage("Không lấy được thông tin nhóm thẻ", Color.DarkRed);
-                    return;
-                }
-
-                //Đọc thông tin loại phương tiện
-                UpdateResultMessage("Đang kiểm trang thông tin sự kiện quẹt thẻ..." + ce.AllCardFormats[0], Color.DarkBlue);
-                //Đọc thông tin thẻ
-                var vehicleGroupInfo = await KzParkingApiHelper.GetVehicleGroupByIdAsync(cardGroup.VehicleGroupId);
-                if (vehicleGroupInfo.Item1 == null)
-                {
-                    UpdateResultMessage("Đọc thông tin loại phương tiện lỗi: " + vehicleGroupInfo.Item2, Color.DarkRed);
-                    return;
-                }
-                vehicleGroup = vehicleGroupInfo.Item1;
-
-                //Lấy hình ảnh sự kiện
-                UpdateResultMessage("Lấy hình ảnh sự kiện...", Color.DarkBlue);
-                foreach (KeyValuePair<CameraPurposeType.EmCameraPurposeType, List<Camera>> kvp in cameras)
-                {
-                    switch (kvp.Key)
-                    {
-                        case CameraPurposeType.EmCameraPurposeType.MainOverView:
-                            overviewImg = ucOverView?.GetFullCurrentImage();
-                            break;
-                        case CameraPurposeType.EmCameraPurposeType.CarLPR:
-                            if (vehicleGroup.VehicleType == (int)VehicleType.EmVehicleType.Car)
-                            {
-                                vehicleImg = ucCarLpr?.GetFullCurrentImage();
-                            }
-                            break;
-                        case CameraPurposeType.EmCameraPurposeType.MotorLPR:
-                            if (vehicleGroup.VehicleType != (int)VehicleType.EmVehicleType.Car)
-                            {
-                                vehicleImg = ucMotoLpr?.GetFullCurrentImage();
-                            }
-                            break;
-                        case CameraPurposeType.EmCameraPurposeType.SubOverView:
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                //Hiển thị hình ảnh sự kiện
-                UpdateResultMessage("Hiển thị hình ảnh sự kiện...", Color.DarkBlue);
-                ShowImage(picOverviewImage, overviewImg);
-                ShowImage(picVehicleImage, vehicleImg);
-
-                //Đọc biển số
-                UpdateResultMessage("Đọc biển số...", Color.DarkBlue);
-                string plate = LprDetect.GetPlateNumber(LPRDetecter.EmLprDetecter.KztekLpr, vehicleImg, out Image? lprImage);
-                ShowImage(picLprImage, lprImage);
-                txtPlate.Invoke(new Action(() =>
-                {
-                    txtPlate.Text = plate;
-                    txtPlate.Refresh();
-                }));
-
-                //Gửi API Check In
-                //--Cập nhật lại đường dẫn có thêm thông tin biển số xe
-                string overviewPath = ImageHelper.CreateSaveFileName(eventTime, false, plate, lane.id, "OVERVIEW");
-                string vehiclePath = ImageHelper.CreateSaveFileName(eventTime, false, plate, lane.id, "VEHICLE");
-                string lprPath = ImageHelper.CreateSaveFileName(eventTime, false, plate, lane.id, "LPR");
-                CardEvent? cardEvent = new CardEvent()
-                {
-                };
-                UpdateResultMessage("Check In...", Color.DarkBlue);
-                await KzParkingApiHelper.PostCheckInAsync(cardEvent);
-
-                //Kiểm tra mở barrie
-                bool isOpenBarrie = true;
-                if (isOpenBarrie)
-                {
-                    foreach (IController item in frmMain.controllers)
-                    {
-                        if (item.ControllerInfo.id.ToLower() == ce.DeviceId.ToLower())
-                        {
-                            for (int i = 0; i < controllerInLane.barriers.Length; i++)
-                            {
-                                bool isOpenSuccess = false;
-                                if (!await item.OpenDoor(100, controllerInLane.barriers[i]))
-                                {
-                                    isOpenSuccess = await item.OpenDoor(100, controllerInLane.barriers[i]);
-                                    if (!isOpenSuccess)
-                                    {
-                                    }
-                                }
-                                else
-                                {
-                                }
-                                if (isOpenSuccess)
-                                {
-                                }
-                            }
-                            break;
-                        }
-                    }
-                }
-
-                //Lưu hình ảnh sự kiện
-                UpdateResultMessage("Lưu hình ảnh sự kiện...", Color.DarkBlue);
-                var task1 = MinioHelper.UploadPicture(overviewImg, overviewPath);
-                var task2 = MinioHelper.UploadPicture(vehicleImg, vehiclePath);
-                var task3 = MinioHelper.UploadPicture(lprImage, lprPath);
-                await Task.WhenAll(task1, task2, task3);
-
-                //Hiển thị kết quả check in
-                UpdateResultMessage("Hiển thị kết quả Check In...", Color.DarkBlue);
-                UpdateResultMessage("Xin Mời Qua", Color.DarkGreen);
-
-                //Cập nhật biến lastEvent
-                lastEvent = cardEvent;
             }
+
+            //Lưu hình ảnh sự kiện
+            UpdateResultMessage("Lưu hình ảnh sự kiện...", Color.DarkBlue);
+            var task1 = MinioHelper.UploadPicture(overviewImg, overviewPath);
+            var task2 = MinioHelper.UploadPicture(vehicleImg, vehiclePath);
+            var task3 = MinioHelper.UploadPicture(lprImage, lprPath);
+            await Task.WhenAll(task1, task2, task3);
+
+            //Hiển thị kết quả check in
+            UpdateResultMessage("Hiển thị kết quả Check In...", Color.DarkBlue);
+            UpdateResultMessage("Xin Mời Qua", Color.DarkGreen);
+
+            //Cập nhật biến lastEvent
+            lastEvent = cardEvent;
         }
-        #endregion END EVENT
+        #endregion End EVENT
     }
 }

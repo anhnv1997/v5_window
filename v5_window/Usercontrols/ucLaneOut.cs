@@ -29,6 +29,9 @@ namespace iParkingv5_window.Usercontrols
         private string laneName = string.Empty;
         private Dictionary<CameraPurposeType.EmCameraPurposeType, List<Camera>> cameras = new Dictionary<CameraPurposeType.EmCameraPurposeType, List<Camera>>();
         CardEvent lastEvent = null;
+
+        public List<CardEventArgs> lastCardEventDatas { get; set; } = new List<CardEventArgs>();
+        public List<InputEventArgs> lastInputEventDatas { get; set; } = new List<InputEventArgs>();
         #endregion
 
         #region Forms
@@ -368,73 +371,12 @@ namespace iParkingv5_window.Usercontrols
 
         public async Task ExcecuteCardEvent(CardEventArgs ce)
         {
-            foreach (ControllerInLane controllerInLane in lane.controlUnits)
+            if (!this.CheckNewCardEvent(this.lane, ce, out ControllerInLane? controllerInLane, out int thoiGianCho))
             {
-                if (controllerInLane.controlUnitId.ToLower() != ce.DeviceId.ToLower())
+                if (thoiGianCho > 0)
                 {
-                    continue;
+                    UpdateResultMessage($"Đang trong thời gian chờ, vui lòng quẹt lại sau {thoiGianCho}s", Color.DarkBlue);
                 }
-                //Danh sách đăng ký có không có reader của sự kiện ==> Bỏ qua
-                if (!controllerInLane.readers.Contains(ce.ReaderIndex.ToString()))
-                {
-                    continue;
-                }
-                //Danh sách biến sử dụng
-                List<Image> overviewImg = new List<Image>();
-                Image? vehicleImg = null;
-                List<Image?> optionalImages = new List<Image?>();
-                Card? card = null;
-                CardGroup? cardGroup = null;
-
-                lblResult.Invoke(() =>
-                {
-                    lblResult.Text = "Đang kiểm trang thông tin sự kiện quẹt thẻ..." + ce.AllCardFormats[0];
-                    lblResult.BackColor = Color.DarkBlue;
-                    lblResult.Refresh();
-                });
-                await Task.Delay(10000);
-                //Đọc thông tin thẻ
-                var cardInfo = await KzParkingApiHelper.GetCardByCardNumberAsync(ce.AllCardFormats[0]);
-                if (cardInfo.Item1 == null)
-                {
-                    lblResult.Invoke(() =>
-                    {
-                        lblResult.Text = cardInfo.Item2;
-                        lblResult.BackColor = Color.DarkRed;
-                        lblResult.Refresh();
-                    });
-                    return;
-                }
-                //Đọc thông tin nhóm thẻ
-
-                //Lấy hình ảnh sự kiện
-                foreach (KeyValuePair<CameraPurposeType.EmCameraPurposeType, List<Camera>> kvp in cameras)
-                {
-                    switch (kvp.Key)
-                    {
-                        case CameraPurposeType.EmCameraPurposeType.MainOverView:
-                            break;
-                        case CameraPurposeType.EmCameraPurposeType.CarLPR:
-                            break;
-                        case CameraPurposeType.EmCameraPurposeType.MotorLPR:
-                            break;
-                        case CameraPurposeType.EmCameraPurposeType.SubOverView:
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                //Đọc biển số
-                //Gửi API Check In
-                CardEvent cardEvent = new CardEvent()
-                {
-                };
-                await KzParkingApiHelper.PostCheckInAsync(cardEvent);
-                //Hiển thị kết quả check in
-                //Kiểm tra mở barrie
-                //Lưu hình ảnh sự kiện
-                //Lưu thông tin sự kiện vào biến tạm để in phiếu
-                lastEvent = cardEvent;
                 return;
             }
         }

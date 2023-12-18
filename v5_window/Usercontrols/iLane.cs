@@ -9,9 +9,9 @@ namespace iParkingv5_window.Usercontrols
 {
     public interface iLane
     {
+        List<CardEventArgs> lastCardEventDatas { get; set; }
+        List<InputEventArgs> lastInputEventDatas { get; set; }  
         Task OnNewEvent(EventArgs e);
         bool SaveUIConfig();
-        //Task ExcecuteCardEvent(CardEventArgs ce);
-        //Task ExcecuteInputEvent(InputEventArgs ie);
     }
 }
