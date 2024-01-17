@@ -1,6 +1,7 @@
-﻿using iParkingv5.Objects;
+﻿using iParkingv5.LprDetecter.LprDetecters;
+using iParkingv5.Objects;
+using iParkingv5.Objects.Configs;
 using iParkingv5_window.Forms.DataForms;
-using iParkingv5_window.Properties;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
 using IPGS.Object.Ultilities.Enums;
@@ -51,8 +52,7 @@ namespace iParkingv5_window.Forms.SystemForms
             CreatePanelBackground();
             CreatePanelMessage();
 
-            //loadingWorks.Add("Tải thông tin cấu hình hệ thống", LoadSystemConfig);
-            //loadingWorks.Add("Kết nối tới máy chủ lưu hình ảnh", CheckMinioConnection);
+            loadingWorks.Add("Kết nối tới máy chủ lưu hình ảnh", CheckMinioConnection);
             loadingWorks.Add("Tải thông tin máy tính", LoadPCConfig);
             loadingWorks.Add("Tải thông tin cổng", LoadGates);
             loadingWorks.Add("Tải thông tin làn", LoadLanes);
@@ -60,7 +60,24 @@ namespace iParkingv5_window.Forms.SystemForms
             loadingWorks.Add("Tải thông tin bảng led", LoadLeds);
             loadingWorks.Add("Tải thông tin camera", LoadCameras);
             loadingWorks.Add("Khởi tạo KztekLPR", CreateKztLPR);
+
+            loadingWorks.Add("Tải thông tin nhóm khách hàng", LoadCustomerGroup);
             this.Load += FrmLoading_Load;
+        }
+
+        private async Task<bool> LoadCustomerGroup()
+        {
+            StaticPool.customerGroupCollection = new iParkingv5.Objects.Datas.CustomerGroupCollection();
+
+            var customerGroups = await KzParkingApiHelper.GetAllCustomerGroups();
+            if (customerGroups != null)
+            {
+                foreach (var item in customerGroups)
+                {
+                    StaticPool.customerGroupCollection.Add(item);
+                }
+            }
+            return true;
         }
 
         private async void FrmLoading_Load(object? sender, EventArgs e)
@@ -86,6 +103,7 @@ namespace iParkingv5_window.Forms.SystemForms
 
             }
             timer1.Enabled = false;
+            this.FormClosing -= frmLoading_FormClosing;
             frmMain frm = new()
             {
                 Owner = this.Owner
@@ -95,8 +113,11 @@ namespace iParkingv5_window.Forms.SystemForms
             GC.Collect();
         }
 
-        private void frmLoading_FormClosing(object sender, FormClosingEventArgs e)
+        private void frmLoading_FormClosing(object? sender, FormClosingEventArgs e)
         {
+            this.FormClosing -= frmLoading_FormClosing;
+            Application.Exit();
+            Environment.Exit(0);
         }
         #endregion
 
@@ -157,39 +178,13 @@ namespace iParkingv5_window.Forms.SystemForms
             lblMessage.Dock = DockStyle.Top;
         }
         ////--WORK
-        //private async Task<bool> LoadSystemConfig()
-        //{
-        //    currentDisplayIndex = 0;
-        //    lblMessage!.Text = "Đang tải thông tin cấu hình hệ thống, vui lòng chờ trong giấy lát";
-        //    lblMessage.Refresh();
-        //    displayMessages = CreateDisplayListMessage(lblMessage.Text);
-        //    this.isWaiting = true;
-        //    timer1.Enabled = true;
-        //    SystemConfig systemConfig = null;
-        //GetSystemConfig:
-        //    {
-        //        systemConfig = await KzParkingApiHelper.GetSystemConfigAsync();
-        //        if (systemConfig == null)
-        //        {
-        //            goto GetSystemConfig;
-        //        }
-        //    }
-
-        //    StaticPool.systemConfig = systemConfig;
-        //    MinioHelper.EndPoint = "103.127.207.247:9000";//systemConfig.PhysicalFileSetting.Endpoint;
-        //    MinioHelper.AccessKey = "kztek";// systemConfig.PhysicalFileSetting.AccessKey;
-        //    MinioHelper.SecretKey = "Kztek123456";//systemConfig.PhysicalFileSetting.SecretKey;
-        //    MinioHelper.secure = false;
-        //    MinioHelper.bucketName = systemConfig.PhysicalFileSetting.ImageBucketName + "-va";
-
-        //    this.isWaiting = false;
-        //    timer1.Enabled = false;
-        //    return true;
-        //}
         private async Task<bool> CheckMinioConnection()
         {
             try
             {
+                MinioHelper.secure = false;
+                MinioHelper.bucketName = "parking-images";
+
                 currentDisplayIndex = 0;
                 lblMessage!.Text = "Đang kết nối tới máy chủ lưu hình ảnh, vui lòng chờ trong giấy lát";
                 lblMessage.Refresh();
@@ -198,16 +193,18 @@ namespace iParkingv5_window.Forms.SystemForms
                 timer1.Enabled = true;
 
                 MinioClient minio = new MinioClient()
-                    .WithEndpoint(MinioHelper.EndPoint)
-                    .WithCredentials(MinioHelper.AccessKey, MinioHelper.SecretKey)
-                    .WithSSL(false)
-                    .Build();
+                                        .WithEndpoint(MinioHelper.EndPoint)
+                                        .WithCredentials(MinioHelper.AccessKey, MinioHelper.SecretKey)
+                                        .WithSSL(false)
+                                        .Build();
+
                 var getListBucketsTask = await minio.ListBucketsAsync().ConfigureAwait(false);
                 timer1.Enabled = false;
                 return true;
             }
             catch (Exception ex)
             {
+                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
                 timer1.Enabled = false;
                 return false;
             }
@@ -282,11 +279,11 @@ namespace iParkingv5_window.Forms.SystemForms
             displayMessages = CreateDisplayListMessage(lblMessage.Text);
             this.isWaiting = true;
             timer1.Enabled = true;
-            List<Lane> lanes = null;
+            List<Lane> laneByComputerIds = null;
         GetLaneConfig:
             {
-                lanes = await KzParkingApiHelper.GetLanesAsync(StaticPool.selectedComputer.id);
-                if (lanes == null)
+                laneByComputerIds = await KzParkingApiHelper.GetLanesAsync(StaticPool.selectedComputer.id);
+                if (laneByComputerIds == null)
                 {
                     goto GetLaneConfig;
                 }
@@ -294,13 +291,23 @@ namespace iParkingv5_window.Forms.SystemForms
 
             this.isWaiting = false;
             timer1.Enabled = false;
-            if (lanes.Count == 0)
+            if (laneByComputerIds.Count == 0)
             {
                 MessageBox.Show("Không tìm thấy thiết lập làn trong hệ thống!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
-
-            StaticPool.lanes = lanes.OrderBy(e => e.type).ToList();
+            else
+            {
+                foreach (var lane in laneByComputerIds)
+                {
+                    Lane? _lane = await KzParkingApiHelper.GetLaneByIdAsync(lane.id);
+                    if (_lane != null)
+                    {
+                        StaticPool.lanes.Add(_lane);
+                    }
+                }
+                laneByComputerIds.Clear();
+            }
             GC.Collect();
             return true;
         }
@@ -354,22 +361,9 @@ namespace iParkingv5_window.Forms.SystemForms
         }
         private async Task<bool> CreateKztLPR()
         {
-            StaticPool.carANPR = new CarANPR();
-            StaticPool.carANPR.NewError += KztekLPR_NewError;
-            StaticPool.carANPR.LPREngineProductKey = "demo";
-            StaticPool.carANPR.EnableLPREngine2 = true;
-            StaticPool.carANPR.CreateLPREngine();
-
-            StaticPool.motoANPR = new MotorANPR();
-            StaticPool.carANPR.NewError += KztekLPR_NewError;
-            StaticPool.carANPR.LPREngineProductKey = "demo";
-            StaticPool.carANPR.EnableLPREngine2 = true;
-            StaticPool.carANPR.CreateLPREngine();
-
-            return true;
-        }
-        private void KztekLPR_NewError(object sender, Kztek.LPR.ErrorEventArgs e)
-        {
+            StaticPool.LprDetect = LprFactory.CreateLprDetecter(StaticPool.lprConfig, null);
+            StaticPool.LprDetect?.CreateLpr(StaticPool.lprConfig);
+            return StaticPool.LprDetect != null;
         }
 
         private List<string> CreateDisplayListMessage(string message)
@@ -386,7 +380,7 @@ namespace iParkingv5_window.Forms.SystemForms
         #endregion
 
         #region Timer
-        private void timer1_Tick(object sender, EventArgs e)
+        private void timerUpdateWaitingMessage_Tick(object sender, EventArgs e)
         {
             if (this.isWaiting)
             {

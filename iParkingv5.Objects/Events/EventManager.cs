@@ -37,9 +37,10 @@ namespace iParkingv5.Objects.Events
     public class CardEventArgs : GeneralEventArgs
     {
         public List<string> AllCardFormats { get; set; } = new List<string>();
+        public string PreferCard { get; set; } = string.Empty;
         public int ReaderIndex { get; set; }
         public string Doors { get; set; }
-
+        public string PlateNumber { get; set; } = string.Empty;
         public bool IsInWaitingTime(CardEventArgs e, int waitingTime, out int thoiGianCho)
         {
             thoiGianCho = 0;
@@ -63,7 +64,7 @@ namespace iParkingv5.Objects.Events
                 }
             }
 
-            double v = Math.Abs((EventTime - e.EventTime).TotalMilliseconds);
+            double v = Math.Abs((EventTime - e.EventTime).TotalSeconds);
             if (v < waitingTime)
             {
                 thoiGianCho = (int)(waitingTime - v);

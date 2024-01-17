@@ -10,7 +10,7 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis.Responses
     public class LoginResponse
     {
         public string identifier { get; set; } = string.Empty;
-        public int expiredAfter { get; set; } = 0;
-        public string token { get; set; } = string.Empty;
+        public int expireInSeconds { get; set; } = 5000*600;
+        public string accessToken { get; set; } = string.Empty;
     }
 }

@@ -1,72 +1,119 @@
-﻿using iParkingv5.Controller;
+﻿using IPaking.Ultility;
+using iParkingv5.Controller;
 using iParkingv5.Objects;
+using iParkingv5.Objects.Configs;
 using iParkingv5.Objects.Events;
+using iParkingv5_window.Forms.ReportForms;
 using iParkingv5_window.Usercontrols;
 using iParkingv6.Objects.Datas;
+using Kztek.Tool;
+using Kztek.Tools;
 using System.Collections.Concurrent;
+using static IPaking.Ultility.TextManagement;
 
 namespace iParkingv5_window.Forms.DataForms
 {
     public partial class frmMain : Form
     {
+        public static EmLanguage language = EmLanguage.Vietnamese;
         #region Properties
         public static List<IController> controllers = new List<IController>();
         private static List<iLane> lanes = new List<iLane>();
         public static ConcurrentQueue<CardEventArgs> cardEvents = new ConcurrentQueue<CardEventArgs>();
         public static ConcurrentQueue<InputEventArgs> inputEvents = new ConcurrentQueue<InputEventArgs>();
+        List<LaneDisplayConfig>? laneDisplayConfigs = null;
         #endregion
 
         #region Forms
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            bool isEnableDevelopeMode = (keyData & Keys.Control) == Keys.Control &&
+                                 (keyData & Keys.Shift) == Keys.Shift &&
+                                 (keyData & Keys.KeyCode) == Keys.E;
+            bool isDisEnableDevelopeMode = (keyData & Keys.Control) == Keys.Control &&
+                                (keyData & Keys.Shift) == Keys.Shift &&
+                                (keyData & Keys.KeyCode) == Keys.D;
+            if (isEnableDevelopeMode)
+            {
+                panelDevelopeMode.Visible = true;
+                splitterDevelopeMode.Visible = true;
+                splitterDevelopeMode.BringToFront();
+            }
+            else if (isDisEnableDevelopeMode)
+            {
+                panelDevelopeMode.Visible = false;
+                splitterDevelopeMode.Visible = false;
+                splitterDevelopeMode.BringToFront();
+            }
+            else
+            {
+                foreach (iLane item in lanes)
+                {
+                    item.OnKeyPress(keyData);
+                }
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
         public frmMain()
         {
             InitializeComponent();
             this.Load += FrmMain_Load;
+            this.Shown += FrmMain_Shown;
+            lblServerName.Text = Environment.MachineName;
+        }
+        private void FrmMain_Shown(object? sender, EventArgs e)
+        {
+            foreach (var item in lanes)
+            {
+                item.DisplayUIConfig();
+            }
         }
         private async void FrmMain_Load(object? sender, EventArgs e)
         {
-            ucViewGrid1.UpdateRowSetting(1, StaticPool.lanes.Count);
-            foreach (Lane lane in StaticPool.lanes)
+            try
             {
-                lblLoadingStatus.Text = "Khởi tạo làn: " + lane.name;
-                lblLoadingStatus.Refresh();
-                iLane iLane = LaneFactory.CreateLane(lane);
-                lanes.Add(iLane);
-                ucViewGrid1.UpdateSelectLocation(iLane as Control);
-                ((Control)iLane).Dock = DockStyle.Fill;
-                ucViewGrid1.Refresh();
-            }
+                var screenBound = Screen.FromControl(this).WorkingArea;
+                this.Size = new Size(screenBound.Width, screenBound.Height);
+                this.Location = new Point(0, 0);
 
-            foreach (Bdk bdk in StaticPool.bdks)
-            {
-                bdk.communicationType = 0;
-                IController controller = ControllerFactory.CreateController(bdk);
-                controllers.Add(controller);
-                lblLoadingStatus.Text = "Đang kết nối đến bộ điều khiển: " + bdk.name;
-                lblLoadingStatus.Refresh();
-                bool isConnectSuccess = await controller.ConnectAsync();
-                controller.CardEvent += Controller_CardEvent;
-                controller.ErrorEvent += Controller_ErrorEvent;
-                controller.InputEvent += Controller_InputEvent;
-                controller.ConnectStatusChangeEvent += Controller_ConnectStatusChangeEvent;
-                controller.DeviceInfoChangeEvent += Controller_DeviceInfoChangeEvent;
-                lblLoadingStatus.Text = "Kết nối đến bộ điều khiển: " + bdk.name + (isConnectSuccess ? "thành công" : "thất bại");
-                lblLoadingStatus.Refresh();
-            }
+                LoadAppDisplayConfig();
 
-            foreach (IController controller in controllers)
-            {
-                controller.PollingStart();
+                InitLaneView();
+
+                await StartControllers();
             }
-            lblLoadingStatus.Text = string.Empty;
-            lblLoadingStatus.Refresh();
+            catch (Exception ex)
+            {
+                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
+            }
         }
-        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        private void frmMain_FormClosing(object? sender, FormClosingEventArgs e)
         {
-            foreach (iLane lane in lanes)
+            List<string> orderConfig = this.ucViewGrid1.GetOrderConfig();
+
+            this.laneDisplayConfigs = new List<LaneDisplayConfig>();
+
+            for (int i = 0; i < lanes.Count; i++)
             {
-                lane.SaveUIConfig();
+                LaneDisplayConfig displayConfig = lanes[i].SaveUIConfig();
+                displayConfig.DisplayIndex = i;
+                laneDisplayConfigs.Add(displayConfig);
             }
+
+            List<LaneDisplayConfig> sortedLaneDisplayConfigs = laneDisplayConfigs
+                   .OrderBy(item => orderConfig.IndexOf(item.LaneId))
+                   .ToList();
+            for (int i = 0; i < sortedLaneDisplayConfigs.Count; i++)
+            {
+                sortedLaneDisplayConfigs[i].DisplayIndex = i;
+            }
+            this.laneDisplayConfigs = sortedLaneDisplayConfigs;
             SaveUIConfig();
+
+            FormClosing -= frmMain_FormClosing;
+            Application.Exit();
+            Environment.Exit(0);
         }
         #endregion
 
@@ -75,22 +122,46 @@ namespace iParkingv5_window.Forms.DataForms
         {
             Application.Exit();
         }
-        private void tsmiDevelopeMode_Click(object sender, EventArgs e)
-        {
-            panelDevelopeMode.Visible = !panelDevelopeMode.Visible;
-            splitterDevelopeMode.Visible = !splitterDevelopeMode.Visible;
-            splitterDevelopeMode.BringToFront();
-        }
         private void tsmiAlarmReport_Click(object sender, EventArgs e)
         {
-
+            new frmReportAlarms().Show(this);
+        }
+        private void tsmiReportIn_Click(object sender, EventArgs e)
+        {
+            new frmReportIn().Show(this);
+        }
+        private void tsmiReportInOut_Click(object sender, EventArgs e)
+        {
+            new frmReportInOut().Show(this);
+        }
+        private void tsmiReport_MouseEnter(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Hand;
+            (sender as ToolStripMenuItem)!.Image = Properties.Resources.report_255_255_255_32px;
+            (sender as ToolStripMenuItem)!.ForeColor = Color.Red;
+        }
+        private void tsmiReport_MouseLeave(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Default;
+            (sender as ToolStripMenuItem)!.Image = Properties.Resources.report_0_0_0_32px;
+            (sender as ToolStripMenuItem)!.ForeColor = Color.Black;
+        }
+        private void tsmiExit_MouseEnter(object sender, EventArgs e)
+        {
+            (sender as ToolStripMenuItem)!.Image = Properties.Resources.NO_255_255_255_32px;
+            (sender as ToolStripMenuItem)!.ForeColor = Color.Red;
+        }
+        private void tsmiExit_MouseLeave(object sender, EventArgs e)
+        {
+            (sender as ToolStripMenuItem)!.Image = Properties.Resources.NO_0_0_0_32px;
+            (sender as ToolStripMenuItem)!.ForeColor = Color.Black;
         }
         #endregion
 
         #region Timer
         private void timerUpdateTime_Tick(object sender, EventArgs e)
         {
-            lblTime.Text = DateTime.Now.ToString("HH:mm:ss");
+            lblTime.Text = DateTime.Now.ToString(UltilityManagement.timeFormat);
             lblTime.Refresh();
         }
         #endregion
@@ -136,18 +207,8 @@ namespace iParkingv5_window.Forms.DataForms
         {
             this.Invoke(new Action(() =>
             {
-                lblLoadingStatus.Text = $"Nhận sự kiện quẹt thẻ READER: {e.ReaderIndex}, CARD: {e.AllCardFormats[0]} từ bộ điều khiển " + e.DeviceName;
+                lblLoadingStatus.Text = $"Nhận sự kiện quẹt thẻ READER: {e.ReaderIndex}, CARD: {e.PreferCard} từ bộ điều khiển " + e.DeviceName;
                 lblLoadingStatus.Refresh();
-
-                foreach (CardEventArgs cardEvent in cardEvents)
-                {
-                    if (cardEvent.IsInWaitingTime(e, 5000, out int thoiGianCho))
-                    {
-                        lblLoadingStatus.Text = $"Đang trong thời gian chờ {e.AllCardFormats[0]}, quẹt lại sau {thoiGianCho / 1000}s";
-                        lblLoadingStatus.Refresh();
-                        return;
-                    }
-                }
 
                 foreach (iLane iLane in lanes)
                 {
@@ -157,38 +218,91 @@ namespace iParkingv5_window.Forms.DataForms
         }
         #endregion End Controller Event
 
-        #region Public Function
-
-        #endregion
-
         #region Private Function
+        //--LOADING
+        private void LoadAppDisplayConfig()
+        {
+            //Đọc thông tin config thứ tự hiển thị trên giao diện
+            laneDisplayConfigs = NewtonSoftHelper<List<LaneDisplayConfig>>.DeserializeObjectFromPath(PathManagement.appDisplayConfigPath);
+            if (laneDisplayConfigs != null)
+            {
+                //Lấy danh sách laneId theo thứ tự ưu tiên
+                List<string> orderLaneIds = (from item in laneDisplayConfigs
+                                             orderby item.DisplayIndex
+                                             select item.LaneId).ToList();
+
+                //Sắp xếp lại danh sách làn theo thứ tự ưu tiên
+                List<Lane> sortedLanes = StaticPool.lanes
+                    .OrderBy(lane => orderLaneIds.IndexOf(lane.id))
+                    .ToList();
+                StaticPool.lanes = sortedLanes;
+            }
+        }
+        private void InitLaneView()
+        {
+            ucViewGrid1.UpdateRowSetting(1, StaticPool.lanes.Count);
+            foreach (Lane lane in StaticPool.lanes)
+            {
+                lblLoadingStatus.Text = "Khởi tạo làn: " + lane.name;
+                lblLoadingStatus.Refresh();
+                LaneDisplayConfig? laneDisplayConfig = GetLaneDisplayConfigByLaneId(lane);
+                iLane iLane = LaneFactory.CreateLane(lane, laneDisplayConfig);
+                lanes.Add(iLane);
+                ucViewGrid1.UpdateSelectLocation(iLane as Control);
+                ((Control)iLane).Dock = DockStyle.Fill;
+                ucViewGrid1.Refresh();
+            }
+        }
+        private LaneDisplayConfig? GetLaneDisplayConfigByLaneId(Lane lane)
+        {
+            if (this.laneDisplayConfigs != null)
+            {
+                if (this.laneDisplayConfigs.Count > 0)
+                {
+                    foreach (LaneDisplayConfig item in this.laneDisplayConfigs)
+                    {
+                        if (item.LaneId == lane.id)
+                        {
+                            return item;
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+        private async Task StartControllers()
+        {
+            foreach (Bdk bdk in StaticPool.bdks)
+            {
+                IController? controller = ControllerFactory.CreateController(bdk);
+                if (controller != null)
+                {
+                    controllers.Add(controller);
+                    lblLoadingStatus.UpdateResultMessage("Đang kết nối đến bộ điều khiển: " + bdk.name, lblLoadingStatus.BackColor);
+                    bool isConnectSuccess = await controller.ConnectAsync();
+                    controller.CardEvent += Controller_CardEvent;
+                    controller.ErrorEvent += Controller_ErrorEvent;
+                    controller.InputEvent += Controller_InputEvent;
+                    controller.ConnectStatusChangeEvent += Controller_ConnectStatusChangeEvent;
+                    controller.DeviceInfoChangeEvent += Controller_DeviceInfoChangeEvent;
+                    lblLoadingStatus.UpdateResultMessage("Kết nối đến bộ điều khiển: " + bdk.name + (isConnectSuccess ? "thành công" : "thất bại"), lblLoadingStatus.BackColor);
+                }
+            }
+
+            foreach (IController controller in controllers)
+            {
+                controller.PollingStart();
+            }
+
+            lblLoadingStatus.UpdateResultMessage(string.Empty, lblLoadingStatus.BackColor);
+        }
+
+        //--CLOSING
         private bool SaveUIConfig()
         {
-            return true;
+            return NewtonSoftHelper<List<LaneDisplayConfig>>.SaveConfig(laneDisplayConfigs, PathManagement.appDisplayConfigPath);
         }
-        #endregion
-
-        private void tsmiReportIn_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tsmiReportInOut_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tsmiSystem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tsmiLanguage_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void tsmiLogout_Click(object sender, EventArgs e)
-        {
-        }
+        #endregion End Private Function
     }
 }

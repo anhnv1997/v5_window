@@ -1,4 +1,6 @@
-﻿using iParkingv5.Objects.Events;
+﻿using iParkingv5.Objects.Configs;
+using iParkingv5.Objects.Events;
+using iParkingv6.Objects.Datas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +11,13 @@ namespace iParkingv5_window.Usercontrols
 {
     public interface iLane
     {
+        Lane lane { get; set; }
         List<CardEventArgs> lastCardEventDatas { get; set; }
         List<InputEventArgs> lastInputEventDatas { get; set; }  
         Task OnNewEvent(EventArgs e);
-        bool SaveUIConfig();
+        void OnKeyPress(Keys keys);
+        LaneDisplayConfig SaveUIConfig();
+        void GetShortcutConfig();
+        void DisplayUIConfig();
     }
 }

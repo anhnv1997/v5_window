@@ -32,15 +32,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             menuStrip1 = new MenuStrip();
             miSystem = new ToolStripMenuItem();
-            tsmiSystem = new ToolStripMenuItem();
-            tsmiLanguage = new ToolStripMenuItem();
-            tsmiLogout = new ToolStripMenuItem();
             tsmiExit = new ToolStripMenuItem();
             miReport = new ToolStripMenuItem();
             tsmiReportIn = new ToolStripMenuItem();
             tsmiReportInOut = new ToolStripMenuItem();
             tsmiAlarmReport = new ToolStripMenuItem();
-            tsmiDevelopeMode = new ToolStripMenuItem();
             panelMain = new Panel();
             ucViewGrid1 = new Usercontrols.ucViewGrid();
             panelAppStatus = new Panel();
@@ -63,91 +59,77 @@
             // 
             // menuStrip1
             // 
+            menuStrip1.Font = new Font("Segoe UI", 12F);
             menuStrip1.Items.AddRange(new ToolStripItem[] { miSystem, miReport });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1344, 28);
+            menuStrip1.Size = new Size(883, 29);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
             // miSystem
             // 
-            miSystem.DropDownItems.AddRange(new ToolStripItem[] { tsmiSystem, tsmiLanguage, tsmiLogout, tsmiExit });
+            miSystem.DropDownItems.AddRange(new ToolStripItem[] { tsmiExit });
             miSystem.Name = "miSystem";
-            miSystem.Size = new Size(83, 24);
+            miSystem.Size = new Size(86, 25);
             miSystem.Text = "Hệ thống";
-            // 
-            // tsmiSystem
-            // 
-            tsmiSystem.Name = "tsmiSystem";
-            tsmiSystem.Size = new Size(198, 24);
-            tsmiSystem.Text = "Cấu hình hệ thống";
-            tsmiSystem.Click += tsmiSystem_Click;
-            // 
-            // tsmiLanguage
-            // 
-            tsmiLanguage.Name = "tsmiLanguage";
-            tsmiLanguage.Size = new Size(198, 24);
-            tsmiLanguage.Text = "Ngôn ngữ";
-            tsmiLanguage.Click += tsmiLanguage_Click;
-            // 
-            // tsmiLogout
-            // 
-            tsmiLogout.Name = "tsmiLogout";
-            tsmiLogout.Size = new Size(198, 24);
-            tsmiLogout.Text = "Đăng xuất";
-            tsmiLogout.Click += tsmiLogout_Click;
             // 
             // tsmiExit
             // 
+            tsmiExit.Image = Properties.Resources.NO_0_0_0_32px;
             tsmiExit.Name = "tsmiExit";
-            tsmiExit.Size = new Size(198, 24);
+            tsmiExit.Size = new Size(119, 26);
             tsmiExit.Text = "Thoát";
             tsmiExit.Click += tsmiExit_Click;
+            tsmiExit.MouseEnter += tsmiExit_MouseEnter;
+            tsmiExit.MouseLeave += tsmiExit_MouseLeave;
             // 
             // miReport
             // 
-            miReport.DropDownItems.AddRange(new ToolStripItem[] { tsmiReportIn, tsmiReportInOut, tsmiAlarmReport, tsmiDevelopeMode });
+            miReport.DropDownItems.AddRange(new ToolStripItem[] { tsmiReportIn, tsmiReportInOut, tsmiAlarmReport });
             miReport.Name = "miReport";
-            miReport.Size = new Size(75, 24);
+            miReport.Size = new Size(76, 25);
             miReport.Text = "Báo cáo";
             // 
             // tsmiReportIn
             // 
+            tsmiReportIn.Image = Properties.Resources.report_0_0_0_32px;
             tsmiReportIn.Name = "tsmiReportIn";
-            tsmiReportIn.Size = new Size(249, 24);
+            tsmiReportIn.Size = new Size(203, 26);
             tsmiReportIn.Text = "Xe đang trong bãi";
             tsmiReportIn.Click += tsmiReportIn_Click;
+            tsmiReportIn.MouseEnter += tsmiReport_MouseEnter;
+            tsmiReportIn.MouseLeave += tsmiReport_MouseLeave;
             // 
             // tsmiReportInOut
             // 
+            tsmiReportInOut.Image = Properties.Resources.report_0_0_0_32px;
             tsmiReportInOut.Name = "tsmiReportInOut";
-            tsmiReportInOut.Size = new Size(249, 24);
+            tsmiReportInOut.Size = new Size(203, 26);
             tsmiReportInOut.Text = "Xe ra khỏi bãi";
             tsmiReportInOut.Click += tsmiReportInOut_Click;
+            tsmiReportInOut.MouseEnter += tsmiReport_MouseEnter;
+            tsmiReportInOut.MouseLeave += tsmiReport_MouseLeave;
             // 
             // tsmiAlarmReport
             // 
+            tsmiAlarmReport.Image = Properties.Resources.report_0_0_0_32px;
             tsmiAlarmReport.Name = "tsmiAlarmReport";
-            tsmiAlarmReport.Size = new Size(249, 24);
+            tsmiAlarmReport.Size = new Size(203, 26);
             tsmiAlarmReport.Text = "Sự kiện cảnh báo";
+            tsmiAlarmReport.Visible = false;
             tsmiAlarmReport.Click += tsmiAlarmReport_Click;
-            // 
-            // tsmiDevelopeMode
-            // 
-            tsmiDevelopeMode.Name = "tsmiDevelopeMode";
-            tsmiDevelopeMode.Size = new Size(249, 24);
-            tsmiDevelopeMode.Text = "Chế độ cho nhà phát triển";
-            tsmiDevelopeMode.Click += tsmiDevelopeMode_Click;
+            tsmiAlarmReport.MouseEnter += tsmiReport_MouseEnter;
+            tsmiAlarmReport.MouseLeave += tsmiReport_MouseLeave;
             // 
             // panelMain
             // 
             panelMain.Controls.Add(ucViewGrid1);
             panelMain.Dock = DockStyle.Fill;
-            panelMain.Location = new Point(0, 28);
+            panelMain.Location = new Point(0, 29);
             panelMain.Margin = new Padding(0);
             panelMain.Name = "panelMain";
-            panelMain.Size = new Size(973, 665);
+            panelMain.Size = new Size(512, 436);
             panelMain.TabIndex = 1;
             // 
             // ucViewGrid1
@@ -159,7 +141,7 @@
             ucViewGrid1.Margin = new Padding(0);
             ucViewGrid1.Name = "ucViewGrid1";
             ucViewGrid1.RowsCount = 2;
-            ucViewGrid1.Size = new Size(973, 665);
+            ucViewGrid1.Size = new Size(512, 436);
             ucViewGrid1.TabIndex = 0;
             // 
             // panelAppStatus
@@ -171,20 +153,20 @@
             panelAppStatus.Controls.Add(lblServerName);
             panelAppStatus.Controls.Add(lblSoftwareName);
             panelAppStatus.Dock = DockStyle.Bottom;
-            panelAppStatus.Location = new Point(0, 693);
+            panelAppStatus.Location = new Point(0, 465);
             panelAppStatus.Name = "panelAppStatus";
-            panelAppStatus.Size = new Size(1344, 36);
+            panelAppStatus.Size = new Size(883, 36);
             panelAppStatus.TabIndex = 2;
             // 
             // lblLoadingStatus
             // 
             lblLoadingStatus.Dock = DockStyle.Fill;
-            lblLoadingStatus.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            lblLoadingStatus.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             lblLoadingStatus.ForeColor = Color.FromArgb(192, 64, 0);
-            lblLoadingStatus.Location = new Point(234, 0);
+            lblLoadingStatus.Location = new Point(260, 0);
             lblLoadingStatus.Name = "lblLoadingStatus";
             lblLoadingStatus.Padding = new Padding(10, 0, 0, 0);
-            lblLoadingStatus.Size = new Size(886, 32);
+            lblLoadingStatus.Size = new Size(378, 32);
             lblLoadingStatus.TabIndex = 4;
             lblLoadingStatus.Text = "Đang Tải Thông Tin ...";
             lblLoadingStatus.TextAlign = ContentAlignment.MiddleCenter;
@@ -192,9 +174,9 @@
             // lblCompanyName
             // 
             lblCompanyName.Dock = DockStyle.Right;
-            lblCompanyName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point);
+            lblCompanyName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline);
             lblCompanyName.ForeColor = Color.Navy;
-            lblCompanyName.Location = new Point(1120, 0);
+            lblCompanyName.Location = new Point(638, 0);
             lblCompanyName.Name = "lblCompanyName";
             lblCompanyName.Padding = new Padding(10, 0, 0, 0);
             lblCompanyName.Size = new Size(135, 32);
@@ -205,11 +187,11 @@
             // lblTime
             // 
             lblTime.Dock = DockStyle.Right;
-            lblTime.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            lblTime.Location = new Point(1255, 0);
+            lblTime.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            lblTime.Location = new Point(773, 0);
             lblTime.Name = "lblTime";
             lblTime.Padding = new Padding(10, 0, 0, 0);
-            lblTime.Size = new Size(85, 32);
+            lblTime.Size = new Size(106, 32);
             lblTime.TabIndex = 2;
             lblTime.Text = "16:04:04";
             lblTime.TextAlign = ContentAlignment.MiddleRight;
@@ -217,8 +199,8 @@
             // lblServerName
             // 
             lblServerName.Dock = DockStyle.Left;
-            lblServerName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            lblServerName.Location = new Point(117, 0);
+            lblServerName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            lblServerName.Location = new Point(143, 0);
             lblServerName.Name = "lblServerName";
             lblServerName.Padding = new Padding(10, 0, 0, 0);
             lblServerName.Size = new Size(117, 32);
@@ -229,11 +211,11 @@
             // lblSoftwareName
             // 
             lblSoftwareName.Dock = DockStyle.Left;
-            lblSoftwareName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            lblSoftwareName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             lblSoftwareName.Location = new Point(0, 0);
             lblSoftwareName.Name = "lblSoftwareName";
             lblSoftwareName.Padding = new Padding(10, 0, 0, 0);
-            lblSoftwareName.Size = new Size(117, 32);
+            lblSoftwareName.Size = new Size(143, 32);
             lblSoftwareName.TabIndex = 0;
             lblSoftwareName.Text = "IPARKINGv5";
             lblSoftwareName.TextAlign = ContentAlignment.MiddleLeft;
@@ -250,9 +232,9 @@
             panelDevelopeMode.Controls.Add(dgvWaitingEvents);
             panelDevelopeMode.Controls.Add(label1);
             panelDevelopeMode.Dock = DockStyle.Right;
-            panelDevelopeMode.Location = new Point(983, 28);
+            panelDevelopeMode.Location = new Point(522, 29);
             panelDevelopeMode.Name = "panelDevelopeMode";
-            panelDevelopeMode.Size = new Size(361, 665);
+            panelDevelopeMode.Size = new Size(361, 436);
             panelDevelopeMode.TabIndex = 3;
             panelDevelopeMode.Visible = false;
             // 
@@ -267,14 +249,14 @@
             dgvWaitingEvents.Name = "dgvWaitingEvents";
             dgvWaitingEvents.ReadOnly = true;
             dgvWaitingEvents.RowTemplate.Height = 29;
-            dgvWaitingEvents.Size = new Size(361, 618);
+            dgvWaitingEvents.Size = new Size(361, 389);
             dgvWaitingEvents.TabIndex = 1;
             // 
             // label1
             // 
             label1.BackColor = Color.Navy;
             label1.Dock = DockStyle.Top;
-            label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point);
+            label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline);
             label1.ForeColor = SystemColors.ButtonHighlight;
             label1.Location = new Point(0, 0);
             label1.Name = "label1";
@@ -287,9 +269,9 @@
             // 
             splitterDevelopeMode.BackColor = Color.FromArgb(192, 0, 0);
             splitterDevelopeMode.Dock = DockStyle.Right;
-            splitterDevelopeMode.Location = new Point(973, 28);
+            splitterDevelopeMode.Location = new Point(512, 29);
             splitterDevelopeMode.Name = "splitterDevelopeMode";
-            splitterDevelopeMode.Size = new Size(10, 665);
+            splitterDevelopeMode.Size = new Size(10, 436);
             splitterDevelopeMode.TabIndex = 4;
             splitterDevelopeMode.TabStop = false;
             splitterDevelopeMode.Visible = false;
@@ -298,7 +280,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1344, 729);
+            ClientSize = new Size(883, 501);
             Controls.Add(panelMain);
             Controls.Add(splitterDevelopeMode);
             Controls.Add(panelDevelopeMode);
@@ -307,7 +289,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             Name = "frmMain";
-            StartPosition = FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.Manual;
             Text = "iParkingv5";
             FormClosing += frmMain_FormClosing;
             menuStrip1.ResumeLayout(false);
@@ -325,9 +307,6 @@
         private MenuStrip menuStrip1;
         private ToolStripMenuItem miSystem;
         private ToolStripMenuItem miReport;
-        private ToolStripMenuItem tsmiSystem;
-        private ToolStripMenuItem tsmiLanguage;
-        private ToolStripMenuItem tsmiLogout;
         private ToolStripMenuItem tsmiReportIn;
         private ToolStripMenuItem tsmiReportInOut;
         private ToolStripMenuItem tsmiExit;
@@ -342,7 +321,6 @@
         private System.Windows.Forms.Timer timerUpdateTime;
         private Panel panelDevelopeMode;
         private Splitter splitterDevelopeMode;
-        private ToolStripMenuItem tsmiDevelopeMode;
         private Label label1;
         private DataGridView dgvWaitingEvents;
         private ToolStripMenuItem tsmiAlarmReport;

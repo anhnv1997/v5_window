@@ -8,11 +8,14 @@
 
   <ItemGroup>
     <Folder Include="Devices\" />
-    <Folder Include="Ultilities\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\iParkingv5.Lpr\iParkingv5.Lpr.csproj" />
   </ItemGroup>
 
   <ItemGroup>

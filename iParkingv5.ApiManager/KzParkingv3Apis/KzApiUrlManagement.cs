@@ -4,122 +4,257 @@ using System.Text;
 
 namespace iParkingv6.ApiManager.KzParkingv3Apis
 {
-    public class KzApiUrlManagement
+    public static class KzApiUrlManagement
     {
         public static string BaseRoute => "api";
+        #region -- USER -- OK
+        public static string PostLoginRoute => "Auth/Login";
+        #endregion
 
-        #region AuthorizedRelated
-        public static string PostLoginRoute => "user/login";
-        #endregion End AuthorizedRelated
+        public enum EmObjectType
+        {
+            Camera,
+            Computer,
+            ControlUnit,
+            Customer,
+            CustomerGroup,
+            EventIn,
+            EventOut,
+            Gate,
+            Identity,
+            IdentityGroup,
+            Lane,
+            Led,
+            RegisteredVehicle,
+            VehicleType,
+            AbnormalEvent
+        }
 
-        #region Card Related
-        //--CardGroup
-        public static string GetCardGroupByListRoute => "tblCardGroup/byList";
-        public static string GetAllCardGroupRoute => "tblCardGroup";
-        public static string GetCardGroupByIdRoute => "tblCardGroup/byId";
+        public static string GetDataByIdRoute(this EmObjectType emObjectType, string objectId)
+        {
+            switch (emObjectType)
+            {
+                case EmObjectType.EventIn:
+                    return $"Event-In/{objectId}";
 
-        //--Card
-        public static string GetCardByIdRoute => "tblCard/byId";
-        public static string GetCardByPlateRoute => "tblCard/byPlate";
-        public static string GetCardByPagingRoute => "tblCard/byPaging";
-        public static string GetCardByCardNumberRoute => "tblCard/byCardNumber";
-        #endregion End Card Related
+                case EmObjectType.VehicleType:
+                    return $"Vehicle-Type/{objectId}";
+                case EmObjectType.CustomerGroup:
+                    return $"Customer-Group/{objectId}";
+                case EmObjectType.IdentityGroup:
+                    return $"Identity-Group/{objectId}";
+                case EmObjectType.RegisteredVehicle:
+                    return $"Registered-Vehicle/{objectId}";
 
-        #region System Config Related
-        //--PC
-        public static string GetPCByIpAddressRoute(string key) => "Computer/byIPAddress/" + key;
-        public static string GetPCByIdRoute(string key) => "Computer/byid/" + key;
+                case EmObjectType.EventOut:
+                    return $"Event-Out/{objectId}";
+                default:
+                    return $"{emObjectType}/{objectId}";
+            }
 
-        //--Controller
-        public static string GetControllerByIdRoute(string key) => "controlunit/byid/"+key;
-        public static string GetControllerByComputerIdRoute(string key) => "controlunit/bycomputerid/" + key;
+        }
+        public static string GetDataByParamsRoute(this EmObjectType emObjectType)
+        {
+            switch (emObjectType)
+            {
+                case EmObjectType.EventIn:
+                    return $"Event-In";
+                case EmObjectType.EventOut:
+                    return $"Event-Out";
+                case EmObjectType.VehicleType:
+                    return $"Vehicle-Type";
+                case EmObjectType.CustomerGroup:
+                    return $"Customer-Group";
+                case EmObjectType.IdentityGroup:
+                    return $"Identity-Group";
+                case EmObjectType.RegisteredVehicle:
+                    return $"Registered-Vehicle";
+                default:
+                    return $"{emObjectType}";
+            }
+        }
 
-        //--Camera
-        public static string GetCameraByIdRoute(string key) => $"camera/byid/{key}";
-        public static string GetCameraByComputerIdRoute(string key) => "camera/bycomputerid/" +key;
+        public static string CreateRoute(this EmObjectType emObjectType)
+        {
+            switch (emObjectType)
+            {
+                case EmObjectType.EventIn:
+                    return $"Event-In";
+                case EmObjectType.EventOut:
+                    return $"Event-Out";
+                case EmObjectType.VehicleType:
+                    return $"Vehicle-Type/";
+                case EmObjectType.CustomerGroup:
+                    return $"Customer-Group/";
+                case EmObjectType.IdentityGroup:
+                    return $"Identity-Group/";
+                case EmObjectType.RegisteredVehicle:
+                    return $"Registered-Vehicle/";
+                default:
+                    return $"{emObjectType}";
+            }
+        }
+        public static string UpdateRouteById(this EmObjectType emObjectType, string id)
+        {
+            switch (emObjectType)
+            {
+                case EmObjectType.EventIn:
+                    return $"Event-In/{id}";
+                case EmObjectType.EventOut:
+                    return $"Event-Out/{id}";
+                case EmObjectType.VehicleType:
+                    return $"Vehicle-Type/{id}";
+                case EmObjectType.CustomerGroup:
+                    return $"Customer-Group/{id}";
+                case EmObjectType.IdentityGroup:
+                    return $"Identity-Group/{id}";
+                case EmObjectType.RegisteredVehicle:
+                    return $"Registered-Vehicle/{id}";
+                default:
+                    return $"{emObjectType}/{id}";
+            }
+        }
+        public static string DeleteByIdRoute(this EmObjectType emObjectType, string objectId)
+        {
+            switch (emObjectType)
+            {
+                case EmObjectType.EventIn:
+                    return $"Event-In/{objectId}";
+                case EmObjectType.EventOut:
+                    return $"Event-Out/{objectId}";
+                case EmObjectType.VehicleType:
+                    return $"Vehicle-Type/{objectId}";
+                case EmObjectType.CustomerGroup:
+                    return $"Customer-Group/{objectId}";
+                case EmObjectType.IdentityGroup:
+                    return $"Identity-Group/{objectId}";
+                case EmObjectType.RegisteredVehicle:
+                    return $"Registered-Vehicle/{objectId}";
+                default:
+                    return $"{emObjectType}/{objectId}";
+            }
+        }
 
-        //--Lane
-        public static string GetLaneByIdRoute(string key) => "lane/byid/" + key;
-        public static string GetLaneByComputerIdRoute(string key) => "lane/bycomputerid/" + key;
 
-        //--Gate
-        public static string GetGateByListRoute => "gate/allactive/";
-        public static string GetGateByIdRoute(string key) => "gate/byid/" + key;
+        //#region -- CAMERA -- OK
+        //public static string GetCameraByIdRoute(string cameraId) => $"camera/byid/{cameraId}";
+        //public static string GetCameraByComputerIdRoute => $"camera";
+        //public static string PostNewCameraRoute => "camera";
+        //public static string PutCameraRoute => "camera";
+        //public static string DeleteCameraByIdRoute(string cameraId) => $"camera/{cameraId}";
+        //#endregion
 
-        //--Led
-        public static string GetLedByIdRoute(string key) => "parkingled/byId/" + key;
-        public static string GetLedByComputerIdRoute(string key) => "parkingled/bycomputerid/" + key;
-        #endregion End System Config Related
+        //#region -- LANE --OK
+        //public static string GetLaneByIdRoute(string laneId) => $"lane/{laneId}";
+        //public static string GetLaneByComputerIdRoute => $"lane";
+        //public static string PostNewLaneRoute => "lane";
+        //public static string PutLaneRoute => "lane";
+        //public static string DeleteLaneByIdRoute(string laneId) => $"lane/{laneId}";
 
-        #region Event Related
-        //--Card Event
-        public static string PostParkingVehiclesPagingRoute => "tblCardEvent/ParkingVehiclesPaging";
-        public static string GetCardEventByPagingInOutRoute => "tblcardevent/byPagingInOut";
-        public static string GetCardEventByIdRoute => "tblCardEvent/byId";
-        public static string PostNewCardEventByIdRoute => "tblCardEvent";
-        public static string DeleteOneCardEventByIdRoute => "tblCardEvent";
-        public static string GetParkingVehicleByCardNumberRoute => "tblCardEvent/parkingVehiceByCardNumber";
-        public static string GetParkingVehicleByPlateNumberRoute => "tblCardEvent/parkingVehiceByPlateNumber";
-        public static string PostParkingFeeRoute => "blCardEvent/parkingFee";
-        //--Parking Event
-        public static string PutGoneOutEventCardGroupIdRoute => "parkingevent/Update/GoneOutEventCardGroupId";
-        public static string PostCheckInRoute => "parkingevent/checkin";
-        public static string PostCheckOutRoute => "parkingevent/checkout";
-        #endregion End Event Related
+        //#endregion
 
-        #region Other
-        //--Fee
-        public static string GetFeeByIdRoute => "tblFee/byId";
-        public static string GetFeeByListRoute => "tblFee/byList";
-        public static string PostNewFeeByIdRoute => "tblFee";
-        public static string PutOneFeeByIdRoute => "tblFee";
-        public static string DeleteOneFeeByIdRoute => "tblFee";
+        //#region -- PARKING LED -- OK
+        //public static string GetLedByIdRoute(string ledId) => $"Led/{ledId}";
+        //public static string GetLedByComputerIdRoute => $"Led";
+        //public static string PostNewLedRoute => "Led";
+        //public static string PutLedRoute => "Led";
+        //public static string DeleteLedByIdRoute(string ledId) => $"Led/{ledId}";
+        //#endregion
 
-        //--User
-        public static string GetUserByIdRoute => "temp/User/byId";
-        public static string GetUserByUsernameRoute => "temp/User/byUserName";
-        public static string PostNewUserByIdRoute => "temp/User";
-        public static string PutUserById => "temp/User";
+        //#region -- CONTROL UNIT -- OK
+        //public static string GetControllerByIdRoute(string controlUnitId) => $"ControlUnit/byid/{controlUnitId}";
+        //public static string GetControllerByComputerIdRoute => $"ControlUnit";
+        //public static string PostNewControlUnitRoute => "ControlUnit";
+        //public static string PutControlUnitRoute => "ControlUnit";
+        //public static string DeleteControlUnitByIdRoute(string controlUnitId) => $"ControlUnit/{controlUnitId}";
+        //#endregion
 
-        //--License
-        public static string GetLicenseRoute => "License/getlicense";
-        #endregion End Other
+        //#region -- COMPUTER -- OK
+        //public static string GetPCByIpAddressRoute => $"Computer";
+        //public static string GetPCByIdRoute(string computerId) => $"Computer/{computerId}";
+        //public static string PostNewComputerRoute => "computer";
+        //public static string PutComputerRoute => "computer";
+        //public static string DeleteComputerByIdRoute(string computerId) => $"computer/{computerId}";
+        //#endregion
 
-        #region Vehicle Group
-        public static string GetVehicleGroupByIdRoute => "tblVehicleGroup/byId";
-        public static string GetVehicleGroupByListRoute => "tblVehicleGroup/byList";
-        public static string PostNewVehicleGroupByIdRoute => "tblVehicleGroup";
-        public static string PutVehicleGroupByIdRoute => "tblVehicleGroup";
-        public static string DeleteOneVehicleGroupByIdRoute => "tblVehicleGroup";
-        #endregion End Vehicle Group
+        //#region -- GATE -- OK
+        //public static string GetGateByListRoute => "gate/allactive/";
+        //public static string GetGateByIdRoute(string gateId) => $"gate/byid/{gateId}";
+        //public static string PostNewGateRoute => "gate";
+        //public static string PutGateRoute => "gate";
+        //public static string DeleteGateByIdRoute(string gateId) => $"gate/{gateId}";
+        //#endregion
 
-        #region Customer Related
-        //--Customer
-        public static string GetCustomerByIdRoute => "tblCustomer/byId";
-        public static string GetCustomerByPagingRoute => "tblCustomer/byPaging";
-        public static string GetCustomerByCodeRoute => "tblCustomer/byCode";
-        public static string GetCustomerByPlateRoute => "tblCustomer/byPlate";
-        public static string PostNewCustomerById => "tblCustomer";
-        public static string PutCustomerById => "tblCustomer";
-        public static string DeleteCustomerById => "tblCustomer";
+        //#region -- VEHICLE TYPE -- OK
+        //public static string GetVehicleTypeByIdRoute(string vehicleTypeId) => $"vehicletype/byid/{vehicleTypeId}";
+        //public static string GetAllVehicleTypesRoute => $"vehicletype/allactive";
+        //#endregion
 
-        //--CustomerGroup
-        public static string GetCustomerGroupByIdRoute => "tblCustomerGroup/byId";
-        public static string PostCustomerGroupByIdRoute => "tblCustomerGroup";
-        public static string PutCustomerGroupByIdRoute => "tblCustomerGroup";
-        public static string DeleteCustomerGroupByIdRoute => "tblCustomerGroup";
-        #endregion End Customer Related
+        //#region -- IDENTITY -- OK
+        //public static string GetIdentityByIdRoute(string id) => $"identity/byid/{id}";
+        //public static string GetIdentityByCodeRoute(string code) => $"identity/bycode/{code}";
+        //public static string GetAllIdentities => "identity/allActive";
+        //public static string PostNewIdentityRoute => "Identity";
+        //public static string PutIdentityRoute => "Identity";
+        //public static string DeleteIdentityByIdRoute(string gateId) => $"Identity/{gateId}";
 
-        #region Alarm
-        public static string GetAlarmByPagingRoute => "tblAlarm/byPaging";
-        public static string GetAlarmByIdRoute => "tblAlarm/byId";
-        public static string PostAlarmByIdRoute => "tblAlarm";
-        public static string PitAlarmByIdRoute => "tblAlarm";
-        public static string DeleteAlarmByIdRoute => "tblAlarm";
-        #endregion End Alarm
+        //#endregion
 
-        #region Black List
-        public static string GetBlackListRoute => "tblBlackList";
-        #endregion End Black List
+        //#region -- IDENTITY GROUP
+
+        //#endregion
+
+        //#region -- EVENT IN
+        //public static string PostNewCardEventByIdRoute => "EventIn";
+        //public static string GetFileNamesRoute(List<int> fileIds)
+        //{
+        //    string baseRoute = "PhysicalFile?";
+        //    foreach (var item in fileIds)
+        //    {
+        //        baseRoute += $"Ids={item}&";
+        //    }
+        //    return baseRoute;
+        //}
+        //public static string PutEventInPlateById(string id) => $"EventIn/{id}";
+        //public static string GetEventIns => $"EventIn";
+        //#endregion
+
+        //#region -- EVENT OUT
+        //public static string PostNewCardEventOutByIdRoute => "EventOut";
+        //public static string PutEventOutPlateById(string id) => $"EventOut/{id}";
+        //public static string GetEventOuts => $"EventOut";
+        //#endregion
+
+        //#region -- ABNORMAL 
+        //#region Alarm
+        //public static string GetAbnormalsRoute => "abnormal";
+        //public static string PostAbnormalRoute => "abnormal";
+        //public static string PutAbnomalByIdRoute => "abnormal";
+        //#endregion End Alarm
+        //#endregion
+
+        //#region -- REGISTERED VEHICLE
+        //public static string GetRegisterVehicleByIdRoute(string id) => $"RegisteredVehicle/byid/{id}";
+        //public static string GetRegisterVehicleByPlateNumberRoute(string plateNumber) => $"RegisteredVehicle/byplatenumber/{plateNumber}";
+        //public static string GetAllRegisterVehicles => "RegisteredVehicle/allactive";
+        //public static string PostNewRegisteredVehicle => "RegisteredVehicle";
+        //public static string PutRegisteredVehicleRoute => "RegisteredVehicle";
+        //#endregion
+
+        //#region -- CUSTOMER
+        //public static string GetCustomerByIdRoute(string customerId) => $"customer/byId/{customerId}";
+        //public static string GetCustomerByCodeRoute(string code) => $"customer/byCode/{code}";
+        //public static string PostNewCustomerRoute => "customer";
+        //public static string PutCustomerRoute => "customer";
+        //public static string DeleteCustomerByIdRoute(string customerId) => $"customer/{customerId}";
+        //#endregion
+
+        //#region -- CUSTOMER GROUP
+        //public static string GetCustomerGroupByIdRoute(string customerGroupId) => $"customergroup/byId/{customerGroupId}";
+        //public static string GetAllCustomerGroupsRoute => $"customergroup/allactive";
+        //public static string PostNewCustomerGroupRoute => "customergroup";
+        //public static string PutCustomerGroupRoute => "customergroup";
+        //public static string DeleteCustomerGroupRoute(string customerGroupId) => $"customergroup/{customerGroupId}";
+        //#endregion
     }
 }

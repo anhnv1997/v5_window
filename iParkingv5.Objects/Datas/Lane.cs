@@ -13,8 +13,6 @@ namespace iParkingv6.Objects.Datas
 
     public class CameraInLane
     {
-        public string id { get; set; }
-        public string laneId { get; set; }
         public string cameraId { get; set; }
         public int cameraPurpose { get; set; }
         public int sideIndex { get; set; }
@@ -23,18 +21,11 @@ namespace iParkingv6.Objects.Datas
 
     public class ControllerInLane
     {
-        public string id { get; set; }
-        public string laneId { get; set; }
         public string controlUnitId { get; set; }
-        public string controlUnitName { get; set; }
-        public string readers { get; set; }
-        public string inputs { get; set; }
-        public string barriers { get; set; }
-        public string alarms { get; set; }
-        public int[] readerIds { get; set; }
-        public int[] inputIds { get; set; }
-        public int[] barrierIds { get; set; }
-        public int[] alarmIds { get; set; }
+        public int[] readers { get; set; }
+        public int[] inputs { get; set; }
+        public int[] barriers { get; set; }
+        public int[] alarms { get; set; }
     }
 
     public class Lane

@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             lblCameraName = new Label();
             panelCameraView = new Panel();
+            toolTip1 = new ToolTip(components);
             SuspendLayout();
             // 
             // lblCameraName
@@ -70,5 +72,6 @@
 
         private Label lblCameraName;
         private Panel panelCameraView;
+        private ToolTip toolTip1;
     }
 }

@@ -132,7 +132,8 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
                 {
                     userID = pullHelper.ConnectByTCP(this.ControllerInfo.comport, this.ControllerInfo.baudrate, timeOut, password, ref userID);
                 });
-                return userID != IntPtr.Zero;
+                this.ControllerInfo.isConnect = userID != IntPtr.Zero;
+                return this.ControllerInfo.isConnect;
             }
             return false;
         }
@@ -143,6 +144,7 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
                 await Task.Delay(10);
             }
             pullHelper.Disconnect(ref userID);
+            this.ControllerInfo.isConnect = false;
             cts?.Cancel();
             return true;
         }
@@ -299,10 +301,12 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
                 {
                     if (userID == IntPtr.Zero)
                     {
+                        this.ControllerInfo.isConnect = false;
                         await ConnectAsync();
                     }
                     else
                     {
+                        this.ControllerInfo.isConnect = true;
                         int ret = 0, buffersize = 256;
                         string str = "";
                         string[] eventDatas = null;
@@ -361,6 +365,11 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
                                 }
                             }
                         }
+                        else
+                        {
+                            this.userID = IntPtr.Zero;
+                            this.ControllerInfo.isConnect = false;
+                        }
                     }
                     await Task.Delay(300);
                 }
@@ -403,6 +412,7 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
             string cardNumberHex = Convert.ToInt32(cardNumberInt).ToString("X8");
             e.AllCardFormats.Add(cardNumberHex);
             e.AllCardFormats.Add(cardNumberInt);
+            e.PreferCard = cardNumberInt;
 
             bool isProximity = cardNumberHex[0] == '0' && cardNumberHex[1] == '0';
             if (isProximity)

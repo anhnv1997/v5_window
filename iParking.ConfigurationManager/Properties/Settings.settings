@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="iParking.ConfigurationManager.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="prefer_width" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">816</Value>
+    </Setting>
+    <Setting Name="prefer_height" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">489</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

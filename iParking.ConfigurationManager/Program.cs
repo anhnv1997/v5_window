@@ -1,3 +1,7 @@
+using IPaking.Ultility;
+using iParking.ConfigurationManager.Forms.SystemForms;
+using Kztek.Tools;
+
 namespace iParking.ConfigurationManager
 {
     internal static class Program
@@ -11,7 +15,8 @@ namespace iParking.ConfigurationManager
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            PathManagement.baseBath = LogHelper.SaveLogFolder = Application.StartupPath;
+            Application.Run(new frmConnectionConfig());
         }
     }
 }

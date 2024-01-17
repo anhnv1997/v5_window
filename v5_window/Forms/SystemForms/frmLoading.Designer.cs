@@ -79,7 +79,7 @@
             // timer1
             // 
             timer1.Interval = 300;
-            timer1.Tick += timer1_Tick;
+            timer1.Tick += timerUpdateWaitingMessage_Tick;
             // 
             // frmLoading
             // 

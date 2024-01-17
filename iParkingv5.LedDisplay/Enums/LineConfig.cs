@@ -1,4 +1,5 @@
-﻿using System;
+﻿using iParkingv5.LedDisplay.LEDs;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using static iParkingv5.LedDisplay.Enums.LedColors;
@@ -31,7 +32,7 @@ namespace iParkingv5.LedDisplay.Enums
             }
         }
 
-        private int fontSize = Convert.ToInt32(LedFontsizes.GetFontsizeInt(EmFontSize.FontSize_10));
+        private int fontSize = (int)EmFontSize.FontSize_10;
         public int FontSize { get => fontSize; set => fontSize = value; }
 
         private EmLedColor color = EmLedColor.RED;
@@ -40,6 +41,9 @@ namespace iParkingv5.LedDisplay.Enums
             get => color;
             set => color = value;
         }
+
+        private EmLedDisplayValue displayValue;
+        public EmLedDisplayValue DisplayValue { get => displayValue; set => displayValue = value; }
 
         private string _data = string.Empty;
         public string Data { get => _data; set => _data = value; }

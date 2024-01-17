@@ -11,22 +11,22 @@ namespace iParkingv5.Objects.Enums
             /// <summary>
             /// camera toan canh chinh
             /// </summary>
-            MainOverView = 1,
+            MainOverView = 3,
 
             /// <summary>
             /// Camera biển số oto
             /// </summary>
-            CarLPR,
+            CarLPR = 2,
 
             /// <summary>
             /// Camera biển số xe máy
             /// </summary>
-            MotorLPR,
+            MotorLPR = 1,
 
             /// <summary>
             /// Camera toàn cảnh phụ
             /// </summary>
-            SubOverView,
+            SubOverView = 4,
         }
         public static string GetDisplayStr(EmCameraPurposeType type)
         {

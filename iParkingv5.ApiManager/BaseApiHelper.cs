@@ -1,5 +1,4 @@
-﻿using iParkingv6.ApiManager.KzParkingv3Apis.Responses;
-using Kztek.Tool.NetworkTools;
+﻿using Kztek.Tool.NetworkTools;
 using Kztek.Tool.TextFormatingTools;
 using Kztek.Tools;
 using RestSharp;
@@ -11,6 +10,15 @@ namespace iParkingv6.ApiManager
 {
     public class BaseApiHelper
     {
+        public class DataSend
+        {
+            public string Url { get; set; }
+            public string Method { get; set; }
+            public Dictionary<string, string> Headers { get; set; }
+            public Dictionary<string, string> Params { get; set; }
+            public object Data { get; set; }
+            public string ErrorMessage { get; set; }
+        }
         #region JSON API HELPER
         public static string startupPath = "";
         public static int timeOut = 10000;
@@ -59,7 +67,6 @@ namespace iParkingv6.ApiManager
             }
             return response.Content;
         }
-
         public static string GeneralJsonAPI(string apiUrl, string data, Dictionary<string, string>? headerValues, Dictionary<string, string> requiredParams, int timeOut, ref string error, Method method)
         {
             var client = new RestClient(apiUrl);
@@ -117,6 +124,16 @@ namespace iParkingv6.ApiManager
             {
                 return Tuple.Create<string, string>(string.Empty, "PING ERROR");
             }
+
+            DataSend dataSend = new DataSend()
+            {
+                Url = apiUrl,
+                Method = method.ToString(),
+                Headers = headerValues,
+                Params = requiredParams,
+                Data = data,
+            };
+
             string errorMessage = string.Empty;
             for (int i = 0; i < max_send_times; i++)
             {
@@ -137,7 +154,6 @@ namespace iParkingv6.ApiManager
                         request.AddHeader(item.Key, item.Value);
                     }
                 }
-
                 if (requiredParams != null)
                 {
                     foreach (KeyValuePair<string, string> kvp in requiredParams)
@@ -152,35 +168,36 @@ namespace iParkingv6.ApiManager
                     var logResponse = response;
                     logResponse.Request = null;
                     LogHelper.Log(logType: LogHelper.EmLogType.ERROR,
-                              doi_tuong_tac_dong: LogHelper.EmObjectLogType.Api,
-                              hanh_dong: method.ToString(),
-                              noi_dung_hanh_dong: $"Gửi {apiUrl} lần {i + 1}",
-                              mo_ta_them: TextFormatingTool.BeautyJson(new
-                              {
-                                  _url = apiUrl,
-                                  _method = method.ToString(),
-                                  _headerValues = headerValues,
-                                  _parameters = requiredParams,
-                                  _obj = data,
-                              }),
-                              obj: logResponse);
-                    continue;
+                                  doi_tuong_tac_dong: LogHelper.EmObjectLogType.Api,
+                                  hanh_dong: method.ToString(),
+                                  noi_dung_hanh_dong: $"Gửi {apiUrl} lần {i + 1}",
+                                  mo_ta_them: TextFormatingTool.BeautyJson(dataSend),
+                                  obj: logResponse);
+                    if (string.IsNullOrEmpty(response.Content))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        return Tuple.Create<string, string>(response.Content, string.Empty);
+                    }
                 }
                 LogHelper.Log(logType: LogHelper.EmLogType.INFOR,
                               doi_tuong_tac_dong: LogHelper.EmObjectLogType.Api,
                               hanh_dong: method.ToString(),
                               noi_dung_hanh_dong: apiUrl,
-                              mo_ta_them: response.Content);
+                              mo_ta_them: TextFormatingTool.BeautyJson(dataSend),
+                              obj: response.Content);
                 return Tuple.Create<string, string>(response.Content, string.Empty);
             }
             return Tuple.Create<string, string>(string.Empty, errorMessage);
         }
         #endregion END JSON API HELPER
 
-
         private static bool IsValidHost(string apiUrl)
         {
             Uri uri = new Uri(apiUrl);
+            return true;
             if (!NetWorkTools.IsPingSuccess(uri.Host, 100))
             {
                 LogHelper.Log(logType: LogHelper.EmLogType.ERROR,

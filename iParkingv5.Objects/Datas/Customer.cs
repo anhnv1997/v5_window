@@ -1,4 +1,5 @@
-﻿using System;
+﻿using iParkingv5.Objects;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,36 +7,22 @@ namespace iParkingv6.Objects.Datas
 {
     public class Customer
     {
-        public string Id { get; set; }
-        //public string CustomerID { get; set; }
-        public string CustomerCode { get; set; }
-        public string CustomerName { get; set; }
-        public string Address { get; set; }
-        public string IDNumber { get; set; }
-        public string Mobile { get; set; }
-        public string CustomerGroupID { get; set; }
-        public string Description { get; set; }
-        public bool EnableAccount { get; set; }
-        public string Account { get; set; }
-        public string Password { get; set; }
-        public string Avatar { get; set; }
-        public bool Inactive { get; set; }
-        public int SortOrder { get; set; }
-        public string AddressUnsign { get; set; }
-        //Update aeon hp 19/11/2020
-        public string Plate1 { get; set; }
-        public string PlateUnsign1 { get; set; }
-        public string VehicleName1 { get; set; }
-        public string Plate2 { get; set; }
-        public string PlateUnsign2 { get; set; }
-        public string VehicleName2 { get; set; }
-        public string Plate3 { get; set; }
-        public string PlateUnsign3 { get; set; }
-        public string VehicleName3 { get; set; }
-        public string Keyword
+        public string id { get; set; }
+        public string code { get; set; }
+        public string name { get; set; }
+        public string address { get; set; }
+        public string idNumber { get; set; }
+        public string phoneNumber { get; set; }
+        public object email { get; set; }
+        public string dateOfBirth { get; set; }
+        public string customerGroupId { get; set; }
+        public string customerGroup
         {
-            get { return string.Join('&', CustomerName?.ToLower(), CustomerCode, Address, Description) ?? ""; }
+            get => StaticPool.customerGroupCollection.GetById(this.customerGroupId)?.Name;
         }
+        public object description { get; set; }
+        public bool enabled { get; set; } = true;
+        public bool deleted { get; set; } = false;
     }
 
 }

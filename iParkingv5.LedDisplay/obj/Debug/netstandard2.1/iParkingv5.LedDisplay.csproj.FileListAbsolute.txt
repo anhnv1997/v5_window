@@ -1,7 +1,11 @@
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\LogFormat\log.html
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\LogFormat\log_item.html
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\LogFormat\style.css
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\iParkingv5.LedDisplay.deps.json
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\iParkingv5.LedDisplay.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\iParkingv5.LedDisplay.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\iParkingv5.Objects.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\Kztek.Tool.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\Kztek.LPR.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\OpenCvSharp.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\SimpleLPR2.dll
@@ -10,6 +14,7 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDispl
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\AForge.Imaging.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\AForge.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\AForge.Math.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\Kztek.Tool.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\iParkingv5.Objects.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\Kztek.LPR.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\OpenCvSharp.pdb
@@ -29,8 +34,6 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDispl
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\obj\Debug\netstandard2.1\iParkingv5.LedDisplay.csproj.CopyComplete
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\obj\Debug\netstandard2.1\iParkingv5.LedDisplay.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\obj\Debug\netstandard2.1\iParkingv5.LedDisplay.pdb
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\LogFormat\log.html
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\LogFormat\log_item.html
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\LogFormat\style.css
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\Kztek.Tool.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\Kztek.Tool.pdb
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\obj\Debug\netstandard2.1\iParkingv5.LedDisplay.sourcelink.json
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\iParkingv5.Lpr.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\bin\Debug\netstandard2.1\iParkingv5.Lpr.pdb

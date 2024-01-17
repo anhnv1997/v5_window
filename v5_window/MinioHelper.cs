@@ -8,21 +8,12 @@ using Kztek.Tools;
 using Minio;
 
 namespace iParkingv5_window
-{
-    public class MinioConfig
-    {
-        public string EndPoint = "192.168.20.10:9000";
-        public string AccessKey = "CzNXj6PlpqklUS1n7l2U";
-        public string SecretKey = "zGTpk9EANk71ayWWOyK9nkvt2XeY1fH47a7o0fPl";
-        public bool secure = false;
-        public string bucketName = "parking-images";
-    }
-
+{   
     public static class MinioHelper
     {
-        public static string EndPoint = "192.168.20.10:9000";
-        public static string AccessKey = "CzNXj6PlpqklUS1n7l2U";
-        public static string SecretKey = "zGTpk9EANk71ayWWOyK9nkvt2XeY1fH47a7o0fPl";
+        public static string EndPoint = string.Empty;
+        public static string AccessKey = string.Empty;
+        public static string SecretKey = string.Empty;
         public static bool secure = false;
         public static string bucketName = "parking-images";
         public static async Task<string> GetImage(string path)
@@ -55,13 +46,13 @@ namespace iParkingv5_window
             return stream;
         }
 
-        public static async Task UploadPicture(Image? image, string savePath)
+        public static async Task<string> UploadPicture(Image? image, string imageKey)
         {
             try
             {
                 if (image == null)
                 {
-                    return;
+                    return string.Empty;
                 }
                 MinioClient minio = new MinioClient()
                             .WithEndpoint(EndPoint)
@@ -82,13 +73,15 @@ namespace iParkingv5_window
                     .WithBucket(bucketName)
                     .WithStreamData(data)
                     .WithObjectSize(data.Length)
-                    .WithObject(savePath)
+                    .WithObject(imageKey)
                     .WithContentType("application/octet-stream");
                 var response = await minio.PutObjectAsync(putObjectArgs);
+                return imageKey;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Lưu hình ảnh lỗi", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return string.Empty;
             }
         }
     }

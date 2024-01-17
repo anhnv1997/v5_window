@@ -1,4 +1,0 @@
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\Misa.Object.Net6\obj\Debug\net6.0\Misa.Object.Net6.GeneratedMSBuildEditorConfig.editorconfig
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\Misa.Object.Net6\obj\Debug\net6.0\Misa.Object.Net6.AssemblyInfoInputs.cache
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\Misa.Object.Net6\obj\Debug\net6.0\Misa.Object.Net6.AssemblyInfo.cs
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\Misa.Object.Net6\obj\Debug\net6.0\Misa.Object.Net6.csproj.CoreCompileInputs.cache

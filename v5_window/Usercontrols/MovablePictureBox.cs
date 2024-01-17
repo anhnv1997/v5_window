@@ -44,6 +44,18 @@ namespace iParkingv5_window.Usercontrols
             this.MouseMove += MoveablePictureBox_MouseMove;
             this.MouseWheel += MovablePictureBox_MouseWheel;
             this.MouseDoubleClick += MovablePictureBox_MouseDoubleClick;
+            this.MouseEnter += MovablePictureBox_MouseEnter;
+            this.MouseLeave += MovablePictureBox_MouseLeave;
+        }
+
+        private void MovablePictureBox_MouseLeave(object? sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Default;
+        }
+
+        private void MovablePictureBox_MouseEnter(object? sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Hand;
         }
 
         private void MovablePictureBox_MouseDoubleClick(object? sender, MouseEventArgs e)

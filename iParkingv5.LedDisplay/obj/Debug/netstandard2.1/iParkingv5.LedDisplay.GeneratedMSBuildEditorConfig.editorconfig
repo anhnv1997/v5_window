@@ -1,3 +1,5 @@
 is_global = true
 build_property.RootNamespace = iParkingv5.LedDisplay
 build_property.ProjectDir = E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.LedDisplay\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 

@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -67,6 +68,30 @@ namespace iParkingv5_window.Usercontrols
                 control.BringToFront();
             }
         }
+        public void StartViewer2(Kztek.Cameras.Camera camera, int i)
+        {
+            this._Camera = camera;
+
+            lblCameraName.Text = camera.Name;
+
+
+            if (camera != null && camera.videoSourcePlayer!= null)
+            {
+                iCameraSourcePlayer iCameraSourcePlayer = camera.videoSourcePlayer;
+                var control = (Control)iCameraSourcePlayer;
+                panelCameraView.Controls.Add(control);
+
+                control.Name = camera.ID;
+                control.Dock = DockStyle.Fill;
+                control.DoubleClick += Control_DoubleClick;
+                control.BringToFront();
+            }
+        }
+
+        private void VideoSourcePlayer_NewFrame(object sender, ref Bitmap image)
+        {
+        }
+
         public Image? GetFullCurrentImage()
         {
             var bmp = _Camera!.GetCurrentVideoFrame();

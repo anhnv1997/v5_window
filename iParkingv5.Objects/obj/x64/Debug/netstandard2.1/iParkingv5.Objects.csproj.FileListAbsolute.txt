@@ -10,12 +10,6 @@ E:\2.Workspace\2.Projects\2023\9.Parking\iParkingv6.Objects\obj\x64\Debug\netsta
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\iParkingv5.Objects.deps.json
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\iParkingv5.Objects.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\iParkingv5.Objects.pdb
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\obj\x64\Debug\netstandard2.1\iParkingv5.Objects.GeneratedMSBuildEditorConfig.editorconfig
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\obj\x64\Debug\netstandard2.1\iParkingv5.Objects.AssemblyInfoInputs.cache
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\obj\x64\Debug\netstandard2.1\iParkingv5.Objects.AssemblyInfo.cs
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\obj\x64\Debug\netstandard2.1\iParkingv5.Objects.csproj.CoreCompileInputs.cache
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\obj\x64\Debug\netstandard2.1\iParkingv5.Objects.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\obj\x64\Debug\netstandard2.1\iParkingv5.Objects.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\Kztek.LPR.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\OpenCvSharp.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\SimpleLPR2.dll
@@ -35,4 +29,13 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\AForge.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\AForge.xml
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\obj\x64\Debug\netstandard2.1\iParkingv5.Objects.csproj.AssemblyReference.cache
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\obj\x64\Debug\netstandard2.1\iParkingv5.Objects.GeneratedMSBuildEditorConfig.editorconfig
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\obj\x64\Debug\netstandard2.1\iParkingv5.Objects.AssemblyInfoInputs.cache
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\obj\x64\Debug\netstandard2.1\iParkingv5.Objects.AssemblyInfo.cs
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\obj\x64\Debug\netstandard2.1\iParkingv5.Objects.csproj.CoreCompileInputs.cache
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\obj\x64\Debug\netstandard2.1\iParkingv5.Objects.csproj.CopyComplete
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\obj\x64\Debug\netstandard2.1\iParkingv5.Objects.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\obj\x64\Debug\netstandard2.1\iParkingv5.Objects.pdb
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\obj\x64\Debug\netstandard2.1\iParkingv5.Objects.sourcelink.json
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\iParkingv5.Lpr.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\iParkingv5.Lpr.pdb

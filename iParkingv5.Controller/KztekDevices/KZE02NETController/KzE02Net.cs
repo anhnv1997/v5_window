@@ -192,6 +192,11 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
                     string maSauFormat2 = int.Parse(cardNumberHEX.Substring(0, 2), System.Globalization.NumberStyles.HexNumber).ToString("000") + ":" +
                                           int.Parse(cardNumberHEX.Substring(2, 4), System.Globalization.NumberStyles.HexNumber).ToString("00000");
 
+                    string maSauFormat3 = int.Parse(cardNumberHEX.Substring(0, 2), System.Globalization.NumberStyles.HexNumber).ToString("000") + ":" +
+                      int.Parse(cardNumberHEX.Substring(2, 4), System.Globalization.NumberStyles.HexNumber).ToString("00000");
+
+                    e.PreferCard = maSauFormat3;
+
                     e.AllCardFormats.Add(maTruocToiGian);
                     if (maTruocToiGian != maTruocFull)
                     {
@@ -203,6 +208,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
                 else
                 {
                     string maInt = Convert.ToInt64(cardNumberHEX, 16).ToString();
+                    e.PreferCard = maInt;
                     e.AllCardFormats.Add(maInt);
                 }
             }

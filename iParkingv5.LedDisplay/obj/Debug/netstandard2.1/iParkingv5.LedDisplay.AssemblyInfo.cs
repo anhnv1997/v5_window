@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("iParkingv5.LedDisplay")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+88c9b08e20db174d0ac50918c3dc12d454b7424e")]
 [assembly: System.Reflection.AssemblyProductAttribute("iParkingv5.LedDisplay")]
 [assembly: System.Reflection.AssemblyTitleAttribute("iParkingv5.LedDisplay")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -29,47 +29,53 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucLaneIn));
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             lblLaneName = new Label();
             panelCameras = new Panel();
-            splitContainer1 = new SplitContainer();
+            splitContainerMain = new SplitContainer();
             tableLayoutPanel1 = new TableLayoutPanel();
             panel3 = new Panel();
             picVehicleImage = new MovablePictureBox();
             panel2 = new Panel();
             picOverviewImage = new MovablePictureBox();
             label1 = new Label();
-            splitter1 = new Splitter();
-            splitContainer2 = new SplitContainer();
-            dataGridView1 = new DataGridView();
+            splitterCamera = new Splitter();
+            splitContainerEventContent = new SplitContainer();
+            dgvEventContent = new DataGridView();
+            Column1 = new DataGridViewTextBoxColumn();
+            Column2 = new DataGridViewTextBoxColumn();
             panel4 = new Panel();
             picLprImage = new MovablePictureBox();
             panel1 = new Panel();
+            btnRegister = new Button();
             btnReTakePhoto = new Button();
             btnWriteIn = new Button();
             txtPlate = new TextBox();
             lblResult = new Label();
-            pictureBox1 = new PictureBox();
+            picSetting = new PictureBox();
             panel5 = new Panel();
             panel7 = new Panel();
             pictureBox2 = new PictureBox();
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
-            splitContainer1.Panel1.SuspendLayout();
-            splitContainer1.Panel2.SuspendLayout();
-            splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainerMain).BeginInit();
+            splitContainerMain.Panel1.SuspendLayout();
+            splitContainerMain.Panel2.SuspendLayout();
+            splitContainerMain.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picVehicleImage).BeginInit();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picOverviewImage).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)splitContainer2).BeginInit();
-            splitContainer2.Panel1.SuspendLayout();
-            splitContainer2.Panel2.SuspendLayout();
-            splitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)splitContainerEventContent).BeginInit();
+            splitContainerEventContent.Panel1.SuspendLayout();
+            splitContainerEventContent.Panel2.SuspendLayout();
+            splitContainerEventContent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvEventContent).BeginInit();
             panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picLprImage).BeginInit();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picSetting).BeginInit();
             panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
@@ -78,7 +84,7 @@
             // 
             lblLaneName.BackColor = Color.Green;
             lblLaneName.Dock = DockStyle.Fill;
-            lblLaneName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            lblLaneName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             lblLaneName.ForeColor = SystemColors.ButtonHighlight;
             lblLaneName.Location = new Point(0, 0);
             lblLaneName.Margin = new Padding(0);
@@ -97,27 +103,27 @@
             panelCameras.Size = new Size(241, 445);
             panelCameras.TabIndex = 3;
             // 
-            // splitContainer1
+            // splitContainerMain
             // 
-            splitContainer1.Dock = DockStyle.Fill;
-            splitContainer1.Location = new Point(0, 44);
-            splitContainer1.Margin = new Padding(0);
-            splitContainer1.Name = "splitContainer1";
-            splitContainer1.Orientation = Orientation.Horizontal;
+            splitContainerMain.Dock = DockStyle.Fill;
+            splitContainerMain.Location = new Point(0, 44);
+            splitContainerMain.Margin = new Padding(0);
+            splitContainerMain.Name = "splitContainerMain";
+            splitContainerMain.Orientation = Orientation.Horizontal;
             // 
-            // splitContainer1.Panel1
+            // splitContainerMain.Panel1
             // 
-            splitContainer1.Panel1.Controls.Add(tableLayoutPanel1);
-            splitContainer1.Panel1.Controls.Add(splitter1);
-            splitContainer1.Panel1.Controls.Add(panelCameras);
+            splitContainerMain.Panel1.Controls.Add(tableLayoutPanel1);
+            splitContainerMain.Panel1.Controls.Add(splitterCamera);
+            splitContainerMain.Panel1.Controls.Add(panelCameras);
             // 
-            // splitContainer1.Panel2
+            // splitContainerMain.Panel2
             // 
-            splitContainer1.Panel2.Controls.Add(splitContainer2);
-            splitContainer1.Panel2.Controls.Add(lblResult);
-            splitContainer1.Size = new Size(727, 634);
-            splitContainer1.SplitterDistance = 445;
-            splitContainer1.TabIndex = 4;
+            splitContainerMain.Panel2.Controls.Add(splitContainerEventContent);
+            splitContainerMain.Panel2.Controls.Add(lblResult);
+            splitContainerMain.Size = new Size(727, 634);
+            splitContainerMain.SplitterDistance = 445;
+            splitContainerMain.TabIndex = 4;
             // 
             // tableLayoutPanel1
             // 
@@ -150,12 +156,13 @@
             // 
             // picVehicleImage
             // 
-            picVehicleImage.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            picVehicleImage.BackColor = Color.Transparent;
+            picVehicleImage.Dock = DockStyle.Fill;
             picVehicleImage.Image = (Image)resources.GetObject("picVehicleImage.Image");
             picVehicleImage.Location = new Point(0, 0);
             picVehicleImage.Name = "picVehicleImage";
             picVehicleImage.Size = new Size(473, 197);
-            picVehicleImage.SizeMode = PictureBoxSizeMode.Zoom;
+            picVehicleImage.SizeMode = PictureBoxSizeMode.StretchImage;
             picVehicleImage.TabIndex = 5;
             picVehicleImage.TabStop = false;
             // 
@@ -171,19 +178,20 @@
             // 
             // picOverviewImage
             // 
-            picOverviewImage.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            picOverviewImage.BackColor = Color.Transparent;
+            picOverviewImage.Dock = DockStyle.Fill;
             picOverviewImage.Image = (Image)resources.GetObject("picOverviewImage.Image");
             picOverviewImage.Location = new Point(0, 0);
             picOverviewImage.Name = "picOverviewImage";
             picOverviewImage.Size = new Size(473, 198);
-            picOverviewImage.SizeMode = PictureBoxSizeMode.Zoom;
+            picOverviewImage.SizeMode = PictureBoxSizeMode.StretchImage;
             picOverviewImage.TabIndex = 5;
             picOverviewImage.TabStop = false;
             // 
             // label1
             // 
             label1.Dock = DockStyle.Fill;
-            label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point);
+            label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline);
             label1.ForeColor = Color.Green;
             label1.Location = new Point(5, 2);
             label1.Name = "label1";
@@ -192,43 +200,71 @@
             label1.Text = "Ảnh Vào";
             label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // splitter1
+            // splitterCamera
             // 
-            splitter1.Location = new Point(241, 0);
-            splitter1.Name = "splitter1";
-            splitter1.Size = new Size(3, 445);
-            splitter1.TabIndex = 4;
-            splitter1.TabStop = false;
+            splitterCamera.Location = new Point(241, 0);
+            splitterCamera.Name = "splitterCamera";
+            splitterCamera.Size = new Size(3, 445);
+            splitterCamera.TabIndex = 4;
+            splitterCamera.TabStop = false;
             // 
-            // splitContainer2
+            // splitContainerEventContent
             // 
-            splitContainer2.Dock = DockStyle.Fill;
-            splitContainer2.Location = new Point(0, 34);
-            splitContainer2.Name = "splitContainer2";
+            splitContainerEventContent.Dock = DockStyle.Fill;
+            splitContainerEventContent.Location = new Point(0, 34);
+            splitContainerEventContent.Name = "splitContainerEventContent";
             // 
-            // splitContainer2.Panel1
+            // splitContainerEventContent.Panel1
             // 
-            splitContainer2.Panel1.Controls.Add(dataGridView1);
+            splitContainerEventContent.Panel1.Controls.Add(dgvEventContent);
             // 
-            // splitContainer2.Panel2
+            // splitContainerEventContent.Panel2
             // 
-            splitContainer2.Panel2.Controls.Add(panel4);
-            splitContainer2.Panel2.Controls.Add(panel1);
-            splitContainer2.Panel2.Controls.Add(txtPlate);
-            splitContainer2.Size = new Size(727, 151);
-            splitContainer2.SplitterDistance = 402;
-            splitContainer2.TabIndex = 0;
+            splitContainerEventContent.Panel2.Controls.Add(panel4);
+            splitContainerEventContent.Panel2.Controls.Add(panel1);
+            splitContainerEventContent.Panel2.Controls.Add(txtPlate);
+            splitContainerEventContent.Size = new Size(727, 151);
+            splitContainerEventContent.SplitterDistance = 402;
+            splitContainerEventContent.TabIndex = 0;
             // 
-            // dataGridView1
+            // dgvEventContent
             // 
-            dataGridView1.BackgroundColor = SystemColors.ButtonHighlight;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Dock = DockStyle.Fill;
-            dataGridView1.Location = new Point(0, 0);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowTemplate.Height = 29;
-            dataGridView1.Size = new Size(402, 151);
-            dataGridView1.TabIndex = 0;
+            dgvEventContent.AllowUserToAddRows = false;
+            dgvEventContent.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(192, 255, 255);
+            dgvEventContent.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dgvEventContent.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dgvEventContent.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgvEventContent.BackgroundColor = SystemColors.ButtonHighlight;
+            dgvEventContent.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvEventContent.ColumnHeadersVisible = false;
+            dgvEventContent.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2 });
+            dgvEventContent.Dock = DockStyle.Fill;
+            dgvEventContent.Location = new Point(0, 0);
+            dgvEventContent.Name = "dgvEventContent";
+            dgvEventContent.ReadOnly = true;
+            dgvEventContent.RowHeadersVisible = false;
+            dgvEventContent.RowTemplate.Height = 29;
+            dgvEventContent.Size = new Size(402, 151);
+            dgvEventContent.TabIndex = 0;
+            // 
+            // Column1
+            // 
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            Column1.DefaultCellStyle = dataGridViewCellStyle2;
+            Column1.HeaderText = "Header";
+            Column1.Name = "Column1";
+            Column1.ReadOnly = true;
+            Column1.Width = 5;
+            // 
+            // Column2
+            // 
+            Column2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 11.25F);
+            Column2.DefaultCellStyle = dataGridViewCellStyle3;
+            Column2.HeaderText = "Content";
+            Column2.Name = "Column2";
+            Column2.ReadOnly = true;
             // 
             // panel4
             // 
@@ -241,17 +277,19 @@
             // 
             // picLprImage
             // 
-            picLprImage.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            picLprImage.BackColor = Color.Transparent;
+            picLprImage.Dock = DockStyle.Fill;
             picLprImage.Image = (Image)resources.GetObject("picLprImage.Image");
             picLprImage.Location = new Point(0, 0);
             picLprImage.Name = "picLprImage";
             picLprImage.Size = new Size(321, 51);
-            picLprImage.SizeMode = PictureBoxSizeMode.Zoom;
+            picLprImage.SizeMode = PictureBoxSizeMode.StretchImage;
             picLprImage.TabIndex = 4;
             picLprImage.TabStop = false;
             // 
             // panel1
             // 
+            panel1.Controls.Add(btnRegister);
             panel1.Controls.Add(btnReTakePhoto);
             panel1.Controls.Add(btnWriteIn);
             panel1.Dock = DockStyle.Bottom;
@@ -261,9 +299,27 @@
             panel1.Size = new Size(321, 68);
             panel1.TabIndex = 3;
             // 
+            // btnRegister
+            // 
+            btnRegister.AutoSize = true;
+            btnRegister.BackColor = Color.Transparent;
+            btnRegister.Dock = DockStyle.Left;
+            btnRegister.Image = (Image)resources.GetObject("btnRegister.Image");
+            btnRegister.ImageAlign = ContentAlignment.TopCenter;
+            btnRegister.Location = new Point(204, 3);
+            btnRegister.Name = "btnRegister";
+            btnRegister.Size = new Size(106, 62);
+            btnRegister.TabIndex = 5;
+            btnRegister.Text = "Đăng ký";
+            btnRegister.TextImageRelation = TextImageRelation.ImageAboveText;
+            btnRegister.UseVisualStyleBackColor = false;
+            btnRegister.Visible = false;
+            btnRegister.Click += btnRegister_Click;
+            // 
             // btnReTakePhoto
             // 
             btnReTakePhoto.AutoSize = true;
+            btnReTakePhoto.BackColor = Color.Transparent;
             btnReTakePhoto.Dock = DockStyle.Left;
             btnReTakePhoto.Image = (Image)resources.GetObject("btnReTakePhoto.Image");
             btnReTakePhoto.ImageAlign = ContentAlignment.TopCenter;
@@ -273,12 +329,13 @@
             btnReTakePhoto.TabIndex = 3;
             btnReTakePhoto.Text = "Chụp lại";
             btnReTakePhoto.TextImageRelation = TextImageRelation.ImageAboveText;
-            btnReTakePhoto.UseVisualStyleBackColor = true;
+            btnReTakePhoto.UseVisualStyleBackColor = false;
             btnReTakePhoto.Click += BtnReTakePhoto_Click;
             // 
             // btnWriteIn
             // 
             btnWriteIn.AutoSize = true;
+            btnWriteIn.BackColor = Color.Transparent;
             btnWriteIn.Dock = DockStyle.Left;
             btnWriteIn.Image = (Image)resources.GetObject("btnWriteIn.Image");
             btnWriteIn.ImageAlign = ContentAlignment.TopCenter;
@@ -288,14 +345,14 @@
             btnWriteIn.TabIndex = 4;
             btnWriteIn.Text = "Ghi Vé Vào";
             btnWriteIn.TextImageRelation = TextImageRelation.ImageAboveText;
-            btnWriteIn.UseVisualStyleBackColor = true;
+            btnWriteIn.UseVisualStyleBackColor = false;
             btnWriteIn.Click += BtnWriteIn_Click;
             // 
             // txtPlate
             // 
             txtPlate.BackColor = SystemColors.HighlightText;
             txtPlate.Dock = DockStyle.Top;
-            txtPlate.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            txtPlate.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             txtPlate.Location = new Point(0, 0);
             txtPlate.Name = "txtPlate";
             txtPlate.Size = new Size(321, 32);
@@ -306,7 +363,7 @@
             // 
             lblResult.BackColor = Color.FromArgb(0, 64, 0);
             lblResult.Dock = DockStyle.Top;
-            lblResult.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            lblResult.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             lblResult.ForeColor = SystemColors.ButtonHighlight;
             lblResult.Location = new Point(0, 0);
             lblResult.Name = "lblResult";
@@ -315,22 +372,25 @@
             lblResult.Text = "XIN MỜI VÀO";
             lblResult.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // pictureBox1
+            // picSetting
             // 
-            pictureBox1.BackColor = Color.Green;
-            pictureBox1.Dock = DockStyle.Right;
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(602, 0);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(52, 44);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 5;
-            pictureBox1.TabStop = false;
+            picSetting.BackColor = Color.Green;
+            picSetting.Dock = DockStyle.Right;
+            picSetting.Image = (Image)resources.GetObject("picSetting.Image");
+            picSetting.Location = new Point(602, 0);
+            picSetting.Name = "picSetting";
+            picSetting.Size = new Size(52, 44);
+            picSetting.SizeMode = PictureBoxSizeMode.Zoom;
+            picSetting.TabIndex = 5;
+            picSetting.TabStop = false;
+            picSetting.Click += picSetting_Click;
+            picSetting.MouseEnter += picSetting_MouseEnter;
+            picSetting.MouseLeave += picSetting_MouseLeave;
             // 
             // panel5
             // 
             panel5.BackColor = Color.Green;
-            panel5.Controls.Add(pictureBox1);
+            panel5.Controls.Add(picSetting);
             panel5.Controls.Add(panel7);
             panel5.Controls.Add(pictureBox2);
             panel5.Controls.Add(lblLaneName);
@@ -362,36 +422,37 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 6;
             pictureBox2.TabStop = false;
+            pictureBox2.Visible = false;
             // 
             // ucLaneIn
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(splitContainer1);
+            Controls.Add(splitContainerMain);
             Controls.Add(panel5);
             Margin = new Padding(0);
             Name = "ucLaneIn";
             Size = new Size(727, 678);
-            splitContainer1.Panel1.ResumeLayout(false);
-            splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
-            splitContainer1.ResumeLayout(false);
+            splitContainerMain.Panel1.ResumeLayout(false);
+            splitContainerMain.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainerMain).EndInit();
+            splitContainerMain.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
             panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picVehicleImage).EndInit();
             panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picOverviewImage).EndInit();
-            splitContainer2.Panel1.ResumeLayout(false);
-            splitContainer2.Panel2.ResumeLayout(false);
-            splitContainer2.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)splitContainer2).EndInit();
-            splitContainer2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            splitContainerEventContent.Panel1.ResumeLayout(false);
+            splitContainerEventContent.Panel2.ResumeLayout(false);
+            splitContainerEventContent.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainerEventContent).EndInit();
+            splitContainerEventContent.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvEventContent).EndInit();
             panel4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picLprImage).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picSetting).EndInit();
             panel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);
@@ -401,13 +462,13 @@
 
         private Label lblLaneName;
         private Panel panelCameras;
-        private SplitContainer splitContainer1;
+        private SplitContainer splitContainerMain;
         private TableLayoutPanel tableLayoutPanel1;
-        private Splitter splitter1;
-        private SplitContainer splitContainer2;
+        private Splitter splitterCamera;
+        private SplitContainer splitContainerEventContent;
         private Panel panel1;
         private TextBox txtPlate;
-        private DataGridView dataGridView1;
+        private DataGridView dgvEventContent;
         private Label lblResult;
         private MovablePictureBox picLprImage;
         private Panel panel2;
@@ -418,9 +479,12 @@
         private Label label1;
         private Button btnReTakePhoto;
         private Button btnWriteIn;
-        private PictureBox pictureBox1;
+        private PictureBox picSetting;
         private Panel panel5;
         private PictureBox pictureBox2;
         private Panel panel7;
+        private DataGridViewTextBoxColumn Column1;
+        private DataGridViewTextBoxColumn Column2;
+        private Button btnRegister;
     }
 }

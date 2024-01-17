@@ -1,16 +1,4 @@
-﻿using iParkingv6.Objects.Datas;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace iParkingv5_window.Usercontrols
+﻿namespace iParkingv5_window.Usercontrols
 {
     public partial class ucViewGrid : UserControl
     {
@@ -20,7 +8,7 @@ namespace iParkingv5_window.Usercontrols
         private bool isMoving = false;
         private Point StartArrangeLocation = new Point(0, 0);
         private Point EndArrangeLocation = new Point(0, 0);
-        TableLayoutPanel table;
+        TableLayoutPanel? table;
         #endregion End Properties
 
         #region Forms
@@ -61,6 +49,7 @@ namespace iParkingv5_window.Usercontrols
             table.Dock = DockStyle.Fill;
             table.ColumnCount = column;
             table.RowCount = row;
+            table.Padding = new Padding(3);
             for (int i = 0; i < column; i++)
             {
                 table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100 / column));
@@ -80,40 +69,19 @@ namespace iParkingv5_window.Usercontrols
             if (control == null) return;
             table.Controls.Add(control);
         }
-        public void SaveViewSetting()
+        public List<string> GetOrderConfig()
         {
-            ViewSetting view = new ViewSetting();
-            view.RowsCount = this.RowsCount;
-            view.ColumnsCount = this.ColumnsCount;
-            Dictionary<string, int[]> víewDetail = new Dictionary<string, int[]>();
+            List<string> orderLanes =  new List<string>();
+            Dictionary<string, int[]> viewDetail = new Dictionary<string, int[]>();
             for (int i = 0; i < RowsCount; i++)
             {
                 for (int j = 0; j < ColumnsCount; j++)
                 {
-                    int[] infors = new int[2] { j, i };
-                    string pcId = table.GetControlFromPosition(j, i) != null ? table.GetControlFromPosition(j, i).Name : string.Empty;
-                    if (!string.IsNullOrEmpty(pcId))
-                    {
-                        víewDetail.Add(pcId, infors);
-                    }
+                    string laneId = table.GetControlFromPosition(j, i) != null ? (table.GetControlFromPosition(j, i) as iLane)!.lane.id : string.Empty;
+                    orderLanes.Add(laneId);
                 }
             }
-            view.ViewSettingDetails = víewDetail;
-            string jsonData = System.Text.Json.JsonSerializer.Serialize(view);
-
-            //using (StreamWriter writer = new StreamWriter(Application.StartupPath + StaticPool.viewSettingPath, false))
-            //{
-            //    try
-            //    {
-            //        writer.WriteLine(jsonData);
-            //        StaticPool.views = view;
-            //        MessageBox.Show("Cập Nhật Thông tin Thành Công!", "Thông Tin", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show("Error: " + ex.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    }
-            //}
+            return orderLanes;
         }
         #endregion
 

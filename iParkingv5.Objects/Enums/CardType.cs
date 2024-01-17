@@ -16,22 +16,22 @@ namespace iParkingv5.Objects.Enums
             /// <summary>
             /// Vé tháng
             /// </summary>
-            Monthly = 1,
+            Monthly = 0,
 
             /// <summary>
             /// Vé ngày
             /// </summary>
-            Daily = 2,
+            Daily = 1,
 
             /// <summary>
             /// vé vip
             /// </summary>
-            VIP = 3,
+            Free = 2,
 
             /// <summary>
             /// Vé master
             /// </summary>
-            Master = 4
+            VIP = 3
         }
         public static string GetDisplayStr(EmCardType type)
         {
@@ -45,8 +45,8 @@ namespace iParkingv5.Objects.Enums
                     return "Vé ngày";
                 case EmCardType.VIP:
                     return "Vé vip";
-                case EmCardType.Master:
-                    return " Vé master";
+                case EmCardType.Free:
+                    return "Vé miễn phí";
                 default:
                     return string.Empty;
             }

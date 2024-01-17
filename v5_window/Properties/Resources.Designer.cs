@@ -63,9 +63,9 @@ namespace iParkingv5_window.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap backup_100 {
+        internal static System.Drawing.Bitmap Checkmark_0_0_0_32px {
             get {
-                object obj = ResourceManager.GetObject("backup_100", resourceCulture);
+                object obj = ResourceManager.GetObject("Checkmark_0_0_0_32px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace iParkingv5_window.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap confirm {
+        internal static System.Drawing.Bitmap Checkmark_255_255_255_32px {
             get {
-                object obj = ResourceManager.GetObject("confirm", resourceCulture);
+                object obj = ResourceManager.GetObject("Checkmark_255_255_255_32px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace iParkingv5_window.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap delete_100 {
+        internal static System.Drawing.Bitmap defaultImage {
             get {
-                object obj = ResourceManager.GetObject("delete_100", resourceCulture);
+                object obj = ResourceManager.GetObject("defaultImage", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace iParkingv5_window.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icons8_business_report_100px {
+        internal static System.Drawing.Bitmap Excel_0_0_0_32px {
             get {
-                object obj = ResourceManager.GetObject("icons8_business_report_100px", resourceCulture);
+                object obj = ResourceManager.GetObject("Excel_0_0_0_32px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace iParkingv5_window.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icons8_cancel_100px {
+        internal static System.Drawing.Bitmap Excel_255_255_255_32px {
             get {
-                object obj = ResourceManager.GetObject("icons8_cancel_100px", resourceCulture);
+                object obj = ResourceManager.GetObject("Excel_255_255_255_32px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +113,9 @@ namespace iParkingv5_window.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icons8_delete_document_256px {
+        internal static System.Drawing.Bitmap login_0_0_0_32px {
             get {
-                object obj = ResourceManager.GetObject("icons8_delete_document_256px", resourceCulture);
+                object obj = ResourceManager.GetObject("login_0_0_0_32px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +123,9 @@ namespace iParkingv5_window.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icons8_Exit_Sign_100px {
+        internal static System.Drawing.Bitmap login_255_255_255_32px {
             get {
-                object obj = ResourceManager.GetObject("icons8_Exit_Sign_100px", resourceCulture);
+                object obj = ResourceManager.GetObject("login_255_255_255_32px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +133,9 @@ namespace iParkingv5_window.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icons8_services_100px {
+        internal static System.Drawing.Bitmap NO_0_0_0_32px {
             get {
-                object obj = ResourceManager.GetObject("icons8_services_100px", resourceCulture);
+                object obj = ResourceManager.GetObject("NO_0_0_0_32px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,9 +143,129 @@ namespace iParkingv5_window.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icons8_user_shield_100px {
+        internal static System.Drawing.Bitmap NO_255_255_255_32px {
             get {
-                object obj = ResourceManager.GetObject("icons8_user_shield_100px", resourceCulture);
+                object obj = ResourceManager.GetObject("NO_255_255_255_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap noti_error_64 {
+            get {
+                object obj = ResourceManager.GetObject("noti_error_64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap noti_ok_64 {
+            get {
+                object obj = ResourceManager.GetObject("noti_ok_64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap noti_question_64 {
+            get {
+                object obj = ResourceManager.GetObject("noti_question_64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap noti_warning_64 {
+            get {
+                object obj = ResourceManager.GetObject("noti_warning_64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap print_0_0_0_32px {
+            get {
+                object obj = ResourceManager.GetObject("print_0_0_0_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap print_255_255_255_32px {
+            get {
+                object obj = ResourceManager.GetObject("print_255_255_255_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap report_0_0_0_32px {
+            get {
+                object obj = ResourceManager.GetObject("report_0_0_0_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap report_255_255_255_32px {
+            get {
+                object obj = ResourceManager.GetObject("report_255_255_255_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap search_0_0_0_32px {
+            get {
+                object obj = ResourceManager.GetObject("search_0_0_0_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap search_255_255_255_32px {
+            get {
+                object obj = ResourceManager.GetObject("search_255_255_255_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap setting_0_0_0_32px {
+            get {
+                object obj = ResourceManager.GetObject("setting_0_0_0_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap setting_255_255_255_32px {
+            get {
+                object obj = ResourceManager.GetObject("setting_255_255_255_32px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

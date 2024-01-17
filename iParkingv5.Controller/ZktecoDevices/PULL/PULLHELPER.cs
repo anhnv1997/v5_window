@@ -336,9 +336,16 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
         }
         public IntPtr ConnectByTCP(string ip, string port, int timeOut, string password, ref IntPtr userID)
         {
-            string _params = $"protocol=TCP,ipaddress={ip},port={port},timeout={timeOut},passwd={password}";
-            userID = PULLSDK.Connect(_params);
-            return userID;
+            try
+            {
+                string _params = $"protocol=TCP,ipaddress={ip},port={port},timeout={timeOut},passwd={password}";
+                userID = PULLSDK.Connect(_params);
+                return userID;
+            }
+            catch (Exception ex)
+            {
+                return IntPtr.Zero;
+            }
         }
 
         public IntPtr ConnectByRS485(string comPort, int baudRate, int deviceID, int timeOut, string password, ref IntPtr userID)
