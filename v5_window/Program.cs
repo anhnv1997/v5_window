@@ -8,6 +8,7 @@ using iParkingv5_window.Forms.SystemForms;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using Kztek.Tool;
 using Kztek.Tools;
+using KztekKeyRegister;
 using System.Diagnostics;
 
 namespace v6_window
@@ -26,16 +27,60 @@ namespace v6_window
 
         StartApp:
             {
-                const string appName = "v5_window";
+                const string appName = "IP_DA_V3_WD";
                 PathManagement.baseBath = LogHelper.SaveLogFolder = Application.StartupPath;
                 LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Khởi chạy ứng dụng");
-                //Application.Run(new frmTest());
-                //return;
-
+                string appCode = "IP_DA_V3_WD";
                 using (Mutex mutex = new Mutex(true, appName, out bool ownmutex))
                 {
                     if (ownmutex)
                     {
+                        //Application.Run(new frmTest());
+                        //return;
+                        //if (Environment.MachineName.ToUpper() != "VIETANHPC")
+                        //{
+                        //    var frmLicenseValidatorForm = new LicenseValidatorForm();
+                        //    frmLicenseValidatorForm.Init(appCode);
+                        //    try
+                        //    {
+                        //        if (frmLicenseValidatorForm.LoadSavedLicense() == null)
+                        //        {
+                        //            bool isOpenActiveForm = MessageBox.Show("Ứng dụng chưa được kích hoạt, bạn có muốn kích hoạt phần mềm?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
+
+                        //            if (isOpenActiveForm)
+                        //            {
+                        //                frmLicenseValidatorForm.ShowActivateForm();
+                        //            }
+                        //            else
+                        //            {
+                        //                Application.Exit();
+                        //                return;
+                        //            }
+                        //        }
+                        //    }
+                        //    catch (Exception ex)
+                        //    {
+                        //        bool isOpenActiveForm = MessageBox.Show("Ứng dụng chưa được kích hoạt, bạn có muốn kích hoạt phần mềm?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
+
+                        //        if (isOpenActiveForm)
+                        //        {
+                        //            frmLicenseValidatorForm.ShowActivateForm();
+                        //            if (!frmLicenseValidatorForm.LicenseActivated)
+                        //            {
+                        //                MessageBox.Show("Kích hoạt không thành công " + ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //                Application.Exit();
+                        //                return;
+                        //            }
+                        //        }
+                        //        else
+                        //        {
+                        //            Application.Exit();
+                        //            return;
+                        //        }
+                        //    }
+
+                        //}
+
                         LoadSystemConfig();
                         LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Mở giao diện đăng nhập hệ thống");
                         Application.Run(new frmLogin());
@@ -70,21 +115,38 @@ namespace v6_window
         }
         private static void LoadSystemConfig()
         {
-            ServerConfig? serverConfig = NewtonSoftHelper<ServerConfig>.DeserializeObjectFromPath(PathManagement.serverConfigPath);
-            if (serverConfig == null)
+            try
             {
-                MessageBox.Show("Không tìm thấy cấu hình server hoặc cấu hình không hợp lệ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Application.Exit();
-                return;
+                ServerConfig? serverConfig = NewtonSoftHelper<ServerConfig>.DeserializeObjectFromPath(PathManagement.serverConfigPath);
+                if (serverConfig == null)
+                {
+                    MessageBox.Show("Không tìm thấy cấu hình server hoặc cấu hình không hợp lệ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Application.Exit();
+                    return;
+                }
+                MinioHelper.EndPoint = serverConfig.MinioServerUrl;
+                MinioHelper.AccessKey = serverConfig.MinioServerUsername;
+                MinioHelper.SecretKey = serverConfig.MinioServerPassword;
+                KzParkingApiHelper.server = serverConfig.ParkingServerUrl;
             }
-            MinioHelper.EndPoint = serverConfig.MinioServerUrl;
-            MinioHelper.AccessKey = serverConfig.MinioServerUsername;
-            MinioHelper.SecretKey = serverConfig.MinioServerPassword;
-            KzParkingApiHelper.server = serverConfig.ParkingServerUrl;
+            catch (Exception ex)
+            {
+                MessageBox.Show("LoadServer: " + ex.Message + "\r\n" + ex.InnerException?.Message);
+            }
 
-            StaticPool.appOption = NewtonSoftHelper<AppOption>.DeserializeObjectFromPath(PathManagement.appOptionConfigPath) ?? new AppOption();
-            StaticPool.eInvoiceConfig = NewtonSoftHelper<EInvoiceConfig>.DeserializeObjectFromPath(PathManagement.einvoiceConfigPath) ?? new EInvoiceConfig();
-            StaticPool.lprConfig = NewtonSoftHelper<LprConfig>.DeserializeObjectFromPath(PathManagement.lprConfigPath) ?? new LprConfig();
+
+            try
+            {
+                StaticPool.appOption = NewtonSoftHelper<AppOption>.DeserializeObjectFromPath(PathManagement.appOptionConfigPath) ?? new AppOption();
+                StaticPool.eInvoiceConfig = NewtonSoftHelper<EInvoiceConfig>.DeserializeObjectFromPath(PathManagement.einvoiceConfigPath) ?? new EInvoiceConfig();
+                StaticPool.lprConfig = NewtonSoftHelper<LprConfig>.DeserializeObjectFromPath(PathManagement.lprConfigPath) ?? new LprConfig();
+                LogHelper.isSaveLog = StaticPool.appOption.IsSaveLog;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("LoadServer2: " + ex.Message + "\r\n" + ex.InnerException?.Message);
+            }
+
         }
     }
 }

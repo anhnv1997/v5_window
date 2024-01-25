@@ -2,6 +2,7 @@
 using iParking.ConfigurationManager.UserControls;
 using iParkingv5.Lpr.Objects;
 using iParkingv5.Objects.Configs;
+using iParkingv5.Objects.Databases;
 using iParkingv6.Objects.Datas;
 using Kztek.Tool;
 using Kztek.Tools;
@@ -24,6 +25,7 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
         ucServerConfig ucServer;
         ucAppOptions ucAppOptions;
         ucLprConnection ucLprConnection;
+        ucDatabaseConnection ucDatabaseConnection;
         #endregion End Properties
 
         #region Forms
@@ -35,6 +37,7 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
 
         private void FrmConnectionConfig_Load(object? sender, EventArgs e)
         {
+            AddTabDatabaseConfig();
             AddTabEInvoiceConfig();
             AddTabServerConfig();
             AddTabOptionConfig();
@@ -42,6 +45,8 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             this.Size = new Size(Properties.Settings.Default.prefer_width, Properties.Settings.Default.prefer_height);
             this.SizeChanged += FrmConnectionConfig_SizeChanged;
         }
+
+
 
         private void FrmConnectionConfig_SizeChanged(object? sender, EventArgs e)
         {
@@ -58,11 +63,28 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             SaveServerConfig();
             SaveLprConfig();
             SaveOptionConfig();
+            SaveDatabaseConfig();
             MessageBox.Show("Lưu cấu hình thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion End Controls In Form
 
         #region Private Function
+        private void AddTabDatabaseConfig()
+        {
+            TabPage tabDatabaseConfig = new TabPage();
+            tabDatabaseConfig.Text = "Database";
+            tabControl1.TabPages.Add(tabDatabaseConfig);
+
+            SQLConn? sqlconf = null;
+            FileXML.ReadXMLSQLConn(PathManagement.databaseConfigPath, ref sqlconf);
+
+            ucDatabaseConnection = new ucDatabaseConnection(sqlconf);
+
+            tabDatabaseConfig.Controls.Add(ucDatabaseConnection);
+            ucDatabaseConnection.Dock = DockStyle.Fill;
+            tabDatabaseConfig.AutoScroll = true;
+            ucDatabaseConnection.Dock = DockStyle.None;
+        }
         private void AddTabEInvoiceConfig()
         {
             TabPage tabEinvoice = new TabPage();
@@ -110,7 +132,7 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             tabLprConfig.Text = "Nhận dạng biển số";
             tabControl1.TabPages.Add(tabLprConfig);
 
-            LprConfig? lprConfig = NewtonSoftHelper<LprConfig>.DeserializeObjectFromPath(PathManagement.lprConfigPath)?? new LprConfig();
+            LprConfig? lprConfig = NewtonSoftHelper<LprConfig>.DeserializeObjectFromPath(PathManagement.lprConfigPath) ?? new LprConfig();
             ucLprConnection = new ucLprConnection(lprConfig);
             tabLprConfig.Controls.Add(ucLprConnection);
             ucLprConnection.Dock = DockStyle.Fill;
@@ -128,6 +150,14 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
         private void SaveOptionConfig()
         {
             NewtonSoftHelper<AppOption>.SaveConfig(ucAppOptions.GetAppOptionConfig(), PathManagement.appOptionConfigPath);
+        }
+        private void SaveDatabaseConfig()
+        {
+            SQLConn sqlConfig = ucDatabaseConnection.GetSqlConfig();
+            if (sqlConfig != null)
+            {
+                FileXML.WriteXMLSQLConn(PathManagement.databaseConfigPath, sqlConfig);
+            }
         }
         private void SaveServerConfig()
         {

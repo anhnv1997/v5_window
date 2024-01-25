@@ -50,6 +50,7 @@
             dgvWaitingEvents = new DataGridView();
             label1 = new Label();
             splitterDevelopeMode = new Splitter();
+            timerUpdateControllerConnection = new System.Windows.Forms.Timer(components);
             menuStrip1.SuspendLayout();
             panelMain.SuspendLayout();
             panelAppStatus.SuspendLayout();
@@ -276,6 +277,12 @@
             splitterDevelopeMode.TabStop = false;
             splitterDevelopeMode.Visible = false;
             // 
+            // timerUpdateControllerConnection
+            // 
+            timerUpdateControllerConnection.Enabled = true;
+            timerUpdateControllerConnection.Interval = 1000;
+            timerUpdateControllerConnection.Tick += timerUpdateControllerConnection_Tick;
+            // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -324,5 +331,6 @@
         private Label label1;
         private DataGridView dgvWaitingEvents;
         private ToolStripMenuItem tsmiAlarmReport;
+        private System.Windows.Forms.Timer timerUpdateControllerConnection;
     }
 }

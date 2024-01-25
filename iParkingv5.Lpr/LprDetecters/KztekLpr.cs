@@ -37,18 +37,37 @@ namespace iParkingv5.LprDetecter.LprDetecters
                 enableMultiplePlateNumber = true,
                 vehicleImage = bitmapCut
             };
-            carANPR!.Analyze(ref lPRObject_Result);
-
-            plateNumber = lPRObject_Result.plateNumber;
-            lprImage = lPRObject_Result.plateImage;
-            if (detectRegion != null)
+            if (isCar)
             {
-                originalImage = DrawRectangle((Bitmap)originalImage, detectRegion.Value.X, detectRegion.Value.Y, detectRegion.Value.Width, detectRegion.Value.Height, Color.Red);
-                originalImage = DrawRectangle((Bitmap)originalImage, lPRObject_Result.plateLocation.X + detectRegion.Value.X, 
-                                                                     lPRObject_Result.plateLocation.Y + detectRegion.Value.Y,
-                                                                     lPRObject_Result.plateLocation.Width,
-                                                                     lPRObject_Result.plateLocation.Height, Color.Blue);
+                carANPR!.Analyze(ref lPRObject_Result);
+
+                plateNumber = lPRObject_Result.plateNumber;
+                lprImage = lPRObject_Result.plateImage;
+                if (detectRegion != null)
+                {
+                    originalImage = DrawRectangle((Bitmap)originalImage, detectRegion.Value.X, detectRegion.Value.Y, detectRegion.Value.Width, detectRegion.Value.Height, Color.Red);
+                    originalImage = DrawRectangle((Bitmap)originalImage, lPRObject_Result.plateLocation.X + detectRegion.Value.X,
+                                                                         lPRObject_Result.plateLocation.Y + detectRegion.Value.Y,
+                                                                         lPRObject_Result.plateLocation.Width,
+                                                                         lPRObject_Result.plateLocation.Height, Color.Blue);
+                }
             }
+            else
+            {
+                motorANPR!.Analyze(ref lPRObject_Result);
+
+                plateNumber = lPRObject_Result.plateNumber;
+                lprImage = lPRObject_Result.plateImage;
+                if (detectRegion != null)
+                {
+                    originalImage = DrawRectangle((Bitmap)originalImage, detectRegion.Value.X, detectRegion.Value.Y, detectRegion.Value.Width, detectRegion.Value.Height, Color.Red);
+                    originalImage = DrawRectangle((Bitmap)originalImage, lPRObject_Result.plateLocation.X + detectRegion.Value.X,
+                                                                         lPRObject_Result.plateLocation.Y + detectRegion.Value.Y,
+                                                                         lPRObject_Result.plateLocation.Width,
+                                                                         lPRObject_Result.plateLocation.Height, Color.Blue);
+                }
+            }
+           
         ReturnResult:
             {
                 onLprDetectCompleteEvent?.Invoke(this, new Events.Events.LprDetectEventArgs()

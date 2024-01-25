@@ -29,6 +29,8 @@ namespace iParking.ConfigurationManager.UserControls
                 txtAllowOpenBarrieTime.Text = appOption.AllowBarrieDelayOpenTime.ToString();
                 txtWaitSwipeCardTime.Text = appOption.MinDelayCardTime.ToString();
                 cbPrintTemplate.SelectedIndex = appOption.PrintTemplate;
+                chbIsSaveLog.Checked = appOption.IsSaveLog;
+                numLoopDelay.Value = appOption.LoopDelay;
             }
             txtWaitSwipeCardTime.TextChanged += TxtWaitSwipeCardTime_TextChanged;
             txtAllowOpenBarrieTime.TextChanged += TxtAllowOpenBarrieTime_TextChanged;
@@ -60,6 +62,8 @@ namespace iParking.ConfigurationManager.UserControls
                 AllowBarrieDelayOpenTime = int.Parse(txtAllowOpenBarrieTime.Text),
                 MinDelayCardTime = int.Parse(txtWaitSwipeCardTime.Text),
                 PrintTemplate = cbPrintTemplate.SelectedIndex,
+                IsSaveLog = chbIsSaveLog.Checked,
+                LoopDelay = (int)numLoopDelay.Value,
             };
         }
         #endregion End Public Function

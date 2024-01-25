@@ -37,13 +37,6 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\D
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\LogFormat\log.html
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\LogFormat\log_item.html
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\LogFormat\style.css
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\DahuaLibRef\avnetsdk.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\DahuaLibRef\dhconfigsdk.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\DahuaLibRef\dhnetsdk.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\DahuaLibRef\dhplay.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\DahuaLibRef\Infra.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\DahuaLibRef\IvsDrawer.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\DahuaLibRef\StreamConvertor.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Resources\banks\abbank.png
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Resources\banks\agribank-logo-1CEEE70C76-seeklogo.com.png
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Resources\banks\bidv.png
@@ -329,10 +322,8 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\D
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\System.Reactive.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\System.Reactive.Linq.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\System.Security.Cryptography.ProtectedData.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\System.Security.Permissions.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\System.Text.Encodings.Web.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\System.Text.Json.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\System.Windows.Extensions.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\runtimes\linux-arm\native\libSystem.IO.Ports.Native.so
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\runtimes\linux-arm64\native\libSystem.IO.Ports.Native.so
@@ -348,9 +339,7 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\D
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Diagnostics.PerformanceCounter.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\runtimes\unix\lib\net6.0\System.IO.Ports.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.IO.Ports.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\AForge.Imaging.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\AForge.Video.DirectShowEx.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\AForge.VideoEx.dll
@@ -399,12 +388,6 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\D
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.RtspPlayer.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\AForge.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\AForge.xml
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\OpenCvSharp.pdb
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\OpenCvSharp.xml
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\OpenCvSharp.dll.config
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\SimpleLPR2.xml
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\OpenCvSharp.Extensions.pdb
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\OpenCvSharp.Extensions.xml
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.csproj.AssemblyReference.cache
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.DataForms.frmConfirm.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.DataForms.frmCustomerRegister.resources
@@ -459,3 +442,9 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\D
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.DataForms.frmSelectCustomer.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Usercontrols.ucEventInInfo.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Usercontrols.ucEventOutInfo.resources
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\System.CodeDom.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\System.Management.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Management.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Security.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\KztekKeyRegister.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Utilities.dll

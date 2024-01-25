@@ -1,22 +1,11 @@
-﻿using DahuaLib.DahuaFuntion;
-using IPaking.Ultility;
+﻿using IPaking.Ultility;
 using iParkingv5.Controller;
 using iParkingv5.Objects;
+using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.Datas;
 using iParkingv5.Objects.Enums;
-using iParkingv5_window.Usercontrols;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
-using IPGS.Object.Databases;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace iParkingv5_window.Forms.DataForms
 {
@@ -254,14 +243,14 @@ namespace iParkingv5_window.Forms.DataForms
                 CustomerId = customerId,
                 Enabled = true,
                 Deleted = false,
-                RegisteredVehicleIdentityMaps = new List<RegisteredVehicleIdentityMap>()
-                {
-                    new RegisteredVehicleIdentityMap()
-                    {
-                        RegisteredVehicleId = vehicleId,
-                        IdentityId = this.selectedIdentity!.Id,
-                    }
-                },
+                //RegisteredVehicleIdentityMaps = new List<RegisteredVehicleIdentityMap>()
+                //{
+                //    new RegisteredVehicleIdentityMap()
+                //    {
+                //        RegisteredVehicleId = vehicleId,
+                //        IdentityId = this.selectedIdentity!.Id,
+                //    }
+                //},
                 CreatedUtc = DateTime.Now.ToString(UltilityManagement.UTCFormat),
             };
 

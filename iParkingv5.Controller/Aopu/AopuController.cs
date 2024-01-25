@@ -367,10 +367,11 @@ namespace iParkingv5.Controller.Aopu
 
                 string maSauFormat2 = int.Parse(cardNumberHex.Substring(2, 2), NumberStyles.HexNumber).ToString("000") + ":" +
                                               int.Parse(cardNumberHex.Substring(4, 4), NumberStyles.HexNumber).ToString("00000");
-
+                string maSauFormat3 = int.Parse(cardNumberHex.Substring(2, 2), NumberStyles.HexNumber).ToString() + ":" +
+                                             int.Parse(cardNumberHex.Substring(4, 4), NumberStyles.HexNumber).ToString();
                 e.AllCardFormats.Add(maSauFormat1);
                 e.AllCardFormats.Add(maSauFormat2);
-
+                e.PreferCard = maSauFormat3;
             }
             e.ReaderIndex = Regex.IsMatch(readerIndex, @"^\d+$") ? Convert.ToInt32(readerIndex) : -1;
             OnCardEvent(e);
@@ -389,6 +390,21 @@ namespace iParkingv5.Controller.Aopu
         public bool OpenDoor2()
         {
             return TcpipObj.OpenDoorLong(1);
+        }
+
+        public Task<bool> AddFinger(List<string> fingerDatas)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> ModifyFInger(string userId, int fingerIndex, string fingerData)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteFinger(string userId, int fingerIndex)
+        {
+            throw new NotImplementedException();
         }
     }
 }

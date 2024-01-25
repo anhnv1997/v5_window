@@ -182,6 +182,7 @@ namespace iParkingv6.ApiManager
                         return Tuple.Create<string, string>(response.Content, string.Empty);
                     }
                 }
+
                 LogHelper.Log(logType: LogHelper.EmLogType.INFOR,
                               doi_tuong_tac_dong: LogHelper.EmObjectLogType.Api,
                               hanh_dong: method.ToString(),

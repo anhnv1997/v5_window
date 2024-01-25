@@ -38,11 +38,11 @@
             // 
             // lblMessage
             // 
-            lblMessage.Dock = DockStyle.Fill;
+            lblMessage.Dock = DockStyle.Top;
             lblMessage.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
             lblMessage.Location = new Point(0, 0);
             lblMessage.Name = "lblMessage";
-            lblMessage.Size = new Size(475, 135);
+            lblMessage.Size = new Size(649, 58);
             lblMessage.TabIndex = 0;
             lblMessage.Text = "label1";
             lblMessage.TextAlign = ContentAlignment.MiddleCenter;
@@ -52,9 +52,9 @@
             panelAction.Controls.Add(btnCancel1);
             panelAction.Controls.Add(btnOk);
             panelAction.Dock = DockStyle.Bottom;
-            panelAction.Location = new Point(0, 135);
+            panelAction.Location = new Point(0, 339);
             panelAction.Name = "panelAction";
-            panelAction.Size = new Size(475, 62);
+            panelAction.Size = new Size(649, 62);
             panelAction.TabIndex = 1;
             // 
             // btnCancel1
@@ -64,7 +64,7 @@
             btnCancel1.BorderStyle = BorderStyle.Fixed3D;
             btnCancel1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnCancel1.ForeColor = Color.Black;
-            btnCancel1.Location = new Point(403, 22);
+            btnCancel1.Location = new Point(577, 22);
             btnCancel1.Name = "btnCancel1";
             btnCancel1.Size = new Size(49, 22);
             btnCancel1.TabIndex = 3;
@@ -77,7 +77,7 @@
             btnOk.BorderStyle = BorderStyle.Fixed3D;
             btnOk.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnOk.ForeColor = Color.Black;
-            btnOk.Location = new Point(322, 22);
+            btnOk.Location = new Point(496, 22);
             btnOk.Name = "btnOk";
             btnOk.Size = new Size(75, 22);
             btnOk.TabIndex = 2;
@@ -88,7 +88,7 @@
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             AutoSize = true;
-            ClientSize = new Size(475, 197);
+            ClientSize = new Size(649, 401);
             Controls.Add(lblMessage);
             Controls.Add(panelAction);
             DoubleBuffered = true;

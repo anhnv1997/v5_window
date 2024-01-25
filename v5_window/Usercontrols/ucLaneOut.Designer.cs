@@ -50,6 +50,7 @@
             splitContainerEventContent = new SplitContainer();
             picLprImage = new MovablePictureBox();
             panel1 = new Panel();
+            btnOpenBarrie = new Button();
             btnPrintTicket = new Button();
             button1 = new Button();
             btnVoucher = new Button();
@@ -93,12 +94,12 @@
             // 
             lblLaneName.BackColor = Color.DarkRed;
             lblLaneName.Dock = DockStyle.Fill;
-            lblLaneName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            lblLaneName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             lblLaneName.ForeColor = SystemColors.ButtonHighlight;
             lblLaneName.Location = new Point(0, 0);
             lblLaneName.Margin = new Padding(0);
             lblLaneName.Name = "lblLaneName";
-            lblLaneName.Size = new Size(763, 43);
+            lblLaneName.Size = new Size(763, 30);
             lblLaneName.TabIndex = 0;
             lblLaneName.Text = "label1";
             lblLaneName.TextAlign = ContentAlignment.MiddleCenter;
@@ -109,13 +110,13 @@
             panelCameras.Dock = DockStyle.Left;
             panelCameras.Location = new Point(0, 0);
             panelCameras.Name = "panelCameras";
-            panelCameras.Size = new Size(241, 445);
+            panelCameras.Size = new Size(241, 454);
             panelCameras.TabIndex = 3;
             // 
             // splitContainerMain
             // 
             splitContainerMain.Dock = DockStyle.Fill;
-            splitContainerMain.Location = new Point(0, 43);
+            splitContainerMain.Location = new Point(0, 30);
             splitContainerMain.Margin = new Padding(0);
             splitContainerMain.Name = "splitContainerMain";
             splitContainerMain.Orientation = Orientation.Horizontal;
@@ -130,8 +131,8 @@
             // 
             splitContainerMain.Panel2.Controls.Add(splitContainerEventContent);
             splitContainerMain.Panel2.Controls.Add(lblResult);
-            splitContainerMain.Size = new Size(815, 635);
-            splitContainerMain.SplitterDistance = 445;
+            splitContainerMain.Size = new Size(815, 648);
+            splitContainerMain.SplitterDistance = 454;
             splitContainerMain.TabIndex = 4;
             // 
             // tableLayoutPanel1
@@ -153,7 +154,7 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(571, 445);
+            tableLayoutPanel1.Size = new Size(571, 454);
             tableLayoutPanel1.TabIndex = 5;
             // 
             // panel3
@@ -161,9 +162,9 @@
             panel3.BackColor = SystemColors.Control;
             panel3.Controls.Add(picOverviewImageIn);
             panel3.Dock = DockStyle.Fill;
-            panel3.Location = new Point(5, 242);
+            panel3.Location = new Point(5, 247);
             panel3.Name = "panel3";
-            panel3.Size = new Size(276, 198);
+            panel3.Size = new Size(276, 202);
             panel3.TabIndex = 1;
             // 
             // picOverviewImageIn
@@ -172,7 +173,7 @@
             picOverviewImageIn.Image = (Image)resources.GetObject("picOverviewImageIn.Image");
             picOverviewImageIn.Location = new Point(0, 0);
             picOverviewImageIn.Name = "picOverviewImageIn";
-            picOverviewImageIn.Size = new Size(276, 198);
+            picOverviewImageIn.Size = new Size(276, 202);
             picOverviewImageIn.SizeMode = PictureBoxSizeMode.StretchImage;
             picOverviewImageIn.TabIndex = 5;
             picOverviewImageIn.TabStop = false;
@@ -182,9 +183,9 @@
             panel2.BackColor = SystemColors.Control;
             panel2.Controls.Add(picOverviewImageOut);
             panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(289, 242);
+            panel2.Location = new Point(289, 247);
             panel2.Name = "panel2";
-            panel2.Size = new Size(277, 198);
+            panel2.Size = new Size(277, 202);
             panel2.TabIndex = 0;
             // 
             // picOverviewImageOut
@@ -193,7 +194,7 @@
             picOverviewImageOut.Image = (Image)resources.GetObject("picOverviewImageOut.Image");
             picOverviewImageOut.Location = new Point(0, 0);
             picOverviewImageOut.Name = "picOverviewImageOut";
-            picOverviewImageOut.Size = new Size(277, 198);
+            picOverviewImageOut.Size = new Size(277, 202);
             picOverviewImageOut.SizeMode = PictureBoxSizeMode.StretchImage;
             picOverviewImageOut.TabIndex = 5;
             picOverviewImageOut.TabStop = false;
@@ -205,7 +206,7 @@
             panel6.Dock = DockStyle.Fill;
             panel6.Location = new Point(289, 37);
             panel6.Name = "panel6";
-            panel6.Size = new Size(277, 197);
+            panel6.Size = new Size(277, 202);
             panel6.TabIndex = 3;
             // 
             // picVehicleImageOut
@@ -214,7 +215,7 @@
             picVehicleImageOut.Image = (Image)resources.GetObject("picVehicleImageOut.Image");
             picVehicleImageOut.Location = new Point(0, 0);
             picVehicleImageOut.Name = "picVehicleImageOut";
-            picVehicleImageOut.Size = new Size(277, 197);
+            picVehicleImageOut.Size = new Size(277, 202);
             picVehicleImageOut.SizeMode = PictureBoxSizeMode.StretchImage;
             picVehicleImageOut.TabIndex = 5;
             picVehicleImageOut.TabStop = false;
@@ -226,7 +227,7 @@
             panel5.Dock = DockStyle.Fill;
             panel5.Location = new Point(5, 37);
             panel5.Name = "panel5";
-            panel5.Size = new Size(276, 197);
+            panel5.Size = new Size(276, 202);
             panel5.TabIndex = 2;
             // 
             // picVehicleImageIn
@@ -235,7 +236,7 @@
             picVehicleImageIn.Image = (Image)resources.GetObject("picVehicleImageIn.Image");
             picVehicleImageIn.Location = new Point(0, 0);
             picVehicleImageIn.Name = "picVehicleImageIn";
-            picVehicleImageIn.Size = new Size(276, 197);
+            picVehicleImageIn.Size = new Size(276, 202);
             picVehicleImageIn.SizeMode = PictureBoxSizeMode.StretchImage;
             picVehicleImageIn.TabIndex = 5;
             picVehicleImageIn.TabStop = false;
@@ -243,7 +244,7 @@
             // label1
             // 
             label1.Dock = DockStyle.Fill;
-            label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point);
+            label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline);
             label1.ForeColor = Color.Green;
             label1.Location = new Point(5, 2);
             label1.Name = "label1";
@@ -255,7 +256,7 @@
             // label2
             // 
             label2.Dock = DockStyle.Fill;
-            label2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point);
+            label2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline);
             label2.ForeColor = Color.Maroon;
             label2.Location = new Point(289, 2);
             label2.Name = "label2";
@@ -268,7 +269,7 @@
             // 
             SplitterCamera.Location = new Point(241, 0);
             SplitterCamera.Name = "SplitterCamera";
-            SplitterCamera.Size = new Size(3, 445);
+            SplitterCamera.Size = new Size(3, 454);
             SplitterCamera.TabIndex = 4;
             SplitterCamera.TabStop = false;
             // 
@@ -288,7 +289,7 @@
             // 
             splitContainerEventContent.Panel2.AutoScroll = true;
             splitContainerEventContent.Panel2.Controls.Add(dgvEventContent);
-            splitContainerEventContent.Size = new Size(815, 152);
+            splitContainerEventContent.Size = new Size(815, 156);
             splitContainerEventContent.SplitterDistance = 454;
             splitContainerEventContent.TabIndex = 0;
             // 
@@ -298,24 +299,42 @@
             picLprImage.Image = (Image)resources.GetObject("picLprImage.Image");
             picLprImage.Location = new Point(0, 32);
             picLprImage.Name = "picLprImage";
-            picLprImage.Size = new Size(454, 52);
+            picLprImage.Size = new Size(454, 56);
             picLprImage.SizeMode = PictureBoxSizeMode.StretchImage;
             picLprImage.TabIndex = 4;
             picLprImage.TabStop = false;
             // 
             // panel1
             // 
+            panel1.AutoScroll = true;
+            panel1.Controls.Add(btnOpenBarrie);
             panel1.Controls.Add(btnPrintTicket);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(btnVoucher);
             panel1.Controls.Add(btnReTakePhoto);
             panel1.Controls.Add(btnWriteOut);
             panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 84);
+            panel1.Location = new Point(0, 88);
             panel1.Name = "panel1";
             panel1.Padding = new Padding(0, 3, 0, 3);
             panel1.Size = new Size(454, 68);
             panel1.TabIndex = 3;
+            // 
+            // btnOpenBarrie
+            // 
+            btnOpenBarrie.AutoSize = true;
+            btnOpenBarrie.BackColor = Color.Transparent;
+            btnOpenBarrie.Dock = DockStyle.Left;
+            btnOpenBarrie.Image = (Image)resources.GetObject("btnOpenBarrie.Image");
+            btnOpenBarrie.ImageAlign = ContentAlignment.TopCenter;
+            btnOpenBarrie.Location = new Point(432, 3);
+            btnOpenBarrie.Name = "btnOpenBarrie";
+            btnOpenBarrie.Size = new Size(106, 45);
+            btnOpenBarrie.TabIndex = 7;
+            btnOpenBarrie.Text = "Mở Barrie";
+            btnOpenBarrie.TextImageRelation = TextImageRelation.ImageAboveText;
+            btnOpenBarrie.UseVisualStyleBackColor = false;
+            btnOpenBarrie.Click += btnOpenBarrie_Click;
             // 
             // btnPrintTicket
             // 
@@ -325,7 +344,7 @@
             btnPrintTicket.ImageAlign = ContentAlignment.TopCenter;
             btnPrintTicket.Location = new Point(358, 3);
             btnPrintTicket.Name = "btnPrintTicket";
-            btnPrintTicket.Size = new Size(74, 62);
+            btnPrintTicket.Size = new Size(74, 45);
             btnPrintTicket.TabIndex = 3;
             btnPrintTicket.Text = "In Vé";
             btnPrintTicket.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -341,7 +360,7 @@
             button1.ImageAlign = ContentAlignment.TopCenter;
             button1.Location = new Point(257, 3);
             button1.Name = "button1";
-            button1.Size = new Size(101, 62);
+            button1.Size = new Size(101, 45);
             button1.TabIndex = 0;
             button1.Text = "TT - ONLINE";
             button1.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -356,7 +375,7 @@
             btnVoucher.ImageAlign = ContentAlignment.TopCenter;
             btnVoucher.Location = new Point(185, 3);
             btnVoucher.Name = "btnVoucher";
-            btnVoucher.Size = new Size(72, 62);
+            btnVoucher.Size = new Size(72, 45);
             btnVoucher.TabIndex = 0;
             btnVoucher.Text = "Voucher";
             btnVoucher.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -371,7 +390,7 @@
             btnReTakePhoto.ImageAlign = ContentAlignment.TopCenter;
             btnReTakePhoto.Location = new Point(98, 3);
             btnReTakePhoto.Name = "btnReTakePhoto";
-            btnReTakePhoto.Size = new Size(87, 62);
+            btnReTakePhoto.Size = new Size(87, 45);
             btnReTakePhoto.TabIndex = 1;
             btnReTakePhoto.Text = "Chụp lại";
             btnReTakePhoto.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -386,7 +405,7 @@
             btnWriteOut.ImageAlign = ContentAlignment.TopCenter;
             btnWriteOut.Location = new Point(0, 3);
             btnWriteOut.Name = "btnWriteOut";
-            btnWriteOut.Size = new Size(98, 62);
+            btnWriteOut.Size = new Size(98, 45);
             btnWriteOut.TabIndex = 2;
             btnWriteOut.Text = "Ghi Vé Ra";
             btnWriteOut.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -397,7 +416,7 @@
             // 
             txtPlate.BackColor = SystemColors.HighlightText;
             txtPlate.Dock = DockStyle.Top;
-            txtPlate.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            txtPlate.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             txtPlate.Location = new Point(0, 0);
             txtPlate.Name = "txtPlate";
             txtPlate.Size = new Size(454, 32);
@@ -422,12 +441,12 @@
             dgvEventContent.ReadOnly = true;
             dgvEventContent.RowHeadersVisible = false;
             dgvEventContent.RowTemplate.Height = 29;
-            dgvEventContent.Size = new Size(357, 152);
+            dgvEventContent.Size = new Size(357, 156);
             dgvEventContent.TabIndex = 1;
             // 
             // Column1
             // 
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             Column1.DefaultCellStyle = dataGridViewCellStyle2;
             Column1.HeaderText = "Header";
             Column1.Name = "Column1";
@@ -437,7 +456,7 @@
             // Column2
             // 
             Column2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 11.25F);
             Column2.DefaultCellStyle = dataGridViewCellStyle3;
             Column2.HeaderText = "Content";
             Column2.Name = "Column2";
@@ -447,7 +466,7 @@
             // 
             lblResult.BackColor = Color.FromArgb(0, 64, 0);
             lblResult.Dock = DockStyle.Top;
-            lblResult.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            lblResult.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             lblResult.ForeColor = SystemColors.ButtonHighlight;
             lblResult.Location = new Point(0, 0);
             lblResult.Name = "lblResult";
@@ -466,7 +485,7 @@
             panel4.Location = new Point(0, 0);
             panel4.Margin = new Padding(0);
             panel4.Name = "panel4";
-            panel4.Size = new Size(815, 43);
+            panel4.Size = new Size(815, 30);
             panel4.TabIndex = 5;
             // 
             // picSetting
@@ -476,7 +495,7 @@
             picSetting.Image = (Image)resources.GetObject("picSetting.Image");
             picSetting.Location = new Point(690, 0);
             picSetting.Name = "picSetting";
-            picSetting.Size = new Size(52, 43);
+            picSetting.Size = new Size(52, 30);
             picSetting.SizeMode = PictureBoxSizeMode.Zoom;
             picSetting.TabIndex = 6;
             picSetting.TabStop = false;
@@ -491,7 +510,7 @@
             panel7.Location = new Point(742, 0);
             panel7.Margin = new Padding(0);
             panel7.Name = "panel7";
-            panel7.Size = new Size(21, 43);
+            panel7.Size = new Size(21, 30);
             panel7.TabIndex = 8;
             // 
             // pictureBox2
@@ -501,7 +520,7 @@
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
             pictureBox2.Location = new Point(763, 0);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(52, 43);
+            pictureBox2.Size = new Size(52, 30);
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 7;
             pictureBox2.TabStop = false;
@@ -578,5 +597,6 @@
         private Panel panel7;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
+        private Button btnOpenBarrie;
     }
 }

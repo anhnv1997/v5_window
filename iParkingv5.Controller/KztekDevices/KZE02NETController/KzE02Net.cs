@@ -120,7 +120,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
                     this.IsBusy = false;
                     // Trang thai thiet bij
                     this.ControllerInfo.isConnect = response != "";
-                    //response = "GetEvent?/Style=Card/UserID=100/LenCard=4/Card=7C19F640/Reader=01/DateTime=YYYYMMDDhhmmss/CardState=U/AccessState=1/Door=00/StateMSG=00";
+                    //response = "GetEvent?/Style=Card/UserID=100/LenCard=4/Card=00000010/Reader=02/DateTime=YYYYMMDDhhmmss/CardState=U/AccessState=1/Door=00/StateMSG=00";
                     //AccessCardGrant: Char(2) + GetEvent?/Style=Card/UserID=100/LenCard=4/Card=7C19F640/Reader=01/DateTime=YYYYMMDDhhmmss/CardState=U/AccessState=1/Door=00/StateMSG=00 + char(3)
                     //AccessCardDenie: Char(2) + GetEvent?/Style=Card/UserID=Null/LenCard=4/Card=7C19F640/Reader=01/DateTime=YYYYMMDDhhmmss/CardState=U/AccessState=1/Door=00/StateMSG=00 + char(3)
                     //InputEvent     : Char(2) + GetEvent?/Style=input/Input=INPUT1/DateTime=YYYYMMDDhhmmss + char(3)
@@ -214,6 +214,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
             }
             string str_readerIndex = map.ContainsKey("reader") ? map["reader"] : "";
             e.ReaderIndex = Regex.IsMatch(str_readerIndex, @"^\d+$") ? Convert.ToInt32(str_readerIndex) : -1;
+            //e.PreferCard = "00000001";
             OnCardEvent(e);
             DeleteCardEvent();
         }

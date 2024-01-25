@@ -14,7 +14,7 @@ namespace iParkingv5_window.Usercontrols.CameraConfiguration
     public partial class frmCameraConfigSet : Form
     {
         private Image img;
-        public Rectangle? config = null;
+        private Rectangle? config = null;
         private Point? StartPoint = null;
         private bool isDrawing = false;
         public frmCameraConfigSet(Image img, Rectangle? config)
@@ -26,7 +26,6 @@ namespace iParkingv5_window.Usercontrols.CameraConfiguration
             this.Load += FrmCameraConfigSet_Load;
             pic.Paint += Pic_Paint;
             pic.MouseUp += Pic_MouseUp;
-            pic.Invalidate();
         }
         private void FrmCameraConfigSet_Load(object? sender, EventArgs e)
         {
@@ -37,11 +36,14 @@ namespace iParkingv5_window.Usercontrols.CameraConfiguration
                 pic.Image = img;
                 pic.Size = img.Size;
             }
+            this.config = GetSaveDisplayConfig(config);
+            pic.Invalidate();
             panelActions.Height = btnCancel1.Height + StaticPool.baseSize * 3;
-           
+
             btnCancel1.Location = new Point(panelActions.Width - btnCancel1.Width - StaticPool.baseSize * 2,
                                             StaticPool.baseSize);
-            btnOk1.Location = new Point(btnCancel1.Location.X - btnCancel1.Width - StaticPool.baseSize,
+
+            btnOk1.Location = new Point(btnCancel1.Location.X - btnOk1.Width - StaticPool.baseSize,
                                         StaticPool.baseSize);
         }
 
@@ -83,6 +85,31 @@ namespace iParkingv5_window.Usercontrols.CameraConfiguration
                                         Math.Abs(StartPoint.Value.Y - e.Y));
                 pic.Invalidate();
             }
+        }
+        public Rectangle? GetSaveConfig()
+        {
+            if (pic.Image == null || config == null)
+            {
+                return null;
+            }
+            float ratioWidth = (float)pic.Width / pic.Image.Width;
+            float ratioHeight = (float)pic.Height / pic.Image.Height;
+
+            return new Rectangle((int)(config.Value.X / ratioWidth), (int)(config.Value.Y / ratioHeight),
+                                (int)(config.Value.Width / ratioWidth), (int)(config.Value.Height / ratioHeight));
+        }
+
+        public Rectangle? GetSaveDisplayConfig(Rectangle? config)
+        {
+            if (pic.Image == null || config == null)
+            {
+                return null;
+            }
+            float ratioWidth = (float)pic.Width / pic.Image.Width;
+            float ratioHeight = (float)pic.Height / pic.Image.Height;
+
+            return new Rectangle((int)(config.Value.X * ratioWidth), (int)(config.Value.Y * ratioHeight),
+                                (int)(config.Value.Width * ratioWidth), (int)(config.Value.Height * ratioHeight));
         }
     }
 }

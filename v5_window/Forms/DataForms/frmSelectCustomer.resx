@@ -117,42 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="Column2.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Column3.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Column8.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Column5.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Column6.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Column4.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Column7.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Column1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnOk1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAcNJREFUWEft
-        180rfUEcx/ErkjyWhbXsbH92+iGs2Ckl/wUriTyUPBXyP0jZkD9A8rz0X+jnsfCzxfuDqemYmXPm3rOg
-        7qdeOUYzX3PPmTlzC+X8ttRgABvYxTkusI81DKEOuacZKvCMtxSPWEcTcskoHuAqFnKFYdhpwCaS7c5U
-        YB6vcBXIahqKip9CbZdqSMsckoMVS2OdfF2/oBfBjKDUmRt6bv5iB0/oRDB6eG7hGiyWKa60YvDzMpxl
-        uAaLdY8/UHT/z7D48VsgVVBH14AxNPMuKLU4gNrvUA1v+pAcLJavuBG8DaV+/GnFZQHebCPZIassxWUP
-        3hwi2eEYLVi12pKyFheN580Rkh22YLKE5N9VvBtKWnHRJL3x3QKznSoTMO16R3RAMUvN7udiT+hbVuDq
-        pF1xDCb6JP4jZuZGcC9IW4b2P9H29TOmuPTAmywb0ThMYotri69EMFqnrs62KbQjprjo9Z6aevyDa4BS
-        6ICS+biW5+tYNFamU5CdSbgGK4aWbnTyOJKp7yw0VtHRoVSvUVeBED3xupW5pBE6193AVcx2jRloZ8w9
-        WsP90LnffDERXet7gzay1HVezg9KofAOPwTSgWg4OnQAAAAASUVORK5CYII=
-</value>
-  </data>
 </root>

@@ -55,6 +55,12 @@
     <Compile Update="Forms\ReportForms\frmReportMoney.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\SystemForms\frmLoading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\SystemForms\frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Usercontrols\BuildControls\ucLoading.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -95,12 +101,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\ReportForms\frmReportInOut.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\SystemForms\frmLoading.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\SystemForms\frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Usercontrols\MovablePictureBox.cs">

@@ -23,6 +23,7 @@ namespace iParkingv5.Controller
                 EmControllerType.MT166 => null,
                 EmControllerType.INGRESSUS => new ZktecoPull() { ControllerInfo = bdk },
                 EmControllerType.E02_NET => new AopuController() { ControllerInfo = bdk },
+                EmControllerType.SC200 => new SC200Devices.SC200() { ControllerInfo = bdk },
                 _ => null,
             };
         }
@@ -35,6 +36,7 @@ namespace iParkingv5.Controller
             MT166 = 3,
             INGRESSUS = 4,
             E02_NET = 5,
+            SC200 = 6,
         }
     }
 }

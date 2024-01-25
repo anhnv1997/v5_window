@@ -32,6 +32,8 @@ namespace iParkingv5_window.Usercontrols
         #region Public Function
         public void UpdateMaxPage(int maxPage)
         {
+            this.SuspendLayout();
+            panelPages.SuspendLayout();
             this.maxPage = maxPage;
             foreach (Control item in panelPages.Controls)
             {
@@ -47,6 +49,7 @@ namespace iParkingv5_window.Usercontrols
             for (int i = 0; i < maxPage; i++)
             {
                 lblPageIndex lblPageIndex = new lblPageIndex(i + 1);
+                lblPageIndex.BackColor = Color.Transparent;
                 lblPageIndex.Click += LblPageIndex_Click;
                 panelPages.Controls.Add(lblPageIndex);
                 lblPageIndex.Dock = DockStyle.Left;
@@ -59,6 +62,8 @@ namespace iParkingv5_window.Usercontrols
             currentPage = 0;
             panelPages.AutoScroll = true;
             this.Height = panelPages.Height;
+            this.ResumeLayout();
+            panelPages.ResumeLayout();
         }
 
         private void LblPageIndex_Click(object? sender, EventArgs e)

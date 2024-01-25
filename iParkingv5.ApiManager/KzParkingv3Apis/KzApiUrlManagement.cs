@@ -9,6 +9,7 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         public static string BaseRoute => "api";
         #region -- USER -- OK
         public static string PostLoginRoute => "Auth/Login";
+        public static string summaryRoute = "Event-Out/Summary";
         #endregion
 
         public enum EmObjectType
@@ -45,7 +46,8 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
                     return $"Identity-Group/{objectId}";
                 case EmObjectType.RegisteredVehicle:
                     return $"Registered-Vehicle/{objectId}";
-
+                case EmObjectType.AbnormalEvent:
+                    return $"Abnormal-Event/{objectId}";
                 case EmObjectType.EventOut:
                     return $"Event-Out/{objectId}";
                 default:
@@ -67,6 +69,8 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
                     return $"Customer-Group";
                 case EmObjectType.IdentityGroup:
                     return $"Identity-Group";
+                case EmObjectType.AbnormalEvent:
+                    return $"Abnormal-Event/";
                 case EmObjectType.RegisteredVehicle:
                     return $"Registered-Vehicle";
                 default:
@@ -90,6 +94,8 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
                     return $"Identity-Group/";
                 case EmObjectType.RegisteredVehicle:
                     return $"Registered-Vehicle/";
+                case EmObjectType.AbnormalEvent:
+                    return $"Abnormal-Event/";
                 default:
                     return $"{emObjectType}";
             }
@@ -110,6 +116,8 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
                     return $"Identity-Group/{id}";
                 case EmObjectType.RegisteredVehicle:
                     return $"Registered-Vehicle/{id}";
+                case EmObjectType.AbnormalEvent:
+                    return $"Abnormal-Event/{id}";
                 default:
                     return $"{emObjectType}/{id}";
             }
@@ -130,6 +138,8 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
                     return $"Identity-Group/{objectId}";
                 case EmObjectType.RegisteredVehicle:
                     return $"Registered-Vehicle/{objectId}";
+                case EmObjectType.AbnormalEvent:
+                    return $"Abnormal-Event/{objectId}";
                 default:
                     return $"{emObjectType}/{objectId}";
             }

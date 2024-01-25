@@ -23,6 +23,12 @@ namespace iParkingv5.Objects
             PINT_1013,
             PINT_1014,
             PINT_1015,
+            PINT_1016,
+            PINT_1017,
+            /// <summary>
+            /// Plate number in and out are not same
+            /// </summary>
+            PINT_1018,
             PINT_4001,
             PINT_4002,
             PINT_4003,
@@ -48,8 +54,12 @@ namespace iParkingv5.Objects
         /// <param name="language">0 - Tiếng Việt, 1 - Tiếng Anh</param>
         /// </summary>
         /// <returns></returns>
-        public static string ToString(EmApiErrorMessage errorMessage, int language)
+        public static string ToString(EmApiErrorMessage? errorMessage, int language = 0)
         {
+            if (errorMessage == null)
+            {
+                return string.Empty;
+            }
             switch (errorMessage)
             {
                 case EmApiErrorMessage.PINT_1001:
@@ -63,25 +73,31 @@ namespace iParkingv5.Objects
                 case EmApiErrorMessage.PINT_1005:
                     return language == 0 ? "Tên đăng nhập đã tồn tại trong hệ thống" : "Duplicated user name";
                 case EmApiErrorMessage.PINT_1006:
-                    return language == 0 ? "Phương tiện đã hết hạn sử dụng" : "Registered vehicle expired";
+                    return language == 0 ? "Biển số xe đã tồn tại trong hệ thống" : "Duplicated Plate Number";
                 case EmApiErrorMessage.PINT_1007:
-                    return language == 0 ? "Phượng tiện đang bị khóa" : "Registered vehicle not enabled";
+                    return language == 0 ? "Phương tiện đã hết hạn sử dụng" : "Registered vehicle expired";
                 case EmApiErrorMessage.PINT_1008:
-                    return language == 0 ? "Phương tiện chưa được kích hoạt" : "Registered vehicle not activated";
+                    return language == 0 ? "Phượng tiện đang bị khóa" : "Registered vehicle not enabled";
                 case EmApiErrorMessage.PINT_1009:
-                    return language == 0 ? "Identity not in use" : "Identity not in use";
+                    return language == 0 ? "Phương tiện chưa được kích hoạt" : "Registered vehicle not activated";
                 case EmApiErrorMessage.PINT_1010:
-                    return language == 0 ? "Xe đang trong bãi" : "Vehicle already in parking lot";
+                    return language == 0 ? "Identity not in use" : "Identity not in use";
                 case EmApiErrorMessage.PINT_1011:
-                    return language == 0 ? "Xe chưa vào bãi" : "Vehicle not in parking lot";
+                    return language == 0 ? "Xe đang trong bãi" : "Vehicle already in parking lot";
                 case EmApiErrorMessage.PINT_1012:
-                    return language == 0 ? "Biển số không khớp với biển số đăng ký" : "Plate number does not correspond to any registered vehicle";
+                    return language == 0 ? "Xe chưa vào bãi" : "Vehicle not in parking lot";
                 case EmApiErrorMessage.PINT_1013:
-                    return language == 0 ? "Nhóm định danh không được sử dụng với làn" : "Identity group not granted access to this lane";
+                    return language == 0 ? "Biển số không khớp với biển số đăng ký" : "Plate number does not correspond to any registered vehicle";
                 case EmApiErrorMessage.PINT_1014:
-                    return language == 0 ? "Nhóm định danh chưa được kích hoạt" : "Identity group not enabled";
+                    return language == 0 ? "Nhóm định danh không được sử dụng với làn" : "Identity group not granted access to this lane";
                 case EmApiErrorMessage.PINT_1015:
+                    return language == 0 ? "Nhóm định danh chưa được kích hoạt" : "Identity group not enabled";
+                case EmApiErrorMessage.PINT_1016:
                     return language == 0 ? "Nhóm định danh - sai giờ sử dụng" : "Identity group not enabled in this time";
+                case EmApiErrorMessage.PINT_1017:
+                    return language == 0 ? "This Identity is not the one used for check in" : "This Identity is not the one used for check in";
+                case EmApiErrorMessage.PINT_1018:
+                    return language == 0 ? "Biển số vào ra không khớp" : "Plate number in and out are not same";
                 case EmApiErrorMessage.PINT_4001:
                     return language == 0 ? "Không tìm thấy thông tin camera" : "Camera not found";
                 case EmApiErrorMessage.PINT_4002:
@@ -93,7 +109,7 @@ namespace iParkingv5.Objects
                 case EmApiErrorMessage.PINT_4005:
                     return language == 0 ? "Không tìm thấy thông tin khách hàng" : "Customer not found";
                 case EmApiErrorMessage.PINT_4006:
-                    return language == 0 ? "Không tìm thấy thồn tin cổng" : "Gate not found";
+                    return language == 0 ? "Không tìm thấy thông tin cổng" : "Gate not found";
                 case EmApiErrorMessage.PINT_4007:
                     return language == 0 ? "Không tìm thấy thông tin định danh" : "Identity not found";
                 case EmApiErrorMessage.PINT_4008:

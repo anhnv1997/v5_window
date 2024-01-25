@@ -9,6 +9,7 @@
         public static string einvoiceConfigPath => baseBath + "/configs/app/einvoice.txt";
         public static string appOptionConfigPath => baseBath + "/configs/app/option.txt";
         public static string appDisplayConfigPath => baseBath + "/configs/app/displayConfig.txt";
+        public static string databaseConfigPath => baseBath + "/configs/app/database.xml";
         public static string appPrintTemplateConfigPath(string printTemplateName) => baseBath + $"/configs/app/print/{printTemplateName}.html";
         #endregion END APP CONFIG PATH
 

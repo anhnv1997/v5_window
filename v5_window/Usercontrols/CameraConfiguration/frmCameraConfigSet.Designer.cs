@@ -44,14 +44,16 @@
             panelCameraView.Dock = DockStyle.Fill;
             panelCameraView.Location = new Point(0, 0);
             panelCameraView.Name = "panelCameraView";
-            panelCameraView.Size = new Size(800, 381);
+            panelCameraView.Size = new Size(934, 462);
             panelCameraView.TabIndex = 0;
             // 
             // pic
             // 
+            pic.Dock = DockStyle.Fill;
             pic.Location = new Point(0, 0);
             pic.Name = "pic";
-            pic.Size = new Size(100, 50);
+            pic.Size = new Size(934, 462);
+            pic.SizeMode = PictureBoxSizeMode.Zoom;
             pic.TabIndex = 0;
             pic.TabStop = false;
             pic.MouseDown += pic_MouseDown;
@@ -64,7 +66,7 @@
             btnOk1.BorderStyle = BorderStyle.Fixed3D;
             btnOk1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnOk1.ForeColor = Color.Black;
-            btnOk1.Location = new Point(573, 16);
+            btnOk1.Location = new Point(707, 16);
             btnOk1.Name = "btnOk1";
             btnOk1.Size = new Size(75, 22);
             btnOk1.TabIndex = 3;
@@ -77,7 +79,7 @@
             btnCancel1.BorderStyle = BorderStyle.Fixed3D;
             btnCancel1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnCancel1.ForeColor = Color.Black;
-            btnCancel1.Location = new Point(694, 16);
+            btnCancel1.Location = new Point(828, 16);
             btnCancel1.Name = "btnCancel1";
             btnCancel1.Size = new Size(49, 22);
             btnCancel1.TabIndex = 4;
@@ -88,21 +90,22 @@
             panelActions.Controls.Add(btnCancel1);
             panelActions.Controls.Add(btnOk1);
             panelActions.Dock = DockStyle.Bottom;
-            panelActions.Location = new Point(0, 381);
+            panelActions.Location = new Point(0, 462);
             panelActions.Name = "panelActions";
-            panelActions.Size = new Size(800, 69);
+            panelActions.Size = new Size(934, 69);
             panelActions.TabIndex = 1;
             // 
             // frmCameraConfigSet
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(934, 531);
             Controls.Add(panelCameraView);
             Controls.Add(panelActions);
+            MaximizeBox = false;
             Name = "frmCameraConfigSet";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Cấu hình vùng nhận diện cho Camera";
-            WindowState = FormWindowState.Maximized;
             panelCameraView.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pic).EndInit();
             panelActions.ResumeLayout(false);

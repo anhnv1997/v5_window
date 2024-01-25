@@ -18,6 +18,8 @@ namespace iParkingv6.Objects.Datas
         public bool enabled { get; set; }
         public bool deleted { get; set; }
         public string createdUtc { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
         public string createdBy { get; set; }
         public object updatedUtc { get; set; }
         public object updatedBy { get; set; }

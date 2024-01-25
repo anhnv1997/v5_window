@@ -16,5 +16,7 @@ namespace iParkingv5.Objects.Configs
         /// Mẫu phiếu in
         /// </summary>
         public int PrintTemplate { get; set; } = (int)EmPrintTemplate.BaseTemplate;
+        public bool IsSaveLog { get; set; }
+        public int LoopDelay { get; set; } = 0;
     }
 }

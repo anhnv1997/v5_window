@@ -78,26 +78,7 @@ namespace iParkingv5_window.Usercontrols
 
             return isValidControllerIdAndReader;
         }
-        //private static List<CardEventArgs> GCColectLastEventDatas(iLane iLane, CardEventArgs ce, DateTime eventTime)
-        //{
-        //    List<CardEventArgs> deleteEvents = new List<CardEventArgs>();
-        //    foreach (var item in iLane.lastCardEventDatas)
-        //    {
-        //        if ((eventTime - item.EventTime).TotalSeconds > StaticPool.appOption.MinDelayCardTime * 1000)
-        //        {
-        //            deleteEvents.Add(item);
-        //        }
-        //    }
-
-        //    foreach (var item in deleteEvents)
-        //    {
-        //        iLane.lastCardEventDatas.Remove(item);
-        //    }
-
-        //    return deleteEvents;
-        //}
-
-        public static void DisplayLed(string plate, DateTime datetimeIn, Identity identity, IdentityGroup identityGroup, string message, string laneId)
+        public static void DisplayLed(string plate, DateTime datetimeIn, Identity? identity, IdentityGroup? identityGroup, string message, string laneId)
         {
             foreach (Lane item in StaticPool.lanes)
             {
@@ -120,9 +101,9 @@ namespace iParkingv5_window.Usercontrols
                     {
                         ParkingData parkingData = new ParkingData();
                         parkingData.Plate = plate;
-                        parkingData.CardNo = identity.Name;
-                        parkingData.CardNumber = identity.Code;
-                        parkingData.CardType = identityGroup.Type.ToString();
+                        parkingData.CardNo = identity?.Name ?? "";
+                        parkingData.CardNumber = identity?.Code ?? "";
+                        parkingData.CardType = identityGroup?.Type.ToString() ?? "";
                         parkingData.DatetimeIn = datetimeIn;
                         parkingData.DatetimeOut = null;
                         parkingData.EventStatus = message;
@@ -159,10 +140,9 @@ namespace iParkingv5_window.Usercontrols
                 lblResult.Refresh();
             });
         }
-
         public static string GetBaseImageKey(string laneName, string cardNumber, string plate, DateTime eventTime)
         {
-            string imageKey = eventTime.ToString($"{laneName}/yyyy/MM/dd/{cardNumber}_{plate}_HH_mm_ss_ffff");
+            string imageKey = $"{laneName}/{eventTime.ToString("yyyy/MM/dd")}/{cardNumber}_{plate}" + eventTime.ToString("_HH_mm_ss_ffff");
             return imageKey;
         }
 

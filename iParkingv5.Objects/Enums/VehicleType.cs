@@ -33,7 +33,7 @@ namespace iParkingv5.Objects.Enums
             /// <summary>
             /// Xe máy điện
             /// </summary>
-            ElectricalMotorBike =3,
+            ElectricalMotorBike = 3,
 
             /// <summary>
             /// Xe đạp
@@ -91,5 +91,21 @@ namespace iParkingv5.Objects.Enums
             IdentityGroups = new List<IdentityGroup>();
             RegisteredVehicles = new List<RegisteredVehicle>();
         }
+        public static string GetVehicleTypeName(List<VehicleType>? vehicleTypes, int id)
+        {
+            if (vehicleTypes == null)
+            {
+                return string.Empty;
+            }
+            foreach (var item in vehicleTypes)
+            {
+                if (item.Id == id)
+                {
+                    return item.Name;
+                }
+            }
+            return string.Empty;
+        }
+
     }
 }

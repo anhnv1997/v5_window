@@ -34,14 +34,5 @@ namespace iParkingv5.Objects.Datas
         public string UpdatedUtc { get; set; }
         public Guid? UpdatedBy { get; set; }
 
-        public VehicleType VehicleType { get; set; }
-        public Customer Customer { get; set; }
-
-        public ICollection<RegisteredVehicleIdentityMap> RegisteredVehicleIdentityMaps { get; set; }
-
-        public RegisteredVehicle()
-        {
-            RegisteredVehicleIdentityMaps = new List<RegisteredVehicleIdentityMap>();
-        }
     }
 }

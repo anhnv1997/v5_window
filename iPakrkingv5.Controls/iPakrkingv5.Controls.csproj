@@ -1,0 +1,82 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Platforms>AnyCPU;x86</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IPaking.Ultility\IPaking.Ultility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Controls\Buttons\LblCancel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Controls\Buttons\LblDelete.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Controls\Buttons\LblExcel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Controls\Buttons\LblLogin.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Controls\Buttons\LblOk.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Controls\Buttons\LblPrint.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Controls\Buttons\LblSearch.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Controls\Buttons\LblSetting.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Update="Usercontrols\BuildControls\ucLoading.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Usercontrols\BuildControls\ucNotify.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Usercontrols\lblPageIndex.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Usercontrols\MovablePictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Usercontrols\ucPages.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>

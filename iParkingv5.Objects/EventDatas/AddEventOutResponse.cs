@@ -1,4 +1,5 @@
 ﻿using iParkingv5.Objects.Datas;
+using iParkingv6.Objects.Datas;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace iParkingv5.Objects.EventDatas
         public List<string> eventInFileKeys { get; set; }
        
         public string lastPaymentUtc { get; set; }
-        public long fee { get; set; }
+        public long charge { get; set; }
         public long discount { get; set; }
         public long paid { get; set; }
         public bool free { get; set; }
@@ -34,6 +35,9 @@ namespace iParkingv5.Objects.EventDatas
         public bool OpenBarrier { get; set; }
         public int AbnormalCode { get; set; }
         public RegisteredVehicle? RegisteredVehicle { get; set; }
+        public Customer? Customer { get; set; }
+        public CustomerGroup? CustomerGroup { get; set; }
+
         public Identity? Identity { get; set; }
         public DateTime? DatetimeIn
         {

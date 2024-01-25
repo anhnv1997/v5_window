@@ -6,16 +6,34 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Platforms>x64</Platforms>
+    <Platforms>x64;x86</Platforms>
     <Version>1.0.0.1</Version>
+    <ApplicationIcon>bin\x64\Debug\net6.0-windows\icons8_parking_2.ico</ApplicationIcon>
+    <PackageIcon>icons8_parking_32px.png</PackageIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="bin\x64\Debug\net6.0-windows\icons8_parking_2.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\x64\Debug\net6.0-windows\icons8_parking_32px.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Minio" Version="5.0.0" />
     <PackageReference Include="SpreadsheetLight" Version="3.5.0" />
+    <PackageReference Include="System.Management" Version="7.0.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\..\BaseLib\Kztek.Cameras\Kztek.Cameras.csproj" />
+    <ProjectReference Include="..\..\..\..\..\..\..\BaseLib\Kztek.LPR\Kztek.LPR.csproj" />
+    <ProjectReference Include="..\..\..\..\..\..\..\BaseLib\Kztek.RtspPlayer\Kztek.RtspPlayer\Kztek.RtspPlayer.csproj" />
     <ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\IPGS.Ultility\IPGS.Ultility.csproj" />
     <ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\Kztek.Tool\Kztek.Tool.csproj" />
     <ProjectReference Include="..\IPaking.Ultility\IPaking.Ultility.csproj" />
@@ -36,14 +54,14 @@
     <Reference Include="AForge.VideoEx">
       <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\AForge.VideoEx.dll</HintPath>
     </Reference>
-    <Reference Include="Kztek.Cameras">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\Kztek.Cameras.dll</HintPath>
+    <Reference Include="Kztek.Security">
+      <HintPath>C:\Users\Admin\OneDrive\Desktop\KeyLib\Kztek.Security.dll</HintPath>
     </Reference>
-    <Reference Include="Kztek.LPR">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\Kztek.LPR.dll</HintPath>
+    <Reference Include="Kztek.Utilities">
+      <HintPath>C:\Users\Admin\OneDrive\Desktop\KeyLib\Kztek.Utilities.dll</HintPath>
     </Reference>
-    <Reference Include="Kztek.RtspPlayer">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\Kztek.RtspPlayer.dll</HintPath>
+    <Reference Include="KztekKeyRegister">
+      <HintPath>C:\Users\Admin\OneDrive\Desktop\KeyLib\KztekKeyRegister.dll</HintPath>
     </Reference>
     <Reference Include="RtspClientSharp">
       <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\RtspClientSharp.dll</HintPath>
@@ -78,5 +96,9 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Forms\SystemForms\" />
   </ItemGroup>
 </Project>

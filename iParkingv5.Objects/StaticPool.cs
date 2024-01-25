@@ -1,6 +1,7 @@
 ﻿using iParkingv5.Lpr.Objects;
 using iParkingv5.LprDetecter.LprDetecters;
 using iParkingv5.Objects.Configs;
+using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.Datas;
 using iParkingv6.Objects.Datas;
 using Kztek.LPR;
@@ -32,6 +33,7 @@ namespace iParkingv5.Objects
         public static ILpr LprDetect;
 
         public static CustomerGroupCollection customerGroupCollection = new CustomerGroupCollection();
+        public static Mdb mdb;
         #endregion End App Datas
 
         //--Function

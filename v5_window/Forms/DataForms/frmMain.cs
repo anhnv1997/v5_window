@@ -90,6 +90,8 @@ namespace iParkingv5_window.Forms.DataForms
         }
         private void frmMain_FormClosing(object? sender, FormClosingEventArgs e)
         {
+            FormClosing -= frmMain_FormClosing;
+
             List<string> orderConfig = this.ucViewGrid1.GetOrderConfig();
 
             this.laneDisplayConfigs = new List<LaneDisplayConfig>();
@@ -111,7 +113,6 @@ namespace iParkingv5_window.Forms.DataForms
             this.laneDisplayConfigs = sortedLaneDisplayConfigs;
             SaveUIConfig();
 
-            FormClosing -= frmMain_FormClosing;
             Application.Exit();
             Environment.Exit(0);
         }
@@ -187,7 +188,7 @@ namespace iParkingv5_window.Forms.DataForms
         {
             lblLoadingStatus.BeginInvoke(new Action(() =>
             {
-                lblLoadingStatus.Text = $"Nhận sự kiện input {e.InputType} từ bộ điều khiển " + e.DeviceName;
+                lblLoadingStatus.Text = $"Nhận sự kiện input {e.InputIndex} từ bộ điều khiển " + e.DeviceName;
                 lblLoadingStatus.Refresh();
                 foreach (iLane iLane in lanes)
                 {
@@ -275,6 +276,14 @@ namespace iParkingv5_window.Forms.DataForms
         {
             foreach (Bdk bdk in StaticPool.bdks)
             {
+                Label lbl = new Label();
+                panelAppStatus.Controls.Add(lbl);
+                lbl.Dock = DockStyle.Right;
+                lbl.TextAlign = ContentAlignment.MiddleCenter;
+                lbl.Text = bdk.name;
+                lbl.Name = bdk.id;
+                lbl.AutoSize = false;
+
                 IController? controller = ControllerFactory.CreateController(bdk);
                 if (controller != null)
                 {
@@ -289,6 +298,7 @@ namespace iParkingv5_window.Forms.DataForms
                     lblLoadingStatus.UpdateResultMessage("Kết nối đến bộ điều khiển: " + bdk.name + (isConnectSuccess ? "thành công" : "thất bại"), lblLoadingStatus.BackColor);
                 }
             }
+            lblTime.SendToBack();
 
             foreach (IController controller in controllers)
             {
@@ -304,5 +314,21 @@ namespace iParkingv5_window.Forms.DataForms
             return NewtonSoftHelper<List<LaneDisplayConfig>>.SaveConfig(laneDisplayConfigs, PathManagement.appDisplayConfigPath);
         }
         #endregion End Private Function
+
+        private void timerUpdateControllerConnection_Tick(object sender, EventArgs e)
+        {
+            timerUpdateControllerConnection.Enabled = false;
+            foreach (Bdk bdk in StaticPool.bdks)
+            {
+                foreach (Label lbl in panelAppStatus.Controls)
+                {
+                    if (lbl.Name == bdk.id)
+                    {
+                        lbl.ForeColor = !bdk.isConnect ? Color.Red : Color.Green;
+                    }
+                }
+            }
+            timerUpdateControllerConnection.Enabled = true;
+        }
     }
 }

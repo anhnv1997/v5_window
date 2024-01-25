@@ -23,12 +23,15 @@ namespace iParkingv5_window.Forms.DataForms
             btnOk.Init(BtnOk_Click);
 
             lblMessage.Padding = new Padding(StaticPool.baseSize * 2);
+            lblMessage.Height =  lblMessage.PreferredSize.Height;
 
             panelAction.Height = btnCancel1.Height + StaticPool.baseSize * 3;
             btnCancel1.Location = new Point(panelAction.Width - btnCancel1.Width - StaticPool.baseSize * 2,
                                             StaticPool.baseSize);
             btnOk.Location = new Point(btnCancel1.Location.X - btnOk.Width - StaticPool.baseSize,
                                        StaticPool.baseSize);
+
+            this.Size = new Size(lblMessage.Width, lblMessage.Height + panelAction.Height + 100);
         }
 
         private void BtnOk_Click(object? sender, EventArgs e)

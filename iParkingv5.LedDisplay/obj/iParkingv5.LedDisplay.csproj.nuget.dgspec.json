@@ -263,6 +263,14 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
+            },
+            "System.Data.OleDb": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.6, )"
             }
           },
           "imports": [

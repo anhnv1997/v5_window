@@ -390,6 +390,9 @@
           "net6.0-windows7.0": {
             "targetAlias": "net6.0-windows",
             "projectReferences": {
+              "E:\\2.Workspace\\2.Projects\\2023\\3.Lotte_TayHo\\1.source\\iPGS_2023_NET6\\DahuaLib\\DahuaLib.csproj": {
+                "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\3.Lotte_TayHo\\1.source\\iPGS_2023_NET6\\DahuaLib\\DahuaLib.csproj"
+              },
               "E:\\2.Workspace\\2.Projects\\2023\\3.Lotte_TayHo\\1.source\\iPGS_2023_NET6\\Kztek.Tool\\Kztek.Tool.csproj": {
                 "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\3.Lotte_TayHo\\1.source\\iPGS_2023_NET6\\Kztek.Tool\\Kztek.Tool.csproj"
               },
@@ -408,6 +411,12 @@
       "frameworks": {
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
+          "dependencies": {
+            "System.IO.Ports": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -545,6 +554,14 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
+            },
+            "System.Data.OleDb": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.6, )"
             }
           },
           "imports": [

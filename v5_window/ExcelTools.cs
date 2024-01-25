@@ -6,6 +6,7 @@ namespace iParkingv5_window
 {
     public class ExcelTools
     {
+        public static string preferPath = @"C:\";
         #region: Styling
         public static SLStyle CreateAlignCenterStyle(SLDocument sl)
         {
@@ -203,9 +204,10 @@ namespace iParkingv5_window
                 saveFile.DefaultExt = "xlsx";
                 saveFile.AddExtension = true;
                 saveFile.FileName = $"{fileName} {DateTime.Now:yyyy_MM_dd_HH_mm_ss}";
-                saveFile.InitialDirectory = @"C:\";
+                saveFile.InitialDirectory = preferPath;
                 if (saveFile.ShowDialog() == DialogResult.OK)
                 {
+                    preferPath = Path.GetDirectoryName(saveFile.FileName);
                     sl.SaveAs(saveFile.FileName);
                 }
             }

@@ -1,4 +1,6 @@
 ﻿using IPaking.Ultility;
+using iParkingv5.Controller.Dahua;
+using iParkingv5.Objects.Enums;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv5_window.Forms.ReportForms;
 using iParkingv5_window.Usercontrols;
@@ -85,7 +87,22 @@ namespace iParkingv5_window.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            new frmReportIn().Show();
+            //new frmReportIn().Show();
+            this.Controls.Add(new ucEventOutInfo());
+        }
+
+        private async void button4_Click(object sender, EventArgs e)
+        {
+            DahuaAccessControl dahuaAccessControl = new DahuaAccessControl();
+            dahuaAccessControl.ControllerInfo = new iParkingv6.Objects.Datas.Bdk()
+            {
+                comport = "192.168.1.108",
+                baudrate = "37777",
+                communicationType = (int)CommunicationTypes.EM_CommunicationType.TCP_IP
+            };
+            dahuaAccessControl.Init();
+            bool isSuccess = await dahuaAccessControl.ConnectAsync();
+            dahuaAccessControl.PollingStart();
         }
 
         //private void Cam_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs)

@@ -35,11 +35,11 @@
             btnLprDetect = new Button();
             btnDraw = new Button();
             panel2 = new Panel();
+            btnSave = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
             picCutVehicleImage = new PictureBox();
             picLprImage = new PictureBox();
             lblDetectPlate = new Label();
-            btnSave = new Button();
             panel2.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picCutVehicleImage).BeginInit();
@@ -91,6 +91,7 @@
             btnLprDetect.Text = "Đọc biển số";
             btnLprDetect.UseVisualStyleBackColor = true;
             btnLprDetect.Visible = false;
+            btnLprDetect.Click += btnLprDetect_Click_1;
             // 
             // btnDraw
             // 
@@ -115,6 +116,17 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(1052, 48);
             panel2.TabIndex = 4;
+            // 
+            // btnSave
+            // 
+            btnSave.Location = new Point(797, 8);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(131, 28);
+            btnSave.TabIndex = 3;
+            btnSave.Text = "Lưu cấu hình";
+            btnSave.UseVisualStyleBackColor = true;
+            btnSave.Visible = false;
+            btnSave.Click += btnSave_Click;
             // 
             // tableLayoutPanel1
             // 
@@ -159,24 +171,13 @@
             // lblDetectPlate
             // 
             lblDetectPlate.Dock = DockStyle.Fill;
-            lblDetectPlate.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            lblDetectPlate.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             lblDetectPlate.Location = new Point(5, 2);
             lblDetectPlate.Name = "lblDetectPlate";
             lblDetectPlate.Size = new Size(234, 51);
             lblDetectPlate.TabIndex = 2;
             lblDetectPlate.Text = "_";
             lblDetectPlate.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // btnSave
-            // 
-            btnSave.Location = new Point(797, 8);
-            btnSave.Name = "btnSave";
-            btnSave.Size = new Size(131, 28);
-            btnSave.TabIndex = 3;
-            btnSave.Text = "Lưu cấu hình";
-            btnSave.UseVisualStyleBackColor = true;
-            btnSave.Visible = false;
-            btnSave.Click += btnSave_Click;
             // 
             // ucCameraConfig
             // 

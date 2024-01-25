@@ -162,7 +162,16 @@
           "lib/netstandard2.0/RestSharp.Authenticators.Digest.dll": {}
         }
       },
-      "runtime.linux-arm.runtime.native.System.IO.Ports/7.0.0": {
+      "RtspClientSharpSPG/0.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/RtspClientSharp.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/RtspClientSharp.dll": {}
+        }
+      },
+      "runtime.linux-arm.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package",
         "runtimeTargets": {
           "runtimes/linux-arm/native/libSystem.IO.Ports.Native.so": {
@@ -171,7 +180,7 @@
           }
         }
       },
-      "runtime.linux-arm64.runtime.native.System.IO.Ports/7.0.0": {
+      "runtime.linux-arm64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package",
         "runtimeTargets": {
           "runtimes/linux-arm64/native/libSystem.IO.Ports.Native.so": {
@@ -180,7 +189,7 @@
           }
         }
       },
-      "runtime.linux-x64.runtime.native.System.IO.Ports/7.0.0": {
+      "runtime.linux-x64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package",
         "runtimeTargets": {
           "runtimes/linux-x64/native/libSystem.IO.Ports.Native.so": {
@@ -197,17 +206,17 @@
           "runtime.win-x86.runtime.native.System.Data.SqlClient.sni": "4.4.0"
         }
       },
-      "runtime.native.System.IO.Ports/7.0.0": {
+      "runtime.native.System.IO.Ports/8.0.0": {
         "type": "package",
         "dependencies": {
-          "runtime.linux-arm.runtime.native.System.IO.Ports": "7.0.0",
-          "runtime.linux-arm64.runtime.native.System.IO.Ports": "7.0.0",
-          "runtime.linux-x64.runtime.native.System.IO.Ports": "7.0.0",
-          "runtime.osx-arm64.runtime.native.System.IO.Ports": "7.0.0",
-          "runtime.osx-x64.runtime.native.System.IO.Ports": "7.0.0"
+          "runtime.linux-arm.runtime.native.System.IO.Ports": "8.0.0",
+          "runtime.linux-arm64.runtime.native.System.IO.Ports": "8.0.0",
+          "runtime.linux-x64.runtime.native.System.IO.Ports": "8.0.0",
+          "runtime.osx-arm64.runtime.native.System.IO.Ports": "8.0.0",
+          "runtime.osx-x64.runtime.native.System.IO.Ports": "8.0.0"
         }
       },
-      "runtime.osx-arm64.runtime.native.System.IO.Ports/7.0.0": {
+      "runtime.osx-arm64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package",
         "runtimeTargets": {
           "runtimes/osx-arm64/native/libSystem.IO.Ports.Native.dylib": {
@@ -216,7 +225,7 @@
           }
         }
       },
-      "runtime.osx-x64.runtime.native.System.IO.Ports/7.0.0": {
+      "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package",
         "runtimeTargets": {
           "runtimes/osx-x64/native/libSystem.IO.Ports.Native.dylib": {
@@ -269,11 +278,26 @@
           }
         }
       },
-      "System.Configuration.ConfigurationManager/7.0.0": {
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Configuration.ConfigurationManager/8.0.0": {
         "type": "package",
         "dependencies": {
-          "System.Security.Cryptography.ProtectedData": "7.0.0",
-          "System.Security.Permissions": "7.0.0"
+          "System.Security.Cryptography.ProtectedData": "8.0.0"
         },
         "compile": {
           "lib/net6.0/System.Configuration.ConfigurationManager.dll": {
@@ -289,11 +313,11 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "System.Data.OleDb/7.0.0": {
+      "System.Data.OleDb/8.0.0": {
         "type": "package",
         "dependencies": {
-          "System.Configuration.ConfigurationManager": "7.0.0",
-          "System.Diagnostics.PerformanceCounter": "7.0.0"
+          "System.Configuration.ConfigurationManager": "8.0.0",
+          "System.Diagnostics.PerformanceCounter": "8.0.0"
         },
         "compile": {
           "lib/net6.0/System.Data.OleDb.dll": {
@@ -315,7 +339,7 @@
           }
         }
       },
-      "System.Data.SqlClient/4.8.5": {
+      "System.Data.SqlClient/4.8.6": {
         "type": "package",
         "dependencies": {
           "Microsoft.Win32.Registry": "4.7.0",
@@ -343,10 +367,10 @@
           }
         }
       },
-      "System.Diagnostics.PerformanceCounter/7.0.0": {
+      "System.Diagnostics.PerformanceCounter/8.0.0": {
         "type": "package",
         "dependencies": {
-          "System.Configuration.ConfigurationManager": "7.0.0"
+          "System.Configuration.ConfigurationManager": "8.0.0"
         },
         "compile": {
           "lib/net6.0/System.Diagnostics.PerformanceCounter.dll": {
@@ -416,10 +440,10 @@
           }
         }
       },
-      "System.IO.Ports/7.0.0": {
+      "System.IO.Ports/8.0.0": {
         "type": "package",
         "dependencies": {
-          "runtime.native.System.IO.Ports": "7.0.0"
+          "runtime.native.System.IO.Ports": "8.0.0"
         },
         "compile": {
           "lib/net6.0/System.IO.Ports.dll": {
@@ -440,6 +464,31 @@
             "rid": "unix"
           },
           "runtimes/win/lib/net6.0/System.IO.Ports.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net6.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net6.0/System.Management.dll": {
             "assetType": "runtime",
             "rid": "win"
           }
@@ -517,7 +566,7 @@
           }
         }
       },
-      "System.Security.Cryptography.ProtectedData/7.0.0": {
+      "System.Security.Cryptography.ProtectedData/8.0.0": {
         "type": "package",
         "compile": {
           "lib/net6.0/System.Security.Cryptography.ProtectedData.dll": {
@@ -526,31 +575,6 @@
         },
         "runtime": {
           "lib/net6.0/System.Security.Cryptography.ProtectedData.dll": {
-            "related": ".xml"
-          }
-        },
-        "build": {
-          "buildTransitive/net6.0/_._": {}
-        },
-        "runtimeTargets": {
-          "runtimes/win/lib/net6.0/System.Security.Cryptography.ProtectedData.dll": {
-            "assetType": "runtime",
-            "rid": "win"
-          }
-        }
-      },
-      "System.Security.Permissions/7.0.0": {
-        "type": "package",
-        "dependencies": {
-          "System.Windows.Extensions": "7.0.0"
-        },
-        "compile": {
-          "lib/net6.0/System.Security.Permissions.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net6.0/System.Security.Permissions.dll": {
             "related": ".xml"
           }
         },
@@ -635,28 +659,6 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
-      "System.Windows.Extensions/7.0.0": {
-        "type": "package",
-        "dependencies": {
-          "System.Drawing.Common": "7.0.0"
-        },
-        "compile": {
-          "lib/net6.0/System.Windows.Extensions.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net6.0/System.Windows.Extensions.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtimeTargets": {
-          "runtimes/win/lib/net6.0/System.Windows.Extensions.dll": {
-            "assetType": "runtime",
-            "rid": "win"
-          }
-        }
-      },
       "DahuaLib/1.0.0.1": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
@@ -718,7 +720,9 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
+          "DahuaLib": "1.0.0.1",
           "Kztek.Tool": "1.0.0.1",
+          "System.IO.Ports": "8.0.0",
           "iParkingv5.Objects": "1.0.0.1"
         },
         "compile": {
@@ -763,6 +767,8 @@
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
           "Newtonsoft.Json": "13.0.3",
+          "System.Data.OleDb": "8.0.0",
+          "System.Data.SqlClient": "4.8.6",
           "iParkingv5.Lpr": "1.0.0"
         },
         "compile": {
@@ -805,6 +811,51 @@
         },
         "runtime": {
           "bin/placeholder/IPGS.Ultility.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WindowsForms"
+        ]
+      },
+      "Kztek.Cameras/1.0.0.2": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Kztek.RtspPlayer": "1.0.0.2"
+        },
+        "compile": {
+          "bin/placeholder/Kztek.Cameras.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Kztek.Cameras.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WindowsForms"
+        ]
+      },
+      "Kztek.LPR/1.0.0.9": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/Kztek.LPR.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Kztek.LPR.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WindowsForms"
+        ]
+      },
+      "Kztek.RtspPlayer/1.0.0.2": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "RtspClientSharpSPG": "0.0.3"
+        },
+        "compile": {
+          "bin/placeholder/Kztek.RtspPlayer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Kztek.RtspPlayer.dll": {}
         },
         "frameworkReferences": [
           "Microsoft.WindowsDesktop.App.WindowsForms"
@@ -1089,49 +1140,61 @@
         "restsharp.authenticators.digest.nuspec"
       ]
     },
-    "runtime.linux-arm.runtime.native.System.IO.Ports/7.0.0": {
-      "sha512": "CBvgRaF+M0xGLDv2Geb/0v0LEADheH8aK72GRAUJdnqnJVsQO60ki1XO8M3keEhnjm+T5NvLm41pNXAVYAPiSg==",
+    "RtspClientSharpSPG/0.0.3": {
+      "sha512": "zynym3QRbFwgZhuiu2KvroJ2HnT0M+Y/Io7SbI8V/w0X3hS3YrpfN4OwxsyLa/Je981NSeOFsaT1pe2bEgtoEQ==",
       "type": "package",
-      "path": "runtime.linux-arm.runtime.native.system.io.ports/7.0.0",
+      "path": "rtspclientsharpspg/0.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/RtspClientSharp.dll",
+        "rtspclientsharpspg.0.0.3.nupkg.sha512",
+        "rtspclientsharpspg.nuspec"
+      ]
+    },
+    "runtime.linux-arm.runtime.native.System.IO.Ports/8.0.0": {
+      "sha512": "gK720fg6HemDg8sXcfy+xCMZ9+hF78Gc7BmREbmkS4noqlu1BAr9qZtuWGhLzFjBfgecmdtl4+SYVwJ1VneZBQ==",
+      "type": "package",
+      "path": "runtime.linux-arm.runtime.native.system.io.ports/8.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
-        "runtime.linux-arm.runtime.native.system.io.ports.7.0.0.nupkg.sha512",
+        "runtime.linux-arm.runtime.native.system.io.ports.8.0.0.nupkg.sha512",
         "runtime.linux-arm.runtime.native.system.io.ports.nuspec",
         "runtimes/linux-arm/native/libSystem.IO.Ports.Native.so",
         "useSharedDesignerContext.txt"
       ]
     },
-    "runtime.linux-arm64.runtime.native.System.IO.Ports/7.0.0": {
-      "sha512": "5VCyRCtCIYU8FR/W8oo7ouFuJ8tmAg9ddsuXhfCKZfZrbaVZSKxkmNBa6fxkfYPueD0jQfOvwFBmE5c6zalCSw==",
+    "runtime.linux-arm64.runtime.native.System.IO.Ports/8.0.0": {
+      "sha512": "KYG6/3ojhEWbb3FwQAKgGWPHrY+HKUXXdVjJlrtyCLn3EMcNTaNcPadb2c0ndQzixZSmAxZKopXJr0nLwhOrpQ==",
       "type": "package",
-      "path": "runtime.linux-arm64.runtime.native.system.io.ports/7.0.0",
+      "path": "runtime.linux-arm64.runtime.native.system.io.ports/8.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
-        "runtime.linux-arm64.runtime.native.system.io.ports.7.0.0.nupkg.sha512",
+        "runtime.linux-arm64.runtime.native.system.io.ports.8.0.0.nupkg.sha512",
         "runtime.linux-arm64.runtime.native.system.io.ports.nuspec",
         "runtimes/linux-arm64/native/libSystem.IO.Ports.Native.so",
         "useSharedDesignerContext.txt"
       ]
     },
-    "runtime.linux-x64.runtime.native.System.IO.Ports/7.0.0": {
-      "sha512": "DV9dWDUs23OoZqMWl5IhLr3D+b9koDiSHQxFKdYgWnQbnthv8c/yDjrlrI8nMrDc71RAKCO8jlUojzuPMX04gg==",
+    "runtime.linux-x64.runtime.native.System.IO.Ports/8.0.0": {
+      "sha512": "Wnw5vhA4mgGbIFoo6l9Fk3iEcwRSq49a1aKwJgXUCUtEQLCSUDjTGSxqy/oMUuOyyn7uLHsH8KgZzQ1y3lReiQ==",
       "type": "package",
-      "path": "runtime.linux-x64.runtime.native.system.io.ports/7.0.0",
+      "path": "runtime.linux-x64.runtime.native.system.io.ports/8.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
-        "runtime.linux-x64.runtime.native.system.io.ports.7.0.0.nupkg.sha512",
+        "runtime.linux-x64.runtime.native.system.io.ports.8.0.0.nupkg.sha512",
         "runtime.linux-x64.runtime.native.system.io.ports.nuspec",
         "runtimes/linux-x64/native/libSystem.IO.Ports.Native.so",
         "useSharedDesignerContext.txt"
@@ -1152,48 +1215,48 @@
         "version.txt"
       ]
     },
-    "runtime.native.System.IO.Ports/7.0.0": {
-      "sha512": "L4Ivegqc3B0Fee7VifFy2JST9nndm+uvJ0viLIZUaImDfnr+JmRin9Tbqd56KuMtm0eVxHpNOWZBPtKrA/1h5Q==",
+    "runtime.native.System.IO.Ports/8.0.0": {
+      "sha512": "Ee7Sz5llLpTgyKIWzKI/GeuRSbFkOABgJRY00SqTY0OkTYtkB+9l5rFZfE7fxPA3c22RfytCBYkUdAkcmwMjQg==",
       "type": "package",
-      "path": "runtime.native.system.io.ports/7.0.0",
+      "path": "runtime.native.system.io.ports/8.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
-        "runtime.native.system.io.ports.7.0.0.nupkg.sha512",
+        "runtime.native.system.io.ports.8.0.0.nupkg.sha512",
         "runtime.native.system.io.ports.nuspec",
         "useSharedDesignerContext.txt"
       ]
     },
-    "runtime.osx-arm64.runtime.native.System.IO.Ports/7.0.0": {
-      "sha512": "jFwh4sKSXZ7al5XrItEO4GdGWa6XNxvNx+LhEHjrSzOwawO1znwJ+Dy+VjnrkySX9Qi4bnHNLoiqOXbqMuka4g==",
+    "runtime.osx-arm64.runtime.native.System.IO.Ports/8.0.0": {
+      "sha512": "rbUBLAaFW9oVkbsb0+XSrAo2QdhBeAyzLl5KQ6Oci9L/u626uXGKInsVJG6B9Z5EO8bmplC8tsMiaHK8wOBZ+w==",
       "type": "package",
-      "path": "runtime.osx-arm64.runtime.native.system.io.ports/7.0.0",
+      "path": "runtime.osx-arm64.runtime.native.system.io.ports/8.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
-        "runtime.osx-arm64.runtime.native.system.io.ports.7.0.0.nupkg.sha512",
+        "runtime.osx-arm64.runtime.native.system.io.ports.8.0.0.nupkg.sha512",
         "runtime.osx-arm64.runtime.native.system.io.ports.nuspec",
         "runtimes/osx-arm64/native/libSystem.IO.Ports.Native.dylib",
         "useSharedDesignerContext.txt"
       ]
     },
-    "runtime.osx-x64.runtime.native.System.IO.Ports/7.0.0": {
-      "sha512": "X4LrHEfke/z9+z+iuVr35NlkhdZldY8JGNMYUN+sfPK/U/6TcE+vP44I0Yv0ir1v0bqIzq3v6Qdv1c1vmp8s4g==",
+    "runtime.osx-x64.runtime.native.System.IO.Ports/8.0.0": {
+      "sha512": "IcfB4jKtM9pkzP9OpYelEcUX1MiDt0IJPBh3XYYdEISFF+6Mc+T8WWi0dr9wVh1gtcdVjubVEIBgB8BHESlGfQ==",
       "type": "package",
-      "path": "runtime.osx-x64.runtime.native.system.io.ports/7.0.0",
+      "path": "runtime.osx-x64.runtime.native.system.io.ports/8.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
-        "runtime.osx-x64.runtime.native.system.io.ports.7.0.0.nupkg.sha512",
+        "runtime.osx-x64.runtime.native.system.io.ports.8.0.0.nupkg.sha512",
         "runtime.osx-x64.runtime.native.system.io.ports.nuspec",
         "runtimes/osx-x64/native/libSystem.IO.Ports.Native.dylib",
         "useSharedDesignerContext.txt"
@@ -1261,15 +1324,43 @@
         "spreadsheetlight.nuspec"
       ]
     },
-    "System.Configuration.ConfigurationManager/7.0.0": {
-      "sha512": "WvRUdlL1lB0dTRZSs5XcQOd5q9MYNk90GkbmRmiCvRHThWiojkpGqWdmEDJdXyHbxG/BhE5hmVbMfRLXW9FJVA==",
+    "System.CodeDom/7.0.0": {
+      "sha512": "GLltyqEsE5/3IE+zYRP5sNa1l44qKl9v+bfdMcwg+M9qnQf47wK3H0SUR/T+3N4JEQXF3vV4CSuuo0rsg+nq2A==",
       "type": "package",
-      "path": "system.configuration.configurationmanager/7.0.0",
+      "path": "system.codedom/7.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.CodeDom.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/System.CodeDom.targets",
+        "lib/net462/System.CodeDom.dll",
+        "lib/net462/System.CodeDom.xml",
+        "lib/net6.0/System.CodeDom.dll",
+        "lib/net6.0/System.CodeDom.xml",
+        "lib/net7.0/System.CodeDom.dll",
+        "lib/net7.0/System.CodeDom.xml",
+        "lib/netstandard2.0/System.CodeDom.dll",
+        "lib/netstandard2.0/System.CodeDom.xml",
+        "system.codedom.7.0.0.nupkg.sha512",
+        "system.codedom.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "System.Configuration.ConfigurationManager/8.0.0": {
+      "sha512": "JlYi9XVvIREURRUlGMr1F6vOFLk7YSY4p1vHo4kX3tQ0AGrjqlRWHDi66ImHhy6qwXBG3BJ6Y1QlYQ+Qz6Xgww==",
+      "type": "package",
+      "path": "system.configuration.configurationmanager/8.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "PACKAGE.md",
         "THIRD-PARTY-NOTICES.TXT",
         "buildTransitive/net461/System.Configuration.ConfigurationManager.targets",
         "buildTransitive/net462/_._",
@@ -1281,22 +1372,25 @@
         "lib/net6.0/System.Configuration.ConfigurationManager.xml",
         "lib/net7.0/System.Configuration.ConfigurationManager.dll",
         "lib/net7.0/System.Configuration.ConfigurationManager.xml",
+        "lib/net8.0/System.Configuration.ConfigurationManager.dll",
+        "lib/net8.0/System.Configuration.ConfigurationManager.xml",
         "lib/netstandard2.0/System.Configuration.ConfigurationManager.dll",
         "lib/netstandard2.0/System.Configuration.ConfigurationManager.xml",
-        "system.configuration.configurationmanager.7.0.0.nupkg.sha512",
+        "system.configuration.configurationmanager.8.0.0.nupkg.sha512",
         "system.configuration.configurationmanager.nuspec",
         "useSharedDesignerContext.txt"
       ]
     },
-    "System.Data.OleDb/7.0.0": {
-      "sha512": "bhAs+5X5acgg3zQ6N4HqxqfwwmqWJzgt54BC8iwygcqa2jktxDFzxwN83GNvqgoTcTs2tenDS/jmhC+AQsmcyg==",
+    "System.Data.OleDb/8.0.0": {
+      "sha512": "FpUTcQ0E8mFvcYp8UZA3NX8wgmhmsCue56g1zfkr1xdOnT5FrYYmC5DWQ9xCw8o8zuxVBKLZvliqEGgmeoalaQ==",
       "type": "package",
-      "path": "system.data.oledb/7.0.0",
+      "path": "system.data.oledb/8.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "LICENSE.TXT",
+        "PACKAGE.md",
         "THIRD-PARTY-NOTICES.TXT",
         "buildTransitive/net461/System.Data.OleDb.targets",
         "buildTransitive/net462/_._",
@@ -1308,21 +1402,25 @@
         "lib/net6.0/System.Data.OleDb.xml",
         "lib/net7.0/System.Data.OleDb.dll",
         "lib/net7.0/System.Data.OleDb.xml",
+        "lib/net8.0/System.Data.OleDb.dll",
+        "lib/net8.0/System.Data.OleDb.xml",
         "lib/netstandard2.0/System.Data.OleDb.dll",
         "lib/netstandard2.0/System.Data.OleDb.xml",
         "runtimes/win/lib/net6.0/System.Data.OleDb.dll",
         "runtimes/win/lib/net6.0/System.Data.OleDb.xml",
         "runtimes/win/lib/net7.0/System.Data.OleDb.dll",
         "runtimes/win/lib/net7.0/System.Data.OleDb.xml",
-        "system.data.oledb.7.0.0.nupkg.sha512",
+        "runtimes/win/lib/net8.0/System.Data.OleDb.dll",
+        "runtimes/win/lib/net8.0/System.Data.OleDb.xml",
+        "system.data.oledb.8.0.0.nupkg.sha512",
         "system.data.oledb.nuspec",
         "useSharedDesignerContext.txt"
       ]
     },
-    "System.Data.SqlClient/4.8.5": {
-      "sha512": "fRqxut4lrndPHrXD+ht1XRmCL3obuKldm4XjCRYS9p5f7FSR7shBxAwTkDrpFMsHC9BhNgjjmUtiIjvehn5zkg==",
+    "System.Data.SqlClient/4.8.6": {
+      "sha512": "2Ij/LCaTQRyAi5lAv7UUTV9R2FobC8xN9mE0fXBZohum/xLl8IZVmE98Rq5ugQHjCgTBRKqpXRb4ORulRdA6Ig==",
       "type": "package",
-      "path": "system.data.sqlclient/4.8.5",
+      "path": "system.data.sqlclient/4.8.6",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1399,21 +1497,22 @@
         "runtimes/win/lib/netstandard2.0/System.Data.SqlClient.xml",
         "runtimes/win/lib/uap10.0.16299/System.Data.SqlClient.dll",
         "runtimes/win/lib/uap10.0.16299/System.Data.SqlClient.xml",
-        "system.data.sqlclient.4.8.5.nupkg.sha512",
+        "system.data.sqlclient.4.8.6.nupkg.sha512",
         "system.data.sqlclient.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
     },
-    "System.Diagnostics.PerformanceCounter/7.0.0": {
-      "sha512": "L+zIMEaXp1vA4wZk1KLMpk6tvU0xy94R0IfmhkmTWeC4KwShsmAfbg5I19LgjsCTYp6GVdXZ2aHluVWL0QqBdA==",
+    "System.Diagnostics.PerformanceCounter/8.0.0": {
+      "sha512": "lX6DXxtJqVGWw7N/QmVoiCyVQ+Q/Xp+jVXPr3gLK1jJExSn1qmAjJQeb8gnOYeeBTG3E3PmG1nu92eYj/TEjpg==",
       "type": "package",
-      "path": "system.diagnostics.performancecounter/7.0.0",
+      "path": "system.diagnostics.performancecounter/8.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "LICENSE.TXT",
+        "PACKAGE.md",
         "THIRD-PARTY-NOTICES.TXT",
         "buildTransitive/net461/System.Diagnostics.PerformanceCounter.targets",
         "buildTransitive/net462/_._",
@@ -1425,13 +1524,17 @@
         "lib/net6.0/System.Diagnostics.PerformanceCounter.xml",
         "lib/net7.0/System.Diagnostics.PerformanceCounter.dll",
         "lib/net7.0/System.Diagnostics.PerformanceCounter.xml",
+        "lib/net8.0/System.Diagnostics.PerformanceCounter.dll",
+        "lib/net8.0/System.Diagnostics.PerformanceCounter.xml",
         "lib/netstandard2.0/System.Diagnostics.PerformanceCounter.dll",
         "lib/netstandard2.0/System.Diagnostics.PerformanceCounter.xml",
         "runtimes/win/lib/net6.0/System.Diagnostics.PerformanceCounter.dll",
         "runtimes/win/lib/net6.0/System.Diagnostics.PerformanceCounter.xml",
         "runtimes/win/lib/net7.0/System.Diagnostics.PerformanceCounter.dll",
         "runtimes/win/lib/net7.0/System.Diagnostics.PerformanceCounter.xml",
-        "system.diagnostics.performancecounter.7.0.0.nupkg.sha512",
+        "runtimes/win/lib/net8.0/System.Diagnostics.PerformanceCounter.dll",
+        "runtimes/win/lib/net8.0/System.Diagnostics.PerformanceCounter.xml",
+        "system.diagnostics.performancecounter.8.0.0.nupkg.sha512",
         "system.diagnostics.performancecounter.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -1530,15 +1633,16 @@
         "version.txt"
       ]
     },
-    "System.IO.Ports/7.0.0": {
-      "sha512": "0nWQjM5IofaIGpvkifN+LLuYwBG6BHlpmphLhhOJepcW12G8qToGuNDRgBzeTVBZzp33wVsESSZ8hUOCfq+8QA==",
+    "System.IO.Ports/8.0.0": {
+      "sha512": "MaiPbx2/QXZc62gm/DrajRrGPG1lU4m08GWMoWiymPYM+ba4kfACp2PbiYpqJ4QiFGhHD00zX3RoVDTucjWe9g==",
       "type": "package",
-      "path": "system.io.ports/7.0.0",
+      "path": "system.io.ports/8.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "LICENSE.TXT",
+        "PACKAGE.md",
         "THIRD-PARTY-NOTICES.TXT",
         "buildTransitive/net461/System.IO.Ports.targets",
         "buildTransitive/net462/_._",
@@ -1550,18 +1654,52 @@
         "lib/net6.0/System.IO.Ports.xml",
         "lib/net7.0/System.IO.Ports.dll",
         "lib/net7.0/System.IO.Ports.xml",
+        "lib/net8.0/System.IO.Ports.dll",
+        "lib/net8.0/System.IO.Ports.xml",
         "lib/netstandard2.0/System.IO.Ports.dll",
         "lib/netstandard2.0/System.IO.Ports.xml",
         "runtimes/unix/lib/net6.0/System.IO.Ports.dll",
         "runtimes/unix/lib/net6.0/System.IO.Ports.xml",
         "runtimes/unix/lib/net7.0/System.IO.Ports.dll",
         "runtimes/unix/lib/net7.0/System.IO.Ports.xml",
+        "runtimes/unix/lib/net8.0/System.IO.Ports.dll",
+        "runtimes/unix/lib/net8.0/System.IO.Ports.xml",
         "runtimes/win/lib/net6.0/System.IO.Ports.dll",
         "runtimes/win/lib/net6.0/System.IO.Ports.xml",
         "runtimes/win/lib/net7.0/System.IO.Ports.dll",
         "runtimes/win/lib/net7.0/System.IO.Ports.xml",
-        "system.io.ports.7.0.0.nupkg.sha512",
+        "runtimes/win/lib/net8.0/System.IO.Ports.dll",
+        "runtimes/win/lib/net8.0/System.IO.Ports.xml",
+        "system.io.ports.8.0.0.nupkg.sha512",
         "system.io.ports.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "System.Management/7.0.2": {
+      "sha512": "/qEUN91mP/MUQmJnM5y5BdT7ZoPuVrtxnFlbJ8a3kBJGhe2wCzBfnPFtK2wTtEEcf3DMGR9J00GZZfg6HRI6yA==",
+      "type": "package",
+      "path": "system.management/7.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Management.targets",
+        "lib/net462/_._",
+        "lib/net6.0/System.Management.dll",
+        "lib/net6.0/System.Management.xml",
+        "lib/net7.0/System.Management.dll",
+        "lib/net7.0/System.Management.xml",
+        "lib/netstandard2.0/System.Management.dll",
+        "lib/netstandard2.0/System.Management.xml",
+        "runtimes/win/lib/net6.0/System.Management.dll",
+        "runtimes/win/lib/net6.0/System.Management.xml",
+        "runtimes/win/lib/net7.0/System.Management.dll",
+        "runtimes/win/lib/net7.0/System.Management.xml",
+        "system.management.7.0.2.nupkg.sha512",
+        "system.management.nuspec",
         "useSharedDesignerContext.txt"
       ]
     },
@@ -1683,15 +1821,16 @@
         "version.txt"
       ]
     },
-    "System.Security.Cryptography.ProtectedData/7.0.0": {
-      "sha512": "xSPiLNlHT6wAHtugASbKAJwV5GVqQK351crnILAucUioFqqieDN79evO1rku1ckt/GfjIn+b17UaSskoY03JuA==",
+    "System.Security.Cryptography.ProtectedData/8.0.0": {
+      "sha512": "+TUFINV2q2ifyXauQXRwy4CiBhqvDEDZeVJU7qfxya4aRYOKzVBpN+4acx25VcPB9ywUN6C0n8drWl110PhZEg==",
       "type": "package",
-      "path": "system.security.cryptography.protecteddata/7.0.0",
+      "path": "system.security.cryptography.protecteddata/8.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "LICENSE.TXT",
+        "PACKAGE.md",
         "THIRD-PARTY-NOTICES.TXT",
         "buildTransitive/net461/System.Security.Cryptography.ProtectedData.targets",
         "buildTransitive/net462/_._",
@@ -1705,45 +1844,16 @@
         "lib/net6.0/System.Security.Cryptography.ProtectedData.xml",
         "lib/net7.0/System.Security.Cryptography.ProtectedData.dll",
         "lib/net7.0/System.Security.Cryptography.ProtectedData.xml",
+        "lib/net8.0/System.Security.Cryptography.ProtectedData.dll",
+        "lib/net8.0/System.Security.Cryptography.ProtectedData.xml",
         "lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll",
         "lib/netstandard2.0/System.Security.Cryptography.ProtectedData.xml",
         "lib/xamarinios10/_._",
         "lib/xamarinmac20/_._",
         "lib/xamarintvos10/_._",
         "lib/xamarinwatchos10/_._",
-        "runtimes/win/lib/net6.0/System.Security.Cryptography.ProtectedData.dll",
-        "runtimes/win/lib/net6.0/System.Security.Cryptography.ProtectedData.xml",
-        "runtimes/win/lib/net7.0/System.Security.Cryptography.ProtectedData.dll",
-        "runtimes/win/lib/net7.0/System.Security.Cryptography.ProtectedData.xml",
-        "system.security.cryptography.protecteddata.7.0.0.nupkg.sha512",
+        "system.security.cryptography.protecteddata.8.0.0.nupkg.sha512",
         "system.security.cryptography.protecteddata.nuspec",
-        "useSharedDesignerContext.txt"
-      ]
-    },
-    "System.Security.Permissions/7.0.0": {
-      "sha512": "Vmp0iRmCEno9BWiskOW5pxJ3d9n+jUqKxvX4GhLwFhnQaySZmBN2FuC0N5gjFHgyFMUjC5sfIJ8KZfoJwkcMmA==",
-      "type": "package",
-      "path": "system.security.permissions/7.0.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "LICENSE.TXT",
-        "THIRD-PARTY-NOTICES.TXT",
-        "buildTransitive/net461/System.Security.Permissions.targets",
-        "buildTransitive/net462/_._",
-        "buildTransitive/net6.0/_._",
-        "buildTransitive/netcoreapp2.0/System.Security.Permissions.targets",
-        "lib/net462/System.Security.Permissions.dll",
-        "lib/net462/System.Security.Permissions.xml",
-        "lib/net6.0/System.Security.Permissions.dll",
-        "lib/net6.0/System.Security.Permissions.xml",
-        "lib/net7.0/System.Security.Permissions.dll",
-        "lib/net7.0/System.Security.Permissions.xml",
-        "lib/netstandard2.0/System.Security.Permissions.dll",
-        "lib/netstandard2.0/System.Security.Permissions.xml",
-        "system.security.permissions.7.0.0.nupkg.sha512",
-        "system.security.permissions.nuspec",
         "useSharedDesignerContext.txt"
       ]
     },
@@ -1940,29 +2050,6 @@
         "version.txt"
       ]
     },
-    "System.Windows.Extensions/7.0.0": {
-      "sha512": "bR4qdCmssMMbo9Fatci49An5B1UaVJZHKNq70PRgzoLYIlitb8Tj7ns/Xt5Pz1CkERiTjcVBDU2y1AVrPBYkaw==",
-      "type": "package",
-      "path": "system.windows.extensions/7.0.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "LICENSE.TXT",
-        "THIRD-PARTY-NOTICES.TXT",
-        "lib/net6.0/System.Windows.Extensions.dll",
-        "lib/net6.0/System.Windows.Extensions.xml",
-        "lib/net7.0/System.Windows.Extensions.dll",
-        "lib/net7.0/System.Windows.Extensions.xml",
-        "runtimes/win/lib/net6.0/System.Windows.Extensions.dll",
-        "runtimes/win/lib/net6.0/System.Windows.Extensions.xml",
-        "runtimes/win/lib/net7.0/System.Windows.Extensions.dll",
-        "runtimes/win/lib/net7.0/System.Windows.Extensions.xml",
-        "system.windows.extensions.7.0.0.nupkg.sha512",
-        "system.windows.extensions.nuspec",
-        "useSharedDesignerContext.txt"
-      ]
-    },
     "DahuaLib/1.0.0.1": {
       "type": "project",
       "path": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/DahuaLib/DahuaLib.csproj",
@@ -2013,6 +2100,21 @@
       "path": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/IPGS.Ultility/IPGS.Ultility.csproj",
       "msbuildProject": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/IPGS.Ultility/IPGS.Ultility.csproj"
     },
+    "Kztek.Cameras/1.0.0.2": {
+      "type": "project",
+      "path": "../../../../../../../BaseLib/Kztek.Cameras/Kztek.Cameras.csproj",
+      "msbuildProject": "../../../../../../../BaseLib/Kztek.Cameras/Kztek.Cameras.csproj"
+    },
+    "Kztek.LPR/1.0.0.9": {
+      "type": "project",
+      "path": "../../../../../../../BaseLib/Kztek.LPR/Kztek.LPR.csproj",
+      "msbuildProject": "../../../../../../../BaseLib/Kztek.LPR/Kztek.LPR.csproj"
+    },
+    "Kztek.RtspPlayer/1.0.0.2": {
+      "type": "project",
+      "path": "../../../../../../../BaseLib/Kztek.RtspPlayer/Kztek.RtspPlayer/Kztek.RtspPlayer.csproj",
+      "msbuildProject": "../../../../../../../BaseLib/Kztek.RtspPlayer/Kztek.RtspPlayer/Kztek.RtspPlayer.csproj"
+    },
     "Kztek.Tool/1.0.0.1": {
       "type": "project",
       "path": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/Kztek.Tool/Kztek.Tool.csproj",
@@ -2028,9 +2130,13 @@
     "net6.0-windows7.0": [
       "IPGS.Ultility >= 1.0.0.1",
       "IPaking.Ultility >= 1.0.0",
+      "Kztek.Cameras >= 1.0.0.2",
+      "Kztek.LPR >= 1.0.0.9",
+      "Kztek.RtspPlayer >= 1.0.0.2",
       "Kztek.Tool >= 1.0.0.1",
       "Minio >= 5.0.0",
       "SpreadsheetLight >= 3.5.0",
+      "System.Management >= 7.0.2",
       "iParking.ConfigurationManager >= 1.0.0.1",
       "iParkingv5.ApiManager >= 1.0.0.1",
       "iParkingv5.Controller >= 1.0.0.1",
@@ -2095,6 +2201,15 @@
             },
             "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj": {
               "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj"
+            },
+            "E:\\BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj": {
+              "projectPath": "E:\\BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj"
+            },
+            "E:\\BaseLib\\Kztek.LPR\\Kztek.LPR.csproj": {
+              "projectPath": "E:\\BaseLib\\Kztek.LPR\\Kztek.LPR.csproj"
+            },
+            "E:\\BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj": {
+              "projectPath": "E:\\BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj"
             }
           }
         }
@@ -2116,6 +2231,10 @@
           "SpreadsheetLight": {
             "target": "Package",
             "version": "[3.5.0, )"
+          },
+          "System.Management": {
+            "target": "Package",
+            "version": "[7.0.2, )"
           }
         },
         "imports": [

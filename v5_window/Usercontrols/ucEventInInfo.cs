@@ -25,10 +25,19 @@ namespace iParkingv5_window.Usercontrols
             this.Load += UcEventInInfo_Load;
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                this.Visible = false;
+                onBackClickEvent?.Invoke(this);
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
         private void UcEventInInfo_Load(object? sender, EventArgs e)
         {
             this.Visible = false;
-
             lblTitle.Location = new Point(StaticPool.baseSize * 2, StaticPool.baseSize * 2);
             lblLaneNameTitle.Location = new Point(lblTitle.Location.X,
                                                    lblTitle.Location.Y + lblTitle.Height + StaticPool.baseSize);
@@ -101,6 +110,7 @@ namespace iParkingv5_window.Usercontrols
             this.BringToFront();
             this.ResumeLayout();
             this.Visible = true;
+            this.ActiveControl = lblCancel1;
         }
     }
 }

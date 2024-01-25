@@ -35,6 +35,7 @@ namespace iParkingv5_window.Forms.ReportForms
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             picOverviewImageIn = new MovablePictureBox();
             picVehicleImageIn = new MovablePictureBox();
             tablePic = new TableLayoutPanel();
@@ -60,9 +61,15 @@ namespace iParkingv5_window.Forms.ReportForms
             btnSearch = new LblSearch();
             btnExportExcel = new LblExcel();
             panelData = new Panel();
+            cbLane = new ComboBox();
+            cbIdentityGroupType = new ComboBox();
+            cbVehicleType = new ComboBox();
+            ucEventInInfo1 = new ucEventInInfo();
             ucNotify1 = new Usercontrols.BuildControls.ucNotify();
             ucLoading1 = new Usercontrols.BuildControls.ucLoading();
-            ucEventInInfo1 = new ucEventInInfo();
+            lblLane = new Label();
+            lblVehicleType = new Label();
+            lblIdentityType = new Label();
             ((System.ComponentModel.ISupportInitialize)picOverviewImageIn).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picVehicleImageIn).BeginInit();
             tablePic.SuspendLayout();
@@ -126,8 +133,8 @@ namespace iParkingv5_window.Forms.ReportForms
             // 
             txtKeyword.Location = new Point(71, 8);
             txtKeyword.Name = "txtKeyword";
-            txtKeyword.Size = new Size(503, 27);
-            txtKeyword.TabIndex = 40;
+            txtKeyword.Size = new Size(210, 27);
+            txtKeyword.TabIndex = 1;
             // 
             // dgvData
             // 
@@ -159,13 +166,21 @@ namespace iParkingv5_window.Forms.ReportForms
             dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             dgvData.DefaultCellStyle = dataGridViewCellStyle3;
-            dgvData.Location = new Point(8, 91);
+            dgvData.Location = new Point(8, 121);
             dgvData.Name = "dgvData";
             dgvData.ReadOnly = true;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Control;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 11.25F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dgvData.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dgvData.RowHeadersVisible = false;
             dgvData.RowTemplate.Height = 29;
             dgvData.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvData.Size = new Size(761, 410);
+            dgvData.Size = new Size(761, 380);
             dgvData.TabIndex = 39;
             // 
             // Column1
@@ -231,10 +246,10 @@ namespace iParkingv5_window.Forms.ReportForms
             // 
             dtpEndTime.CustomFormat = "HH:mm:ss dd/MM/yyyy";
             dtpEndTime.Format = DateTimePickerFormat.Custom;
-            dtpEndTime.Location = new Point(364, 41);
+            dtpEndTime.Location = new Point(374, 39);
             dtpEndTime.Name = "dtpEndTime";
             dtpEndTime.Size = new Size(210, 27);
-            dtpEndTime.TabIndex = 34;
+            dtpEndTime.TabIndex = 3;
             // 
             // dtpStartTime
             // 
@@ -243,7 +258,7 @@ namespace iParkingv5_window.Forms.ReportForms
             dtpStartTime.Location = new Point(71, 41);
             dtpStartTime.Name = "dtpStartTime";
             dtpStartTime.Size = new Size(210, 27);
-            dtpStartTime.TabIndex = 35;
+            dtpStartTime.TabIndex = 2;
             // 
             // lblEndTime
             // 
@@ -251,9 +266,9 @@ namespace iParkingv5_window.Forms.ReportForms
             lblEndTime.BackColor = Color.Transparent;
             lblEndTime.Location = new Point(295, 46);
             lblEndTime.Name = "lblEndTime";
-            lblEndTime.Size = new Size(63, 20);
+            lblEndTime.Size = new Size(71, 20);
             lblEndTime.TabIndex = 32;
-            lblEndTime.Text = "Kết thúc";
+            lblEndTime.Text = "Kết thúc  ";
             // 
             // lblStartTime
             // 
@@ -269,7 +284,7 @@ namespace iParkingv5_window.Forms.ReportForms
             // 
             ucPages1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             ucPages1.BorderStyle = BorderStyle.Fixed3D;
-            ucPages1.Location = new Point(8, 522);
+            ucPages1.Location = new Point(12, 554);
             ucPages1.Name = "ucPages1";
             ucPages1.Size = new Size(1013, 48);
             ucPages1.TabIndex = 43;
@@ -320,7 +335,7 @@ namespace iParkingv5_window.Forms.ReportForms
             btnSearch.BorderStyle = BorderStyle.Fixed3D;
             btnSearch.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnSearch.ForeColor = Color.Black;
-            btnSearch.Location = new Point(580, 8);
+            btnSearch.Location = new Point(602, 9);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(76, 22);
             btnSearch.TabIndex = 60;
@@ -340,11 +355,17 @@ namespace iParkingv5_window.Forms.ReportForms
             // 
             // panelData
             // 
+            panelData.Controls.Add(cbLane);
+            panelData.Controls.Add(cbIdentityGroupType);
+            panelData.Controls.Add(cbVehicleType);
             panelData.Controls.Add(ucEventInInfo1);
             panelData.Controls.Add(ucNotify1);
             panelData.Controls.Add(ucLoading1);
             panelData.Controls.Add(lblKeyword);
             panelData.Controls.Add(btnExportExcel);
+            panelData.Controls.Add(lblLane);
+            panelData.Controls.Add(lblVehicleType);
+            panelData.Controls.Add(lblIdentityType);
             panelData.Controls.Add(lblStartTime);
             panelData.Controls.Add(btnCancel);
             panelData.Controls.Add(btnSearch);
@@ -362,6 +383,41 @@ namespace iParkingv5_window.Forms.ReportForms
             panelData.Name = "panelData";
             panelData.Size = new Size(1024, 614);
             panelData.TabIndex = 62;
+            // 
+            // cbLane
+            // 
+            cbLane.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbLane.FormattingEnabled = true;
+            cbLane.Location = new Point(374, 72);
+            cbLane.Name = "cbLane";
+            cbLane.Size = new Size(210, 28);
+            cbLane.TabIndex = 5;
+            // 
+            // cbIdentityGroupType
+            // 
+            cbIdentityGroupType.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbIdentityGroupType.FormattingEnabled = true;
+            cbIdentityGroupType.Location = new Point(374, 5);
+            cbIdentityGroupType.Name = "cbIdentityGroupType";
+            cbIdentityGroupType.Size = new Size(210, 28);
+            cbIdentityGroupType.TabIndex = 5;
+            // 
+            // cbVehicleType
+            // 
+            cbVehicleType.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbVehicleType.FormattingEnabled = true;
+            cbVehicleType.Location = new Point(71, 74);
+            cbVehicleType.Name = "cbVehicleType";
+            cbVehicleType.Size = new Size(210, 28);
+            cbVehicleType.TabIndex = 4;
+            // 
+            // ucEventInInfo1
+            // 
+            ucEventInInfo1.BackColor = Color.FromArgb(255, 224, 192);
+            ucEventInInfo1.Location = new Point(610, 56);
+            ucEventInInfo1.Name = "ucEventInInfo1";
+            ucEventInInfo1.Size = new Size(494, 364);
+            ucEventInInfo1.TabIndex = 64;
             // 
             // ucNotify1
             // 
@@ -385,12 +441,35 @@ namespace iParkingv5_window.Forms.ReportForms
             ucLoading1.Size = new Size(392, 188);
             ucLoading1.TabIndex = 62;
             // 
-            // ucEventInInfo1
+            // lblLane
             // 
-            ucEventInInfo1.Location = new Point(610, 56);
-            ucEventInInfo1.Name = "ucEventInInfo1";
-            ucEventInInfo1.Size = new Size(494, 337);
-            ucEventInInfo1.TabIndex = 64;
+            lblLane.AutoSize = true;
+            lblLane.BackColor = Color.Transparent;
+            lblLane.Location = new Point(297, 79);
+            lblLane.Name = "lblLane";
+            lblLane.Size = new Size(32, 20);
+            lblLane.TabIndex = 33;
+            lblLane.Text = "Làn";
+            // 
+            // lblVehicleType
+            // 
+            lblVehicleType.AutoSize = true;
+            lblVehicleType.BackColor = Color.Transparent;
+            lblVehicleType.Location = new Point(5, 80);
+            lblVehicleType.Name = "lblVehicleType";
+            lblVehicleType.Size = new Size(56, 20);
+            lblVehicleType.TabIndex = 33;
+            lblVehicleType.Text = "Loại xe";
+            // 
+            // lblIdentityType
+            // 
+            lblIdentityType.AutoSize = true;
+            lblIdentityType.BackColor = Color.Transparent;
+            lblIdentityType.Location = new Point(295, 13);
+            lblIdentityType.Name = "lblIdentityType";
+            lblIdentityType.Size = new Size(75, 20);
+            lblIdentityType.TabIndex = 33;
+            lblIdentityType.Text = "Nhóm thẻ";
             // 
             // frmReportIn
             // 
@@ -432,6 +511,7 @@ namespace iParkingv5_window.Forms.ReportForms
         private Panel panelData;
         private Usercontrols.BuildControls.ucNotify ucNotify1;
         private Usercontrols.BuildControls.ucLoading ucLoading1;
+        private ucEventInInfo ucEventInInfo1;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
         private DataGridViewTextBoxColumn Column7;
@@ -440,6 +520,11 @@ namespace iParkingv5_window.Forms.ReportForms
         private DataGridViewTextBoxColumn Column6;
         private DataGridViewTextBoxColumn Column9;
         private DataGridViewButtonColumn Column3;
-        private ucEventInInfo ucEventInInfo1;
+        private Label lblIdentityType;
+        private Label lblVehicleType;
+        private ComboBox cbIdentityGroupType;
+        private ComboBox cbVehicleType;
+        private ComboBox cbLane;
+        private Label lblLane;
     }
 }

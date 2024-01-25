@@ -450,5 +450,20 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
             await Task.Delay(1);
             return result == 0;
         }
+
+        public Task<bool> AddFinger(List<string> fingerDatas)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> ModifyFInger(string userId, int fingerIndex, string fingerData)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteFinger(string userId, int fingerIndex)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

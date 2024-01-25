@@ -70,8 +70,11 @@ namespace iParkingv5_window.Forms.SystemForms
             chbIsRemember.Location = new Point(txtPassword.Location.X,
                                                txtPassword.Location.Y + txtPassword.Height + StaticPool.baseSize / 2);
 
+            this.Height = chbIsRemember.Location.Y + chbIsRemember.Height + btnCancel1.Height+  StaticPool.baseSize * 3 + this.Height - this.DisplayRectangle.Height;
+
             btnCancel1.Location = new Point(panelMain.Width - btnCancel1.Width - StaticPool.baseSize * 2,
                                             chbIsRemember.Location.Y + chbIsRemember.Height + StaticPool.baseSize);
+
             btnLogin.Location = new Point(btnCancel1.Location.X - btnLogin.Width - StaticPool.baseSize / 2,
                                           btnCancel1.Location.Y);
 

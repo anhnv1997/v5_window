@@ -152,7 +152,7 @@ namespace iParkingv5_window.Usercontrols
             frmCameraConfigSet.ShowDialog();
             if (frmCameraConfigSet.DialogResult == DialogResult.OK)
             {
-                this.config = frmCameraConfigSet.config;
+                this.config = frmCameraConfigSet.GetSaveConfig();
                 panelCamera.Controls[0].Invalidate();
             }
         }
@@ -199,5 +199,9 @@ namespace iParkingv5_window.Usercontrols
         }
         #endregion End Private Function
 
+        private void btnLprDetect_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

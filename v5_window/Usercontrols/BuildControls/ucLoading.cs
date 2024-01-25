@@ -1,4 +1,5 @@
 ﻿using IPaking.Ultility;
+using iParkingv5.Objects;
 using iParkingv5_window.Controls.Buttons;
 using iParkingv5_window.Forms.DataForms;
 using System;
@@ -27,6 +28,8 @@ namespace iParkingv5_window.Usercontrols.BuildControls
                 lblMessage.Text = value;
                 lblMessage.Location = new Point(picWaiting.Location.X + picWaiting.Width,
                                                 picWaiting.Location.Y + (picWaiting.Height - lblMessage.Height) / 2);
+                this.Height = Math.Max(lblMessage.Location.Y + lblMessage.Height + StaticPool.baseSize * 2, picWaiting.Location.Y + picWaiting.Height + StaticPool.baseSize * 2);
+
             }
         }
 
@@ -65,7 +68,6 @@ namespace iParkingv5_window.Usercontrols.BuildControls
             this.Message = message;
             this.Location = new Point(this.Parent.Location.X + (this.Parent.Width - this.Width) / 2,
                                       this.Parent.Location.Y + (this.Parent.Height - this.Height) / 2);
-
 
             this.Visible = true;
             this.Parent.SizeChanged += Parent_SizeChanged;

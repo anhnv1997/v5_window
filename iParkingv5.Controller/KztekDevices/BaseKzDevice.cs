@@ -13,7 +13,6 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using static iParkingv5.Objects.Enums.CommunicationTypes;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace iParkingv5.Controller.KztekDevices
 {
@@ -405,6 +404,21 @@ namespace iParkingv5.Controller.KztekDevices
                 }
             }
             return output;
+        }
+
+        public Task<bool> AddFinger(List<string> fingerDatas)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> ModifyFInger(string userId, int fingerIndex, string fingerData)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteFinger(string userId, int fingerIndex)
+        {
+            throw new NotImplementedException();
         }
     }
 }

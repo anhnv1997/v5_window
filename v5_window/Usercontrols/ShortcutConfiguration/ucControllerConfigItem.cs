@@ -1,4 +1,5 @@
 ﻿using IPaking.Ultility;
+using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
 using iParkingv6.Objects.Datas;
 using Kztek.Tool;
@@ -24,7 +25,16 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
 
         private void UcControllerConfigItem_Load(object? sender, EventArgs e)
         {
-            lblControllerName.Text = this.controllerInLane.controlUnitId;
+            string controllerName = string.Empty;
+            foreach (var item in StaticPool.bdks)
+            {
+                if (item.id.ToLower() == this.controllerInLane.controlUnitId.ToLower())
+                {
+                    controllerName = item.name;
+                    break;
+                }
+            }
+            lblControllerName.Text = controllerName;
 
             List<ControllerShortcutConfig>? controllerShortcutConfigs = NewtonSoftHelper<List<ControllerShortcutConfig>>.
                 DeserializeObjectFromPath(PathManagement.laneControllerShortcutConfigPath(

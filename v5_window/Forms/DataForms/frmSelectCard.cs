@@ -28,7 +28,17 @@ namespace iParkingv5_window.Forms.DataForms
             InitializeComponent();
             this.Text = title;
             dgvData.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
+            this.KeyPreview = true;
+            this.KeyDown += FrmSelectCard_KeyDown;
             this.Load += FrmSelectCard_Load;
+        }
+
+        private void FrmSelectCard_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                BtnSearch_Click(null, null);
+            }
         }
 
         private void FrmSelectCard_Load(object? sender, EventArgs e)
@@ -56,6 +66,7 @@ namespace iParkingv5_window.Forms.DataForms
             dgvData.Location = new Point(lblTittle.Location.X, btnSearch.Location.Y + btnSearch.Height + StaticPool.baseSize);
             dgvData.Width = panelData.Width - StaticPool.baseSize * 4;
             dgvData.Height = btnCancel.Location.Y - StaticPool.baseSize - dgvData.Location.Y;
+            ucNotify1.OnSelectResultEvent += UcNotify1_OnSelectResultEvent;
         }
         #endregion END FORMS
 
@@ -99,12 +110,14 @@ namespace iParkingv5_window.Forms.DataForms
                 Identity? identity = identityResponse.Item1;
                 if (!identityResponse.Item2)
                 {
-                    MessageBox.Show("Không đọc được thông tin định danh, vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ucLoading1.HideLoading();
+                    ucNotify1.Show(ucNotify.EmNotiType.Error, "Không đọc được thông tin định danh, vui lòng thử lại");
                     return;
                 }
                 if (identity == null)
                 {
-                    MessageBox.Show("Mã định danh không có trong hệ thống", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ucLoading1.HideLoading();
+                    ucNotify1.Show(ucNotify.EmNotiType.Information, "Mã định danh không có trong hệ thống");
                     return;
                 }
                 if (identity != null)

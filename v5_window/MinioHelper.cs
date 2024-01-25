@@ -24,7 +24,8 @@ namespace iParkingv5_window
                             .WithEndpoint(EndPoint)
                             .WithCredentials(AccessKey, SecretKey)
                             .WithSSL(secure)
-                            .Build();
+                            .Build()
+                            .WithRegion("us-west-rack");
                 var getListBucketsTask = await minio.ListBucketsAsync().ConfigureAwait(false);
                 PresignedGetObjectArgs args = new PresignedGetObjectArgs()
                                         .WithBucket(bucketName)
@@ -58,7 +59,8 @@ namespace iParkingv5_window
                             .WithEndpoint(EndPoint)
                             .WithCredentials(AccessKey, SecretKey)
                             .WithSSL(secure)
-                            .Build();
+                            .Build()
+                            .WithRegion("us-west-rack");
 
                 BucketExistsArgs bucketExistsArgs = new BucketExistsArgs().WithBucket(bucketName);
                 bool bucketExists = await minio.BucketExistsAsync(bucketExistsArgs);

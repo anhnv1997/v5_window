@@ -6,6 +6,7 @@
         public static int H2_SIZE = 64;
         public static int H3_SIZE = 64;
         public static int ROOT_SIZE = 12;
+        public static EmLanguage ROOT_LANGUAGE = EmLanguage.Vietnamese;
         public enum EmTextDisplay
         {
             NOTIFY_INFORMATION,

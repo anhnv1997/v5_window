@@ -49,6 +49,7 @@
             panel4 = new Panel();
             picLprImage = new MovablePictureBox();
             panel1 = new Panel();
+            btnOpenBarrie = new Button();
             btnRegister = new Button();
             btnReTakePhoto = new Button();
             btnWriteIn = new Button();
@@ -89,7 +90,7 @@
             lblLaneName.Location = new Point(0, 0);
             lblLaneName.Margin = new Padding(0);
             lblLaneName.Name = "lblLaneName";
-            lblLaneName.Size = new Size(727, 44);
+            lblLaneName.Size = new Size(727, 30);
             lblLaneName.TabIndex = 0;
             lblLaneName.Text = "label1";
             lblLaneName.TextAlign = ContentAlignment.MiddleCenter;
@@ -100,13 +101,13 @@
             panelCameras.Dock = DockStyle.Left;
             panelCameras.Location = new Point(0, 0);
             panelCameras.Name = "panelCameras";
-            panelCameras.Size = new Size(241, 445);
+            panelCameras.Size = new Size(241, 454);
             panelCameras.TabIndex = 3;
             // 
             // splitContainerMain
             // 
             splitContainerMain.Dock = DockStyle.Fill;
-            splitContainerMain.Location = new Point(0, 44);
+            splitContainerMain.Location = new Point(0, 30);
             splitContainerMain.Margin = new Padding(0);
             splitContainerMain.Name = "splitContainerMain";
             splitContainerMain.Orientation = Orientation.Horizontal;
@@ -121,8 +122,8 @@
             // 
             splitContainerMain.Panel2.Controls.Add(splitContainerEventContent);
             splitContainerMain.Panel2.Controls.Add(lblResult);
-            splitContainerMain.Size = new Size(727, 634);
-            splitContainerMain.SplitterDistance = 445;
+            splitContainerMain.Size = new Size(727, 648);
+            splitContainerMain.SplitterDistance = 454;
             splitContainerMain.TabIndex = 4;
             // 
             // tableLayoutPanel1
@@ -141,7 +142,7 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new Size(483, 445);
+            tableLayoutPanel1.Size = new Size(483, 454);
             tableLayoutPanel1.TabIndex = 5;
             // 
             // panel3
@@ -151,7 +152,7 @@
             panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(5, 37);
             panel3.Name = "panel3";
-            panel3.Size = new Size(473, 197);
+            panel3.Size = new Size(473, 202);
             panel3.TabIndex = 1;
             // 
             // picVehicleImage
@@ -161,7 +162,7 @@
             picVehicleImage.Image = (Image)resources.GetObject("picVehicleImage.Image");
             picVehicleImage.Location = new Point(0, 0);
             picVehicleImage.Name = "picVehicleImage";
-            picVehicleImage.Size = new Size(473, 197);
+            picVehicleImage.Size = new Size(473, 202);
             picVehicleImage.SizeMode = PictureBoxSizeMode.StretchImage;
             picVehicleImage.TabIndex = 5;
             picVehicleImage.TabStop = false;
@@ -171,9 +172,9 @@
             panel2.BackColor = SystemColors.Control;
             panel2.Controls.Add(picOverviewImage);
             panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(5, 242);
+            panel2.Location = new Point(5, 247);
             panel2.Name = "panel2";
-            panel2.Size = new Size(473, 198);
+            panel2.Size = new Size(473, 202);
             panel2.TabIndex = 0;
             // 
             // picOverviewImage
@@ -183,7 +184,7 @@
             picOverviewImage.Image = (Image)resources.GetObject("picOverviewImage.Image");
             picOverviewImage.Location = new Point(0, 0);
             picOverviewImage.Name = "picOverviewImage";
-            picOverviewImage.Size = new Size(473, 198);
+            picOverviewImage.Size = new Size(473, 202);
             picOverviewImage.SizeMode = PictureBoxSizeMode.StretchImage;
             picOverviewImage.TabIndex = 5;
             picOverviewImage.TabStop = false;
@@ -204,7 +205,7 @@
             // 
             splitterCamera.Location = new Point(241, 0);
             splitterCamera.Name = "splitterCamera";
-            splitterCamera.Size = new Size(3, 445);
+            splitterCamera.Size = new Size(3, 454);
             splitterCamera.TabIndex = 4;
             splitterCamera.TabStop = false;
             // 
@@ -223,7 +224,7 @@
             splitContainerEventContent.Panel2.Controls.Add(panel4);
             splitContainerEventContent.Panel2.Controls.Add(panel1);
             splitContainerEventContent.Panel2.Controls.Add(txtPlate);
-            splitContainerEventContent.Size = new Size(727, 151);
+            splitContainerEventContent.Size = new Size(727, 156);
             splitContainerEventContent.SplitterDistance = 402;
             splitContainerEventContent.TabIndex = 0;
             // 
@@ -245,7 +246,7 @@
             dgvEventContent.ReadOnly = true;
             dgvEventContent.RowHeadersVisible = false;
             dgvEventContent.RowTemplate.Height = 29;
-            dgvEventContent.Size = new Size(402, 151);
+            dgvEventContent.Size = new Size(402, 156);
             dgvEventContent.TabIndex = 0;
             // 
             // Column1
@@ -272,7 +273,7 @@
             panel4.Dock = DockStyle.Fill;
             panel4.Location = new Point(0, 32);
             panel4.Name = "panel4";
-            panel4.Size = new Size(321, 51);
+            panel4.Size = new Size(321, 56);
             panel4.TabIndex = 4;
             // 
             // picLprImage
@@ -282,22 +283,40 @@
             picLprImage.Image = (Image)resources.GetObject("picLprImage.Image");
             picLprImage.Location = new Point(0, 0);
             picLprImage.Name = "picLprImage";
-            picLprImage.Size = new Size(321, 51);
+            picLprImage.Size = new Size(321, 56);
             picLprImage.SizeMode = PictureBoxSizeMode.StretchImage;
             picLprImage.TabIndex = 4;
             picLprImage.TabStop = false;
             // 
             // panel1
             // 
+            panel1.AutoScroll = true;
+            panel1.Controls.Add(btnOpenBarrie);
             panel1.Controls.Add(btnRegister);
             panel1.Controls.Add(btnReTakePhoto);
             panel1.Controls.Add(btnWriteIn);
             panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 83);
+            panel1.Location = new Point(0, 88);
             panel1.Name = "panel1";
             panel1.Padding = new Padding(0, 3, 0, 3);
             panel1.Size = new Size(321, 68);
             panel1.TabIndex = 3;
+            // 
+            // btnOpenBarrie
+            // 
+            btnOpenBarrie.AutoSize = true;
+            btnOpenBarrie.BackColor = Color.Transparent;
+            btnOpenBarrie.Dock = DockStyle.Left;
+            btnOpenBarrie.Image = (Image)resources.GetObject("btnOpenBarrie.Image");
+            btnOpenBarrie.ImageAlign = ContentAlignment.TopCenter;
+            btnOpenBarrie.Location = new Point(310, 3);
+            btnOpenBarrie.Name = "btnOpenBarrie";
+            btnOpenBarrie.Size = new Size(106, 45);
+            btnOpenBarrie.TabIndex = 6;
+            btnOpenBarrie.Text = "Mở Barrie";
+            btnOpenBarrie.TextImageRelation = TextImageRelation.ImageAboveText;
+            btnOpenBarrie.UseVisualStyleBackColor = false;
+            btnOpenBarrie.Click += btnOpenBarrie_Click;
             // 
             // btnRegister
             // 
@@ -308,7 +327,7 @@
             btnRegister.ImageAlign = ContentAlignment.TopCenter;
             btnRegister.Location = new Point(204, 3);
             btnRegister.Name = "btnRegister";
-            btnRegister.Size = new Size(106, 62);
+            btnRegister.Size = new Size(106, 45);
             btnRegister.TabIndex = 5;
             btnRegister.Text = "Đăng ký";
             btnRegister.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -325,7 +344,7 @@
             btnReTakePhoto.ImageAlign = ContentAlignment.TopCenter;
             btnReTakePhoto.Location = new Point(98, 3);
             btnReTakePhoto.Name = "btnReTakePhoto";
-            btnReTakePhoto.Size = new Size(106, 62);
+            btnReTakePhoto.Size = new Size(106, 45);
             btnReTakePhoto.TabIndex = 3;
             btnReTakePhoto.Text = "Chụp lại";
             btnReTakePhoto.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -341,7 +360,7 @@
             btnWriteIn.ImageAlign = ContentAlignment.TopCenter;
             btnWriteIn.Location = new Point(0, 3);
             btnWriteIn.Name = "btnWriteIn";
-            btnWriteIn.Size = new Size(98, 62);
+            btnWriteIn.Size = new Size(98, 45);
             btnWriteIn.TabIndex = 4;
             btnWriteIn.Text = "Ghi Vé Vào";
             btnWriteIn.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -379,7 +398,7 @@
             picSetting.Image = (Image)resources.GetObject("picSetting.Image");
             picSetting.Location = new Point(602, 0);
             picSetting.Name = "picSetting";
-            picSetting.Size = new Size(52, 44);
+            picSetting.Size = new Size(52, 30);
             picSetting.SizeMode = PictureBoxSizeMode.Zoom;
             picSetting.TabIndex = 5;
             picSetting.TabStop = false;
@@ -398,7 +417,7 @@
             panel5.Location = new Point(0, 0);
             panel5.Margin = new Padding(0);
             panel5.Name = "panel5";
-            panel5.Size = new Size(727, 44);
+            panel5.Size = new Size(727, 30);
             panel5.TabIndex = 6;
             // 
             // panel7
@@ -408,7 +427,7 @@
             panel7.Location = new Point(654, 0);
             panel7.Margin = new Padding(0);
             panel7.Name = "panel7";
-            panel7.Size = new Size(21, 44);
+            panel7.Size = new Size(21, 30);
             panel7.TabIndex = 9;
             // 
             // pictureBox2
@@ -418,7 +437,7 @@
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
             pictureBox2.Location = new Point(675, 0);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(52, 44);
+            pictureBox2.Size = new Size(52, 30);
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 6;
             pictureBox2.TabStop = false;
@@ -486,5 +505,6 @@
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
         private Button btnRegister;
+        private Button btnOpenBarrie;
     }
 }

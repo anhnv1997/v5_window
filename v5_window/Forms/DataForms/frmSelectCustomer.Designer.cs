@@ -31,7 +31,6 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSelectCustomer));
             dgvData = new DataGridView();
             Column2 = new DataGridViewTextBoxColumn();
             Column3 = new DataGridViewTextBoxColumn();
@@ -222,7 +221,6 @@
             btnOk1.BorderStyle = BorderStyle.Fixed3D;
             btnOk1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnOk1.ForeColor = Color.Black;
-            btnOk1.Image = (Image)resources.GetObject("btnOk1.Image");
             btnOk1.ImageAlign = ContentAlignment.MiddleLeft;
             btnOk1.Location = new Point(637, 395);
             btnOk1.Name = "btnOk1";
