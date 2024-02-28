@@ -12,7 +12,17 @@ namespace iParkingv5.Objects.Events
     public delegate void ConnectStatusChangeEventHandler(object sender, ConnectStatusCHangeEventArgs e);
     public delegate void DeviceInfoChangeEventHandler(object sender, DeviceInfoChangeArgs e);
     public delegate void DisplayTextChangeEventHandler(object? sender, TextChangeEventArgs e);
+    public delegate void FingerEventHandler(object sender, FingerEventArgs e);
+    public delegate void OnChangeLaneEvent(object sender);
+    public delegate void OnControlSizeChanged(object sender, ControlSizeChangedEventArgs type);
 
+    public class ControlSizeChangedEventArgs : EventArgs
+    {
+        public int Type { get; set; }
+        public  int NewX { get; set; }
+        public  int NewY { get; set; }
+        public int NewDistance { get; set; }
+    }
     public class GeneralEventArgs : EventArgs
     {
         public string DeviceId { get; set; } = string.Empty;
@@ -73,6 +83,12 @@ namespace iParkingv5.Objects.Events
             return false;
         }
     }
+    public class FingerEventArgs : GeneralEventArgs
+    {
+        public string UserId { get; set; }
+        public int ReaderIndex { get; set; }
+    }
+
     public class ConnectStatusCHangeEventArgs : GeneralEventArgs
     {
         public bool CurrentStatus { get; set; }

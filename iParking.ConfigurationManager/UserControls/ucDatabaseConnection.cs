@@ -81,26 +81,31 @@ namespace iParking.ConfigurationManager.UserControls
             string password = txtPassword.Text;
             string databaseName = cbDatabase.Text;
             string authenticationMode = cbAuthenMode.Text;
-            if (string.IsNullOrEmpty(serverName))
+            bool isUseDatabase = chbIsUseDatabase.Checked;
+            if (isUseDatabase)
             {
-                MessageBox.Show("Tên máy chủ không được bỏ trống!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return null;
-            }
+                if (string.IsNullOrEmpty(serverName))
+                {
+                    MessageBox.Show("Tên máy chủ không được bỏ trống!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return null;
+                }
 
-            if (string.IsNullOrEmpty(databaseName))
-            {
-                MessageBox.Show("Tên máy chủ không được bỏ trống!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return null;
-            }
+                if (string.IsNullOrEmpty(databaseName))
+                {
+                    MessageBox.Show("Tên máy chủ không được bỏ trống!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return null;
+                }
 
-            if (authenticationMode == "SQL Server Authentication" && string.IsNullOrEmpty(login))
-            {
-                MessageBox.Show("Tên đăng nhập không được bỏ trống!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return null;
-            }
+                if (authenticationMode == "SQL Server Authentication" && string.IsNullOrEmpty(login))
+                {
+                    MessageBox.Show("Tên đăng nhập không được bỏ trống!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return null;
+                }
 
-            SQLConn sqlconn = new SQLConn("", serverName, databaseName, login, CryptorEngine.Encrypt(password, true), authenticationMode);
-            return sqlconn;
+                SQLConn sqlconn = new SQLConn("", serverName, databaseName, login, CryptorEngine.Encrypt(password, true), authenticationMode, true);
+                return sqlconn;
+            }
+            return new SQLConn("", serverName, databaseName, login, CryptorEngine.Encrypt(password, true), authenticationMode, false);
         }
         #endregion
 

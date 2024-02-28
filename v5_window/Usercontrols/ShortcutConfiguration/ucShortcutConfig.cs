@@ -1,7 +1,6 @@
 ﻿using IPaking.Ultility;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
-using iParkingv5_window.Controls.Buttons;
 using iParkingv5_window.Usercontrols.ShortcutConfiguration;
 using iParkingv6.Objects.Datas;
 using Kztek.Tool;
@@ -50,7 +49,7 @@ namespace iParkingv5_window.Usercontrols
             ucControllerConfig.Dock = DockStyle.Fill;
             ucControllerConfig.BringToFront();
             panelActions.BringToFront();
-            btnOk1.Init(btnSaveConfig_Click);
+            btnOk1.InitControl(btnSaveConfig_Click);
             panelActions.Height = StaticPool.baseSize * 3 + btnOk1.Height;
             btnOk1.Location = new Point(panelActions.Width - btnOk1.Width,
                                         StaticPool.baseSize);

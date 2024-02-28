@@ -1,6 +1,7 @@
-﻿using iParkingv5.Objects;
+﻿using iPakrkingv5.Controls;
+using iPakrkingv5.Controls.Controls.Buttons;
+using iParkingv5.Objects;
 using iParkingv5.Objects.Datas;
-using iParkingv5_window.Controls.Buttons;
 using iParkingv5_window.Usercontrols.BuildControls;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using System.Runtime.InteropServices;
@@ -32,7 +33,6 @@ namespace iParkingv5_window.Forms.DataForms
             this.KeyDown += FrmSelectCard_KeyDown;
             this.Load += FrmSelectCard_Load;
         }
-
         private void FrmSelectCard_KeyDown(object? sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -40,16 +40,16 @@ namespace iParkingv5_window.Forms.DataForms
                 BtnSearch_Click(null, null);
             }
         }
-
         private void FrmSelectCard_Load(object? sender, EventArgs e)
         {
             this.Location = this.position;
             this.Font = panelData.Font = new Font(this.Font.Name, StaticPool.baseSize);
             lblTittle.Font = new Font(this.Font.Name, StaticPool.baseSize * 2, FontStyle.Bold);
+            panelData.ToggleDoubleBuffered(true);
 
-            btnSearch.Init(BtnSearch_Click);
-            btnSelectCard.Init(BtnSelectCard_Click);
-            btnCancel.Init(BtnCancel_Click);
+            btnSearch.InitControl(BtnSearch_Click);
+            btnSelectCard.InitControl(BtnSelectCard_Click);
+            btnCancel.InitControl(BtnCancel_Click);
 
             lblTittle.Location = new Point(StaticPool.baseSize * 2, StaticPool.baseSize * 2);
             lblCardNumber.Location = new Point(lblTittle.Location.X, lblTittle.Location.Y + lblTittle.Height + StaticPool.baseSize);
@@ -67,6 +67,7 @@ namespace iParkingv5_window.Forms.DataForms
             dgvData.Width = panelData.Width - StaticPool.baseSize * 4;
             dgvData.Height = btnCancel.Location.Y - StaticPool.baseSize - dgvData.Location.Y;
             ucNotify1.OnSelectResultEvent += UcNotify1_OnSelectResultEvent;
+            this.ActiveControl = btnSearch;
         }
         #endregion END FORMS
 
@@ -85,14 +86,14 @@ namespace iParkingv5_window.Forms.DataForms
                 {
                     continue;
                 }
-                if (!IsSupportsTransparency(item))
-                {
-                    item.Enabled = false;
-                    continue;
-                }
                 else if (item is IDesignControl)
                 {
                     ((IDesignControl)item).EnableWaitMode();
+                }
+                else if (!ControlExtensions.IsSupportsTransparency(item))
+                {
+                    item.Enabled = false;
+                    continue;
                 }
             }
             ucLoading1.Show("Đang tải thông tin định danh", frmMain.language);
@@ -127,7 +128,7 @@ namespace iParkingv5_window.Forms.DataForms
             }
             else
             {
-                List<Identity> identities = await KzParkingApiHelper.GetAllIdentity();
+                List<Identity> identities = await KzParkingApiHelper.GetIdentities("");
                 if (identities != null)
                 {
                     for (int i = 0; i < identities.Count; i++)
@@ -215,20 +216,5 @@ namespace iParkingv5_window.Forms.DataForms
                 item.Enabled = true;
             }
         }
-        static bool IsSupportsTransparency(Control control)
-        {
-            Type[] transparentControlTypes = { typeof(Panel), typeof(GroupBox), typeof(Label) };
-
-            foreach (Type transparentType in transparentControlTypes)
-            {
-                if (transparentType.IsAssignableFrom(control.GetType()))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
     }
 }

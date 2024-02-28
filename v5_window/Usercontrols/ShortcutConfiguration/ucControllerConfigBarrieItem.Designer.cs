@@ -1,4 +1,6 @@
-﻿namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
+﻿using iPakrkingv5.Controls.Controls.Buttons;
+
+namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
 {
     partial class ucControllerConfigBarrieItem
     {
@@ -31,7 +33,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucControllerConfigBarrieItem));
             lblCurrentConfig = new Label();
             lblBarrieName = new Label();
-            picChangeConfig = new Controls.Buttons.LblSetting();
+            picChangeConfig = new LblSetting();
             SuspendLayout();
             // 
             // lblCurrentConfig
@@ -60,7 +62,6 @@
             // picChangeConfig
             // 
             picChangeConfig.AutoSize = true;
-            picChangeConfig.BorderStyle = BorderStyle.Fixed3D;
             picChangeConfig.Dock = DockStyle.Right;
             picChangeConfig.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             picChangeConfig.ForeColor = Color.Black;
@@ -90,6 +91,6 @@
 
         private Label lblCurrentConfig;
         private Label lblBarrieName;
-        private Controls.Buttons.LblSetting picChangeConfig;
+        private LblSetting picChangeConfig;
     }
 }

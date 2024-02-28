@@ -1,21 +1,12 @@
-﻿using iParkingv5.Objects;
+﻿using iPakrkingv5.Controls;
+using iPakrkingv5.Controls.Controls.Buttons;
+using iParkingv5.Objects;
 using iParkingv5.Objects.Databases;
-using iParkingv5_window.Controls.Buttons;
 using iParkingv5_window.Forms.DataForms;
-using iParkingv5_window.Usercontrols;
 using iParkingv5_window.Usercontrols.BuildControls;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using Kztek.Tool.TextFormatingTools;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper;
 
 namespace iParkingv5_window.Forms.ReportForms
@@ -49,9 +40,8 @@ namespace iParkingv5_window.Forms.ReportForms
         private void FrmReportInOut_Load(object? sender, EventArgs e)
         {
             CreateUI();
+            this.ActiveControl = btnSearch;
         }
-
-
         private void FrmReportInOut_KeyDown(object? sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Return)
@@ -97,15 +87,16 @@ namespace iParkingv5_window.Forms.ReportForms
                 {
                     continue;
                 }
-                if (!IsSupportsTransparency(item))
-                {
-                    item.Enabled = false;
-                    continue;
-                }
                 else if (item is IDesignControl)
                 {
                     ((IDesignControl)item).EnableWaitMode();
                 }
+                else if (!ControlExtensions.IsSupportsTransparency(item))
+                {
+                    item.Enabled = false;
+                    continue;
+                }
+
             }
             ucLoading1.Show("Đang tải thông tin xe ra khỏi bãi", frmMain.language);
             Application.DoEvents();
@@ -117,9 +108,9 @@ namespace iParkingv5_window.Forms.ReportForms
             string keyword = txtKeyword.Text;
             DateTime startTime = dtpStartTime.Value;
             DateTime endTime = dtpEndTime.Value;
-            string vehicleTypeId = ((ListItem)cbVehicleType.SelectedItem).Value;
-            string identityGroupId = ((ListItem)cbIdentityGroup.SelectedItem).Value;
-            string laneId = ((ListItem)cbLane.SelectedItem).Value;
+            string vehicleTypeId = ((ListItem)cbVehicleType.SelectedItem)?.Value??"";
+            string identityGroupId = ((ListItem)cbIdentityGroup.SelectedItem)?.Value ?? "";
+            string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
 
             Tuple<List<EventOutReport>, int, int> eventOutReport = await KzParkingApiHelper.GetEventOuts(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId);
 
@@ -172,15 +163,16 @@ namespace iParkingv5_window.Forms.ReportForms
                 {
                     continue;
                 }
-                if (!IsSupportsTransparency(item))
-                {
-                    item.Enabled = true;
-                    continue;
-                }
                 else if (item is IDesignControl)
                 {
                     ((IDesignControl)item).Reset();
                 }
+                else if (!ControlExtensions.IsSupportsTransparency(item))
+                {
+                    item.Enabled = true;
+                    continue;
+                }
+
             }
             Application.DoEvents();
             panelData.ResumeLayout();
@@ -195,7 +187,6 @@ namespace iParkingv5_window.Forms.ReportForms
         {
             ExcelTools.CreatReportFile(dgvData, "Báo cáo Xe Ra Khỏi Bãi");
         }
-
         private async void DgvData_SelectionChanged(object? sender, EventArgs e)
         {
             try
@@ -268,7 +259,7 @@ namespace iParkingv5_window.Forms.ReportForms
                     {
                         ((IDesignControl)item).EnableWaitMode();
                     }
-                    else if (!IsSupportsTransparency(item))
+                    else if (!ControlExtensions.IsSupportsTransparency(item))
                     {
                         item.Enabled = true;
                         continue;
@@ -293,7 +284,6 @@ namespace iParkingv5_window.Forms.ReportForms
                                                          laneIDOut, datetimeOut, plateNumberOut, identityIdOut, createdById);
             }
         }
-
         private void UcPages1_OnpageSelect(int pageIndex)
         {
             this.Invoke(new Action(async () =>
@@ -310,14 +300,14 @@ namespace iParkingv5_window.Forms.ReportForms
                     {
                         continue;
                     }
-                    if (!IsSupportsTransparency(item))
-                    {
-                        item.Enabled = false;
-                        continue;
-                    }
                     else if (item is IDesignControl)
                     {
                         ((IDesignControl)item).EnableWaitMode();
+                    }
+                    else if (!ControlExtensions.IsSupportsTransparency(item))
+                    {
+                        item.Enabled = false;
+                        continue;
                     }
                 }
                 ucLoading1.Show("Đang tải thông tin xe ra khỏi bãi", frmMain.language);
@@ -329,9 +319,9 @@ namespace iParkingv5_window.Forms.ReportForms
                 string keyword = txtKeyword.Text;
                 DateTime startTime = dtpStartTime.Value;
                 DateTime endTime = dtpEndTime.Value;
-                string vehicleTypeId = ((ListItem)cbVehicleType.SelectedItem).Value;
-                string identityGroupId = ((ListItem)cbIdentityGroup.SelectedItem).Value;
-                string laneId = ((ListItem)cbLane.SelectedItem).Value;
+                string vehicleTypeId = ((ListItem)cbVehicleType.SelectedItem)?.Value ?? "";
+                string identityGroupId = ((ListItem)cbIdentityGroup.SelectedItem)?.Value ?? "";
+                string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
 
                 Tuple<List<EventOutReport>, int, int> eventOutReport = await KzParkingApiHelper.GetEventOuts(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, pageIndex);
 
@@ -367,14 +357,14 @@ namespace iParkingv5_window.Forms.ReportForms
                     {
                         continue;
                     }
-                    if (!IsSupportsTransparency(item))
-                    {
-                        item.Enabled = true;
-                        continue;
-                    }
                     else if (item is IDesignControl)
                     {
                         ((IDesignControl)item).Reset();
+                    }
+                    else if (!ControlExtensions.IsSupportsTransparency(item))
+                    {
+                        item.Enabled = true;
+                        continue;
                     }
                 }
 
@@ -393,14 +383,14 @@ namespace iParkingv5_window.Forms.ReportForms
                 {
                     continue;
                 }
-                if (!IsSupportsTransparency(item))
-                {
-                    item.Enabled = true;
-                    continue;
-                }
                 else if (item is IDesignControl)
                 {
                     ((IDesignControl)item).Reset();
+                }
+                else if (!ControlExtensions.IsSupportsTransparency(item))
+                {
+                    item.Enabled = true;
+                    continue;
                 }
             }
         }
@@ -419,7 +409,7 @@ namespace iParkingv5_window.Forms.ReportForms
                     {
                         ((IDesignControl)item).Reset();
                     }
-                    else if (!IsSupportsTransparency(item))
+                    else if (!ControlExtensions.IsSupportsTransparency(item))
                     {
                         item.Enabled = true;
                         continue;
@@ -432,10 +422,10 @@ namespace iParkingv5_window.Forms.ReportForms
         #region Private Function
         private async void CreateUI()
         {
-            btnCancel.Init(btnCancel_Click);
-            btnExportExcel.Init(btnExportExcel_Click);
-            btnSearch.Init(btnSearch_Click);
-
+            btnCancel.InitControl(btnCancel_Click);
+            btnExportExcel.InitControl(btnExportExcel_Click);
+            btnSearch.InitControl(btnSearch_Click);
+            panelData.ToggleDoubleBuffered(true);
 
             lblKeyword.Location = new Point(StaticPool.baseSize * 2, StaticPool.baseSize * 2);
             txtKeyword.Location = new Point(lblKeyword.Location.X + lblKeyword.Width + StaticPool.baseSize,
@@ -485,12 +475,12 @@ namespace iParkingv5_window.Forms.ReportForms
             lblTotalEvents.Location = new Point(tablePic.Location.X, lblStartTime.Location.Y);
             lblMoney.Location = new Point(dgvData.Location.X + (dgvData.Width - lblMoney.Width), lblMoney.Location.Y);
 
+            cbVehicleType.DisplayMember = cbIdentityGroup.DisplayMember = cbLane.DisplayMember = "Name";
+            cbVehicleType.ValueMember = cbIdentityGroup.ValueMember = cbLane.ValueMember = "Value";
+
             await LoadVehicleTypeData();
             await LoadIdentityGroup();
             await LoadLaneType();
-
-            cbVehicleType.DisplayMember = cbIdentityGroup.DisplayMember = cbLane.DisplayMember = "Name";
-            cbVehicleType.ValueMember = cbIdentityGroup.ValueMember = cbLane.ValueMember = "Value";
         }
 
         private void DisableFastLoading()
@@ -554,7 +544,7 @@ namespace iParkingv5_window.Forms.ReportForms
 
                 row.Cells[i++].Value = item.createdBy;     //10
                 row.Cells[i++].Value = item.eventInCreatedBy;//11
-                row.Cells[i++].Value = item.charge;//11
+                row.Cells[i++].Value = TextFormatingTool.GetMoneyFormat( item.charge.ToString());//11
                 row.Cells[i++].Value = physicalFileIdsIn == null ? "" : string.Join(";", physicalFileIdsIn);//12
                 row.Cells[i++].Value = item.fileKeys == null ? "" : string.Join(";", item.fileKeys);//13
                 row.Cells[i++].Value = "Xem thêm";//13
@@ -580,21 +570,6 @@ namespace iParkingv5_window.Forms.ReportForms
             }
             pic.Image = Properties.Resources.defaultImage;
         }
-        static bool IsSupportsTransparency(Control control)
-        {
-            Type[] transparentControlTypes = { typeof(Panel), typeof(GroupBox), typeof(Label) };
-
-            foreach (Type transparentType in transparentControlTypes)
-            {
-                if (transparentType.IsAssignableFrom(control.GetType()))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         private async Task LoadVehicleTypeData()
         {
             cbVehicleType.Invoke(new Action(() =>
@@ -624,6 +599,9 @@ namespace iParkingv5_window.Forms.ReportForms
         }
         private async Task LoadIdentityGroup()
         {
+            cbIdentityGroup.DisplayMember = "Name";
+            cbIdentityGroup.ValueMember = "Value";
+
             cbIdentityGroup.Invoke(new Action(() =>
             {
                 cbIdentityGroup.Items.Add(new ListItem()
@@ -647,6 +625,7 @@ namespace iParkingv5_window.Forms.ReportForms
                 }
                 cbIdentityGroup.SelectedIndex = 0;
             }));
+
         }
         private async Task LoadLaneType()
         {

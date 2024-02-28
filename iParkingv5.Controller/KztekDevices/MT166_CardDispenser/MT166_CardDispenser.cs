@@ -53,8 +53,8 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
         }
         public override void DeleteCardEvent()
         {
-            string comport = this.ControllerInfo.comport;
-            int baudrate = GetBaudrate(this.ControllerInfo.baudrate);
+            string comport = this.ControllerInfo.Comport;
+            int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
             string cmd = KZTEK_CMD.DeleteEventCMD();
             UdpTools.ExecuteCommand(comport, baudrate, cmd, 500, UdpTools.STX, Encoding.ASCII);
         }
@@ -125,8 +125,8 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
             {
                 try
                 {
-                    string comport = this.ControllerInfo.comport;
-                    int baudrate = GetBaudrate(this.ControllerInfo.baudrate);
+                    string comport = this.ControllerInfo.Comport;
+                    int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
                     string getEventCmd = KZTEK_CMD.GetEventCMD();
                     this.IsBusy = true;
                     string response = string.Empty;
@@ -136,7 +136,7 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
                     });
                     this.IsBusy = false;
                     // Trang thai thiet bij
-                    this.ControllerInfo.isConnect = response != "";
+                    this.ControllerInfo.IsConnect = response != "";
                     //GetEvent?/LenCard=4/Card=7C19F640/Input=1/ArrayInput=X/Com=Com1/StateCardDispenserCom1=Y/StateCardDispenserCom2=Z/
 
                     if (response != "" && (response.Contains("GetEvent?/")) && !response.Contains("NotEvent"))
@@ -184,7 +184,7 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
         {
             InputEventArgs ie = new InputEventArgs
             {
-                DeviceId = controller.id
+                DeviceId = controller.Id
             };
             string str_inputName = map.ContainsKey("input") ? map["input"] : "";
             if (!string.IsNullOrEmpty(str_inputName))
@@ -200,7 +200,7 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
         {
             CardEventArgs e = new CardEventArgs
             {
-                DeviceId = controller.id,
+                DeviceId = controller.Id,
                 AllCardFormats = new List<string>(),
             };
             string cardNumberHEX = map.ContainsKey("card") ? map["card"] : "";
@@ -242,8 +242,8 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
         {
             InputEventArgs ie = new()
             {
-                DeviceId = controller.id,
-                DeviceName = controller.name,
+                DeviceId = controller.Id,
+                DeviceName = controller.Name,
             };
             ie.InputIndex = int.Parse(doorNo);
             ie.InputType = InputTupe.EmInputType.Exit;
@@ -252,8 +252,8 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
 
         public override async Task<bool> OpenDoor(int timeInMilisecond, int relayIndex)
         {
-            string comport = this.ControllerInfo.comport;
-            int baudrate = GetBaudrate(this.ControllerInfo.baudrate);
+            string comport = this.ControllerInfo.Comport;
+            int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
             string openRelayCmd = KZTEK_CMD.OpenRelayCMD(relayIndex);
 
             this.IsBusy = true;

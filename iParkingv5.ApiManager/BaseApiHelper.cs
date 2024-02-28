@@ -4,6 +4,7 @@ using Kztek.Tools;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace iParkingv6.ApiManager
@@ -161,7 +162,7 @@ namespace iParkingv6.ApiManager
                         request.AddQueryParameter(kvp.Key, kvp.Value);
                     }
                 }
-
+                string a = Newtonsoft.Json.JsonConvert.SerializeObject(data);
                 var response = await client.ExecuteAsync(request);
                 if (!response.IsSuccessful)
                 {

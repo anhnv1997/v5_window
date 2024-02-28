@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using static iParkingv5.Objects.Enums.CommunicationTypes;
@@ -28,7 +29,6 @@ namespace iParkingv5.Controller.Dahua
 
         const string TimeFormat = "yyyyMMddHHmmss";
 
-
         public Bdk ControllerInfo { get; set; }
 
         public DahuaAccessControl()
@@ -39,6 +39,7 @@ namespace iParkingv5.Controller.Dahua
         }
         #region Event
         public event CardEventHandler? CardEvent;
+        public event FingerEventHandler? FingerEvent;
         public event ControllerErrorEventHandler? ErrorEvent;
         public event InputEventHandler? InputEvent;
         public event ConnectStatusChangeEventHandler? ConnectStatusChangeEvent;
@@ -68,19 +69,19 @@ namespace iParkingv5.Controller.Dahua
         #region: CONNECT
         public async Task<bool> TestConnectionAsync()
         {
-            if (CommunicationTypes.IS_TCP((EM_CommunicationType)(this.ControllerInfo.communicationType)))
+            if (CommunicationTypes.IS_TCP((EM_CommunicationType)(this.ControllerInfo.CommunicationType)))
             {
-                if (NetWorkTools.IsPingSuccess(this.ControllerInfo.comport, 500))
+                if (NetWorkTools.IsPingSuccess(this.ControllerInfo.Comport, 500))
                 {
                     NET_DEVICEINFO_Ex deviceInfo = new NET_DEVICEINFO_Ex();
-                    string ip = this.ControllerInfo.comport;
-                    ushort port = ushort.Parse(this.ControllerInfo.baudrate);
+                    string ip = this.ControllerInfo.Comport;
+                    ushort port = ushort.Parse(this.ControllerInfo.Baudrate);
                     string username = "admin";
                     string password = "admin";
                     m_LoginID = NETClient.LoginWithHighLevelSecurity(ip, port, username, password, EM_LOGIN_SPAC_CAP_TYPE.TCP, IntPtr.Zero, ref deviceInfo);
 
-                    this.ControllerInfo.isConnect = m_LoginID != IntPtr.Zero;
-                    return this.ControllerInfo.isConnect;
+                    this.ControllerInfo.IsConnect = m_LoginID != IntPtr.Zero;
+                    return this.ControllerInfo.IsConnect;
                 }
             }
             return false;
@@ -174,10 +175,8 @@ namespace iParkingv5.Controller.Dahua
         #endregion End System
 
         #region CallBack 回调
-        public void Init()
+        public static void Init()
         {
-
-
             try
             {
                 NETClient.Init(m_DisConnectCallBack, IntPtr.Zero, null);
@@ -190,17 +189,14 @@ namespace iParkingv5.Controller.Dahua
                 Process.GetCurrentProcess().Kill();
             }
         }
-
         private void DisConnectCallBack(IntPtr lLoginID, IntPtr pchDVRIP, int nDVRPort, IntPtr dwUser)
         {
-            this.ControllerInfo.isConnect = false;
+            this.ControllerInfo.IsConnect = false;
         }
-
         private void ReConnectCallBack(IntPtr lLoginID, IntPtr pchDVRIP, int nDVRPort, IntPtr dwUser)
         {
-            this.ControllerInfo.isConnect = true;
+            this.ControllerInfo.IsConnect = true;
         }
-
         private bool AlarmCallBack(int lCommand, IntPtr lLoginID, IntPtr pBuf, uint dwBufLen, IntPtr pchDVRIP, int nDVRPort, bool bAlarmAckFlag, int nEventID, IntPtr dwUser)
         {
             EM_ALARM_TYPE type = (EM_ALARM_TYPE)lCommand;
@@ -215,11 +211,14 @@ namespace iParkingv5.Controller.Dahua
                         try
                         {
                             userId = int.Parse(Encoding.Default.GetString(access_info.szUserID));
-
+                            if (userId > 0)
+                            {
+                                CallFingerEvent(this.ControllerInfo, userId, 1);
+                            }
                         }
                         catch (Exception)
                         {
-                            break;
+                            CallFingerEvent(this.ControllerInfo, 0, 1);
                         }
                     }
                     else
@@ -239,7 +238,7 @@ namespace iParkingv5.Controller.Dahua
         {
             CardEventArgs e = new CardEventArgs
             {
-                DeviceId = controller.id,
+                DeviceId = controller.Id,
                 AllCardFormats = new List<string>(),
             };
             string cardNumberHEX = cardNumber;
@@ -282,22 +281,121 @@ namespace iParkingv5.Controller.Dahua
             e.ReaderIndex = readerIndex;
             this.CardEvent?.Invoke(this, e);
         }
-
-        public async Task<bool> AddFinger(List<string> fingerDatas)
+        private void CallFingerEvent(Bdk controller, int userId, int readerIndex)
         {
-            return false;
-        }
-
-        public async Task<bool> ModifyFInger(string userId, int fingerIndex, string fingerData)
-        {
-            return false;
-        }
-
-        public async Task<bool> DeleteFinger(string userId, int fingerIndex)
-        {
-            return false;
+            FingerEventArgs e = new FingerEventArgs
+            {
+                DeviceId = controller.Id,
+                UserId = userId.ToString(),
+                ReaderIndex = readerIndex
+            };
+            this.FingerEvent?.Invoke(this, e);
         }
 
         #endregion
+
+        #region USER
+        public async Task<bool> AddFinger(List<string> fingerDatas, string customerName, int userId)
+        {
+            RegisterCustomer(customerName, userId, out bool result, out NET_EM_FAILCODE[] stuOutErrArray);
+            if (!result)
+            {
+                return false;
+            }
+
+            //Xóa toàn bộ thông tin vân tay cũ
+            result = false;
+            string[] userid = new string[] { userId.ToString() };
+            result = NETClient.RemoveOperateAccessFingerprintService(m_LoginID, userid, out stuOutErrArray, 3000);
+
+            //Đăng ký vân tay mới
+            bool isAllSuccess = true;
+            for (int i = 0; i < fingerDatas.Count; i++)
+            {
+                isAllSuccess = AssignFinger(fingerDatas, isAllSuccess, i + 1, userId);
+            }
+            return isAllSuccess;
+        }
+        public async Task<bool> ModifyFinger(List<string> fingerDatas, string customerName, int userId)
+        {
+            return false;
+        }
+        public async Task<bool> DeleteFinger(string userId, int fingerIndex)
+        {
+            NET_EM_FAILCODE[] stuOutErrArray = new NET_EM_FAILCODE[1];
+            string[] InUserid = new string[] { userId };
+            bool result = NETClient.RemoveOperateAccessUserService(m_LoginID, InUserid, out stuOutErrArray, 3000);
+            var lastError = NETClient.GetLastError();
+            return result;
+        }
+        #endregion END USER
+
+        #region Private Function
+        private bool AssignFinger(List<string> fingerDatas, bool isAllSuccess, int i, int userId)
+        {
+            int m_PacketLen = 810;
+            List<string> tempList = fingerDatas[i - 1].Split(" ").ToList();
+            byte[] FingerPrintInfo = new byte[tempList.Count];
+            for (int j = 0; j < tempList.Count; j++)
+            {
+                FingerPrintInfo[j] = (byte)int.Parse(tempList[j]);
+            }
+            NET_ACCESS_FINGERPRINT_INFO fingerprint_info = new NET_ACCESS_FINGERPRINT_INFO();
+            fingerprint_info.nPacketNum = 1;
+            fingerprint_info.nPacketLen = m_PacketLen;
+            fingerprint_info.szFingerPrintInfo = Marshal.AllocHGlobal(m_PacketLen);
+            fingerprint_info.nDuressIndex = 0;
+            fingerprint_info.szUserID = userId.ToString();
+            for (int j = 0; j < m_PacketLen; j++)
+            {
+                Marshal.WriteByte(fingerprint_info.szFingerPrintInfo, j, FingerPrintInfo[j]);
+            }
+            NET_ACCESS_FINGERPRINT_INFO[] stuFingerInArray = new NET_ACCESS_FINGERPRINT_INFO[1] { fingerprint_info };
+            NET_EM_FAILCODE[] stuOutArray;
+
+            bool bRet = NETClient.InsertOperateAccessFingerprintService(m_LoginID, stuFingerInArray, out stuOutArray, 3000);
+            if (!bRet)
+            {
+                isAllSuccess = false;
+            }
+
+            return isAllSuccess;
+        }
+        private void RegisterCustomer(string customerName, int userId, out bool result, out NET_EM_FAILCODE[] stuOutErrArray)
+        {
+            NET_ACCESS_USER_INFO userInfo = new NET_ACCESS_USER_INFO
+            {
+                szUserID = userId.ToString(),
+                szName = customerName,
+                szPsw = "",
+                emAuthority = EM_ATTENDANCE_AUTHORITY.Customer,
+
+                nTimeSectionNum = 1,
+                nTimeSectionNo = new int[32]
+            };
+            userInfo.nTimeSectionNo[0] = 0;
+
+            userInfo.nSpecialDaysScheduleNum = 1;
+            userInfo.nSpecialDaysSchedule = new int[128];
+            userInfo.nSpecialDaysSchedule[0] = 0;
+
+            userInfo.emUserType = EM_USER_TYPE.NORMAL;
+            userInfo.nUserTime = 0;
+            userInfo.bFirstEnter = false;
+            userInfo.nFirstEnterDoorsNum = 0;
+
+            userInfo.stuValidStartTime = NET_TIME.FromDateTime(DateTime.Now);
+            userInfo.stuValidEndTime = NET_TIME.FromDateTime(DateTime.Now.AddYears(1));
+            userInfo.nDoors = new int[32];
+            userInfo.nDoors[0] = 0;
+            userInfo.nDoorNum = 1;
+
+            result = false;
+            NET_ACCESS_USER_INFO[] stuInArray = new NET_ACCESS_USER_INFO[1] { userInfo };
+            stuOutErrArray = new NET_EM_FAILCODE[1];
+            result = NETClient.InsertOperateAccessUserService(m_LoginID, stuInArray, out stuOutErrArray, 5000);
+            var a = NETClient.GetLastError();
+        }
+        #endregion End Private Function
     }
 }

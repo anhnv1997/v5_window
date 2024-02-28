@@ -8,23 +8,22 @@ namespace iParkingv6.Objects.Datas
 {
     public class Customer
     {
-        public string id { get; set; }
-        public string code { get; set; }
-        public string name { get; set; }
-        public string address { get; set; }
-        public string idNumber { get; set; }
-        public string phoneNumber { get; set; }
-        public object email { get; set; }
+        public string Id { get; set; }
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string IdNumber { get; set; }
+        public string PhoneNumber { get; set; }
+        public object Email { get; set; }
         [JsonIgnore]
-        public DateTime dateOfBirth { get; set; } = DateTime.MinValue;
-        public string customerGroupId { get; set; }
-        public string customerGroup
+        public DateTime DateOfBirth { get; set; } = DateTime.MinValue;
+        public string CustomerGroupId { get; set; }
+        public string CustomerGroupName
         {
-            get => StaticPool.customerGroupCollection.GetById(this.customerGroupId)?.Name ?? "";
+            get => StaticPool.customerGroupCollection.GetById(this.CustomerGroupId)?.Name ?? "";
         }
-        public object description { get; set; }
-        public bool enabled { get; set; } = true;
-        public bool deleted { get; set; } = false;
+        public object Description { get; set; }
+        public bool Enabled { get; set; } = true;
         public static void GetCustomerName(List<Customer> customers, string id, out string customerName, out string customerCode, out string customerGroupId, out string customerGroupName)
         {
             if (customers == null)
@@ -37,12 +36,12 @@ namespace iParkingv6.Objects.Datas
             }
             foreach (var item in customers)
             {
-                if (item.id == id)
+                if (item.Id == id)
                 {
-                    customerName = item.name;
-                    customerCode = item.code;
-                    customerGroupId = item.customerGroupId;
-                    customerGroupName = item.customerGroup;
+                    customerName = item.Name;
+                    customerCode = item.Code;
+                    customerGroupId = item.CustomerGroupId;
+                    customerGroupName = item.CustomerGroupName;
                     return;
                 }
             }

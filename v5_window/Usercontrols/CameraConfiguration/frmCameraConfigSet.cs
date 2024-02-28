@@ -29,8 +29,8 @@ namespace iParkingv5_window.Usercontrols.CameraConfiguration
         }
         private void FrmCameraConfigSet_Load(object? sender, EventArgs e)
         {
-            btnOk1.Init(BtnOk1_Click);
-            btnCancel1.Init(BtnCancel1_Click);
+            btnOk1.InitControl(BtnOk1_Click);
+            btnCancel1.InitControl(BtnCancel1_Click);
             if (img != null)
             {
                 pic.Image = img;

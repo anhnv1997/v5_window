@@ -1,13 +1,4 @@
 ﻿using iParkingv5.Objects.Configs;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using static iParkingv5.Objects.Enums.PrintHelpers;
 
 namespace iParking.ConfigurationManager.UserControls
@@ -26,7 +17,7 @@ namespace iParking.ConfigurationManager.UserControls
             LoadPrintTemplate();
             if (this.appOption != null)
             {
-                txtAllowOpenBarrieTime.Text = appOption.AllowBarrieDelayOpenTime.ToString();
+                txtAllowOpenBarrieTime.Text = appOption!.AllowBarrieDelayOpenTime.ToString();
                 txtWaitSwipeCardTime.Text = appOption.MinDelayCardTime.ToString();
                 cbPrintTemplate.SelectedIndex = appOption.PrintTemplate;
                 chbIsSaveLog.Checked = appOption.IsSaveLog;
@@ -76,7 +67,7 @@ namespace iParking.ConfigurationManager.UserControls
                 cbPrintTemplate.Items.Add(item.ToString());
             }
         }
-        #endregion
+        #endregion End Private Funciton
 
     }
 }

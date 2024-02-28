@@ -29,6 +29,7 @@ namespace iParkingv5.Objects
             /// Plate number in and out are not same
             /// </summary>
             PINT_1018,
+            PINT_1019,
             PINT_4001,
             PINT_4002,
             PINT_4003,
@@ -98,6 +99,8 @@ namespace iParkingv5.Objects
                     return language == 0 ? "This Identity is not the one used for check in" : "This Identity is not the one used for check in";
                 case EmApiErrorMessage.PINT_1018:
                     return language == 0 ? "Biển số vào ra không khớp" : "Plate number in and out are not same";
+                case EmApiErrorMessage.PINT_1019:
+                    return language == 0 ? "Phương tiện không được phép ghi vào bằng biển số" : "Registered vehicle not allowed to check in by plate only";
                 case EmApiErrorMessage.PINT_4001:
                     return language == 0 ? "Không tìm thấy thông tin camera" : "Camera not found";
                 case EmApiErrorMessage.PINT_4002:

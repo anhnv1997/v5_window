@@ -35,7 +35,7 @@ namespace iParkingv6.Objects.Datas
         public string name { get; set; }
         public string computerId { get; set; }
         public int type { get; set; }
-        public object reverseLaneId { get; set; }
+        public string reverseLaneId { get; set; }
         public bool loop { get; set; }
         public bool autoPrintInvoice { get; set; }
         public bool displayLed { get; set; }

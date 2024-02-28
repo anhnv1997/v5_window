@@ -1,5 +1,6 @@
 ﻿using iParkingv5.Objects.Datas;
 using iParkingv6.Objects.Datas;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -21,5 +22,55 @@ namespace iParkingv5.Objects.EventDatas
         public Lane Lane { get; set; }
 
         public List<string> FileKeys { get; set; }
+        [JsonIgnore]
+        public DateTime? AlarmTime
+        {
+            get
+            {
+                try
+                {
+                    if (string.IsNullOrEmpty(CreatedUtc))
+                    {
+                        return null;
+                    }
+                    if (CreatedUtc.Contains("T"))
+                    {
+                        return DateTime.ParseExact(CreatedUtc.Substring(0, "yyyy-MM-ddTHH:mm:ss".Length), "yyyy-MM-ddTHH:mm:ss", null).AddHours(7);
+                    }
+                    else
+                    {
+                        return DateTime.Parse(CreatedUtc).AddHours(7);
+                    }
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
+        public  string GetAbnormalStr()
+        {
+            switch (this.AbnormalCode)
+            {
+                case AbnormalCode.IdentityNotExist:
+                    return "Mã đinh danh không tồn tại";
+                case AbnormalCode.InvalidPlateNumber:
+                    return "Biển số không hợp lệ";
+                case AbnormalCode.InvalidLane:
+                    return "Làn không hợp lệ";
+                case AbnormalCode.OpenBarrierByKeyboard:
+                    return "Mở barrie bằng phím tắt";
+                case AbnormalCode.OpenBarrierByButton:
+                    return "Mở barrie bằng nút cứng";
+                case AbnormalCode.ManualEvent:
+                    return "Ghi vé thủ công";
+                case AbnormalCode.InvalidUser:
+                    return "Người dùng không tồn tại";
+                default:
+                    return AbnormalCode.InvalidUser.ToString();
+            }
+        }
+
     }
 }

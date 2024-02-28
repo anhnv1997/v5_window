@@ -1,4 +1,5 @@
 ﻿using IPaking.Ultility;
+using iParkingv5.Controller.Dahua;
 using iParkingv5.Lpr.Objects;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
@@ -80,7 +81,7 @@ namespace v6_window
                         //    }
 
                         //}
-
+                        //DahuaAccessControl.Init();
                         LoadSystemConfig();
                         LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Mở giao diện đăng nhập hệ thống");
                         Application.Run(new frmLogin());
@@ -110,24 +111,24 @@ namespace v6_window
                         }
                     }
                 }
-           
+
             }
         }
         private static void LoadSystemConfig()
         {
             try
             {
-                ServerConfig? serverConfig = NewtonSoftHelper<ServerConfig>.DeserializeObjectFromPath(PathManagement.serverConfigPath);
-                if (serverConfig == null)
+                StaticPool.serverConfig = NewtonSoftHelper<ServerConfig>.DeserializeObjectFromPath(PathManagement.serverConfigPath);
+                if (StaticPool.serverConfig == null)
                 {
                     MessageBox.Show("Không tìm thấy cấu hình server hoặc cấu hình không hợp lệ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Application.Exit();
                     return;
                 }
-                MinioHelper.EndPoint = serverConfig.MinioServerUrl;
-                MinioHelper.AccessKey = serverConfig.MinioServerUsername;
-                MinioHelper.SecretKey = serverConfig.MinioServerPassword;
-                KzParkingApiHelper.server = serverConfig.ParkingServerUrl;
+                MinioHelper.EndPoint = StaticPool.serverConfig.MinioServerUrl;
+                MinioHelper.AccessKey = StaticPool.serverConfig.MinioServerUsername;
+                MinioHelper.SecretKey = StaticPool.serverConfig.MinioServerPassword;
+                KzParkingApiHelper.server = StaticPool.serverConfig.ParkingServerUrl;
             }
             catch (Exception ex)
             {

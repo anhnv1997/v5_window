@@ -34,6 +34,7 @@ namespace iParkingv5.Objects
 
         public static CustomerGroupCollection customerGroupCollection = new CustomerGroupCollection();
         public static Mdb mdb;
+        public static ServerConfig serverConfig = new ServerConfig();
         #endregion End App Datas
 
         //--Function

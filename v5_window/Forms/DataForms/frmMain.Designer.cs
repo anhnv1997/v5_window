@@ -32,11 +32,17 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             menuStrip1 = new MenuStrip();
             miSystem = new ToolStripMenuItem();
+            tsmiActiveLanesConfig = new ToolStripMenuItem();
             tsmiExit = new ToolStripMenuItem();
             miReport = new ToolStripMenuItem();
             tsmiReportIn = new ToolStripMenuItem();
             tsmiReportInOut = new ToolStripMenuItem();
             tsmiAlarmReport = new ToolStripMenuItem();
+            đăngKýToolStripMenuItem = new ToolStripMenuItem();
+            btnRegisterCar = new ToolStripMenuItem();
+            btnRegisterMotor = new ToolStripMenuItem();
+            btnRegisterWalker = new ToolStripMenuItem();
+            btnRegisterList = new ToolStripMenuItem();
             panelMain = new Panel();
             ucViewGrid1 = new Usercontrols.ucViewGrid();
             panelAppStatus = new Panel();
@@ -61,7 +67,7 @@
             // menuStrip1
             // 
             menuStrip1.Font = new Font("Segoe UI", 12F);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { miSystem, miReport });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { miSystem, miReport, đăngKýToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(883, 29);
@@ -70,16 +76,24 @@
             // 
             // miSystem
             // 
-            miSystem.DropDownItems.AddRange(new ToolStripItem[] { tsmiExit });
+            miSystem.DropDownItems.AddRange(new ToolStripItem[] { tsmiActiveLanesConfig, tsmiExit });
             miSystem.Name = "miSystem";
             miSystem.Size = new Size(86, 25);
             miSystem.Text = "Hệ thống";
+            // 
+            // tsmiActiveLanesConfig
+            // 
+            tsmiActiveLanesConfig.Image = (Image)resources.GetObject("tsmiActiveLanesConfig.Image");
+            tsmiActiveLanesConfig.Name = "tsmiActiveLanesConfig";
+            tsmiActiveLanesConfig.Size = new Size(242, 26);
+            tsmiActiveLanesConfig.Text = "Cấu hình làn hoạt động";
+            tsmiActiveLanesConfig.Click += tsmiActiveLanesConfig_Click;
             // 
             // tsmiExit
             // 
             tsmiExit.Image = Properties.Resources.NO_0_0_0_32px;
             tsmiExit.Name = "tsmiExit";
-            tsmiExit.Size = new Size(119, 26);
+            tsmiExit.Size = new Size(242, 26);
             tsmiExit.Text = "Thoát";
             tsmiExit.Click += tsmiExit_Click;
             tsmiExit.MouseEnter += tsmiExit_MouseEnter;
@@ -118,10 +132,48 @@
             tsmiAlarmReport.Name = "tsmiAlarmReport";
             tsmiAlarmReport.Size = new Size(203, 26);
             tsmiAlarmReport.Text = "Sự kiện cảnh báo";
-            tsmiAlarmReport.Visible = false;
             tsmiAlarmReport.Click += tsmiAlarmReport_Click;
             tsmiAlarmReport.MouseEnter += tsmiReport_MouseEnter;
             tsmiAlarmReport.MouseLeave += tsmiReport_MouseLeave;
+            // 
+            // đăngKýToolStripMenuItem
+            // 
+            đăngKýToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { btnRegisterCar, btnRegisterMotor, btnRegisterWalker, btnRegisterList });
+            đăngKýToolStripMenuItem.Name = "đăngKýToolStripMenuItem";
+            đăngKýToolStripMenuItem.Size = new Size(79, 25);
+            đăngKýToolStripMenuItem.Text = "Đăng ký";
+            // 
+            // btnRegisterCar
+            // 
+            btnRegisterCar.Image = (Image)resources.GetObject("btnRegisterCar.Image");
+            btnRegisterCar.Name = "btnRegisterCar";
+            btnRegisterCar.Size = new Size(211, 26);
+            btnRegisterCar.Text = "Ô tô";
+            btnRegisterCar.Click += btnRegisterCar_Click;
+            // 
+            // btnRegisterMotor
+            // 
+            btnRegisterMotor.Image = (Image)resources.GetObject("btnRegisterMotor.Image");
+            btnRegisterMotor.Name = "btnRegisterMotor";
+            btnRegisterMotor.Size = new Size(211, 26);
+            btnRegisterMotor.Text = "Xe máy";
+            btnRegisterMotor.Click += btnRegisterMotor_Click;
+            // 
+            // btnRegisterWalker
+            // 
+            btnRegisterWalker.Image = (Image)resources.GetObject("btnRegisterWalker.Image");
+            btnRegisterWalker.Name = "btnRegisterWalker";
+            btnRegisterWalker.Size = new Size(211, 26);
+            btnRegisterWalker.Text = "Người đi bộ";
+            btnRegisterWalker.Click += btnRegisterWalker_Click;
+            // 
+            // btnRegisterList
+            // 
+            btnRegisterList.Image = (Image)resources.GetObject("btnRegisterList.Image");
+            btnRegisterList.Name = "btnRegisterList";
+            btnRegisterList.Size = new Size(211, 26);
+            btnRegisterList.Text = "Danh sách đăng ký";
+            btnRegisterList.Click += btnRegisterList_Click;
             // 
             // panelMain
             // 
@@ -332,5 +384,11 @@
         private DataGridView dgvWaitingEvents;
         private ToolStripMenuItem tsmiAlarmReport;
         private System.Windows.Forms.Timer timerUpdateControllerConnection;
+        private ToolStripMenuItem tsmiActiveLanesConfig;
+        private ToolStripMenuItem đăngKýToolStripMenuItem;
+        private ToolStripMenuItem btnRegisterCar;
+        private ToolStripMenuItem btnRegisterMotor;
+        private ToolStripMenuItem btnRegisterWalker;
+        private ToolStripMenuItem btnRegisterList;
     }
 }

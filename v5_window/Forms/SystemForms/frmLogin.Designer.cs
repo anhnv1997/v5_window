@@ -1,4 +1,5 @@
 ﻿using IPaking.Ultility;
+using iPakrkingv5.Controls.Controls.Buttons;
 
 namespace iParkingv5_window.Forms.SystemForms
 {
@@ -39,13 +40,13 @@ namespace iParkingv5_window.Forms.SystemForms
             txtPassword = new TextBox();
             timerAutoConnect = new System.Windows.Forms.Timer(components);
             lblStatus = new Label();
-            btnCancel1 = new Controls.Buttons.LblCancel();
-            btnLogin = new Controls.Buttons.LblLogin();
+            btnCancel1 = new LblCancel();
+            btnLogin = new LblLogin();
             panelMain = new Panel();
+            ucLoading1 = new Usercontrols.BuildControls.ucLoading();
             lblLoginTitle = new Label();
             picLogo = new PictureBox();
             ucNotify1 = new Usercontrols.BuildControls.ucNotify();
-            ucLoading1 = new Usercontrols.BuildControls.ucLoading();
             panelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picLogo).BeginInit();
             SuspendLayout();
@@ -124,30 +125,30 @@ namespace iParkingv5_window.Forms.SystemForms
             btnCancel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnCancel1.AutoSize = true;
             btnCancel1.BackColor = Color.FromArgb(230, 230, 230);
-            btnCancel1.BorderStyle = BorderStyle.Fixed3D;
             btnCancel1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnCancel1.ForeColor = Color.Black;
-            btnCancel1.Location = new Point(477, 474);
+            btnCancel1.Location = new Point(469, 466);
             btnCancel1.Margin = new Padding(0);
             btnCancel1.Name = "btnCancel1";
-            btnCancel1.Size = new Size(52, 22);
+            btnCancel1.Size = new Size(60, 30);
             btnCancel1.TabIndex = 7;
             btnCancel1.Text = "Thoát";
+            btnCancel1.UseVisualStyleBackColor = false;
             // 
             // btnLogin
             // 
             btnLogin.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnLogin.AutoSize = true;
             btnLogin.BackColor = Color.FromArgb(230, 230, 230);
-            btnLogin.BorderStyle = BorderStyle.Fixed3D;
             btnLogin.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnLogin.ForeColor = Color.Black;
-            btnLogin.Location = new Point(374, 474);
+            btnLogin.Location = new Point(366, 466);
             btnLogin.Margin = new Padding(0);
             btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(87, 22);
+            btnLogin.Size = new Size(95, 30);
             btnLogin.TabIndex = 8;
             btnLogin.Text = "Đăng nhập";
+            btnLogin.UseVisualStyleBackColor = false;
             // 
             // panelMain
             // 
@@ -173,12 +174,22 @@ namespace iParkingv5_window.Forms.SystemForms
             panelMain.Size = new Size(553, 505);
             panelMain.TabIndex = 9;
             // 
+            // ucLoading1
+            // 
+            ucLoading1.BackColor = Color.FromArgb(255, 224, 192);
+            ucLoading1.Language = TextManagement.EmLanguage.Vietnamese;
+            ucLoading1.Location = new Point(437, 284);
+            ucLoading1.Message = "Preparing to download";
+            ucLoading1.Name = "ucLoading1";
+            ucLoading1.Size = new Size(392, 188);
+            ucLoading1.TabIndex = 13;
+            // 
             // lblLoginTitle
             // 
             lblLoginTitle.AutoSize = true;
             lblLoginTitle.BackColor = Color.Transparent;
             lblLoginTitle.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
-            lblLoginTitle.Location = new Point(24, 263);
+            lblLoginTitle.Location = new Point(24, 274);
             lblLoginTitle.Name = "lblLoginTitle";
             lblLoginTitle.Size = new Size(328, 45);
             lblLoginTitle.TabIndex = 12;
@@ -208,16 +219,6 @@ namespace iParkingv5_window.Forms.SystemForms
             ucNotify1.Size = new Size(375, 374);
             ucNotify1.TabIndex = 10;
             // 
-            // ucLoading1
-            // 
-            ucLoading1.BackColor = Color.FromArgb(255, 224, 192);
-            ucLoading1.Language = TextManagement.EmLanguage.Vietnamese;
-            ucLoading1.Location = new Point(437, 284);
-            ucLoading1.Message = "Preparing to download";
-            ucLoading1.Name = "ucLoading1";
-            ucLoading1.Size = new Size(392, 188);
-            ucLoading1.TabIndex = 13;
-            // 
             // frmLogin
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -245,8 +246,8 @@ namespace iParkingv5_window.Forms.SystemForms
         private TextBox txtPassword;
         private System.Windows.Forms.Timer timerAutoConnect;
         private Label lblStatus;
-        private Controls.Buttons.LblCancel btnCancel1;
-        private Controls.Buttons.LblLogin btnLogin;
+        private LblCancel btnCancel1;
+        private LblLogin btnLogin;
         private Panel panelMain;
         private Usercontrols.BuildControls.ucNotify ucNotify1;
         private PictureBox picLogo;

@@ -14,6 +14,7 @@ namespace iParkingv5.Controller
 
         #region Event
         event CardEventHandler CardEvent;
+        event FingerEventHandler FingerEvent;
         event ControllerErrorEventHandler ErrorEvent;
         event InputEventHandler InputEvent;
         event ConnectStatusChangeEventHandler ConnectStatusChangeEvent;
@@ -57,8 +58,8 @@ namespace iParkingv5.Controller
         #region Door Control
         Task<bool> OpenDoor(int timeInMilisecond, int relayIndex);
 
-        Task<bool> AddFinger(List<string> fingerDatas);
-        Task<bool> ModifyFInger(string userId, int fingerIndex, string fingerData);
+        Task<bool> AddFinger(List<string> fingerDatas, string customerName, int userId);
+        Task<bool> ModifyFinger(List<string> fingerDatas, string customerName, int userId);
         Task<bool> DeleteFinger(string userId, int fingerIndex);
         #endregion End Region
     }

@@ -96,11 +96,11 @@ namespace iParkingv5_window.Forms
             DahuaAccessControl dahuaAccessControl = new DahuaAccessControl();
             dahuaAccessControl.ControllerInfo = new iParkingv6.Objects.Datas.Bdk()
             {
-                comport = "192.168.1.108",
-                baudrate = "37777",
-                communicationType = (int)CommunicationTypes.EM_CommunicationType.TCP_IP
+                Comport = "192.168.1.108",
+                Baudrate = "37777",
+                CommunicationType = (int)CommunicationTypes.EM_CommunicationType.TCP_IP
             };
-            dahuaAccessControl.Init();
+            //dahuaAccessControl.Init();
             bool isSuccess = await dahuaAccessControl.ConnectAsync();
             dahuaAccessControl.PollingStart();
         }

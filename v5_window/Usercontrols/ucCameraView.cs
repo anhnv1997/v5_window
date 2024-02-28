@@ -94,7 +94,6 @@ namespace iParkingv5_window.Usercontrols
 
         public Image? GetFullCurrentImage()
         {
-            //return Image.FromFile("C:\\Users\\Admin\\OneDrive\\Desktop\\New folder\\1.png");
             var bmp = _Camera!.GetCurrentVideoFrame();
             if (bmp == null)
             {
@@ -107,5 +106,24 @@ namespace iParkingv5_window.Usercontrols
             return bmp;
         }
         #endregion End Public Function
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            this._Camera.videoSourcePlayer.Stop();
+            this._Camera.Stop();
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

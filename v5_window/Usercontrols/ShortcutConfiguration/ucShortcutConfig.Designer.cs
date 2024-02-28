@@ -1,4 +1,6 @@
-﻿namespace iParkingv5_window.Usercontrols
+﻿using iPakrkingv5.Controls.Controls.Buttons;
+
+namespace iParkingv5_window.Usercontrols
 {
     partial class ucShortcutConfig
     {
@@ -30,7 +32,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucShortcutConfig));
             panelActions = new Panel();
-            btnOk1 = new Controls.Buttons.LblOk();
+            btnOk1 = new LblOk();
             panelActions.SuspendLayout();
             SuspendLayout();
             // 
@@ -71,6 +73,6 @@
         #endregion
 
         private Panel panelActions;
-        private Controls.Buttons.LblOk btnOk1;
+        private LblOk btnOk1;
     }
 }

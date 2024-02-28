@@ -20,7 +20,7 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
 
         private void UcControllerConfigBarrieItem_Load(object? sender, EventArgs e)
         {
-            picChangeConfig.Init(PicChangeConfig_MouseClick);
+            picChangeConfig.InitControl(PicChangeConfig_MouseClick);
             lblBarrieName.Text = "Barrie " + this.barrieIndex;
             if (this.keySet != null)
             {

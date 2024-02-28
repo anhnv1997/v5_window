@@ -1,4 +1,5 @@
-﻿using iParkingv5.Lpr.Objects;
+﻿using iParkingv5.Lpr.LprDetecters.AmericalLprs;
+using iParkingv5.Lpr.Objects;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -21,7 +22,7 @@ namespace iParkingv5.LprDetecter.LprDetecters
                     lpr = new KztekLpr();
                     break;
                 case Objects.LprDetecter.EmLprDetecter.AmericalLpr:
-                    lpr = new AmericalLpr();
+                    lpr = new AmericalLpr(lprConfig);
                     break;
                 default:
                     return null;

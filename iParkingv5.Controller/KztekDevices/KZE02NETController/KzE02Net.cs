@@ -36,8 +36,8 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
         }
         public override void DeleteCardEvent()
         {
-            string comport = this.ControllerInfo.comport;
-            int baudrate = GetBaudrate(this.ControllerInfo.baudrate);
+            string comport = this.ControllerInfo.Comport;
+            int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
             string cmd = KZTEK_CMD.DeleteEventCMD();
             UdpTools.ExecuteCommand(comport, baudrate, cmd, 500, UdpTools.STX, Encoding.ASCII);
         }
@@ -108,8 +108,8 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
             {
                 try
                 {
-                    string comport = this.ControllerInfo.comport;
-                    int baudrate = GetBaudrate(this.ControllerInfo.baudrate);
+                    string comport = this.ControllerInfo.Comport;
+                    int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
                     string getEventCmd = KZTEK_CMD.GetEventCMD();
                     this.IsBusy = true;
                     string response = string.Empty;
@@ -119,7 +119,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
                     });
                     this.IsBusy = false;
                     // Trang thai thiet bij
-                    this.ControllerInfo.isConnect = response != "";
+                    this.ControllerInfo.IsConnect = response != "";
                     //response = "GetEvent?/Style=Card/UserID=100/LenCard=4/Card=00000010/Reader=02/DateTime=YYYYMMDDhhmmss/CardState=U/AccessState=1/Door=00/StateMSG=00";
                     //AccessCardGrant: Char(2) + GetEvent?/Style=Card/UserID=100/LenCard=4/Card=7C19F640/Reader=01/DateTime=YYYYMMDDhhmmss/CardState=U/AccessState=1/Door=00/StateMSG=00 + char(3)
                     //AccessCardDenie: Char(2) + GetEvent?/Style=Card/UserID=Null/LenCard=4/Card=7C19F640/Reader=01/DateTime=YYYYMMDDhhmmss/CardState=U/AccessState=1/Door=00/StateMSG=00 + char(3)
@@ -150,7 +150,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
         {
             InputEventArgs ie = new InputEventArgs
             {
-                DeviceId = controller.id
+                DeviceId = controller.Id
             };
             string str_inputName = map.ContainsKey("input") ? map["input"] : "";
             if (!string.IsNullOrEmpty(str_inputName))
@@ -173,7 +173,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
         {
             CardEventArgs e = new CardEventArgs
             {
-                DeviceId = controller.id,
+                DeviceId = controller.Id,
                 AllCardFormats = new List<string>(),
             };
             string cardNumberHEX = map.ContainsKey("card") ? map["card"] : "";
@@ -221,8 +221,8 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
 
         public override async Task<bool> OpenDoor(int timeInMilisecond, int relayIndex)
         {
-            string comport = this.ControllerInfo.comport;
-            int baudrate = GetBaudrate(this.ControllerInfo.baudrate);
+            string comport = this.ControllerInfo.Comport;
+            int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
             string openRelayCmd = KZTEK_CMD.OpenRelayCMD(relayIndex);
 
             this.IsBusy = true;

@@ -1,5 +1,5 @@
-﻿using iParkingv5.Objects;
-using iParkingv5_window.Controls.Buttons;
+﻿using iPakrkingv5.Controls.Controls.Buttons;
+using iParkingv5.Objects;
 
 namespace iParkingv5_window.Forms.DataForms
 {
@@ -32,7 +32,10 @@ namespace iParkingv5_window.Forms.DataForms
 
         private void FrmSetShortCutKey_Load(object? sender, EventArgs e)
         {
-            btnOk1.Init(BtnOk1_Click);
+            LblOk btnOk1 = new LblOk();
+            panelActions.Controls.Add(btnOk1);
+
+            btnOk1.InitControl(BtnOk1_Click);
             lblTitle.Padding = new Padding(StaticPool.baseSize * 2);
             panelActions.Height = btnOk1.Height + StaticPool.baseSize * 3;
             btnOk1.Location = new Point(panelActions.Width - btnOk1.Width - StaticPool.baseSize * 2,

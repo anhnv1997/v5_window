@@ -106,5 +106,53 @@ namespace iParkingv5_CustomerRegister.Properties {
                 this["isRemember"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int preferVehicleWidth {
+            get {
+                return ((int)(this["preferVehicleWidth"]));
+            }
+            set {
+                this["preferVehicleWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int preferVehicleHeight {
+            get {
+                return ((int)(this["preferVehicleHeight"]));
+            }
+            set {
+                this["preferVehicleHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int preferFingerWidth {
+            get {
+                return ((int)(this["preferFingerWidth"]));
+            }
+            set {
+                this["preferFingerWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int preferFingerHeight {
+            get {
+                return ((int)(this["preferFingerHeight"]));
+            }
+            set {
+                this["preferFingerHeight"] = value;
+            }
+        }
     }
 }

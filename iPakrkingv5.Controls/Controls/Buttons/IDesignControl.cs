@@ -2,7 +2,7 @@
 {
     public interface IDesignControl
     {
-        void Init(EventHandler? OnClickEvent);
+        void InitControl(EventHandler? OnClickEvent);
         void EnableWaitMode();
         void Reset();
     }

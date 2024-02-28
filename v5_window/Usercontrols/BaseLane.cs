@@ -142,7 +142,7 @@ namespace iParkingv5_window.Usercontrols
         }
         public static string GetBaseImageKey(string laneName, string cardNumber, string plate, DateTime eventTime)
         {
-            string imageKey = $"{laneName}/{eventTime.ToString("yyyy/MM/dd")}/{cardNumber}_{plate}" + eventTime.ToString("_HH_mm_ss_ffff");
+            string imageKey = $"{laneName}/{eventTime.ToString("yyyy/MM/dd")}/{cardNumber}_{plate.Replace("-","").Replace(" ","").Replace(".", "")}" + eventTime.ToString("_HH_mm_ss_ffff");
             return imageKey;
         }
 
@@ -150,7 +150,7 @@ namespace iParkingv5_window.Usercontrols
         {
             foreach (IController item in frmMain.controllers)
             {
-                if (item.ControllerInfo.id.ToLower() == controllerId.ToLower())
+                if (item.ControllerInfo.Id.ToLower() == controllerId.ToLower())
                 {
                     for (int i = 0; i < controllerInLane?.barriers.Length; i++)
                     {

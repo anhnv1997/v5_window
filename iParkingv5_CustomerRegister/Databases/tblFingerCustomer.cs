@@ -16,31 +16,38 @@ namespace iParkingv5_CustomerRegister.Databases
         public const string tblColCustomerId = "CustomerId";
         public const string tblColFingerCustomerCode = "FingerCustomerCode";
 
-        public static async Task<List<string>> GetFingerIdsByCustomerId(string customerId)
+        public static async Task<Tuple<List<string>, string>> GetRegisterFingersByCustomerId(string customerId)
         {
+            string fingerCustomerCode = string.Empty;
             List<string> data = new List<string>();
-            string cmd = $@"SELECT {tblColFingerId} FROM {tblName} WHERE {tblColCustomerId} = '{customerId}'";
+            string cmd = $@"SELECT {tblColFingerId}, {tblColFingerCustomerCode} FROM {tblName} WHERE {tblColCustomerId} = '{customerId}'";
             DataTable? dtData = null;
             await Task.Run(() =>
             {
                 dtData = StaticPool.mdb.FillData(cmd);
             });
-            if (dtData == null) return new List<string>();
+            if (dtData == null) return Tuple.Create<List<string>, string>(new List<string>(), string.Empty);
+            if (dtData.Rows.Count == 0) return Tuple.Create<List<string>, string>(new List<string>(), string.Empty);
+            
+            fingerCustomerCode = dtData.Rows[0][tblColFingerCustomerCode].ToString() ?? "";
             foreach (DataRow row in dtData.Rows)
             {
                 string fingerId = row[tblColFingerId].ToString() ?? "";
                 data.Add(fingerId);
             }
-            return data;
+            return Tuple.Create<List<string>, string>(data, fingerCustomerCode);
         }
-        public static string GetFingerCustomeCode(string customerId)
+
+        public static string GetFingerCustomeCode(string customerId, out bool valid)
         {
+            valid = false;
             string cmd = $@"SELECT TOP 1 {tblColFingerCustomerCode} FROM {tblName}
                             WHERE {tblColCustomerId} = '{customerId}'";
             DataTable dtData = StaticPool.mdb.FillData(cmd);
-            if (dtData == null) return Guid.NewGuid().ToString();
-            if (dtData.Rows.Count == 0) return Guid.NewGuid().ToString();
-            return dtData.Rows[0][tblColFingerCustomerCode].ToString() ?? Guid.NewGuid().ToString();
+            if (dtData == null) return customerId + "-Finger";
+            if (dtData.Rows.Count == 0) return Guid.NewGuid().ToString() + "-Finger";
+            valid = true;
+            return dtData.Rows[0][tblColFingerCustomerCode].ToString() ?? Guid.NewGuid().ToString() + "-Finger";
         }
 
         public static bool Insert(string customerId, string fingerId, string fingerCustomerCode)
@@ -49,10 +56,14 @@ namespace iParkingv5_CustomerRegister.Databases
                                   VALUES ('{customerId}', '{fingerId}', '{fingerCustomerCode}')";
             return StaticPool.mdb.ExecuteCommand(insertCmd);
         }
-
         public static bool DeleteByCustomerId(string customerId)
         {
             string deleteCmd = $@"DELETE {tblName} WHERE {tblColCustomerId} = '{customerId}'";
+            return StaticPool.mdb.ExecuteCommand(deleteCmd);
+        }
+        public static bool DeleteByFingerId(ushort fingerId)
+        {
+            string deleteCmd = $@"Delete {tblName} WHERE {tblColFingerId}  = {fingerId}";
             return StaticPool.mdb.ExecuteCommand(deleteCmd);
         }
     }

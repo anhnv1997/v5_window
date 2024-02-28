@@ -64,7 +64,7 @@ namespace iParkingv5_window.Usercontrols
             lblIdentityCode.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblIdentityGroup.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 
-            lblCancel1.Init(LblCancel1_Click);
+            lblCancel1.InitControl(LblCancel1_Click);
             this.Height = lblIdentityGroup.Location.Y + lblIdentityGroup.Height + StaticPool.baseSize * 3 + lblCancel1.Height;
             lblCancel1.Location = new Point(this.DisplayRectangle.Width - lblCancel1.Width - StaticPool.baseSize * 2,
                                             lblIdentityGroup.Location.Y + lblIdentityGroup.Height + StaticPool.baseSize);
@@ -98,7 +98,7 @@ namespace iParkingv5_window.Usercontrols
             lblVehilceType.Text = vehicleType == null ? "_" : vehicleType.Name;
             lblIdentityName.Text = identity == null ? "_" : identity.Name;
             lblIdentityCode.Text = identity == null ? "_" : identity.Code;
-            lblIdentityGroup.Text = identityGroup == null ? "_" :identityGroup.Name;
+            lblIdentityGroup.Text = identityGroup == null ? "_" : identityGroup.Name;
 
             lblLaneName.Location = new Point(this.DisplayRectangle.Width - lblLaneName.Width - StaticPool.baseSize * 2, lblLaneNameTitle.Location.Y);
             lblTimeIn.Location = new Point(this.DisplayRectangle.Width - lblTimeIn.Width - StaticPool.baseSize * 2, lblTimeInTitle.Location.Y);

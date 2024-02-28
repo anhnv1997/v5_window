@@ -492,7 +492,7 @@ namespace iParkingv5_CustomerRegister
             return _UploadImage(string.Empty, null, ImageW, ImageH);
         }
 
-        enum EmError
+        public enum EmError
         {
             /// <summary>
             /// Command Executed Successfully or OK

@@ -1,10 +1,12 @@
 ﻿using iParkingv5_window.Usercontrols;
+using iParkingv5_window.Usercontrols.LaneConfiguration;
 using iParkingv6.Objects.Datas;
 
 namespace iParkingv5_window.Forms.DataForms
 {
     public partial class frmLaneSetting : Form
     {
+        
         #region Properties
         private List<Led> leds = new List<Led>();
         private List<Camera> cameras = new List<Camera>();
@@ -38,6 +40,10 @@ namespace iParkingv5_window.Forms.DataForms
             ucShortcutConfig ucLaneShortcutConfig = new ucShortcutConfig(this.laneId, this.bdks, this.isLaneIn);
             tabShortcut.Controls.Add(ucLaneShortcutConfig);
             ucLaneShortcutConfig.Dock = DockStyle.Fill;
+
+            ucLaneDirectionConfig ucLaneDirectionConfig = new ucLaneDirectionConfig(this.laneId);
+            tabDisplayConfig.Controls.Add(ucLaneDirectionConfig);
+            ucLaneDirectionConfig.Dock = DockStyle.Fill;
         }
         #endregion End Forms
     }

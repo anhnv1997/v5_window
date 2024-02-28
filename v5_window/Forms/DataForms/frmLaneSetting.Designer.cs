@@ -33,6 +33,7 @@
             tabLedConfig = new TabPage();
             tabCameraConfig = new TabPage();
             tabShortcut = new TabPage();
+            tabDisplayConfig = new TabPage();
             tabSetting.SuspendLayout();
             SuspendLayout();
             // 
@@ -41,6 +42,7 @@
             tabSetting.Controls.Add(tabLedConfig);
             tabSetting.Controls.Add(tabCameraConfig);
             tabSetting.Controls.Add(tabShortcut);
+            tabSetting.Controls.Add(tabDisplayConfig);
             tabSetting.Dock = DockStyle.Fill;
             tabSetting.Location = new Point(0, 0);
             tabSetting.Name = "tabSetting";
@@ -63,7 +65,7 @@
             tabCameraConfig.Location = new Point(4, 29);
             tabCameraConfig.Name = "tabCameraConfig";
             tabCameraConfig.Padding = new Padding(3);
-            tabCameraConfig.Size = new Size(1013, 546);
+            tabCameraConfig.Size = new Size(890, 519);
             tabCameraConfig.TabIndex = 1;
             tabCameraConfig.Text = "Camera";
             tabCameraConfig.UseVisualStyleBackColor = true;
@@ -73,10 +75,20 @@
             tabShortcut.Location = new Point(4, 29);
             tabShortcut.Name = "tabShortcut";
             tabShortcut.Padding = new Padding(3);
-            tabShortcut.Size = new Size(1013, 546);
+            tabShortcut.Size = new Size(890, 519);
             tabShortcut.TabIndex = 2;
             tabShortcut.Text = "Phím tắt";
             tabShortcut.UseVisualStyleBackColor = true;
+            // 
+            // tabDisplayConfig
+            // 
+            tabDisplayConfig.Location = new Point(4, 29);
+            tabDisplayConfig.Name = "tabDisplayConfig";
+            tabDisplayConfig.Padding = new Padding(3);
+            tabDisplayConfig.Size = new Size(890, 519);
+            tabDisplayConfig.TabIndex = 3;
+            tabDisplayConfig.Text = "Hiển thị";
+            tabDisplayConfig.UseVisualStyleBackColor = true;
             // 
             // frmLaneSetting
             // 
@@ -98,5 +110,6 @@
         private TabPage tabLedConfig;
         private TabPage tabCameraConfig;
         private TabPage tabShortcut;
+        private TabPage tabDisplayConfig;
     }
 }

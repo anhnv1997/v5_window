@@ -1,4 +1,5 @@
-﻿using iParkingv5_window.Controls.Buttons;
+﻿
+using iPakrkingv5.Controls.Controls.Buttons;
 
 namespace iParkingv5_window.Usercontrols
 {
@@ -96,7 +97,6 @@ namespace iParkingv5_window.Usercontrols
             // btnCancel1
             // 
             btnCancel1.AutoSize = true;
-            btnCancel1.BorderStyle = BorderStyle.Fixed3D;
             btnCancel1.Dock = DockStyle.Right;
             btnCancel1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnCancel1.ForeColor = Color.Black;

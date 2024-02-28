@@ -2,7 +2,6 @@
 using iParkingv5_window.Forms.DataForms;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using Kztek.Tools;
-
 namespace iParkingv5_window.Forms.SystemForms
 {
     public partial class frmLogin : Form
@@ -49,8 +48,8 @@ namespace iParkingv5_window.Forms.SystemForms
             panelMain.Padding = new Padding(StaticPool.baseSize);
             panelMain.Font = new Font(panelMain.Font.Name, StaticPool.baseSize);
 
-            btnCancel1.Init(btnExit_Click);
-            btnLogin.Init(btnLogin_Click);
+            btnCancel1.InitControl(btnExit_Click);
+            btnLogin.InitControl(btnLogin_Click);
 
             lblLoginTitle.Location = new Point(StaticPool.baseSize * 2,
                                                picLogo.Location.Y + picLogo.Height + StaticPool.baseSize * 2);
@@ -82,6 +81,7 @@ namespace iParkingv5_window.Forms.SystemForms
                                            btnLogin.Location.Y + (btnLogin.Height - lblStatus.Height) / 2);
 
             timerAutoConnect.Enabled = true;
+            this.ActiveControl = btnLogin;
         }
 
         private void UcNotify1_OnSelectResultEvent(DialogResult result)

@@ -32,7 +32,7 @@ namespace iParkingv5.Controller.Aopu
         public event InputEventHandler? InputEvent;
         public event ConnectStatusChangeEventHandler? ConnectStatusChangeEvent;
         public event DeviceInfoChangeEventHandler? DeviceInfoChangeEvent;
-
+        public event FingerEventHandler? FingerEvent;
 
         // Signal thread to stop work
         public void SignalToStop()
@@ -91,7 +91,7 @@ namespace iParkingv5.Controller.Aopu
 
         private void TcpipObj_OnDisconnect()
         {
-            ControllerInfo.isConnect = false;
+            ControllerInfo.IsConnect = false;
         }
 
         DateTime _olddatetime = DateTime.Now.AddMinutes(-1);
@@ -192,9 +192,9 @@ namespace iParkingv5.Controller.Aopu
         #region: CONNECT
         public async Task<bool> TestConnectionAsync()
         {
-            if (IS_TCP((EM_CommunicationType)(ControllerInfo.communicationType)))
+            if (IS_TCP((EM_CommunicationType)(ControllerInfo.CommunicationType)))
             {
-                return NetWorkTools.IsPingSuccess(ControllerInfo.comport, 500);
+                return NetWorkTools.IsPingSuccess(ControllerInfo.Comport, 500);
             }
             return false;
         }
@@ -205,8 +205,8 @@ namespace iParkingv5.Controller.Aopu
                 bool result;
                 try
                 {
-                    result = TcpipObj.OpenIP(ControllerInfo.comport, int.Parse(ControllerInfo.baudrate), 23456);
-                    ControllerInfo.isConnect = result;
+                    result = TcpipObj.OpenIP(ControllerInfo.Comport, int.Parse(ControllerInfo.Baudrate), 23456);
+                    ControllerInfo.IsConnect = result;
                 }
                 catch (Exception ex)
                 {
@@ -316,8 +316,8 @@ namespace iParkingv5.Controller.Aopu
         {
             InputEventArgs ie = new()
             {
-                DeviceId = controller.id,
-                DeviceName = controller.name,
+                DeviceId = controller.Id,
+                DeviceName = controller.Name,
             };
             ie.InputIndex = int.Parse(doorNo);
             ie.InputType = InputTupe.EmInputType.Loop;
@@ -327,8 +327,8 @@ namespace iParkingv5.Controller.Aopu
         {
             InputEventArgs ie = new()
             {
-                DeviceId = controller.id,
-                DeviceName = controller.name,
+                DeviceId = controller.Id,
+                DeviceName = controller.Name,
             };
             ie.InputIndex = int.Parse(doorNo);
             ie.InputType = InputTupe.EmInputType.Exit;
@@ -339,8 +339,8 @@ namespace iParkingv5.Controller.Aopu
         {
             CardEventArgs e = new()
             {
-                DeviceId = controller.id,
-                DeviceName = controller.name,
+                DeviceId = controller.Id,
+                DeviceName = controller.Name,
                 AllCardFormats = new List<string>(),
             };
             string cardNumberHex = Convert.ToInt32(cardNumberInt).ToString("X8");
@@ -397,12 +397,22 @@ namespace iParkingv5.Controller.Aopu
             throw new NotImplementedException();
         }
 
-        public Task<bool> ModifyFInger(string userId, int fingerIndex, string fingerData)
+        public Task<bool> ModifyFinger(string userId, int fingerIndex, string fingerData)
         {
             throw new NotImplementedException();
         }
 
         public Task<bool> DeleteFinger(string userId, int fingerIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> AddFinger(List<string> fingerDatas, string customerName, int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> ModifyFinger(List<string> fingerDatas, string customerName, int userId)
         {
             throw new NotImplementedException();
         }

@@ -83,13 +83,14 @@ namespace iParkingv5_window.Usercontrols.BuildControls
         {
             InitializeComponent();
             this.Load += UcNotify_Load;
+            this.DoubleBuffered = true;
         }
         private void UcNotify_Load(object? sender, EventArgs e)
         {
             this.MaximumSize = this.MinimumSize = this.Size;
 
-            btnConfirm.Init(BtnConfirm_Click);
-            btnCancel.Init(BtnCancel_Click);
+            btnConfirm.InitControl(BtnConfirm_Click);
+            btnCancel.InitControl(BtnCancel_Click);
 
             lblMessage.MaximumSize = new Size(this.Width - StaticPool.baseSize * 2, 0);
             lblMessage.MinimumSize = new Size(this.Width - 80, 0);

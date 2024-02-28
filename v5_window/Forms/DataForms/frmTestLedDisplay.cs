@@ -37,8 +37,8 @@ namespace iParkingv5_window.Forms.DataForms
 
         private void FrmTestLedDisplay_Load(object? sender, EventArgs e)
         {
-            btnOk1.Init(BtnOk1_Click);
-            btnCancel1.Init(BtnCancel1_Click);
+            btnOk1.InitControl(BtnOk1_Click);
+            btnCancel1.InitControl(BtnCancel1_Click);
         }
         private void BtnOk1_Click(object? sender, EventArgs e)
         {

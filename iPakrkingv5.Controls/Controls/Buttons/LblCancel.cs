@@ -2,62 +2,60 @@
 
 namespace iPakrkingv5.Controls.Controls.Buttons
 {
-    public class LblCancel : Label, IDesignControl
+    public class LblCancel : Button, IDesignControl
     {
         public EventHandler? OnClickEvent;
         public LblCancel() : base()
         {
             Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            BorderStyle = BorderStyle.Fixed3D;
+            this.Text = "Đóng";
         }
 
         private void BtnCancel_MouseLeave(object? sender, EventArgs e)
         {
             Cursor = Cursors.Default;
             ForeColor = Color.Black;
-            BorderStyle = BorderStyle.Fixed3D;
             Image = Properties.Resources.NO_0_0_0_32px;
         }
         private void BtnCancel_MouseEnter(object? sender, EventArgs e)
         {
             Cursor = Cursors.Hand;
             ForeColor = Color.Red;
-            BorderStyle = BorderStyle.FixedSingle;
             Image = Properties.Resources.NO_255_255_255_32px;
         }
 
-        public void Init(EventHandler? OnClickEvent)
+        public void InitControl(EventHandler? OnClickEvent)
         {
-            Text = "Đóng";
-            Font = new Font(Font.Name, TextManagement.ROOT_SIZE, FontStyle.Bold);
-
-            AutoSize = false;
-            ImageAlign = ContentAlignment.MiddleLeft;
-            TextAlign = ContentAlignment.MiddleRight;
-            Image = Properties.Resources.NO_0_0_0_32px;
-            Size = new Size(PreferredWidth + Image.Width / 2 + TextManagement.ROOT_SIZE * 2, PreferredHeight + TextManagement.ROOT_SIZE);
-
-            BackColor = Color.FromArgb(230, 230, 230);
-            ForeColor = Color.Black;
+            this.Text = "Đóng";
+            this.Font = new Font(this.Font.Name, TextManagement.ROOT_SIZE, FontStyle.Bold);
+            this.ImageAlign = ContentAlignment.MiddleLeft;
+            this.TextAlign = ContentAlignment.MiddleRight;
+            this.TextImageRelation = TextImageRelation.ImageBeforeText;
+            this.Image = Properties.Resources.NO_0_0_0_32px;
+            this.AutoSize = false;
+            this.Size = new Size(this.PreferredSize.Width, this.PreferredSize.Height + TextManagement.ROOT_SIZE);
+            this.BackColor = Color.FromArgb(230, 230, 230);
+            this.ForeColor = Color.Black;
             this.OnClickEvent = OnClickEvent;
-            MouseEnter += BtnCancel_MouseEnter;
-            MouseLeave += BtnCancel_MouseLeave;
+            this.MouseEnter += BtnCancel_MouseEnter;
+            this.MouseLeave += BtnCancel_MouseLeave;
             if (this.OnClickEvent != null)
             {
-                Click += this.OnClickEvent;
+                this.Click += this.OnClickEvent;
             }
         }
         public void EnableWaitMode()
         {
             BackColor = Color.Transparent;
+            this.Enabled = false;
             Click -= OnClickEvent;
             MouseEnter -= BtnCancel_MouseEnter;
             MouseLeave -= BtnCancel_MouseLeave;
-            BorderStyle = BorderStyle.Fixed3D;
             Image = Properties.Resources.NO_0_0_0_32px;
         }
         public void Reset()
         {
+            this.Enabled = true;
             BackColor = Color.FromArgb(230, 230, 230);
             ForeColor = Color.Black;
             Click += OnClickEvent;

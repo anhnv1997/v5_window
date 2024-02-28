@@ -1,4 +1,6 @@
-﻿namespace iParkingv5_window.Usercontrols
+﻿using iPakrkingv5.Controls.Controls.Buttons;
+
+namespace iParkingv5_window.Usercontrols
 {
     partial class ucEventOutInfo
     {
@@ -36,7 +38,7 @@
             lblPlateNumberIn = new Label();
             lblVehilceTypeIn = new Label();
             lblEventOutTitle = new Label();
-            lblCancel1 = new Controls.Buttons.LblCancel();
+            lblCancel1 = new LblCancel();
             lblIdentityNameTitle = new Label();
             lblLaneNameTitle = new Label();
             lblIdentityCodeTitle = new Label();
@@ -155,7 +157,6 @@
             // 
             lblCancel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             lblCancel1.AutoSize = true;
-            lblCancel1.BorderStyle = BorderStyle.Fixed3D;
             lblCancel1.Location = new Point(679, 451);
             lblCancel1.Name = "lblCancel1";
             lblCancel1.Size = new Size(80, 22);
@@ -445,7 +446,7 @@
         private Label lblVehilceTypeTitle;
         private Label lblVehilceTypeIn;
         private Label lblEventOutTitle;
-        private Controls.Buttons.LblCancel lblCancel1;
+        private LblCancel lblCancel1;
         private Label lblIdentityNameOut;
         private Label lblLaneNameIn;
         private Label lblIdentityCodeOut;

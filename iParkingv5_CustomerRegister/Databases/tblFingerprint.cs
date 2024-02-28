@@ -16,19 +16,6 @@ namespace iParkingv5_CustomerRegister.Databases
         public const string tblColFingerData = "FingerData";
         public const string tblColDescription = "Description";
 
-        public static bool InsertFinger(ushort fingerId, string fingerData)
-        {
-            string insertCmd = $@"INSERT INTO {tblName}({tblColFingerId},{tblColFingerData})
-                                  VALUES('{fingerId}', '{fingerData}')";
-            return StaticPool.mdb.ExecuteCommand(insertCmd);
-        }
-        public static bool UpdateFinger(ushort fingerId, string fingerData)
-        {
-            string insertCmd = $@"UPDATE {tblName} SET {tblColFingerData} = '{fingerData}'
-                                  WHERE {tblColFingerId} = '{fingerId}'";
-            return StaticPool.mdb.ExecuteCommand(insertCmd);
-        }
-
         public static async Task<List<Tuple<string, string>>> GetFingerDatas(List<string> fingerIds)
         {
             List<Tuple<string, string>> data = new List<Tuple<string, string>>();
@@ -53,6 +40,23 @@ namespace iParkingv5_CustomerRegister.Databases
                 data.Add(Tuple.Create<string, string>(fingerId, fingerData));
             }
             return data;
+        }
+        public static bool InsertFinger(ushort fingerId, string fingerData)
+        {
+            string insertCmd = $@"INSERT INTO {tblName}({tblColFingerId},{tblColFingerData})
+                                  VALUES('{fingerId}', '{fingerData}')";
+            return StaticPool.mdb.ExecuteCommand(insertCmd);
+        }
+        public static bool UpdateFinger(ushort fingerId, string fingerData)
+        {
+            string insertCmd = $@"UPDATE {tblName} SET {tblColFingerData} = '{fingerData}'
+                                  WHERE {tblColFingerId} = '{fingerId}'";
+            return StaticPool.mdb.ExecuteCommand(insertCmd);
+        }
+        public static bool DeleteFinger(ushort fingerId)
+        {
+            string deleteCmd = $@"DELETE {tblName} WHERE {tblColFingerId} = {fingerId}";
+            return StaticPool.mdb.ExecuteCommand(deleteCmd);
         }
     }
 }

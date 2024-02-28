@@ -64,22 +64,6 @@ namespace iParkingv5_window.Forms.SystemForms
             loadingWorks.Add("Tải thông tin nhóm khách hàng", LoadCustomerGroup);
             this.Load += FrmLoading_Load;
         }
-
-        private async Task<bool> LoadCustomerGroup()
-        {
-            StaticPool.customerGroupCollection = new iParkingv5.Objects.Datas.CustomerGroupCollection();
-
-            var customerGroups = await KzParkingApiHelper.GetAllCustomerGroups();
-            if (customerGroups != null)
-            {
-                foreach (var item in customerGroups)
-                {
-                    StaticPool.customerGroupCollection.Add(item);
-                }
-            }
-            return true;
-        }
-
         private async void FrmLoading_Load(object? sender, EventArgs e)
         {
             foreach (KeyValuePair<string, Func<Task<bool>>> actions in loadingWorks)
@@ -104,15 +88,43 @@ namespace iParkingv5_window.Forms.SystemForms
             }
             timer1.Enabled = false;
             this.FormClosing -= frmLoading_FormClosing;
-            frmMain frm = new()
+
+            bool isNeedToChooseLane = false;
+            foreach (var item in StaticPool.lanes)
             {
-                Owner = this.Owner
-            };
-            frm.Show();
+                if (!string.IsNullOrEmpty(item.reverseLaneId))
+                {
+                    isNeedToChooseLane = true;
+                    break;
+                }
+            }
+
+            if (!isNeedToChooseLane)
+            {
+                List<Lane> lanes = new List<Lane>();
+                foreach (var item in StaticPool.lanes)
+                {
+                    lanes.Add(item);
+                }
+
+                frmMain frm = new(lanes)
+                {
+                    Owner = this.Owner
+                };
+                frm.Show();
+            }
+            else
+            {
+                frmSelectLaneMode frm = new frmSelectLaneMode()
+                {
+                    Owner = this.Owner,
+                };
+                frm.Show();
+            }
+
             this.Close();
             GC.Collect();
         }
-
         private void frmLoading_FormClosing(object? sender, FormClosingEventArgs e)
         {
             this.FormClosing -= frmLoading_FormClosing;
@@ -244,7 +256,7 @@ namespace iParkingv5_window.Forms.SystemForms
         }
         private async Task<bool> LoadGates()
         {
-            StaticPool.gate = await KzParkingApiHelper.GetGateByIdAsync(StaticPool.selectedComputer.gateId);
+            StaticPool.gate = await KzParkingApiHelper.GetGateByIdAsync(StaticPool.selectedComputer.GateId);
             return StaticPool.gate != null;
         }
         private async Task<bool> LoadCameras()
@@ -258,7 +270,7 @@ namespace iParkingv5_window.Forms.SystemForms
             List<Camera>? cameras = null;
         GetCameraConfig:
             {
-                cameras = await KzParkingApiHelper.GetCameraByComputerIdAsync(StaticPool.selectedComputer.id);
+                cameras = await KzParkingApiHelper.GetCameraByComputerIdAsync(StaticPool.selectedComputer.Id);
                 if (cameras == null)
                 {
                     goto GetCameraConfig;
@@ -269,6 +281,20 @@ namespace iParkingv5_window.Forms.SystemForms
             timer1.Enabled = false;
             StaticPool.cameras = cameras;
             GC.Collect();
+            return true;
+        }
+        private async Task<bool> LoadCustomerGroup()
+        {
+            StaticPool.customerGroupCollection = new iParkingv5.Objects.Datas.CustomerGroupCollection();
+
+            var customerGroups = await KzParkingApiHelper.GetAllCustomerGroups();
+            if (customerGroups != null)
+            {
+                foreach (var item in customerGroups)
+                {
+                    StaticPool.customerGroupCollection.Add(item);
+                }
+            }
             return true;
         }
         private async Task<bool> LoadLanes()
@@ -282,7 +308,7 @@ namespace iParkingv5_window.Forms.SystemForms
             List<Lane> laneByComputerIds = null;
         GetLaneConfig:
             {
-                laneByComputerIds = await KzParkingApiHelper.GetLanesAsync(StaticPool.selectedComputer.id);
+                laneByComputerIds = await KzParkingApiHelper.GetLanesAsync(StaticPool.selectedComputer.Id);
                 if (laneByComputerIds == null)
                 {
                     goto GetLaneConfig;
@@ -322,7 +348,7 @@ namespace iParkingv5_window.Forms.SystemForms
             List<Led> leds = null;
         GetLedConfig:
             {
-                leds = await KzParkingApiHelper.GetLedsAsync(StaticPool.selectedComputer.id);
+                leds = await KzParkingApiHelper.GetLedsAsync(StaticPool.selectedComputer.Id);
                 if (leds == null)
                 {
                     goto GetLedConfig;
@@ -346,7 +372,7 @@ namespace iParkingv5_window.Forms.SystemForms
             List<Bdk> bdks = null;
         GetBDKConfig:
             {
-                bdks = await KzParkingApiHelper.GetControllerByPCId(StaticPool.selectedComputer.id);
+                bdks = await KzParkingApiHelper.GetControllerByPCId(StaticPool.selectedComputer.Id);
                 if (bdks == null)
                 {
                     goto GetBDKConfig;
@@ -361,8 +387,18 @@ namespace iParkingv5_window.Forms.SystemForms
         }
         private async Task<bool> CreateKztLPR()
         {
+            currentDisplayIndex = 0;
+            lblMessage!.Text = "Khởi tạo LPR Engine";
+            lblMessage.Refresh();
+            displayMessages = CreateDisplayListMessage(lblMessage.Text);
+            this.isWaiting = true;
+            timer1.Enabled = true;
+
             StaticPool.LprDetect = LprFactory.CreateLprDetecter(StaticPool.lprConfig, null);
             StaticPool.LprDetect?.CreateLpr(StaticPool.lprConfig);
+
+            this.isWaiting = false;
+            timer1.Enabled = false;
             return StaticPool.LprDetect != null;
         }
 

@@ -1,22 +1,12 @@
-﻿using iParkingv5.Objects;
-using iParkingv5.Objects.Enums;
-using iParkingv5_window.Controls.Buttons;
+﻿using iPakrkingv5.Controls;
+using iPakrkingv5.Controls.Controls.Buttons;
+using iParkingv5.Objects;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv5_window.Usercontrols.BuildControls;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using IPGS.Object.Databases;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlTypes;
-using System.Drawing;
-using System.IO;
-using System.Linq;
+using SpreadsheetLight.Charts;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper;
 
 namespace iParkingv5_window.Forms.ReportForms
@@ -31,9 +21,12 @@ namespace iParkingv5_window.Forms.ReportForms
         private const int WM_SETREDRAW = 11;
         private int totalPages = 0;
         private int totalEvents = 0;
+        private bool isAllowSelect = false;
 
+        public string selectedIdentityId = String.Empty;
+        public string selectedPlateNumber = String.Empty;
         #region Forms
-        public frmReportIn()
+        public frmReportIn(bool isAllowSelect = false)
         {
             InitializeComponent();
             dtpStartTime.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
@@ -44,6 +37,7 @@ namespace iParkingv5_window.Forms.ReportForms
             dgvData.CellContentClick += DgvData_CellContentClick;
             ucPages1.OnpageSelect += UcPages1_OnpageSelect;
             ucEventInInfo1.onBackClickEvent += UcEventInfo1_onBackClickEvent;
+            this.isAllowSelect = isAllowSelect;
 
             this.Load += FrmReportIn_Load;
             this.SizeChanged += FrmReportIn_SizeChanged;
@@ -51,6 +45,12 @@ namespace iParkingv5_window.Forms.ReportForms
         private void FrmReportIn_Load(object? sender, EventArgs e)
         {
             CreateUI();
+            this.ActiveControl = btnSearch;
+            panelData.ToggleDoubleBuffered(true);
+            if (this.isAllowSelect)
+            {
+                dgvData.CellDoubleClick += DgvData_CellDoubleClick;
+            }
         }
 
         private void FrmReportIn_KeyDown(object? sender, KeyEventArgs e)
@@ -77,51 +77,47 @@ namespace iParkingv5_window.Forms.ReportForms
             ucPages1.Width = panelData.Width - StaticPool.baseSize * 4;
             ucPages1.Location = new Point(dgvData.Location.X, dgvData.Location.Y + dgvData.Height + StaticPool.baseSize);
         }
-
         #endregion End Forms
 
         #region Controls In Form
         private async void btnSearch_Click(object? sender, EventArgs e)
         {
-            panelData.SuspendLayout();
+            //panelData.SuspendLayout();
             picOverviewImageIn.Image = Properties.Resources.defaultImage;
             picVehicleImageIn.Image = Properties.Resources.defaultImage;
-            panelData.BackColor = Color.FromArgb((int)(0.37 * 255), 42, 47, 48);
-            foreach (Control item in panelData.Controls)
-            {
-                if (item is ucLoading)
-                {
-                    continue;
-                }
-                else if (item is ucNotify)
-                {
-                    continue;
-                }
-                if (item is IDesignControl)
-                {
-                    ((IDesignControl)item).EnableWaitMode();
-                }
-                else if (!IsSupportsTransparency(item))
-                {
-                    item.Enabled = true;
-                    continue;
-                }
-            }
-            ucLoading1.Show("Đang tải thông tin xe trong bãi", frmMain.language);
-            panelData.ResumeLayout();
-
-            EnableFastLoading();
+            //panelData.BackColor = Color.FromArgb((int)(0.37 * 255), 42, 47, 48);
+            //foreach (Control item in panelData.Controls)
+            //{
+            //    if (item is ucLoading)
+            //    {
+            //        continue;
+            //    }
+            //    else if (item is ucNotify)
+            //    {
+            //        continue;
+            //    }
+            //    if (item is IDesignControl)
+            //    {
+            //        ((IDesignControl)item).EnableWaitMode();
+            //    }
+            //    else if (!ControlExtensions.IsSupportsTransparency(item))
+            //    {
+            //        item.Enabled = true;
+            //        continue;
+            //    }
+            //}
+            //ucLoading1.Show("Đang tải thông tin xe trong bãi", frmMain.language);
+            //panelData.ResumeLayout();
 
             string keyword = txtKeyword.Text;
             DateTime startTime = dtpStartTime.Value;
             DateTime endTime = dtpEndTime.Value;
-            string vehicleTypeId = ((ListItem)cbVehicleType.SelectedItem).Value;
-            string identityGroupId = ((ListItem)cbIdentityGroupType.SelectedItem).Value;
-            string laneId = ((ListItem)cbLane.SelectedItem).Value;
-            Application.DoEvents();
+            string vehicleTypeId = ((ListItem)cbVehicleType.SelectedItem)?.Value ?? "";
+            string identityGroupId = ((ListItem)cbIdentityGroupType.SelectedItem)?.Value ?? "";
+            string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
+            //Application.DoEvents();
             Tuple<List<EventInReport>, int, int> eventInData = await KzParkingApiHelper.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId);
-
-            if (eventInData.Item1 == null)
+            if (eventInData!.Item1 == null)
             {
                 DisableFastLoading();
                 panelData.BackColor = Color.White;
@@ -135,34 +131,37 @@ namespace iParkingv5_window.Forms.ReportForms
             totalEvents = eventInData.Item3;
             List<EventInReport> eventInReports = eventInData.Item1 ?? new List<EventInReport>();
 
+            panelData.SuspendLayout();
+            EnableFastLoading();
             DisplayNavigation();
             DisplayEventInData(eventInReports);
             DisableFastLoading();
 
-            panelData.BackColor = Color.White;
-            ucLoading1.HideLoading();
-            foreach (Control item in panelData.Controls)
-            {
-                if (item is ucLoading)
-                {
-                    continue;
-                }
-                else if (item is ucNotify)
-                {
-                    continue;
-                }
-                if (!IsSupportsTransparency(item))
-                {
-                    item.Enabled = true;
-                    continue;
-                }
-                else if (item is IDesignControl)
-                {
-                    ((IDesignControl)item).Reset();
-                }
-            }
+            //panelData.BackColor = Color.White;
+            //ucLoading1.HideLoading();
+            //foreach (Control item in panelData.Controls)
+            //{
+            //    if (item is ucLoading)
+            //    {
+            //        continue;
+            //    }
+            //    else if (item is ucNotify)
+            //    {
+            //        continue;
+            //    }
+            //    if (item is IDesignControl)
+            //    {
+            //        ((IDesignControl)item).Reset();
+            //    }
+            //    else if (!ControlExtensions.IsSupportsTransparency(item))
+            //    {
+            //        item.Enabled = true;
+            //        continue;
+            //    }
+            //}
 
             eventInReports.Clear();
+            //panelData.ResumeLayout();
         }
 
         private void btnExportExcel_Click(object? sender, EventArgs e)
@@ -214,6 +213,7 @@ namespace iParkingv5_window.Forms.ReportForms
         {
             if (e.ColumnIndex == dgvData.ColumnCount - 1 && e.RowIndex >= 0)
             {
+                panelData.SuspendLayout();
                 panelData.BackColor = Color.FromArgb((int)(0.37 * 255), 42, 47, 48);
                 foreach (Control item in panelData.Controls)
                 {
@@ -225,7 +225,7 @@ namespace iParkingv5_window.Forms.ReportForms
                     {
                         ((IDesignControl)item).EnableWaitMode();
                     }
-                    else if (!IsSupportsTransparency(item))
+                    else if (!ControlExtensions.IsSupportsTransparency(item))
                     {
                         item.Enabled = true;
                         continue;
@@ -239,7 +239,19 @@ namespace iParkingv5_window.Forms.ReportForms
                 string createdById = dgvData.Rows[e.RowIndex].Cells[5].Value?.ToString() ?? "";
                 ucEventInInfo1.ShowInfo(Cursor.Position, laneID, datetimeIn, plateNumber, identityId, createdById);
                 this.ActiveControl = ucEventInInfo1;
+                panelData.ResumeLayout();
             }
+        }
+        private void DgvData_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1)
+            {
+                return;
+            }
+            this.selectedIdentityId = dgvData.Rows[e.RowIndex].Cells[1].Value?.ToString() ?? "";
+            this.selectedPlateNumber = dgvData.Rows[e.RowIndex].Cells[2].Value?.ToString() ?? "";
+
+            this.DialogResult = DialogResult.OK;
         }
 
         private void UcPages1_OnpageSelect(int pageIndex)
@@ -267,7 +279,7 @@ namespace iParkingv5_window.Forms.ReportForms
                     {
                         ((IDesignControl)item).EnableWaitMode();
                     }
-                    else if (!IsSupportsTransparency(item))
+                    else if (!ControlExtensions.IsSupportsTransparency(item))
                     {
                         item.Enabled = true;
                         continue;
@@ -281,9 +293,9 @@ namespace iParkingv5_window.Forms.ReportForms
                 string keyword = txtKeyword.Text;
                 DateTime startTime = dtpStartTime.Value;
                 DateTime endTime = dtpEndTime.Value;
-                string vehicleTypeId = ((ListItem)cbVehicleType.SelectedItem).Value;
-                string identityGroupId = ((ListItem)cbIdentityGroupType.SelectedItem).Value;
-                string laneId = ((ListItem)cbLane.SelectedItem).Value;
+                string vehicleTypeId = ((ListItem)cbVehicleType.SelectedItem)?.Value ?? "";
+                string identityGroupId = ((ListItem)cbIdentityGroupType.SelectedItem)?.Value ?? "";
+                string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
 
                 Application.DoEvents();
                 Tuple<List<EventInReport>, int, int> eventInData = await KzParkingApiHelper.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, pageIndex);
@@ -309,6 +321,7 @@ namespace iParkingv5_window.Forms.ReportForms
                 DisplayEventInData(eventInReports);
                 DisableFastLoading();
 
+                panelData.SuspendLayout();
                 panelData.BackColor = Color.White;
                 ucLoading1.HideLoading();
                 foreach (Control item in panelData.Controls)
@@ -321,24 +334,27 @@ namespace iParkingv5_window.Forms.ReportForms
                     {
                         continue;
                     }
-                    if (!IsSupportsTransparency(item))
+                    if (item is IDesignControl)
+                    {
+                        ((IDesignControl)item).Reset();
+                    }
+                    else if (!ControlExtensions.IsSupportsTransparency(item))
                     {
                         item.Enabled = true;
                         continue;
                     }
-                    else if (item is IDesignControl)
-                    {
-                        ((IDesignControl)item).Reset();
-                    }
                 }
 
                 eventInReports.Clear();
+                panelData.ResumeLayout();
             }));
 
         }
         private void UcNotify1_OnSelectResultEvent(DialogResult result)
         {
             ucEventInInfo1.onBackClickEvent -= UcEventInfo1_onBackClickEvent;
+            panelData.SuspendLayout();
+            panelData.BackColor = Color.White;
             foreach (Control item in panelData.Controls)
             {
                 if (item is ucLoading)
@@ -349,16 +365,18 @@ namespace iParkingv5_window.Forms.ReportForms
                 {
                     continue;
                 }
-                if (!IsSupportsTransparency(item))
+                if (item is IDesignControl)
+                {
+                    ((IDesignControl)item).Reset();
+                }
+                else if (!ControlExtensions.IsSupportsTransparency(item))
                 {
                     item.Enabled = true;
                     continue;
                 }
-                else if (item is IDesignControl)
-                {
-                    ((IDesignControl)item).Reset();
-                }
             }
+
+            panelData.ResumeLayout();
         }
         private void UcEventInfo1_onBackClickEvent(object sender)
         {
@@ -375,7 +393,7 @@ namespace iParkingv5_window.Forms.ReportForms
                     {
                         ((IDesignControl)item).Reset();
                     }
-                    else if (!IsSupportsTransparency(item))
+                    else if (!ControlExtensions.IsSupportsTransparency(item))
                     {
                         item.Enabled = true;
                         continue;
@@ -388,11 +406,17 @@ namespace iParkingv5_window.Forms.ReportForms
         #region Private Function
         private async void CreateUI()
         {
-            btnCancel.Init(btnCancel_Click);
-            btnExportExcel.Init(btnExportExcel_Click);
-            btnSearch.Init(btnSearch_Click);
+            btnCancel.InitControl(btnCancel_Click);
+            btnExportExcel.InitControl(btnExportExcel_Click);
+            btnSearch.InitControl(btnSearch_Click);
+            panelData.ToggleDoubleBuffered(true);
 
-            lblKeyword.Location = new Point(StaticPool.baseSize * 2, StaticPool.baseSize * 2);
+            lblTitle.Text = "Danh Sách Xe Đang Trong Bãi";
+            lblTitle.Location = new Point(StaticPool.baseSize * 2, StaticPool.baseSize * 2);
+            lblTitle.Font = new Font(lblTitle.Font.Name, StaticPool.baseSize * 2, FontStyle.Bold);
+            lblTitle.BackColor = Color.Transparent;
+
+            lblKeyword.Location = new Point(lblTitle.Location.X, lblTitle.Location.Y + lblTitle.Height + StaticPool.baseSize);
             txtKeyword.Location = new Point(lblKeyword.Location.X + lblKeyword.Width + StaticPool.baseSize,
                                             lblKeyword.Location.Y + (lblKeyword.Height - txtKeyword.Height) / 2);
 
@@ -437,12 +461,12 @@ namespace iParkingv5_window.Forms.ReportForms
             lblPage.Location = new Point(tablePic.Location.X, lblKeyword.Location.Y);
             lblTotalEvents.Location = new Point(tablePic.Location.X, lblStartTime.Location.Y);
 
+            cbVehicleType.DisplayMember = cbIdentityGroupType.DisplayMember = cbLane.DisplayMember = "Name";
+            cbVehicleType.ValueMember = cbIdentityGroupType.ValueMember = cbLane.ValueMember = "Value";
+
             await LoadVehicleTypeData();
             await LoadIdentityGroup();
             await LoadLaneType();
-
-            cbVehicleType.DisplayMember = cbIdentityGroupType.DisplayMember = cbLane.DisplayMember = "Name";
-            cbVehicleType.ValueMember = cbIdentityGroupType.ValueMember = cbLane.ValueMember = "Value";
         }
         private void DisableFastLoading()
         {
@@ -468,11 +492,8 @@ namespace iParkingv5_window.Forms.ReportForms
             lblTotalEvents.Text = "Tổng số sự kiện: " + totalEvents;
             lblPage.Refresh();
             lblTotalEvents.Refresh();
-            if (totalPages > 1)
-            {
-                ucPages1.Visible = true;
-                ucPages1.UpdateMaxPage(totalPages);
-            }
+            ucPages1.Visible = totalPages > 1;
+            ucPages1.UpdateMaxPage(totalPages);
         }
         private void DisplayEventInData(List<EventInReport> eventInReports)
         {
@@ -512,21 +533,6 @@ namespace iParkingv5_window.Forms.ReportForms
             }
             pic.Image = Properties.Resources.defaultImage;
         }
-        static bool IsSupportsTransparency(Control control)
-        {
-            Type[] transparentControlTypes = { typeof(Panel), typeof(GroupBox), typeof(Label) };
-
-            foreach (Type transparentType in transparentControlTypes)
-            {
-                if (transparentType.IsAssignableFrom(control.GetType()))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         private async Task LoadVehicleTypeData()
         {
             cbVehicleType.Invoke(new Action(() =>

@@ -73,7 +73,7 @@
             // 
             btnCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnCancel.AutoSize = true;
-            btnCancel.BorderStyle = BorderStyle.Fixed3D;
+            //btnCancel.BorderStyle = BorderStyle.Fixed3D;
             btnCancel.Location = new Point(250, 309);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(80, 22);
@@ -84,7 +84,7 @@
             // 
             btnConfirm.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnConfirm.AutoSize = true;
-            btnConfirm.BorderStyle = BorderStyle.Fixed3D;
+            //btnConfirm.BorderStyle = BorderStyle.Fixed3D;
             btnConfirm.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnConfirm.Location = new Point(188, 309);
             btnConfirm.Name = "btnConfirm";

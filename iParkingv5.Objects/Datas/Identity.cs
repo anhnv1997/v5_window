@@ -26,7 +26,7 @@ namespace iParkingv5.Objects.Datas
         /// </summary>
         public string Code { get; set; }
 
-        public Guid IdentityGroupId { get; set; }
+        public string IdentityGroupId { get; set; }
         public IdentityType Type { get; set; }
         public IdentityStatus Status { get; set; }
         public string Note { get; set; }
@@ -37,17 +37,6 @@ namespace iParkingv5.Objects.Datas
 
         public IdentityGroup IdentityGroup { get; set; }
 
-        public ICollection<RegisteredVehicleIdentityMap> RegisteredVehicleIdentityMaps { get; set; }
-        public ICollection<EventIn> EventIns { get; set; }
-        public ICollection<EventOut> EventOuts { get; set; }
-        public ICollection<AbnormalEvent> AbnormalEvents { get; set; }
-
-        public Identity()
-        {
-            Id = Guid.NewGuid().ToString();
-            RegisteredVehicleIdentityMaps = new List<RegisteredVehicleIdentityMap>();
-            EventIns = new List<EventIn>();
-            EventOuts = new List<EventOut>();
-        }
+        public List<RegisteredVehicle> RegisteredVehicles { get; set; } = new List<RegisteredVehicle>();
     }
 }

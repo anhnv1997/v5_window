@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using iParkingv5.Objects.Enums;
-using Newtonsoft.Json;
 
 namespace iParkingv5.Objects.Datas
 {
@@ -39,6 +38,27 @@ namespace iParkingv5.Objects.Datas
             Identities = new List<Identity>();
             IdentityGroupLaneMaps = new List<IdentityGroupLaneMap>();
             RoleIdentityGroupMaps = new List<RoleIdentityGroupMap>();
+        }
+
+        public static string GetIdentityGroupName(List<IdentityGroup> identityGroups, string identityGroupId)
+        {
+            if (identityGroups == null)
+            {
+                return string.Empty;
+            }
+            if (identityGroups.Count == 0)
+            {
+                return string.Empty;
+            }
+            foreach (var item in identityGroups)
+            {
+                if (item.Id.ToString().ToLower() == identityGroupId.ToLower())
+                {
+                    return item.Name;
+                }
+            }
+            
+            return string.Empty;
         }
     }
 

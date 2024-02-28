@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace iParkingv6.Objects.Datas
+﻿namespace iParkingv6.Objects.Datas
 {
     public class Gate
     {

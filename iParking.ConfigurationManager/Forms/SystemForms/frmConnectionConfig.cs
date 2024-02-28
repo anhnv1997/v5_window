@@ -34,7 +34,6 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             InitializeComponent();
             this.Load += FrmConnectionConfig_Load;
         }
-
         private void FrmConnectionConfig_Load(object? sender, EventArgs e)
         {
             AddTabDatabaseConfig();
@@ -45,9 +44,6 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             this.Size = new Size(Properties.Settings.Default.prefer_width, Properties.Settings.Default.prefer_height);
             this.SizeChanged += FrmConnectionConfig_SizeChanged;
         }
-
-
-
         private void FrmConnectionConfig_SizeChanged(object? sender, EventArgs e)
         {
             Properties.Settings.Default.prefer_width = this.Size.Width;
@@ -139,6 +135,7 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             tabLprConfig.AutoScroll = true;
             ucLprConnection.Dock = DockStyle.None;
         }
+
         private void SaveEInvoiceConfig()
         {
             NewtonSoftHelper<EInvoiceConfig>.SaveConfig(ucEInvoice.GetEInvoiceConfig(), PathManagement.einvoiceConfigPath);

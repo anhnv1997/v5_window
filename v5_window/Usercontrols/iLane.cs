@@ -11,9 +11,11 @@ namespace iParkingv5_window.Usercontrols
 {
     public interface iLane
     {
+        event OnControlSizeChanged onControlSizeChangeEvent;
+        event OnChangeLaneEvent OnChangeLaneEvent;
         Lane lane { get; set; }
         List<CardEventArgs> lastCardEventDatas { get; set; }
-        List<InputEventArgs> lastInputEventDatas { get; set; }  
+        List<InputEventArgs> lastInputEventDatas { get; set; }
         Task OnNewEvent(EventArgs e);
         void OnKeyPress(Keys keys);
         LaneDisplayConfig SaveUIConfig();

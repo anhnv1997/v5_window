@@ -47,6 +47,7 @@ namespace iParkingv5.Controller.SC200Devices
         public ManualResetEvent? ForceLoopIteration { get; set; }
         #region Event
         public event CardEventHandler? CardEvent;
+        public event FingerEventHandler? FingerEvent;
         public event ControllerErrorEventHandler? ErrorEvent;
         public event InputEventHandler? InputEvent;
         public event ConnectStatusChangeEventHandler? ConnectStatusChangeEvent;
@@ -58,8 +59,8 @@ namespace iParkingv5.Controller.SC200Devices
             try
             {
                 serialPort = new SerialPort();
-                serialPort.PortName = this.ControllerInfo.comport;
-                serialPort.BaudRate = int.Parse(this.ControllerInfo.baudrate);
+                serialPort.PortName = this.ControllerInfo.Comport;
+                serialPort.BaudRate = int.Parse(this.ControllerInfo.Baudrate);
                 serialPort.ReadBufferSize = 4096;
                 serialPort.WriteBufferSize = 4096;
                 serialPort.DataBits = 8;
@@ -70,14 +71,14 @@ namespace iParkingv5.Controller.SC200Devices
                 //serialPort.InitializeLifetimeService();
                 serialPort.DataReceived += SerialPort_DataReceived;
                 serialPort.Open();
-                this.ControllerInfo.isConnect = serialPort.IsOpen;
-                return this.ControllerInfo.isConnect;
+                this.ControllerInfo.IsConnect = serialPort.IsOpen;
+                return this.ControllerInfo.IsConnect;
             }
             catch (Exception ex)
             {
                 //MessageBox.Show("Ket noi den thiet bi\n" + ex.Message);
             }
-            this.ControllerInfo.isConnect = false;
+            this.ControllerInfo.IsConnect = false;
             return false;
         }
         public void PollingStart()
@@ -283,7 +284,7 @@ namespace iParkingv5.Controller.SC200Devices
         {
             InputEventArgs ie = new InputEventArgs
             {
-                DeviceId = controller.id
+                DeviceId = controller.Id
             };
             switch (inputIndex)
             {
@@ -315,7 +316,7 @@ namespace iParkingv5.Controller.SC200Devices
         {
             CardEventArgs e = new CardEventArgs
             {
-                DeviceId = controller.id,
+                DeviceId = controller.Id,
                 AllCardFormats = new List<string>(),
             };
             string cardNumberHEX = cardNumber;
@@ -377,7 +378,7 @@ namespace iParkingv5.Controller.SC200Devices
 
                     //foreach (Controller controller in controllers)
                     //{
-                    this.ControllerInfo.isConnect = true; // Thiet bi online
+                    this.ControllerInfo.IsConnect = true; // Thiet bi online
 
                     byte ctrl_Str = response[4];
                     byte subCtrl_Str = response[5];
@@ -542,15 +543,15 @@ namespace iParkingv5.Controller.SC200Devices
         #region: CONNECT
         public async Task<bool> TestConnectionAsync()
         {
-            if (!CommunicationTypes.IS_TCP((EM_CommunicationType)(this.ControllerInfo.communicationType)))
+            if (!CommunicationTypes.IS_TCP((EM_CommunicationType)(this.ControllerInfo.CommunicationType)))
             {
                 try
                 {
-                    if (this.ControllerInfo.communicationType == 1)
+                    if (this.ControllerInfo.CommunicationType == 1)
                     {
                         serialPort = new SerialPort();
-                        serialPort.PortName = this.ControllerInfo.comport;
-                        serialPort.BaudRate = int.Parse(this.ControllerInfo.baudrate);
+                        serialPort.PortName = this.ControllerInfo.Comport;
+                        serialPort.BaudRate = int.Parse(this.ControllerInfo.Baudrate);
                         serialPort.ReadBufferSize = 4096;
                         serialPort.WriteBufferSize = 4096;
                         serialPort.DataBits = 8;
@@ -560,7 +561,7 @@ namespace iParkingv5.Controller.SC200Devices
                         serialPort.RtsEnable = true;
                         serialPort.DataReceived += SerialPort_DataReceived;
                         serialPort.Open();
-                        this.ControllerInfo.isConnect = true;
+                        this.ControllerInfo.IsConnect = true;
                         return true;
                     }
                     else
@@ -570,7 +571,7 @@ namespace iParkingv5.Controller.SC200Devices
                 catch (Exception ex)
                 {
                 }
-                this.ControllerInfo.isConnect = false;
+                this.ControllerInfo.IsConnect = false;
                 return false;
             }
             return false;
@@ -626,7 +627,7 @@ namespace iParkingv5.Controller.SC200Devices
 
         public async Task<int> GetPortAsync()
         {
-            return GetBaudrate(this.ControllerInfo.baudrate);
+            return GetBaudrate(this.ControllerInfo.Baudrate);
         }
         public async Task<string> GetComkeyAsync()
         {
@@ -681,15 +682,15 @@ namespace iParkingv5.Controller.SC200Devices
         public int GetBaudrate(string GetDateTimeCMD)
         {
             int baudrate = 0;
-            if (!string.IsNullOrEmpty(this.ControllerInfo.baudrate))
+            if (!string.IsNullOrEmpty(this.ControllerInfo.Baudrate))
             {
                 try
                 {
-                    baudrate = int.Parse(this.ControllerInfo.baudrate);
+                    baudrate = int.Parse(this.ControllerInfo.Baudrate);
                 }
                 catch (Exception ex)
                 {
-                    string errorMessage = $@"Controller {this.ControllerInfo.comport} Got Baudrate Error: " + ex.Message;
+                    string errorMessage = $@"Controller {this.ControllerInfo.Comport} Got Baudrate Error: " + ex.Message;
                     ErrorEvent?.Invoke(this, new ControllerErrorEventArgs()
                     {
                         ErrorString = errorMessage,
@@ -720,12 +721,22 @@ namespace iParkingv5.Controller.SC200Devices
             throw new NotImplementedException();
         }
 
-        public Task<bool> ModifyFInger(string userId, int fingerIndex, string fingerData)
+        public Task<bool> ModifyFinger(string userId, int fingerIndex, string fingerData)
         {
             throw new NotImplementedException();
         }
 
         public Task<bool> DeleteFinger(string userId, int fingerIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> AddFinger(List<string> fingerDatas, string customerName, int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> ModifyFinger(List<string> fingerDatas, string customerName, int userId)
         {
             throw new NotImplementedException();
         }

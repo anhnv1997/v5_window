@@ -39,7 +39,7 @@ namespace iParkingv5_CustomerRegister.Objects
                                    where fingerControlUnit.FingerId.Equals(fingerId, StringComparison.CurrentCultureIgnoreCase)
                                    select fingerControlUnit.ControlUnitId.ToLower()).ToList();
             Bdk? _bdk = (from Bdk bdk in bdks
-                         where bdkIds.Contains(bdk.id)
+                         where bdkIds.Contains(bdk.Id)
                          select bdk).FirstOrDefault();
             bdkIds.Clear();
             return _bdk;

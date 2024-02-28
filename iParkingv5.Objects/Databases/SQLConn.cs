@@ -6,11 +6,12 @@ namespace iParkingv5.Objects.Databases
 {
     public class SQLConn
     {
+        public bool isUseDatabase { get; set; } = false;
         public SQLConn()
         {
 
         }
-        public SQLConn(string _dbtype, string _servername, string _databasename, string _user, string _pass, string _authentication)
+        public SQLConn(string _dbtype, string _servername, string _databasename, string _user, string _pass, string _authentication, bool _isUseDatabse)
         {
             dbtype = _dbtype;
             sqlservername = _servername;
@@ -18,6 +19,7 @@ namespace iParkingv5.Objects.Databases
             sqlusername = _user;
             sqlpassword = _pass;
             authentication = _authentication;
+            this.isUseDatabase = _isUseDatabse;
         }
 
         private string dbtype = "";

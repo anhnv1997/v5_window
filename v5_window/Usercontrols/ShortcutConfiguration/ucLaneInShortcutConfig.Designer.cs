@@ -1,4 +1,6 @@
-﻿namespace iParkingv5_window.Usercontrols
+﻿using iPakrkingv5.Controls.Controls.Buttons;
+
+namespace iParkingv5_window.Usercontrols
 {
     partial class ucLaneInShortcutConfig
     {
@@ -35,9 +37,9 @@
             lblConfirmPlateKey = new Label();
             lblWriteInKey = new Label();
             lblReserveLaneKey = new Label();
-            picChangeConfirmPlateKey = new Controls.Buttons.LblSetting();
-            btnSetting1 = new Controls.Buttons.LblSetting();
-            picReserveLane = new Controls.Buttons.LblSetting();
+            picChangeConfirmPlateKey = new LblSetting();
+            btnSetting1 = new LblSetting();
+            picReserveLane = new LblSetting();
             SuspendLayout();
             // 
             // label1
@@ -169,8 +171,8 @@
         private Label lblConfirmPlateKey;
         private Label lblWriteInKey;
         private Label lblReserveLaneKey;
-        private Controls.Buttons.LblSetting picChangeConfirmPlateKey;
-        private Controls.Buttons.LblSetting btnSetting1;
-        private Controls.Buttons.LblSetting picReserveLane;
+        private LblSetting picChangeConfirmPlateKey;
+        private LblSetting btnSetting1;
+        private LblSetting picReserveLane;
     }
 }

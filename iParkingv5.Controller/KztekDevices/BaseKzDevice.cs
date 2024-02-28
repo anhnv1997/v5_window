@@ -26,6 +26,7 @@ namespace iParkingv5.Controller.KztekDevices
         public ManualResetEvent? ForceLoopIteration { get; set; }
         #region Event
         public event CardEventHandler? CardEvent;
+        public event FingerEventHandler? FingerEvent;
         public event ControllerErrorEventHandler? ErrorEvent;
         public event InputEventHandler? InputEvent;
         public event ConnectStatusChangeEventHandler? ConnectStatusChangeEvent;
@@ -40,12 +41,12 @@ namespace iParkingv5.Controller.KztekDevices
         #region: CONNECT
         public async Task<bool> TestConnectionAsync()
         {
-            if (CommunicationTypes.IS_TCP((EM_CommunicationType)(this.ControllerInfo.communicationType)))
+            if (CommunicationTypes.IS_TCP((EM_CommunicationType)(this.ControllerInfo.CommunicationType)))
             {
-                if (NetWorkTools.IsPingSuccess(this.ControllerInfo.comport, 500))
+                if (NetWorkTools.IsPingSuccess(this.ControllerInfo.Comport, 500))
                 {
-                    this.ControllerInfo.isConnect = !string.IsNullOrEmpty(await GetIPAsync());
-                    return this.ControllerInfo.isConnect;
+                    this.ControllerInfo.IsConnect = !string.IsNullOrEmpty(await GetIPAsync());
+                    return this.ControllerInfo.IsConnect;
                 }
             }
             return false;
@@ -70,8 +71,8 @@ namespace iParkingv5.Controller.KztekDevices
         {
             string GetDateTimeCMD = KZTEK_CMD.GetDateTimeCMD();
 
-            string comport = this.ControllerInfo.comport;
-            int baudrate = GetBaudrate(this.ControllerInfo.baudrate);
+            string comport = this.ControllerInfo.Comport;
+            int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
             this.IsBusy = true;
             string response = string.Empty;
             await Task.Run(() => response = UdpTools.ExecuteCommand(comport, baudrate, GetDateTimeCMD, 500, UdpTools.STX, Encoding.ASCII));
@@ -95,8 +96,8 @@ namespace iParkingv5.Controller.KztekDevices
         }
         public async Task<bool> SetDateTime(DateTime time)
         {
-            string comport = this.ControllerInfo.comport;
-            int baudrate = GetBaudrate(this.ControllerInfo.baudrate);
+            string comport = this.ControllerInfo.Comport;
+            int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
             string SetDateTimeCMD = KZTEK_CMD.SetDateTimeCMD(time.ToString(TimeFormat));
             this.IsBusy = true;
             string response = string.Empty;
@@ -135,8 +136,8 @@ namespace iParkingv5.Controller.KztekDevices
         public async Task<string> GetIPAsync()
         {
             string autoDetectCMD = KZTEK_CMD.AutoDetectCMD();
-            string comport = this.ControllerInfo.comport;
-            int baudrate = GetBaudrate(this.ControllerInfo.baudrate);
+            string comport = this.ControllerInfo.Comport;
+            int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
             this.IsBusy = true;
             string response = string.Empty;
             await Task.Run(() => response = UdpTools.ExecuteCommand(comport, baudrate, autoDetectCMD, 500, UdpTools.STX, Encoding.ASCII));
@@ -161,8 +162,8 @@ namespace iParkingv5.Controller.KztekDevices
         public async Task<string> GetMacAsync()
         {
             string autoDetectCMD = KZTEK_CMD.AutoDetectCMD();
-            string comport = this.ControllerInfo.comport;
-            int baudrate = GetBaudrate(this.ControllerInfo.baudrate);
+            string comport = this.ControllerInfo.Comport;
+            int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
             this.IsBusy = true;
             string response = string.Empty;
             await Task.Run(() => response = UdpTools.ExecuteCommand(comport, baudrate, autoDetectCMD, 500, UdpTools.STX, Encoding.ASCII));
@@ -187,8 +188,8 @@ namespace iParkingv5.Controller.KztekDevices
         public async Task<string> GetDefaultGatewayAsync()
         {
             string autoDetectCMD = KZTEK_CMD.AutoDetectCMD();
-            string comport = this.ControllerInfo.comport;
-            int baudrate = GetBaudrate(this.ControllerInfo.baudrate);
+            string comport = this.ControllerInfo.Comport;
+            int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
             this.IsBusy = true;
             string response = string.Empty;
             await Task.Run(() => response = UdpTools.ExecuteCommand(comport, baudrate, autoDetectCMD, 500, UdpTools.STX, Encoding.ASCII));
@@ -213,7 +214,7 @@ namespace iParkingv5.Controller.KztekDevices
 
         public async Task<int> GetPortAsync()
         {
-            return GetBaudrate(this.ControllerInfo.baudrate);
+            return GetBaudrate(this.ControllerInfo.Baudrate);
         }
         public async Task<string> GetComkeyAsync()
         {
@@ -222,8 +223,8 @@ namespace iParkingv5.Controller.KztekDevices
         //SET
         public async Task<bool> SetMacAsync(string macAddr)
         {
-            string comport = this.ControllerInfo.comport;
-            int baudrate = GetBaudrate(this.ControllerInfo.baudrate);
+            string comport = this.ControllerInfo.Comport;
+            int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
             string SetDateTimeCMD = KZTEK_CMD.Get_ChangeMacAddressCmd(macAddr);
             this.IsBusy = true;
             string response = string.Empty;
@@ -253,8 +254,8 @@ namespace iParkingv5.Controller.KztekDevices
         }
         public async Task<bool> SetNetWorkInforAsync(string ip, string subnetMask, string defaultGateway, string macAddr)
         {
-            string comport = this.ControllerInfo.comport;
-            int baudrate = GetBaudrate(this.ControllerInfo.baudrate);
+            string comport = this.ControllerInfo.Comport;
+            int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
             string SetDateTimeCMD = KZTEK_CMD.ChangeIPCMD(ip, subnetMask, defaultGateway, macAddr);
             this.IsBusy = true;
             string response = string.Empty;
@@ -291,8 +292,8 @@ namespace iParkingv5.Controller.KztekDevices
         #region System
         public async Task<bool> ClearMemory()
         {
-            var serverIP = IPAddress.Parse(this.ControllerInfo.comport);
-            var serverPort = GetBaudrate(this.ControllerInfo.baudrate);
+            var serverIP = IPAddress.Parse(this.ControllerInfo.Comport);
+            var serverPort = GetBaudrate(this.ControllerInfo.Baudrate);
             var serverEndpoint = new IPEndPoint(serverIP, serverPort);
             var size = 500;
             var receiveBuffer = new byte[size];
@@ -318,16 +319,16 @@ namespace iParkingv5.Controller.KztekDevices
         }
         public async Task<bool> RestartDevice()
         {
-            string comport = this.ControllerInfo.comport;
-            int baudrate = GetBaudrate(this.ControllerInfo.baudrate);
+            string comport = this.ControllerInfo.Comport;
+            int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
             string ResetCMD = "ResetDevice?/";
             string response = UdpTools.ExecuteCommand(comport, baudrate, ResetCMD, 500, UdpTools.STX, Encoding.ASCII);
             return true;
         }
         public async Task<bool> ResetDefault()
         {
-            var serverIP = IPAddress.Parse(this.ControllerInfo.comport);
-            var serverPort = GetBaudrate(this.ControllerInfo.baudrate);
+            var serverIP = IPAddress.Parse(this.ControllerInfo.Comport);
+            var serverPort = GetBaudrate(this.ControllerInfo.Baudrate);
             var serverEndpoint = new IPEndPoint(serverIP, serverPort);
             var size = 500;
             var receiveBuffer = new byte[size];
@@ -372,15 +373,15 @@ namespace iParkingv5.Controller.KztekDevices
         public int GetBaudrate(string GetDateTimeCMD)
         {
             int baudrate = 0;
-            if (!string.IsNullOrEmpty(this.ControllerInfo.baudrate))
+            if (!string.IsNullOrEmpty(this.ControllerInfo.Baudrate))
             {
                 try
                 {
-                    baudrate = int.Parse(this.ControllerInfo.baudrate);
+                    baudrate = int.Parse(this.ControllerInfo.Baudrate);
                 }
                 catch (Exception ex)
                 {
-                    string errorMessage = $@"Controller {this.ControllerInfo.comport} Got Baudrate Error: " + ex.Message;
+                    string errorMessage = $@"Controller {this.ControllerInfo.Comport} Got Baudrate Error: " + ex.Message;
                     ErrorEvent?.Invoke(this, new ControllerErrorEventArgs()
                     {
                         ErrorString = errorMessage,
@@ -411,12 +412,22 @@ namespace iParkingv5.Controller.KztekDevices
             throw new NotImplementedException();
         }
 
-        public Task<bool> ModifyFInger(string userId, int fingerIndex, string fingerData)
+        public Task<bool> ModifyFinger(string userId, int fingerIndex, string fingerData)
         {
             throw new NotImplementedException();
         }
 
         public Task<bool> DeleteFinger(string userId, int fingerIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> AddFinger(List<string> fingerDatas, string customerName, int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> ModifyFinger(List<string> fingerDatas, string customerName, int userId)
         {
             throw new NotImplementedException();
         }

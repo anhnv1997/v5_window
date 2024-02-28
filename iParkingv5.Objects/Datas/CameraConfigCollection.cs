@@ -35,7 +35,7 @@ namespace iParkingv5.Objects.Datas
             var data = new CameraConfigCollection();
             foreach (Camera item in InnerList)
             {
-                if (obj.Contains(item.id))
+                if (obj.Contains(item.Id))
                 {
                     data.Add(item);
                 }

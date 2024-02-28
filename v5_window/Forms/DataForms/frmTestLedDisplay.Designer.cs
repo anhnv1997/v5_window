@@ -1,4 +1,6 @@
-﻿namespace iParkingv5_window.Forms.DataForms
+﻿using iPakrkingv5.Controls.Controls.Buttons;
+
+namespace iParkingv5_window.Forms.DataForms
 {
     partial class frmTestLedDisplay
     {
@@ -44,8 +46,8 @@
             label8 = new Label();
             dtpStartTime = new DateTimePicker();
             dtpEndTime = new DateTimePicker();
-            btnOk1 = new Controls.Buttons.LblOk();
-            btnCancel1 = new Controls.Buttons.LblCancel();
+            btnOk1 = new LblOk();
+            btnCancel1 = new LblCancel();
             SuspendLayout();
             // 
             // label1
@@ -190,7 +192,6 @@
             // 
             btnOk1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnOk1.AutoSize = true;
-            btnOk1.BorderStyle = BorderStyle.Fixed3D;
             btnOk1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnOk1.ForeColor = Color.Black;
             btnOk1.Location = new Point(327, 304);
@@ -203,7 +204,6 @@
             // 
             btnCancel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnCancel1.AutoSize = true;
-            btnCancel1.BorderStyle = BorderStyle.Fixed3D;
             btnCancel1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnCancel1.ForeColor = Color.Black;
             btnCancel1.Location = new Point(408, 304);
@@ -262,7 +262,7 @@
         private Label label8;
         private DateTimePicker dtpStartTime;
         private DateTimePicker dtpEndTime;
-        private Controls.Buttons.LblOk btnOk1;
-        private Controls.Buttons.LblCancel btnCancel1;
+        private LblOk btnOk1;
+        private LblCancel btnCancel1;
     }
 }

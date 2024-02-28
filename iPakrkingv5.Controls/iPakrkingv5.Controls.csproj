@@ -6,7 +6,8 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Platforms>AnyCPU;x86</Platforms>
+    <Platforms>x86;x64</Platforms>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,9 +36,7 @@
     <Compile Update="Controls\Buttons\LblSearch.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="Controls\Buttons\LblSetting.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Update="Controls\Buttons\LblSetting.cs" />
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

@@ -86,8 +86,8 @@ namespace iPakrkingv5.Controls.Usercontrols.BuildControls
         {
             this.MaximumSize = this.MinimumSize = this.Size;
 
-            btnConfirm.Init(BtnConfirm_Click);
-            btnCancel.Init(BtnCancel_Click);
+            btnConfirm.InitControl(BtnConfirm_Click);
+            btnCancel.InitControl(BtnCancel_Click);
 
             lblMessage.MaximumSize = new Size(this.Width - TextManagement.ROOT_SIZE * 2, 0);
             lblMessage.MinimumSize = new Size(this.Width - 80, 0);

@@ -1,4 +1,6 @@
-﻿namespace iParkingv5_window.Forms.DataForms
+﻿using iPakrkingv5.Controls.Controls.Buttons;
+
+namespace iParkingv5_window.Forms.DataForms
 {
     partial class frmSelectCard
     {
@@ -39,11 +41,11 @@
             Column6 = new DataGridViewTextBoxColumn();
             Column4 = new DataGridViewTextBoxColumn();
             Column1 = new DataGridViewTextBoxColumn();
-            btnSearch = new Controls.Buttons.LblSearch();
+            btnSearch = new LblSearch();
             txtIdentity = new TextBox();
             lblCardNumber = new Label();
-            btnCancel = new Controls.Buttons.LblCancel();
-            btnSelectCard = new Controls.Buttons.LblOk();
+            btnCancel = new LblCancel();
+            btnSelectCard = new LblOk();
             panelData = new Panel();
             ucLoading1 = new Usercontrols.BuildControls.ucLoading();
             ucNotify1 = new Usercontrols.BuildControls.ucNotify();
@@ -134,7 +136,6 @@
             // btnSearch
             // 
             btnSearch.AutoSize = true;
-            btnSearch.BorderStyle = BorderStyle.Fixed3D;
             btnSearch.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnSearch.ForeColor = Color.Black;
             btnSearch.Location = new Point(373, 59);
@@ -164,7 +165,6 @@
             // 
             btnCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnCancel.AutoSize = true;
-            btnCancel.BorderStyle = BorderStyle.Fixed3D;
             btnCancel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnCancel.ForeColor = Color.Black;
             btnCancel.Location = new Point(490, 406);
@@ -177,7 +177,6 @@
             // 
             btnSelectCard.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnSelectCard.AutoSize = true;
-            btnSelectCard.BorderStyle = BorderStyle.Fixed3D;
             btnSelectCard.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnSelectCard.ForeColor = Color.Black;
             btnSelectCard.Location = new Point(409, 406);
@@ -253,9 +252,9 @@
         private DataGridViewTextBoxColumn Column6;
         private DataGridViewTextBoxColumn Column4;
         private DataGridViewTextBoxColumn Column1;
-        private Controls.Buttons.LblCancel btnCancel;
-        private Controls.Buttons.LblOk btnSelectCard;
-        private Controls.Buttons.LblSearch btnSearch;
+        private LblCancel btnCancel;
+        private LblOk btnSelectCard;
+        private LblSearch btnSearch;
         private Panel panelData;
         private Usercontrols.BuildControls.ucNotify ucNotify1;
         private Usercontrols.BuildControls.ucLoading ucLoading1;

@@ -27,7 +27,7 @@ namespace iParkingv5_window.Usercontrols
 
             cbCamera.SelectedIndexChanged += CbCamera_SelectedIndexChanged;
             btnLiveview.Click += btnLiveview_Click;
-            btnLprDetect.Click += btnLprDetect_Click;
+            btnCarLprDetect.Click += btnCarLprDetect_Click;
             btnDraw.Click += btnDraw_Click;
             this.Load += UcCameraConfig_Load;
         }
@@ -36,7 +36,7 @@ namespace iParkingv5_window.Usercontrols
         {
             foreach (Camera camera in this.cameras)
             {
-                cbCamera.Items.Add(camera.name);
+                cbCamera.Items.Add(camera.Name);
             }
         }
         #endregion End Forms
@@ -48,26 +48,26 @@ namespace iParkingv5_window.Usercontrols
             config = null;
             foreach (Camera camera in this.cameras)
             {
-                if (camera.name == cbCamera.Text)
+                if (camera.Name == cbCamera.Text)
                 {
                     currentCamera = camera;
 
                     ClearView();
 
                     camView = new Kztek.Cameras.Camera();
-                    camView.ID = currentCamera!.id;
-                    camView.Name = currentCamera!.name;
-                    camView.VideoSource = currentCamera.ipAddress;
-                    camView.HttpPort = int.Parse(currentCamera.httpPort);
-                    camView.Login = currentCamera.username;
-                    camView.Password = currentCamera.password;
-                    camView.Chanel = currentCamera.channel;
+                    camView.ID = currentCamera!.Id;
+                    camView.Name = currentCamera!.Name;
+                    camView.VideoSource = currentCamera.IpAddress;
+                    camView.HttpPort = int.Parse(currentCamera.HttpPort);
+                    camView.Login = currentCamera.Username;
+                    camView.Password = currentCamera.Password;
+                    camView.Chanel = currentCamera.Channel;
                     string _camType = currentCamera.GetCameraType() == "HIK" ? "HIKVISION" : currentCamera.GetCameraType();
                     camView.CameraType = Kztek.Cameras.CameraTypes.GetType(_camType);
                     camView.StreamType = Kztek.Cameras.StreamTypes.GetType("H264");
-                    camView.Resolution = string.IsNullOrEmpty(currentCamera.resolution) ? "1280x720" : currentCamera.resolution;
+                    camView.Resolution = string.IsNullOrEmpty(currentCamera.Resolution) ? "1280x720" : currentCamera.Resolution;
 
-                    var oldConfig = NewtonSoftHelper<CameraDetectRegion>.DeserializeObjectFromPath(PathManagement.laneCameraConfigPath(laneId, this.currentCamera!.id));
+                    var oldConfig = NewtonSoftHelper<CameraDetectRegion>.DeserializeObjectFromPath(PathManagement.laneCameraConfigPath(laneId, this.currentCamera!.Id));
                     if (oldConfig != null)
                     {
                         config = new Rectangle(oldConfig.X, oldConfig.Y, oldConfig.Width, oldConfig.Height);
@@ -85,7 +85,8 @@ namespace iParkingv5_window.Usercontrols
             picLprImage.Image = null;
             picCutVehicleImage.Image = null;
             btnDraw.Visible = false;
-            btnLprDetect.Visible = false;
+            btnCarLprDetect.Visible = false;
+            btnMotorLprDetect.Visible = false;
             btnSave.Visible = false;
         }
         private void btnLiveview_Click(object? sender, EventArgs e)
@@ -96,7 +97,8 @@ namespace iParkingv5_window.Usercontrols
                 return;
             }
             btnDraw.Visible = true;
-            btnLprDetect.Visible = true;
+            btnCarLprDetect.Visible = true;
+            btnMotorLprDetect.Visible = true;
             btnSave.Visible = true;
             camView!.Start();
 
@@ -112,7 +114,7 @@ namespace iParkingv5_window.Usercontrols
                 control.BringToFront();
             }
         }
-        private void btnLprDetect_Click(object? sender, EventArgs e)
+        private void btnCarLprDetect_Click(object? sender, EventArgs e)
         {
             if (!IsExistCamera())
             {
@@ -126,14 +128,42 @@ namespace iParkingv5_window.Usercontrols
                 {
                     Bitmap bitmapCut = CropBitmap((Bitmap)image, (Rectangle)config!);
 
-                    string plate = StaticPool.LprDetect.GetPlateNumber(bitmapCut, true, null, out Image? lprImage);
-                    lblDetectPlate.Text = plate;
+                    string carPlate = StaticPool.LprDetect.GetPlateNumber(bitmapCut, true, null, out Image? lprImage);
+                    lblDetectPlate.Text = carPlate;
                     picCutVehicleImage.Image = bitmapCut;
                     picLprImage.Image = lprImage;
                 }
                 else
                 {
                     string plate = StaticPool.LprDetect.GetPlateNumber(image, true, null, out Image? lprImage);
+                    lblDetectPlate.Text = plate;
+                    picCutVehicleImage.Image = image;
+                    picLprImage.Image = lprImage;
+                }
+            }
+        }
+        private void btnMotorLprDetect_Click(object sender, EventArgs e)
+        {
+            if (!IsExistCamera())
+            {
+                MessageBox.Show("Hãy chọn camera!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            Image image = camView!.GetCurrentVideoFrame();
+            if (image != null)
+            {
+                if (config != null)
+                {
+                    Bitmap bitmapCut = CropBitmap((Bitmap)image, (Rectangle)config!);
+
+                    string carPlate = StaticPool.LprDetect.GetPlateNumber(bitmapCut, false, null, out Image? lprImage);
+                    lblDetectPlate.Text = carPlate;
+                    picCutVehicleImage.Image = bitmapCut;
+                    picLprImage.Image = lprImage;
+                }
+                else
+                {
+                    string plate = StaticPool.LprDetect.GetPlateNumber(image, false, null, out Image? lprImage);
                     lblDetectPlate.Text = plate;
                     picCutVehicleImage.Image = image;
                     picLprImage.Image = lprImage;
@@ -167,7 +197,7 @@ namespace iParkingv5_window.Usercontrols
                     Width = this.config.Value.Width,
                     Height = this.config.Value.Height,
                 };
-                NewtonSoftHelper<CameraDetectRegion>.SaveConfig(cameraDetectRegion, PathManagement.laneCameraConfigPath(laneId, this.currentCamera!.id));
+                NewtonSoftHelper<CameraDetectRegion>.SaveConfig(cameraDetectRegion, PathManagement.laneCameraConfigPath(laneId, this.currentCamera!.Id));
             }
             else
             {
@@ -199,9 +229,5 @@ namespace iParkingv5_window.Usercontrols
         }
         #endregion End Private Function
 
-        private void btnLprDetect_Click_1(object sender, EventArgs e)
-        {
-
-        }
     }
 }

@@ -38,8 +38,16 @@
             label3 = new Label();
             txtMinioServerUsername = new TextBox();
             label4 = new Label();
+            groupBox3 = new GroupBox();
+            label5 = new Label();
+            txtRabbitMqServer = new TextBox();
+            txtRabbitMQPassword = new TextBox();
+            label6 = new Label();
+            txtRabbitMQUsername = new TextBox();
+            label7 = new Label();
             groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
+            groupBox3.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox2
@@ -146,18 +154,94 @@
             label4.TabIndex = 2;
             label4.Text = "Url";
             // 
+            // groupBox3
+            // 
+            groupBox3.AutoSize = true;
+            groupBox3.Controls.Add(label5);
+            groupBox3.Controls.Add(txtRabbitMqServer);
+            groupBox3.Controls.Add(txtRabbitMQPassword);
+            groupBox3.Controls.Add(label6);
+            groupBox3.Controls.Add(txtRabbitMQUsername);
+            groupBox3.Controls.Add(label7);
+            groupBox3.Dock = DockStyle.Top;
+            groupBox3.Location = new Point(0, 212);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new Size(625, 139);
+            groupBox3.TabIndex = 7;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "Thông tin Rabbit MQ Server";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(6, 89);
+            label5.Name = "label5";
+            label5.Size = new Size(90, 20);
+            label5.TabIndex = 6;
+            label5.Text = "Mã bảo mật";
+            // 
+            // txtRabbitMqServer
+            // 
+            txtRabbitMqServer.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtRabbitMqServer.Location = new Point(147, 20);
+            txtRabbitMqServer.Name = "txtRabbitMqServer";
+            txtRabbitMqServer.PlaceholderText = "Địa chỉ IP của Server";
+            txtRabbitMqServer.Size = new Size(457, 27);
+            txtRabbitMqServer.TabIndex = 1;
+            // 
+            // txtRabbitMQPassword
+            // 
+            txtRabbitMQPassword.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtRabbitMQPassword.Location = new Point(147, 86);
+            txtRabbitMQPassword.Name = "txtRabbitMQPassword";
+            txtRabbitMQPassword.PasswordChar = '*';
+            txtRabbitMQPassword.PlaceholderText = "Mật khẩu tài khoản hoặc mã bảo mật";
+            txtRabbitMQPassword.Size = new Size(457, 27);
+            txtRabbitMQPassword.TabIndex = 3;
+            txtRabbitMQPassword.UseSystemPasswordChar = true;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(6, 52);
+            label6.Name = "label6";
+            label6.Size = new Size(107, 20);
+            label6.TabIndex = 7;
+            label6.Text = "Tên đăng nhập";
+            // 
+            // txtRabbitMQUsername
+            // 
+            txtRabbitMQUsername.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtRabbitMQUsername.Location = new Point(147, 53);
+            txtRabbitMQUsername.Name = "txtRabbitMQUsername";
+            txtRabbitMQUsername.PlaceholderText = "Tên đăng nhập vào hệ thống";
+            txtRabbitMQUsername.Size = new Size(457, 27);
+            txtRabbitMQUsername.TabIndex = 2;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(6, 23);
+            label7.Name = "label7";
+            label7.Size = new Size(28, 20);
+            label7.TabIndex = 2;
+            label7.Text = "Url";
+            // 
             // ucServerConfig
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(groupBox3);
             Controls.Add(groupBox1);
             Controls.Add(groupBox2);
             Name = "ucServerConfig";
-            Size = new Size(625, 217);
+            Size = new Size(625, 390);
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            groupBox3.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -174,5 +258,12 @@
         private Label label3;
         private TextBox txtMinioServerUsername;
         private Label label4;
+        private GroupBox groupBox3;
+        private Label label5;
+        private TextBox txtRabbitMqServer;
+        private TextBox txtRabbitMQPassword;
+        private Label label6;
+        private TextBox txtRabbitMQUsername;
+        private Label label7;
     }
 }

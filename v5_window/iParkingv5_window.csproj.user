@@ -1,37 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Compile Update="Controls\Buttons\LblCancel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\Buttons\LblDelete.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\Buttons\LblExcel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\Buttons\LblLogin.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\Buttons\LblOk.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\Buttons\LblPrint.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\Buttons\LblSearch.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\Buttons\LblSetting.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Forms\DataForms\frmConfirm.cs">
+    <Compile Update="Forms\DataForms\frmConfirmIn.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\DataForms\frmCustomerRegister.cs">
+    <Compile Update="Forms\DataForms\frmConfirmOut.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\DataForms\frmSelectCustomer.cs">
+    <Compile Update="Forms\DataForms\Registers\frmCustomerRegister.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\DataForms\frmSetShortCutKey.cs">
@@ -49,16 +25,22 @@
     <Compile Update="Forms\DataForms\frmTestLedDisplay.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\frmTest.cs">
+    <Compile Update="Forms\DataForms\Registers\frmRegisteredList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\ReportForms\frmReportMoney.cs">
+    <Compile Update="Forms\DataForms\Registers\frmWalkerRegister.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\frmTest.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\SystemForms\frmLoading.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\SystemForms\frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\SystemForms\frmSelectLaneMode.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Usercontrols\BuildControls\ucLoading.cs">
@@ -69,6 +51,9 @@
     </Compile>
     <Compile Update="Usercontrols\CameraConfiguration\frmCameraConfigSet.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Usercontrols\LaneConfiguration\ucLaneDirectionConfig.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Usercontrols\lblPageIndex.cs">
       <SubType>Component</SubType>
@@ -107,6 +92,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Update="Usercontrols\CameraConfiguration\ucCameraConfig.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Usercontrols\ucAlarmInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Usercontrols\ucCameraView.cs">

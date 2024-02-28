@@ -126,7 +126,7 @@ namespace iParkingv5_CustomerRegister.Forms.SystemForms
             btnCancel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnCancel1.AutoSize = true;
             btnCancel1.BackColor = Color.FromArgb(230, 230, 230);
-            btnCancel1.BorderStyle = BorderStyle.Fixed3D;
+            //btnCancel1.BorderStyle = BorderStyle.Fixed3D;
             btnCancel1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnCancel1.ForeColor = Color.Black;
             btnCancel1.Location = new Point(477, 474);
@@ -141,7 +141,7 @@ namespace iParkingv5_CustomerRegister.Forms.SystemForms
             btnLogin.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnLogin.AutoSize = true;
             btnLogin.BackColor = Color.FromArgb(230, 230, 230);
-            btnLogin.BorderStyle = BorderStyle.Fixed3D;
+            //btnLogin.BorderStyle = BorderStyle.Fixed3D;
             btnLogin.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnLogin.ForeColor = Color.Black;
             btnLogin.Location = new Point(374, 474);

@@ -1,4 +1,6 @@
-﻿namespace iParkingv5_window.Usercontrols
+﻿using iPakrkingv5.Controls.Controls.Buttons;
+
+namespace iParkingv5_window.Usercontrols
 {
     partial class ucEventInInfo
     {
@@ -43,7 +45,7 @@
             lblVehilceTypeTitle = new Label();
             lblVehilceType = new Label();
             lblTitle = new Label();
-            lblCancel1 = new Controls.Buttons.LblCancel();
+            lblCancel1 = new LblCancel();
             SuspendLayout();
             // 
             // lblIdentityNameTitle
@@ -215,7 +217,6 @@
             // 
             lblCancel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             lblCancel1.AutoSize = true;
-            lblCancel1.BorderStyle = BorderStyle.Fixed3D;
             lblCancel1.Location = new Point(363, 302);
             lblCancel1.Name = "lblCancel1";
             lblCancel1.Size = new Size(80, 22);
@@ -266,6 +267,6 @@
         private Label lblVehilceTypeTitle;
         private Label lblVehilceType;
         private Label lblTitle;
-        private Controls.Buttons.LblCancel lblCancel1;
+        private LblCancel lblCancel1;
     }
 }

@@ -7,17 +7,16 @@ namespace iParkingv6.Objects.Datas
 {
     public class Computer
     {
-        public string id { get; set; }
-        public string name { get; set; }
-        public string gateId { get; set; }
-        public string ipAddress { get; set; }
-        public object description { get; set; }
-        public bool enabled { get; set; }
-        public bool deleted { get; set; }
-        public string createdUtc { get; set; }
-        public string createdBy { get; set; }
-        public string updatedUtc { get; set; }
-        public string updatedBy { get; set; }
-        public object gate { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string GateId { get; set; }
+        public string IpAddress { get; set; }
+        public object Description { get; set; }
+        public bool Enabled { get; set; }
+        public string CreatedUtc { get; set; }
+        public string CreatedBy { get; set; }
+        public string UpdatedUtc { get; set; }
+        public string UpdatedBy { get; set; }
+        public object Gate { get; set; }
     }
 }

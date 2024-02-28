@@ -28,7 +28,7 @@ namespace iParkingv5.Objects.EventDatas
                 {
                     if (CreatedUtc.Contains("T"))
                     {
-                        return DateTime.ParseExact(CreatedUtc, "yyyy-MM-ddTHH:mm:ss:ffff", null).AddHours(7);
+                        return DateTime.ParseExact(CreatedUtc.Substring(0, "yyyy-MM-ddTHH:mm:ss".Length), "yyyy-MM-ddTHH:mm:ss", null).AddHours(7);
                     }
                     else
                     {

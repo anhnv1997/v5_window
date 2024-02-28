@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using iPakrkingv5.Controls.Controls.Buttons;
+using System.Windows.Forms;
 using System.Xml.Linq;
 
 namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
@@ -38,9 +39,9 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
             lblConfirmPlateKey = new Label();
             lblWriteOutKey = new Label();
             lblReserveLaneKey = new Label();
-            picChangeConfirmPlateKey = new Controls.Buttons.LblSetting();
-            picWriteOut = new Controls.Buttons.LblSetting();
-            picReserveLane = new Controls.Buttons.LblSetting();
+            picChangeConfirmPlateKey = new LblSetting();
+            picWriteOut = new LblSetting();
+            picReserveLane = new LblSetting();
             SuspendLayout();
             // 
             // label1
@@ -172,8 +173,8 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
         private Label lblConfirmPlateKey;
         private Label lblWriteOutKey;
         private Label lblReserveLaneKey;
-        private Controls.Buttons.LblSetting picChangeConfirmPlateKey;
-        private Controls.Buttons.LblSetting picWriteOut;
-        private Controls.Buttons.LblSetting picReserveLane;
+        private LblSetting picChangeConfirmPlateKey;
+        private LblSetting picWriteOut;
+        private LblSetting picReserveLane;
     }
 }

@@ -128,13 +128,13 @@ namespace iParkingv5.LprDetecter.LprDetecters
                 carANPR = new CarANPR();
                 carANPR.NewError += KztekLPR_NewError;
                 carANPR.LPREngineProductKey = "demo";
-                carANPR.EnableLPREngine2 = true;
+                carANPR.EnableLPREngine2 = false;
                 carANPR.CreateLPREngine();
 
                 motorANPR = new MotorANPR();
                 motorANPR.NewError += KztekLPR_NewError;
                 motorANPR.LPREngineProductKey = "demo";
-                motorANPR.EnableLPREngine2 = true;
+                motorANPR.EnableLPREngine2 = false;
                 motorANPR.CreateLPREngine();
                 return true;
             }

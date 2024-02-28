@@ -1,18 +1,7 @@
 ﻿using IPaking.Ultility;
 using iParkingv5.Objects;
-using iParkingv5_window.Controls.Buttons;
-using iParkingv5_window.Forms.DataForms;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using static IPaking.Ultility.TextManagement;
-using static iParkingv5_window.Usercontrols.BuildControls.ucNotify;
 
 namespace iParkingv5_window.Usercontrols.BuildControls
 {
@@ -50,6 +39,7 @@ namespace iParkingv5_window.Usercontrols.BuildControls
         {
             InitializeComponent();
             this.Load += UcLoading_Load;
+            this.DoubleBuffered =true;
         }
 
         private void UcLoading_Load(object? sender, EventArgs e)

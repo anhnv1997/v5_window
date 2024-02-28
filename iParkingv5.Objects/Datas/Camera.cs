@@ -7,30 +7,27 @@ namespace iParkingv6.Objects.Datas
 
     public class Camera
     {
-        public string id { get; set; }
-        public string name { get; set; }
-        public string ipAddress { get; set; }
-        public string httpPort { get; set; }
-        public string rtspPort { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
-        public int frameRate { get; set; }
-        public string resolution { get; set; }
-        public int channel { get; set; }
-        public int type { get; set; }
-        public string computerId { get; set; }
-        public object resizeConfigs { get; set; }
-        public bool enabled { get; set; }
-        public bool deleted { get; set; }
-        public string createdUtc { get; set; }
-        public string createdBy { get; set; }
-        public object updatedUtc { get; set; }
-        public object updatedBy { get; set; }
-        public object computer { get; set; }
-        public object[] laneCameraMaps { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string IpAddress { get; set; }
+        public string HttpPort { get; set; }
+        public string RtspPort { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public int FrameRate { get; set; }
+        public string Resolution { get; set; }
+        public int Channel { get; set; }
+        public int Type { get; set; }
+        public string ComputerId { get; set; }
+        public object ResizeConfigs { get; set; }
+        public bool Enabled { get; set; }
+        public string CreatedUtc { get; set; }
+        public string CreatedBy { get; set; }
+        public object UpdatedUtc { get; set; }
+        public object UpdatedBy { get; set; }
         public string GetCameraType()
         {
-            switch (this.type)
+            switch (this.Type)
             {
                 case 0:
                     return "Secus";

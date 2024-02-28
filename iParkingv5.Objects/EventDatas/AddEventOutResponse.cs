@@ -15,7 +15,8 @@ namespace iParkingv5.Objects.EventDatas
         public string laneId { get; set; }
         public string plateNumber { get; set; }
         public List<string> fileKeys { get; set; }
-        
+        public List<int> physicalFileIds { get; set; }
+        public string eventInId { get; set; }
         public string eventInIdentityId { get; set; }
         public string eventInLaneId { get; set; }
         public string eventInPlateNumber { get; set; }
@@ -45,6 +46,10 @@ namespace iParkingv5.Objects.EventDatas
             {
                 try
                 {
+                    if (string.IsNullOrEmpty(eventInCreatedUtc))
+                    {
+                        return null;
+                    }
                     if (eventInCreatedUtc.Contains("T"))
                     {
                         return DateTime.ParseExact(eventInCreatedUtc.Substring(0, "yyyy-MM-ddTHH:mm:ss".Length), "yyyy-MM-ddTHH:mm:ss", null).AddHours(7);
@@ -67,6 +72,10 @@ namespace iParkingv5.Objects.EventDatas
             {
                 try
                 {
+                    if (string.IsNullOrEmpty(createdUtc))
+                    {
+                        return null;
+                    }
                     if (createdUtc.Contains("T"))
                     {
                         return DateTime.ParseExact(createdUtc.Substring(0, "yyyy-MM-ddTHH:mm:ss".Length), "yyyy-MM-ddTHH:mm:ss", null).AddHours(7);

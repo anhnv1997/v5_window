@@ -31,9 +31,9 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
             lblWriteOutKey.Text = ((Keys)ShortcutConfig.WriteOut).ToString();
             lblReserveLaneKey.Text = ((Keys)ShortcutConfig.ReserveLane).ToString();
 
-            picChangeConfirmPlateKey.Init(PicChangeConfirmPlateKey_Click);
-            picWriteOut.Init(PicChangeWriteOutKey_Click);
-            picReserveLane.Init(PicChangeReserverLane_Click);
+            picChangeConfirmPlateKey.InitControl(PicChangeConfirmPlateKey_Click);
+            picWriteOut.InitControl(PicChangeWriteOutKey_Click);
+            picReserveLane.InitControl(PicChangeReserverLane_Click);
         }
         #endregion End Forms
 

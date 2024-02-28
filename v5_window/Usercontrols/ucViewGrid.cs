@@ -1,4 +1,8 @@
-﻿namespace iParkingv5_window.Usercontrols
+﻿using iParkingv5.Objects.Configs;
+using iParkingv6.Objects.Datas;
+using System.Windows.Forms;
+
+namespace iParkingv5_window.Usercontrols
 {
     public partial class ucViewGrid : UserControl
     {
@@ -71,7 +75,7 @@
         }
         public List<string> GetOrderConfig()
         {
-            List<string> orderLanes =  new List<string>();
+            List<string> orderLanes = new List<string>();
             Dictionary<string, int[]> viewDetail = new Dictionary<string, int[]>();
             for (int i = 0; i < RowsCount; i++)
             {
@@ -133,6 +137,21 @@
             {
                 table.SetCellPosition(endControl, new TableLayoutPanelCellPosition(startCell.X, startCell.Y));
             }
+            table.Refresh();
+            this.SuspendLayout();
+            for (int i = 0; i < table.Controls.Count; i++)
+            {
+                Control control = table.GetControlFromPosition(i, 0);
+                if (control is ucLaneIn)
+                {
+                    table.ColumnStyles[i] = new ColumnStyle(SizeType.Percent, 40);
+                }
+                else
+                {
+                    table.ColumnStyles[i] = new ColumnStyle(SizeType.Percent, 60);
+                }
+            }
+            this.ResumeLayout();
         }
         #endregion End Private Function
     }

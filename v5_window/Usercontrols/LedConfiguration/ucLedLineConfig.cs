@@ -41,7 +41,7 @@ namespace iParkingv5_window.Usercontrols
             }
             this.order = order;
             lblStepName.Text = "Bước " + order;
-            btnCancel1.Init(picDelete_Click);
+            btnCancel1.InitControl(picDelete_Click);
         }
         #endregion End Forms
 

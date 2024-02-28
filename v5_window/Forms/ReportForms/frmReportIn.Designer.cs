@@ -1,4 +1,4 @@
-﻿using iParkingv5_window.Controls.Buttons;
+﻿using iPakrkingv5.Controls.Controls.Buttons;
 using iParkingv5_window.Usercontrols;
 
 namespace iParkingv5_window.Forms.ReportForms
@@ -70,6 +70,7 @@ namespace iParkingv5_window.Forms.ReportForms
             lblLane = new Label();
             lblVehicleType = new Label();
             lblIdentityType = new Label();
+            lblTitle = new Label();
             ((System.ComponentModel.ISupportInitialize)picOverviewImageIn).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picVehicleImageIn).BeginInit();
             tablePic.SuspendLayout();
@@ -79,6 +80,7 @@ namespace iParkingv5_window.Forms.ReportForms
             // 
             // picOverviewImageIn
             // 
+            picOverviewImageIn.BackColor = Color.WhiteSmoke;
             picOverviewImageIn.BorderStyle = BorderStyle.FixedSingle;
             picOverviewImageIn.Dock = DockStyle.Fill;
             picOverviewImageIn.Image = (Image)resources.GetObject("picOverviewImageIn.Image");
@@ -86,12 +88,13 @@ namespace iParkingv5_window.Forms.ReportForms
             picOverviewImageIn.Margin = new Padding(0);
             picOverviewImageIn.Name = "picOverviewImageIn";
             picOverviewImageIn.Size = new Size(246, 205);
-            picOverviewImageIn.SizeMode = PictureBoxSizeMode.StretchImage;
+            picOverviewImageIn.SizeMode = PictureBoxSizeMode.Zoom;
             picOverviewImageIn.TabIndex = 30;
             picOverviewImageIn.TabStop = false;
             // 
             // picVehicleImageIn
             // 
+            picVehicleImageIn.BackColor = Color.WhiteSmoke;
             picVehicleImageIn.BorderStyle = BorderStyle.FixedSingle;
             picVehicleImageIn.Dock = DockStyle.Fill;
             picVehicleImageIn.Image = (Image)resources.GetObject("picVehicleImageIn.Image");
@@ -99,7 +102,7 @@ namespace iParkingv5_window.Forms.ReportForms
             picVehicleImageIn.Margin = new Padding(0);
             picVehicleImageIn.Name = "picVehicleImageIn";
             picVehicleImageIn.Size = new Size(246, 205);
-            picVehicleImageIn.SizeMode = PictureBoxSizeMode.StretchImage;
+            picVehicleImageIn.SizeMode = PictureBoxSizeMode.Zoom;
             picVehicleImageIn.TabIndex = 29;
             picVehicleImageIn.TabStop = false;
             // 
@@ -320,24 +323,22 @@ namespace iParkingv5_window.Forms.ReportForms
             // 
             btnCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnCancel.AutoSize = true;
-            btnCancel.BorderStyle = BorderStyle.Fixed3D;
             btnCancel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnCancel.ForeColor = Color.Black;
-            btnCancel.Location = new Point(963, 583);
+            btnCancel.Location = new Point(955, 575);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(49, 22);
+            btnCancel.Size = new Size(57, 30);
             btnCancel.TabIndex = 59;
             btnCancel.Text = "Đóng";
             // 
             // btnSearch
             // 
             btnSearch.AutoSize = true;
-            btnSearch.BorderStyle = BorderStyle.Fixed3D;
             btnSearch.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnSearch.ForeColor = Color.Black;
             btnSearch.Location = new Point(602, 9);
             btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(76, 22);
+            btnSearch.Size = new Size(84, 30);
             btnSearch.TabIndex = 60;
             btnSearch.Text = "Tìm kiếm";
             // 
@@ -345,16 +346,16 @@ namespace iParkingv5_window.Forms.ReportForms
             // 
             btnExportExcel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnExportExcel.AutoSize = true;
-            btnExportExcel.BorderStyle = BorderStyle.Fixed3D;
             btnExportExcel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            btnExportExcel.Location = new Point(872, 583);
+            btnExportExcel.Location = new Point(864, 575);
             btnExportExcel.Name = "btnExportExcel";
-            btnExportExcel.Size = new Size(72, 22);
+            btnExportExcel.Size = new Size(80, 30);
             btnExportExcel.TabIndex = 61;
             btnExportExcel.Text = "lblExcel1";
             // 
             // panelData
             // 
+            panelData.Controls.Add(lblTitle);
             panelData.Controls.Add(cbLane);
             panelData.Controls.Add(cbIdentityGroupType);
             panelData.Controls.Add(cbVehicleType);
@@ -416,7 +417,7 @@ namespace iParkingv5_window.Forms.ReportForms
             ucEventInInfo1.BackColor = Color.FromArgb(255, 224, 192);
             ucEventInInfo1.Location = new Point(610, 56);
             ucEventInInfo1.Name = "ucEventInInfo1";
-            ucEventInInfo1.Size = new Size(494, 364);
+            ucEventInInfo1.Size = new Size(494, 379);
             ucEventInInfo1.TabIndex = 64;
             // 
             // ucNotify1
@@ -470,6 +471,15 @@ namespace iParkingv5_window.Forms.ReportForms
             lblIdentityType.Size = new Size(75, 20);
             lblIdentityType.TabIndex = 33;
             lblIdentityType.Text = "Nhóm thẻ";
+            // 
+            // lblTitle
+            // 
+            lblTitle.AutoSize = true;
+            lblTitle.Location = new Point(615, 82);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(50, 20);
+            lblTitle.TabIndex = 65;
+            lblTitle.Text = "label1";
             // 
             // frmReportIn
             // 
@@ -526,5 +536,6 @@ namespace iParkingv5_window.Forms.ReportForms
         private ComboBox cbVehicleType;
         private ComboBox cbLane;
         private Label lblLane;
+        private Label lblTitle;
     }
 }

@@ -49,7 +49,7 @@ namespace iParkingv5_window.Usercontrols
 
             dgvData.Height = lblIdentityGroupIn.Location.Y + lblIdentityGroupOut.Height + StaticPool.baseSize;
 
-            lblCancel1.Init(LblCancel1_Click);
+            lblCancel1.InitControl(LblCancel1_Click);
             this.Height = dgvData.Location.Y + dgvData.Height + StaticPool.baseSize * 3 + lblCancel1.Height;
             lblCancel1.Location = new Point(this.DisplayRectangle.Width - lblCancel1.Width - StaticPool.baseSize * 2,
                                             dgvData.Location.Y + dgvData.Height + StaticPool.baseSize);

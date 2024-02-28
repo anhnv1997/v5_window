@@ -1,4 +1,6 @@
-﻿namespace iParkingv5_window.Forms.DataForms
+﻿using iPakrkingv5.Controls.Controls.Buttons;
+
+namespace iParkingv5_window.Forms.DataForms
 {
     partial class frmSetShortCutKey
     {
@@ -31,8 +33,6 @@
             lblTitle = new Label();
             lblCurrentKeySetValue = new Label();
             panelActions = new Panel();
-            btnOk1 = new Controls.Buttons.LblOk();
-            panelActions.SuspendLayout();
             SuspendLayout();
             // 
             // lblTitle
@@ -60,24 +60,11 @@
             // 
             // panelActions
             // 
-            panelActions.Controls.Add(btnOk1);
             panelActions.Dock = DockStyle.Bottom;
             panelActions.Location = new Point(0, 181);
             panelActions.Name = "panelActions";
             panelActions.Size = new Size(564, 51);
             panelActions.TabIndex = 3;
-            // 
-            // btnOk1
-            // 
-            btnOk1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnOk1.AutoSize = true;
-            btnOk1.BorderStyle = BorderStyle.Fixed3D;
-            btnOk1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            btnOk1.Location = new Point(496, 11);
-            btnOk1.Name = "btnOk1";
-            btnOk1.Size = new Size(56, 22);
-            btnOk1.TabIndex = 0;
-            btnOk1.Text = "lblOk1";
             // 
             // frmSetShortCutKey
             // 
@@ -96,8 +83,6 @@
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Chọn phím tắt";
-            panelActions.ResumeLayout(false);
-            panelActions.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -107,6 +92,5 @@
         private Label lblTitle;
         private Label lblCurrentKeySetValue;
         private Panel panelActions;
-        private Controls.Buttons.LblOk btnOk1;
     }
 }

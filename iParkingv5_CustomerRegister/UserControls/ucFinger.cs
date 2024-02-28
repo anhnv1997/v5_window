@@ -1,5 +1,7 @@
 ﻿using iParkingv5.Objects;
+using iParkingv5_CustomerRegister.Databases;
 using iParkingv5_CustomerRegister.Forms;
+using static iParkingv5_CustomerRegister.BRNETLH;
 
 namespace iParkingv5_CustomerRegister.UserControls
 {
@@ -107,7 +109,28 @@ namespace iParkingv5_CustomerRegister.UserControls
         }
         private void PicDeleteFinger_Click(object? sender, EventArgs e)
         {
+            if (!(BRNETLH.Open()))
+            {
+                MessageBox.Show("Không kết nối được đến thiết bị!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            if (BRNETLH.CmdDelChar(this.FingerId))
+            {
+                MessageBox.Show("Xóa thông tin vân tay thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                if (BRNETLH._ErrFlag != (int)EmError.CMD_RT_MB_NOT_EXIST_IN_ADDRESS)
+                {
+                    string errorMessgae = BRNETLH.GetLastErrorMessage();
+                    MessageBox.Show($"Xóa thông tin vân tay thất bại: {errorMessgae} \r\n vui lòng thử lại sau giây lát!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+            }
+            tblFingerprint.DeleteFinger(this.FingerId);
+            tblFingerCustomer.DeleteByFingerId(this.FingerId);
             this.FingerDataStr = "";
+            BRNETLH.Close();
         }
 
         private void PicAddFinger_MouseLeave(object? sender, EventArgs e)
@@ -129,7 +152,6 @@ namespace iParkingv5_CustomerRegister.UserControls
                 this.FingerId = frm.registerIndex;
             }
         }
-
         public Tuple<ushort, string> GetFingerData()
         {
             return Tuple.Create<ushort, string>(this.FingerId, this.FingerDataStr);

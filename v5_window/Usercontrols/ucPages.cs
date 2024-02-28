@@ -1,4 +1,5 @@
-﻿using System;
+﻿using iPakrkingv5.Controls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -23,9 +24,11 @@ namespace iParkingv5_window.Usercontrols
         public ucPages()
         {
             InitializeComponent();
+            this.ToggleDoubleBuffered(true);
+            panelPages.ToggleDoubleBuffered(true);
             panelPages.Font = new Font(this.Font, FontStyle.Underline);
             panelPages.Height = 44;
-            panelPages.MinimumSize = new System.Drawing.Size(0, 44);
+            panelPages.MinimumSize = new Size(0, 44);
         }
         #endregion End Forms
 
@@ -46,26 +49,26 @@ namespace iParkingv5_window.Usercontrols
 
             panelPages.Controls.Clear();
             panelPages.AutoScroll = false;
+            Control[] list = new Control[maxPage];
             for (int i = 0; i < maxPage; i++)
             {
-                lblPageIndex lblPageIndex = new lblPageIndex(i + 1);
-                lblPageIndex.BackColor = Color.Transparent;
+                lblPageIndex lblPageIndex = new lblPageIndex(maxPage - i - 1);
                 lblPageIndex.Click += LblPageIndex_Click;
-                panelPages.Controls.Add(lblPageIndex);
                 lblPageIndex.Dock = DockStyle.Left;
-                lblPageIndex.BringToFront();
+                //lblPageIndex.BackColor = Color.Transparent;
                 if (i == 0)
                 {
                     lblPageIndex.BorderStyle = BorderStyle.Fixed3D;
                 }
+                list[i] = lblPageIndex;
             }
+            panelPages.Controls.AddRange(list.ToArray());
             currentPage = 0;
             panelPages.AutoScroll = true;
             this.Height = panelPages.Height;
             this.ResumeLayout();
             panelPages.ResumeLayout();
         }
-
         private void LblPageIndex_Click(object? sender, EventArgs e)
         {
             lblPageIndex lblPageIndex = (sender as lblPageIndex)!;

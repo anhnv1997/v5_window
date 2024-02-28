@@ -31,6 +31,7 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
         public ManualResetEvent? ForceLoopIteration { get; set; }
         #region Event
         public event CardEventHandler? CardEvent;
+        public event FingerEventHandler? FingerEvent;
         public event ControllerErrorEventHandler? ErrorEvent;
         public event InputEventHandler? InputEvent;
         public event ConnectStatusChangeEventHandler? ConnectStatusChangeEvent;
@@ -116,9 +117,9 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
         #region: CONNECT
         public async Task<bool> TestConnectionAsync()
         {
-            if (CommunicationTypes.IS_TCP((EM_CommunicationType)(this.ControllerInfo.communicationType)))
+            if (CommunicationTypes.IS_TCP((EM_CommunicationType)(this.ControllerInfo.CommunicationType)))
             {
-                return NetWorkTools.IsPingSuccess(this.ControllerInfo.comport, 500);
+                return NetWorkTools.IsPingSuccess(this.ControllerInfo.Comport, 500);
             }
             return false;
         }
@@ -130,10 +131,10 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
                 string password = string.Empty;
                 await Task.Run(() =>
                 {
-                    userID = pullHelper.ConnectByTCP(this.ControllerInfo.comport, this.ControllerInfo.baudrate, timeOut, password, ref userID);
+                    userID = pullHelper.ConnectByTCP(this.ControllerInfo.Comport, this.ControllerInfo.Baudrate, timeOut, password, ref userID);
                 });
-                this.ControllerInfo.isConnect = userID != IntPtr.Zero;
-                return this.ControllerInfo.isConnect;
+                this.ControllerInfo.IsConnect = userID != IntPtr.Zero;
+                return this.ControllerInfo.IsConnect;
             }
             return false;
         }
@@ -144,7 +145,7 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
                 await Task.Delay(10);
             }
             pullHelper.Disconnect(ref userID);
-            this.ControllerInfo.isConnect = false;
+            this.ControllerInfo.IsConnect = false;
             cts?.Cancel();
             return true;
         }
@@ -301,12 +302,12 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
                 {
                     if (userID == IntPtr.Zero)
                     {
-                        this.ControllerInfo.isConnect = false;
+                        this.ControllerInfo.IsConnect = false;
                         await ConnectAsync();
                     }
                     else
                     {
-                        this.ControllerInfo.isConnect = true;
+                        this.ControllerInfo.IsConnect = true;
                         int ret = 0, buffersize = 256;
                         string str = "";
                         string[] eventDatas = null;
@@ -368,7 +369,7 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
                         else
                         {
                             this.userID = IntPtr.Zero;
-                            this.ControllerInfo.isConnect = false;
+                            this.ControllerInfo.IsConnect = false;
                         }
                     }
                     await Task.Delay(300);
@@ -383,8 +384,8 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
         {
             InputEventArgs ie = new()
             {
-                DeviceId = controller.id,
-                DeviceName = controller.name,
+                DeviceId = controller.Id,
+                DeviceName = controller.Name,
             };
             ie.InputIndex = int.Parse(doorNo);
             ie.InputType = InputTupe.EmInputType.Loop;
@@ -394,8 +395,8 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
         {
             InputEventArgs ie = new()
             {
-                DeviceId = controller.id,
-                DeviceName = controller.name,
+                DeviceId = controller.Id,
+                DeviceName = controller.Name,
             };
             ie.InputIndex = int.Parse(doorNo);
             ie.InputType = InputTupe.EmInputType.Exit;
@@ -405,8 +406,8 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
         {
             CardEventArgs e = new()
             {
-                DeviceId = controller.id,
-                DeviceName = controller.name,
+                DeviceId = controller.Id,
+                DeviceName = controller.Name,
                 AllCardFormats = new List<string>(),
             };
             string cardNumberHex = Convert.ToInt32(cardNumberInt).ToString("X8");
@@ -456,12 +457,22 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
             throw new NotImplementedException();
         }
 
-        public Task<bool> ModifyFInger(string userId, int fingerIndex, string fingerData)
+        public Task<bool> ModifyFinger(string userId, int fingerIndex, string fingerData)
         {
             throw new NotImplementedException();
         }
 
         public Task<bool> DeleteFinger(string userId, int fingerIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> AddFinger(List<string> fingerDatas, string customerName, int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> ModifyFinger(List<string> fingerDatas, string customerName, int userId)
         {
             throw new NotImplementedException();
         }

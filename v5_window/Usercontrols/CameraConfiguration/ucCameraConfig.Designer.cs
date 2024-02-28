@@ -32,10 +32,11 @@
             cbCamera = new ComboBox();
             panelCamera = new Panel();
             btnLiveview = new Button();
-            btnLprDetect = new Button();
+            btnCarLprDetect = new Button();
             btnDraw = new Button();
             panel2 = new Panel();
             btnSave = new Button();
+            btnMotorLprDetect = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
             picCutVehicleImage = new PictureBox();
             picLprImage = new PictureBox();
@@ -68,34 +69,33 @@
             // 
             panelCamera.BackColor = SystemColors.Control;
             panelCamera.Dock = DockStyle.Fill;
-            panelCamera.Location = new Point(0, 48);
+            panelCamera.Location = new Point(0, 80);
             panelCamera.Name = "panelCamera";
-            panelCamera.Size = new Size(808, 441);
+            panelCamera.Size = new Size(808, 409);
             panelCamera.TabIndex = 2;
             // 
             // btnLiveview
             // 
-            btnLiveview.Location = new Point(409, 9);
+            btnLiveview.Location = new Point(413, 8);
             btnLiveview.Name = "btnLiveview";
             btnLiveview.Size = new Size(96, 28);
             btnLiveview.TabIndex = 3;
             btnLiveview.Text = "Live view";
             btnLiveview.UseVisualStyleBackColor = true;
             // 
-            // btnLprDetect
+            // btnCarLprDetect
             // 
-            btnLprDetect.Location = new Point(511, 9);
-            btnLprDetect.Name = "btnLprDetect";
-            btnLprDetect.Size = new Size(96, 28);
-            btnLprDetect.TabIndex = 3;
-            btnLprDetect.Text = "Đọc biển số";
-            btnLprDetect.UseVisualStyleBackColor = true;
-            btnLprDetect.Visible = false;
-            btnLprDetect.Click += btnLprDetect_Click_1;
+            btnCarLprDetect.Location = new Point(515, 8);
+            btnCarLprDetect.Name = "btnCarLprDetect";
+            btnCarLprDetect.Size = new Size(148, 28);
+            btnCarLprDetect.TabIndex = 3;
+            btnCarLprDetect.Text = "Đọc biển số ô tô";
+            btnCarLprDetect.UseVisualStyleBackColor = true;
+            btnCarLprDetect.Visible = false;
             // 
             // btnDraw
             // 
-            btnDraw.Location = new Point(613, 9);
+            btnDraw.Location = new Point(669, 8);
             btnDraw.Name = "btnDraw";
             btnDraw.Size = new Size(178, 28);
             btnDraw.TabIndex = 3;
@@ -109,24 +109,36 @@
             panel2.Controls.Add(btnSave);
             panel2.Controls.Add(btnDraw);
             panel2.Controls.Add(label1);
-            panel2.Controls.Add(btnLprDetect);
+            panel2.Controls.Add(btnMotorLprDetect);
+            panel2.Controls.Add(btnCarLprDetect);
             panel2.Controls.Add(btnLiveview);
             panel2.Dock = DockStyle.Top;
             panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1052, 48);
+            panel2.Size = new Size(1052, 80);
             panel2.TabIndex = 4;
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(797, 8);
+            btnSave.Location = new Point(669, 42);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(131, 28);
+            btnSave.Size = new Size(178, 28);
             btnSave.TabIndex = 3;
             btnSave.Text = "Lưu cấu hình";
             btnSave.UseVisualStyleBackColor = true;
             btnSave.Visible = false;
             btnSave.Click += btnSave_Click;
+            // 
+            // btnMotorLprDetect
+            // 
+            btnMotorLprDetect.Location = new Point(515, 42);
+            btnMotorLprDetect.Name = "btnMotorLprDetect";
+            btnMotorLprDetect.Size = new Size(148, 28);
+            btnMotorLprDetect.TabIndex = 3;
+            btnMotorLprDetect.Text = "Đọc biển số xe máy";
+            btnMotorLprDetect.UseVisualStyleBackColor = true;
+            btnMotorLprDetect.Visible = false;
+            btnMotorLprDetect.Click += btnMotorLprDetect_Click;
             // 
             // tableLayoutPanel1
             // 
@@ -137,14 +149,14 @@
             tableLayoutPanel1.Controls.Add(picLprImage, 0, 2);
             tableLayoutPanel1.Controls.Add(lblDetectPlate, 0, 0);
             tableLayoutPanel1.Dock = DockStyle.Right;
-            tableLayoutPanel1.Location = new Point(808, 48);
+            tableLayoutPanel1.Location = new Point(808, 80);
             tableLayoutPanel1.Margin = new Padding(0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 3;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 51F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(244, 441);
+            tableLayoutPanel1.Size = new Size(244, 409);
             tableLayoutPanel1.TabIndex = 5;
             // 
             // picCutVehicleImage
@@ -152,7 +164,7 @@
             picCutVehicleImage.Location = new Point(2, 55);
             picCutVehicleImage.Margin = new Padding(0);
             picCutVehicleImage.Name = "picCutVehicleImage";
-            picCutVehicleImage.Size = new Size(240, 191);
+            picCutVehicleImage.Size = new Size(240, 175);
             picCutVehicleImage.SizeMode = PictureBoxSizeMode.StretchImage;
             picCutVehicleImage.TabIndex = 0;
             picCutVehicleImage.TabStop = false;
@@ -160,10 +172,10 @@
             // picLprImage
             // 
             picLprImage.Dock = DockStyle.Fill;
-            picLprImage.Location = new Point(2, 248);
+            picLprImage.Location = new Point(2, 232);
             picLprImage.Margin = new Padding(0);
             picLprImage.Name = "picLprImage";
-            picLprImage.Size = new Size(240, 191);
+            picLprImage.Size = new Size(240, 175);
             picLprImage.SizeMode = PictureBoxSizeMode.StretchImage;
             picLprImage.TabIndex = 1;
             picLprImage.TabStop = false;
@@ -203,7 +215,7 @@
         private ComboBox cbCamera;
         private Panel panelCamera;
         private Button btnLiveview;
-        private Button btnLprDetect;
+        private Button btnCarLprDetect;
         private Button btnDraw;
         private Panel panel2;
         private TableLayoutPanel tableLayoutPanel1;
@@ -211,5 +223,6 @@
         private PictureBox picLprImage;
         private Label lblDetectPlate;
         private Button btnSave;
+        private Button btnMotorLprDetect;
     }
 }

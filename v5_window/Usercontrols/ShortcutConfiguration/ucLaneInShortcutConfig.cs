@@ -28,9 +28,9 @@ namespace iParkingv5_window.Usercontrols
             lblConfirmPlateKey.Text = ((Keys)ShortcutConfig.ConfirmPlateKey).ToString();
             lblWriteInKey.Text = ((Keys)ShortcutConfig.WriteIn).ToString();
             lblReserveLaneKey.Text = ((Keys)ShortcutConfig.ReserveLane).ToString();
-            picChangeConfirmPlateKey.Init(picChangeConfirmPlateKey_Click);
-            btnSetting1.Init(picChangeWriteInKey_Click);
-            picReserveLane.Init(picChangeReserverLane_Click);
+            picChangeConfirmPlateKey.InitControl(picChangeConfirmPlateKey_Click);
+            btnSetting1.InitControl(picChangeWriteInKey_Click);
+            picReserveLane.InitControl(picChangeReserverLane_Click);
         }
         #endregion End Forms
 

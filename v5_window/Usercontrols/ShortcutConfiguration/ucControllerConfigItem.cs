@@ -28,9 +28,9 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
             string controllerName = string.Empty;
             foreach (var item in StaticPool.bdks)
             {
-                if (item.id.ToLower() == this.controllerInLane.controlUnitId.ToLower())
+                if (item.Id.ToLower() == this.controllerInLane.controlUnitId.ToLower())
                 {
-                    controllerName = item.name;
+                    controllerName = item.Name;
                     break;
                 }
             }

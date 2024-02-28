@@ -14,8 +14,8 @@ namespace iParkingv5.Controller.KztekDevices.KZE16AccessControl
     {
         public override async Task<bool> OpenDoor(int timeInMilisecond, int relayIndex)
         {
-            string comport = this.ControllerInfo.comport;
-            int baudrate = GetBaudrate(this.ControllerInfo.baudrate);
+            string comport = this.ControllerInfo.Comport;
+            int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
             string openRelayCmd = $"SetRelayPulse?/Relay={relayIndex:00}";
 
             this.IsBusy = true;

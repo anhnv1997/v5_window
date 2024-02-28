@@ -40,7 +40,7 @@ namespace iParkingv5_CustomerRegister.Objects
                                         where fingerCustomer.FingerId.Equals(fingerId, StringComparison.CurrentCultureIgnoreCase)
                                         select fingerCustomer.CustomerId.ToLower()).ToList();
             Customer? _customer = (from Customer customer in customers
-                                   where customerIds.Contains(customer.id)
+                                   where customerIds.Contains(customer.Id)
                                    select customer).FirstOrDefault();
             customerIds.Clear();
             return _customer;

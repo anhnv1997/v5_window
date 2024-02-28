@@ -1,4 +1,6 @@
-﻿namespace iParkingv5_window.Usercontrols.CameraConfiguration
+﻿using iPakrkingv5.Controls.Controls.Buttons;
+
+namespace iParkingv5_window.Usercontrols.CameraConfiguration
 {
     partial class frmCameraConfigSet
     {
@@ -30,8 +32,8 @@
         {
             panelCameraView = new Panel();
             pic = new PictureBox();
-            btnOk1 = new Controls.Buttons.LblOk();
-            btnCancel1 = new Controls.Buttons.LblCancel();
+            btnOk1 = new LblOk();
+            btnCancel1 = new LblCancel();
             panelActions = new Panel();
             panelCameraView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pic).BeginInit();
@@ -49,6 +51,8 @@
             // 
             // pic
             // 
+            pic.BackColor = SystemColors.GradientInactiveCaption;
+            pic.BorderStyle = BorderStyle.FixedSingle;
             pic.Dock = DockStyle.Fill;
             pic.Location = new Point(0, 0);
             pic.Name = "pic";
@@ -63,12 +67,11 @@
             // 
             btnOk1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnOk1.AutoSize = true;
-            btnOk1.BorderStyle = BorderStyle.Fixed3D;
             btnOk1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnOk1.ForeColor = Color.Black;
-            btnOk1.Location = new Point(707, 16);
+            btnOk1.Location = new Point(699, 8);
             btnOk1.Name = "btnOk1";
-            btnOk1.Size = new Size(75, 22);
+            btnOk1.Size = new Size(83, 30);
             btnOk1.TabIndex = 3;
             btnOk1.Text = "Xác nhận";
             // 
@@ -76,12 +79,11 @@
             // 
             btnCancel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnCancel1.AutoSize = true;
-            btnCancel1.BorderStyle = BorderStyle.Fixed3D;
             btnCancel1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnCancel1.ForeColor = Color.Black;
-            btnCancel1.Location = new Point(828, 16);
+            btnCancel1.Location = new Point(820, 8);
             btnCancel1.Name = "btnCancel1";
-            btnCancel1.Size = new Size(49, 22);
+            btnCancel1.Size = new Size(57, 30);
             btnCancel1.TabIndex = 4;
             btnCancel1.Text = "Đóng";
             // 
@@ -117,8 +119,8 @@
 
         private Panel panelCameraView;
         private PictureBox pic;
-        private Controls.Buttons.LblOk btnOk1;
-        private Controls.Buttons.LblCancel btnCancel1;
+        private LblOk btnOk1;
+        private LblCancel btnCancel1;
         private Panel panelActions;
     }
 }
