@@ -46,7 +46,7 @@ namespace iParkingv5_window.Forms.DataForms
             label8 = new Label();
             dtpStartTime = new DateTimePicker();
             dtpEndTime = new DateTimePicker();
-            btnOk1 = new LblOk();
+            btnOk1 = new BtnOk();
             btnCancel1 = new LblCancel();
             SuspendLayout();
             // 
@@ -262,7 +262,7 @@ namespace iParkingv5_window.Forms.DataForms
         private Label label8;
         private DateTimePicker dtpStartTime;
         private DateTimePicker dtpEndTime;
-        private LblOk btnOk1;
+        private BtnOk btnOk1;
         private LblCancel btnCancel1;
     }
 }

@@ -19,7 +19,7 @@ namespace iParkingv5_window.Forms.DataForms
     public partial class frmConfirmIn : Form
     {
         private iPakrkingv5.Controls.Controls.Buttons.LblCancel btnCancel1;
-        private iPakrkingv5.Controls.Controls.Buttons.LblOk btnOk;
+        private iPakrkingv5.Controls.Controls.Buttons.BtnOk btnOk;
         public frmConfirmIn(string message, string identityCode, string identityName, string identityGroupName,
                             string customer, string plateNumber, string address, Image vehicleImage, Image overviewImage)
         {
@@ -43,7 +43,7 @@ namespace iParkingv5_window.Forms.DataForms
 
         private void FrmConfirm_Load(object? sender, EventArgs e)
         {
-            btnOk = new iPakrkingv5.Controls.Controls.Buttons.LblOk();
+            btnOk = new iPakrkingv5.Controls.Controls.Buttons.BtnOk();
             btnCancel1 = new iPakrkingv5.Controls.Controls.Buttons.LblCancel();
 
             this.Controls.Add(btnOk);

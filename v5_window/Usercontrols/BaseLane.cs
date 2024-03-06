@@ -1,4 +1,5 @@
 ﻿using IPaking.Ultility;
+using iPakrkingv5.Controls.Controls.Labels;
 using iParkingv5.Controller;
 using iParkingv5.LedDisplay.LEDs;
 using iParkingv5.Objects;
@@ -130,14 +131,15 @@ namespace iParkingv5_window.Usercontrols
                 pictureBox.Refresh();
             }));
         }
-        public static void UpdateResultMessage(this Label lblResult, string message, Color backColor)
+        public static void UpdateResultMessage(this lblResult lblResult, string message, Color backColor)
         {
             lblResult.Invoke(() =>
             {
-                lblResult.Text = message;
+                lblResult.Message = message;
+                //lblResult.Text = message;
                 lblResult.BackColor = backColor;
-                lblResult.Height = lblResult.PreferredHeight;
-                lblResult.Refresh();
+                //lblResult.Height = lblResult.PreferredHeight;
+                //lblResult.Refresh();
             });
         }
         public static string GetBaseImageKey(string laneName, string cardNumber, string plate, DateTime eventTime)

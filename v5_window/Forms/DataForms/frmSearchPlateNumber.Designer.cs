@@ -39,8 +39,8 @@ namespace iParkingv5_CustomerRegister.Forms
             ucLoading1 = new ucLoading();
             lblTitle = new Label();
             btnCancel1 = new LblCancel();
-            btnOk1 = new LblOk();
-            lblSearch = new LblSearch();
+            btnOk1 = new BtnOk();
+            lblSearch = new BtnSearch();
             ucNotify1 = new ucNotify();
             lblKeyword = new Label();
             txtKeyword = new TextBox();
@@ -302,8 +302,8 @@ namespace iParkingv5_CustomerRegister.Forms
         private ucLoading ucLoading1;
         private Label lblTitle;
         private LblCancel btnCancel1;
-        private LblOk btnOk1;
-        private LblSearch lblSearch;
+        private BtnOk btnOk1;
+        private BtnSearch lblSearch;
         private ucNotify ucNotify1;
         private Label lblKeyword;
         private TextBox txtKeyword;

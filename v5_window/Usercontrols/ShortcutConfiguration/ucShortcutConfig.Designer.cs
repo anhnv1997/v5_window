@@ -32,7 +32,7 @@ namespace iParkingv5_window.Usercontrols
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucShortcutConfig));
             panelActions = new Panel();
-            btnOk1 = new LblOk();
+            btnOk1 = new BtnOk();
             panelActions.SuspendLayout();
             SuspendLayout();
             // 
@@ -73,6 +73,6 @@ namespace iParkingv5_window.Usercontrols
         #endregion
 
         private Panel panelActions;
-        private LblOk btnOk1;
+        private BtnOk btnOk1;
     }
 }

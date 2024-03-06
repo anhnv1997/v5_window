@@ -10,7 +10,7 @@ namespace iParkingv5_window.Forms.SystemForms
     public partial class frmSelectLaneMode : Form
     {
         #region Properties
-        LblOk btnOk;
+        BtnOk btnOk;
         int waitTimes = 0;
         #endregion End Properties
 
@@ -22,7 +22,7 @@ namespace iParkingv5_window.Forms.SystemForms
         }
         private void FrmSelectLaneMode_Load(object? sender, EventArgs e)
         {
-            btnOk = new LblOk();
+            btnOk = new BtnOk();
 
             this.Controls.Add(btnOk);
             btnOk.InitControl(BtnOk_Click);

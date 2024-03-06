@@ -56,9 +56,10 @@ namespace iParkingv5_window.Usercontrols
                 lblPageIndex.Click += LblPageIndex_Click;
                 lblPageIndex.Dock = DockStyle.Left;
                 //lblPageIndex.BackColor = Color.Transparent;
-                if (i == 0)
+                if (i == maxPage - 1)
                 {
                     lblPageIndex.BorderStyle = BorderStyle.Fixed3D;
+                    lblPageIndex.ForeColor = Color.FromArgb(253, 149, 40);
                 }
                 list[i] = lblPageIndex;
             }
@@ -79,11 +80,13 @@ namespace iParkingv5_window.Usercontrols
                     if (currentPage != lblPageIndex.PageIndex)
                     {
                         item.BorderStyle = BorderStyle.None;
+                        item.ForeColor = Color.Black;
                     }
                     break;
                 }
             }
             lblPageIndex.BorderStyle = BorderStyle.Fixed3D;
+            lblPageIndex.ForeColor = Color.FromArgb(253, 149, 40);
             lblPageIndex.Size = lblPageIndex.PreferredSize;
             panelPages.Refresh();
             OnpageSelect?.Invoke(lblPageIndex!.PageIndex);

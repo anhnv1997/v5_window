@@ -790,7 +790,7 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             }
             return false;
         }
-        public static async Task<Tuple<List<EventInReport>, int, int>> GetEventIns(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, int pageIndex = 1, int pageSize = 25)
+        public static async Task<Tuple<List<EventInReport>, int, int>> GetEventIns(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, int pageIndex = 1, int pageSize = 100)
         {
             StandardlizeServerName();
             string apiUrl = server + KzApiUrlManagement.EmObjectType.EventIn.GetDataByParamsRoute();
@@ -843,7 +843,7 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
 
         #endregion
 
-        public static async Task<Tuple<List<AbnormalEvent>, int, int>> GetAlarms(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, int pageIndex = 1, int pageSize = 25)
+        public static async Task<Tuple<List<AbnormalEvent>, int, int>> GetAlarms(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, int pageIndex = 1, int pageSize = 100)
         {
             StandardlizeServerName();
             string apiUrl = server + KzApiUrlManagement.EmObjectType.AbnormalEvent.GetDataByParamsRoute();
@@ -979,7 +979,7 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             }
             return false;
         }
-        public static async Task<Tuple<List<EventOutReport>, int, int>> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, int pageIndex = 1, int pageSize = 25)
+        public static async Task<Tuple<List<EventOutReport>, int, int>> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, int pageIndex = 1, int pageSize = 100)
         {
             StandardlizeServerName();
             string apiUrl = server + KzApiUrlManagement.EmObjectType.EventOut.GetDataByParamsRoute();

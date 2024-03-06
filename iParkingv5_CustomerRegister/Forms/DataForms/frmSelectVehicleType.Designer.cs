@@ -35,8 +35,8 @@
             ucLoading1 = new iPakrkingv5.Controls.Usercontrols.BuildControls.ucLoading();
             lblTitle = new Label();
             btnCancel1 = new iPakrkingv5.Controls.Controls.Buttons.LblCancel();
-            btnOk1 = new iPakrkingv5.Controls.Controls.Buttons.LblOk();
-            lblSearch = new iPakrkingv5.Controls.Controls.Buttons.LblSearch();
+            btnOk1 = new iPakrkingv5.Controls.Controls.Buttons.BtnOk();
+            lblSearch = new iPakrkingv5.Controls.Controls.Buttons.BtnSearch();
             ucNotify1 = new iPakrkingv5.Controls.Usercontrols.BuildControls.ucNotify();
             lblKeyword = new Label();
             txtKeyword = new TextBox();
@@ -220,8 +220,8 @@
         private iPakrkingv5.Controls.Usercontrols.BuildControls.ucLoading ucLoading1;
         private Label lblTitle;
         private iPakrkingv5.Controls.Controls.Buttons.LblCancel btnCancel1;
-        private iPakrkingv5.Controls.Controls.Buttons.LblOk btnOk1;
-        private iPakrkingv5.Controls.Controls.Buttons.LblSearch lblSearch;
+        private iPakrkingv5.Controls.Controls.Buttons.BtnOk btnOk1;
+        private iPakrkingv5.Controls.Controls.Buttons.BtnSearch lblSearch;
         private iPakrkingv5.Controls.Usercontrols.BuildControls.ucNotify ucNotify1;
         private Label lblKeyword;
         private TextBox txtKeyword;

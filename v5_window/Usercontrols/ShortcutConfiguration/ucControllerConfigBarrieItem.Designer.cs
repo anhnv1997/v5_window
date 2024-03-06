@@ -33,7 +33,7 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucControllerConfigBarrieItem));
             lblCurrentConfig = new Label();
             lblBarrieName = new Label();
-            picChangeConfig = new LblSetting();
+            picChangeConfig = new BtnSetting();
             SuspendLayout();
             // 
             // lblCurrentConfig
@@ -91,6 +91,6 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
 
         private Label lblCurrentConfig;
         private Label lblBarrieName;
-        private LblSetting picChangeConfig;
+        private BtnSetting picChangeConfig;
     }
 }

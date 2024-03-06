@@ -106,6 +106,7 @@ namespace iParkingv5_window.Forms.DataForms
             {
                 var screenBound = Screen.FromControl(this).WorkingArea;
                 this.Size = new Size(screenBound.Width, screenBound.Height);
+                this.Size = new Size(1366,768);
                 this.Location = new Point(0, 0);
 
                 LoadAppDisplayConfig();
@@ -173,23 +174,23 @@ namespace iParkingv5_window.Forms.DataForms
         private void tsmiReport_MouseEnter(object sender, EventArgs e)
         {
             this.Cursor = Cursors.Hand;
-            (sender as ToolStripMenuItem)!.Image = Properties.Resources.report_255_255_255_32px;
+            //(sender as ToolStripMenuItem)!.Image = Properties.Resources.report_255_255_255_32px;
             (sender as ToolStripMenuItem)!.ForeColor = Color.Red;
         }
         private void tsmiReport_MouseLeave(object sender, EventArgs e)
         {
             this.Cursor = Cursors.Default;
-            (sender as ToolStripMenuItem)!.Image = Properties.Resources.report_0_0_0_32px;
+            //(sender as ToolStripMenuItem)!.Image = Properties.Resources.report_0_0_0_32px;
             (sender as ToolStripMenuItem)!.ForeColor = Color.Black;
         }
         private void tsmiExit_MouseEnter(object sender, EventArgs e)
         {
-            (sender as ToolStripMenuItem)!.Image = Properties.Resources.NO_255_255_255_32px;
+            //(sender as ToolStripMenuItem)!.Image = Properties.Resources.NO_255_255_255_32px;
             (sender as ToolStripMenuItem)!.ForeColor = Color.Red;
         }
         private void tsmiExit_MouseLeave(object sender, EventArgs e)
         {
-            (sender as ToolStripMenuItem)!.Image = Properties.Resources.NO_0_0_0_32px;
+            //(sender as ToolStripMenuItem)!.Image = Properties.Resources.NO_0_0_0_32px;
             (sender as ToolStripMenuItem)!.ForeColor = Color.Black;
         }
         #endregion
@@ -356,14 +357,14 @@ namespace iParkingv5_window.Forms.DataForms
                 if (controller != null)
                 {
                     controllers.Add(controller);
-                    lblLoadingStatus.UpdateResultMessage("Đang kết nối đến bộ điều khiển: " + bdk.Name, lblLoadingStatus.BackColor);
+                    //lblLoadingStatus.UpdateResultMessage("Đang kết nối đến bộ điều khiển: " + bdk.Name, lblLoadingStatus.BackColor);
                     bool isConnectSuccess = await controller.ConnectAsync();
                     controller.CardEvent += Controller_CardEvent;
                     controller.ErrorEvent += Controller_ErrorEvent;
                     controller.InputEvent += Controller_InputEvent;
                     controller.ConnectStatusChangeEvent += Controller_ConnectStatusChangeEvent;
                     controller.DeviceInfoChangeEvent += Controller_DeviceInfoChangeEvent;
-                    lblLoadingStatus.UpdateResultMessage("Kết nối đến bộ điều khiển: " + bdk.Name + (isConnectSuccess ? "thành công" : "thất bại"), lblLoadingStatus.BackColor);
+                    //lblLoadingStatus.UpdateResultMessage("Kết nối đến bộ điều khiển: " + bdk.Name + (isConnectSuccess ? "thành công" : "thất bại"), lblLoadingStatus.BackColor);
                 }
             }
             lblTime.SendToBack();
@@ -373,7 +374,7 @@ namespace iParkingv5_window.Forms.DataForms
                 controller.PollingStart();
             }
 
-            lblLoadingStatus.UpdateResultMessage(string.Empty, lblLoadingStatus.BackColor);
+            //lblLoadingStatus.UpdateResultMessage(string.Empty, lblLoadingStatus.BackColor);
         }
 
         //--CLOSING

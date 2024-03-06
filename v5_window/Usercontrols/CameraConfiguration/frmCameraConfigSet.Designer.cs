@@ -32,7 +32,7 @@ namespace iParkingv5_window.Usercontrols.CameraConfiguration
         {
             panelCameraView = new Panel();
             pic = new PictureBox();
-            btnOk1 = new LblOk();
+            btnOk1 = new BtnOk();
             btnCancel1 = new LblCancel();
             panelActions = new Panel();
             panelCameraView.SuspendLayout();
@@ -119,7 +119,7 @@ namespace iParkingv5_window.Usercontrols.CameraConfiguration
 
         private Panel panelCameraView;
         private PictureBox pic;
-        private LblOk btnOk1;
+        private BtnOk btnOk1;
         private LblCancel btnCancel1;
         private Panel panelActions;
     }

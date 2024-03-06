@@ -41,7 +41,7 @@ namespace ALSE.SystemForms
             timerAutoConnect = new System.Windows.Forms.Timer(components);
             lblStatus = new Label();
             btnCancel1 = new LblCancel();
-            btnLogin = new LblLogin();
+            btnLogin = new BtnLogin();
             panelMain = new Panel();
             lblLoginTitle = new Label();
             picLogo = new PictureBox();
@@ -245,7 +245,7 @@ namespace ALSE.SystemForms
         private System.Windows.Forms.Timer timerAutoConnect;
         private Label lblStatus;
         private LblCancel btnCancel1;
-        private LblLogin btnLogin;
+        private BtnLogin btnLogin;
         private Panel panelMain;
         private iPakrkingv5.Controls.Usercontrols.BuildControls.ucNotify ucNotify1;
         private PictureBox picLogo;

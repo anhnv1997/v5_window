@@ -29,11 +29,11 @@ namespace iParkingv5_window.Forms.DataForms
         public string SelectCustomerGroup { get; set; } = string.Empty;
         public string SelectCustomerGroupId { get; set; } = string.Empty;
 
-        LblSearch lblSearch;
+        BtnSearch lblSearch;
         LblCancel btnCancel1;
         ucLoading ucLoading1;
         ucNotify ucNotify1;
-        LblOk btnOk1;
+        BtnOk btnOk1;
         #endregion END PROPERTIES
 
         #region FORMS
@@ -47,11 +47,11 @@ namespace iParkingv5_window.Forms.DataForms
         {
             this.Font = panelData.Font = new Font(this.Font.Name, TextManagement.ROOT_SIZE);
 
-            lblSearch = new LblSearch();
+            lblSearch = new BtnSearch();
             btnCancel1 = new LblCancel();
             ucLoading1 = new ucLoading();
             ucNotify1 = new ucNotify();
-            btnOk1 = new LblOk();
+            btnOk1 = new BtnOk();
 
             panelData.Controls.Add(lblSearch);
             panelData.Controls.Add(btnCancel1);

@@ -36,7 +36,7 @@ namespace iParkingv5_window.Usercontrols
             label2 = new Label();
             numDelayTime = new NumericUpDown();
             label1 = new Label();
-            btnCancel1 = new LblDelete();
+            btnCancel1 = new BtnDelete();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numDelayTime).BeginInit();
             SuspendLayout();
@@ -129,6 +129,6 @@ namespace iParkingv5_window.Usercontrols
         private Label label2;
         private NumericUpDown numDelayTime;
         private Label label1;
-        private LblDelete btnCancel1;
+        private BtnDelete btnCancel1;
     }
 }

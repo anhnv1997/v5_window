@@ -52,7 +52,7 @@ namespace iParkingv5_window.Usercontrols.LaneConfiguration
         #region Private Function
         private void CreateUI()
         {
-            LblOk btnOk = new LblOk();
+            BtnOk btnOk = new BtnOk();
             btnOk.InitControl(BtnOk_Click);
 
             lblDisplayDirection.Location = new Point(TextManagement.ROOT_SIZE * 2, TextManagement.ROOT_SIZE * 2);

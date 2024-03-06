@@ -126,6 +126,7 @@ namespace iParkingv5_window.Usercontrols
             panelCameras.SizeChanged += PanelCameras_SizeChanged;
             splitContainerEventContent.SizeChanged += SplitContainerEventContent_SizeChanged;
             splitContainerMain.MouseDoubleClick += SplitContainerEventContent_MouseDoubleClick;
+            lblResult.UpdateResultMessage("HẸN GẶP LẠI", Color.DarkGreen);
         }
 
         private void SplitContainerEventContent_MouseDoubleClick(object? sender, MouseEventArgs e)
@@ -1734,6 +1735,11 @@ namespace iParkingv5_window.Usercontrols
                     await KzParkingApiHelper.UpdateRegisteredVehicleAsyncById(vehicle);
                 }
             }
+        }
+
+        private void panelAction_SizeChanged(object sender, EventArgs e)
+        {
+            panelAction.Height = panelAction.HorizontalScroll.Visible ? 20 + 48 : 48;
         }
     }
 }

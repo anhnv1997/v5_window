@@ -33,7 +33,7 @@
             lblTitle = new Label();
             lblKeyword = new Label();
             txtKeyword = new TextBox();
-            lblSearch = new iPakrkingv5.Controls.Controls.Buttons.LblSearch();
+            lblSearch = new iPakrkingv5.Controls.Controls.Buttons.BtnSearch();
             dgvData = new DataGridView();
             Column1 = new DataGridViewTextBoxColumn();
             dgv_col_select = new DataGridViewCheckBoxColumn();
@@ -46,7 +46,7 @@
             lblGuide = new Label();
             panelData = new Panel();
             btnCancel1 = new iPakrkingv5.Controls.Controls.Buttons.LblCancel();
-            btnOk1 = new iPakrkingv5.Controls.Controls.Buttons.LblOk();
+            btnOk1 = new iPakrkingv5.Controls.Controls.Buttons.BtnOk();
             ucNotify1 = new iPakrkingv5.Controls.Usercontrols.BuildControls.ucNotify();
             ucLoading1 = new iPakrkingv5.Controls.Usercontrols.BuildControls.ucLoading();
             ((System.ComponentModel.ISupportInitialize)dgvData).BeginInit();
@@ -265,14 +265,14 @@
         private Label lblTitle;
         private Label lblKeyword;
         private TextBox txtKeyword;
-        private iPakrkingv5.Controls.Controls.Buttons.LblSearch lblSearch;
+        private iPakrkingv5.Controls.Controls.Buttons.BtnSearch lblSearch;
         private DataGridView dgvData;
         private Label lblGuide;
         private Panel panelData;
         private iPakrkingv5.Controls.Usercontrols.BuildControls.ucNotify ucNotify1;
         private iPakrkingv5.Controls.Usercontrols.BuildControls.ucLoading ucLoading1;
         private iPakrkingv5.Controls.Controls.Buttons.LblCancel btnCancel1;
-        private iPakrkingv5.Controls.Controls.Buttons.LblOk btnOk1;
+        private iPakrkingv5.Controls.Controls.Buttons.BtnOk btnOk1;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewCheckBoxColumn dgv_col_select;
         private DataGridViewTextBoxColumn Column8;

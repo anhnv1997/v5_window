@@ -37,9 +37,9 @@ namespace iParkingv5_window.Usercontrols
             lblConfirmPlateKey = new Label();
             lblWriteInKey = new Label();
             lblReserveLaneKey = new Label();
-            picChangeConfirmPlateKey = new LblSetting();
-            btnSetting1 = new LblSetting();
-            picReserveLane = new LblSetting();
+            picChangeConfirmPlateKey = new BtnSetting();
+            btnSetting1 = new BtnSetting();
+            picReserveLane = new BtnSetting();
             SuspendLayout();
             // 
             // label1
@@ -171,8 +171,8 @@ namespace iParkingv5_window.Usercontrols
         private Label lblConfirmPlateKey;
         private Label lblWriteInKey;
         private Label lblReserveLaneKey;
-        private LblSetting picChangeConfirmPlateKey;
-        private LblSetting btnSetting1;
-        private LblSetting picReserveLane;
+        private BtnSetting picChangeConfirmPlateKey;
+        private BtnSetting btnSetting1;
+        private BtnSetting picReserveLane;
     }
 }

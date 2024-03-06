@@ -33,7 +33,7 @@
             lblMessageType = new Label();
             lblMessage = new Label();
             btnCancel = new Controls.Buttons.LblCancel();
-            btnConfirm = new Controls.Buttons.LblOk();
+            btnConfirm = new Controls.Buttons.BtnOk();
             ((System.ComponentModel.ISupportInitialize)picNotiType).BeginInit();
             SuspendLayout();
             // 
@@ -117,6 +117,6 @@
         private Label lblMessageType;
         private Label lblMessage;
         private Controls.Buttons.LblCancel btnCancel;
-        private Controls.Buttons.LblOk btnConfirm;
+        private Controls.Buttons.BtnOk btnConfirm;
     }
 }

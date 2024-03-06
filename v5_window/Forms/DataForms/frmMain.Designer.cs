@@ -91,7 +91,7 @@
             // 
             // tsmiExit
             // 
-            tsmiExit.Image = Properties.Resources.NO_0_0_0_32px;
+            tsmiExit.Image = (Image)resources.GetObject("tsmiExit.Image");
             tsmiExit.Name = "tsmiExit";
             tsmiExit.Size = new Size(242, 26);
             tsmiExit.Text = "Thoát";
@@ -108,7 +108,7 @@
             // 
             // tsmiReportIn
             // 
-            tsmiReportIn.Image = Properties.Resources.report_0_0_0_32px;
+            tsmiReportIn.Image = (Image)resources.GetObject("tsmiReportIn.Image");
             tsmiReportIn.Name = "tsmiReportIn";
             tsmiReportIn.Size = new Size(203, 26);
             tsmiReportIn.Text = "Xe đang trong bãi";
@@ -118,7 +118,7 @@
             // 
             // tsmiReportInOut
             // 
-            tsmiReportInOut.Image = Properties.Resources.report_0_0_0_32px;
+            tsmiReportInOut.Image = (Image)resources.GetObject("tsmiReportInOut.Image");
             tsmiReportInOut.Name = "tsmiReportInOut";
             tsmiReportInOut.Size = new Size(203, 26);
             tsmiReportInOut.Text = "Xe ra khỏi bãi";
@@ -128,7 +128,7 @@
             // 
             // tsmiAlarmReport
             // 
-            tsmiAlarmReport.Image = Properties.Resources.report_0_0_0_32px;
+            tsmiAlarmReport.Image = (Image)resources.GetObject("tsmiAlarmReport.Image");
             tsmiAlarmReport.Name = "tsmiAlarmReport";
             tsmiAlarmReport.Size = new Size(203, 26);
             tsmiAlarmReport.Text = "Sự kiện cảnh báo";

@@ -36,7 +36,7 @@ namespace iParkingv5_window.Forms.DataForms
             lblMessage = new Label();
             panelAction = new Panel();
             btnCancel1 = new LblCancel();
-            btnOk = new LblOk();
+            btnOk = new BtnOk();
             dgvEventInData = new DataGridView();
             panel1 = new Panel();
             panelEventPic = new Panel();
@@ -231,7 +231,7 @@ namespace iParkingv5_window.Forms.DataForms
 
         private Label lblMessage;
         private Panel panelAction;
-        private LblOk btnOk;
+        private BtnOk btnOk;
         private LblCancel btnCancel1;
         private DataGridView dgvEventInData;
         private Panel panel1;

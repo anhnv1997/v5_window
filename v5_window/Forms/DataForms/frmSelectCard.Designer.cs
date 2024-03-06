@@ -41,11 +41,11 @@ namespace iParkingv5_window.Forms.DataForms
             Column6 = new DataGridViewTextBoxColumn();
             Column4 = new DataGridViewTextBoxColumn();
             Column1 = new DataGridViewTextBoxColumn();
-            btnSearch = new LblSearch();
+            btnSearch = new BtnSearch();
             txtIdentity = new TextBox();
             lblCardNumber = new Label();
             btnCancel = new LblCancel();
-            btnSelectCard = new LblOk();
+            btnSelectCard = new BtnOk();
             panelData = new Panel();
             ucLoading1 = new Usercontrols.BuildControls.ucLoading();
             ucNotify1 = new Usercontrols.BuildControls.ucNotify();
@@ -253,8 +253,8 @@ namespace iParkingv5_window.Forms.DataForms
         private DataGridViewTextBoxColumn Column4;
         private DataGridViewTextBoxColumn Column1;
         private LblCancel btnCancel;
-        private LblOk btnSelectCard;
-        private LblSearch btnSearch;
+        private BtnOk btnSelectCard;
+        private BtnSearch btnSearch;
         private Panel panelData;
         private Usercontrols.BuildControls.ucNotify ucNotify1;
         private Usercontrols.BuildControls.ucLoading ucLoading1;

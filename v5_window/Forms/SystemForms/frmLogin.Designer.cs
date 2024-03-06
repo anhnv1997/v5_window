@@ -41,7 +41,7 @@ namespace iParkingv5_window.Forms.SystemForms
             timerAutoConnect = new System.Windows.Forms.Timer(components);
             lblStatus = new Label();
             btnCancel1 = new LblCancel();
-            btnLogin = new LblLogin();
+            btnLogin = new BtnLogin();
             panelMain = new Panel();
             ucLoading1 = new Usercontrols.BuildControls.ucLoading();
             lblLoginTitle = new Label();
@@ -247,7 +247,7 @@ namespace iParkingv5_window.Forms.SystemForms
         private System.Windows.Forms.Timer timerAutoConnect;
         private Label lblStatus;
         private LblCancel btnCancel1;
-        private LblLogin btnLogin;
+        private BtnLogin btnLogin;
         private Panel panelMain;
         private Usercontrols.BuildControls.ucNotify ucNotify1;
         private PictureBox picLogo;

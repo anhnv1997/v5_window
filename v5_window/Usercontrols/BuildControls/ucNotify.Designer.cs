@@ -35,7 +35,7 @@ namespace iParkingv5_window.Usercontrols.BuildControls
             lblMessageType = new Label();
             lblMessage = new Label();
             btnCancel = new LblCancel();
-            btnConfirm = new LblOk();
+            btnConfirm = new BtnOk();
             ((System.ComponentModel.ISupportInitialize)picNotiType).BeginInit();
             SuspendLayout();
             // 
@@ -117,6 +117,6 @@ namespace iParkingv5_window.Usercontrols.BuildControls
         private Label lblMessageType;
         private Label lblMessage;
         private LblCancel btnCancel;
-        private LblOk btnConfirm;
+        private BtnOk btnConfirm;
     }   
 }

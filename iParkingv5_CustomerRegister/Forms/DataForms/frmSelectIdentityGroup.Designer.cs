@@ -37,7 +37,7 @@
             cbVehicleType = new ComboBox();
             txtIdentityGroupName = new TextBox();
             lblVehicleType = new Label();
-            lblSearch1 = new iPakrkingv5.Controls.Controls.Buttons.LblSearch();
+            lblSearch1 = new iPakrkingv5.Controls.Controls.Buttons.BtnSearch();
             dgvData = new DataGridView();
             Column5 = new DataGridViewTextBoxColumn();
             Column1 = new DataGridViewTextBoxColumn();
@@ -45,7 +45,7 @@
             Column3 = new DataGridViewTextBoxColumn();
             Column4 = new DataGridViewTextBoxColumn();
             lblCancel1 = new iPakrkingv5.Controls.Controls.Buttons.LblCancel();
-            lblOk1 = new iPakrkingv5.Controls.Controls.Buttons.LblOk();
+            lblOk1 = new iPakrkingv5.Controls.Controls.Buttons.BtnOk();
             ((System.ComponentModel.ISupportInitialize)dgvData).BeginInit();
             SuspendLayout();
             // 
@@ -222,10 +222,10 @@
         private ComboBox cbVehicleType;
         private TextBox txtIdentityGroupName;
         private Label lblVehicleType;
-        private iPakrkingv5.Controls.Controls.Buttons.LblSearch lblSearch1;
+        private iPakrkingv5.Controls.Controls.Buttons.BtnSearch lblSearch1;
         private DataGridView dgvData;
         private iPakrkingv5.Controls.Controls.Buttons.LblCancel lblCancel1;
-        private iPakrkingv5.Controls.Controls.Buttons.LblOk lblOk1;
+        private iPakrkingv5.Controls.Controls.Buttons.BtnOk lblOk1;
         private DataGridViewTextBoxColumn Column5;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;

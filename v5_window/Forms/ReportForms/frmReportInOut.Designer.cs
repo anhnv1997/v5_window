@@ -68,8 +68,8 @@ namespace iParkingv5_window.Forms.ReportForms
             lblPage = new Label();
             lblTotalEvents = new Label();
             btnCancel = new LblCancel();
-            btnSearch = new LblSearch();
-            btnExportExcel = new LblExcel();
+            btnSearch = new BtnSearch();
+            btnExportExcel = new BtnExcel();
             panelData = new Panel();
             cbLane = new ComboBox();
             lblLane = new Label();
@@ -653,8 +653,8 @@ namespace iParkingv5_window.Forms.ReportForms
         private Label lblPage;
         private Label lblTotalEvents;
         private LblCancel btnCancel;
-        private LblSearch btnSearch;
-        private LblExcel btnExportExcel;
+        private BtnSearch btnSearch;
+        private BtnExcel btnExportExcel;
         private Panel panelData;
         private TableLayoutPanel tablePic;
         private Usercontrols.BuildControls.ucNotify ucNotify1;

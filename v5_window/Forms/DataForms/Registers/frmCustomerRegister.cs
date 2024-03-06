@@ -46,10 +46,10 @@ namespace iParkingv5_window.Forms.DataForms
             this.Load += FrmCustomerRegister_Load;
             this.FormClosing += FrmCustomerRegister_FormClosing;
         }
-        LblSearch btnSearchCustomer;
+        BtnSearch btnSearchCustomer;
         private async void FrmCustomerRegister_Load(object? sender, EventArgs e)
         {
-            btnSearchCustomer = new LblSearch();
+            btnSearchCustomer = new BtnSearch();
             btnSearchCustomer.InitControl(BtnSearchCustomer_Click);
             this.Controls.Add(btnSearchCustomer);
 

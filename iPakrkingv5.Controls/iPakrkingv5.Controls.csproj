@@ -15,28 +15,28 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Controls\Buttons\LblCancel.cs">
+    <Compile Update="Controls\Buttons\BtnCancel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="Controls\Buttons\LblDelete.cs">
+    <Compile Update="Controls\Buttons\BtnDelete.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="Controls\Buttons\LblExcel.cs">
+    <Compile Update="Controls\Buttons\BtnExcel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="Controls\Buttons\LblLogin.cs">
+    <Compile Update="Controls\Buttons\BtnLogin.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="Controls\Buttons\LblOk.cs">
+    <Compile Update="Controls\Buttons\BtnOk.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="Controls\Buttons\LblPrint.cs">
+    <Compile Update="Controls\Buttons\BtnPrint.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="Controls\Buttons\LblSearch.cs">
+    <Compile Update="Controls\Buttons\BtnSearch.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="Controls\Buttons\LblSetting.cs" />
+    <Compile Update="Controls\Buttons\BtnSetting.cs" />
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

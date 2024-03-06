@@ -12,10 +12,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucLaneIn));
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             lblLaneName = new Label();
             panelCameras = new Panel();
             splitContainerMain = new SplitContainer();
@@ -28,21 +28,20 @@
             splitterCamera = new Splitter();
             splitContainerEventContent = new SplitContainer();
             dgvEventContent = new DataGridView();
+            Column1 = new DataGridViewTextBoxColumn();
+            Column2 = new DataGridViewTextBoxColumn();
             panel4 = new Panel();
             picLprImage = new MovablePictureBox();
             panelAction = new Panel();
-            btnRegister = new Button();
             btnWriteIn = new Button();
             btnOpenBarrie = new Button();
             btnReTakePhoto = new Button();
             txtPlate = new TextBox();
-            lblResult = new Label();
+            lblResult = new iPakrkingv5.Controls.Controls.Labels.lblResult();
             picSetting = new PictureBox();
             panel5 = new Panel();
             panel7 = new Panel();
             pictureBox2 = new PictureBox();
-            Column1 = new DataGridViewTextBoxColumn();
-            Column2 = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)splitContainerMain).BeginInit();
             splitContainerMain.Panel1.SuspendLayout();
             splitContainerMain.Panel2.SuspendLayout();
@@ -209,15 +208,15 @@
             splitContainerEventContent.Panel2.Controls.Add(panelAction);
             splitContainerEventContent.Panel2.Controls.Add(txtPlate);
             splitContainerEventContent.Size = new Size(727, 156);
-            splitContainerEventContent.SplitterDistance = 402;
+            splitContainerEventContent.SplitterDistance = 304;
             splitContainerEventContent.TabIndex = 0;
             // 
             // dgvEventContent
             // 
             dgvEventContent.AllowUserToAddRows = false;
             dgvEventContent.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(192, 255, 255);
-            dgvEventContent.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(192, 255, 255);
+            dgvEventContent.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
             dgvEventContent.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dgvEventContent.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgvEventContent.BackgroundColor = SystemColors.ButtonHighlight;
@@ -231,8 +230,28 @@
             dgvEventContent.ReadOnly = true;
             dgvEventContent.RowHeadersVisible = false;
             dgvEventContent.RowTemplate.Height = 29;
-            dgvEventContent.Size = new Size(402, 156);
+            dgvEventContent.Size = new Size(304, 156);
             dgvEventContent.TabIndex = 0;
+            // 
+            // Column1
+            // 
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
+            Column1.DefaultCellStyle = dataGridViewCellStyle5;
+            Column1.HeaderText = "Header";
+            Column1.Name = "Column1";
+            Column1.ReadOnly = true;
+            Column1.Width = 5;
+            // 
+            // Column2
+            // 
+            Column2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 11.25F);
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
+            Column2.DefaultCellStyle = dataGridViewCellStyle6;
+            Column2.HeaderText = "Content";
+            Column2.Name = "Column2";
+            Column2.ReadOnly = true;
             // 
             // panel4
             // 
@@ -240,7 +259,7 @@
             panel4.Dock = DockStyle.Fill;
             panel4.Location = new Point(0, 32);
             panel4.Name = "panel4";
-            panel4.Size = new Size(321, 56);
+            panel4.Size = new Size(419, 79);
             panel4.TabIndex = 4;
             // 
             // picLprImage
@@ -250,7 +269,7 @@
             picLprImage.Image = (Image)resources.GetObject("picLprImage.Image");
             picLprImage.Location = new Point(0, 0);
             picLprImage.Name = "picLprImage";
-            picLprImage.Size = new Size(321, 56);
+            picLprImage.Size = new Size(419, 79);
             picLprImage.SizeMode = PictureBoxSizeMode.Zoom;
             picLprImage.TabIndex = 4;
             picLprImage.TabStop = false;
@@ -258,33 +277,17 @@
             // panelAction
             // 
             panelAction.AutoScroll = true;
-            panelAction.Controls.Add(btnRegister);
+            panelAction.AutoScrollMinSize = new Size(0, 68);
             panelAction.Controls.Add(btnWriteIn);
             panelAction.Controls.Add(btnOpenBarrie);
             panelAction.Controls.Add(btnReTakePhoto);
             panelAction.Dock = DockStyle.Bottom;
-            panelAction.Location = new Point(0, 88);
+            panelAction.Location = new Point(0, 111);
             panelAction.Name = "panelAction";
             panelAction.Padding = new Padding(0, 3, 0, 3);
-            panelAction.Size = new Size(321, 68);
+            panelAction.Size = new Size(419, 45);
             panelAction.TabIndex = 3;
-            // 
-            // btnRegister
-            // 
-            btnRegister.AutoSize = true;
-            btnRegister.BackColor = Color.Transparent;
-            btnRegister.Dock = DockStyle.Left;
-            btnRegister.Image = (Image)resources.GetObject("btnRegister.Image");
-            btnRegister.ImageAlign = ContentAlignment.TopCenter;
-            btnRegister.Location = new Point(310, 3);
-            btnRegister.Name = "btnRegister";
-            btnRegister.Size = new Size(106, 45);
-            btnRegister.TabIndex = 5;
-            btnRegister.Text = "Đăng ký";
-            btnRegister.TextImageRelation = TextImageRelation.ImageAboveText;
-            btnRegister.UseVisualStyleBackColor = false;
-            btnRegister.Visible = false;
-            btnRegister.Click += btnRegister_Click;
+            panelAction.SizeChanged += panelAction_SizeChanged;
             // 
             // btnWriteIn
             // 
@@ -293,11 +296,10 @@
             btnWriteIn.Dock = DockStyle.Left;
             btnWriteIn.Image = (Image)resources.GetObject("btnWriteIn.Image");
             btnWriteIn.ImageAlign = ContentAlignment.TopCenter;
-            btnWriteIn.Location = new Point(212, 3);
+            btnWriteIn.Location = new Point(160, 3);
             btnWriteIn.Name = "btnWriteIn";
-            btnWriteIn.Size = new Size(98, 45);
+            btnWriteIn.Size = new Size(80, 62);
             btnWriteIn.TabIndex = 4;
-            btnWriteIn.Text = "Ghi Vé Vào";
             btnWriteIn.TextImageRelation = TextImageRelation.ImageAboveText;
             btnWriteIn.UseVisualStyleBackColor = false;
             btnWriteIn.Click += BtnWriteIn_Click;
@@ -309,11 +311,10 @@
             btnOpenBarrie.Dock = DockStyle.Left;
             btnOpenBarrie.Image = (Image)resources.GetObject("btnOpenBarrie.Image");
             btnOpenBarrie.ImageAlign = ContentAlignment.TopCenter;
-            btnOpenBarrie.Location = new Point(106, 3);
+            btnOpenBarrie.Location = new Point(80, 3);
             btnOpenBarrie.Name = "btnOpenBarrie";
-            btnOpenBarrie.Size = new Size(106, 45);
+            btnOpenBarrie.Size = new Size(80, 62);
             btnOpenBarrie.TabIndex = 6;
-            btnOpenBarrie.Text = "Mở Barrie";
             btnOpenBarrie.TextImageRelation = TextImageRelation.ImageAboveText;
             btnOpenBarrie.UseVisualStyleBackColor = false;
             btnOpenBarrie.Click += btnOpenBarrie_Click;
@@ -327,9 +328,8 @@
             btnReTakePhoto.ImageAlign = ContentAlignment.TopCenter;
             btnReTakePhoto.Location = new Point(0, 3);
             btnReTakePhoto.Name = "btnReTakePhoto";
-            btnReTakePhoto.Size = new Size(106, 45);
+            btnReTakePhoto.Size = new Size(80, 62);
             btnReTakePhoto.TabIndex = 3;
-            btnReTakePhoto.Text = "Chụp lại";
             btnReTakePhoto.TextImageRelation = TextImageRelation.ImageAboveText;
             btnReTakePhoto.UseVisualStyleBackColor = false;
             btnReTakePhoto.Click += BtnReTakePhoto_Click;
@@ -341,7 +341,7 @@
             txtPlate.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             txtPlate.Location = new Point(0, 0);
             txtPlate.Name = "txtPlate";
-            txtPlate.Size = new Size(321, 32);
+            txtPlate.Size = new Size(419, 32);
             txtPlate.TabIndex = 0;
             txtPlate.TextAlign = HorizontalAlignment.Center;
             // 
@@ -355,7 +355,6 @@
             lblResult.Name = "lblResult";
             lblResult.Size = new Size(727, 34);
             lblResult.TabIndex = 1;
-            lblResult.Text = "XIN MỜI VÀO";
             lblResult.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // picSetting
@@ -410,26 +409,6 @@
             pictureBox2.TabStop = false;
             pictureBox2.Visible = false;
             // 
-            // Column1
-            // 
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            Column1.DefaultCellStyle = dataGridViewCellStyle2;
-            Column1.HeaderText = "Header";
-            Column1.Name = "Column1";
-            Column1.ReadOnly = true;
-            Column1.Width = 5;
-            // 
-            // Column2
-            // 
-            Column2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 11.25F);
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            Column2.DefaultCellStyle = dataGridViewCellStyle3;
-            Column2.HeaderText = "Content";
-            Column2.Name = "Column2";
-            Column2.ReadOnly = true;
-            // 
             // ucLaneIn
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -475,7 +454,7 @@
         private Panel panelAction;
         private TextBox txtPlate;
         private DataGridView dgvEventContent;
-        private Label lblResult;
+        private iPakrkingv5.Controls.Controls.Labels.lblResult lblResult;
         private MovablePictureBox picLprImage;
         private Panel panel2;
         private MovablePictureBox picOverviewImage;
@@ -489,7 +468,6 @@
         private Panel panel5;
         private PictureBox pictureBox2;
         private Panel panel7;
-        private Button btnRegister;
         private Button btnOpenBarrie;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;

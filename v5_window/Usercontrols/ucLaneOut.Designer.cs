@@ -1,4 +1,6 @@
-﻿namespace iParkingv5_window.Usercontrols
+﻿using iPakrkingv5.Controls.Controls.Labels;
+
+namespace iParkingv5_window.Usercontrols
 {
     partial class ucLaneOut
     {
@@ -40,13 +42,13 @@
             btnReTakePhoto = new Button();
             txtPlate = new TextBox();
             dgvEventContent = new DataGridView();
-            lblResult = new Label();
+            Column1 = new DataGridViewTextBoxColumn();
+            Column2 = new DataGridViewTextBoxColumn();
+            lblResult = new lblResult();
             panel4 = new Panel();
             picSetting = new PictureBox();
             panel7 = new Panel();
             pictureBox2 = new PictureBox();
-            Column1 = new DataGridViewTextBoxColumn();
-            Column2 = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)splitContainerMain).BeginInit();
             splitContainerMain.Panel1.SuspendLayout();
             splitContainerMain.Panel2.SuspendLayout();
@@ -294,6 +296,8 @@
             // panelAction
             // 
             panelAction.AutoScroll = true;
+            panelAction.AutoScrollMinSize = new Size(0, 68);
+            panelAction.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panelAction.Controls.Add(btnPrintTicket);
             panelAction.Controls.Add(button1);
             panelAction.Controls.Add(btnVoucher);
@@ -306,6 +310,7 @@
             panelAction.Padding = new Padding(0, 3, 0, 3);
             panelAction.Size = new Size(454, 68);
             panelAction.TabIndex = 3;
+            panelAction.SizeChanged += panelAction_SizeChanged;
             // 
             // btnPrintTicket
             // 
@@ -313,11 +318,10 @@
             btnPrintTicket.Dock = DockStyle.Left;
             btnPrintTicket.Image = (Image)resources.GetObject("btnPrintTicket.Image");
             btnPrintTicket.ImageAlign = ContentAlignment.TopCenter;
-            btnPrintTicket.Location = new Point(464, 3);
+            btnPrintTicket.Location = new Point(400, 3);
             btnPrintTicket.Name = "btnPrintTicket";
-            btnPrintTicket.Size = new Size(74, 45);
+            btnPrintTicket.Size = new Size(80, 62);
             btnPrintTicket.TabIndex = 3;
-            btnPrintTicket.Text = "In Vé";
             btnPrintTicket.TextImageRelation = TextImageRelation.ImageAboveText;
             btnPrintTicket.UseVisualStyleBackColor = true;
             btnPrintTicket.Visible = false;
@@ -329,11 +333,10 @@
             button1.Dock = DockStyle.Left;
             button1.Image = (Image)resources.GetObject("button1.Image");
             button1.ImageAlign = ContentAlignment.TopCenter;
-            button1.Location = new Point(363, 3);
+            button1.Location = new Point(320, 3);
             button1.Name = "button1";
-            button1.Size = new Size(101, 45);
+            button1.Size = new Size(80, 62);
             button1.TabIndex = 0;
-            button1.Text = "TT - ONLINE";
             button1.TextImageRelation = TextImageRelation.ImageAboveText;
             button1.UseVisualStyleBackColor = true;
             button1.Visible = false;
@@ -344,11 +347,10 @@
             btnVoucher.Dock = DockStyle.Left;
             btnVoucher.Image = (Image)resources.GetObject("btnVoucher.Image");
             btnVoucher.ImageAlign = ContentAlignment.TopCenter;
-            btnVoucher.Location = new Point(291, 3);
+            btnVoucher.Location = new Point(240, 3);
             btnVoucher.Name = "btnVoucher";
-            btnVoucher.Size = new Size(72, 45);
+            btnVoucher.Size = new Size(80, 62);
             btnVoucher.TabIndex = 0;
-            btnVoucher.Text = "Voucher";
             btnVoucher.TextImageRelation = TextImageRelation.ImageAboveText;
             btnVoucher.UseVisualStyleBackColor = true;
             btnVoucher.Visible = false;
@@ -359,11 +361,10 @@
             btnWriteOut.Dock = DockStyle.Left;
             btnWriteOut.Image = (Image)resources.GetObject("btnWriteOut.Image");
             btnWriteOut.ImageAlign = ContentAlignment.TopCenter;
-            btnWriteOut.Location = new Point(193, 3);
+            btnWriteOut.Location = new Point(160, 3);
             btnWriteOut.Name = "btnWriteOut";
-            btnWriteOut.Size = new Size(98, 45);
+            btnWriteOut.Size = new Size(80, 62);
             btnWriteOut.TabIndex = 2;
-            btnWriteOut.Text = "Ghi Vé Ra";
             btnWriteOut.TextImageRelation = TextImageRelation.ImageAboveText;
             btnWriteOut.UseVisualStyleBackColor = true;
             btnWriteOut.Click += BtnWriteOut_Click;
@@ -375,11 +376,10 @@
             btnOpenBarrie.Dock = DockStyle.Left;
             btnOpenBarrie.Image = (Image)resources.GetObject("btnOpenBarrie.Image");
             btnOpenBarrie.ImageAlign = ContentAlignment.TopCenter;
-            btnOpenBarrie.Location = new Point(87, 3);
+            btnOpenBarrie.Location = new Point(80, 3);
             btnOpenBarrie.Name = "btnOpenBarrie";
-            btnOpenBarrie.Size = new Size(106, 45);
+            btnOpenBarrie.Size = new Size(80, 62);
             btnOpenBarrie.TabIndex = 7;
-            btnOpenBarrie.Text = "Mở Barrie";
             btnOpenBarrie.TextImageRelation = TextImageRelation.ImageAboveText;
             btnOpenBarrie.UseVisualStyleBackColor = false;
             btnOpenBarrie.Click += btnOpenBarrie_Click;
@@ -392,9 +392,8 @@
             btnReTakePhoto.ImageAlign = ContentAlignment.TopCenter;
             btnReTakePhoto.Location = new Point(0, 3);
             btnReTakePhoto.Name = "btnReTakePhoto";
-            btnReTakePhoto.Size = new Size(87, 45);
+            btnReTakePhoto.Size = new Size(80, 62);
             btnReTakePhoto.TabIndex = 1;
-            btnReTakePhoto.Text = "Chụp lại";
             btnReTakePhoto.TextImageRelation = TextImageRelation.ImageAboveText;
             btnReTakePhoto.UseVisualStyleBackColor = true;
             btnReTakePhoto.Click += BtnReTakePhoto_Click;
@@ -419,6 +418,7 @@
             dgvEventContent.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dgvEventContent.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgvEventContent.BackgroundColor = SystemColors.ButtonHighlight;
+            dgvEventContent.BorderStyle = BorderStyle.None;
             dgvEventContent.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvEventContent.ColumnHeadersVisible = false;
             dgvEventContent.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2 });
@@ -431,6 +431,27 @@
             dgvEventContent.Size = new Size(357, 156);
             dgvEventContent.TabIndex = 1;
             // 
+            // Column1
+            // 
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            Column1.DefaultCellStyle = dataGridViewCellStyle2;
+            Column1.HeaderText = "Header";
+            Column1.Name = "Column1";
+            Column1.ReadOnly = true;
+            Column1.Width = 5;
+            // 
+            // Column2
+            // 
+            Column2.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 11.25F);
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            Column2.DefaultCellStyle = dataGridViewCellStyle3;
+            Column2.HeaderText = "Content";
+            Column2.Name = "Column2";
+            Column2.ReadOnly = true;
+            Column2.Width = 5;
+            // 
             // lblResult
             // 
             lblResult.BackColor = Color.FromArgb(0, 64, 0);
@@ -441,7 +462,6 @@
             lblResult.Name = "lblResult";
             lblResult.Size = new Size(815, 34);
             lblResult.TabIndex = 1;
-            lblResult.Text = "HẸN GẶP LẠI";
             lblResult.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panel4
@@ -495,27 +515,6 @@
             pictureBox2.TabStop = false;
             pictureBox2.Visible = false;
             // 
-            // Column1
-            // 
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            Column1.DefaultCellStyle = dataGridViewCellStyle2;
-            Column1.HeaderText = "Header";
-            Column1.Name = "Column1";
-            Column1.ReadOnly = true;
-            Column1.Width = 5;
-            // 
-            // Column2
-            // 
-            Column2.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 11.25F);
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            Column2.DefaultCellStyle = dataGridViewCellStyle3;
-            Column2.HeaderText = "Content";
-            Column2.Name = "Column2";
-            Column2.ReadOnly = true;
-            Column2.Width = 5;
-            // 
             // ucLaneOut
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -565,7 +564,7 @@
         private Button btnVoucher;
         private Button button1;
         private TextBox txtPlate;
-        private Label lblResult;
+        private lblResult lblResult;
         private MovablePictureBox picLprImage;
         private Panel panel2;
         private MovablePictureBox picOverviewImageOut;

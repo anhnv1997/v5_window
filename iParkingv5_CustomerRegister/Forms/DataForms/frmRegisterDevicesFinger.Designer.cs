@@ -46,8 +46,8 @@
             Column1 = new DataGridViewTextBoxColumn();
             txtCustomerCode = new TextBox();
             chbSelectAllDevice = new CheckBox();
-            lblSearch1 = new iPakrkingv5.Controls.Controls.Buttons.LblSearch();
-            lblOk1 = new iPakrkingv5.Controls.Controls.Buttons.LblOk();
+            lblSearch1 = new iPakrkingv5.Controls.Controls.Buttons.BtnSearch();
+            lblOk1 = new iPakrkingv5.Controls.Controls.Buttons.BtnOk();
             ((System.ComponentModel.ISupportInitialize)dgvCustomerData).BeginInit();
             SuspendLayout();
             // 
@@ -250,7 +250,7 @@
         private DataGridViewTextBoxColumn Column1;
         private TextBox txtCustomerCode;
         private CheckBox chbSelectAllDevice;
-        private iPakrkingv5.Controls.Controls.Buttons.LblSearch lblSearch1;
-        private iPakrkingv5.Controls.Controls.Buttons.LblOk lblOk1;
+        private iPakrkingv5.Controls.Controls.Buttons.BtnSearch lblSearch1;
+        private iPakrkingv5.Controls.Controls.Buttons.BtnOk lblOk1;
     }
 }

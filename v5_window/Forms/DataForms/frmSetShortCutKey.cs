@@ -32,7 +32,7 @@ namespace iParkingv5_window.Forms.DataForms
 
         private void FrmSetShortCutKey_Load(object? sender, EventArgs e)
         {
-            LblOk btnOk1 = new LblOk();
+            BtnOk btnOk1 = new BtnOk();
             panelActions.Controls.Add(btnOk1);
 
             btnOk1.InitControl(BtnOk1_Click);

@@ -41,7 +41,7 @@
             lblMessage = new Label();
             panelAction = new Panel();
             btnCancel1 = new iPakrkingv5.Controls.Controls.Buttons.LblCancel();
-            btnOk = new iPakrkingv5.Controls.Controls.Buttons.LblOk();
+            btnOk = new iPakrkingv5.Controls.Controls.Buttons.BtnOk();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEventInData).BeginInit();
             panelEventPic.SuspendLayout();

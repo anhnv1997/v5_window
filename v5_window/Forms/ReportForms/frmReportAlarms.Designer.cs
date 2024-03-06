@@ -41,11 +41,11 @@ namespace iParkingv5_window.Forms.ReportForms
             ucNotify1 = new Usercontrols.BuildControls.ucNotify();
             ucLoading1 = new Usercontrols.BuildControls.ucLoading();
             lblKeyword = new Label();
-            btnExportExcel = new LblExcel();
+            btnExportExcel = new BtnExcel();
             lblLane = new Label();
             lblVehicleType = new Label();
             btnCancel = new LblCancel();
-            btnSearch = new LblSearch();
+            btnSearch = new BtnSearch();
             ucPages1 = new Usercontrols.ucPages();
             lblTotalEvents = new Label();
             tablePic = new TableLayoutPanel();
@@ -483,11 +483,11 @@ namespace iParkingv5_window.Forms.ReportForms
         private Usercontrols.BuildControls.ucNotify ucNotify1;
         private Usercontrols.BuildControls.ucLoading ucLoading1;
         private Label lblKeyword;
-        private LblExcel btnExportExcel;
+        private BtnExcel btnExportExcel;
         private Label lblLane;
         private Label lblVehicleType;
         private LblCancel btnCancel;
-        private LblSearch btnSearch;
+        private BtnSearch btnSearch;
         private Usercontrols.ucPages ucPages1;
         private Label lblTotalEvents;
         private TableLayoutPanel tablePic;

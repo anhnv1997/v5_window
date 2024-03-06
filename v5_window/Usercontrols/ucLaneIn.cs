@@ -111,6 +111,7 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
 
+
             this.Load += UcLaneIn_Load;
         }
         private void UcLaneIn_Load(object? sender, EventArgs e)
@@ -126,6 +127,7 @@ namespace iParkingv5_window.Usercontrols
             panelCameras.SizeChanged += PanelCameras_SizeChanged;
             splitContainerEventContent.SizeChanged += SplitContainerEventContent_SizeChanged;
             splitContainerMain.MouseDoubleClick += SplitContainerEventContent_MouseDoubleClick;
+            lblResult.UpdateResultMessage("XIN MỜI VÀO", Color.DarkGreen);
         }
 
         private void SplitContainerEventContent_MouseDoubleClick(object? sender, MouseEventArgs e)
@@ -1242,7 +1244,7 @@ namespace iParkingv5_window.Usercontrols
                 txtPlate.Text = string.Empty;
                 txtPlate.Refresh();
 
-                lblResult.Text = "";
+                lblResult.Message = "";
                 lblResult.Refresh();
             }));
         }
@@ -1534,6 +1536,10 @@ namespace iParkingv5_window.Usercontrols
             base.Dispose(disposing);
         }
 
-
+        private void panelAction_SizeChanged(object sender, EventArgs e)
+        {
+          //  panelAction.Height = panelAction.PreferredSize.Height;
+            //panelAction.Height = (panelAction.Width > panelAction.PreferredSize.Width) ? 48 : 20 + 48;
+        }
     }
 }

@@ -45,8 +45,8 @@ namespace iParkingv5_window.Forms.DataForms
             cbVehicleTypes = new ComboBox();
             lblCustomerCode = new Label();
             txtCustomerCode = new TextBox();
-            btnOk1 = new LblOk();
-            btnSearch = new LblSearch();
+            btnOk1 = new BtnOk();
+            btnSearch = new BtnSearch();
             SuspendLayout();
             // 
             // lblCustomerName
@@ -257,7 +257,7 @@ namespace iParkingv5_window.Forms.DataForms
         private ComboBox cbVehicleTypes;
         private Label lblCustomerCode;
         private TextBox txtCustomerCode;
-        private LblOk btnOk1;
-        private LblSearch btnSearch;
+        private BtnOk btnOk1;
+        private BtnSearch btnSearch;
     }
 }
