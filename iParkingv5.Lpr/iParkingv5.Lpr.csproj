@@ -9,12 +9,16 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="OpenCvSharp4" Version="4.9.0.20240103" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Kztek.LPR">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\Kztek.LPR.dll</HintPath>
+    <Reference Include="DarknetYolo">
+      <HintPath>C:\Users\Admin\OneDrive\Desktop\NXT AI LPR\NXT AI LPR\DarknetYolo.dll</HintPath>
+    </Reference>
+    <Reference Include="NXT.Net6.LPR_AI">
+      <HintPath>C:\Users\Admin\OneDrive\Desktop\NXT AI LPR\NXT AI LPR\NXT.Net6.LPR_AI.dll</HintPath>
     </Reference>
   </ItemGroup>
 

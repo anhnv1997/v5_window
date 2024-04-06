@@ -38,13 +38,13 @@ namespace iParkingv5_window.Forms.DataForms
             btnCancel1 = new LblCancel();
             btnOk = new BtnOk();
             dgvEventInData = new DataGridView();
+            Column1 = new DataGridViewTextBoxColumn();
+            Column2 = new DataGridViewTextBoxColumn();
             panel1 = new Panel();
             panelEventPic = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
             picOverview = new Usercontrols.MovablePictureBox();
             picVehicle = new Usercontrols.MovablePictureBox();
-            Column1 = new DataGridViewTextBoxColumn();
-            Column2 = new DataGridViewTextBoxColumn();
             panelAction.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEventInData).BeginInit();
             panel1.SuspendLayout();
@@ -60,7 +60,7 @@ namespace iParkingv5_window.Forms.DataForms
             lblMessage.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
             lblMessage.Location = new Point(0, 0);
             lblMessage.Name = "lblMessage";
-            lblMessage.Size = new Size(760, 58);
+            lblMessage.Size = new Size(945, 58);
             lblMessage.TabIndex = 0;
             lblMessage.Text = "label1";
             lblMessage.TextAlign = ContentAlignment.MiddleCenter;
@@ -72,7 +72,7 @@ namespace iParkingv5_window.Forms.DataForms
             panelAction.Dock = DockStyle.Bottom;
             panelAction.Location = new Point(0, 423);
             panelAction.Name = "panelAction";
-            panelAction.Size = new Size(760, 62);
+            panelAction.Size = new Size(945, 62);
             panelAction.TabIndex = 1;
             // 
             // btnCancel1
@@ -81,9 +81,9 @@ namespace iParkingv5_window.Forms.DataForms
             btnCancel1.AutoSize = true;
             btnCancel1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnCancel1.ForeColor = Color.Black;
-            btnCancel1.Location = new Point(688, 22);
+            btnCancel1.Location = new Point(865, 14);
             btnCancel1.Name = "btnCancel1";
-            btnCancel1.Size = new Size(49, 22);
+            btnCancel1.Size = new Size(57, 30);
             btnCancel1.TabIndex = 3;
             btnCancel1.Text = "Đóng";
             // 
@@ -93,9 +93,9 @@ namespace iParkingv5_window.Forms.DataForms
             btnOk.AutoSize = true;
             btnOk.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnOk.ForeColor = Color.Black;
-            btnOk.Location = new Point(607, 22);
+            btnOk.Location = new Point(784, 14);
             btnOk.Name = "btnOk";
-            btnOk.Size = new Size(75, 22);
+            btnOk.Size = new Size(83, 30);
             btnOk.TabIndex = 2;
             btnOk.Text = "Xác nhận";
             // 
@@ -125,11 +125,22 @@ namespace iParkingv5_window.Forms.DataForms
             dgvEventInData.Dock = DockStyle.Fill;
             dgvEventInData.Location = new Point(0, 0);
             dgvEventInData.Name = "dgvEventInData";
-            dgvEventInData.ReadOnly = true;
             dgvEventInData.RowHeadersVisible = false;
             dgvEventInData.RowTemplate.Height = 29;
-            dgvEventInData.Size = new Size(439, 365);
+            dgvEventInData.Size = new Size(624, 365);
             dgvEventInData.TabIndex = 2;
+            // 
+            // Column1
+            // 
+            Column1.HeaderText = "Header";
+            Column1.Name = "Column1";
+            Column1.Width = 5;
+            // 
+            // Column2
+            // 
+            Column2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Column2.HeaderText = "Content";
+            Column2.Name = "Column2";
             // 
             // panel1
             // 
@@ -138,14 +149,14 @@ namespace iParkingv5_window.Forms.DataForms
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 58);
             panel1.Name = "panel1";
-            panel1.Size = new Size(760, 365);
+            panel1.Size = new Size(945, 365);
             panel1.TabIndex = 3;
             // 
             // panelEventPic
             // 
             panelEventPic.Controls.Add(tableLayoutPanel1);
             panelEventPic.Dock = DockStyle.Right;
-            panelEventPic.Location = new Point(439, 0);
+            panelEventPic.Location = new Point(624, 0);
             panelEventPic.Name = "panelEventPic";
             panelEventPic.Size = new Size(321, 365);
             panelEventPic.TabIndex = 3;
@@ -185,26 +196,12 @@ namespace iParkingv5_window.Forms.DataForms
             picVehicle.TabIndex = 0;
             picVehicle.TabStop = false;
             // 
-            // Column1
-            // 
-            Column1.HeaderText = "Header";
-            Column1.Name = "Column1";
-            Column1.ReadOnly = true;
-            Column1.Width = 5;
-            // 
-            // Column2
-            // 
-            Column2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Column2.HeaderText = "Content";
-            Column2.Name = "Column2";
-            Column2.ReadOnly = true;
-            // 
-            // frmConfirm
+            // frmConfirmOut
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             AutoSize = true;
-            ClientSize = new Size(760, 485);
+            ClientSize = new Size(945, 485);
             Controls.Add(panel1);
             Controls.Add(lblMessage);
             Controls.Add(panelAction);
@@ -213,7 +210,7 @@ namespace iParkingv5_window.Forms.DataForms
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "frmConfirm";
+            Name = "frmConfirmOut";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Xác nhận thông tin";
             panelAction.ResumeLayout(false);

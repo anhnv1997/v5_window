@@ -107,7 +107,7 @@ namespace iParkingv5_window.Forms.DataForms
 
             if (!string.IsNullOrEmpty(txtIdentity.Text))
             {
-                var identityResponse = await KzParkingApiHelper.GetIdentityByCode(txtIdentity.Text);
+                var identityResponse = await KzParkingApiHelper.GetIdentityByCodeAsync(txtIdentity.Text);
                 Identity? identity = identityResponse.Item1;
                 if (!identityResponse.Item2)
                 {

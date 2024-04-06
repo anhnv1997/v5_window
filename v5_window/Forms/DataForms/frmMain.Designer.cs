@@ -47,6 +47,7 @@
             ucViewGrid1 = new Usercontrols.ucViewGrid();
             panelAppStatus = new Panel();
             lblLoadingStatus = new Label();
+            lblScale = new Label();
             lblCompanyName = new Label();
             lblTime = new Label();
             lblServerName = new Label();
@@ -57,6 +58,8 @@
             label1 = new Label();
             splitterDevelopeMode = new Splitter();
             timerUpdateControllerConnection = new System.Windows.Forms.Timer(components);
+            báoCáoCânToolStripMenuItem = new ToolStripMenuItem();
+            btnScaleReport = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             panelMain.SuspendLayout();
             panelAppStatus.SuspendLayout();
@@ -67,12 +70,13 @@
             // menuStrip1
             // 
             menuStrip1.Font = new Font("Segoe UI", 12F);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { miSystem, miReport, đăngKýToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { miSystem, miReport, đăngKýToolStripMenuItem, báoCáoCânToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(883, 29);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
+            menuStrip1.DoubleClick += menuStrip1_DoubleClick;
             // 
             // miSystem
             // 
@@ -142,6 +146,7 @@
             đăngKýToolStripMenuItem.Name = "đăngKýToolStripMenuItem";
             đăngKýToolStripMenuItem.Size = new Size(79, 25);
             đăngKýToolStripMenuItem.Text = "Đăng ký";
+            đăngKýToolStripMenuItem.Visible = false;
             // 
             // btnRegisterCar
             // 
@@ -165,6 +170,7 @@
             btnRegisterWalker.Name = "btnRegisterWalker";
             btnRegisterWalker.Size = new Size(211, 26);
             btnRegisterWalker.Text = "Người đi bộ";
+            btnRegisterWalker.Visible = false;
             btnRegisterWalker.Click += btnRegisterWalker_Click;
             // 
             // btnRegisterList
@@ -173,6 +179,7 @@
             btnRegisterList.Name = "btnRegisterList";
             btnRegisterList.Size = new Size(211, 26);
             btnRegisterList.Text = "Danh sách đăng ký";
+            btnRegisterList.Visible = false;
             btnRegisterList.Click += btnRegisterList_Click;
             // 
             // panelMain
@@ -201,6 +208,7 @@
             // 
             panelAppStatus.BorderStyle = BorderStyle.Fixed3D;
             panelAppStatus.Controls.Add(lblLoadingStatus);
+            panelAppStatus.Controls.Add(lblScale);
             panelAppStatus.Controls.Add(lblCompanyName);
             panelAppStatus.Controls.Add(lblTime);
             panelAppStatus.Controls.Add(lblServerName);
@@ -216,13 +224,25 @@
             lblLoadingStatus.Dock = DockStyle.Fill;
             lblLoadingStatus.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             lblLoadingStatus.ForeColor = Color.FromArgb(192, 64, 0);
-            lblLoadingStatus.Location = new Point(260, 0);
+            lblLoadingStatus.Location = new Point(362, 0);
             lblLoadingStatus.Name = "lblLoadingStatus";
             lblLoadingStatus.Padding = new Padding(10, 0, 0, 0);
-            lblLoadingStatus.Size = new Size(378, 32);
+            lblLoadingStatus.Size = new Size(276, 32);
             lblLoadingStatus.TabIndex = 4;
             lblLoadingStatus.Text = "Đang Tải Thông Tin ...";
             lblLoadingStatus.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // lblScale
+            // 
+            lblScale.Dock = DockStyle.Left;
+            lblScale.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            lblScale.Location = new Point(230, 0);
+            lblScale.Name = "lblScale";
+            lblScale.Padding = new Padding(10, 0, 0, 0);
+            lblScale.Size = new Size(132, 32);
+            lblScale.TabIndex = 5;
+            lblScale.Text = "Số Cân: ";
+            lblScale.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblCompanyName
             // 
@@ -253,7 +273,7 @@
             // 
             lblServerName.Dock = DockStyle.Left;
             lblServerName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblServerName.Location = new Point(143, 0);
+            lblServerName.Location = new Point(113, 0);
             lblServerName.Name = "lblServerName";
             lblServerName.Padding = new Padding(10, 0, 0, 0);
             lblServerName.Size = new Size(117, 32);
@@ -268,7 +288,7 @@
             lblSoftwareName.Location = new Point(0, 0);
             lblSoftwareName.Name = "lblSoftwareName";
             lblSoftwareName.Padding = new Padding(10, 0, 0, 0);
-            lblSoftwareName.Size = new Size(143, 32);
+            lblSoftwareName.Size = new Size(113, 32);
             lblSoftwareName.TabIndex = 0;
             lblSoftwareName.Text = "IPARKINGv5";
             lblSoftwareName.TextAlign = ContentAlignment.MiddleLeft;
@@ -335,6 +355,20 @@
             timerUpdateControllerConnection.Interval = 1000;
             timerUpdateControllerConnection.Tick += timerUpdateControllerConnection_Tick;
             // 
+            // báoCáoCânToolStripMenuItem
+            // 
+            báoCáoCânToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { btnScaleReport });
+            báoCáoCânToolStripMenuItem.Name = "báoCáoCânToolStripMenuItem";
+            báoCáoCânToolStripMenuItem.Size = new Size(104, 25);
+            báoCáoCânToolStripMenuItem.Text = "Báo cáo cân";
+            // 
+            // btnScaleReport
+            // 
+            btnScaleReport.Name = "btnScaleReport";
+            btnScaleReport.Size = new Size(202, 26);
+            btnScaleReport.Text = "Báo cáo tổng hợp";
+            btnScaleReport.Click += btnScaleReport_Click;
+            // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -390,5 +424,8 @@
         private ToolStripMenuItem btnRegisterMotor;
         private ToolStripMenuItem btnRegisterWalker;
         private ToolStripMenuItem btnRegisterList;
+        private Label lblScale;
+        private ToolStripMenuItem báoCáoCânToolStripMenuItem;
+        private ToolStripMenuItem btnScaleReport;
     }
 }

@@ -49,6 +49,8 @@ namespace iParkingv6.Objects.Datas
                     return "Hanse";
                 case 9:
                     return "Tiandy";
+                case 10:
+                    return "DMAX";
                 default:
                     return "";
             }

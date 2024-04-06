@@ -1,4 +1,5 @@
 ﻿using iParkingv5.Objects.Configs;
+using System.IO.Ports;
 using static iParkingv5.Objects.Enums.PrintHelpers;
 
 namespace iParking.ConfigurationManager.UserControls
@@ -15,6 +16,7 @@ namespace iParking.ConfigurationManager.UserControls
             InitializeComponent();
             this.appOption = appOption;
             LoadPrintTemplate();
+            
             if (this.appOption != null)
             {
                 txtAllowOpenBarrieTime.Text = appOption!.AllowBarrieDelayOpenTime.ToString();
@@ -22,9 +24,13 @@ namespace iParking.ConfigurationManager.UserControls
                 cbPrintTemplate.SelectedIndex = appOption.PrintTemplate;
                 chbIsSaveLog.Checked = appOption.IsSaveLog;
                 numLoopDelay.Value = appOption.LoopDelay;
+                numRetakePhotoTurn.Value = appOption.RetakePhotoTimes;
+                numRetakePhotoDelayTime.Value = appOption.RetakePhotoDelay;
             }
             txtWaitSwipeCardTime.TextChanged += TxtWaitSwipeCardTime_TextChanged;
             txtAllowOpenBarrieTime.TextChanged += TxtAllowOpenBarrieTime_TextChanged;
+
+            
         }
         #endregion End Forms
 
@@ -55,6 +61,8 @@ namespace iParking.ConfigurationManager.UserControls
                 PrintTemplate = cbPrintTemplate.SelectedIndex,
                 IsSaveLog = chbIsSaveLog.Checked,
                 LoopDelay = (int)numLoopDelay.Value,
+                RetakePhotoTimes = (int)numRetakePhotoTurn.Value,
+                RetakePhotoDelay = (int)numRetakePhotoDelayTime.Value,
             };
         }
         #endregion End Public Function

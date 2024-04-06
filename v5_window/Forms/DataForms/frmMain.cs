@@ -1,5 +1,7 @@
 ﻿using IPaking.Ultility;
 using iPakrkingv5.Controls;
+using iParkingv5.ApiManager.KzScaleApis;
+using iParkingv5.ApiManager.XuanCuong;
 using iParkingv5.Controller;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
@@ -9,14 +11,18 @@ using iParkingv5_window.Forms.ReportForms;
 using iParkingv5_window.Forms.SystemForms;
 using iParkingv5_window.Usercontrols;
 using iParkingv6.Objects.Datas;
+using Kztek.Scale_net6.Interfaces;
+using Kztek.Scale_net6.Objects;
 using Kztek.Tool;
 using Kztek.Tools;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Collections.Concurrent;
 using System.Text;
+using v5_IScale.Forms.ReportForms;
 using static IPaking.Ultility.TextManagement;
 using static iParkingv5.Controller.ControllerFactory;
+using static iParkingv5.Objects.Enums.PrintHelpers;
 
 namespace iParkingv5_window.Forms.DataForms
 {
@@ -24,14 +30,18 @@ namespace iParkingv5_window.Forms.DataForms
     {
         public static ControlSizeChangedEventArgs? splitContainerMainLocation;
         public static EmLanguage language = EmLanguage.Vietnamese;
+        private bool isScale = false;
         #region Properties
         public static List<IController> controllers = new List<IController>();
         private static List<iLane> lanes = new List<iLane>();
+        private static IScale scaleController;
         public static ConcurrentQueue<CardEventArgs> cardEvents = new ConcurrentQueue<CardEventArgs>();
         public static ConcurrentQueue<InputEventArgs> inputEvents = new ConcurrentQueue<InputEventArgs>();
         List<LaneDisplayConfig>? laneDisplayConfigs = null;
         public static string controllerEventInitQueueName = "queue.ControllerEvent";
         private List<Lane> activeLanes = new List<Lane>();
+        public static string defaultImagePath = Application.StartupPath + @"Resources\defaultImage.png";
+        //public static Image _defaultImage ;
         #endregion
 
         #region Forms
@@ -106,10 +116,12 @@ namespace iParkingv5_window.Forms.DataForms
             {
                 var screenBound = Screen.FromControl(this).WorkingArea;
                 this.Size = new Size(screenBound.Width, screenBound.Height);
-                this.Size = new Size(1366,768);
+                //this.Size = new Size(1366, 768);
                 this.Location = new Point(0, 0);
 
                 LoadAppDisplayConfig();
+                LoadScaleConfig();
+                LoadThirdPartyConfig();
 
                 InitLaneView();
                 await ConnectToRabbitMQ();
@@ -124,6 +136,47 @@ namespace iParkingv5_window.Forms.DataForms
                 LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
             }
         }
+
+        private void LoadScaleConfig()
+        {
+            if (File.Exists(PathManagement.scaleConfigPath))
+            {
+                var scaleConfig = NewtonSoftHelper<ScaleConfig>.DeserializeObjectFromPath(PathManagement.scaleConfigPath) ?? ScaleConfig.CreateDefaultConfig();
+                this.isScale = scaleConfig.IsUseScaleDevice;
+                KzScaleApiHelper.server = scaleConfig.ScaleServer;
+                scaleController = ScaleFactory.CreateScaleController(scaleConfig);
+                scaleController.Connect(scaleConfig.Comport, scaleConfig.Baudrate);
+                scaleController.PollingStart();
+                if (scaleController != null)
+                {
+                    scaleController.ScaleEvent += ScaleController_ScaleEvent;
+                    scaleController.PollingStart();
+                }
+            }
+            if (((EmPrintTemplate)StaticPool.appOption.PrintTemplate) != EmPrintTemplate.XuanCuong)
+            {
+                báoCáoCânToolStripMenuItem.Visible = false;
+            }
+        }
+        private void LoadThirdPartyConfig()
+        {
+            if (File.Exists(PathManagement.thirtPartyConfigPath))
+            {
+                var thirdPartyConfig = NewtonSoftHelper<ThirdPartyConfig>.DeserializeObjectFromPath(PathManagement.thirtPartyConfigPath);
+                if (thirdPartyConfig != null)
+                {
+                    if (thirdPartyConfig.IsUse)
+                    {
+                        if (((EmPrintTemplate)StaticPool.appOption.PrintTemplate) == EmPrintTemplate.XuanCuong)
+                        {
+                            XuanCuongApiHelper.url = thirdPartyConfig.ServerUrl;
+                            XuanCuongApiHelper.apiKey = thirdPartyConfig.Password;
+                        }
+                    }
+                }
+            }
+        }
+
         private void frmMain_FormClosing(object? sender, FormClosingEventArgs e)
         {
             FormClosing -= frmMain_FormClosing;
@@ -201,9 +254,28 @@ namespace iParkingv5_window.Forms.DataForms
             lblTime.Text = DateTime.Now.ToString(UltilityManagement.timeFormat);
             lblTime.Refresh();
         }
-        #endregion
+        #endregion End Timer
 
         #region Controller Event
+        private void ScaleController_ScaleEvent(object sender, Kztek.Scale_net6.Events.ScaleEventArgs e)
+        {
+            this.Invoke(new Action(() =>
+            {
+                this.Invoke(new Action(() =>
+                {
+                    foreach (iLane iLane in lanes)
+                    {
+                        iLane.ScaleValue = e.Gross;
+                    }
+                }));
+
+                if (lblScale.Text != "Số cân: " + e.Gross.ToString())
+                {
+                    lblScale.Text = "Số cân: " + e.Gross.ToString();
+                }
+            }));
+        }
+
         private void Controller_DeviceInfoChangeEvent(object sender, DeviceInfoChangeArgs e)
         {
             lblLoadingStatus.BeginInvoke(new Action(() =>
@@ -259,8 +331,18 @@ namespace iParkingv5_window.Forms.DataForms
         //--LOADING
         private void LoadAppDisplayConfig()
         {
+            laneDisplayConfigs = new List<LaneDisplayConfig>();
+            foreach (var item in this.activeLanes)
+            {
+                var config = NewtonSoftHelper<LaneDisplayConfig>.DeserializeObjectFromPath(PathManagement.appDisplayConfigPath(item.id));
+                if (config != null)
+                {
+                    laneDisplayConfigs.Add(config);
+                }
+            }
+
             //Đọc thông tin config thứ tự hiển thị trên giao diện
-            laneDisplayConfigs = NewtonSoftHelper<List<LaneDisplayConfig>>.DeserializeObjectFromPath(PathManagement.appDisplayConfigPath);
+            //laneDisplayConfigs = NewtonSoftHelper<List<LaneDisplayConfig>>.DeserializeObjectFromPath(PathManagement.appDisplayConfigPath);
             if (laneDisplayConfigs != null)
             {
                 //Lấy danh sách laneId theo thứ tự ưu tiên
@@ -282,12 +364,13 @@ namespace iParkingv5_window.Forms.DataForms
 
             ucViewGrid1.SuspendLayout();
             ucViewGrid1.UpdateRowSetting(1, this.activeLanes.Count);
+            bool isDisplayLastEvent = this.activeLanes.Count == 1;
             foreach (Lane lane in this.activeLanes)
             {
                 lblLoadingStatus.Text = "Khởi tạo làn: " + lane.name;
                 lblLoadingStatus.Refresh();
                 LaneDisplayConfig? laneDisplayConfig = GetLaneDisplayConfigByLaneId(lane);
-                iLane iLane = LaneFactory.CreateLane(lane, laneDisplayConfig);
+                iLane iLane = LaneFactory.CreateLane(lane, laneDisplayConfig, isDisplayLastEvent, this.isScale);
                 iLane.OnChangeLaneEvent += ILane_OnChangeLaneEvent;
                 lanes.Add(iLane);
                 ucViewGrid1.UpdateSelectLocation(iLane as Control);
@@ -380,7 +463,15 @@ namespace iParkingv5_window.Forms.DataForms
         //--CLOSING
         private bool SaveUIConfig()
         {
-            return NewtonSoftHelper<List<LaneDisplayConfig>>.SaveConfig(laneDisplayConfigs, PathManagement.appDisplayConfigPath);
+            if (laneDisplayConfigs != null)
+            {
+                foreach (var item in laneDisplayConfigs)
+                {
+                    NewtonSoftHelper<LaneDisplayConfig>.SaveConfig(item, PathManagement.appDisplayConfigPath(item.LaneId));
+                }
+            }
+            return true;
+            //return NewtonSoftHelper<List<LaneDisplayConfig>>.SaveConfig(laneDisplayConfigs, PathManagement.appDisplayConfigPath);
         }
 
         //--RABBITMQ
@@ -455,9 +546,15 @@ namespace iParkingv5_window.Forms.DataForms
             timerUpdateControllerConnection.Enabled = true;
         }
 
-        private void tsmiActiveLanesConfig_Click(object sender, EventArgs e)
+        private async void tsmiActiveLanesConfig_Click(object sender, EventArgs e)
         {
             FormClosing -= frmMain_FormClosing;
+            foreach (var item in controllers)
+            {
+                item.PollingStop();
+                await item.DisconnectAsync();
+            }
+            controllers.Clear();
             frmSelectLaneMode frm = new frmSelectLaneMode()
             {
                 Owner = this.Owner,
@@ -529,13 +626,14 @@ namespace iParkingv5_window.Forms.DataForms
                         break;
                     }
                 }
-
+                bool isDisplayLastEvent = this.activeLanes.Count == 1;
                 if (updateLane != null)
                 {
                     lblLoadingStatus.Text = "Khởi tạo làn: " + updateLane.name;
                     lblLoadingStatus.Refresh();
+                    LoadAppDisplayConfig();
                     LaneDisplayConfig? laneDisplayConfig = GetLaneDisplayConfigByLaneId(updateLane);
-                    iLane iLane = LaneFactory.CreateLane(updateLane, laneDisplayConfig);
+                    iLane iLane = LaneFactory.CreateLane(updateLane, laneDisplayConfig, isDisplayLastEvent, this.isScale);
                     iLane.OnChangeLaneEvent += ILane_OnChangeLaneEvent;
                     for (int i = 0; i < lanes.Count; i++)
                     {
@@ -563,6 +661,7 @@ namespace iParkingv5_window.Forms.DataForms
                     {
                         table.ColumnStyles[i] = new ColumnStyle(SizeType.Percent, 60);
                     }
+                    ((iLane)item).DisplayUIConfig();
                 }
                 ucViewGrid1.ResumeLayout();
                 GC.Collect();
@@ -571,22 +670,77 @@ namespace iParkingv5_window.Forms.DataForms
 
         private void btnRegisterCar_Click(object sender, EventArgs e)
         {
-            new frmCustomerRegister(this.activeLanes, iParkingv5.Objects.Enums.VehicleType.VehicleBaseType.Car).Show();
+            foreach (var item in controllers)
+            {
+                item.CardEvent -= Controller_CardEvent;
+                item.ErrorEvent -= Controller_ErrorEvent;
+                item.InputEvent -= Controller_InputEvent;
+                item.ConnectStatusChangeEvent -= Controller_ConnectStatusChangeEvent;
+                item.DeviceInfoChangeEvent -= Controller_DeviceInfoChangeEvent;
+            }
+            new frmCustomerRegister(this.activeLanes, iParkingv5.Objects.Enums.VehicleType.VehicleBaseType.Car).ShowDialog();
+            foreach (var item in controllers)
+            {
+                item.CardEvent += Controller_CardEvent;
+                item.ErrorEvent += Controller_ErrorEvent;
+                item.InputEvent += Controller_InputEvent;
+                item.ConnectStatusChangeEvent += Controller_ConnectStatusChangeEvent;
+                item.DeviceInfoChangeEvent += Controller_DeviceInfoChangeEvent;
+            }
         }
 
         private void btnRegisterMotor_Click(object sender, EventArgs e)
         {
-            new frmCustomerRegister(this.activeLanes, iParkingv5.Objects.Enums.VehicleType.VehicleBaseType.MotorBike).Show();
+            foreach (var item in controllers)
+            {
+                item.CardEvent -= Controller_CardEvent;
+                item.ErrorEvent -= Controller_ErrorEvent;
+                item.InputEvent -= Controller_InputEvent;
+                item.ConnectStatusChangeEvent -= Controller_ConnectStatusChangeEvent;
+                item.DeviceInfoChangeEvent -= Controller_DeviceInfoChangeEvent;
+            }
+            new frmCustomerRegister(this.activeLanes, iParkingv5.Objects.Enums.VehicleType.VehicleBaseType.MotorBike).ShowDialog();
+            foreach (var item in controllers)
+            {
+                item.CardEvent += Controller_CardEvent;
+                item.ErrorEvent += Controller_ErrorEvent;
+                item.InputEvent += Controller_InputEvent;
+                item.ConnectStatusChangeEvent += Controller_ConnectStatusChangeEvent;
+                item.DeviceInfoChangeEvent += Controller_DeviceInfoChangeEvent;
+            }
         }
 
         private void btnRegisterWalker_Click(object sender, EventArgs e)
         {
-            new frmWalkerRegister().Show();
+            foreach (var item in controllers)
+            {
+                item.CardEvent -= Controller_CardEvent;
+                item.ErrorEvent -= Controller_ErrorEvent;
+                item.InputEvent -= Controller_InputEvent;
+                item.ConnectStatusChangeEvent -= Controller_ConnectStatusChangeEvent;
+                item.DeviceInfoChangeEvent -= Controller_DeviceInfoChangeEvent;
+            }
+            new frmWalkerRegister().ShowDialog();
+            foreach (var item in controllers)
+            {
+                item.CardEvent += Controller_CardEvent;
+                item.ErrorEvent += Controller_ErrorEvent;
+                item.InputEvent += Controller_InputEvent;
+                item.ConnectStatusChangeEvent += Controller_ConnectStatusChangeEvent;
+                item.DeviceInfoChangeEvent += Controller_DeviceInfoChangeEvent;
+            }
         }
-
         private void btnRegisterList_Click(object sender, EventArgs e)
         {
             new frmRegisteredList().Show();
+        }
+        private void menuStrip1_DoubleClick(object sender, EventArgs e)
+        {
+            panelAppStatus.Visible = !panelAppStatus.Visible;
+        }
+        private void btnScaleReport_Click(object sender, EventArgs e)
+        {
+            new frmReportScaleWithInvoice().ShowDialog();
         }
     }
 }

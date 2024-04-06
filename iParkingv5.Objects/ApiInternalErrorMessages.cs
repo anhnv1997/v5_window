@@ -30,6 +30,7 @@ namespace iParkingv5.Objects
             /// </summary>
             PINT_1018,
             PINT_1019,
+            PINT_1021,
             PINT_4001,
             PINT_4002,
             PINT_4003,
@@ -82,7 +83,7 @@ namespace iParkingv5.Objects
                 case EmApiErrorMessage.PINT_1009:
                     return language == 0 ? "Phương tiện chưa được kích hoạt" : "Registered vehicle not activated";
                 case EmApiErrorMessage.PINT_1010:
-                    return language == 0 ? "Identity not in use" : "Identity not in use";
+                    return language == 0 ? "Định danh - ngừng sử dụng" : "Identity not in use";
                 case EmApiErrorMessage.PINT_1011:
                     return language == 0 ? "Xe đang trong bãi" : "Vehicle already in parking lot";
                 case EmApiErrorMessage.PINT_1012:
@@ -96,11 +97,13 @@ namespace iParkingv5.Objects
                 case EmApiErrorMessage.PINT_1016:
                     return language == 0 ? "Nhóm định danh - sai giờ sử dụng" : "Identity group not enabled in this time";
                 case EmApiErrorMessage.PINT_1017:
-                    return language == 0 ? "This Identity is not the one used for check in" : "This Identity is not the one used for check in";
+                    return language == 0 ? "Định danh không được phép sử dụng" : "This Identity is not the one used for check in";
                 case EmApiErrorMessage.PINT_1018:
                     return language == 0 ? "Biển số vào ra không khớp" : "Plate number in and out are not same";
                 case EmApiErrorMessage.PINT_1019:
                     return language == 0 ? "Phương tiện không được phép ghi vào bằng biển số" : "Registered vehicle not allowed to check in by plate only";
+                case EmApiErrorMessage.PINT_1021:
+                    return language == 0 ? "Chưa được phép ra" : "This vehicle not allowed to checkout by Third party";
                 case EmApiErrorMessage.PINT_4001:
                     return language == 0 ? "Không tìm thấy thông tin camera" : "Camera not found";
                 case EmApiErrorMessage.PINT_4002:

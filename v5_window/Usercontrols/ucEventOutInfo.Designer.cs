@@ -157,9 +157,9 @@ namespace iParkingv5_window.Usercontrols
             // 
             lblCancel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             lblCancel1.AutoSize = true;
-            lblCancel1.Location = new Point(679, 451);
+            lblCancel1.Location = new Point(671, 443);
             lblCancel1.Name = "lblCancel1";
-            lblCancel1.Size = new Size(80, 22);
+            lblCancel1.Size = new Size(88, 30);
             lblCancel1.TabIndex = 5;
             lblCancel1.Text = "lblCancel1";
             // 

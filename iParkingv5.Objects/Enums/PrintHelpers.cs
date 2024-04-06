@@ -8,7 +8,8 @@ namespace iParkingv5.Objects.Enums
     {
         public enum EmPrintTemplate
         {
-            BaseTemplate
+            BaseTemplate,
+            XuanCuong,
         }
     }
 }

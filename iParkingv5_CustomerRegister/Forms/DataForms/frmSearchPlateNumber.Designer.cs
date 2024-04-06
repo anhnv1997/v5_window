@@ -40,7 +40,7 @@ namespace iParkingv5_window.Forms.DataForms
             lblTitle = new Label();
             btnCancel1 = new LblCancel();
             btnOk1 = new BtnOk();
-            lblSearch = new BtnSearch();
+            btnSearch = new BtnSearch();
             ucNotify1 = new ucNotify();
             lblKeyword = new Label();
             txtKeyword = new TextBox();
@@ -67,7 +67,7 @@ namespace iParkingv5_window.Forms.DataForms
             panelData.Controls.Add(lblTitle);
             panelData.Controls.Add(btnCancel1);
             panelData.Controls.Add(btnOk1);
-            panelData.Controls.Add(lblSearch);
+            panelData.Controls.Add(btnSearch);
             panelData.Controls.Add(ucNotify1);
             panelData.Controls.Add(lblKeyword);
             panelData.Controls.Add(txtKeyword);
@@ -121,13 +121,13 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             // lblSearch
             // 
-            lblSearch.AutoSize = true;
-            lblSearch.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblSearch.Location = new Point(560, 98);
-            lblSearch.Name = "lblSearch";
-            lblSearch.Size = new Size(91, 30);
-            lblSearch.TabIndex = 1;
-            lblSearch.Text = "lblSearch1";
+            btnSearch.AutoSize = true;
+            btnSearch.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            btnSearch.Location = new Point(560, 98);
+            btnSearch.Name = "lblSearch";
+            btnSearch.Size = new Size(91, 30);
+            btnSearch.TabIndex = 1;
+            btnSearch.Text = "lblSearch1";
             // 
             // ucNotify1
             // 
@@ -303,7 +303,7 @@ namespace iParkingv5_window.Forms.DataForms
         private Label lblTitle;
         private LblCancel btnCancel1;
         private BtnOk btnOk1;
-        private BtnSearch lblSearch;
+        private BtnSearch btnSearch;
         private ucNotify ucNotify1;
         private Label lblKeyword;
         private TextBox txtKeyword;

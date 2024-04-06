@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "oysd7C90QWGhFGzWstHgKWIzQQprys/ZU4PftpEP2Yu5usSHobfSOdU7rRNbZY+tB4+L4W9acsjMKs1njjukhw==",
+  "dgSpecHash": "fFb/eV2HcI1gOcuw+ZoR5m77o+gwbiQLAaPtxIIKK19MCpbZhEBggqwftXITo8Re61iW8W1xWr9RXae61jzGmA==",
   "success": true,
   "projectFilePath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\v5_window\\iParkingv5_window.csproj",
   "expectedPackageFiles": [
@@ -12,6 +12,7 @@
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.win32.systemevents\\8.0.0\\microsoft.win32.systemevents.8.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\minio\\5.0.0\\minio.5.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\opencvsharp4\\4.9.0.20240103\\opencvsharp4.4.9.0.20240103.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\rabbitmq.client\\6.8.1\\rabbitmq.client.6.8.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\restsharp\\110.2.0\\restsharp.110.2.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\restsharp.authenticators.digest\\1.6.0\\restsharp.authenticators.digest.1.6.0.nupkg.sha512",

@@ -194,11 +194,12 @@ namespace iParkingv5_window.Forms.DataForms
             btnOk1.AutoSize = true;
             btnOk1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnOk1.ForeColor = Color.Black;
-            btnOk1.Location = new Point(327, 304);
+            btnOk1.Location = new Point(319, 296);
             btnOk1.Name = "btnOk1";
-            btnOk1.Size = new Size(75, 22);
+            btnOk1.Size = new Size(83, 30);
             btnOk1.TabIndex = 109;
             btnOk1.Text = "Xác nhận";
+            btnOk1.Click += btnOk1_Click_1;
             // 
             // btnCancel1
             // 
@@ -206,9 +207,9 @@ namespace iParkingv5_window.Forms.DataForms
             btnCancel1.AutoSize = true;
             btnCancel1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnCancel1.ForeColor = Color.Black;
-            btnCancel1.Location = new Point(408, 304);
+            btnCancel1.Location = new Point(400, 296);
             btnCancel1.Name = "btnCancel1";
-            btnCancel1.Size = new Size(49, 22);
+            btnCancel1.Size = new Size(57, 30);
             btnCancel1.TabIndex = 10;
             btnCancel1.Text = "Đóng";
             // 

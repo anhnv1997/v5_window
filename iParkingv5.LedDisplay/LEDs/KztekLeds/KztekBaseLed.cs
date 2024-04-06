@@ -66,6 +66,8 @@ namespace iParkingv5.LedDisplay.LEDs.KztekLeds
                             string temp = TextFormatingTool.GetMoneyFormat(parkingData.Money.ToString());
                             itemDetail.Value.Data = temp.Substring(0, temp.Length - 2).Trim();
                             break;
+                        case EmLedDisplayValue.Option:
+                            break;
                         default:
                             itemDetail.Value.Data = string.Empty;
                             break;

@@ -1,26 +1,12 @@
 ﻿using iParkingv5.LprDetecter.LprDetecters;
 using iParkingv5.Objects;
-using iParkingv5.Objects.Configs;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
-using IPGS.Object.Ultilities.Enums;
 using IPGS.Ultility.TextFormats;
-using Kztek.LPR;
 using Kztek.Tool.NetworkTools;
 using Kztek.Tools;
 using Minio;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace iParkingv5_window.Forms.SystemForms
 {

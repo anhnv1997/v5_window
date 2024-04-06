@@ -44,7 +44,9 @@
     <ProjectReference Include="..\iParkingv5.ApiManager\iParkingv5.ApiManager.csproj" />
     <ProjectReference Include="..\iParkingv5.Controller\iParkingv5.Controller.csproj" />
     <ProjectReference Include="..\iParkingv5.LedDisplay\iParkingv5.LedDisplay.csproj" />
+    <ProjectReference Include="..\iParkingv5.Lpr\iParkingv5.Lpr.csproj" />
     <ProjectReference Include="..\iParkingv5.Objects\iParkingv5.Objects.csproj" />
+    <ProjectReference Include="..\Kztek.Scale\Net6\Kztek.Scale\Kztek.Scale_net6.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -69,6 +71,9 @@
     <Reference Include="RtspClientSharp">
       <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\RtspClientSharp.dll</HintPath>
     </Reference>
+    <Reference Include="SayMoney">
+      <HintPath>..\..\..\v3_trunk\packages\SayMoney.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
@@ -76,6 +81,15 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\DataForms\frmSearchPlateNumber.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\ReportForms\frmReportScaleWithInvoice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\ReportForms\frmReportScaleWithoutInvoice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\ReportForms\frmSelectPrintCount.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
@@ -105,5 +119,9 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="obj\" />
   </ItemGroup>
 </Project>

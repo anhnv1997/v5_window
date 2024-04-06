@@ -42,6 +42,12 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
             picChangeConfirmPlateKey = new BtnSetting();
             picWriteOut = new BtnSetting();
             picReserveLane = new BtnSetting();
+            picReSnapshot = new BtnSetting();
+            lblReSnapshotLaneKey = new Label();
+            label4 = new Label();
+            label5 = new Label();
+            lblPrintKey = new Label();
+            picPrint = new BtnSetting();
             SuspendLayout();
             // 
             // label1
@@ -74,7 +80,7 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
             // lblConfirmPlateKey
             // 
             lblConfirmPlateKey.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            lblConfirmPlateKey.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point);
+            lblConfirmPlateKey.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline);
             lblConfirmPlateKey.ForeColor = Color.Navy;
             lblConfirmPlateKey.Location = new Point(171, 20);
             lblConfirmPlateKey.Name = "lblConfirmPlateKey";
@@ -86,7 +92,7 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
             // lblWriteOutKey
             // 
             lblWriteOutKey.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            lblWriteOutKey.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point);
+            lblWriteOutKey.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline);
             lblWriteOutKey.ForeColor = Color.Navy;
             lblWriteOutKey.Location = new Point(171, 65);
             lblWriteOutKey.Name = "lblWriteOutKey";
@@ -98,7 +104,7 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
             // lblReserveLaneKey
             // 
             lblReserveLaneKey.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            lblReserveLaneKey.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point);
+            lblReserveLaneKey.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline);
             lblReserveLaneKey.ForeColor = Color.Navy;
             lblReserveLaneKey.Location = new Point(171, 106);
             lblReserveLaneKey.Name = "lblReserveLaneKey";
@@ -111,7 +117,7 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
             // 
             picChangeConfirmPlateKey.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             picChangeConfirmPlateKey.AutoSize = true;
-            picChangeConfirmPlateKey.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            picChangeConfirmPlateKey.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             picChangeConfirmPlateKey.ForeColor = Color.Black;
             picChangeConfirmPlateKey.Image = (Image)resources.GetObject("picChangeConfirmPlateKey.Image");
             picChangeConfirmPlateKey.Location = new Point(465, 19);
@@ -124,7 +130,7 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
             // 
             picWriteOut.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             picWriteOut.AutoSize = true;
-            picWriteOut.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            picWriteOut.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             picWriteOut.ForeColor = Color.Black;
             picWriteOut.Image = (Image)resources.GetObject("picWriteOut.Image");
             picWriteOut.Location = new Point(465, 61);
@@ -137,7 +143,7 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
             // 
             picReserveLane.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             picReserveLane.AutoSize = true;
-            picReserveLane.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            picReserveLane.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             picReserveLane.ForeColor = Color.Black;
             picReserveLane.Image = (Image)resources.GetObject("picReserveLane.Image");
             picReserveLane.Location = new Point(465, 105);
@@ -146,10 +152,84 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
             picReserveLane.TabIndex = 5;
             picReserveLane.Text = " ";
             // 
+            // picReSnapshot
+            // 
+            picReSnapshot.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            picReSnapshot.AutoSize = true;
+            picReSnapshot.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            picReSnapshot.ForeColor = Color.Black;
+            picReSnapshot.Image = (Image)resources.GetObject("picReSnapshot.Image");
+            picReSnapshot.Location = new Point(465, 146);
+            picReSnapshot.Name = "picReSnapshot";
+            picReSnapshot.Size = new Size(55, 38);
+            picReSnapshot.TabIndex = 8;
+            picReSnapshot.Text = " ";
+            // 
+            // lblReSnapshotLaneKey
+            // 
+            lblReSnapshotLaneKey.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lblReSnapshotLaneKey.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline);
+            lblReSnapshotLaneKey.ForeColor = Color.Navy;
+            lblReSnapshotLaneKey.Location = new Point(160, 146);
+            lblReSnapshotLaneKey.Name = "lblReSnapshotLaneKey";
+            lblReSnapshotLaneKey.Size = new Size(291, 34);
+            lblReSnapshotLaneKey.TabIndex = 7;
+            lblReSnapshotLaneKey.Text = "label4";
+            lblReSnapshotLaneKey.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(14, 155);
+            label4.Name = "label4";
+            label4.Size = new Size(63, 20);
+            label4.TabIndex = 6;
+            label4.Text = "Chụp lại";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(14, 202);
+            label5.Name = "label5";
+            label5.Size = new Size(62, 20);
+            label5.TabIndex = 6;
+            label5.Text = "In Vé Xe";
+            // 
+            // lblPrintKey
+            // 
+            lblPrintKey.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            lblPrintKey.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline);
+            lblPrintKey.ForeColor = Color.Navy;
+            lblPrintKey.Location = new Point(160, 193);
+            lblPrintKey.Name = "lblPrintKey";
+            lblPrintKey.Size = new Size(291, 34);
+            lblPrintKey.TabIndex = 7;
+            lblPrintKey.Text = "label4";
+            lblPrintKey.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // picPrint
+            // 
+            picPrint.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            picPrint.AutoSize = true;
+            picPrint.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            picPrint.ForeColor = Color.Black;
+            picPrint.Image = (Image)resources.GetObject("picPrint.Image");
+            picPrint.Location = new Point(465, 193);
+            picPrint.Name = "picPrint";
+            picPrint.Size = new Size(55, 38);
+            picPrint.TabIndex = 8;
+            picPrint.Text = " ";
+            // 
             // ucLaneOutShortcutConfig
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(picPrint);
+            Controls.Add(picReSnapshot);
+            Controls.Add(lblPrintKey);
+            Controls.Add(label5);
+            Controls.Add(lblReSnapshotLaneKey);
+            Controls.Add(label4);
             Controls.Add(picReserveLane);
             Controls.Add(picWriteOut);
             Controls.Add(picChangeConfirmPlateKey);
@@ -160,7 +240,7 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "ucLaneOutShortcutConfig";
-            Size = new Size(523, 155);
+            Size = new Size(523, 281);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -176,5 +256,11 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
         private BtnSetting picChangeConfirmPlateKey;
         private BtnSetting picWriteOut;
         private BtnSetting picReserveLane;
+        private BtnSetting picReSnapshot;
+        private Label lblReSnapshotLaneKey;
+        private Label label4;
+        private Label label5;
+        private Label lblPrintKey;
+        private BtnSetting picPrint;
     }
 }

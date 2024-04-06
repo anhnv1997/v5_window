@@ -329,6 +329,8 @@ namespace ALSE.Objects
                 }
                 else
                 {
+                    cardNumberHEX = cardNumberHEX.Substring(6, 2) + cardNumberHEX.Substring(4, 2) +
+                                 cardNumberHEX.Substring(2, 2) + cardNumberHEX.Substring(0, 2);
                     string maInt = Convert.ToInt64(cardNumberHEX, 16).ToString();
                     e.AllCardFormats.Add(maInt);
                     e.PreferCard = maInt;

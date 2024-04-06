@@ -32,6 +32,7 @@
     <ProjectReference Include="..\iParkingv5.ApiManager\iParkingv5.ApiManager.csproj" />
     <ProjectReference Include="..\iParkingv5.Controller\iParkingv5.Controller.csproj" />
     <ProjectReference Include="..\iParkingv5.Objects\iParkingv5.Objects.csproj" />
+    <ProjectReference Include="..\Kztek.Scale\Net6\Kztek.Scale\Kztek.Scale_net6.csproj" />
   </ItemGroup>
 
   <ItemGroup>

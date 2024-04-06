@@ -11,6 +11,8 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         public static string PostLoginRoute => "Auth/Login";
         public static string summaryRoute = "Event-Out/Summary";
         public static string CommitOutRoute = "Event-Out";
+        public static string DeleteCheckOutRoute(string id) => $"Check-Out/{id}";
+        public static string GetIdentityByCodeRoute(string code) => $"Identity/Code/{code}";
         #endregion
 
         public enum EmObjectType
@@ -86,7 +88,7 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
                 case EmObjectType.EventIn:
                     return $"Event-In";
                 case EmObjectType.EventOut:
-                    return $"Event-Out/Check-Out";
+                    return $"Check-Out";
                 case EmObjectType.VehicleType:
                     return $"Vehicle-Type/";
                 case EmObjectType.CustomerGroup:

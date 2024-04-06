@@ -158,7 +158,7 @@ namespace iParkingv5_CustomerRegister.Forms
                     }
 
                     //Kiểm tra xem người dùng có đăng ký trước đó hay không
-                    var identityResponse = await KzParkingApiHelper.GetIdentityByCode(fingerCustomerCode);
+                    var identityResponse = await KzParkingApiHelper.GetIdentityByCodeAsync(fingerCustomerCode);
                     if (identityResponse.Item1 != null)
                     {
                         this.identity = identityResponse.Item1;

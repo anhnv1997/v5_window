@@ -18,5 +18,8 @@ namespace iParkingv5.Objects.Configs
         public int PrintTemplate { get; set; } = (int)EmPrintTemplate.BaseTemplate;
         public bool IsSaveLog { get; set; }
         public int LoopDelay { get; set; } = 0;
+        public int RetakePhotoDelay { get; set; } = 300;
+        public int RetakePhotoTimes { get; set; } = 5;
+        public string ScaleDevice { get; set; } = "";
     }
 }

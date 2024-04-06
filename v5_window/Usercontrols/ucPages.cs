@@ -52,7 +52,7 @@ namespace iParkingv5_window.Usercontrols
             Control[] list = new Control[maxPage];
             for (int i = 0; i < maxPage; i++)
             {
-                lblPageIndex lblPageIndex = new lblPageIndex(maxPage - i - 1);
+                lblPageIndex lblPageIndex = new lblPageIndex(maxPage - i);
                 lblPageIndex.Click += LblPageIndex_Click;
                 lblPageIndex.Dock = DockStyle.Left;
                 //lblPageIndex.BackColor = Color.Transparent;

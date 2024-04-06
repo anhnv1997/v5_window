@@ -64,6 +64,7 @@ namespace iParkingv5_window.Usercontrols
                     DisplayColor = ucLedLineConfigItems[i].LedColor,
                     FontSize = (int)ucLedLineConfigItems[i].LedFontSize,
                     DisplayValue = ucLedLineConfigItems[i].LedDisplayValue,
+                    Data = ucLedLineConfigItems[i].FreeText,
                 });
             }
             return displayStepDetail;
@@ -76,7 +77,7 @@ namespace iParkingv5_window.Usercontrols
                 if (displayStepDetail.DisplayDatas.ContainsKey(ucLedLineConfigItems[i].lineIndex))
                 {
                     LineConfig config = displayStepDetail.DisplayDatas[ucLedLineConfigItems[i].lineIndex];
-                    ucLedLineConfigItems[i].LoadOldConfig((int)config.DisplayValue, config.DisplayColor, (EmFontSize)config.FontSize);
+                    ucLedLineConfigItems[i].LoadOldConfig((int)config.DisplayValue, config.DisplayColor, (EmFontSize)config.FontSize, config.Data);
                 }
             }
         }

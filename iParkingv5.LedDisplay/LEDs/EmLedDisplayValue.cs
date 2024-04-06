@@ -15,5 +15,6 @@ namespace iParkingv5.LedDisplay.LEDs
         DATETIME_IN = 6,
         DATETIMEOUT = 7,
         MONEY = 8,
+        Option = 9,
     }
 }

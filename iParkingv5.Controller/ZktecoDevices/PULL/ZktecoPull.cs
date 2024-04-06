@@ -296,7 +296,7 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
 
         public async void WorkerThread()
         {
-            while (!stopEvent.WaitOne(0, true))
+            while (!stopEvent?.WaitOne(0, true) ?? false)
             {
                 try
                 {
@@ -355,7 +355,7 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
                                     //--Card Event
                                     else
                                     {
-                                        if (!string.IsNullOrEmpty(cardNumberInt) && int.Parse(cardNumberInt) != 0)
+                                        if (!string.IsNullOrEmpty(cardNumberInt) && Int64.Parse(cardNumberInt) != 0)
                                         {
                                             CallCardEvent(ControllerInfo, cardNumberInt, entryStatus);
                                         }
@@ -410,7 +410,7 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
                 DeviceName = controller.Name,
                 AllCardFormats = new List<string>(),
             };
-            string cardNumberHex = Convert.ToInt32(cardNumberInt).ToString("X8");
+            string cardNumberHex = Convert.ToInt64(cardNumberInt).ToString("X8");
             e.AllCardFormats.Add(cardNumberHex);
             e.AllCardFormats.Add(cardNumberInt);
             e.PreferCard = cardNumberInt;
@@ -435,10 +435,17 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
 
                 string maSauFormat2 = int.Parse(cardNumberHex.Substring(2, 2), NumberStyles.HexNumber).ToString("000") + ":" +
                                               int.Parse(cardNumberHex.Substring(4, 4), NumberStyles.HexNumber).ToString("00000");
-
+                e.PreferCard = maSauFormat2;
                 e.AllCardFormats.Add(maSauFormat1);
                 e.AllCardFormats.Add(maSauFormat2);
 
+            }
+            else
+            {
+                int a = (int)(Convert.ToInt64(cardNumberInt, 10) / 65536);
+                int b = (int)(Convert.ToInt64(cardNumberInt, 10) - a * 65536);
+                //e.PreferCard = a + ":" + b;
+                e.PreferCard = a.ToString("00000") + ":" + b.ToString("00000");
             }
             e.ReaderIndex = Regex.IsMatch(readerIndex, @"^\d+$") ? Convert.ToInt32(readerIndex) + 1 : -1;
             OnCardEvent(e);

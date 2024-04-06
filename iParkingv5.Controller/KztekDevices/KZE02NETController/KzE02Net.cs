@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using static iParkingv5.Controller.CardFactory;
 
 namespace iParkingv5.Controller.KztekDevices.KZE02NETController
 {
@@ -104,8 +105,12 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
 
         public async void WorkerThread()
         {
-            while (!stopEvent.WaitOne(0, true))
+            while (stopEvent != null)
             {
+                if (stopEvent.WaitOne(0, true))
+                {
+                    return;
+                }
                 try
                 {
                     string comport = this.ControllerInfo.Comport;
@@ -139,7 +144,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
                             CallInputEvent(this.ControllerInfo, map);
                         }
                     }
-                    await Task.Delay(300);
+                    await Task.Delay(150);
                 }
                 catch (Exception ex)
                 {
@@ -196,7 +201,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
                       int.Parse(cardNumberHEX.Substring(2, 4), System.Globalization.NumberStyles.HexNumber).ToString("00000");
 
                     e.PreferCard = maSauFormat3;
-
+                    e.PreferCard = maTruocFull;
                     e.AllCardFormats.Add(maTruocToiGian);
                     if (maTruocToiGian != maTruocFull)
                     {
@@ -207,14 +212,38 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
                 }
                 else
                 {
+                    //cardNumberHEX = cardNumberHEX.Substring(6, 2) + cardNumberHEX.Substring(4, 2) + 
+                    //                cardNumberHEX.Substring(2, 2) + cardNumberHEX.Substring(0, 2);
                     string maInt = Convert.ToInt64(cardNumberHEX, 16).ToString();
-                    e.PreferCard = maInt;
+                    int a = (int)(Convert.ToInt64(maInt, 10) / 65536);
+                    int b = (int)(Convert.ToInt64(maInt, 10) - a * 65536);
+                    e.PreferCard = a.ToString("00000") + ":" + b.ToString("00000");
+                    //e.PreferCard = maInt;
                     e.AllCardFormats.Add(maInt);
                 }
             }
             string str_readerIndex = map.ContainsKey("reader") ? map["reader"] : "";
             e.ReaderIndex = Regex.IsMatch(str_readerIndex, @"^\d+$") ? Convert.ToInt32(str_readerIndex) : -1;
-            //e.PreferCard = "00000001";
+            string cardState = map.ContainsKey("cardstate") ? map["cardstate"] : "";
+            if (cardState == "R")
+            {
+                string door = map.ContainsKey("door") ? map["door"] : "";
+                if (!string.IsNullOrEmpty(door))
+                {
+                    if (door == "01")
+                    {
+                        e.Doors = "1";
+                    }
+                    if (door == "02")
+                    {
+                        e.Doors = "2";
+                    }
+                }
+            }
+            else
+            {
+                e.Doors = "";
+            }
             OnCardEvent(e);
             DeleteCardEvent();
         }
@@ -248,5 +277,43 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
             });
             return false;
         }
+        public bool DeleteCard(string userId, string cardNumber, out string errorMessage, out int errorCode)
+        {
+            string comport = this.ControllerInfo.Comport;
+            int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
+            string deleteCMD = KZTEK_CMD.DeleteUserCMD(int.Parse(userId));
+            string response = UdpTools.ExecuteCommand(comport, baudrate, deleteCMD, 500, UdpTools.STX, Encoding.ASCII);
+            if (UdpTools.IsSuccess(response, "OK"))
+            {
+                errorMessage = string.Empty;
+                errorCode = -1;
+                return true;
+            }
+            errorCode = -1;
+            errorMessage = "Device return false";
+            return false;
+        }
+        public bool DownloadCard(string userId, string cardNumber, EM_CardType cardType, int timezoneId, string doors, out string errorMessage, out int errorCode)
+        {
+            ICardFactory cardFactory = CardFactory.CreateCardController((int)cardType);
+            string _cardNumber = cardNumber; //cardFactory.GetCardHexNumber(cardNumber);
+            int cardlen = 4;// cardFactory.CardLen();
+            string comport = this.ControllerInfo.Comport;
+            int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
+            string door =int.Parse(doors).ToString("00");
+            if (door == "")
+            {
+                errorCode = -1;
+                errorMessage = "UNKNOWN";
+                return false;
+            }
+            string downloadCMD = KZTEK_CMD.DownloadUserCMD(Convert.ToInt32(userId), _cardNumber, cardlen, timezoneId, door);
+            string response = UdpTools.ExecuteCommand(comport, baudrate, downloadCMD, 500, UdpTools.STX, Encoding.ASCII);
+            bool result = UdpTools.IsSuccess(response, "OK");
+            errorCode = -1;
+            errorMessage = "UNKNOWN";
+            return result;
+        }
+
     }
 }

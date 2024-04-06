@@ -59,7 +59,7 @@ namespace ALS_BacNinh.Forms.SystemForms
             this.cardEventArgses.Enqueue(e);
             //foreach (string cardNumber in e.AllCardFormats)
             //{
-            var identityResponse = await KzParkingApiHelper.GetIdentityByCode(e.PreferCard);
+            var identityResponse = await KzParkingApiHelper.GetIdentityByCodeAsync(e.PreferCard);
             Identity? identity = identityResponse.Item1;
             if (identity != null)
             {
@@ -85,7 +85,7 @@ namespace ALS_BacNinh.Forms.SystemForms
             }
             //}
             string cmd2 = $@"INSERT INTO tblEvent(card_number, customer_name, event_time, is_valid, card_id, reader)
-                                             VALUES('{e.AllCardFormats[0]}', N'', '{e.EventTime.ToString("yyyy/MM/dd HH:mm:ss")}', 0, '', {e.ReaderIndex})";
+                                             VALUES('{e.PreferCard}', N'', '{e.EventTime.ToString("yyyy/MM/dd HH:mm:ss")}', 0, '', {e.ReaderIndex})";
             StaticPool.mdb.ExecuteCommand(cmd2);
         }
         #endregion END CONTROLLER EVENT

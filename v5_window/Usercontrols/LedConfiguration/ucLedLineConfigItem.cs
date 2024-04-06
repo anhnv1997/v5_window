@@ -51,6 +51,7 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
         }
+        public string FreeText { get => txtDisplaytext.Text; }
         #endregion End Properties
 
         #region Forms
@@ -102,9 +103,10 @@ namespace iParkingv5_window.Usercontrols
             cbFontSize.SelectedIndexChanged += CbFontSize_SelectedIndexChanged;
 
         }
-        public void LoadOldConfig(int displayValueIndex, EmLedColor color, EmFontSize fontsizeIndex)
+        public void LoadOldConfig(int displayValueIndex, EmLedColor color, EmFontSize fontsizeIndex, string freeText)
         {
             cbDisplayMode.SelectedIndex = displayValueIndex;
+            txtDisplaytext.Text = freeText;
             switch (fontsizeIndex)
             {
                 case EmFontSize.FontSize_7:
@@ -173,5 +175,14 @@ namespace iParkingv5_window.Usercontrols
             }
         }
         #endregion End Public Function
+
+        private void cbDisplayMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtDisplaytext.Visible = cbDisplayMode.SelectedIndex == cbDisplayMode.Items.Count - 1;
+            if (!txtDisplaytext.Visible)
+            {
+                txtDisplaytext.Text = "";
+            }
+        }
     }
 }

@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using System.Security.Principal;
 using iParkingv5.Objects;
 using Newtonsoft.Json.Linq;
+using System.Drawing.Printing;
 
 namespace iParkingv6.ApiManager.KzParkingv3Apis
 {
@@ -49,8 +50,6 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
                 username = _username,
                 password = _password
             };
-            // token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiOTQ1NzNmMy05M2U5LTRmYjctOGQxOC02MDdhNDRjZmJlOWQiLCJuYmYiOjE3MDYyMzQ0MzUsImV4cCI6MTcwNjMyMDgzNSwiaWF0IjoxNzA2MjM0NDM1LCJpc3MiOiJQYXJraW5nLkFwaSIsImF1ZCI6IlBhcmtpbmcuQ2xpZW50In0.6xQoxKVZ6gvS2I5_SkhFLunNccHwcsFCU3Fxt0pfm34";
-            //return Tuple.Create<string, string>(token, "");
 
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, login, null, null, timeOut, RestSharp.Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
@@ -64,6 +63,8 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
                     {
                         token = kzBaseResponse.data.accessToken;
                         expireTime = kzBaseResponse.data.expireInSeconds;
+                        StaticPool.userId = _username;
+                        StaticPool.user_name = _username;
                     }
                     return Tuple.Create<string, string>(token, kzBaseResponse.metadata?.message?.value ?? "");
                 }
@@ -513,7 +514,6 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             }
             return null;
         }
-
         #endregion
 
         #region -- IDENTITY
@@ -538,11 +538,10 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             }
             return null;
         }
-
-        public static async Task<Tuple<Identity, bool>> GetIdentityByCode(string code)
+        public static async Task<Tuple<Identity, bool>> GetIdentityByCodeAsync(string code)
         {
             StandardlizeServerName();
-            string apiUrl = server + KzApiUrlManagement.EmObjectType.Identity.GetDataByParamsRoute();
+            string apiUrl = server + KzApiUrlManagement.GetIdentityByCodeRoute(code);
 
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
@@ -556,27 +555,16 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Get);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                KzBaseResponseData<List<Identity>> kzBaseResponse = NewtonSoftHelper<KzBaseResponseData<List<Identity>>>.GetBaseResponse(response.Item1);
-                if (kzBaseResponse?.data != null)
+                KzBaseResponseData<Identity> kzBaseResponse = NewtonSoftHelper<KzBaseResponseData<Identity>>.GetBaseResponse(response.Item1);
+                if (kzBaseResponse == null)
                 {
-                    if (kzBaseResponse?.data.Count > 0)
-                    {
-                        foreach (var item in kzBaseResponse?.data)
-                        {
-                            if (item.Code == code)
-                            {
-                                return Tuple.Create<Identity, bool>(item, true);
-
-                            }
-                        }
-                        return Tuple.Create<Identity, bool>(kzBaseResponse?.data[0], true);
-                    }
-                    else
-                    {
-                        return Tuple.Create<Identity, bool>(null, kzBaseResponse.metadata.success);
-                    }
+                    return Tuple.Create<Identity, bool>(null, false);
                 }
-                return Tuple.Create<Identity, bool>(null, false);
+                if (kzBaseResponse.data == null)
+                {
+                    return Tuple.Create<Identity, bool>(null, false);
+                }
+                return Tuple.Create<Identity, bool>(kzBaseResponse.data, true);
             }
             return Tuple.Create<Identity, bool>(null, false);
         }
@@ -717,7 +705,7 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             {
                 data.fileKeys.Add(item);
             }
-            string a =  Newtonsoft.Json.JsonConvert.SerializeObject(data);  
+            string a = Newtonsoft.Json.JsonConvert.SerializeObject(data);
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
@@ -842,7 +830,6 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         }
 
         #endregion
-
         public static async Task<Tuple<List<AbnormalEvent>, int, int>> GetAlarms(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, int pageIndex = 1, int pageSize = 100)
         {
             StandardlizeServerName();
@@ -894,7 +881,6 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             return Tuple.Create<List<AbnormalEvent>, int, int>(null, 0, 0);
         }
 
-
         #region -- EVENT OUT
         public static async Task<KzBaseResponseData<AddEventOutResponse>> PostCheckOutAsync(string _laneId, string _plateNumber, Identity? identitiy, List<string> imageKeys, bool isForce)
         {
@@ -944,6 +930,27 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
                 return addEventOutResponse;
             }
             return null;
+        }
+        public static async Task<bool> CancelCheckOut(string eventOutId)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + KzApiUrlManagement.DeleteCheckOutRoute(eventOutId);
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, RestSharp.Method.Post);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                KzBaseResponseData<string> kzBaseResponse = NewtonSoftHelper<KzBaseResponseData<string>>.GetBaseResponse(response.Item1);
+                if (kzBaseResponse == null)
+                {
+                    return false;
+                }
+                return kzBaseResponse.metadata.success;
+            }
+            return false;
         }
 
         public static async Task<bool> UpdateEventOutPlate(string eventId, string plate)
@@ -1037,6 +1044,44 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             public int revenue { get; set; }
             public int totalCustomer { get; set; }
         }
+        public class SumaryCountEvent
+        {
+            public int countAllEventIn { get; set; } = 0;
+            public int totalEventOut { get; set; } = 0;
+            public int totalVehicleIn { get; set; } = 0;
+        }
+
+        public static async Task<SumaryCountEvent> SummaryEvent()
+        {
+            StandardlizeServerName();
+            string apiUrl = server + "report/SummaryEvents";
+
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            DateTime startTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0).AddHours(-7);
+            DateTime endTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59).AddHours(-7);
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("fromUtc", startTime.ToString("yyyy-MM-ddTHH:mm:ss.000Z"));
+            parameters.Add("toUtc", endTime.ToString("yyyy-MM-ddTHH:mm:ss.000Z"));
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Get);
+
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                KzBaseResponseData<SumaryCountEvent> kzBaseResponse = NewtonSoftHelper<KzBaseResponseData<SumaryCountEvent>>.GetBaseResponse(response.Item1);
+                if (kzBaseResponse != null)
+                {
+                    if (kzBaseResponse.data != null)
+                    {
+                        return kzBaseResponse.data;
+                    }
+                }
+            }
+
+            return new SumaryCountEvent();
+        }
 
         public static async Task<long?> GetSummary(DateTime startTime, DateTime endTime)
         {
@@ -1115,6 +1160,10 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
                     }
                 }
             }
+            public string IdentityGroupId { get; set; }
+            public string CustomerId { get; set; }
+            public string RegisteredVehicleId { get; set; }
+            public string CheckOutValidationStatus { get; set; }
         }
         public class EventOutReport
         {
@@ -1131,6 +1180,9 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             public bool free { get; set; }
             public string createdUtc { get; set; }
             public string createdBy { get; set; }
+            public string IdentityGroupId { get; set; }
+            public string CustomerId { get; set; }
+            public string RegisteredVehicleId { get; set; }
 
             //Thông tin sự kiện vào
             public string eventInIdentityId { get; set; }
@@ -1189,9 +1241,9 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         #endregion
 
         #region ABNORMAL
-
         public static async Task<bool> CreateAlarmAsync(string identityId, string laneId, string plate, AbnormalCode abnormalCode,
-                                                        string imageKey, bool isLaneIn)
+                                                        string imageKey, bool isLaneIn, string identityGroupId, string customerId, 
+                                                        string registerVehicleId, string description)
         {
             StandardlizeServerName();
             string apiUrl = server + KzApiUrlManagement.EmObjectType.AbnormalEvent.CreateRoute();
@@ -1206,9 +1258,13 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
                 PlateNumber = plate,
                 AbnormalCode = abnormalCode,
                 FileKeys = new List<string>()
-                    {
-                         imageKey + (isLaneIn? "_OVERVIEWIN.jpeg" : "_OVERVIEWOUT.jpeg"),
-                    },
+                {
+                    imageKey + (isLaneIn? "_OVERVIEWIN.jpeg" : "_OVERVIEWOUT.jpeg"),
+                },
+                IdentityGroupId = identityGroupId,
+                CustomerId = customerId,
+                RegisteredVehicleId = registerVehicleId,
+                Description = description
             };
             abnormalEvent.FileKeys.Add(imageKey + (isLaneIn ? "_VEHICLEIN.jpeg" : "_VEHICLEOUT.jpeg"));
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, abnormalEvent, headers, null, timeOut, RestSharp.Method.Post);
@@ -1347,7 +1403,7 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
                 {
                     return false;
                 }
-                return kzBaseResponse.metadata?.success?? false;
+                return kzBaseResponse.metadata?.success ?? false;
             }
             return false;
         }

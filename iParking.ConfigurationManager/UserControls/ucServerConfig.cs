@@ -35,7 +35,6 @@ namespace iParking.ConfigurationManager.UserControls
         }
         #endregion End Forms
 
-
         #region Public Function
         public ServerConfig GetServerConfig()
         {

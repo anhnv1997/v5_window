@@ -48,5 +48,10 @@ namespace iParkingv5_window.Forms.DataForms
         {
             this.DialogResult = DialogResult.Cancel;
         }
+
+        private void btnOk1_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

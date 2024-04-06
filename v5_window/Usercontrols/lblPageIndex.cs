@@ -26,7 +26,7 @@ namespace iParkingv5_window.Usercontrols
 
         private void LblPageIndex_MouseLeave(object? sender, EventArgs e)
         {
-            this.Cursor = Cursors.Default;
+            this.Cursor = Cursors.Arrow;
         }
         private void LblPageIndex_MouseEnter(object? sender, EventArgs e)
         {

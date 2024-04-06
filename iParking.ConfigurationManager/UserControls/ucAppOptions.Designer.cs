@@ -29,10 +29,16 @@
         private void InitializeComponent()
         {
             groupBox2 = new GroupBox();
+            numRetakePhotoDelayTime = new NumericUpDown();
+            numRetakePhotoTurn = new NumericUpDown();
+            label12 = new Label();
+            chbIsSaveLog = new CheckBox();
+            label10 = new Label();
+            label11 = new Label();
             numLoopDelay = new NumericUpDown();
+            label9 = new Label();
             label8 = new Label();
             label7 = new Label();
-            chbIsSaveLog = new CheckBox();
             cbPrintTemplate = new ComboBox();
             txtWaitSwipeCardTime = new TextBox();
             txtAllowOpenBarrieTime = new TextBox();
@@ -40,16 +46,24 @@
             label1 = new Label();
             label2 = new Label();
             groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numRetakePhotoDelayTime).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numRetakePhotoTurn).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numLoopDelay).BeginInit();
             SuspendLayout();
             // 
             // groupBox2
             // 
             groupBox2.AutoSize = true;
+            groupBox2.Controls.Add(numRetakePhotoDelayTime);
+            groupBox2.Controls.Add(numRetakePhotoTurn);
+            groupBox2.Controls.Add(label12);
+            groupBox2.Controls.Add(chbIsSaveLog);
+            groupBox2.Controls.Add(label10);
+            groupBox2.Controls.Add(label11);
             groupBox2.Controls.Add(numLoopDelay);
+            groupBox2.Controls.Add(label9);
             groupBox2.Controls.Add(label8);
             groupBox2.Controls.Add(label7);
-            groupBox2.Controls.Add(chbIsSaveLog);
             groupBox2.Controls.Add(cbPrintTemplate);
             groupBox2.Controls.Add(txtWaitSwipeCardTime);
             groupBox2.Controls.Add(txtAllowOpenBarrieTime);
@@ -59,10 +73,63 @@
             groupBox2.Dock = DockStyle.Top;
             groupBox2.Location = new Point(0, 0);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(653, 199);
+            groupBox2.Size = new Size(653, 269);
             groupBox2.TabIndex = 5;
             groupBox2.TabStop = false;
             groupBox2.Text = "Tùy chọn";
+            // 
+            // numRetakePhotoDelayTime
+            // 
+            numRetakePhotoDelayTime.Location = new Point(218, 186);
+            numRetakePhotoDelayTime.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            numRetakePhotoDelayTime.Name = "numRetakePhotoDelayTime";
+            numRetakePhotoDelayTime.Size = new Size(382, 27);
+            numRetakePhotoDelayTime.TabIndex = 6;
+            // 
+            // numRetakePhotoTurn
+            // 
+            numRetakePhotoTurn.Location = new Point(218, 153);
+            numRetakePhotoTurn.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            numRetakePhotoTurn.Name = "numRetakePhotoTurn";
+            numRetakePhotoTurn.Size = new Size(382, 27);
+            numRetakePhotoTurn.TabIndex = 6;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(619, 193);
+            label12.Name = "label12";
+            label12.Size = new Size(28, 20);
+            label12.TabIndex = 7;
+            label12.Text = "ms";
+            // 
+            // chbIsSaveLog
+            // 
+            chbIsSaveLog.AutoSize = true;
+            chbIsSaveLog.Location = new Point(218, 219);
+            chbIsSaveLog.Name = "chbIsSaveLog";
+            chbIsSaveLog.Size = new Size(141, 24);
+            chbIsSaveLog.TabIndex = 6;
+            chbIsSaveLog.Text = "Lưu log hệ thống";
+            chbIsSaveLog.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(619, 160);
+            label10.Name = "label10";
+            label10.Size = new Size(29, 20);
+            label10.TabIndex = 7;
+            label10.Text = "lần";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(6, 188);
+            label11.Name = "label11";
+            label11.Size = new Size(115, 20);
+            label11.TabIndex = 7;
+            label11.Text = "Delay chụp hình";
             // 
             // numLoopDelay
             // 
@@ -71,6 +138,15 @@
             numLoopDelay.Name = "numLoopDelay";
             numLoopDelay.Size = new Size(382, 27);
             numLoopDelay.TabIndex = 6;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(6, 155);
+            label9.Name = "label9";
+            label9.Size = new Size(138, 20);
+            label9.TabIndex = 7;
+            label9.Text = "Số lần chụp lại hình";
             // 
             // label8
             // 
@@ -89,16 +165,6 @@
             label7.Size = new Size(85, 20);
             label7.TabIndex = 7;
             label7.Text = "Loop Delay";
-            // 
-            // chbIsSaveLog
-            // 
-            chbIsSaveLog.AutoSize = true;
-            chbIsSaveLog.Location = new Point(218, 149);
-            chbIsSaveLog.Name = "chbIsSaveLog";
-            chbIsSaveLog.Size = new Size(141, 24);
-            chbIsSaveLog.TabIndex = 6;
-            chbIsSaveLog.Text = "Lưu log hệ thống";
-            chbIsSaveLog.UseVisualStyleBackColor = true;
             // 
             // cbPrintTemplate
             // 
@@ -163,6 +229,8 @@
             Size = new Size(653, 395);
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numRetakePhotoDelayTime).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numRetakePhotoTurn).EndInit();
             ((System.ComponentModel.ISupportInitialize)numLoopDelay).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -186,5 +254,11 @@
         private NumericUpDown numLoopDelay;
         private Label label8;
         private Label label7;
+        private NumericUpDown numRetakePhotoDelayTime;
+        private NumericUpDown numRetakePhotoTurn;
+        private Label label12;
+        private Label label10;
+        private Label label11;
+        private Label label9;
     }
 }

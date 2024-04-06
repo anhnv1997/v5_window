@@ -1,15 +1,12 @@
 ﻿using IPaking.Ultility;
-using iParkingv5.Controller.Dahua;
 using iParkingv5.Lpr.Objects;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
 using iParkingv5_window;
-using iParkingv5_window.Forms;
 using iParkingv5_window.Forms.SystemForms;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using Kztek.Tool;
 using Kztek.Tools;
-using KztekKeyRegister;
 using System.Diagnostics;
 
 namespace v6_window
@@ -36,7 +33,6 @@ namespace v6_window
                 {
                     if (ownmutex)
                     {
-                        //Application.Run(new frmTest());
                         //return;
                         //if (Environment.MachineName.ToUpper() != "VIETANHPC")
                         //{

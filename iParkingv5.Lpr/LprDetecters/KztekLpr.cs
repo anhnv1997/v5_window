@@ -1,5 +1,5 @@
 ﻿using iParkingv5.Lpr.Objects;
-using Kztek.LPR;
+using NXT.Net6.LPR_AI;
 using System;
 using System.Drawing;
 using System.Threading.Tasks;
@@ -10,7 +10,7 @@ namespace iParkingv5.LprDetecter.LprDetecters
     {
         #region PROPERTIES
         public CarANPR? carANPR;
-        public MotorANPR? motorANPR;
+        public MotoANPR? motorANPR;
         #endregion END PROPERTIES
         public event Events.Events.OnLprDetectComplete? onLprDetectCompleteEvent;
 
@@ -32,7 +32,7 @@ namespace iParkingv5.LprDetecter.LprDetecters
             if (!isCar && motorANPR == null) { goto ReturnResult; }
             Bitmap bitmapCut = detectRegion != null ? CropBitmap((Bitmap)originalImage, (Rectangle)detectRegion!) : (Bitmap)originalImage;
 
-            var lPRObject_Result = new LPRObject
+            var lPRObject_Result = new LPR_Result_Object
             {
                 enableMultiplePlateNumber = true,
                 vehicleImage = bitmapCut
@@ -43,14 +43,6 @@ namespace iParkingv5.LprDetecter.LprDetecters
 
                 plateNumber = lPRObject_Result.plateNumber;
                 lprImage = lPRObject_Result.plateImage;
-                if (detectRegion != null)
-                {
-                    originalImage = DrawRectangle((Bitmap)originalImage, detectRegion.Value.X, detectRegion.Value.Y, detectRegion.Value.Width, detectRegion.Value.Height, Color.Red);
-                    originalImage = DrawRectangle((Bitmap)originalImage, lPRObject_Result.plateLocation.X + detectRegion.Value.X,
-                                                                         lPRObject_Result.plateLocation.Y + detectRegion.Value.Y,
-                                                                         lPRObject_Result.plateLocation.Width,
-                                                                         lPRObject_Result.plateLocation.Height, Color.Blue);
-                }
             }
             else
             {
@@ -58,14 +50,14 @@ namespace iParkingv5.LprDetecter.LprDetecters
 
                 plateNumber = lPRObject_Result.plateNumber;
                 lprImage = lPRObject_Result.plateImage;
-                if (detectRegion != null)
-                {
-                    originalImage = DrawRectangle((Bitmap)originalImage, detectRegion.Value.X, detectRegion.Value.Y, detectRegion.Value.Width, detectRegion.Value.Height, Color.Red);
-                    originalImage = DrawRectangle((Bitmap)originalImage, lPRObject_Result.plateLocation.X + detectRegion.Value.X,
-                                                                         lPRObject_Result.plateLocation.Y + detectRegion.Value.Y,
-                                                                         lPRObject_Result.plateLocation.Width,
-                                                                         lPRObject_Result.plateLocation.Height, Color.Blue);
-                }
+                //if (detectRegion != null)
+                //{
+                //    originalImage = DrawRectangle((Bitmap)originalImage, detectRegion.Value.X, detectRegion.Value.Y, detectRegion.Value.Width, detectRegion.Value.Height, Color.Red);
+                //    originalImage = DrawRectangle((Bitmap)originalImage, lPRObject_Result.plateLocation.X + detectRegion.Value.X,
+                //                                                         lPRObject_Result.plateLocation.Y + detectRegion.Value.Y,
+                //                                                         lPRObject_Result.plateLocation.Width,
+                //                                                         lPRObject_Result.plateLocation.Height, Color.Blue);
+                //}
             }
            
         ReturnResult:
@@ -98,7 +90,7 @@ namespace iParkingv5.LprDetecter.LprDetecters
                 goto ReturnResult;
             }
             Bitmap bitmapCut = CropBitmap((Bitmap)originalImage, (Rectangle)detectRegion!);
-            var lPRObject_Result = new LPRObject
+            var lPRObject_Result = new LPR_Result_Object
             {
                 enableMultiplePlateNumber = true,
                 vehicleImage = (Bitmap)bitmapCut
@@ -126,15 +118,9 @@ namespace iParkingv5.LprDetecter.LprDetecters
             try
             {
                 carANPR = new CarANPR();
-                carANPR.NewError += KztekLPR_NewError;
-                carANPR.LPREngineProductKey = "demo";
-                carANPR.EnableLPREngine2 = false;
                 carANPR.CreateLPREngine();
 
-                motorANPR = new MotorANPR();
-                motorANPR.NewError += KztekLPR_NewError;
-                motorANPR.LPREngineProductKey = "demo";
-                motorANPR.EnableLPREngine2 = false;
+                motorANPR = new MotoANPR();
                 motorANPR.CreateLPREngine();
                 return true;
             }
@@ -142,9 +128,6 @@ namespace iParkingv5.LprDetecter.LprDetecters
             {
                 throw new Exception(ex.Message);
             }
-        }
-        private void KztekLPR_NewError(object sender, Kztek.LPR.ErrorEventArgs e)
-        {
         }
 
         static Bitmap CropBitmap(Bitmap source, Rectangle? cutRect)

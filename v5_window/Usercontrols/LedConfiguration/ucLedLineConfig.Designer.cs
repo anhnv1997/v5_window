@@ -61,13 +61,13 @@ namespace iParkingv5_window.Usercontrols
             panel2.Location = new Point(68, 0);
             panel2.Name = "panel2";
             panel2.Padding = new Padding(0, 5, 0, 0);
-            panel2.Size = new Size(340, 38);
+            panel2.Size = new Size(332, 38);
             panel2.TabIndex = 2;
             // 
             // label2
             // 
             label2.Dock = DockStyle.Right;
-            label2.Location = new Point(297, 5);
+            label2.Location = new Point(289, 5);
             label2.Name = "label2";
             label2.Size = new Size(43, 33);
             label2.TabIndex = 2;
@@ -80,7 +80,7 @@ namespace iParkingv5_window.Usercontrols
             numDelayTime.Location = new Point(71, 5);
             numDelayTime.Maximum = new decimal(new int[] { 99999, 0, 0, 0 });
             numDelayTime.Name = "numDelayTime";
-            numDelayTime.Size = new Size(269, 27);
+            numDelayTime.Size = new Size(261, 27);
             numDelayTime.TabIndex = 1;
             numDelayTime.Value = new decimal(new int[] { 300, 0, 0, 0 });
             // 
@@ -100,9 +100,9 @@ namespace iParkingv5_window.Usercontrols
             btnCancel1.Dock = DockStyle.Right;
             btnCancel1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnCancel1.ForeColor = Color.Black;
-            btnCancel1.Location = new Point(408, 0);
+            btnCancel1.Location = new Point(400, 0);
             btnCancel1.Name = "btnCancel1";
-            btnCancel1.Size = new Size(38, 22);
+            btnCancel1.Size = new Size(46, 92);
             btnCancel1.TabIndex = 3;
             btnCancel1.Text = "Xóa";
             // 

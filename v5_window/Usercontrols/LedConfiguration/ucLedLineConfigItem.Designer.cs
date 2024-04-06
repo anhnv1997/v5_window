@@ -32,17 +32,19 @@
             lblLineName = new Label();
             cbColor = new ComboBox();
             cbFontSize = new ComboBox();
+            txtDisplaytext = new TextBox();
             SuspendLayout();
             // 
             // cbDisplayMode
             // 
             cbDisplayMode.DropDownStyle = ComboBoxStyle.DropDownList;
             cbDisplayMode.FormattingEnabled = true;
-            cbDisplayMode.Items.AddRange(new object[] { "Để Trống", "Mã Thẻ", "Số Thẻ", "Loại Thẻ", "Loại Sự Kiện", "Biển Số Xe", "Thời Gian Vào", "Thời Gian Ra", "Phí Gửi Xe" });
+            cbDisplayMode.Items.AddRange(new object[] { "Để Trống", "Mã Thẻ", "Số Thẻ", "Loại Thẻ", "Loại Sự Kiện", "Biển Số Xe", "Thời Gian Vào", "Thời Gian Ra", "Phí Gửi Xe", "Tùy Chọn" });
             cbDisplayMode.Location = new Point(78, 10);
             cbDisplayMode.Name = "cbDisplayMode";
             cbDisplayMode.Size = new Size(201, 28);
             cbDisplayMode.TabIndex = 0;
+            cbDisplayMode.SelectedIndexChanged += cbDisplayMode_SelectedIndexChanged;
             // 
             // lblLineName
             // 
@@ -73,16 +75,26 @@
             cbFontSize.Size = new Size(121, 28);
             cbFontSize.TabIndex = 3;
             // 
+            // txtDisplaytext
+            // 
+            txtDisplaytext.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtDisplaytext.Location = new Point(539, 10);
+            txtDisplaytext.Name = "txtDisplaytext";
+            txtDisplaytext.Size = new Size(196, 27);
+            txtDisplaytext.TabIndex = 4;
+            txtDisplaytext.Visible = false;
+            // 
             // ucLedLineConfigItem
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(txtDisplaytext);
             Controls.Add(cbFontSize);
             Controls.Add(cbColor);
             Controls.Add(lblLineName);
             Controls.Add(cbDisplayMode);
             Name = "ucLedLineConfigItem";
-            Size = new Size(540, 46);
+            Size = new Size(738, 46);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -93,5 +105,6 @@
         private Label lblLineName;
         private ComboBox cbColor;
         private ComboBox cbFontSize;
+        private TextBox txtDisplaytext;
     }
 }

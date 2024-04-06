@@ -16,7 +16,13 @@
     <Compile Update="UserControls\ucLprConnection.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="UserControls\ucScaleConfig.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="UserControls\ucServerConfig.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UserControls\ucThirdParty.cs">
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>

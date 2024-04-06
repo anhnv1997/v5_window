@@ -81,6 +81,11 @@ namespace iParkingv5_window.Forms.SystemForms
                                            btnLogin.Location.Y + (btnLogin.Height - lblStatus.Height) / 2);
 
             timerAutoConnect.Enabled = true;
+            if (File.Exists(Application.StartupPath + @"Resources\defaultImage.png"))
+            {
+                picLogo.Image = Image.FromFile(Application.StartupPath + @"Resources\logo.png");
+            }
+
             this.ActiveControl = btnLogin;
         }
 

@@ -31,11 +31,11 @@ namespace iParkingv5_window.Forms.ReportForms
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmReportInOut));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmReportInOut));
             dtpEndTime = new DateTimePicker();
             dtpStartTime = new DateTimePicker();
             lblStartTime = new Label();
@@ -45,27 +45,11 @@ namespace iParkingv5_window.Forms.ReportForms
             lblKeyword = new Label();
             txtKeyword = new TextBox();
             dgvData = new DataGridView();
-            Column1 = new DataGridViewTextBoxColumn();
-            Column4 = new DataGridViewTextBoxColumn();
-            Column2 = new DataGridViewTextBoxColumn();
-            Column7 = new DataGridViewTextBoxColumn();
-            Column10 = new DataGridViewTextBoxColumn();
-            Column8 = new DataGridViewTextBoxColumn();
-            Column11 = new DataGridViewTextBoxColumn();
-            Column5 = new DataGridViewTextBoxColumn();
-            Column13 = new DataGridViewTextBoxColumn();
-            Column6 = new DataGridViewTextBoxColumn();
-            Column12 = new DataGridViewTextBoxColumn();
-            Column15 = new DataGridViewTextBoxColumn();
-            Column9 = new DataGridViewTextBoxColumn();
-            Column14 = new DataGridViewTextBoxColumn();
-            Column3 = new DataGridViewButtonColumn();
             lblEndTime = new Label();
             tableLayoutPanel2 = new TableLayoutPanel();
             picOverviewImageOut = new MovablePictureBox();
             picVehicleImageOut = new MovablePictureBox();
             ucPages1 = new ucPages();
-            lblPage = new Label();
             lblTotalEvents = new Label();
             btnCancel = new LblCancel();
             btnSearch = new BtnSearch();
@@ -82,6 +66,26 @@ namespace iParkingv5_window.Forms.ReportForms
             ucNotify1 = new Usercontrols.BuildControls.ucNotify();
             ucLoading1 = new Usercontrols.BuildControls.ucLoading();
             tablePic = new TableLayoutPanel();
+            Column1 = new DataGridViewTextBoxColumn();
+            Column4 = new DataGridViewTextBoxColumn();
+            Column2 = new DataGridViewTextBoxColumn();
+            Column7 = new DataGridViewTextBoxColumn();
+            Column10 = new DataGridViewTextBoxColumn();
+            Column8 = new DataGridViewTextBoxColumn();
+            Column11 = new DataGridViewTextBoxColumn();
+            Column5 = new DataGridViewTextBoxColumn();
+            Column13 = new DataGridViewTextBoxColumn();
+            Column6 = new DataGridViewTextBoxColumn();
+            Column12 = new DataGridViewTextBoxColumn();
+            Column15 = new DataGridViewTextBoxColumn();
+            Column9 = new DataGridViewTextBoxColumn();
+            Column14 = new DataGridViewTextBoxColumn();
+            Column16 = new DataGridViewTextBoxColumn();
+            Column17 = new DataGridViewTextBoxColumn();
+            Column18 = new DataGridViewTextBoxColumn();
+            Column20 = new DataGridViewTextBoxColumn();
+            Column19 = new DataGridViewTextBoxColumn();
+            Column3 = new DataGridViewButtonColumn();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picOverviewImageIn).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picVehicleImageIn).BeginInit();
@@ -142,12 +146,11 @@ namespace iParkingv5_window.Forms.ReportForms
             picOverviewImageIn.BackColor = Color.WhiteSmoke;
             picOverviewImageIn.BorderStyle = BorderStyle.FixedSingle;
             picOverviewImageIn.Dock = DockStyle.Fill;
-            picOverviewImageIn.Image = (Image)resources.GetObject("picOverviewImageIn.Image");
             picOverviewImageIn.Location = new Point(0, 0);
             picOverviewImageIn.Margin = new Padding(0);
             picOverviewImageIn.Name = "picOverviewImageIn";
             picOverviewImageIn.Size = new Size(224, 194);
-            picOverviewImageIn.SizeMode = PictureBoxSizeMode.Zoom;
+            picOverviewImageIn.SizeMode = PictureBoxSizeMode.StretchImage;
             picOverviewImageIn.TabIndex = 30;
             picOverviewImageIn.TabStop = false;
             // 
@@ -156,12 +159,11 @@ namespace iParkingv5_window.Forms.ReportForms
             picVehicleImageIn.BackColor = Color.WhiteSmoke;
             picVehicleImageIn.BorderStyle = BorderStyle.FixedSingle;
             picVehicleImageIn.Dock = DockStyle.Fill;
-            picVehicleImageIn.Image = (Image)resources.GetObject("picVehicleImageIn.Image");
             picVehicleImageIn.Location = new Point(0, 194);
             picVehicleImageIn.Margin = new Padding(0);
             picVehicleImageIn.Name = "picVehicleImageIn";
             picVehicleImageIn.Size = new Size(224, 194);
-            picVehicleImageIn.SizeMode = PictureBoxSizeMode.Zoom;
+            picVehicleImageIn.SizeMode = PictureBoxSizeMode.StretchImage;
             picVehicleImageIn.TabIndex = 29;
             picVehicleImageIn.TabStop = false;
             // 
@@ -202,7 +204,7 @@ namespace iParkingv5_window.Forms.ReportForms
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvData.Columns.AddRange(new DataGridViewColumn[] { Column1, Column4, Column2, Column7, Column10, Column8, Column11, Column5, Column13, Column6, Column12, Column15, Column9, Column14, Column3 });
+            dgvData.Columns.AddRange(new DataGridViewColumn[] { Column1, Column4, Column2, Column7, Column10, Column8, Column11, Column5, Column13, Column6, Column12, Column15, Column9, Column14, Column16, Column17, Column18, Column20, Column19, Column3 });
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = SystemColors.Window;
             dataGridViewCellStyle4.Font = new Font("Segoe UI", 11.25F);
@@ -220,124 +222,8 @@ namespace iParkingv5_window.Forms.ReportForms
             dgvData.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvData.Size = new Size(515, 388);
             dgvData.TabIndex = 50;
-            // 
-            // Column1
-            // 
-            Column1.Frozen = true;
-            Column1.HeaderText = "STT";
-            Column1.Name = "Column1";
-            Column1.ReadOnly = true;
-            Column1.Width = 68;
-            // 
-            // Column4
-            // 
-            Column4.HeaderText = "Định Danh";
-            Column4.Name = "Column4";
-            Column4.ReadOnly = true;
-            Column4.Visible = false;
-            Column4.Width = 123;
-            // 
-            // Column2
-            // 
-            Column2.HeaderText = "Định danh ra";
-            Column2.Name = "Column2";
-            Column2.ReadOnly = true;
-            Column2.Visible = false;
-            Column2.Width = 140;
-            // 
-            // Column7
-            // 
-            Column7.Frozen = true;
-            Column7.HeaderText = "Biển Số Xe Vào";
-            Column7.Name = "Column7";
-            Column7.ReadOnly = true;
-            Column7.Width = 154;
-            // 
-            // Column10
-            // 
-            Column10.Frozen = true;
-            Column10.HeaderText = "Biển Số Xe ra";
-            Column10.Name = "Column10";
-            Column10.ReadOnly = true;
-            Column10.Width = 140;
-            // 
-            // Column8
-            // 
-            Column8.Frozen = true;
-            Column8.HeaderText = "Giờ Vào";
-            Column8.Name = "Column8";
-            Column8.ReadOnly = true;
-            // 
-            // Column11
-            // 
-            Column11.Frozen = true;
-            Column11.HeaderText = "Giờ Ra";
-            Column11.Name = "Column11";
-            Column11.ReadOnly = true;
-            Column11.Width = 90;
-            // 
-            // Column5
-            // 
-            Column5.HeaderText = "Làn Vào";
-            Column5.Name = "Column5";
-            Column5.ReadOnly = true;
-            Column5.Visible = false;
-            Column5.Width = 101;
-            // 
-            // Column13
-            // 
-            Column13.HeaderText = "Làn Ra";
-            Column13.Name = "Column13";
-            Column13.ReadOnly = true;
-            Column13.Visible = false;
-            Column13.Width = 91;
-            // 
-            // Column6
-            // 
-            Column6.HeaderText = "Người Dùng Vào";
-            Column6.Name = "Column6";
-            Column6.ReadOnly = true;
-            Column6.Visible = false;
-            Column6.Width = 169;
-            // 
-            // Column12
-            // 
-            Column12.HeaderText = "Người Dùng Ra";
-            Column12.Name = "Column12";
-            Column12.ReadOnly = true;
-            Column12.Visible = false;
-            Column12.Width = 159;
-            // 
-            // Column15
-            // 
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
-            Column15.DefaultCellStyle = dataGridViewCellStyle3;
-            Column15.HeaderText = "Phí gửi xe";
-            Column15.Name = "Column15";
-            Column15.ReadOnly = true;
-            Column15.Width = 118;
-            // 
-            // Column9
-            // 
-            Column9.HeaderText = "physicalFileIdIns";
-            Column9.Name = "Column9";
-            Column9.ReadOnly = true;
-            Column9.Visible = false;
-            Column9.Width = 168;
-            // 
-            // Column14
-            // 
-            Column14.HeaderText = "physicalIdOuts";
-            Column14.Name = "Column14";
-            Column14.ReadOnly = true;
-            Column14.Visible = false;
-            Column14.Width = 154;
-            // 
-            // Column3
-            // 
-            Column3.HeaderText = "Xem thêm";
-            Column3.Name = "Column3";
-            Column3.ReadOnly = true;
+            dgvData.CellMouseClick += dgvData_CellMouseClick;
+            dgvData.MouseClick += dgvData_MouseClick;
             // 
             // lblEndTime
             // 
@@ -370,12 +256,11 @@ namespace iParkingv5_window.Forms.ReportForms
             picOverviewImageOut.BackColor = Color.WhiteSmoke;
             picOverviewImageOut.BorderStyle = BorderStyle.FixedSingle;
             picOverviewImageOut.Dock = DockStyle.Fill;
-            picOverviewImageOut.Image = (Image)resources.GetObject("picOverviewImageOut.Image");
             picOverviewImageOut.Location = new Point(0, 0);
             picOverviewImageOut.Margin = new Padding(0);
             picOverviewImageOut.Name = "picOverviewImageOut";
             picOverviewImageOut.Size = new Size(224, 194);
-            picOverviewImageOut.SizeMode = PictureBoxSizeMode.Zoom;
+            picOverviewImageOut.SizeMode = PictureBoxSizeMode.StretchImage;
             picOverviewImageOut.TabIndex = 30;
             picOverviewImageOut.TabStop = false;
             // 
@@ -384,18 +269,18 @@ namespace iParkingv5_window.Forms.ReportForms
             picVehicleImageOut.BackColor = Color.WhiteSmoke;
             picVehicleImageOut.BorderStyle = BorderStyle.FixedSingle;
             picVehicleImageOut.Dock = DockStyle.Fill;
-            picVehicleImageOut.Image = (Image)resources.GetObject("picVehicleImageOut.Image");
             picVehicleImageOut.Location = new Point(0, 194);
             picVehicleImageOut.Margin = new Padding(0);
             picVehicleImageOut.Name = "picVehicleImageOut";
             picVehicleImageOut.Size = new Size(224, 194);
-            picVehicleImageOut.SizeMode = PictureBoxSizeMode.Zoom;
+            picVehicleImageOut.SizeMode = PictureBoxSizeMode.StretchImage;
             picVehicleImageOut.TabIndex = 29;
             picVehicleImageOut.TabStop = false;
             // 
             // ucPages1
             // 
             ucPages1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            ucPages1.BackColor = Color.Transparent;
             ucPages1.BorderStyle = BorderStyle.Fixed3D;
             ucPages1.Location = new Point(8, 551);
             ucPages1.Name = "ucPages1";
@@ -403,25 +288,12 @@ namespace iParkingv5_window.Forms.ReportForms
             ucPages1.TabIndex = 54;
             ucPages1.Visible = false;
             // 
-            // lblPage
-            // 
-            lblPage.AutoSize = true;
-            lblPage.BackColor = Color.Transparent;
-            lblPage.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            lblPage.ForeColor = Color.Navy;
-            lblPage.Location = new Point(710, 7);
-            lblPage.Name = "lblPage";
-            lblPage.Size = new Size(64, 25);
-            lblPage.TabIndex = 55;
-            lblPage.Text = "Trang";
-            lblPage.Visible = false;
-            // 
             // lblTotalEvents
             // 
             lblTotalEvents.AutoSize = true;
             lblTotalEvents.BackColor = Color.Transparent;
             lblTotalEvents.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            lblTotalEvents.ForeColor = Color.Navy;
+            lblTotalEvents.ForeColor = Color.FromArgb(253, 149, 40);
             lblTotalEvents.Location = new Point(710, 38);
             lblTotalEvents.Name = "lblTotalEvents";
             lblTotalEvents.Size = new Size(153, 25);
@@ -484,7 +356,6 @@ namespace iParkingv5_window.Forms.ReportForms
             panelData.Controls.Add(ucPages1);
             panelData.Controls.Add(lblTotalEvents);
             panelData.Controls.Add(lblKeyword);
-            panelData.Controls.Add(lblPage);
             panelData.Controls.Add(dgvData);
             panelData.Controls.Add(lblStartTime);
             panelData.Controls.Add(dtpStartTime);
@@ -611,6 +482,160 @@ namespace iParkingv5_window.Forms.ReportForms
             tablePic.Size = new Size(448, 388);
             tablePic.TabIndex = 60;
             // 
+            // Column1
+            // 
+            Column1.Frozen = true;
+            Column1.HeaderText = "STT";
+            Column1.Name = "Column1";
+            Column1.ReadOnly = true;
+            Column1.Width = 68;
+            // 
+            // Column4
+            // 
+            Column4.HeaderText = "Định Danh";
+            Column4.Name = "Column4";
+            Column4.ReadOnly = true;
+            Column4.Visible = false;
+            Column4.Width = 123;
+            // 
+            // Column2
+            // 
+            Column2.HeaderText = "Định danh ra";
+            Column2.Name = "Column2";
+            Column2.ReadOnly = true;
+            Column2.Visible = false;
+            Column2.Width = 140;
+            // 
+            // Column7
+            // 
+            Column7.Frozen = true;
+            Column7.HeaderText = "Biển Số Vào";
+            Column7.Name = "Column7";
+            Column7.ReadOnly = true;
+            Column7.Width = 131;
+            // 
+            // Column10
+            // 
+            Column10.Frozen = true;
+            Column10.HeaderText = "Biển Số Ra";
+            Column10.Name = "Column10";
+            Column10.ReadOnly = true;
+            Column10.Width = 121;
+            // 
+            // Column8
+            // 
+            Column8.Frozen = true;
+            Column8.HeaderText = "Giờ Vào";
+            Column8.Name = "Column8";
+            Column8.ReadOnly = true;
+            // 
+            // Column11
+            // 
+            Column11.Frozen = true;
+            Column11.HeaderText = "Giờ Ra";
+            Column11.Name = "Column11";
+            Column11.ReadOnly = true;
+            Column11.Width = 90;
+            // 
+            // Column5
+            // 
+            Column5.HeaderText = "Làn Vào";
+            Column5.Name = "Column5";
+            Column5.ReadOnly = true;
+            Column5.Visible = false;
+            Column5.Width = 101;
+            // 
+            // Column13
+            // 
+            Column13.HeaderText = "Làn Ra";
+            Column13.Name = "Column13";
+            Column13.ReadOnly = true;
+            Column13.Visible = false;
+            Column13.Width = 91;
+            // 
+            // Column6
+            // 
+            Column6.HeaderText = "Người Dùng Vào";
+            Column6.Name = "Column6";
+            Column6.ReadOnly = true;
+            Column6.Visible = false;
+            Column6.Width = 169;
+            // 
+            // Column12
+            // 
+            Column12.HeaderText = "Người Dùng Ra";
+            Column12.Name = "Column12";
+            Column12.ReadOnly = true;
+            Column12.Visible = false;
+            Column12.Width = 159;
+            // 
+            // Column15
+            // 
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
+            Column15.DefaultCellStyle = dataGridViewCellStyle3;
+            Column15.Frozen = true;
+            Column15.HeaderText = "Phí";
+            Column15.Name = "Column15";
+            Column15.ReadOnly = true;
+            Column15.Width = 66;
+            // 
+            // Column9
+            // 
+            Column9.HeaderText = "physicalFileIdIns";
+            Column9.Name = "Column9";
+            Column9.ReadOnly = true;
+            Column9.Visible = false;
+            Column9.Width = 168;
+            // 
+            // Column14
+            // 
+            Column14.HeaderText = "physicalIdOuts";
+            Column14.Name = "Column14";
+            Column14.ReadOnly = true;
+            Column14.Visible = false;
+            Column14.Width = 154;
+            // 
+            // Column16
+            // 
+            Column16.HeaderText = "Làn Ra";
+            Column16.Name = "Column16";
+            Column16.ReadOnly = true;
+            Column16.Width = 91;
+            // 
+            // Column17
+            // 
+            Column17.HeaderText = "Làn Vào";
+            Column17.Name = "Column17";
+            Column17.ReadOnly = true;
+            Column17.Width = 101;
+            // 
+            // Column18
+            // 
+            Column18.HeaderText = "Nhóm";
+            Column18.Name = "Column18";
+            Column18.ReadOnly = true;
+            Column18.Width = 89;
+            // 
+            // Column20
+            // 
+            Column20.HeaderText = "BSĐK";
+            Column20.Name = "Column20";
+            Column20.ReadOnly = true;
+            Column20.Width = 82;
+            // 
+            // Column19
+            // 
+            Column19.HeaderText = "Khách Hàng";
+            Column19.Name = "Column19";
+            Column19.ReadOnly = true;
+            Column19.Width = 133;
+            // 
+            // Column3
+            // 
+            Column3.HeaderText = "Xem thêm";
+            Column3.Name = "Column3";
+            Column3.ReadOnly = true;
+            // 
             // frmReportInOut
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -650,7 +675,6 @@ namespace iParkingv5_window.Forms.ReportForms
         private MovablePictureBox picOverviewImageOut;
         private MovablePictureBox picVehicleImageOut;
         private Usercontrols.ucPages ucPages1;
-        private Label lblPage;
         private Label lblTotalEvents;
         private LblCancel btnCancel;
         private BtnSearch btnSearch;
@@ -681,6 +705,11 @@ namespace iParkingv5_window.Forms.ReportForms
         private DataGridViewTextBoxColumn Column15;
         private DataGridViewTextBoxColumn Column9;
         private DataGridViewTextBoxColumn Column14;
+        private DataGridViewTextBoxColumn Column16;
+        private DataGridViewTextBoxColumn Column17;
+        private DataGridViewTextBoxColumn Column18;
+        private DataGridViewTextBoxColumn Column20;
+        private DataGridViewTextBoxColumn Column19;
         private DataGridViewButtonColumn Column3;
     }
 }

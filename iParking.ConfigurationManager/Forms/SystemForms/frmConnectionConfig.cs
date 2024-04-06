@@ -3,18 +3,9 @@ using iParking.ConfigurationManager.UserControls;
 using iParkingv5.Lpr.Objects;
 using iParkingv5.Objects.Configs;
 using iParkingv5.Objects.Databases;
-using iParkingv6.Objects.Datas;
+using Kztek.Scale_net6.Objects;
 using Kztek.Tool;
 using Kztek.Tools;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace iParking.ConfigurationManager.Forms.SystemForms
 {
@@ -26,6 +17,8 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
         ucAppOptions ucAppOptions;
         ucLprConnection ucLprConnection;
         ucDatabaseConnection ucDatabaseConnection;
+        ucScaleConfig ucScaleConfig;
+        ucThirdParty ucThirdParty;
         #endregion End Properties
 
         #region Forms
@@ -41,6 +34,9 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             AddTabServerConfig();
             AddTabOptionConfig();
             AddTabLprConfig();
+            AddTabScaleConfig();
+            AddTabThirdParty();
+
             this.Size = new Size(Properties.Settings.Default.prefer_width, Properties.Settings.Default.prefer_height);
             this.SizeChanged += FrmConnectionConfig_SizeChanged;
         }
@@ -60,6 +56,8 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             SaveLprConfig();
             SaveOptionConfig();
             SaveDatabaseConfig();
+            SaveScaleConfig();
+            SaveThirdPartyConfig();
             MessageBox.Show("Lưu cấu hình thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion End Controls In Form
@@ -135,6 +133,34 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             tabLprConfig.AutoScroll = true;
             ucLprConnection.Dock = DockStyle.None;
         }
+        private void AddTabScaleConfig()
+        {
+            TabPage tabScaleConfig = new TabPage();
+            tabScaleConfig.Text = "Thiết bị cân";
+            tabControl1.TabPages.Add(tabScaleConfig);
+            ScaleConfig? scaleConfig = NewtonSoftHelper<ScaleConfig>.DeserializeObjectFromPath(PathManagement.scaleConfigPath) ?? new ScaleConfig();
+
+            ucScaleConfig = new ucScaleConfig(scaleConfig);
+
+            tabScaleConfig.Controls.Add(ucScaleConfig);
+            ucScaleConfig.Dock = DockStyle.Fill;
+            tabScaleConfig.AutoScroll = true;
+            ucScaleConfig.Dock = DockStyle.None;
+        }
+        private void AddTabThirdParty()
+        {
+            TabPage tabThirdParty = new TabPage();
+            tabThirdParty.Text = "Tích hợp hệ thống thứ 3";
+            tabControl1.TabPages.Add(tabThirdParty);
+            ThirdPartyConfig? thirdPartyConfig = NewtonSoftHelper<ThirdPartyConfig>.DeserializeObjectFromPath(PathManagement.thirtPartyConfigPath) ?? new ThirdPartyConfig();
+
+            ucThirdParty = new ucThirdParty(thirdPartyConfig);
+
+            tabThirdParty.Controls.Add(ucThirdParty);
+            ucThirdParty.Dock = DockStyle.Fill;
+            tabThirdParty.AutoScroll = true;
+            ucThirdParty.Dock = DockStyle.None;
+        }
 
         private void SaveEInvoiceConfig()
         {
@@ -182,12 +208,17 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
                 }
             }
         }
+        private void SaveScaleConfig()
+        {
+            NewtonSoftHelper<ScaleConfig>.SaveConfig(ucScaleConfig.GetScaleConfig(), PathManagement.scaleConfigPath);
+        }
+        private void SaveThirdPartyConfig()
+        {
+            NewtonSoftHelper<ThirdPartyConfig>.SaveConfig(ucThirdParty.GetServerConfig(), PathManagement.thirtPartyConfigPath);
+        }
         #endregion End Private Function
 
         #region Public Function
-
         #endregion End Public Function
-
-
     }
 }

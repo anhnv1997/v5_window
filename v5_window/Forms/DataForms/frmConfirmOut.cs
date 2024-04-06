@@ -11,13 +11,16 @@ namespace iParkingv5_window.Forms.DataForms
     {
         //Thông tin sự kiện vào
         private string plateIn;
+        private string detectedPlate;
         private string identityIdIn;
         private string laneId;
         private List<string> fileKeys;
         private string datetimeIn;
         private long charge = 0;
+        public string updatePlate;
         #region Forms
-        public frmConfirmOut(string errorMessage, string plateIn, string identityIdIn, string laneId, List<string> fileKeys, DateTime? datetimeIn, bool isDisplayQuestion = true, long charge = 0)
+        public frmConfirmOut(string detectedPlate, string errorMessage, string plateIn, string identityIdIn,
+                            string laneId, List<string> fileKeys, DateTime? datetimeIn, bool isDisplayQuestion = true, long charge = 0)
         {
             InitializeComponent();
             this.Text = "Xác nhận xe ra khỏi bãi";
@@ -31,6 +34,7 @@ namespace iParkingv5_window.Forms.DataForms
             }
             lblMessage.Size = lblMessage.PreferredSize;
 
+            this.detectedPlate = detectedPlate;
             this.plateIn = plateIn;
             this.identityIdIn = identityIdIn;
             this.laneId = laneId;
@@ -58,12 +62,13 @@ namespace iParkingv5_window.Forms.DataForms
 
             this.Visible = false;
 
-            ShowInfo(this.laneId, this.datetimeIn, this.plateIn, this.identityIdIn);
+            ShowInfo(this.detectedPlate, this.laneId, this.datetimeIn, this.plateIn, this.identityIdIn);
             this.ActiveControl = btnOk;
         }
 
         private void BtnOk_Click(object? sender, EventArgs e)
         {
+            updatePlate = dgvEventInData.Rows[3].Cells[1].Value.ToString();
             this.DialogResult = DialogResult.OK;
         }
 
@@ -72,8 +77,17 @@ namespace iParkingv5_window.Forms.DataForms
             this.DialogResult = DialogResult.Cancel;
         }
         #endregion End Forms
+        public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
+        private string v1;
+        private string v2;
+        private string v3;
+        private string v4;
+        private List<string>? eventInFileKeys;
+        private DateTime dateTime;
+        private bool v5;
+        private long v6;
 
-        public async void ShowInfo(string laneIdIn, string datetimeIn, string plateIn, string identityIdIn)
+        public async void ShowInfo(string detectedPlate, string laneIdIn, string datetimeIn, string plateIn, string identityIdIn)
         {
             try
             {
@@ -96,20 +110,28 @@ namespace iParkingv5_window.Forms.DataForms
                 {
                     dgvEventInData.Rows.Clear();
                     dgvEventInData.Rows.Add("Thời gian vào", datetimeIn);
+                    dgvEventInData.Rows.Add("Thời gian ra", DateTime.Now.ToString());
                     dgvEventInData.Rows.Add("Mã định danh", identityIn?.Code);
-                    dgvEventInData.Rows.Add("Biển số nhận diện", plateIn);
+                    dgvEventInData.Rows.Add("Biển số vào", plateIn);
+                    dgvEventInData.Rows.Add("Biển số Ra", detectedPlate);
                     if (identityGroupIn != null)
                     {
                         dgvEventInData.Rows.Add("Nhóm", identityGroupIn.Name);
+                        dgvEventInData.Rows[dgvEventInData.RowCount - 1].DefaultCellStyle.Font = new Font(dgvEventInData.DefaultCellStyle.Font.Name, dgvEventInData.DefaultCellStyle.Font.Size * 2);
+                        dgvEventInData.Rows[dgvEventInData.RowCount - 1].DefaultCellStyle.ForeColor = Color.Red;
                     }
                     if (vehicleTypeIn != null)
                     {
                         dgvEventInData.Rows.Add("Loại phương tiện", VehicleType.GetDisplayStr(vehicleTypeIn.Type));
                     }
-                    if (this.charge > 0)
+
+                    //if (this.charge > 0)
                     {
                         dgvEventInData.Rows.Add("Phí gửi xe", TextFormatingTool.GetMoneyFormat(this.charge.ToString()));
                     }
+                    dgvEventInData.Rows[dgvEventInData.RowCount - 1].DefaultCellStyle.Font = new Font(dgvEventInData.DefaultCellStyle.Font.Name, dgvEventInData.DefaultCellStyle.Font.Size * 2);
+                    dgvEventInData.Rows[dgvEventInData.RowCount - 1].DefaultCellStyle.ForeColor = Color.Red;
+
                 }));
                 if (this.fileKeys?.Count >= 2)
                 {
@@ -124,15 +146,15 @@ namespace iParkingv5_window.Forms.DataForms
                     await ShowImage(this.fileKeys[0], picOverview);
                     this.Invoke(() =>
                     {
-                        picOverview.Image = Properties.Resources.defaultImage;
+                        picOverview.Image = defaultImg;
                     });
                 }
                 else
                 {
                     this.Invoke(() =>
                     {
-                        picOverview.Image = Properties.Resources.defaultImage;
-                        picVehicle.Image = Properties.Resources.defaultImage;
+                        picOverview.Image = defaultImg;
+                        picVehicle.Image = defaultImg;
                     });
                 }
 
@@ -154,7 +176,7 @@ namespace iParkingv5_window.Forms.DataForms
                     return;
                 }
             }
-            pic.Image = Properties.Resources.defaultImage;
+            pic.Image = defaultImg;
         }
     }
 }

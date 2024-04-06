@@ -46,6 +46,12 @@ namespace iParkingv5_window.Usercontrols
             lblVehilceType = new Label();
             lblTitle = new Label();
             lblCancel1 = new LblCancel();
+            lblCustomerTitle = new Label();
+            lblCustomer = new Label();
+            lblPhoneTitle = new Label();
+            lblPhoneNumber = new Label();
+            lblExpireTimeTitle = new Label();
+            lblExpireTime = new Label();
             SuspendLayout();
             // 
             // lblIdentityNameTitle
@@ -217,11 +223,77 @@ namespace iParkingv5_window.Usercontrols
             // 
             lblCancel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             lblCancel1.AutoSize = true;
-            lblCancel1.Location = new Point(363, 302);
+            lblCancel1.Location = new Point(355, 405);
             lblCancel1.Name = "lblCancel1";
-            lblCancel1.Size = new Size(80, 22);
+            lblCancel1.Size = new Size(88, 30);
             lblCancel1.TabIndex = 5;
             lblCancel1.Text = "lblCancel1";
+            // 
+            // lblCustomerTitle
+            // 
+            lblCustomerTitle.AutoSize = true;
+            lblCustomerTitle.BackColor = Color.Transparent;
+            lblCustomerTitle.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            lblCustomerTitle.Location = new Point(24, 310);
+            lblCustomerTitle.Name = "lblCustomerTitle";
+            lblCustomerTitle.Size = new Size(91, 20);
+            lblCustomerTitle.TabIndex = 0;
+            lblCustomerTitle.Text = "Khách hàng";
+            // 
+            // lblCustomer
+            // 
+            lblCustomer.AutoSize = true;
+            lblCustomer.BackColor = Color.Transparent;
+            lblCustomer.Location = new Point(185, 310);
+            lblCustomer.Name = "lblCustomer";
+            lblCustomer.Size = new Size(15, 20);
+            lblCustomer.TabIndex = 3;
+            lblCustomer.Text = "_";
+            lblCustomer.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // lblPhoneTitle
+            // 
+            lblPhoneTitle.AutoSize = true;
+            lblPhoneTitle.BackColor = Color.Transparent;
+            lblPhoneTitle.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            lblPhoneTitle.Location = new Point(24, 340);
+            lblPhoneTitle.Name = "lblPhoneTitle";
+            lblPhoneTitle.Size = new Size(100, 20);
+            lblPhoneTitle.TabIndex = 0;
+            lblPhoneTitle.Text = "Số điện thoại";
+            // 
+            // lblPhoneNumber
+            // 
+            lblPhoneNumber.AutoSize = true;
+            lblPhoneNumber.BackColor = Color.Transparent;
+            lblPhoneNumber.Location = new Point(185, 340);
+            lblPhoneNumber.Name = "lblPhoneNumber";
+            lblPhoneNumber.Size = new Size(15, 20);
+            lblPhoneNumber.TabIndex = 3;
+            lblPhoneNumber.Text = "_";
+            lblPhoneNumber.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // lblExpireTimeTitle
+            // 
+            lblExpireTimeTitle.AutoSize = true;
+            lblExpireTimeTitle.BackColor = Color.Transparent;
+            lblExpireTimeTitle.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            lblExpireTimeTitle.Location = new Point(24, 372);
+            lblExpireTimeTitle.Name = "lblExpireTimeTitle";
+            lblExpireTimeTitle.Size = new Size(98, 20);
+            lblExpireTimeTitle.TabIndex = 0;
+            lblExpireTimeTitle.Text = "Hạn sử dụng";
+            // 
+            // lblExpireTime
+            // 
+            lblExpireTime.AutoSize = true;
+            lblExpireTime.BackColor = Color.Transparent;
+            lblExpireTime.Location = new Point(185, 372);
+            lblExpireTime.Name = "lblExpireTime";
+            lblExpireTime.Size = new Size(15, 20);
+            lblExpireTime.TabIndex = 3;
+            lblExpireTime.Text = "_";
+            lblExpireTime.TextAlign = ContentAlignment.MiddleRight;
             // 
             // ucEventInInfo
             // 
@@ -232,6 +304,9 @@ namespace iParkingv5_window.Usercontrols
             Controls.Add(lblTitle);
             Controls.Add(lblVehilceType);
             Controls.Add(lblPlateNumber);
+            Controls.Add(lblExpireTime);
+            Controls.Add(lblPhoneNumber);
+            Controls.Add(lblCustomer);
             Controls.Add(lblIdentityGroup);
             Controls.Add(lblTimeIn);
             Controls.Add(lblIdentityCode);
@@ -239,13 +314,16 @@ namespace iParkingv5_window.Usercontrols
             Controls.Add(lblIdentityName);
             Controls.Add(lblVehilceTypeTitle);
             Controls.Add(lblPlateNumberTitle);
+            Controls.Add(lblExpireTimeTitle);
+            Controls.Add(lblPhoneTitle);
+            Controls.Add(lblCustomerTitle);
             Controls.Add(lblIdentityGroupTitle);
             Controls.Add(lblTimeInTitle);
             Controls.Add(lblIdentityCodeTitle);
             Controls.Add(lblLaneNameTitle);
             Controls.Add(lblIdentityNameTitle);
             Name = "ucEventInInfo";
-            Size = new Size(494, 337);
+            Size = new Size(494, 448);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -268,5 +346,11 @@ namespace iParkingv5_window.Usercontrols
         private Label lblVehilceType;
         private Label lblTitle;
         private LblCancel lblCancel1;
+        private Label lblCustomerTitle;
+        private Label lblCustomer;
+        private Label lblPhoneTitle;
+        private Label lblPhoneNumber;
+        private Label lblExpireTimeTitle;
+        private Label lblExpireTime;
     }
 }

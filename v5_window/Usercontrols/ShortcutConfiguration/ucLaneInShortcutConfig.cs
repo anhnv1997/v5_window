@@ -28,10 +28,15 @@ namespace iParkingv5_window.Usercontrols
             lblConfirmPlateKey.Text = ((Keys)ShortcutConfig.ConfirmPlateKey).ToString();
             lblWriteInKey.Text = ((Keys)ShortcutConfig.WriteIn).ToString();
             lblReserveLaneKey.Text = ((Keys)ShortcutConfig.ReserveLane).ToString();
+            lblReSnapshotLaneKey.Text = ((Keys)ShortcutConfig.ReSnapshotKey).ToString();
+
             picChangeConfirmPlateKey.InitControl(picChangeConfirmPlateKey_Click);
             btnSetting1.InitControl(picChangeWriteInKey_Click);
             picReserveLane.InitControl(picChangeReserverLane_Click);
+            picReSnapshot.InitControl(PicReSnapshot_Click);
         }
+
+       
         #endregion End Forms
 
         #region Controls In Form
@@ -66,6 +71,17 @@ namespace iParkingv5_window.Usercontrols
                 ShortcutConfig!.ReserveLane = (int)frm.KeySet;
                 lblReserveLaneKey.Text = ((Keys)ShortcutConfig.ReserveLane).ToString();
             }
+        }
+        private void PicReSnapshot_Click(object? sender, EventArgs e)
+        {
+            frmSetShortCutKey frm = new frmSetShortCutKey(Keys.Enter);
+            frm.ShowDialog();
+            if (frm.DialogResult == DialogResult.OK)
+            {
+                ShortcutConfig!.ReSnapshotKey = (int)frm.KeySet;
+                lblReSnapshotLaneKey.Text = ((Keys)ShortcutConfig.ReSnapshotKey).ToString();
+            }
+            frm.Dispose();
         }
         #endregion End Controls In Form
     }

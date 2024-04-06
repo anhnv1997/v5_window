@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "0BtG2oJ8pJQVXitULRSvZtMn+m71VX/zBLQ5FeCQwBKyh/BHhdUzn1LSHf3dCP/eCSuuTqHKcQLIH4LeNeV2pg==",
+  "dgSpecHash": "Ycc2l16pYwkEo+YISgs8YqopsSNhz/JQuNxGQalto2t3GZURVZndG0JjvP4ffeb+G2Gu2M9AbPDxksDkPVUUiQ==",
   "success": true,
   "projectFilePath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.ApiManager\\iParkingv5.ApiManager.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\3.1.32\\microsoft.extensions.logging.abstractions.3.1.32.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\opencvsharp4\\4.9.0.20240103\\opencvsharp4.4.9.0.20240103.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\restsharp\\110.2.0\\restsharp.110.2.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\restsharp.authenticators.digest\\1.6.0\\restsharp.authenticators.digest.1.6.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.7.0\\runtime.native.system.data.sqlclient.sni.4.7.0.nupkg.sha512",

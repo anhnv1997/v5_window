@@ -133,6 +133,23 @@
           }
         }
       },
+      "OpenCvSharp4/4.9.0.20240103": {
+        "type": "package",
+        "dependencies": {
+          "System.Memory": "4.5.5",
+          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/OpenCvSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/OpenCvSharp.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "RabbitMQ.Client/6.8.1": {
         "type": "package",
         "dependencies": {
@@ -743,6 +760,7 @@
         "dependencies": {
           "DahuaLib": "1.0.0.1",
           "IPaking.Ultility": "1.0.0",
+          "Kztek.Scale_net6": "1.0.0.10",
           "Kztek.Tool": "1.0.0.1",
           "iParkingv5.ApiManager": "1.0.0.1",
           "iParkingv5.Controller": "1.0.0.1",
@@ -812,6 +830,7 @@
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
           "Newtonsoft.Json": "13.0.3",
+          "OpenCvSharp4": "4.9.0.20240103",
           "System.Drawing.Common": "8.0.1"
         },
         "compile": {
@@ -842,13 +861,12 @@
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
           "DahuaLib": "1.0.0.1",
-          "Kztek.Tool": "1.0.0.1",
           "Newtonsoft.Json": "13.0.3",
           "ParkingHelper": "1.0.0.1",
           "System.Data.OleDb": "7.0.0",
-          "System.Data.SqlClient": "4.8.5",
+          "System.Data.SqlClient": "4.8.6",
           "System.Drawing.Common": "7.0.0",
-          "System.IO.Ports": "7.0.0",
+          "System.IO.Ports": "8.0.0",
           "System.Text.Json": "7.0.3"
         },
         "compile": {
@@ -862,8 +880,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "IPGS.Object": "1.0.0.1",
-          "Kztek.Tool": "1.0.0.1"
+          "IPGS.Object": "1.0.0.1"
         },
         "compile": {
           "bin/placeholder/IPGS.Ultility.dll": {}
@@ -919,6 +936,19 @@
         "frameworkReferences": [
           "Microsoft.WindowsDesktop.App.WindowsForms"
         ]
+      },
+      "Kztek.Scale_net6/1.0.0.10": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "System.IO.Ports": "7.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Kztek.Scale_net6.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Kztek.Scale_net6.dll": {}
+        }
       },
       "Kztek.Tool/1.0.0.1": {
         "type": "project",
@@ -1162,6 +1192,25 @@
         "newtonsoft.json.13.0.3.nupkg.sha512",
         "newtonsoft.json.nuspec",
         "packageIcon.png"
+      ]
+    },
+    "OpenCvSharp4/4.9.0.20240103": {
+      "sha512": "+BJMqToSH3dl+5SUF2YaPI+1eY/o/aTtvCQsY3qgcE4YS8qvPNS7MObzzVy4avYrBmcEEFnCvNF+1VbFnQjU9w==",
+      "type": "package",
+      "path": "opencvsharp4/4.9.0.20240103",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net48/OpenCvSharp.dll",
+        "lib/net48/OpenCvSharp.xml",
+        "lib/net6.0/OpenCvSharp.dll",
+        "lib/net6.0/OpenCvSharp.xml",
+        "lib/netstandard2.0/OpenCvSharp.dll",
+        "lib/netstandard2.0/OpenCvSharp.xml",
+        "lib/netstandard2.1/OpenCvSharp.dll",
+        "lib/netstandard2.1/OpenCvSharp.xml",
+        "opencvsharp4.4.9.0.20240103.nupkg.sha512",
+        "opencvsharp4.nuspec"
       ]
     },
     "RabbitMQ.Client/6.8.1": {
@@ -2248,6 +2297,11 @@
       "path": "../../../../../../../BaseLib/Kztek.RtspPlayer/Kztek.RtspPlayer/Kztek.RtspPlayer.csproj",
       "msbuildProject": "../../../../../../../BaseLib/Kztek.RtspPlayer/Kztek.RtspPlayer/Kztek.RtspPlayer.csproj"
     },
+    "Kztek.Scale_net6/1.0.0.10": {
+      "type": "project",
+      "path": "../Kztek.Scale/Net6/Kztek.Scale/Kztek.Scale_net6.csproj",
+      "msbuildProject": "../Kztek.Scale/Net6/Kztek.Scale/Kztek.Scale_net6.csproj"
+    },
     "Kztek.Tool/1.0.0.1": {
       "type": "project",
       "path": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/Kztek.Tool/Kztek.Tool.csproj",
@@ -2266,6 +2320,7 @@
       "Kztek.Cameras >= 1.0.0.2",
       "Kztek.LPR >= 1.0.0.9",
       "Kztek.RtspPlayer >= 1.0.0.2",
+      "Kztek.Scale_net6 >= 1.0.0.10",
       "Kztek.Tool >= 1.0.0.1",
       "Minio >= 5.0.0",
       "RabbitMQ.Client >= 6.8.1",
@@ -2276,6 +2331,7 @@
       "iParkingv5.ApiManager >= 1.0.0.1",
       "iParkingv5.Controller >= 1.0.0.1",
       "iParkingv5.LedDisplay >= 1.0.0",
+      "iParkingv5.Lpr >= 1.0.0",
       "iParkingv5.Objects >= 1.0.0.1"
     ]
   },
@@ -2338,8 +2394,14 @@
             "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.LedDisplay\\iParkingv5.LedDisplay.csproj": {
               "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.LedDisplay\\iParkingv5.LedDisplay.csproj"
             },
+            "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Lpr\\iParkingv5.Lpr.csproj": {
+              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Lpr\\iParkingv5.Lpr.csproj"
+            },
             "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj": {
               "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj"
+            },
+            "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Scale\\Net6\\Kztek.Scale\\Kztek.Scale_net6.csproj": {
+              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Scale\\Net6\\Kztek.Scale\\Kztek.Scale_net6.csproj"
             },
             "E:\\BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj": {
               "projectPath": "E:\\BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj"
@@ -2357,6 +2419,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -2399,7 +2466,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

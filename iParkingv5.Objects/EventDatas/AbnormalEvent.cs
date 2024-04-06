@@ -17,7 +17,9 @@ namespace iParkingv5.Objects.EventDatas
         public string Description { get; set; }
         public bool Deleted { get; set; }
         public string CreatedUtc { get; set; }
-
+        public string RegisteredVehicleId { get; set; }
+        public string IdentityGroupId { get; set; }
+        public string CustomerId { get; set; }
         public Identity Identity { get; set; }
         public Lane Lane { get; set; }
 

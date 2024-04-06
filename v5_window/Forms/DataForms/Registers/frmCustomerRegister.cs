@@ -128,7 +128,7 @@ namespace iParkingv5_window.Forms.DataForms
                         }
                     }
                 }
-                var identityResponse = await KzParkingApiHelper.GetIdentityByCode(ce.PreferCard);
+                var identityResponse = await KzParkingApiHelper.GetIdentityByCodeAsync(ce.PreferCard);
                 this.selectedIdentity = identityResponse.Item1;
                 if (!identityResponse.Item2)
                 {

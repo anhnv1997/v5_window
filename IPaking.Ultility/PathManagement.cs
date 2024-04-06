@@ -8,12 +8,16 @@
         public static string lprConfigPath => baseBath + "/configs/app/lpr.txt";
         public static string einvoiceConfigPath => baseBath + "/configs/app/einvoice.txt";
         public static string appOptionConfigPath => baseBath + "/configs/app/option.txt";
-        public static string appDisplayConfigPath => baseBath + "/configs/app/displayConfig.txt";
+        public static string appServicesConfigPath => baseBath + "/configs/app/services.txt";
+        public static string scaleConfigPath => baseBath + "/configs/app/scale.txt";
+        public static string thirtPartyConfigPath => baseBath + "/configs/app/thirtParty.txt";
+        public static string appDisplayConfigPath(string laneID) => baseBath + $"/configs/app/{laneID}/displayConfig.txt";
         public static string appLaneDirectionConfigPath(string laneId) => baseBath + $"/configs/app/{laneId}/displayDirection.txt";
 
         public static string databaseConfigPath => baseBath + "/configs/app/database.xml";
         public static string appActiveLaneConfigPath() => baseBath + $"/configs/app/activeLane.txt";
         public static string appPrintTemplateConfigPath(string printTemplateName) => baseBath + $"/configs/app/print/{printTemplateName}.html";
+        public static string appPrintScaleTemplateConfigPath(string printTemplateName) => baseBath + $"/configs/app/print/{printTemplateName}Scale.html";
         #endregion END APP CONFIG PATH
 
         #region LANE CONFIG PATH

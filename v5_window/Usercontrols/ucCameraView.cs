@@ -94,6 +94,7 @@ namespace iParkingv5_window.Usercontrols
 
         public Image? GetFullCurrentImage()
         {
+            //return Image.FromFile("E:\\2.Workspace\\10.LprTraining\\XuanCuongInput\\19.jpg");
             var bmp = _Camera!.GetCurrentVideoFrame();
             if (bmp == null)
             {

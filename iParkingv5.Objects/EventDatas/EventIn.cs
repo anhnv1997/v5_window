@@ -62,5 +62,8 @@ namespace iParkingv5.Objects.EventDatas
         {
             PaymentTransactions = new List<PaymentTransaction>();
         }
+        public Customer customer { get; set; }
+        public string IdentityGroupId { get; set; }
+        public RegisteredVehicle RegisteredVehicle { get; set; }
     }
 }

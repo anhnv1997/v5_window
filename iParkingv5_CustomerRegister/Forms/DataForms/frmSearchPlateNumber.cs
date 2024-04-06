@@ -59,7 +59,7 @@ namespace iParkingv5_window.Forms.DataForms
             lblTitle.Font = new Font(this.Font.Name, StaticPool.baseSize * 2, FontStyle.Bold);
             panelData.ToggleDoubleBuffered(true);
 
-            lblSearch.InitControl(BtnSearch_Click);
+            btnSearch.InitControl(BtnSearch_Click);
             btnOk1.InitControl(BtnOk1_Click);
             btnCancel1.InitControl(BtnCancel1_Click);
 
@@ -68,16 +68,18 @@ namespace iParkingv5_window.Forms.DataForms
 
             txtKeyword.Location = new Point(lblKeyword.Location.X + lblKeyword.Width + StaticPool.baseSize,
                                             lblKeyword.Location.Y + (lblKeyword.Height - txtKeyword.Height) / 2);
-            lblSearch.Location = new Point(txtKeyword.Location.X + txtKeyword.Width + StaticPool.baseSize,
-                                           txtKeyword.Location.Y + (txtKeyword.Height - lblSearch.Height) / 2);
+            btnSearch.Location = new Point(txtKeyword.Location.X + txtKeyword.Width + StaticPool.baseSize,
+                                           txtKeyword.Location.Y + (txtKeyword.Height - btnSearch.Height) / 2);
 
             btnCancel1.Location = new Point(panelData.Width - btnCancel1.Width - StaticPool.baseSize * 2,
                                            panelData.Height - btnCancel1.Height - StaticPool.baseSize * 2);
             btnOk1.Location = new Point(btnCancel1.Location.X - btnOk1.Width - StaticPool.baseSize, btnCancel1.Location.Y);
-            dgvData.Location = new Point(lblTitle.Location.X, lblSearch.Location.Y + lblSearch.Height + StaticPool.baseSize);
+            dgvData.Location = new Point(lblTitle.Location.X, btnSearch.Location.Y + btnSearch.Height + StaticPool.baseSize);
             dgvData.Width = panelData.Width - StaticPool.baseSize * 4;
             dgvData.Height = btnCancel1.Location.Y - StaticPool.baseSize - dgvData.Location.Y;
             ucNotify1.OnSelectResultEvent += UcNotify1_OnSelectResultEvent;
+
+            btnSearch.PerformClick();
         }
         #endregion END FORMS
 

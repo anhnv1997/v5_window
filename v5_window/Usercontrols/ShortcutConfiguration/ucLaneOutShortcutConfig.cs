@@ -30,11 +30,16 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
             lblConfirmPlateKey.Text = ((Keys)ShortcutConfig.ConfirmPlateKey).ToString();
             lblWriteOutKey.Text = ((Keys)ShortcutConfig.WriteOut).ToString();
             lblReserveLaneKey.Text = ((Keys)ShortcutConfig.ReserveLane).ToString();
+            lblReSnapshotLaneKey.Text = ((Keys)ShortcutConfig.ReSnapshotKey).ToString();
+            lblPrintKey.Text = ((Keys)ShortcutConfig.PrintKey).ToString();
 
             picChangeConfirmPlateKey.InitControl(PicChangeConfirmPlateKey_Click);
             picWriteOut.InitControl(PicChangeWriteOutKey_Click);
             picReserveLane.InitControl(PicChangeReserverLane_Click);
+            picReSnapshot.InitControl(PicReSnapshot_Click);
+            picPrint.InitControl(PicPrint_Click);
         }
+
         #endregion End Forms
 
         #region Controls In Form
@@ -68,6 +73,29 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
                 ShortcutConfig!.ReserveLane = (int)frm.KeySet;
                 lblReserveLaneKey.Text = ((Keys)ShortcutConfig.ReserveLane).ToString();
             }
+        }
+        private void PicReSnapshot_Click(object? sender, EventArgs e)
+        {
+            frmSetShortCutKey frm = new frmSetShortCutKey(Keys.Enter);
+            frm.ShowDialog();
+            if (frm.DialogResult == DialogResult.OK)
+            {
+                ShortcutConfig!.ReSnapshotKey = (int)frm.KeySet;
+                lblReSnapshotLaneKey.Text = ((Keys)ShortcutConfig.ReSnapshotKey).ToString();
+            }
+            frm.Dispose();
+        }
+
+        private void PicPrint_Click(object? sender, EventArgs e)
+        {
+            frmSetShortCutKey frm = new frmSetShortCutKey(Keys.Enter);
+            frm.ShowDialog();
+            if (frm.DialogResult == DialogResult.OK)
+            {
+                ShortcutConfig!.PrintKey = (int)frm.KeySet;
+                lblPrintKey.Text = ((Keys)ShortcutConfig.PrintKey).ToString();
+            }
+            frm.Dispose();
         }
         #endregion End Controls In Form
     }

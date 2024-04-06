@@ -40,8 +40,8 @@
             picVehicle = new Usercontrols.MovablePictureBox();
             lblMessage = new Label();
             panelAction = new Panel();
-            btnCancel1 = new iPakrkingv5.Controls.Controls.Buttons.LblCancel();
-            btnOk = new iPakrkingv5.Controls.Controls.Buttons.BtnOk();
+            lblCancel1 = new iPakrkingv5.Controls.Controls.Buttons.LblCancel();
+            btnOk1 = new iPakrkingv5.Controls.Controls.Buttons.BtnOk();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEventInData).BeginInit();
             panelEventPic.SuspendLayout();
@@ -58,7 +58,7 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 58);
             panel1.Name = "panel1";
-            panel1.Size = new Size(800, 330);
+            panel1.Size = new Size(1009, 330);
             panel1.TabIndex = 6;
             // 
             // dgvEventInData
@@ -87,17 +87,15 @@
             dgvEventInData.Dock = DockStyle.Fill;
             dgvEventInData.Location = new Point(0, 0);
             dgvEventInData.Name = "dgvEventInData";
-            dgvEventInData.ReadOnly = true;
             dgvEventInData.RowHeadersVisible = false;
             dgvEventInData.RowTemplate.Height = 29;
-            dgvEventInData.Size = new Size(479, 330);
+            dgvEventInData.Size = new Size(688, 330);
             dgvEventInData.TabIndex = 2;
             // 
             // Column1
             // 
             Column1.HeaderText = "Header";
             Column1.Name = "Column1";
-            Column1.ReadOnly = true;
             Column1.Width = 5;
             // 
             // Column2
@@ -105,13 +103,12 @@
             Column2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Column2.HeaderText = "Content";
             Column2.Name = "Column2";
-            Column2.ReadOnly = true;
             // 
             // panelEventPic
             // 
             panelEventPic.Controls.Add(tableLayoutPanel1);
             panelEventPic.Dock = DockStyle.Right;
-            panelEventPic.Location = new Point(479, 0);
+            panelEventPic.Location = new Point(688, 0);
             panelEventPic.Name = "panelEventPic";
             panelEventPic.Size = new Size(321, 330);
             panelEventPic.TabIndex = 3;
@@ -157,50 +154,50 @@
             lblMessage.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
             lblMessage.Location = new Point(0, 0);
             lblMessage.Name = "lblMessage";
-            lblMessage.Size = new Size(800, 58);
+            lblMessage.Size = new Size(1009, 58);
             lblMessage.TabIndex = 4;
             lblMessage.Text = "label1";
             lblMessage.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panelAction
             // 
-            panelAction.Controls.Add(btnCancel1);
-            panelAction.Controls.Add(btnOk);
+            panelAction.Controls.Add(lblCancel1);
+            panelAction.Controls.Add(btnOk1);
             panelAction.Dock = DockStyle.Bottom;
             panelAction.Location = new Point(0, 388);
             panelAction.Name = "panelAction";
-            panelAction.Size = new Size(800, 62);
+            panelAction.Size = new Size(1009, 62);
             panelAction.TabIndex = 5;
             // 
-            // btnCancel1
+            // lblCancel1
             // 
-            btnCancel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnCancel1.AutoSize = true;
-            btnCancel1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            btnCancel1.ForeColor = Color.Black;
-            btnCancel1.Location = new Point(1280, -24);
-            btnCancel1.Name = "btnCancel1";
-            btnCancel1.Size = new Size(57, 30);
-            btnCancel1.TabIndex = 3;
-            btnCancel1.Text = "Đóng";
+            lblCancel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            lblCancel1.AutoSize = true;
+            lblCancel1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            lblCancel1.ForeColor = Color.Black;
+            lblCancel1.Location = new Point(940, 20);
+            lblCancel1.Name = "lblCancel1";
+            lblCancel1.Size = new Size(57, 30);
+            lblCancel1.TabIndex = 5;
+            lblCancel1.Text = "Đóng";
             // 
-            // btnOk
+            // btnOk1
             // 
-            btnOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnOk.AutoSize = true;
-            btnOk.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            btnOk.ForeColor = Color.Black;
-            btnOk.Location = new Point(1199, -24);
-            btnOk.Name = "btnOk";
-            btnOk.Size = new Size(83, 30);
-            btnOk.TabIndex = 2;
-            btnOk.Text = "Xác nhận";
+            btnOk1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnOk1.AutoSize = true;
+            btnOk1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            btnOk1.ForeColor = Color.Black;
+            btnOk1.Location = new Point(859, 20);
+            btnOk1.Name = "btnOk1";
+            btnOk1.Size = new Size(83, 30);
+            btnOk1.TabIndex = 4;
+            btnOk1.Text = "Xác nhận";
             // 
             // frmConfirmIn
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1009, 450);
             Controls.Add(panel1);
             Controls.Add(lblMessage);
             Controls.Add(panelAction);
@@ -230,6 +227,7 @@
         private Usercontrols.MovablePictureBox picVehicle;
         private Label lblMessage;
         private Panel panelAction;
-
+        private iPakrkingv5.Controls.Controls.Buttons.LblCancel lblCancel1;
+        private iPakrkingv5.Controls.Controls.Buttons.BtnOk btnOk1;
     }
 }
