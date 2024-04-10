@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <Reference Include="Kztek.LPR">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\Kztek.LPR.dll</HintPath>
+      <HintPath>..\packages\Kztek.LPR.dll</HintPath>
     </Reference>
   </ItemGroup>
 

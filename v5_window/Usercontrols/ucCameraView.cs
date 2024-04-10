@@ -1,20 +1,4 @@
-﻿using iParkingv5.Objects;
-using iParkingv5.Objects.Enums;
-using iParkingv6.Objects.Datas;
-using Kztek.Cameras;
-using Kztek.LPR;
-using Kztek.Tools;
-using ParkingHelper.ModelSystem;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using Kztek.Cameras;
 
 namespace iParkingv5_window.Usercontrols
 {

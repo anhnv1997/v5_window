@@ -16,20 +16,24 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\DahuaLib\DahuaLib.csproj" />
-    <ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\Kztek.Tool\Kztek.Tool.csproj" />
     <ProjectReference Include="..\iParkingv5.Objects\iParkingv5.Objects.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="Aopu_Controller">
-      <HintPath>..\..\..\..\..\Kztek.Libaries\Kztek.AccessControl_NetStandard\refs\Aopu_Controller.dll</HintPath>
+      <HintPath>..\packages\Aopu_Controller.dll</HintPath>
+    </Reference>
+    <Reference Include="DahuaLib">
+      <HintPath>..\packages\DahuaLib.dll</HintPath>
     </Reference>
     <Reference Include="Ingressus">
-      <HintPath>..\..\..\..\..\..\3.Devices\3.FIngertec\DebugINGRESS\Debug\Ingressus.dll</HintPath>
+      <HintPath>..\packages\Ingressus.dll</HintPath>
     </Reference>
     <Reference Include="Interop.AccessTcp">
       <HintPath>..\..\..\..\..\..\4..Library Reference\New folder\Interop.AccessTcp.dll</HintPath>
+    </Reference>
+    <Reference Include="Kztek.Tool">
+      <HintPath>..\packages\Kztek.Tool.dll</HintPath>
     </Reference>
   </ItemGroup>
 

@@ -33,11 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\..\BaseLib\Kztek.Cameras\Kztek.Cameras.csproj" />
-    <ProjectReference Include="..\..\..\..\..\..\..\BaseLib\Kztek.LPR\Kztek.LPR.csproj" />
-    <ProjectReference Include="..\..\..\..\..\..\..\BaseLib\Kztek.RtspPlayer\Kztek.RtspPlayer\Kztek.RtspPlayer.csproj" />
-    <ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\IPGS.Ultility\IPGS.Ultility.csproj" />
-    <ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\Kztek.Tool\Kztek.Tool.csproj" />
     <ProjectReference Include="..\IPaking.Ultility\IPaking.Ultility.csproj" />
     <ProjectReference Include="..\iPakrkingv5.Controls\iPakrkingv5.Controls.csproj" />
     <ProjectReference Include="..\iParking.ConfigurationManager\iParking.ConfigurationManager.csproj" />
@@ -50,29 +45,44 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="AForge">
+      <HintPath>..\packages\Camera_LPR\AForge.dll</HintPath>
+    </Reference>
     <Reference Include="AForge.Imaging">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\AForge.Imaging.dll</HintPath>
+      <HintPath>..\packages\Camera_LPR\AForge.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Math">
+      <HintPath>..\packages\Camera_LPR\AForge.Math.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Video.DirectShowEx">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\AForge.Video.DirectShowEx.dll</HintPath>
+      <HintPath>..\packages\Camera_LPR\AForge.Video.DirectShowEx.dll</HintPath>
     </Reference>
     <Reference Include="AForge.VideoEx">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\AForge.VideoEx.dll</HintPath>
+      <HintPath>..\packages\Camera_LPR\AForge.VideoEx.dll</HintPath>
     </Reference>
-    <Reference Include="Kztek.Security">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\KeyLib\Kztek.Security.dll</HintPath>
+    <Reference Include="AForge.Vision">
+      <HintPath>..\packages\Camera_LPR\AForge.Vision.dll</HintPath>
     </Reference>
-    <Reference Include="Kztek.Utilities">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\KeyLib\Kztek.Utilities.dll</HintPath>
+    <Reference Include="IPGS.Ultility">
+      <HintPath>..\packages\IPGS.Ultility.dll</HintPath>
     </Reference>
-    <Reference Include="KztekKeyRegister">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\KeyLib\KztekKeyRegister.dll</HintPath>
+    <Reference Include="Kztek.Cameras">
+      <HintPath>..\packages\Kztek.Cameras.dll</HintPath>
+    </Reference>
+    <Reference Include="Kztek.LPR">
+      <HintPath>..\packages\Kztek.LPR.dll</HintPath>
+    </Reference>
+    <Reference Include="Kztek.RtspPlayer">
+      <HintPath>..\packages\Kztek.RtspPlayer.dll</HintPath>
+    </Reference>
+    <Reference Include="Kztek.Tool">
+      <HintPath>..\packages\Kztek.Tool.dll</HintPath>
     </Reference>
     <Reference Include="RtspClientSharp">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\RtspClientSharp.dll</HintPath>
+      <HintPath>..\packages\Camera_LPR\RtspClientSharp.dll</HintPath>
     </Reference>
     <Reference Include="SayMoney">
-      <HintPath>..\..\..\v3_trunk\packages\SayMoney.dll</HintPath>
+      <HintPath>..\packages\SayMoney.dll</HintPath>
     </Reference>
   </ItemGroup>
 

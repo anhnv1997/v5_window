@@ -10,12 +10,7 @@ using System.Threading.Tasks;
 using Kztek.Tool;
 using iParkingv5.Objects.Enums;
 using Newtonsoft.Json;
-using System.Net;
-using Microsoft.Extensions.Logging;
-using System.Security.Principal;
 using iParkingv5.Objects;
-using Newtonsoft.Json.Linq;
-using System.Drawing.Printing;
 
 namespace iParkingv6.ApiManager.KzParkingv3Apis
 {

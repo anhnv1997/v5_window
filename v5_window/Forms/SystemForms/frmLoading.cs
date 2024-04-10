@@ -164,8 +164,9 @@ namespace iParkingv5_window.Forms.SystemForms
         {
             lblMessage = new Label();
             lblMessage.AutoSize = false;
-            lblMessage.SetKioskSecondary("Đang tải thông tin hệ thống, vui lòng chờ trong giây lát...",
-                                        panelMessage.Width, panelMessage.Height, false);
+            //Fix 
+            //lblMessage.SetKioskSecondary("Đang tải thông tin hệ thống, vui lòng chờ trong giây lát...",
+            //                            panelMessage.Width, panelMessage.Height, false);
             lblMessage.TextAlign = ContentAlignment.MiddleCenter;
 
             panelMessage.MinimumSize = new Size(0, lblMessage.Height);

@@ -53,13 +53,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\DahuaLib\DahuaLib.csproj" />
     <ProjectReference Include="..\IPaking.Ultility\IPaking.Ultility.csproj" />
     <ProjectReference Include="..\iPakrkingv5.Controls\iPakrkingv5.Controls.csproj" />
     <ProjectReference Include="..\iParking.ConfigurationManager\iParking.ConfigurationManager.csproj" />
     <ProjectReference Include="..\iParkingv5.ApiManager\iParkingv5.ApiManager.csproj" />
     <ProjectReference Include="..\iParkingv5.Objects\iParkingv5.Objects.csproj" />
     <ProjectReference Include="..\v5_window\iParkingv5_window.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DahuaLib">
+      <HintPath>..\packages\DahuaLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
