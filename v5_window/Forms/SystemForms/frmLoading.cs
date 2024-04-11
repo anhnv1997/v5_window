@@ -128,7 +128,7 @@ namespace iParkingv5_window.Forms.SystemForms
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
         }
-        #endregion
+        #endregion End Forms
 
         #region Private Function
         //--CREATE FORMS
@@ -387,7 +387,6 @@ namespace iParkingv5_window.Forms.SystemForms
             timer1.Enabled = false;
             return StaticPool.LprDetect != null;
         }
-
         private List<string> CreateDisplayListMessage(string message)
         {
             List<string> result = new List<string>
@@ -399,7 +398,7 @@ namespace iParkingv5_window.Forms.SystemForms
             };
             return result;
         }
-        #endregion
+        #endregion End Private Function
 
         #region Timer
         private void timerUpdateWaitingMessage_Tick(object sender, EventArgs e)
@@ -415,6 +414,6 @@ namespace iParkingv5_window.Forms.SystemForms
                 }
             }
         }
-        #endregion
+        #endregion End Timer
     }
 }

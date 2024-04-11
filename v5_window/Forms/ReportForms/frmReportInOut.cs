@@ -60,6 +60,10 @@ namespace iParkingv5_window.Forms.ReportForms
             CreateUI();
             this.ActiveControl = btnSearch;
             btnSearch.PerformClick();
+            picOverviewImageIn.Image = picOverviewImageIn.ErrorImage = defaultImg;
+            picVehicleImageIn.Image = picVehicleImageIn.ErrorImage = defaultImg;
+            picOverviewImageOut.Image = picOverviewImageOut.ErrorImage = defaultImg;
+            picVehicleImageOut.Image = picVehicleImageOut.ErrorImage = defaultImg;
         }
         private void FrmReportInOut_KeyDown(object? sender, KeyEventArgs e)
         {
@@ -561,29 +565,35 @@ namespace iParkingv5_window.Forms.ReportForms
         }
         private async Task LoadLaneType()
         {
-            cbLane.Invoke(new Action(() =>
+            try
             {
-                cbLane.Items.Add(new ListItem()
+                cbLane.Invoke(new Action(() =>
                 {
-                    Name = "Tất cả",
-                    Value = ""
-                });
-            }));
-
-            lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
-            cbLane.Invoke(new Action(() =>
-            {
-                foreach (var item in lanes)
-                {
-                    ListItem laneItem = new ListItem()
+                    cbLane.Items.Add(new ListItem()
                     {
-                        Name = item.name,
-                        Value = item.id
-                    };
-                    cbLane.Items.Add(laneItem);
-                }
-                cbLane.SelectedIndex = 0;
-            }));
+                        Name = "Tất cả",
+                        Value = ""
+                    });
+                }));
+
+                lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
+                cbLane.Invoke(new Action(() =>
+                {
+                    foreach (var item in lanes)
+                    {
+                        ListItem laneItem = new ListItem()
+                        {
+                            Name = item.name,
+                            Value = item.id
+                        };
+                        cbLane.Items.Add(laneItem);
+                    }
+                    cbLane.SelectedIndex = 0;
+                }));
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private string GetLaneName(string laneId)

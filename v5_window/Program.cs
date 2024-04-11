@@ -7,6 +7,7 @@ using iParkingv5_window.Forms.SystemForms;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using Kztek.Tool;
 using Kztek.Tools;
+using KztekKeyRegister;
 using System.Diagnostics;
 
 namespace v6_window
@@ -25,58 +26,57 @@ namespace v6_window
 
         StartApp:
             {
-                const string appName = "IP_DA_V3_WD";
+                const string appName = "IP_DA_V5_LU";
                 PathManagement.baseBath = LogHelper.SaveLogFolder = Application.StartupPath;
                 LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Khởi chạy ứng dụng");
-                string appCode = "IP_DA_V3_WD";
+                string appCode = "IP_DA_V5_LU";
                 using (Mutex mutex = new Mutex(true, appName, out bool ownmutex))
                 {
                     if (ownmutex)
                     {
                         //return;
                         //if (Environment.MachineName.ToUpper() != "VIETANHPC")
-                        //{
-                        //    var frmLicenseValidatorForm = new LicenseValidatorForm();
-                        //    frmLicenseValidatorForm.Init(appCode);
-                        //    try
-                        //    {
-                        //        if (frmLicenseValidatorForm.LoadSavedLicense() == null)
-                        //        {
-                        //            bool isOpenActiveForm = MessageBox.Show("Ứng dụng chưa được kích hoạt, bạn có muốn kích hoạt phần mềm?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
+                        {
+                            var frmLicenseValidatorForm = new LicenseValidatorForm();
+                            frmLicenseValidatorForm.Init(appCode);
+                            try
+                            {
+                                if (frmLicenseValidatorForm.LoadSavedLicense() == null)
+                                {
+                                    bool isOpenActiveForm = MessageBox.Show("Ứng dụng chưa được kích hoạt, bạn có muốn kích hoạt phần mềm?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
 
-                        //            if (isOpenActiveForm)
-                        //            {
-                        //                frmLicenseValidatorForm.ShowActivateForm();
-                        //            }
-                        //            else
-                        //            {
-                        //                Application.Exit();
-                        //                return;
-                        //            }
-                        //        }
-                        //    }
-                        //    catch (Exception ex)
-                        //    {
-                        //        bool isOpenActiveForm = MessageBox.Show("Ứng dụng chưa được kích hoạt, bạn có muốn kích hoạt phần mềm?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
+                                    if (isOpenActiveForm)
+                                    {
+                                        frmLicenseValidatorForm.ShowActivateForm();
+                                    }
+                                    else
+                                    {
+                                        Application.Exit();
+                                        return;
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                bool isOpenActiveForm = MessageBox.Show("Ứng dụng chưa được kích hoạt, bạn có muốn kích hoạt phần mềm?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
 
-                        //        if (isOpenActiveForm)
-                        //        {
-                        //            frmLicenseValidatorForm.ShowActivateForm();
-                        //            if (!frmLicenseValidatorForm.LicenseActivated)
-                        //            {
-                        //                MessageBox.Show("Kích hoạt không thành công " + ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        //                Application.Exit();
-                        //                return;
-                        //            }
-                        //        }
-                        //        else
-                        //        {
-                        //            Application.Exit();
-                        //            return;
-                        //        }
-                        //    }
-
-                        //}
+                                if (isOpenActiveForm)
+                                {
+                                    frmLicenseValidatorForm.ShowActivateForm();
+                                    if (!frmLicenseValidatorForm.LicenseActivated)
+                                    {
+                                        MessageBox.Show("Kích hoạt không thành công " + ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        Application.Exit();
+                                        return;
+                                    }
+                                }
+                                else
+                                {
+                                    Application.Exit();
+                                    return;
+                                }
+                            }
+                        }
                         //DahuaAccessControl.Init();
                         LoadSystemConfig();
                         LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Mở giao diện đăng nhập hệ thống");

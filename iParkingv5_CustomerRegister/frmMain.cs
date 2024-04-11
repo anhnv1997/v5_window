@@ -185,10 +185,10 @@ namespace iParkingv5_CustomerRegister
         {
             ConnectionFactory factory = new ConnectionFactory
             {
-                HostName = "192.168.21.20",
+                HostName = StaticPool.serverConfig.RabbitMqUrl,// "192.168.21.140",
                 Port = 5672,
-                UserName = "admin",
-                Password = "Kztek123456",
+                UserName = StaticPool.serverConfig.RabbitMqUsername ,
+                Password = StaticPool.serverConfig.RabbitMqPassword,
                 VirtualHost = "/"
             };
             conn = factory.CreateConnection();

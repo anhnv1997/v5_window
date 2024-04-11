@@ -86,6 +86,7 @@ namespace iParkingv5_CustomerRegister
                                 return;
                             }
                             KzParkingApiHelper.server = serverConfig.ParkingServerUrl;
+                StaticPool.serverConfig = serverConfig;
                         }
                         catch (Exception ex)
                         {
@@ -181,6 +182,7 @@ namespace iParkingv5_CustomerRegister
                     return;
                 }
                 KzParkingApiHelper.server = serverConfig.ParkingServerUrl;
+                StaticPool.serverConfig = serverConfig;
             }
             catch (Exception ex)
             {

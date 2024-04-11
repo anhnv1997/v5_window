@@ -440,14 +440,12 @@ namespace iParkingv5_window.Forms.DataForms
                 if (controller != null)
                 {
                     controllers.Add(controller);
-                    //lblLoadingStatus.UpdateResultMessage("Đang kết nối đến bộ điều khiển: " + bdk.Name, lblLoadingStatus.BackColor);
                     bool isConnectSuccess = await controller.ConnectAsync();
                     controller.CardEvent += Controller_CardEvent;
                     controller.ErrorEvent += Controller_ErrorEvent;
                     controller.InputEvent += Controller_InputEvent;
                     controller.ConnectStatusChangeEvent += Controller_ConnectStatusChangeEvent;
                     controller.DeviceInfoChangeEvent += Controller_DeviceInfoChangeEvent;
-                    //lblLoadingStatus.UpdateResultMessage("Kết nối đến bộ điều khiển: " + bdk.Name + (isConnectSuccess ? "thành công" : "thất bại"), lblLoadingStatus.BackColor);
                 }
             }
             lblTime.SendToBack();
@@ -457,7 +455,6 @@ namespace iParkingv5_window.Forms.DataForms
                 controller.PollingStart();
             }
 
-            //lblLoadingStatus.UpdateResultMessage(string.Empty, lblLoadingStatus.BackColor);
         }
 
         //--CLOSING

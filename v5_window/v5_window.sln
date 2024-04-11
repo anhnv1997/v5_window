@@ -55,6 +55,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "v5_IScale", "..\v5_IScale\v
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vinapol", "..\..\..\..\..\2024\Vinapol\Vinapol\Vinapol.csproj", "{62184A14-831E-402F-AFA9-808F47C1C637}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TESTCAM", "..\TESTCAM\TESTCAM.csproj", "{25ECE784-3652-4E10-8BD6-E769249CBE3D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -369,6 +371,18 @@ Global
 		{62184A14-831E-402F-AFA9-808F47C1C637}.Release|x64.Build.0 = Release|x64
 		{62184A14-831E-402F-AFA9-808F47C1C637}.Release|x86.ActiveCfg = Release|Any CPU
 		{62184A14-831E-402F-AFA9-808F47C1C637}.Release|x86.Build.0 = Release|Any CPU
+		{25ECE784-3652-4E10-8BD6-E769249CBE3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25ECE784-3652-4E10-8BD6-E769249CBE3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25ECE784-3652-4E10-8BD6-E769249CBE3D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{25ECE784-3652-4E10-8BD6-E769249CBE3D}.Debug|x64.Build.0 = Debug|Any CPU
+		{25ECE784-3652-4E10-8BD6-E769249CBE3D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{25ECE784-3652-4E10-8BD6-E769249CBE3D}.Debug|x86.Build.0 = Debug|Any CPU
+		{25ECE784-3652-4E10-8BD6-E769249CBE3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25ECE784-3652-4E10-8BD6-E769249CBE3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25ECE784-3652-4E10-8BD6-E769249CBE3D}.Release|x64.ActiveCfg = Release|Any CPU
+		{25ECE784-3652-4E10-8BD6-E769249CBE3D}.Release|x64.Build.0 = Release|Any CPU
+		{25ECE784-3652-4E10-8BD6-E769249CBE3D}.Release|x86.ActiveCfg = Release|Any CPU
+		{25ECE784-3652-4E10-8BD6-E769249CBE3D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

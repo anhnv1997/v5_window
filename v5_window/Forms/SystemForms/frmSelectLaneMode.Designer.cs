@@ -41,27 +41,29 @@
             // 
             lblTitle.AutoSize = true;
             lblTitle.BackColor = Color.Transparent;
-            lblTitle.Location = new Point(23, 22);
+            lblTitle.Location = new Point(20, 16);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(166, 20);
+            lblTitle.Size = new Size(133, 15);
             lblTitle.TabIndex = 0;
             lblTitle.Text = "Lựa chọn làn hoạt động";
             // 
             // panelActiveLanes
             // 
             panelActiveLanes.BackColor = SystemColors.Control;
-            panelActiveLanes.Location = new Point(23, 88);
+            panelActiveLanes.Location = new Point(20, 66);
+            panelActiveLanes.Margin = new Padding(3, 2, 3, 2);
             panelActiveLanes.Name = "panelActiveLanes";
-            panelActiveLanes.Size = new Size(427, 172);
+            panelActiveLanes.Size = new Size(374, 129);
             panelActiveLanes.TabIndex = 1;
             // 
             // chbSelectAll
             // 
             chbSelectAll.AutoSize = true;
             chbSelectAll.BackColor = Color.Transparent;
-            chbSelectAll.Location = new Point(23, 58);
+            chbSelectAll.Location = new Point(20, 44);
+            chbSelectAll.Margin = new Padding(3, 2, 3, 2);
             chbSelectAll.Name = "chbSelectAll";
-            chbSelectAll.Size = new Size(103, 24);
+            chbSelectAll.Size = new Size(87, 19);
             chbSelectAll.TabIndex = 4;
             chbSelectAll.Text = "Chọn tất cả";
             chbSelectAll.UseVisualStyleBackColor = false;
@@ -79,21 +81,22 @@
             lblStatus.BackColor = Color.Transparent;
             lblStatus.Font = new Font("Segoe UI", 11.25F, FontStyle.Italic);
             lblStatus.ForeColor = Color.Green;
-            lblStatus.Location = new Point(23, 214);
+            lblStatus.Location = new Point(20, 160);
             lblStatus.Name = "lblStatus";
             lblStatus.Size = new Size(0, 20);
             lblStatus.TabIndex = 7;
             // 
             // frmSelectLaneMode
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(568, 370);
+            ClientSize = new Size(497, 278);
             Controls.Add(lblStatus);
             Controls.Add(chbSelectAll);
             Controls.Add(panelActiveLanes);
             Controls.Add(lblTitle);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
             Name = "frmSelectLaneMode";
             StartPosition = FormStartPosition.CenterScreen;

@@ -2,6 +2,7 @@
 using iParkingv5_window.Forms.DataForms;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using Kztek.Tools;
+
 namespace iParkingv5_window.Forms.SystemForms
 {
     public partial class frmLogin : Form
@@ -89,25 +90,9 @@ namespace iParkingv5_window.Forms.SystemForms
             this.ActiveControl = btnLogin;
         }
 
-        private void UcNotify1_OnSelectResultEvent(DialogResult result)
-        {
-            panelMain.BackColor = Color.White;
-            foreach (var item in activeControls)
-            {
-                item.Visible = true;
-            }
-        }
         #endregion End Forms
 
         #region Controls In Form
-        private void btnExit_Click(object? sender, EventArgs e)
-        {
-            lblStatus.Visible = false;
-            timerAutoConnect.Enabled = false;
-            Application.Exit();
-            Environment.Exit(0);
-        }
-
         private async void btnLogin_Click(object? sender, EventArgs e)
         {
             btnLogin.Enabled = false;
@@ -180,20 +165,39 @@ namespace iParkingv5_window.Forms.SystemForms
                 btnLogin.Enabled = true;
             }
         }
+
         private void textBox_TextChanged(object sender, EventArgs e)
         {
             lblStatus.Visible = false;
             timerAutoConnect.Enabled = false;
         }
+
         private void Control_Click(object sender, EventArgs e)
         {
             lblStatus.Visible = false;
             timerAutoConnect.Enabled = false;
         }
+
         private void chbIsRemember_CheckedChanged(object sender, EventArgs e)
         {
             lblStatus.Visible = false;
             timerAutoConnect.Enabled = false;
+        }
+        private void UcNotify1_OnSelectResultEvent(DialogResult result)
+        {
+            panelMain.BackColor = Color.White;
+            foreach (var item in activeControls)
+            {
+                item.Visible = true;
+            }
+        }
+
+        private void btnExit_Click(object? sender, EventArgs e)
+        {
+            lblStatus.Visible = false;
+            timerAutoConnect.Enabled = false;
+            Application.Exit();
+            Environment.Exit(0);
         }
         #endregion End Controls In Form
 

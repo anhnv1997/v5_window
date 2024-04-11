@@ -63,7 +63,7 @@ namespace iParkingv5_window.Forms.ReportForms
             registerVehicles = await KzParkingApiHelper.GetRegisteredVehicles("");
             customers = (await KzParkingApiHelper.GetAllCustomers())?.Item1 ?? new List<Customer>();
             identityGroups = await KzParkingApiHelper.GetIdentityGroupsAsync() ?? new List<IdentityGroup>();
-
+            picOverviewImageIn.Image = picVehicleImageIn.Image = defaultImg;
             await CreateUI();
             this.ActiveControl = btnSearch;
             btnSearch.PerformClick();

@@ -1,7 +1,6 @@
 ﻿using IPaking.Ultility;
 using iPakrkingv5.Controls;
 using iPakrkingv5.Controls.Controls.Buttons;
-using iParkingv5.Objects;
 using iParkingv5.Objects.Datas;
 using iParkingv5.Objects.Enums;
 using iParkingv5_window.Forms.DataForms;
@@ -9,7 +8,6 @@ using iParkingv5_window.Usercontrols.BuildControls;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
 using IPGS.Object.Databases;
-using SpreadsheetLight.Charts;
 using System.Runtime.InteropServices;
 using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper;
 
@@ -22,6 +20,7 @@ namespace iParkingv5_window.Forms.ReportForms
         private List<IdentityGroup> identityGroups = new List<IdentityGroup>();
         private List<RegisteredVehicle> registerVehicles = new List<RegisteredVehicle>();
         private List<Customer> customers = new List<Customer>();
+        public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
         #endregion End Properties
 
 
@@ -67,6 +66,9 @@ namespace iParkingv5_window.Forms.ReportForms
             {
                 dgvData.CellDoubleClick += DgvData_CellDoubleClick;
             }
+            picOverviewImageIn.Image = picOverviewImageIn.ErrorImage = defaultImg;
+            picVehicleImageIn.Image = picVehicleImageIn.ErrorImage = defaultImg;
+
             picOverviewImageIn.LoadCompleted += Pic_LoadCompleted;
             picVehicleImageIn.LoadCompleted += Pic_LoadCompleted;
 
@@ -121,7 +123,6 @@ namespace iParkingv5_window.Forms.ReportForms
             ucPages1.Location = new Point(dgvData.Location.X, dgvData.Location.Y + dgvData.Height + TextManagement.ROOT_SIZE);
         }
         #endregion End Forms
-        public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
 
         #region Controls In Form
         private async void btnSearch_Click(object? sender, EventArgs e)

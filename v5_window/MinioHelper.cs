@@ -16,7 +16,7 @@ namespace iParkingv5_window
         public static string SecretKey = string.Empty;
         public static bool secure = false;
         public static string bucketName = "parking-images";
-        public static async Task<string> GetImage(string path)
+        public static async Task<string> GetImage(string key)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace iParkingv5_window
                 var getListBucketsTask = await minio.ListBucketsAsync().ConfigureAwait(false);
                 PresignedGetObjectArgs args = new PresignedGetObjectArgs()
                                         .WithBucket(bucketName)
-                                        .WithObject(path)
+                                        .WithObject(key)
                                         .WithExpiry(60 * 60 * 24);
                 string url = await minio.PresignedGetObjectAsync(args);
                 return url;
@@ -46,7 +46,6 @@ namespace iParkingv5_window
             stream.Position = 0;
             return stream;
         }
-
         public static async Task<string> UploadPicture(Image? image, string imageKey)
         {
             try

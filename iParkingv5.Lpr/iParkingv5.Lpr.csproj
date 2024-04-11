@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
     <Platforms>x86;x64</Platforms>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,10 +15,10 @@
 
   <ItemGroup>
     <Reference Include="DarknetYolo">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\NXT AI LPR\NXT AI LPR\DarknetYolo.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\BaseLib\NXT AI LPR\NXT AI LPR\DarknetYolo.dll</HintPath>
     </Reference>
     <Reference Include="NXT.Net6.LPR_AI">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\NXT AI LPR\NXT AI LPR\NXT.Net6.LPR_AI.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\BaseLib\NXT AI LPR\NXT AI LPR\NXT.Net6.LPR_AI.dll</HintPath>
     </Reference>
   </ItemGroup>
 
