@@ -53,7 +53,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IPaking.Ultility\IPaking.Ultility.csproj" />
     <ProjectReference Include="..\iPakrkingv5.Controls\iPakrkingv5.Controls.csproj" />
     <ProjectReference Include="..\iParking.ConfigurationManager\iParking.ConfigurationManager.csproj" />
     <ProjectReference Include="..\iParkingv5.ApiManager\iParkingv5.ApiManager.csproj" />
@@ -64,6 +63,9 @@
   <ItemGroup>
     <Reference Include="DahuaLib">
       <HintPath>..\packages\DahuaLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Kztek.Tool">
+      <HintPath>..\packages\Kztek.Tool.dll</HintPath>
     </Reference>
   </ItemGroup>
 

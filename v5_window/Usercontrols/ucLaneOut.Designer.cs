@@ -48,12 +48,6 @@ namespace iParkingv5_window.Usercontrols
             this.dgvEventContent = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panelNote = new System.Windows.Forms.Panel();
-            this.tableLayoutPanelNote = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cbNote = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.picRetakePhoto = new System.Windows.Forms.PictureBox();
             this.panel10 = new System.Windows.Forms.Panel();
@@ -74,9 +68,6 @@ namespace iParkingv5_window.Usercontrols
             this.panelScaleAction = new System.Windows.Forms.Panel();
             this.btnOpenBarrie = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.panelGoodsType = new System.Windows.Forms.Panel();
-            this.cbGoodsType = new System.Windows.Forms.ComboBox();
             this.toolTipPrint = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
             this.splitContainerMain.Panel1.SuspendLayout();
@@ -102,9 +93,6 @@ namespace iParkingv5_window.Usercontrols
             this.panel15.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLprImageIn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEventContent)).BeginInit();
-            this.panelNote.SuspendLayout();
-            this.tableLayoutPanelNote.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picRetakePhoto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picWriteOut)).BeginInit();
@@ -114,7 +102,6 @@ namespace iParkingv5_window.Usercontrols
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panelEventData.SuspendLayout();
             this.panelScaleAction.SuspendLayout();
-            this.panelGoodsType.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblLaneName
@@ -371,7 +358,7 @@ namespace iParkingv5_window.Usercontrols
             // splitContainerEventContent
             // 
             this.splitContainerEventContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerEventContent.Location = new System.Drawing.Point(0, 38);
+            this.splitContainerEventContent.Location = new System.Drawing.Point(0, 0);
             this.splitContainerEventContent.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.splitContainerEventContent.Name = "splitContainerEventContent";
             this.splitContainerEventContent.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -384,9 +371,8 @@ namespace iParkingv5_window.Usercontrols
             // 
             this.splitContainerEventContent.Panel2.AutoScroll = true;
             this.splitContainerEventContent.Panel2.Controls.Add(this.dgvEventContent);
-            this.splitContainerEventContent.Panel2.Controls.Add(this.panelNote);
-            this.splitContainerEventContent.Size = new System.Drawing.Size(308, 294);
-            this.splitContainerEventContent.SplitterDistance = 97;
+            this.splitContainerEventContent.Size = new System.Drawing.Size(308, 332);
+            this.splitContainerEventContent.SplitterDistance = 109;
             this.splitContainerEventContent.SplitterWidth = 3;
             this.splitContainerEventContent.TabIndex = 0;
             // 
@@ -403,7 +389,7 @@ namespace iParkingv5_window.Usercontrols
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(308, 97);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(308, 109);
             this.tableLayoutPanel2.TabIndex = 5;
             // 
             // panel14
@@ -414,7 +400,7 @@ namespace iParkingv5_window.Usercontrols
             this.panel14.Location = new System.Drawing.Point(157, 2);
             this.panel14.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel14.Name = "panel14";
-            this.panel14.Size = new System.Drawing.Size(148, 93);
+            this.panel14.Size = new System.Drawing.Size(148, 105);
             this.panel14.TabIndex = 0;
             // 
             // picLprImage
@@ -424,7 +410,7 @@ namespace iParkingv5_window.Usercontrols
             this.picLprImage.Location = new System.Drawing.Point(0, 32);
             this.picLprImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.picLprImage.Name = "picLprImage";
-            this.picLprImage.Size = new System.Drawing.Size(148, 61);
+            this.picLprImage.Size = new System.Drawing.Size(148, 73);
             this.picLprImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picLprImage.TabIndex = 4;
             this.picLprImage.TabStop = false;
@@ -449,7 +435,7 @@ namespace iParkingv5_window.Usercontrols
             this.panel15.Location = new System.Drawing.Point(3, 2);
             this.panel15.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel15.Name = "panel15";
-            this.panel15.Size = new System.Drawing.Size(148, 93);
+            this.panel15.Size = new System.Drawing.Size(148, 105);
             this.panel15.TabIndex = 1;
             // 
             // picLprImageIn
@@ -459,7 +445,7 @@ namespace iParkingv5_window.Usercontrols
             this.picLprImageIn.Location = new System.Drawing.Point(0, 24);
             this.picLprImageIn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.picLprImageIn.Name = "picLprImageIn";
-            this.picLprImageIn.Size = new System.Drawing.Size(148, 69);
+            this.picLprImageIn.Size = new System.Drawing.Size(148, 81);
             this.picLprImageIn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picLprImageIn.TabIndex = 1;
             this.picLprImageIn.TabStop = false;
@@ -490,13 +476,13 @@ namespace iParkingv5_window.Usercontrols
             this.Column1,
             this.Column2});
             this.dgvEventContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvEventContent.Location = new System.Drawing.Point(0, 116);
+            this.dgvEventContent.Location = new System.Drawing.Point(0, 0);
             this.dgvEventContent.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dgvEventContent.Name = "dgvEventContent";
             this.dgvEventContent.ReadOnly = true;
             this.dgvEventContent.RowHeadersVisible = false;
             this.dgvEventContent.RowTemplate.Height = 29;
-            this.dgvEventContent.Size = new System.Drawing.Size(308, 78);
+            this.dgvEventContent.Size = new System.Drawing.Size(308, 220);
             this.dgvEventContent.TabIndex = 1;
             // 
             // Column1
@@ -518,85 +504,6 @@ namespace iParkingv5_window.Usercontrols
             this.Column2.HeaderText = "Content";
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
-            // 
-            // panelNote
-            // 
-            this.panelNote.Controls.Add(this.tableLayoutPanelNote);
-            this.panelNote.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelNote.Location = new System.Drawing.Point(0, 0);
-            this.panelNote.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panelNote.Name = "panelNote";
-            this.panelNote.Size = new System.Drawing.Size(308, 116);
-            this.panelNote.TabIndex = 2;
-            // 
-            // tableLayoutPanelNote
-            // 
-            this.tableLayoutPanelNote.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.tableLayoutPanelNote.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanelNote.ColumnCount = 1;
-            this.tableLayoutPanelNote.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelNote.Controls.Add(this.groupBox1, 0, 2);
-            this.tableLayoutPanelNote.Controls.Add(this.label4, 0, 0);
-            this.tableLayoutPanelNote.Controls.Add(this.label5, 0, 1);
-            this.tableLayoutPanelNote.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelNote.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanelNote.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tableLayoutPanelNote.Name = "tableLayoutPanelNote";
-            this.tableLayoutPanelNote.RowCount = 3;
-            this.tableLayoutPanelNote.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelNote.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelNote.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 56F));
-            this.tableLayoutPanelNote.Size = new System.Drawing.Size(308, 116);
-            this.tableLayoutPanelNote.TabIndex = 1;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.cbNote);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 15.75F);
-            this.groupBox1.Location = new System.Drawing.Point(1, 59);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox1.Size = new System.Drawing.Size(306, 56);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Dịch vụ";
-            // 
-            // cbNote
-            // 
-            this.cbNote.BackColor = System.Drawing.Color.Silver;
-            this.cbNote.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbNote.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbNote.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.cbNote.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbNote.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.cbNote.FormattingEnabled = true;
-            this.cbNote.Location = new System.Drawing.Point(3, 30);
-            this.cbNote.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.cbNote.Name = "cbNote";
-            this.cbNote.Size = new System.Drawing.Size(300, 38);
-            this.cbNote.TabIndex = 3;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
-            this.label4.Location = new System.Drawing.Point(4, 1);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(71, 20);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "GHI CHÚ";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
-            this.label5.Location = new System.Drawing.Point(4, 30);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(209, 20);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "GHI CHÚ DỊCH VỤ HẠ TẦNG";
             // 
             // panel4
             // 
@@ -767,7 +674,6 @@ namespace iParkingv5_window.Usercontrols
             // 
             this.panelEventData.Controls.Add(this.splitContainerEventContent);
             this.panelEventData.Controls.Add(this.panelScaleAction);
-            this.panelEventData.Controls.Add(this.panelGoodsType);
             this.panelEventData.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelEventData.Location = new System.Drawing.Point(676, 22);
             this.panelEventData.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -779,7 +685,6 @@ namespace iParkingv5_window.Usercontrols
             // 
             this.panelScaleAction.Controls.Add(this.btnOpenBarrie);
             this.panelScaleAction.Controls.Add(this.button2);
-            this.panelScaleAction.Controls.Add(this.button1);
             this.panelScaleAction.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelScaleAction.Location = new System.Drawing.Point(0, 332);
             this.panelScaleAction.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -814,46 +719,6 @@ namespace iParkingv5_window.Usercontrols
             this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.btnPrintTicket_Click);
-            // 
-            // button1
-            // 
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.button1.Location = new System.Drawing.Point(5, 12);
-            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(94, 63);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "In phiếu cân";
-            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.btnPrintScale_Click);
-            // 
-            // panelGoodsType
-            // 
-            this.panelGoodsType.Controls.Add(this.cbGoodsType);
-            this.panelGoodsType.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelGoodsType.Location = new System.Drawing.Point(0, 0);
-            this.panelGoodsType.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panelGoodsType.Name = "panelGoodsType";
-            this.panelGoodsType.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.panelGoodsType.Size = new System.Drawing.Size(308, 38);
-            this.panelGoodsType.TabIndex = 4;
-            // 
-            // cbGoodsType
-            // 
-            this.cbGoodsType.BackColor = System.Drawing.Color.Silver;
-            this.cbGoodsType.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbGoodsType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbGoodsType.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.cbGoodsType.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbGoodsType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.cbGoodsType.FormattingEnabled = true;
-            this.cbGoodsType.Location = new System.Drawing.Point(0, 4);
-            this.cbGoodsType.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.cbGoodsType.Name = "cbGoodsType";
-            this.cbGoodsType.Size = new System.Drawing.Size(308, 38);
-            this.cbGoodsType.TabIndex = 2;
             // 
             // ucLaneOut
             // 
@@ -891,10 +756,6 @@ namespace iParkingv5_window.Usercontrols
             this.panel15.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picLprImageIn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEventContent)).EndInit();
-            this.panelNote.ResumeLayout(false);
-            this.tableLayoutPanelNote.ResumeLayout(false);
-            this.tableLayoutPanelNote.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picRetakePhoto)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picWriteOut)).EndInit();
@@ -904,7 +765,6 @@ namespace iParkingv5_window.Usercontrols
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panelEventData.ResumeLayout(false);
             this.panelScaleAction.ResumeLayout(false);
-            this.panelGoodsType.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -957,20 +817,11 @@ namespace iParkingv5_window.Usercontrols
         private Panel panelScaleAction;
         private Button btnOpenBarrie;
         private Button button2;
-        private Button button1;
-        private Panel panelGoodsType;
-        private ComboBox cbGoodsType;
         private TableLayoutPanel tableLayoutPanel2;
         private Panel panel14;
         private Panel panel15;
         private MovablePictureBox picLprImageIn;
         private Label lblPlateIn;
-        private Panel panelNote;
-        private TableLayoutPanel tableLayoutPanelNote;
-        private Label label4;
-        private Label label5;
-        private GroupBox groupBox1;
-        private ComboBox cbNote;
         private ToolTip toolTipPrint;
     }
 }

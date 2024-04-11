@@ -41,12 +41,6 @@
             this.dgvEventContent = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panelNote = new System.Windows.Forms.Panel();
-            this.tableLayoutPanelNote = new System.Windows.Forms.TableLayoutPanel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cbNote = new System.Windows.Forms.ComboBox();
             this.picSetting = new System.Windows.Forms.PictureBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.picRetakePhoto = new System.Windows.Forms.PictureBox();
@@ -62,11 +56,6 @@
             this.toolTip3 = new System.Windows.Forms.ToolTip(this.components);
             this.splitterEventInfoWithCamera = new System.Windows.Forms.Splitter();
             this.panelEventData = new System.Windows.Forms.Panel();
-            this.panelScaleAction = new System.Windows.Forms.Panel();
-            this.btnopenBarrie = new System.Windows.Forms.Button();
-            this.btnPrintScale = new System.Windows.Forms.Button();
-            this.panelGoodsType = new System.Windows.Forms.Panel();
-            this.cbGoodsType = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -89,9 +78,6 @@
             this.panelDetectPlate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLprImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEventContent)).BeginInit();
-            this.panelNote.SuspendLayout();
-            this.tableLayoutPanelNote.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picSetting)).BeginInit();
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picRetakePhoto)).BeginInit();
@@ -99,8 +85,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.picOpenBarrie)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panelEventData.SuspendLayout();
-            this.panelScaleAction.SuspendLayout();
-            this.panelGoodsType.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -256,6 +240,7 @@
             // 
             // panel4
             // 
+            this.panel4.Controls.Add(this.panelEventData);
             this.panel4.Controls.Add(this.panelLastEvent);
             this.panel4.Controls.Add(this.ucEventCount1);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -272,11 +257,11 @@
             this.panelLastEvent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelLastEvent.Controls.Add(this.panel9);
             this.panelLastEvent.Controls.Add(this.label2);
-            this.panelLastEvent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelLastEvent.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelLastEvent.Location = new System.Drawing.Point(221, 0);
             this.panelLastEvent.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelLastEvent.Name = "panelLastEvent";
-            this.panelLastEvent.Size = new System.Drawing.Size(643, 132);
+            this.panelLastEvent.Size = new System.Drawing.Size(333, 132);
             this.panelLastEvent.TabIndex = 7;
             // 
             // panel9
@@ -285,7 +270,7 @@
             this.panel9.Location = new System.Drawing.Point(0, 27);
             this.panel9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(641, 103);
+            this.panel9.Size = new System.Drawing.Size(331, 103);
             this.panel9.TabIndex = 8;
             // 
             // label2
@@ -295,7 +280,7 @@
             this.label2.ForeColor = System.Drawing.Color.Navy;
             this.label2.Location = new System.Drawing.Point(0, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(641, 27);
+            this.label2.Size = new System.Drawing.Size(331, 27);
             this.label2.TabIndex = 7;
             this.label2.Text = "Các lượt xe vào gần đây";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -324,10 +309,9 @@
             // splitContainerEventContent
             // 
             this.splitContainerEventContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerEventContent.Location = new System.Drawing.Point(0, 38);
+            this.splitContainerEventContent.Location = new System.Drawing.Point(0, 0);
             this.splitContainerEventContent.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.splitContainerEventContent.Name = "splitContainerEventContent";
-            this.splitContainerEventContent.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainerEventContent.Panel1
             // 
@@ -336,9 +320,8 @@
             // splitContainerEventContent.Panel2
             // 
             this.splitContainerEventContent.Panel2.Controls.Add(this.dgvEventContent);
-            this.splitContainerEventContent.Panel2.Controls.Add(this.panelNote);
-            this.splitContainerEventContent.Size = new System.Drawing.Size(200, 282);
-            this.splitContainerEventContent.SplitterDistance = 144;
+            this.splitContainerEventContent.Size = new System.Drawing.Size(310, 132);
+            this.splitContainerEventContent.SplitterDistance = 214;
             this.splitContainerEventContent.SplitterWidth = 3;
             this.splitContainerEventContent.TabIndex = 0;
             // 
@@ -350,7 +333,7 @@
             this.panelDetectPlate.Location = new System.Drawing.Point(0, 0);
             this.panelDetectPlate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelDetectPlate.Name = "panelDetectPlate";
-            this.panelDetectPlate.Size = new System.Drawing.Size(200, 144);
+            this.panelDetectPlate.Size = new System.Drawing.Size(214, 132);
             this.panelDetectPlate.TabIndex = 4;
             // 
             // picLprImage
@@ -360,7 +343,7 @@
             this.picLprImage.Location = new System.Drawing.Point(0, 32);
             this.picLprImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.picLprImage.Name = "picLprImage";
-            this.picLprImage.Size = new System.Drawing.Size(200, 112);
+            this.picLprImage.Size = new System.Drawing.Size(214, 100);
             this.picLprImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picLprImage.TabIndex = 4;
             this.picLprImage.TabStop = false;
@@ -373,7 +356,7 @@
             this.txtPlate.Location = new System.Drawing.Point(0, 0);
             this.txtPlate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtPlate.Name = "txtPlate";
-            this.txtPlate.Size = new System.Drawing.Size(200, 32);
+            this.txtPlate.Size = new System.Drawing.Size(214, 32);
             this.txtPlate.TabIndex = 0;
             this.txtPlate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -393,13 +376,13 @@
             this.Column1,
             this.Column2});
             this.dgvEventContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvEventContent.Location = new System.Drawing.Point(0, 123);
+            this.dgvEventContent.Location = new System.Drawing.Point(0, 0);
             this.dgvEventContent.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dgvEventContent.Name = "dgvEventContent";
             this.dgvEventContent.ReadOnly = true;
             this.dgvEventContent.RowHeadersVisible = false;
             this.dgvEventContent.RowTemplate.Height = 29;
-            this.dgvEventContent.Size = new System.Drawing.Size(200, 12);
+            this.dgvEventContent.Size = new System.Drawing.Size(93, 132);
             this.dgvEventContent.TabIndex = 0;
             // 
             // Column1
@@ -421,85 +404,6 @@
             this.Column2.HeaderText = "Content";
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
-            // 
-            // panelNote
-            // 
-            this.panelNote.Controls.Add(this.tableLayoutPanelNote);
-            this.panelNote.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelNote.Location = new System.Drawing.Point(0, 0);
-            this.panelNote.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panelNote.Name = "panelNote";
-            this.panelNote.Size = new System.Drawing.Size(200, 123);
-            this.panelNote.TabIndex = 3;
-            // 
-            // tableLayoutPanelNote
-            // 
-            this.tableLayoutPanelNote.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.tableLayoutPanelNote.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanelNote.ColumnCount = 1;
-            this.tableLayoutPanelNote.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelNote.Controls.Add(this.label3, 0, 0);
-            this.tableLayoutPanelNote.Controls.Add(this.label6, 0, 1);
-            this.tableLayoutPanelNote.Controls.Add(this.groupBox1, 0, 2);
-            this.tableLayoutPanelNote.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelNote.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanelNote.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tableLayoutPanelNote.Name = "tableLayoutPanelNote";
-            this.tableLayoutPanelNote.RowCount = 3;
-            this.tableLayoutPanelNote.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelNote.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelNote.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 57F));
-            this.tableLayoutPanelNote.Size = new System.Drawing.Size(200, 123);
-            this.tableLayoutPanelNote.TabIndex = 1;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
-            this.label3.Location = new System.Drawing.Point(4, 1);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(71, 20);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "GHI CHÚ";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
-            this.label6.Location = new System.Drawing.Point(4, 33);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(166, 31);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "GHI CHÚ DỊCH VỤ HẠ TẦNG";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.cbNote);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 15.75F);
-            this.groupBox1.Location = new System.Drawing.Point(1, 65);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox1.Size = new System.Drawing.Size(198, 57);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Dịch vụ";
-            // 
-            // cbNote
-            // 
-            this.cbNote.BackColor = System.Drawing.Color.Silver;
-            this.cbNote.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbNote.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbNote.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.cbNote.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbNote.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.cbNote.FormattingEnabled = true;
-            this.cbNote.Location = new System.Drawing.Point(3, 30);
-            this.cbNote.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.cbNote.Name = "cbNote";
-            this.cbNote.Size = new System.Drawing.Size(192, 38);
-            this.cbNote.TabIndex = 3;
             // 
             // picSetting
             // 
@@ -634,7 +538,7 @@
             // splitterEventInfoWithCamera
             // 
             this.splitterEventInfoWithCamera.Dock = System.Windows.Forms.DockStyle.Right;
-            this.splitterEventInfoWithCamera.Location = new System.Drawing.Point(660, 22);
+            this.splitterEventInfoWithCamera.Location = new System.Drawing.Point(860, 22);
             this.splitterEventInfoWithCamera.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.splitterEventInfoWithCamera.Name = "splitterEventInfoWithCamera";
             this.splitterEventInfoWithCamera.Size = new System.Drawing.Size(4, 390);
@@ -644,79 +548,12 @@
             // panelEventData
             // 
             this.panelEventData.Controls.Add(this.splitContainerEventContent);
-            this.panelEventData.Controls.Add(this.panelScaleAction);
-            this.panelEventData.Controls.Add(this.panelGoodsType);
-            this.panelEventData.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelEventData.Location = new System.Drawing.Point(664, 22);
+            this.panelEventData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelEventData.Location = new System.Drawing.Point(554, 0);
             this.panelEventData.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelEventData.Name = "panelEventData";
-            this.panelEventData.Size = new System.Drawing.Size(200, 390);
+            this.panelEventData.Size = new System.Drawing.Size(310, 132);
             this.panelEventData.TabIndex = 8;
-            // 
-            // panelScaleAction
-            // 
-            this.panelScaleAction.Controls.Add(this.btnopenBarrie);
-            this.panelScaleAction.Controls.Add(this.btnPrintScale);
-            this.panelScaleAction.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelScaleAction.Location = new System.Drawing.Point(0, 320);
-            this.panelScaleAction.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panelScaleAction.Name = "panelScaleAction";
-            this.panelScaleAction.Size = new System.Drawing.Size(200, 70);
-            this.panelScaleAction.TabIndex = 1;
-            // 
-            // btnopenBarrie
-            // 
-            this.btnopenBarrie.Image = ((System.Drawing.Image)(resources.GetObject("btnopenBarrie.Image")));
-            this.btnopenBarrie.Location = new System.Drawing.Point(105, 4);
-            this.btnopenBarrie.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnopenBarrie.Name = "btnopenBarrie";
-            this.btnopenBarrie.Size = new System.Drawing.Size(94, 63);
-            this.btnopenBarrie.TabIndex = 0;
-            this.btnopenBarrie.Text = "Mở barrie";
-            this.btnopenBarrie.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnopenBarrie.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnopenBarrie.UseVisualStyleBackColor = true;
-            this.btnopenBarrie.Click += new System.EventHandler(this.btnOpenBarrie_Click);
-            // 
-            // btnPrintScale
-            // 
-            this.btnPrintScale.Image = ((System.Drawing.Image)(resources.GetObject("btnPrintScale.Image")));
-            this.btnPrintScale.Location = new System.Drawing.Point(5, 5);
-            this.btnPrintScale.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnPrintScale.Name = "btnPrintScale";
-            this.btnPrintScale.Size = new System.Drawing.Size(94, 63);
-            this.btnPrintScale.TabIndex = 0;
-            this.btnPrintScale.Text = "In phiếu cân";
-            this.btnPrintScale.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnPrintScale.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnPrintScale.UseVisualStyleBackColor = true;
-            this.btnPrintScale.Click += new System.EventHandler(this.btnPrintScale_Click);
-            // 
-            // panelGoodsType
-            // 
-            this.panelGoodsType.Controls.Add(this.cbGoodsType);
-            this.panelGoodsType.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelGoodsType.Location = new System.Drawing.Point(0, 0);
-            this.panelGoodsType.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panelGoodsType.Name = "panelGoodsType";
-            this.panelGoodsType.Padding = new System.Windows.Forms.Padding(0, 4, 0, 4);
-            this.panelGoodsType.Size = new System.Drawing.Size(200, 38);
-            this.panelGoodsType.TabIndex = 3;
-            // 
-            // cbGoodsType
-            // 
-            this.cbGoodsType.BackColor = System.Drawing.Color.Silver;
-            this.cbGoodsType.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbGoodsType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbGoodsType.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.cbGoodsType.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbGoodsType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.cbGoodsType.FormattingEnabled = true;
-            this.cbGoodsType.Location = new System.Drawing.Point(0, 4);
-            this.cbGoodsType.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.cbGoodsType.Name = "cbGoodsType";
-            this.cbGoodsType.Size = new System.Drawing.Size(200, 38);
-            this.cbGoodsType.TabIndex = 2;
             // 
             // tableLayoutPanel3
             // 
@@ -759,7 +596,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.splitterEventInfoWithCamera);
-            this.Controls.Add(this.panelEventData);
             this.Controls.Add(this.splitContainerMain);
             this.Controls.Add(this.panel5);
             this.Margin = new System.Windows.Forms.Padding(0);
@@ -785,10 +621,6 @@
             this.panelDetectPlate.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLprImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEventContent)).EndInit();
-            this.panelNote.ResumeLayout(false);
-            this.tableLayoutPanelNote.ResumeLayout(false);
-            this.tableLayoutPanelNote.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picSetting)).EndInit();
             this.panel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picRetakePhoto)).EndInit();
@@ -796,8 +628,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.picOpenBarrie)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panelEventData.ResumeLayout(false);
-            this.panelScaleAction.ResumeLayout(false);
-            this.panelGoodsType.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
             this.ResumeLayout(false);
@@ -852,19 +682,8 @@
         private Label label2;
         private Panel panel9;
         private Panel panelEventData;
-        private Panel panelScaleAction;
-        private Button btnopenBarrie;
-        private Button btnPrintScale;
-        private Panel panelGoodsType;
-        private ComboBox cbGoodsType;
         private TableLayoutPanel tableLayoutPanel3;
         private Label label4;
         private Label label5;
-        private Panel panelNote;
-        private TableLayoutPanel tableLayoutPanelNote;
-        private Label label3;
-        private Label label6;
-        private GroupBox groupBox1;
-        private ComboBox cbNote;
     }
 }

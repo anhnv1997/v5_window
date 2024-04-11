@@ -120,7 +120,6 @@ namespace iParkingv5_window.Forms.DataForms
                 this.Location = new Point(0, 0);
 
                 LoadAppDisplayConfig();
-                LoadScaleConfig();
                 LoadThirdPartyConfig();
 
                 InitLaneView();
@@ -137,27 +136,7 @@ namespace iParkingv5_window.Forms.DataForms
             }
         }
 
-        private void LoadScaleConfig()
-        {
-            if (File.Exists(PathManagement.scaleConfigPath))
-            {
-                var scaleConfig = NewtonSoftHelper<ScaleConfig>.DeserializeObjectFromPath(PathManagement.scaleConfigPath) ?? ScaleConfig.CreateDefaultConfig();
-                this.isScale = scaleConfig.IsUseScaleDevice;
-                KzScaleApiHelper.server = scaleConfig.ScaleServer;
-                scaleController = ScaleFactory.CreateScaleController(scaleConfig);
-                scaleController.Connect(scaleConfig.Comport, scaleConfig.Baudrate);
-                scaleController.PollingStart();
-                if (scaleController != null)
-                {
-                    scaleController.ScaleEvent += ScaleController_ScaleEvent;
-                    scaleController.PollingStart();
-                }
-            }
-            if (((EmPrintTemplate)StaticPool.appOption.PrintTemplate) != EmPrintTemplate.XuanCuong)
-            {
-                báoCáoCânToolStripMenuItem.Visible = false;
-            }
-        }
+        
         private void LoadThirdPartyConfig()
         {
             if (File.Exists(PathManagement.thirtPartyConfigPath))
@@ -257,24 +236,7 @@ namespace iParkingv5_window.Forms.DataForms
         #endregion End Timer
 
         #region Controller Event
-        private void ScaleController_ScaleEvent(object sender, Kztek.Scale_net6.Events.ScaleEventArgs e)
-        {
-            this.Invoke(new Action(() =>
-            {
-                this.Invoke(new Action(() =>
-                {
-                    foreach (iLane iLane in lanes)
-                    {
-                        iLane.ScaleValue = e.Gross;
-                    }
-                }));
-
-                if (lblScale.Text != "Số cân: " + e.Gross.ToString())
-                {
-                    lblScale.Text = "Số cân: " + e.Gross.ToString();
-                }
-            }));
-        }
+       
 
         private void Controller_DeviceInfoChangeEvent(object sender, DeviceInfoChangeArgs e)
         {

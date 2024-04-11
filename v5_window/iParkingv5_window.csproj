@@ -75,8 +75,17 @@
     <Reference Include="Kztek.RtspPlayer">
       <HintPath>..\packages\Kztek.RtspPlayer.dll</HintPath>
     </Reference>
+    <Reference Include="Kztek.Security">
+      <HintPath>..\packages\KeyLib\Kztek.Security.dll</HintPath>
+    </Reference>
     <Reference Include="Kztek.Tool">
       <HintPath>..\packages\Kztek.Tool.dll</HintPath>
+    </Reference>
+    <Reference Include="Kztek.Utilities">
+      <HintPath>..\packages\KeyLib\Kztek.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="KztekKeyRegister">
+      <HintPath>..\packages\KeyLib\KztekKeyRegister.dll</HintPath>
     </Reference>
     <Reference Include="RtspClientSharp">
       <HintPath>..\packages\Camera_LPR\RtspClientSharp.dll</HintPath>

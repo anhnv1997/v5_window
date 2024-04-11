@@ -655,3 +655,6 @@ F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\AForg
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\AForge.VideoEx.dll
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\AForge.Vision.dll
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\RtspClientSharp.dll
+F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Security.dll
+F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Utilities.dll
+F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\KztekKeyRegister.dll

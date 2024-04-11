@@ -134,7 +134,6 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
 
-            panelScaleAction.Visible = isScale;
             this.Load += UcLaneIn_Load;
         }
         private async void UcLaneIn_Load(object? sender, EventArgs e)
@@ -293,55 +292,6 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
             splitContainerMain.BringToFront();
-
-            if (this.isScale)
-            {
-                await LoadGoodsType();
-                cbGoodsType.Refresh();
-            }
-            else
-            {
-                panelGoodsType.Visible = false;
-            }
-            if (((EmPrintTemplate)StaticPool.appOption.PrintTemplate) == EmPrintTemplate.XuanCuong)
-            {
-                if (File.Exists(PathManagement.appServicesConfigPath))
-                {
-                    string[] serviceSupport = File.ReadAllText(PathManagement.appServicesConfigPath).Split(";");
-                    foreach (var item in serviceSupport)
-                    {
-                        cbNote.Items.Add(item);
-                    }
-                    if (cbNote.Items.Count > 0)
-                    {
-                        cbNote.SelectedIndex = 0;
-                        cbNote.Refresh();
-                    }
-                    else
-                    {
-                        for (int i = 0; i < tableLayoutPanelNote.ColumnCount; i++)
-                        {
-                            Control Control = tableLayoutPanelNote.GetControlFromPosition(i, tableLayoutPanelNote.RowCount - 1);
-                            tableLayoutPanelNote.Controls.Remove(Control);
-                        }
-                        tableLayoutPanelNote.RowStyles.RemoveAt(tableLayoutPanelNote.RowCount - 1);
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < tableLayoutPanelNote.ColumnCount; i++)
-                    {
-                        Control Control = tableLayoutPanelNote.GetControlFromPosition(i, tableLayoutPanelNote.RowCount - 1);
-                        tableLayoutPanelNote.Controls.Remove(Control);
-                    }
-                    tableLayoutPanelNote.RowStyles.RemoveAt(tableLayoutPanelNote.RowCount - 1);
-                }
-            }
-            else
-            {
-                panelNote.Visible = false;
-            }
-
 
             this.ActiveControl = splitContainerMain;
         }
@@ -1874,12 +1824,7 @@ namespace iParkingv5_window.Usercontrols
             lblResult.UpdateResultMessage("Xin Mời Qua", Color.DarkGreen);
 
             WeighingDetail? weighingDetail = null;
-            if (isScale)
-            {
-                string weightFormId = ((ListItem)cbGoodsType.SelectedItem)?.Name ?? "";
-                weighingDetail = await KzScaleApiHelper.CreateScaleEvent(detectPlate, eventIn?.Id, this.ScaleValue, weightFormId,
-                                                        StaticPool.userId, StaticPool.user_name, imageKeys);
-            }
+            
             DisplayEventInfo(eventTime, detectPlate, identity, identityGroup, vehicleType, eventIn?.customer, eventIn?.registeredVehicle, weighingDetail);
             BaseLane.DisplayLed(detectPlate, eventTime, identity, identityGroup, "Hẹn Gặp lại", this.lane.id);
             await BaseLane.SaveEventImage(overviewImg, vehicleImg, lprImage, imageKey, true);
@@ -1959,33 +1904,6 @@ namespace iParkingv5_window.Usercontrols
             base.Dispose(disposing);
         }
 
-        private async Task LoadGoodsType()
-        {
-            try
-            {
-                var weighingForms = await KzScaleApiHelper.GetWeighingForms();
-                if (weighingForms != null)
-                {
-
-                    foreach (var item in weighingForms)
-                    {
-                        ListItem li = new ListItem()
-                        {
-                            Name = item.Id,
-                            Value = item.Name,
-                        };
-                        cbGoodsType.Items.Add(li);
-                    }
-                    cbGoodsType.DisplayMember = "Value";
-                    cbGoodsType.SelectedIndex = cbGoodsType.Items.Count > 0 ? 0 : -1;
-                    cbGoodsType.SelectedIndexChanged += CbGoodsType_SelectedIndexChanged;
-                }
-            }
-            catch (Exception)
-            {
-            }
-        }
-
         private int printCount = 0;
         private async void btnPrintScale_Click(object sender, EventArgs e)
         {
@@ -2047,7 +1965,6 @@ namespace iParkingv5_window.Usercontrols
                 string baseContent = File.ReadAllText(printTemplatePath);
                 baseContent = baseContent.Replace("{$content}", printContent);
                 baseContent = baseContent.Replace("{$plateNumber}", lastEvent.PlateNumber);
-                baseContent = baseContent.Replace("{$weightType}", cbGoodsType.Text);
                 return baseContent;
             }
             else
