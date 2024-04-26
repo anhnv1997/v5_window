@@ -1,4 +1,6 @@
-﻿using iParkingv5.Objects.Enums;
+﻿using iParkingv5.ApiManager.KzParkingv5Apis;
+using iParkingv5.ApiManager.KzScaleApis;
+using iParkingv5.Objects.Enums;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using System;
 using System.Collections.Generic;
@@ -49,12 +51,21 @@ namespace iParkingv5_window.Forms.DataForms
 
         private async void FrmEventInDetail_Load(object? sender, EventArgs e)
         {
-            var lane = await KzParkingApiHelper.GetLaneByIdAsync(laneId);
-            var identity = await KzParkingApiHelper.GetIdentityById(this.identityId);
-            var identityGroup = await KzParkingApiHelper.GetIdentityGroupByIdAsync(this.cardGroupId);
-            var customer = await KzParkingApiHelper.GetCustomerById(this.customerId);
-            var registerVehicle = await KzParkingApiHelper.GetRegisteredVehicleById(this.registerVehicleId);
-            VehicleType vehicleType = await KzParkingApiHelper.GetVehicleTypeById(identityGroup?.VehicleTypeId.ToString());
+            //var lane = await KzParkingApiHelper.GetLaneByIdAsync(laneId);
+            var lane = (await KzParkingv5ApiHelper.GetLaneByIdAsync(laneId)).Item1;
+            //var identity = await KzParkingApiHelper.GetIdentityById(this.identityId);
+            var identity = (await KzParkingv5ApiHelper.GetIdentityByIdAsync(this.identityId)).Item1;
+
+            var identityGroup = (await KzParkingv5ApiHelper.GetIdentityGroupByIdAsync(this.cardGroupId)).Item1;
+
+            //var customer = await KzParkingApiHelper.GetCustomerById(this.customerId);
+            var customer = (await KzParkingv5ApiHelper.GetCustomerByIdAsync(this.customerId)).Item1;
+
+            //var registerVehicle = await KzParkingApiHelper.GetRegisteredVehicleById(this.registerVehicleId);
+            var registerVehicle = (await KzParkingv5ApiHelper.GetRegistedVehilceByIdAsync(this.registerVehicleId)).Item1;
+
+            //VehicleType vehicleType = await KzParkingApiHelper.GetVehicleTypeById(identityGroup?.VehicleTypeId.ToString());
+            VehicleType vehicleType = (await KzParkingv5ApiHelper.GetVehicleTypeByIdAsync(identityGroup?.VehicleType.Id.ToString())).Item1;
 
             txtPlate.Text = this.PlateNumber;
             lblLaneName.Text = lane?.name;
@@ -109,9 +120,11 @@ namespace iParkingv5_window.Forms.DataForms
         {
             if (this.isEventIn)
             {
-                bool isUpdateSuccess = await KzParkingApiHelper.UpdateEventInPlate(this.EventId, txtPlate.Text);
+                //bool isUpdateSuccess = await KzParkingApiHelper.UpdateEventInPlate(this.EventId, txtPlate.Text);
+                bool isUpdateSuccess = await KzParkingv5ApiHelper.UpdateEventInPlateAsync(this.EventId, txtPlate.Text);
                 if (isUpdateSuccess)
                 {
+                    KzScaleApiHelper.UpdatePlate(this.EventId, txtPlate.Text);
                     MessageBox.Show("Cập nhật thông tin thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.updatePlate = txtPlate.Text;
                     this.DialogResult = DialogResult.OK;
@@ -124,9 +137,11 @@ namespace iParkingv5_window.Forms.DataForms
             }
             else
             {
-                bool isUpdateSuccess = await KzParkingApiHelper.UpdateEventOutPlate(this.EventId, txtPlate.Text);
+                //bool isUpdateSuccess = await KzParkingApiHelper.UpdateEventOutPlate(this.EventId, txtPlate.Text);
+                bool isUpdateSuccess =await KzParkingv5ApiHelper.UpdateEventOutPlate(this.EventId, txtPlate.Text);
                 if (isUpdateSuccess)
                 {
+                    KzScaleApiHelper.UpdatePlate(this.EventId, txtPlate.Text);
                     MessageBox.Show("Cập nhật thông tin thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.updatePlate = txtPlate.Text;
                     this.DialogResult = DialogResult.OK;

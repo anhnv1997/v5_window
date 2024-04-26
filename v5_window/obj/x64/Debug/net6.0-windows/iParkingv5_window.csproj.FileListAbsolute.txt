@@ -483,3 +483,13 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\D
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Sdcb.PaddleOCR.Models.LocalV3.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Sdcb.PaddleOCR.Models.LocalV4.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\NXT.Net6.LPR_AI.pdb
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\runtimes\win-x64\native\WebView2Loader.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\IdentityModel.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\IdentityModel.OidcClient.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Microsoft.Web.WebView2.Core.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Microsoft.Web.WebView2.WinForms.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Microsoft.Web.WebView2.Wpf.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\runtimes\win-arm64\native\WebView2Loader.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\runtimes\win-x86\native\WebView2Loader.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.frmTest.resources

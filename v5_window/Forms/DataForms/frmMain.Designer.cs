@@ -259,6 +259,7 @@
             lblScale.TabIndex = 5;
             lblScale.Text = "Số Cân: ";
             lblScale.TextAlign = ContentAlignment.MiddleLeft;
+            lblScale.Visible = false;
             // 
             // lblCompanyName
             // 

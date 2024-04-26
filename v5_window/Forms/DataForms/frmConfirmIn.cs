@@ -79,5 +79,10 @@ namespace iParkingv5_window.Forms.DataForms
         {
             this.DialogResult = DialogResult.Cancel;
         }
+
+        private void panelAction_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

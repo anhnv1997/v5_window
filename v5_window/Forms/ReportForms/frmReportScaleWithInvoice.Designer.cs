@@ -100,18 +100,20 @@ namespace v5_IScale.Forms.ReportForms
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(5, 27);
+            label1.Location = new Point(6, 38);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(49, 15);
+            label1.Size = new Size(65, 21);
             label1.TabIndex = 0;
             label1.Text = "Từ ngày";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(5, 50);
+            label2.Location = new Point(6, 70);
+            label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
-            label2.Size = new Size(57, 15);
+            label2.Size = new Size(76, 21);
             label2.TabIndex = 0;
             label2.Text = "Đến ngày";
             // 
@@ -119,73 +121,76 @@ namespace v5_IScale.Forms.ReportForms
             // 
             dtpStartTime.CustomFormat = "dd/MM/yyyy HH:mm:ss";
             dtpStartTime.Format = DateTimePickerFormat.Custom;
-            dtpStartTime.Location = new Point(80, 23);
-            dtpStartTime.Margin = new Padding(3, 2, 3, 2);
+            dtpStartTime.Location = new Point(103, 32);
+            dtpStartTime.Margin = new Padding(4, 3, 4, 3);
             dtpStartTime.Name = "dtpStartTime";
-            dtpStartTime.Size = new Size(253, 23);
+            dtpStartTime.Size = new Size(280, 29);
             dtpStartTime.TabIndex = 2;
             // 
             // dtpEndTime
             // 
             dtpEndTime.CustomFormat = "dd/MM/yyyy HH:mm:ss";
             dtpEndTime.Format = DateTimePickerFormat.Custom;
-            dtpEndTime.Location = new Point(80, 48);
-            dtpEndTime.Margin = new Padding(3, 2, 3, 2);
+            dtpEndTime.Location = new Point(103, 67);
+            dtpEndTime.Margin = new Padding(4, 3, 4, 3);
             dtpEndTime.Name = "dtpEndTime";
-            dtpEndTime.Size = new Size(253, 23);
+            dtpEndTime.Size = new Size(280, 29);
             dtpEndTime.TabIndex = 3;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(5, 75);
+            label3.Location = new Point(6, 105);
+            label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
-            label3.Size = new Size(60, 15);
+            label3.Size = new Size(79, 21);
             label3.TabIndex = 2;
             label3.Text = "Biển số xe";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(5, 124);
+            label4.Location = new Point(6, 174);
+            label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
-            label4.Size = new Size(59, 15);
+            label4.Size = new Size(78, 21);
             label4.TabIndex = 2;
             label4.Text = "Loại hàng";
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(5, 100);
+            label5.Location = new Point(6, 140);
+            label5.Margin = new Padding(4, 0, 4, 0);
             label5.Name = "label5";
-            label5.Size = new Size(62, 15);
+            label5.Size = new Size(82, 21);
             label5.TabIndex = 2;
             label5.Text = "Người cân";
             // 
             // txtPlateNumber
             // 
-            txtPlateNumber.Location = new Point(80, 73);
-            txtPlateNumber.Margin = new Padding(3, 2, 3, 2);
+            txtPlateNumber.Location = new Point(103, 102);
+            txtPlateNumber.Margin = new Padding(4, 3, 4, 3);
             txtPlateNumber.Name = "txtPlateNumber";
-            txtPlateNumber.Size = new Size(253, 23);
+            txtPlateNumber.Size = new Size(280, 29);
             txtPlateNumber.TabIndex = 4;
             // 
             // cbGoodsType
             // 
             cbGoodsType.DropDownStyle = ComboBoxStyle.DropDownList;
             cbGoodsType.FormattingEnabled = true;
-            cbGoodsType.Location = new Point(80, 122);
-            cbGoodsType.Margin = new Padding(3, 2, 3, 2);
+            cbGoodsType.Location = new Point(103, 171);
+            cbGoodsType.Margin = new Padding(4, 3, 4, 3);
             cbGoodsType.Name = "cbGoodsType";
-            cbGoodsType.Size = new Size(253, 23);
+            cbGoodsType.Size = new Size(280, 29);
             cbGoodsType.TabIndex = 6;
             // 
             // txtUsername
             // 
-            txtUsername.Location = new Point(80, 98);
-            txtUsername.Margin = new Padding(3, 2, 3, 2);
+            txtUsername.Location = new Point(103, 137);
+            txtUsername.Margin = new Padding(4, 3, 4, 3);
             txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(253, 23);
+            txtUsername.Size = new Size(280, 29);
             txtUsername.TabIndex = 5;
             // 
             // dgvData
@@ -199,7 +204,7 @@ namespace v5_IScale.Forms.ReportForms
             dgvData.BackgroundColor = SystemColors.Control;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -209,7 +214,7 @@ namespace v5_IScale.Forms.ReportForms
             dgvData.Columns.AddRange(new DataGridViewColumn[] { Column13, Column1, Column2, Column3, Column4, Column5, Column6, Column7, Column8, Column9, Column10, Column11, Column12 });
             dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle10.BackColor = SystemColors.Window;
-            dataGridViewCellStyle10.Font = new Font("Segoe UI", 11.25F);
+            dataGridViewCellStyle10.Font = new Font("Segoe UI", 12F);
             dataGridViewCellStyle10.ForeColor = SystemColors.ControlText;
             dataGridViewCellStyle10.Padding = new Padding(5);
             dataGridViewCellStyle10.SelectionBackColor = SystemColors.Highlight;
@@ -217,14 +222,14 @@ namespace v5_IScale.Forms.ReportForms
             dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
             dgvData.DefaultCellStyle = dataGridViewCellStyle10;
             dgvData.Dock = DockStyle.Fill;
-            dgvData.Location = new Point(0, 200);
-            dgvData.Margin = new Padding(3, 2, 3, 2);
+            dgvData.Location = new Point(0, 251);
+            dgvData.Margin = new Padding(4, 3, 4, 3);
             dgvData.Name = "dgvData";
             dgvData.ReadOnly = true;
             dgvData.RowHeadersVisible = false;
             dgvData.RowTemplate.Height = 29;
             dgvData.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvData.Size = new Size(1122, 322);
+            dgvData.Size = new Size(1198, 316);
             dgvData.TabIndex = 5;
             dgvData.CellClick += dgvData_CellClick;
             // 
@@ -234,7 +239,7 @@ namespace v5_IScale.Forms.ReportForms
             Column13.Name = "Column13";
             Column13.ReadOnly = true;
             Column13.Visible = false;
-            Column13.Width = 131;
+            Column13.Width = 130;
             // 
             // Column1
             // 
@@ -250,7 +255,7 @@ namespace v5_IScale.Forms.ReportForms
             Column2.HeaderText = "Giờ cân 1";
             Column2.Name = "Column2";
             Column2.ReadOnly = true;
-            Column2.Width = 109;
+            Column2.Width = 111;
             // 
             // Column3
             // 
@@ -259,7 +264,7 @@ namespace v5_IScale.Forms.ReportForms
             Column3.HeaderText = "Giờ cân 2";
             Column3.Name = "Column3";
             Column3.ReadOnly = true;
-            Column3.Width = 109;
+            Column3.Width = 111;
             // 
             // Column4
             // 
@@ -292,28 +297,28 @@ namespace v5_IScale.Forms.ReportForms
             // 
             // Column7
             // 
+            Column7.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
             Column7.DefaultCellStyle = dataGridViewCellStyle8;
             Column7.HeaderText = "Thông tin cân lần >= 3";
             Column7.Name = "Column7";
             Column7.ReadOnly = true;
-            Column7.Width = 204;
             // 
             // Column8
             // 
             Column8.HeaderText = "Loại hàng";
             Column8.Name = "Column8";
             Column8.ReadOnly = true;
-            Column8.Width = 112;
+            Column8.Width = 113;
             // 
             // Column9
             // 
-            Column9.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridViewCellStyle9.WrapMode = DataGridViewTriState.False;
             Column9.DefaultCellStyle = dataGridViewCellStyle9;
             Column9.HeaderText = "Người cân";
             Column9.Name = "Column9";
             Column9.ReadOnly = true;
+            Column9.Width = 117;
             // 
             // Column10
             // 
@@ -321,7 +326,7 @@ namespace v5_IScale.Forms.ReportForms
             Column10.Name = "Column10";
             Column10.ReadOnly = true;
             Column10.Visible = false;
-            Column10.Width = 150;
+            Column10.Width = 149;
             // 
             // Column11
             // 
@@ -329,7 +334,7 @@ namespace v5_IScale.Forms.ReportForms
             Column11.Name = "Column11";
             Column11.ReadOnly = true;
             Column11.Visible = false;
-            Column11.Width = 152;
+            Column11.Width = 151;
             // 
             // Column12
             // 
@@ -337,7 +342,7 @@ namespace v5_IScale.Forms.ReportForms
             Column12.Name = "Column12";
             Column12.ReadOnly = true;
             Column12.Visible = false;
-            Column12.Width = 172;
+            Column12.Width = 173;
             // 
             // groupBox1
             // 
@@ -354,11 +359,12 @@ namespace v5_IScale.Forms.ReportForms
             groupBox1.Controls.Add(label5);
             groupBox1.Controls.Add(label4);
             groupBox1.Dock = DockStyle.Left;
+            groupBox1.Font = new Font("Segoe UI", 12F);
             groupBox1.Location = new Point(0, 0);
-            groupBox1.Margin = new Padding(3, 2, 3, 2);
+            groupBox1.Margin = new Padding(4, 3, 4, 3);
             groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(3, 2, 3, 2);
-            groupBox1.Size = new Size(341, 200);
+            groupBox1.Padding = new Padding(4, 3, 4, 3);
+            groupBox1.Size = new Size(393, 251);
             groupBox1.TabIndex = 6;
             groupBox1.TabStop = false;
             groupBox1.Text = "Điều kiện lọc";
@@ -368,10 +374,10 @@ namespace v5_IScale.Forms.ReportForms
             btnExcel.AutoSize = true;
             btnExcel.Font = new Font("Segoe UI", 14F);
             btnExcel.Image = (Image)resources.GetObject("btnExcel.Image");
-            btnExcel.Location = new Point(244, 158);
-            btnExcel.Margin = new Padding(3, 2, 3, 2);
+            btnExcel.Location = new Point(274, 206);
+            btnExcel.Margin = new Padding(4, 3, 4, 3);
             btnExcel.Name = "btnExcel";
-            btnExcel.Size = new Size(97, 38);
+            btnExcel.Size = new Size(109, 38);
             btnExcel.TabIndex = 1;
             btnExcel.Text = "Excel";
             btnExcel.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -383,10 +389,10 @@ namespace v5_IScale.Forms.ReportForms
             btnSearch.AutoSize = true;
             btnSearch.Font = new Font("Segoe UI", 14F);
             btnSearch.Image = (Image)resources.GetObject("btnSearch.Image");
-            btnSearch.Location = new Point(125, 158);
-            btnSearch.Margin = new Padding(3, 2, 3, 2);
+            btnSearch.Location = new Point(117, 206);
+            btnSearch.Margin = new Padding(4, 3, 4, 3);
             btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(130, 38);
+            btnSearch.Size = new Size(149, 38);
             btnSearch.TabIndex = 0;
             btnSearch.Text = "Tìm kiếm";
             btnSearch.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -400,9 +406,9 @@ namespace v5_IScale.Forms.ReportForms
             panel1.Controls.Add(groupBox1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(3, 2, 3, 2);
+            panel1.Margin = new Padding(4, 3, 4, 3);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1122, 200);
+            panel1.Size = new Size(1198, 251);
             panel1.TabIndex = 7;
             // 
             // tableLayoutPanel1
@@ -415,12 +421,12 @@ namespace v5_IScale.Forms.ReportForms
             tableLayoutPanel1.Controls.Add(panel4, 2, 0);
             tableLayoutPanel1.Controls.Add(panel3, 1, 0);
             tableLayoutPanel1.Controls.Add(panel2, 0, 0);
-            tableLayoutPanel1.Location = new Point(341, 60);
-            tableLayoutPanel1.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel1.Location = new Point(399, 81);
+            tableLayoutPanel1.Margin = new Padding(4, 3, 4, 3);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(737, 139);
+            tableLayoutPanel1.Size = new Size(762, 163);
             tableLayoutPanel1.TabIndex = 8;
             // 
             // panel4
@@ -428,18 +434,19 @@ namespace v5_IScale.Forms.ReportForms
             panel4.Controls.Add(picSecondWeight);
             panel4.Controls.Add(label8);
             panel4.Dock = DockStyle.Fill;
-            panel4.Location = new Point(494, 4);
-            panel4.Margin = new Padding(3, 2, 3, 2);
+            panel4.Location = new Point(512, 5);
+            panel4.Margin = new Padding(4, 3, 4, 3);
             panel4.Name = "panel4";
-            panel4.Size = new Size(238, 131);
+            panel4.Size = new Size(244, 153);
             panel4.TabIndex = 0;
             // 
             // picSecondWeight
             // 
             picSecondWeight.Dock = DockStyle.Fill;
             picSecondWeight.Location = new Point(0, 20);
+            picSecondWeight.Margin = new Padding(4);
             picSecondWeight.Name = "picSecondWeight";
-            picSecondWeight.Size = new Size(238, 111);
+            picSecondWeight.Size = new Size(244, 133);
             picSecondWeight.SizeMode = PictureBoxSizeMode.Zoom;
             picSecondWeight.TabIndex = 1;
             picSecondWeight.TabStop = false;
@@ -451,6 +458,7 @@ namespace v5_IScale.Forms.ReportForms
             label8.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             label8.ForeColor = Color.FromArgb(0, 0, 192);
             label8.Location = new Point(0, 0);
+            label8.Margin = new Padding(4, 0, 4, 0);
             label8.Name = "label8";
             label8.Size = new Size(114, 20);
             label8.TabIndex = 0;
@@ -461,18 +469,19 @@ namespace v5_IScale.Forms.ReportForms
             panel3.Controls.Add(picFirstWeight);
             panel3.Controls.Add(label7);
             panel3.Dock = DockStyle.Fill;
-            panel3.Location = new Point(250, 4);
-            panel3.Margin = new Padding(3, 2, 3, 2);
+            panel3.Location = new Point(259, 5);
+            panel3.Margin = new Padding(4, 3, 4, 3);
             panel3.Name = "panel3";
-            panel3.Size = new Size(236, 131);
+            panel3.Size = new Size(243, 153);
             panel3.TabIndex = 0;
             // 
             // picFirstWeight
             // 
             picFirstWeight.Dock = DockStyle.Fill;
             picFirstWeight.Location = new Point(0, 20);
+            picFirstWeight.Margin = new Padding(4);
             picFirstWeight.Name = "picFirstWeight";
-            picFirstWeight.Size = new Size(236, 111);
+            picFirstWeight.Size = new Size(243, 133);
             picFirstWeight.SizeMode = PictureBoxSizeMode.Zoom;
             picFirstWeight.TabIndex = 1;
             picFirstWeight.TabStop = false;
@@ -484,6 +493,7 @@ namespace v5_IScale.Forms.ReportForms
             label7.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             label7.ForeColor = Color.FromArgb(0, 0, 192);
             label7.Location = new Point(0, 0);
+            label7.Margin = new Padding(4, 0, 4, 0);
             label7.Name = "label7";
             label7.Size = new Size(114, 20);
             label7.TabIndex = 0;
@@ -494,18 +504,19 @@ namespace v5_IScale.Forms.ReportForms
             panel2.Controls.Add(movablePictureBox1);
             panel2.Controls.Add(label6);
             panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(5, 4);
-            panel2.Margin = new Padding(3, 2, 3, 2);
+            panel2.Location = new Point(6, 5);
+            panel2.Margin = new Padding(4, 3, 4, 3);
             panel2.Name = "panel2";
-            panel2.Size = new Size(237, 131);
+            panel2.Size = new Size(243, 153);
             panel2.TabIndex = 0;
             // 
             // movablePictureBox1
             // 
             movablePictureBox1.Dock = DockStyle.Fill;
             movablePictureBox1.Location = new Point(0, 20);
+            movablePictureBox1.Margin = new Padding(4);
             movablePictureBox1.Name = "movablePictureBox1";
-            movablePictureBox1.Size = new Size(237, 111);
+            movablePictureBox1.Size = new Size(243, 133);
             movablePictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             movablePictureBox1.TabIndex = 1;
             movablePictureBox1.TabStop = false;
@@ -517,6 +528,7 @@ namespace v5_IScale.Forms.ReportForms
             label6.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             label6.ForeColor = Color.FromArgb(0, 0, 192);
             label6.Location = new Point(0, 0);
+            label6.Margin = new Padding(4, 0, 4, 0);
             label6.Name = "label6";
             label6.Size = new Size(100, 20);
             label6.TabIndex = 0;
@@ -529,11 +541,10 @@ namespace v5_IScale.Forms.ReportForms
             groupBox2.Controls.Add(btnPrintScaleTicket);
             groupBox2.Controls.Add(btnPrintEInvoice);
             groupBox2.Dock = DockStyle.Top;
-            groupBox2.Location = new Point(341, 0);
-            groupBox2.Margin = new Padding(3, 2, 3, 2);
+            groupBox2.Location = new Point(393, 0);
+            groupBox2.Margin = new Padding(4, 3, 4, 3);
             groupBox2.Name = "groupBox2";
-            groupBox2.Padding = new Padding(3, 2, 3, 2);
-            groupBox2.Size = new Size(781, 62);
+            groupBox2.Size = new Size(805, 75);
             groupBox2.TabIndex = 10;
             groupBox2.TabStop = false;
             groupBox2.Text = "In phiếu";
@@ -541,12 +552,13 @@ namespace v5_IScale.Forms.ReportForms
             // cbPrintMode
             // 
             cbPrintMode.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbPrintMode.Font = new Font("Segoe UI", 14F);
             cbPrintMode.FormattingEnabled = true;
             cbPrintMode.Items.AddRange(new object[] { "Thông tin cân lần 1", "Thông tin cân lần 2", "Thông tin cân lần 3", "Thông tin cân lần 4", "Thông tin cân lần 5", "Thông tin cân lần 6", "Thông tin cân lần 7", "Thông tin cân lần 8", "Thông tin cân lần 9", "Thông tin cân lần 10" });
-            cbPrintMode.Location = new Point(5, 23);
-            cbPrintMode.Margin = new Padding(3, 2, 3, 2);
+            cbPrintMode.Location = new Point(6, 32);
+            cbPrintMode.Margin = new Padding(4, 3, 4, 3);
             cbPrintMode.Name = "cbPrintMode";
-            cbPrintMode.Size = new Size(229, 23);
+            cbPrintMode.Size = new Size(207, 33);
             cbPrintMode.TabIndex = 6;
             // 
             // btnPrintInternetEInvoice
@@ -554,10 +566,9 @@ namespace v5_IScale.Forms.ReportForms
             btnPrintInternetEInvoice.AutoSize = true;
             btnPrintInternetEInvoice.Font = new Font("Segoe UI", 14F);
             btnPrintInternetEInvoice.Image = (Image)resources.GetObject("btnPrintInternetEInvoice.Image");
-            btnPrintInternetEInvoice.Location = new Point(520, 18);
-            btnPrintInternetEInvoice.Margin = new Padding(3, 2, 3, 2);
+            btnPrintInternetEInvoice.Location = new Point(539, 24);
             btnPrintInternetEInvoice.Name = "btnPrintInternetEInvoice";
-            btnPrintInternetEInvoice.Size = new Size(209, 38);
+            btnPrintInternetEInvoice.Size = new Size(229, 41);
             btnPrintInternetEInvoice.TabIndex = 9;
             btnPrintInternetEInvoice.Text = "Hóa đơn (Internet)";
             btnPrintInternetEInvoice.TextAlign = ContentAlignment.MiddleRight;
@@ -570,10 +581,9 @@ namespace v5_IScale.Forms.ReportForms
             btnPrintScaleTicket.AutoSize = true;
             btnPrintScaleTicket.Font = new Font("Segoe UI", 14F);
             btnPrintScaleTicket.Image = (Image)resources.GetObject("btnPrintScaleTicket.Image");
-            btnPrintScaleTicket.Location = new Point(239, 18);
-            btnPrintScaleTicket.Margin = new Padding(3, 2, 3, 2);
+            btnPrintScaleTicket.Location = new Point(226, 24);
             btnPrintScaleTicket.Name = "btnPrintScaleTicket";
-            btnPrintScaleTicket.Size = new Size(145, 38);
+            btnPrintScaleTicket.Size = new Size(162, 41);
             btnPrintScaleTicket.TabIndex = 7;
             btnPrintScaleTicket.Text = "Phiếu cân";
             btnPrintScaleTicket.TextAlign = ContentAlignment.MiddleRight;
@@ -586,10 +596,9 @@ namespace v5_IScale.Forms.ReportForms
             btnPrintEInvoice.AutoSize = true;
             btnPrintEInvoice.Font = new Font("Segoe UI", 14F);
             btnPrintEInvoice.Image = (Image)resources.GetObject("btnPrintEInvoice.Image");
-            btnPrintEInvoice.Location = new Point(390, 18);
-            btnPrintEInvoice.Margin = new Padding(3, 2, 3, 2);
+            btnPrintEInvoice.Location = new Point(394, 24);
             btnPrintEInvoice.Name = "btnPrintEInvoice";
-            btnPrintEInvoice.Size = new Size(126, 38);
+            btnPrintEInvoice.Size = new Size(139, 41);
             btnPrintEInvoice.TabIndex = 8;
             btnPrintEInvoice.Text = "Hóa đơn";
             btnPrintEInvoice.TextAlign = ContentAlignment.MiddleRight;
@@ -599,13 +608,14 @@ namespace v5_IScale.Forms.ReportForms
             // 
             // frmReportScaleWithInvoice
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1122, 522);
+            ClientSize = new Size(1198, 567);
             Controls.Add(dgvData);
             Controls.Add(panel1);
+            Font = new Font("Segoe UI", 12F);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(3, 2, 3, 2);
+            Margin = new Padding(4, 3, 4, 3);
             Name = "frmReportScaleWithInvoice";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Báo cáo sự kiện cân";
@@ -657,6 +667,11 @@ namespace v5_IScale.Forms.ReportForms
         private Button btnPrintEInvoice;
         private Button btnPrintScaleTicket;
         private Button btnExcel;
+        private Panel panel2;
+        private Label label6;
+        private iParkingv5_window.Usercontrols.MovablePictureBox picSecondWeight;
+        private iParkingv5_window.Usercontrols.MovablePictureBox picFirstWeight;
+        private iParkingv5_window.Usercontrols.MovablePictureBox movablePictureBox1;
         private DataGridViewTextBoxColumn Column13;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
@@ -670,10 +685,5 @@ namespace v5_IScale.Forms.ReportForms
         private DataGridViewTextBoxColumn Column10;
         private DataGridViewTextBoxColumn Column11;
         private DataGridViewTextBoxColumn Column12;
-        private Panel panel2;
-        private Label label6;
-        private iParkingv5_window.Usercontrols.MovablePictureBox picSecondWeight;
-        private iParkingv5_window.Usercontrols.MovablePictureBox picFirstWeight;
-        private iParkingv5_window.Usercontrols.MovablePictureBox movablePictureBox1;
     }
 }

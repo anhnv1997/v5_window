@@ -38,7 +38,6 @@ namespace v5_IScale.Forms.ReportForms
                 btnSearch.PerformClick();
             }
         }
-
         #endregion End Forms
 
         #region Controls In Form
@@ -54,13 +53,17 @@ namespace v5_IScale.Forms.ReportForms
                 MessageBox.Show("Không có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
             if (dgvData.CurrentRow == null)
             {
                 MessageBox.Show("Hãy chọn sự kiện cần in phiếu cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
             string parkingEventId = dgvData.CurrentRow.Cells[0].Value.ToString() ?? "";
+
             var frm = new frmSelectPrintCount();
+
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 this.printCount = frm.PrintCount;
@@ -70,6 +73,7 @@ namespace v5_IScale.Forms.ReportForms
                 wbPrint.DocumentText = GetPrintContent(await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(parkingEventId));
             }
         }
+
         private void btnPrintEInvoice_Click(object sender, EventArgs e)
         {
 
@@ -129,7 +133,7 @@ namespace v5_IScale.Forms.ReportForms
             DateTime endTime = dtpEndTime.Value;
             string plateNumber = txtPlateNumber.Text;
             string userCode = txtUsername.Text;
-            string goodsTypeId = ((ListItem)cbGoodsType.SelectedItem)?.Name??"";
+            string goodsTypeId = ((ListItem)cbGoodsType.SelectedItem)?.Name ?? "";
             return await KzScaleApiHelper.GetWeighingActionDetails(startTime, endTime, plateNumber, userCode, goodsTypeId);
         }
         private void DisplayInGridview(List<WeighingDetail> data)
@@ -172,7 +176,7 @@ namespace v5_IScale.Forms.ReportForms
                         }
                     }
                     largerThan2TimesScale = largerThan2TimesScale.TrimEnd();
-                    string userAction = item.weighing_action_detail.Count > 0 ? item.weighing_action_detail[0].User_action : "";
+                    string userAction = item.weighing_action_detail.Count > 0 ? item.weighing_action_detail[0].User_code : "";
                     string vehicleImage = "";
                     string firstScaleImage = item.weighing_action_detail.Count > 0 ? item.weighing_action_detail[0].list_image : "";
                     string secondScaleImage = item.weighing_action_detail.Count > 1 ? item.weighing_action_detail[1].list_image : "";
@@ -194,16 +198,21 @@ namespace v5_IScale.Forms.ReportForms
                 Name = "",
                 Value = "Tất cả",
             });
-            foreach (var item in weighingForms)
+
+            if (weighingForms != null)
             {
-                StaticPool.WeighingFormCollection.Add(item);
-                ListItem li = new ListItem()
+                foreach (var item in weighingForms)
                 {
-                    Name = item.Id,
-                    Value = item.Name,
-                };
-                cbGoodsType.Items.Add(li);
+                    StaticPool.WeighingFormCollection.Add(item);
+                    ListItem li = new()
+                    {
+                        Name = item.Id,
+                        Value = item.Name,
+                    };
+                    cbGoodsType.Items.Add(li);
+                }
             }
+            
             cbGoodsType.DisplayMember = "Value";
             cbGoodsType.SelectedIndex = cbGoodsType.Items.Count > 0 ? 0 : -1;
             cbPrintMode.SelectedIndex = 0;

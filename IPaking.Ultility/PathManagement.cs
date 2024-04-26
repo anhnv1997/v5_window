@@ -10,6 +10,7 @@
         public static string appOptionConfigPath => baseBath + "/configs/app/option.txt";
         public static string appServicesConfigPath => baseBath + "/configs/app/services.txt";
         public static string scaleConfigPath => baseBath + "/configs/app/scale.txt";
+        public static string tokenPath => baseBath + "/configs/app/refreshToken.txt";
         public static string thirtPartyConfigPath => baseBath + "/configs/app/thirtParty.txt";
         public static string appDisplayConfigPath(string laneID) => baseBath + $"/configs/app/{laneID}/displayConfig.txt";
         public static string appLaneDirectionConfigPath(string laneId) => baseBath + $"/configs/app/{laneId}/displayDirection.txt";
@@ -18,6 +19,7 @@
         public static string appActiveLaneConfigPath() => baseBath + $"/configs/app/activeLane.txt";
         public static string appPrintTemplateConfigPath(string printTemplateName) => baseBath + $"/configs/app/print/{printTemplateName}.html";
         public static string appPrintScaleTemplateConfigPath(string printTemplateName) => baseBath + $"/configs/app/print/{printTemplateName}Scale.html";
+        public static string appPrintScaleInvoiceOfflineTemplateConfigPath(string printTemplateName) => baseBath + $"/configs/app/print/{printTemplateName}ScaleInvoiceOffline.html";
         #endregion END APP CONFIG PATH
 
         #region LANE CONFIG PATH
@@ -25,6 +27,7 @@
         public static string laneControllerShortcutConfigPath(string laneId) => baseBath + $"/configs/{laneId}/lane/controllerShortcut.txt";
         public static string laneLedConfigPath(string laneId, string ledId) => baseBath + $"/configs/{laneId}/led/{ledId}.txt";
         public static string laneCameraConfigPath(string laneId, string cameraId) => baseBath + $"/configs/{laneId}/camera/{cameraId}.txt";
+        public static string sharedPreferencesPath() => baseBath + "/configs/app/sharedPreferences.txt";
         #endregion END LANE CONFIG PATH
     }
 }

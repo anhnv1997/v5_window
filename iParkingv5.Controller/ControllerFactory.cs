@@ -25,7 +25,7 @@ namespace iParkingv5.Controller
                 EmControllerType.INGRESSUS => new ZktecoPull() { ControllerInfo = bdk },
                 EmControllerType.E02_NET => new AopuController() { ControllerInfo = bdk },
                 EmControllerType.SC200 => new SC200Devices.SC200() { ControllerInfo = bdk },
-                EmControllerType.Dahua => new DahuaAccessControl() { ControllerInfo = bdk },
+                EmControllerType.Dahua => new DahuaAccessControl(bdk.Id) { ControllerInfo = bdk },
                 _ => null,
             };
         }

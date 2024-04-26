@@ -403,7 +403,7 @@
       }
     },
     "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\IPaking.Ultility\\IPaking.Ultility.csproj": {
-      "version": "1.0.0",
+      "version": "1.0.0.1",
       "restore": {
         "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\IPaking.Ultility\\IPaking.Ultility.csproj",
         "projectName": "IPaking.Ultility",
@@ -469,7 +469,7 @@
       }
     },
     "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iPakrkingv5.Controls\\iPakrkingv5.Controls.csproj": {
-      "version": "1.0.0",
+      "version": "1.0.0.1",
       "restore": {
         "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iPakrkingv5.Controls\\iPakrkingv5.Controls.csproj",
         "projectName": "iPakrkingv5.Controls",
@@ -633,7 +633,7 @@
       }
     },
     "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.ApiManager\\iParkingv5.ApiManager.csproj": {
-      "version": "1.0.0.1",
+      "version": "1.0.0.4",
       "restore": {
         "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.ApiManager\\iParkingv5.ApiManager.csproj",
         "projectName": "iParkingv5.ApiManager",
@@ -801,7 +801,7 @@
       }
     },
     "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.LedDisplay\\iParkingv5.LedDisplay.csproj": {
-      "version": "1.0.0",
+      "version": "1.0.0.1",
       "restore": {
         "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.LedDisplay\\iParkingv5.LedDisplay.csproj",
         "projectName": "iParkingv5.LedDisplay",
@@ -832,6 +832,9 @@
             "projectReferences": {
               "E:\\2.Workspace\\2.Projects\\2023\\3.Lotte_TayHo\\1.source\\iPGS_2023_NET6\\Kztek.Tool\\Kztek.Tool.csproj": {
                 "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\3.Lotte_TayHo\\1.source\\iPGS_2023_NET6\\Kztek.Tool\\Kztek.Tool.csproj"
+              },
+              "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Lpr\\iParkingv5.Lpr.csproj": {
+                "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Lpr\\iParkingv5.Lpr.csproj"
               },
               "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj": {
                 "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj"
@@ -874,7 +877,7 @@
       }
     },
     "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Lpr\\iParkingv5.Lpr.csproj": {
-      "version": "1.0.0",
+      "version": "1.0.0.1",
       "restore": {
         "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Lpr\\iParkingv5.Lpr.csproj",
         "projectName": "iParkingv5.Lpr",
@@ -954,7 +957,7 @@
       }
     },
     "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj": {
-      "version": "1.0.0.1",
+      "version": "1.0.0.2",
       "restore": {
         "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj",
         "projectName": "iParkingv5.Objects",
@@ -1110,7 +1113,7 @@
       }
     },
     "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\v5_window\\iParkingv5_window.csproj": {
-      "version": "1.0.0.1",
+      "version": "1.0.0.6",
       "restore": {
         "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\v5_window\\iParkingv5_window.csproj",
         "projectName": "iParkingv5_window",
@@ -1199,6 +1202,18 @@
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "dependencies": {
+            "IdentityModel": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "IdentityModel.OidcClient": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.Web.WebView2": {
+              "target": "Package",
+              "version": "[1.0.2420.47, )"
+            },
             "Minio": {
               "target": "Package",
               "version": "[5.0.0, )"

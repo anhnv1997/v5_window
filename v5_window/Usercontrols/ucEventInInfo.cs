@@ -1,4 +1,5 @@
-﻿using iParkingv5.Objects;
+﻿using iParkingv5.ApiManager.KzParkingv5Apis;
+using iParkingv5.Objects;
 using iParkingv5.Objects.Datas;
 using iParkingv5.Objects.Enums;
 using iParkingv6.ApiManager.KzParkingv3Apis;
@@ -89,21 +90,26 @@ namespace iParkingv5_window.Usercontrols
             this.SuspendLayout();
             this.Location = position;
             this.BackColor = Color.FromArgb(255, 224, 192);
-            Lane? lane = await KzParkingApiHelper.GetLaneByIdAsync(laneId);
-            Identity? identity = await KzParkingApiHelper.GetIdentityById(identityId);
+            //Lane? lane = await KzParkingApiHelper.GetLaneByIdAsync(laneId);
+            Lane? lane = (await KzParkingv5ApiHelper.GetLaneByIdAsync(laneId)).Item1;
+            //Identity? identity = await KzParkingApiHelper.GetIdentityById(identityId);
+            Identity? identity = (await KzParkingv5ApiHelper.GetIdentityByIdAsync(identityId)).Item1;
             IdentityGroup? identityGroup = null;
             VehicleType? vehicleType = null;
             if (identity != null)
             {
-                identityGroup = await KzParkingApiHelper.GetIdentityGroupByIdAsync(identity.IdentityGroupId.ToString());
+                //identityGroup = await KzParkingApiHelper.GetIdentityGroupByIdAsync(identity.IdentityGroupId.ToString());
+                identityGroup = (await KzParkingv5ApiHelper.GetIdentityGroupByIdAsync(identity.IdentityGroupId.ToString())).Item1;
                 if (identityGroup != null)
                 {
-                    vehicleType = await KzParkingApiHelper.GetVehicleTypeById(identityGroup.VehicleTypeId.ToString());
+                    //vehicleType = await KzParkingApiHelper.GetVehicleTypeById(identityGroup.VehicleTypeId.ToString());
+                    vehicleType = (await KzParkingv5ApiHelper.GetVehicleTypeByIdAsync(identityGroup.VehicleType.Id.ToString())).Item1;
                 }
             }
 
-            Customer? customer = string.IsNullOrEmpty(customerID) ? null : await KzParkingApiHelper.GetCustomerById(customerID);
-            RegisteredVehicle? registerVehicle = string.IsNullOrEmpty(registerVehicleId) ? null : await KzParkingApiHelper.GetRegisteredVehicleById(registerVehicleId);
+            //Customer? customer = string.IsNullOrEmpty(customerID) ? null : await KzParkingApiHelper.GetCustomerById(customerID);
+            Customer? customer = string.IsNullOrEmpty(customerID) ? null : (await KzParkingv5ApiHelper.GetCustomerByIdAsync(customerID)).Item1;
+            RegisteredVehicle? registerVehicle = string.IsNullOrEmpty(registerVehicleId) ? null : (await KzParkingv5ApiHelper.GetRegistedVehilceByIdAsync(registerVehicleId)).Item1;
 
             lblLaneName.Text = lane == null ? "_" : lane.name;
             lblTimeIn.Text = datetimeIn;

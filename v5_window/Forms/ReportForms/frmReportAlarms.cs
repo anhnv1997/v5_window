@@ -1,6 +1,7 @@
 ﻿using IPaking.Ultility;
 using iPakrkingv5.Controls;
 using iPakrkingv5.Controls.Controls.Buttons;
+using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Datas;
 using iParkingv5.Objects.EventDatas;
@@ -60,9 +61,16 @@ namespace iParkingv5_window.Forms.ReportForms
 
         private async void FrmReportIn_Load(object? sender, EventArgs e)
         {
-            registerVehicles = await KzParkingApiHelper.GetRegisteredVehicles("");
-            customers = (await KzParkingApiHelper.GetAllCustomers())?.Item1 ?? new List<Customer>();
-            identityGroups = await KzParkingApiHelper.GetIdentityGroupsAsync() ?? new List<IdentityGroup>();
+            //registerVehicles = await KzParkingApiHelper.GetRegisteredVehicles("");
+
+            registerVehicles = (await KzParkingv5ApiHelper.GetRegisterVehiclesAsync("")).Item1;
+
+            //customers = (await KzParkingApiHelper.GetAllCustomers())?.Item1 ?? new List<Customer>();
+            customers = (await KzParkingv5ApiHelper.GetCustomersAsync())?.Item1 ?? new List<Customer>();
+
+            //identityGroups = await KzParkingApiHelper.GetIdentityGroupsAsync() ?? new List<IdentityGroup>();
+            identityGroups = (await KzParkingv5ApiHelper.GetIdentityGroupsAsync()).Item1 ?? new List<IdentityGroup>();
+
             picOverviewImageIn.Image = picVehicleImageIn.Image = defaultImg;
             await CreateUI();
             this.ActiveControl = btnSearch;
@@ -523,7 +531,8 @@ namespace iParkingv5_window.Forms.ReportForms
             }));
 
 
-            var vehicleTypes = await KzParkingApiHelper.GetAllVehicleTypes() ?? new List<iParkingv5.Objects.Enums.VehicleType>();
+            //var vehicleTypes = await KzParkingApiHelper.GetAllVehicleTypes() ?? new List<iParkingv5.Objects.Enums.VehicleType>();
+            var vehicleTypes = (await KzParkingv5ApiHelper.GetVehicleTypesAsync()).Item1 ?? new List<iParkingv5.Objects.Enums.VehicleType>();
             cbVehicleType.Invoke(new Action(() =>
             {
                 foreach (var item in vehicleTypes)
@@ -552,7 +561,8 @@ namespace iParkingv5_window.Forms.ReportForms
                 });
             }));
 
-            lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
+            //lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
+            lanes = (await KzParkingv5ApiHelper.GetLanesAsync()).Item1 ?? new List<iParkingv6.Objects.Datas.Lane>();
             cbLane.Invoke(new Action(() =>
             {
                 foreach (var item in lanes)

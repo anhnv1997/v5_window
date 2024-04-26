@@ -21,5 +21,6 @@ namespace iParkingv5.Objects.Configs
         public int RetakePhotoDelay { get; set; } = 300;
         public int RetakePhotoTimes { get; set; } = 5;
         public string ScaleDevice { get; set; } = "";
+        public string CheckForUpdatePath { get; set; } = "";
     }
 }

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Kztek.Tools;
+﻿using System.Drawing.Imaging;
 using Minio;
 
 namespace iParkingv5_window
-{   
+{
     public static class MinioHelper
     {
         public static string EndPoint = string.Empty;

@@ -16,6 +16,9 @@ using System.Security.Principal;
 using iParkingv5.Objects;
 using Newtonsoft.Json.Linq;
 using System.Drawing.Printing;
+using RestSharp;
+using System.Drawing.Imaging;
+using iParkingv5.Objects.Invoices;
 
 namespace iParkingv6.ApiManager.KzParkingv3Apis
 {
@@ -30,7 +33,7 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         public static string token = string.Empty;
         public static CancellationTokenSource cts;
 
-        class EventIdentity
+        public class EventIdentity
         {
             public string code { get; set; }
             public IdentityType type { get; set; }
@@ -89,6 +92,7 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         }
         private static async Task PollingAuthorize(CancellationToken ctsToken)
         {
+            return;
             while (!ctsToken.IsCancellationRequested)
             {
                 int delayTime = expireTime;
@@ -516,6 +520,14 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         }
         #endregion
 
+        public class Filter
+        {
+            public string queryKey { get; set; }
+            public string queryType { get; set; }
+            public string queryValue { get; set; }
+            public string operation { get; set; }
+        }
+
         #region -- IDENTITY
         public static async Task<Identity> GetIdentityById(string id)
         {
@@ -541,8 +553,16 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         public static async Task<Tuple<Identity, bool>> GetIdentityByCodeAsync(string code)
         {
             StandardlizeServerName();
-            string apiUrl = server + KzApiUrlManagement.GetIdentityByCodeRoute(code);
+            string apiUrl = "http://14.160.26.45:5000/identity/search";// server + KzApiUrlManagement.GetIdentityByCodeRoute(code);
 
+            Filter x = new Filter()
+            {
+                operation = "eq",
+                queryKey = "code",
+                queryType = "text",
+                queryValue = code,
+            };
+            string _filter = Newtonsoft.Json.JsonConvert.SerializeObject(x);
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
@@ -552,7 +572,12 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             {
                 { "keyword", code  }
             };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Get);
+            var data = new
+            {
+                filter = _filter
+            };
+
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
                 KzBaseResponseData<Identity> kzBaseResponse = NewtonSoftHelper<KzBaseResponseData<Identity>>.GetBaseResponse(response.Item1);
@@ -682,42 +707,97 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         #endregion
 
         #region -- EVENT IN
-        public static async Task<KzBaseResponseData<AddEventInResponse>> PostCheckInAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false)
+        public static async Task<KzBaseResponseData<AddEventInResponse>> PostCheckInAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null)
         {
             StandardlizeServerName();
-            string apiUrl = server + KzApiUrlManagement.EmObjectType.EventIn.CreateRoute();
-            //Gửi API
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-            {
-                { "Authorization","Bearer " + token  }
-            };
-            var data = new
-            {
-                laneId = _laneId,
-                plateNumber = _plateNumber,
-                identityCode = identity == null ? null : identity?.Code,
-                identityType = identity == null ? null : identity?.Type,
-                forceEntrance = isForce,
-                fileKeys = new List<string>()
-            };
+            string apiUrl = string.Empty;
 
-            foreach (var item in imageKeys)
+            if (identity == null)
             {
-                data.fileKeys.Add(item);
+                apiUrl = server + KzApiUrlManagement.EmObjectType.EventIn.CreateRoute() + "/vehicle";
+                //Gửi API
+                Dictionary<string, string> headers = new Dictionary<string, string>()
+                {
+                { "Authorization","Bearer " + token  }
+                };
+                var _vehicle = new
+                {
+                    id = registeredVehicle.Id,
+                    plateNumber = _plateNumber,
+                    customerId = registeredVehicle.CustomerId,
+                };
+                var data = new
+                {
+                    laneId = _laneId,
+                    vehicle = _vehicle,
+                    forceEntrance = isForce,
+                    fileKeys = new List<string>()
+                };
+
+                foreach (var item in imageKeys)
+                {
+                    data.fileKeys.Add(item);
+                }
+                string a = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+                var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
+                if (!string.IsNullOrEmpty(response.Item1))
+                {
+                    try
+                    {
+                        KzBaseResponseData<AddEventInResponse> addEventInResponse = NewtonSoftHelper<KzBaseResponseData<AddEventInResponse>>.GetBaseResponse(response.Item1);
+                        return addEventInResponse;
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
             }
-            string a = Newtonsoft.Json.JsonConvert.SerializeObject(data);
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
-            if (!string.IsNullOrEmpty(response.Item1))
+            else
             {
-                try
+                apiUrl = server + KzApiUrlManagement.EmObjectType.EventIn.CreateRoute() + "/vehicle";
+                //Gửi API
+                Dictionary<string, string> headers = new Dictionary<string, string>()
                 {
-                    KzBaseResponseData<AddEventInResponse> addEventInResponse = NewtonSoftHelper<KzBaseResponseData<AddEventInResponse>>.GetBaseResponse(response.Item1);
-                    return addEventInResponse;
+                { "Authorization","Bearer " + token  }
+                };
+
+                var _identityCheckIn = new
+                {
+                    id = identity.Id,
+                    code = identity.Code,
+                    identityGroupId = identity.IdentityGroupId,
+                };
+
+                var data = new
+                {
+                    laneId = _laneId,
+                    identity = _identityCheckIn,
+                    plateNumber = _plateNumber,
+                    //identityCode = identity == null ? null : identity?.Code,
+                    //identityType = identity == null ? null : identity?.Type,
+                    forceEntrance = isForce,
+                    fileKeys = new List<string>()
+                };
+
+                foreach (var item in imageKeys)
+                {
+                    data.fileKeys.Add(item);
                 }
-                catch (Exception)
+                string a = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+                var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
+                if (!string.IsNullOrEmpty(response.Item1))
                 {
+                    try
+                    {
+                        KzBaseResponseData<AddEventInResponse> addEventInResponse = NewtonSoftHelper<KzBaseResponseData<AddEventInResponse>>.GetBaseResponse(response.Item1);
+                        return addEventInResponse;
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
             }
+
             return null;
         }
         public static async Task<List<string>> GetFileIns(List<int> fileIds)
@@ -1128,6 +1208,9 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         {
             public string id { get; set; }
             public string identityId { get; set; }
+            public string identityCode { get; set; }
+            public string identityName { get; set; }
+
             public string laneId { get; set; }
             public string plateNumber { get; set; }
             public int status { get; set; }
@@ -1164,34 +1247,42 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             public string CustomerId { get; set; }
             public string RegisteredVehicleId { get; set; }
             public string CheckOutValidationStatus { get; set; }
+            public int TransactionType { get; set; }
+            public string TransactionCode { get; set; }
         }
         public class EventOutReport
         {
             //Thông tin sự kiện ra
             public string id { get; set; }
             public string identityId { get; set; }
-            public string laneId { get; set; }
-            public string plateNumber { get; set; }
             public string[] fileKeys { get; set; }
             public string lastPaymentUtc { get; set; }
-            public int charge { get; set; }
             public int discount { get; set; }
             public int paid { get; set; }
             public bool free { get; set; }
-            public string createdUtc { get; set; }
-            public string createdBy { get; set; }
-            public string IdentityGroupId { get; set; }
             public string CustomerId { get; set; }
             public string RegisteredVehicleId { get; set; }
 
             //Thông tin sự kiện vào
             public string eventInIdentityId { get; set; }
-            public string eventInLaneId { get; set; }
-            public string eventInPlateNumber { get; set; }
-            public string eventInCreatedUtc { get; set; }
-            public string eventInCreatedBy { get; set; }
             public string[] eventInFileKeys { get; set; }
 
+            public string eventInCreatedUtc { get; set; }
+            public string createdUtc { get; set; }
+            public string ParkingTime()
+            {
+                TimeSpan ParkingTime = (TimeSpan)(DateTime.Parse(createdUtc) - DateTime.Parse(eventInCreatedUtc))!;
+                string formattedTime = "";
+                if (ParkingTime.TotalDays > 1)
+                {
+                    formattedTime = string.Format("{0} ngày {1} giờ {2} phút", ParkingTime.Days, ParkingTime.Hours, ParkingTime.Minutes);
+                }
+                else
+                {
+                    formattedTime = string.Format("{0} giờ {1} phút", ParkingTime.Hours, ParkingTime.Minutes);
+                }
+                return formattedTime;
+            }
             [JsonIgnore]
             public DateTime? DatetimeOut
             {
@@ -1237,12 +1328,51 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
                     }
                 }
             }
+            public string IdentityName { get; set; }
+            public string IdentityGroupId { get; set; }
+            public string eventInPlateNumber { get; set; }
+            public string plateNumber { get; set; }
+            public int TransactionType { get; set; }
+            public string TransactionCode { get; set; }
+            public int charge { get; set; }
+            public string eventInCreatedBy { get; set; }
+            public string createdBy { get; set; }
+            public string eventInLaneId { get; set; }
+            public string laneId { get; set; }
+
+            public string InvoiceTemplate { get; set; }
+            public string InvoiceNo { get; set; }
+        }
+
+        public class TransactionType
+        {
+            public enum EmTransactionType
+            {
+                InBound,
+                OutBound,
+                Overweight,
+                Other
+            }
+            public static string GetTransactionTypeStr(int transactionType)
+            {
+                switch (transactionType)
+                {
+                    case (int)EmTransactionType.InBound:
+                        return "Nhập";
+                    case (int)EmTransactionType.OutBound:
+                        return "Xuất";
+                    case (int)EmTransactionType.Overweight:
+                        return "Sang tải";
+                    default:
+                        return "Khac";
+                }
+            }
         }
         #endregion
 
         #region ABNORMAL
         public static async Task<bool> CreateAlarmAsync(string identityId, string laneId, string plate, AbnormalCode abnormalCode,
-                                                        string imageKey, bool isLaneIn, string identityGroupId, string customerId, 
+                                                        string imageKey, bool isLaneIn, string identityGroupId, string customerId,
                                                         string registerVehicleId, string description)
         {
             StandardlizeServerName();
@@ -1599,6 +1729,36 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         }
         #endregion
 
+        #region --INVOICE
+        public static async Task<InvoiceData> GetInvoiceData(string orderId, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL)
+        {
+            string url = $"http://14.160.26.45:26868/einvoice?provider=65";
+
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            var data = new
+            {
+                InvoiceNumber = "",
+                OrderId = orderId,
+                GetFile = true,
+                FileType = "Pdf"
+            };
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(url, data, headers, null, timeOut, Method.Get);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                return NewtonSoftHelper<InvoiceData>.GetBaseResponse(response.Item1);
+            }
+            return null;
+        }
+        //public static async Task<bool> CreateInvoice(string plateNumber, )
+        //{
+
+        //}
+        #endregion
+
         #endregion END PUBLIC FUNCTION
 
         #region PRIVATE FUNCTION
@@ -1610,5 +1770,84 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             }
         }
         #endregion END PRIVATE FUNCTION
+
+        public class InvoiceData
+        {
+            public string id { get; set; }
+            public string orderId { get; set; }
+            public object requestId { get; set; }
+            public int serviceProvider { get; set; }
+            public Creator creator { get; set; }
+            public string signedFileData { get; set; }
+            public Company company { get; set; }
+            public Paymentitem[] paymentItems { get; set; }
+            public DateTime createdAt { get; set; }
+            public object modifiedAt { get; set; }
+            public Lookupinformation lookupInformation { get; set; }
+            public object note { get; set; }
+            public Taxdetails taxDetails { get; set; }
+            public Invoiceconfiguration invoiceConfiguration { get; set; }
+        }
+        public class InvoiceDataSearch
+        {
+            public string orderId { get; set; }
+            public Lookupinformation lookupInformation { get; set; }
+            public Invoiceconfiguration invoiceConfiguration { get; set; }
+        }
+
+        public class Creator
+        {
+            public string id { get; set; }
+            public string name { get; set; }
+            public object code { get; set; }
+            public object phone { get; set; }
+            public object email { get; set; }
+            public object description { get; set; }
+        }
+
+        public class Company
+        {
+            public string name { get; set; }
+            public object code { get; set; }
+            public string taxCode { get; set; }
+            public object description { get; set; }
+            public object phoneNumber { get; set; }
+            public object email { get; set; }
+        }
+
+        public class Lookupinformation
+        {
+            public object mappingId { get; set; }
+            public string invoiceNumber { get; set; }
+            public string reservationCode { get; set; }
+        }
+
+        public class Taxdetails
+        {
+            public int totalWithTax { get; set; }
+            public int taxAmount { get; set; }
+            public int taxRate { get; set; }
+        }
+
+        public class Invoiceconfiguration
+        {
+            public string templateCode { get; set; }
+            public string invoiceTypeCode { get; set; }
+            public string symbolCode { get; set; }
+        }
+
+        public class Paymentitem
+        {
+            public string name { get; set; }
+            public string code { get; set; }
+            public object description { get; set; }
+            public string unitName { get; set; }
+            public object category { get; set; }
+            public int quantity { get; set; }
+            public int unitPrice { get; set; }
+            public int taxRate { get; set; }
+            public int total { get; set; }
+        }
+
     }
 }

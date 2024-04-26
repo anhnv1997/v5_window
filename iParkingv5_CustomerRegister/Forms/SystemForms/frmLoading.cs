@@ -213,5 +213,10 @@ namespace iParkingv5_CustomerRegister.Forms.SystemForms
             }
         }
         #endregion
+
+        private void panelMessage_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

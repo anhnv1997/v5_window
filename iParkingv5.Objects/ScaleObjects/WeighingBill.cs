@@ -13,8 +13,8 @@ namespace iParkingv5.Objects.ScaleObjects
         public string Weighing_action_id { get; set; } = string.Empty;
         public string Weighing_action_detail_id { get; set; } = string.Empty;
         public string Number_of_bill { get; set; } = string.Empty;
-        public double Id_of_bill { get; set; }
-        public long Lookup_code { get; set; }
+        public string code_of_bill { get; set; }
+        public string Lookup_code { get; set; }
         public string First_time { get; set; } = string.Empty;
         public string Last_time { get; set; } = string.Empty;
         public string Response_data { get; set; } = string.Empty;

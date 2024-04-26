@@ -1,90 +1,80 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWindowsForms>true</UseWindowsForms>
+		<Version>1.0.1.1</Version>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Minio" Version="5.0.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="IdentityModel" Version="7.0.0" />
+		<PackageReference Include="IdentityModel.OidcClient" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2420.47" />
+		<PackageReference Include="Minio" Version="5.0.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\..\BaseLib\Kztek.Cameras\Kztek.Cameras.csproj" />
-    <ProjectReference Include="..\..\..\..\..\..\..\BaseLib\Kztek.LPR\Kztek.LPR.csproj" />
-    <ProjectReference Include="..\..\..\..\..\..\..\BaseLib\Kztek.RtspPlayer\Kztek.RtspPlayer\Kztek.RtspPlayer.csproj" />
-    <ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\IPGS.Ultility\IPGS.Ultility.csproj" />
-    <ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\Kztek.Tool\Kztek.Tool.csproj" />
-    <ProjectReference Include="..\IPaking.Ultility\IPaking.Ultility.csproj" />
-    <ProjectReference Include="..\iPakrkingv5.Controls\iPakrkingv5.Controls.csproj" />
-    <ProjectReference Include="..\iParking.ConfigurationManager\iParking.ConfigurationManager.csproj" />
-    <ProjectReference Include="..\iParkingv5.ApiManager\iParkingv5.ApiManager.csproj" />
-    <ProjectReference Include="..\iParkingv5.Controller\iParkingv5.Controller.csproj" />
-    <ProjectReference Include="..\iParkingv5.LedDisplay\iParkingv5.LedDisplay.csproj" />
-    <ProjectReference Include="..\iParkingv5.Lpr\iParkingv5.Lpr.csproj" />
-    <ProjectReference Include="..\iParkingv5.Objects\iParkingv5.Objects.csproj" />
-    <ProjectReference Include="..\Kztek.Scale\Net6\Kztek.Scale\Kztek.Scale_net6.csproj" />
-    <ProjectReference Include="..\v5_window\iParkingv5_window.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\..\..\..\..\BaseLib\Kztek.Cameras\Kztek.Cameras.csproj" />
+		<ProjectReference Include="..\..\..\..\..\..\..\BaseLib\Kztek.LPR\Kztek.LPR.csproj" />
+		<ProjectReference Include="..\..\..\..\..\..\..\BaseLib\Kztek.RtspPlayer\Kztek.RtspPlayer\Kztek.RtspPlayer.csproj" />
+		<ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\IPGS.Ultility\IPGS.Ultility.csproj" />
+		<ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\Kztek.Tool\Kztek.Tool.csproj" />
+		<ProjectReference Include="..\IPaking.Ultility\IPaking.Ultility.csproj" />
+		<ProjectReference Include="..\iPakrkingv5.Controls\iPakrkingv5.Controls.csproj" />
+		<ProjectReference Include="..\iParking.ConfigurationManager\iParking.ConfigurationManager.csproj" />
+		<ProjectReference Include="..\iParkingv5.ApiManager\iParkingv5.ApiManager.csproj" />
+		<ProjectReference Include="..\iParkingv5.Controller\iParkingv5.Controller.csproj" />
+		<ProjectReference Include="..\iParkingv5.LedDisplay\iParkingv5.LedDisplay.csproj" />
+		<ProjectReference Include="..\iParkingv5.Lpr\iParkingv5.Lpr.csproj" />
+		<ProjectReference Include="..\iParkingv5.Objects\iParkingv5.Objects.csproj" />
+		<ProjectReference Include="..\Kztek.Scale\Net6\Kztek.Scale\Kztek.Scale_net6.csproj" />
+		<ProjectReference Include="..\v5_window\iParkingv5_window.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Forms\frmReportIn.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\MovablePictureBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Forms\SystemForms\frmLoading.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\SystemForms\frmLogin.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\ucEventInInfo.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Forms\ucPages.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Properties\Settings.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Update="Usercontrols\BuildControls\ucLoading.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Usercontrols\BuildControls\ucNotify.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Usercontrols\lblPageIndex.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Usercontrols\ucCameraView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Forms\frmReportIn.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Update="Forms\MovablePictureBox.cs">
+			<SubType>Component</SubType>
+		</Compile>
+		<Compile Update="Forms\SystemForms\frmLoading.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Update="Forms\SystemForms\frmLogin.cs" />
+		<Compile Update="Forms\ucEventInInfo.cs">
+			<SubType>UserControl</SubType>
+		</Compile>
+		<Compile Update="Forms\ucPages.cs">
+			<SubType>UserControl</SubType>
+		</Compile>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Usercontrols\BuildControls\ucLoading.cs">
+			<SubType>UserControl</SubType>
+		</Compile>
+		<Compile Update="Usercontrols\BuildControls\ucNotify.cs">
+			<SubType>UserControl</SubType>
+		</Compile>
+		<Compile Update="Usercontrols\lblPageIndex.cs">
+			<SubType>Component</SubType>
+		</Compile>
+		<Compile Update="Usercontrols\ucCameraView.cs">
+			<SubType>UserControl</SubType>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
 
 </Project>

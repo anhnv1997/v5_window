@@ -37,6 +37,12 @@
             panelLastEvent = new Panel();
             panelNearestEvent = new Panel();
             panel9 = new Panel();
+            label20 = new Label();
+            label19 = new Label();
+            label18 = new Label();
+            label17 = new Label();
+            label22 = new Label();
+            label21 = new Label();
             label14 = new Label();
             label13 = new Label();
             label12 = new Label();
@@ -49,18 +55,19 @@
             ucEventCount1 = new ucEventCount();
             lblResult = new iPakrkingv5.Controls.Controls.Labels.lblResult();
             splitContainerEventContent = new SplitContainer();
-            panelDetectPlate = new Panel();
+            panel10 = new Panel();
             picLprImage = new MovablePictureBox();
+            label27 = new Label();
+            panelDetectPlate = new Panel();
             txtPlate = new TextBox();
+            label25 = new Label();
+            panelNote = new Panel();
+            tableLayoutPanelNote = new TableLayoutPanel();
+            groupBox1 = new GroupBox();
+            cbNote = new ComboBox();
             dgvEventContent = new DataGridView();
             Column1 = new DataGridViewTextBoxColumn();
             Column2 = new DataGridViewTextBoxColumn();
-            panelNote = new Panel();
-            tableLayoutPanelNote = new TableLayoutPanel();
-            label3 = new Label();
-            label6 = new Label();
-            groupBox1 = new GroupBox();
-            cbNote = new ComboBox();
             picSetting = new PictureBox();
             panel5 = new Panel();
             picRetakePhoto = new PictureBox();
@@ -72,14 +79,21 @@
             panel7 = new Panel();
             pictureBox2 = new PictureBox();
             toolTip1 = new ToolTip(components);
+            btnPrintScale = new Button();
             toolTip2 = new ToolTip(components);
             toolTip3 = new ToolTip(components);
             splitterEventInfoWithCamera = new Splitter();
             panelEventData = new Panel();
-            panelScaleAction = new Panel();
-            btnopenBarrie = new Button();
-            btnPrintScale = new Button();
             panelGoodsType = new Panel();
+            label26 = new Label();
+            lblScaleFee = new Label();
+            panelScaleAction = new Panel();
+            btnPrintScaleOnline = new Button();
+            btnPrintScaleOffline = new Button();
+            panel12 = new Panel();
+            label24 = new Label();
+            lblScaleInfo = new Label();
+            label23 = new Label();
             cbGoodsType = new ComboBox();
             tableLayoutPanel3 = new TableLayoutPanel();
             label4 = new Label();
@@ -105,12 +119,13 @@
             splitContainerEventContent.Panel1.SuspendLayout();
             splitContainerEventContent.Panel2.SuspendLayout();
             splitContainerEventContent.SuspendLayout();
-            panelDetectPlate.SuspendLayout();
+            panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picLprImage).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dgvEventContent).BeginInit();
+            panelDetectPlate.SuspendLayout();
             panelNote.SuspendLayout();
             tableLayoutPanelNote.SuspendLayout();
             groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvEventContent).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picSetting).BeginInit();
             panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picRetakePhoto).BeginInit();
@@ -118,8 +133,9 @@
             ((System.ComponentModel.ISupportInitialize)picOpenBarrie).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panelEventData.SuspendLayout();
-            panelScaleAction.SuspendLayout();
             panelGoodsType.SuspendLayout();
+            panelScaleAction.SuspendLayout();
+            panel12.SuspendLayout();
             tableLayoutPanel3.SuspendLayout();
             SuspendLayout();
             // 
@@ -132,7 +148,7 @@
             lblLaneName.Location = new Point(0, 0);
             lblLaneName.Margin = new Padding(0);
             lblLaneName.Name = "lblLaneName";
-            lblLaneName.Size = new Size(1038, 22);
+            lblLaneName.Size = new Size(1242, 22);
             lblLaneName.TabIndex = 0;
             lblLaneName.Text = "label1";
             lblLaneName.TextAlign = ContentAlignment.MiddleCenter;
@@ -142,11 +158,12 @@
             panelCameras.BorderStyle = BorderStyle.FixedSingle;
             panelCameras.Controls.Add(label15);
             panelCameras.Dock = DockStyle.Left;
-            panelCameras.Location = new Point(200, 0);
-            panelCameras.Margin = new Padding(3, 2, 3, 2);
+            panelCameras.Location = new Point(393, 0);
+            panelCameras.Margin = new Padding(0);
             panelCameras.Name = "panelCameras";
-            panelCameras.Size = new Size(211, 337);
+            panelCameras.Size = new Size(211, 440);
             panelCameras.TabIndex = 3;
+            panelCameras.Paint += panelCameras_Paint;
             // 
             // label15
             // 
@@ -156,7 +173,7 @@
             label15.ForeColor = Color.Green;
             label15.Location = new Point(0, 0);
             label15.Name = "label15";
-            label15.Size = new Size(209, 30);
+            label15.Size = new Size(209, 36);
             label15.TabIndex = 3;
             label15.Text = "Cam lối vào";
             label15.TextAlign = ContentAlignment.MiddleCenter;
@@ -180,8 +197,8 @@
             // 
             splitContainerMain.Panel2.Controls.Add(panel4);
             splitContainerMain.Panel2.Controls.Add(lblResult);
-            splitContainerMain.Size = new Size(754, 575);
-            splitContainerMain.SplitterDistance = 337;
+            splitContainerMain.Size = new Size(869, 721);
+            splitContainerMain.SplitterDistance = 440;
             splitContainerMain.SplitterWidth = 3;
             splitContainerMain.TabIndex = 4;
             // 
@@ -193,14 +210,13 @@
             tableLayoutPanel1.Controls.Add(label1, 0, 0);
             tableLayoutPanel1.Controls.Add(tablePic, 0, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(414, 0);
-            tableLayoutPanel1.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel1.Location = new Point(607, 0);
+            tableLayoutPanel1.Margin = new Padding(0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 15F));
-            tableLayoutPanel1.Size = new Size(340, 337);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Size = new Size(262, 440);
             tableLayoutPanel1.TabIndex = 5;
             // 
             // label1
@@ -209,9 +225,10 @@
             label1.Dock = DockStyle.Fill;
             label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline);
             label1.ForeColor = Color.Green;
-            label1.Location = new Point(5, 2);
+            label1.Location = new Point(2, 2);
+            label1.Margin = new Padding(0);
             label1.Name = "label1";
-            label1.Size = new Size(330, 30);
+            label1.Size = new Size(258, 35);
             label1.TabIndex = 2;
             label1.Text = "Ảnh Vào";
             label1.TextAlign = ContentAlignment.MiddleCenter;
@@ -227,13 +244,13 @@
             tablePic.Controls.Add(panel2, 1, 0);
             tablePic.Controls.Add(panel3, 0, 0);
             tablePic.Dock = DockStyle.Fill;
-            tablePic.Location = new Point(5, 36);
-            tablePic.Margin = new Padding(3, 2, 3, 2);
+            tablePic.Location = new Point(2, 39);
+            tablePic.Margin = new Padding(0);
             tablePic.Name = "tablePic";
             tablePic.RowCount = 2;
             tablePic.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tablePic.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tablePic.Size = new Size(330, 297);
+            tablePic.Size = new Size(258, 399);
             tablePic.TabIndex = 3;
             // 
             // picOther2
@@ -242,13 +259,14 @@
             picOther2.Dock = DockStyle.Fill;
             picOther2.ErrorImage = null;
             picOther2.Image = (Image)resources.GetObject("picOther2.Image");
-            picOther2.Location = new Point(168, 151);
-            picOther2.Margin = new Padding(3, 2, 3, 2);
+            picOther2.Location = new Point(129, 200);
+            picOther2.Margin = new Padding(0);
             picOther2.Name = "picOther2";
-            picOther2.Size = new Size(158, 143);
+            picOther2.Size = new Size(128, 198);
             picOther2.SizeMode = PictureBoxSizeMode.StretchImage;
             picOther2.TabIndex = 5;
             picOther2.TabStop = false;
+            picOther2.LoadCompleted += Pic_LoadCompleted;
             // 
             // picVehicleImage
             // 
@@ -256,23 +274,24 @@
             picVehicleImage.Dock = DockStyle.Fill;
             picVehicleImage.ErrorImage = null;
             picVehicleImage.Image = (Image)resources.GetObject("picVehicleImage.Image");
-            picVehicleImage.Location = new Point(4, 151);
-            picVehicleImage.Margin = new Padding(3, 2, 3, 2);
+            picVehicleImage.Location = new Point(1, 200);
+            picVehicleImage.Margin = new Padding(0);
             picVehicleImage.Name = "picVehicleImage";
-            picVehicleImage.Size = new Size(157, 143);
+            picVehicleImage.Size = new Size(127, 198);
             picVehicleImage.SizeMode = PictureBoxSizeMode.StretchImage;
             picVehicleImage.TabIndex = 5;
             picVehicleImage.TabStop = false;
+            picVehicleImage.LoadCompleted += Pic_LoadCompleted;
             // 
             // panel2
             // 
             panel2.BackColor = SystemColors.Control;
             panel2.Controls.Add(picOther1);
             panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(168, 3);
-            panel2.Margin = new Padding(3, 2, 3, 2);
+            panel2.Location = new Point(129, 1);
+            panel2.Margin = new Padding(0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(158, 143);
+            panel2.Size = new Size(128, 198);
             panel2.TabIndex = 0;
             // 
             // picOther1
@@ -282,22 +301,23 @@
             picOther1.ErrorImage = null;
             picOther1.Image = (Image)resources.GetObject("picOther1.Image");
             picOther1.Location = new Point(0, 0);
-            picOther1.Margin = new Padding(3, 2, 3, 2);
+            picOther1.Margin = new Padding(0);
             picOther1.Name = "picOther1";
-            picOther1.Size = new Size(158, 143);
+            picOther1.Size = new Size(128, 198);
             picOther1.SizeMode = PictureBoxSizeMode.StretchImage;
             picOther1.TabIndex = 5;
             picOther1.TabStop = false;
+            picOther1.LoadCompleted += Pic_LoadCompleted;
             // 
             // panel3
             // 
             panel3.BackColor = SystemColors.Control;
             panel3.Controls.Add(picOverviewImage);
             panel3.Dock = DockStyle.Fill;
-            panel3.Location = new Point(4, 3);
-            panel3.Margin = new Padding(3, 2, 3, 2);
+            panel3.Location = new Point(1, 1);
+            panel3.Margin = new Padding(0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(157, 143);
+            panel3.Size = new Size(127, 198);
             panel3.TabIndex = 1;
             // 
             // picOverviewImage
@@ -307,19 +327,21 @@
             picOverviewImage.ErrorImage = null;
             picOverviewImage.Image = (Image)resources.GetObject("picOverviewImage.Image");
             picOverviewImage.Location = new Point(0, 0);
-            picOverviewImage.Margin = new Padding(3, 2, 3, 2);
+            picOverviewImage.Margin = new Padding(0);
             picOverviewImage.Name = "picOverviewImage";
-            picOverviewImage.Size = new Size(157, 143);
+            picOverviewImage.Size = new Size(127, 198);
             picOverviewImage.SizeMode = PictureBoxSizeMode.StretchImage;
             picOverviewImage.TabIndex = 5;
             picOverviewImage.TabStop = false;
+            picOverviewImage.LoadCompleted += Pic_LoadCompleted;
             // 
             // splitterCamera
             // 
-            splitterCamera.Location = new Point(411, 0);
+            splitterCamera.BackColor = SystemColors.ButtonHighlight;
+            splitterCamera.Location = new Point(604, 0);
             splitterCamera.Margin = new Padding(3, 2, 3, 2);
             splitterCamera.Name = "splitterCamera";
-            splitterCamera.Size = new Size(3, 337);
+            splitterCamera.Size = new Size(3, 440);
             splitterCamera.TabIndex = 4;
             splitterCamera.TabStop = false;
             // 
@@ -328,8 +350,9 @@
             panelOversizeCam.Controls.Add(label16);
             panelOversizeCam.Dock = DockStyle.Left;
             panelOversizeCam.Location = new Point(0, 0);
+            panelOversizeCam.Margin = new Padding(0);
             panelOversizeCam.Name = "panelOversizeCam";
-            panelOversizeCam.Size = new Size(200, 337);
+            panelOversizeCam.Size = new Size(393, 440);
             panelOversizeCam.TabIndex = 6;
             panelOversizeCam.Visible = false;
             // 
@@ -340,8 +363,9 @@
             label16.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline);
             label16.ForeColor = Color.Green;
             label16.Location = new Point(0, 0);
+            label16.Margin = new Padding(0);
             label16.Name = "label16";
-            label16.Size = new Size(200, 30);
+            label16.Size = new Size(393, 37);
             label16.TabIndex = 3;
             label16.Text = "Cam quá khổ";
             label16.TextAlign = ContentAlignment.MiddleCenter;
@@ -353,9 +377,9 @@
             panel4.Dock = DockStyle.Fill;
             panel4.Font = new Font("Segoe UI", 13F);
             panel4.Location = new Point(0, 44);
-            panel4.Margin = new Padding(3, 2, 3, 2);
+            panel4.Margin = new Padding(0);
             panel4.Name = "panel4";
-            panel4.Size = new Size(754, 191);
+            panel4.Size = new Size(869, 234);
             panel4.TabIndex = 2;
             // 
             // panelLastEvent
@@ -366,23 +390,29 @@
             panelLastEvent.Controls.Add(panel9);
             panelLastEvent.Controls.Add(label2);
             panelLastEvent.Dock = DockStyle.Fill;
-            panelLastEvent.Location = new Point(266, 0);
+            panelLastEvent.Location = new Point(286, 0);
             panelLastEvent.Margin = new Padding(3, 2, 3, 2);
             panelLastEvent.Name = "panelLastEvent";
-            panelLastEvent.Size = new Size(488, 191);
+            panelLastEvent.Size = new Size(583, 234);
             panelLastEvent.TabIndex = 7;
             // 
             // panelNearestEvent
             // 
             panelNearestEvent.Dock = DockStyle.Fill;
             panelNearestEvent.Location = new Point(0, 27);
-            panelNearestEvent.Margin = new Padding(3, 2, 3, 2);
+            panelNearestEvent.Margin = new Padding(0);
             panelNearestEvent.Name = "panelNearestEvent";
-            panelNearestEvent.Size = new Size(486, 109);
+            panelNearestEvent.Size = new Size(581, 126);
             panelNearestEvent.TabIndex = 8;
             // 
             // panel9
             // 
+            panel9.Controls.Add(label20);
+            panel9.Controls.Add(label19);
+            panel9.Controls.Add(label18);
+            panel9.Controls.Add(label17);
+            panel9.Controls.Add(label22);
+            panel9.Controls.Add(label21);
             panel9.Controls.Add(label14);
             panel9.Controls.Add(label13);
             panel9.Controls.Add(label12);
@@ -392,16 +422,79 @@
             panel9.Controls.Add(label8);
             panel9.Controls.Add(label7);
             panel9.Dock = DockStyle.Bottom;
-            panel9.Location = new Point(0, 136);
+            panel9.Location = new Point(0, 153);
             panel9.Name = "panel9";
-            panel9.Size = new Size(486, 53);
+            panel9.Size = new Size(581, 79);
             panel9.TabIndex = 9;
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            label20.Location = new Point(262, 45);
+            label20.Name = "label20";
+            label20.Size = new Size(149, 25);
+            label20.TabIndex = 0;
+            label20.Text = "Đóng/Mở barrie";
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            label19.ForeColor = Color.Navy;
+            label19.Location = new Point(195, 45);
+            label19.Name = "label19";
+            label19.Size = new Size(72, 25);
+            label19.TabIndex = 0;
+            label19.Text = "Space: ";
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            label18.Location = new Point(41, 45);
+            label18.Name = "label18";
+            label18.Size = new Size(141, 25);
+            label18.TabIndex = 0;
+            label18.Text = "In phiếu thứ tự";
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            label17.ForeColor = Color.Navy;
+            label17.Location = new Point(4, 45);
+            label17.Name = "label17";
+            label17.Size = new Size(41, 25);
+            label17.TabIndex = 0;
+            label17.Text = "F8 :";
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            label22.Location = new Point(532, 45);
+            label22.Name = "label22";
+            label22.Size = new Size(123, 25);
+            label22.TabIndex = 0;
+            label22.Text = "Cam quá khổ";
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            label21.ForeColor = Color.Navy;
+            label21.Location = new Point(475, 45);
+            label21.Name = "label21";
+            label21.Size = new Size(51, 25);
+            label21.TabIndex = 0;
+            label21.Text = "F12 :";
             // 
             // label14
             // 
             label14.AutoSize = true;
             label14.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            label14.Location = new Point(457, 16);
+            label14.Location = new Point(532, 16);
             label14.Name = "label14";
             label14.Size = new Size(81, 25);
             label14.TabIndex = 0;
@@ -412,7 +505,7 @@
             label13.AutoSize = true;
             label13.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
             label13.ForeColor = Color.Navy;
-            label13.Location = new Point(420, 16);
+            label13.Location = new Point(475, 16);
             label13.Name = "label13";
             label13.Size = new Size(41, 25);
             label13.TabIndex = 0;
@@ -422,7 +515,7 @@
             // 
             label12.AutoSize = true;
             label12.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            label12.Location = new Point(315, 16);
+            label12.Location = new Point(370, 16);
             label12.Name = "label12";
             label12.Size = new Size(85, 25);
             label12.TabIndex = 0;
@@ -433,7 +526,7 @@
             label11.AutoSize = true;
             label11.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
             label11.ForeColor = Color.Navy;
-            label11.Location = new Point(278, 16);
+            label11.Location = new Point(333, 16);
             label11.Name = "label11";
             label11.Size = new Size(41, 25);
             label11.TabIndex = 0;
@@ -443,7 +536,7 @@
             // 
             label10.AutoSize = true;
             label10.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            label10.Location = new Point(177, 16);
+            label10.Location = new Point(232, 16);
             label10.Name = "label10";
             label10.Size = new Size(79, 25);
             label10.TabIndex = 0;
@@ -454,7 +547,7 @@
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
             label9.ForeColor = Color.Navy;
-            label9.Location = new Point(140, 16);
+            label9.Location = new Point(195, 16);
             label9.Name = "label9";
             label9.Size = new Size(41, 25);
             label9.TabIndex = 0;
@@ -488,7 +581,7 @@
             label2.ForeColor = Color.Navy;
             label2.Location = new Point(0, 0);
             label2.Name = "label2";
-            label2.Size = new Size(486, 27);
+            label2.Size = new Size(581, 27);
             label2.TabIndex = 7;
             label2.Text = "Các lượt xe vào gần đây";
             label2.TextAlign = ContentAlignment.MiddleLeft;
@@ -497,10 +590,11 @@
             // 
             ucEventCount1.BorderStyle = BorderStyle.FixedSingle;
             ucEventCount1.Dock = DockStyle.Left;
+            ucEventCount1.Font = new Font("Segoe UI", 12F);
             ucEventCount1.Location = new Point(0, 0);
             ucEventCount1.Margin = new Padding(3, 2, 3, 2);
             ucEventCount1.Name = "ucEventCount1";
-            ucEventCount1.Size = new Size(266, 191);
+            ucEventCount1.Size = new Size(286, 234);
             ucEventCount1.TabIndex = 7;
             // 
             // lblResult
@@ -510,68 +604,163 @@
             lblResult.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             lblResult.ForeColor = SystemColors.ButtonHighlight;
             lblResult.Location = new Point(0, 0);
+            lblResult.Margin = new Padding(0);
             lblResult.Name = "lblResult";
-            lblResult.Size = new Size(754, 44);
+            lblResult.Size = new Size(869, 44);
             lblResult.TabIndex = 1;
             lblResult.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // splitContainerEventContent
             // 
+            splitContainerEventContent.BorderStyle = BorderStyle.FixedSingle;
             splitContainerEventContent.Dock = DockStyle.Fill;
-            splitContainerEventContent.Location = new Point(0, 38);
-            splitContainerEventContent.Margin = new Padding(3, 2, 3, 2);
+            splitContainerEventContent.Location = new Point(0, 205);
+            splitContainerEventContent.Margin = new Padding(0);
             splitContainerEventContent.Name = "splitContainerEventContent";
             splitContainerEventContent.Orientation = Orientation.Horizontal;
             // 
             // splitContainerEventContent.Panel1
             // 
+            splitContainerEventContent.Panel1.Controls.Add(panel10);
             splitContainerEventContent.Panel1.Controls.Add(panelDetectPlate);
             // 
             // splitContainerEventContent.Panel2
             // 
-            splitContainerEventContent.Panel2.Controls.Add(dgvEventContent);
             splitContainerEventContent.Panel2.Controls.Add(panelNote);
-            splitContainerEventContent.Size = new Size(380, 467);
-            splitContainerEventContent.SplitterDistance = 238;
+            splitContainerEventContent.Panel2.Controls.Add(dgvEventContent);
+            splitContainerEventContent.Size = new Size(469, 516);
+            splitContainerEventContent.SplitterDistance = 251;
             splitContainerEventContent.SplitterWidth = 3;
             splitContainerEventContent.TabIndex = 0;
             // 
-            // panelDetectPlate
+            // panel10
             // 
-            panelDetectPlate.BorderStyle = BorderStyle.FixedSingle;
-            panelDetectPlate.Controls.Add(picLprImage);
-            panelDetectPlate.Controls.Add(txtPlate);
-            panelDetectPlate.Dock = DockStyle.Fill;
-            panelDetectPlate.Location = new Point(0, 0);
-            panelDetectPlate.Margin = new Padding(3, 2, 3, 2);
-            panelDetectPlate.Name = "panelDetectPlate";
-            panelDetectPlate.Size = new Size(380, 238);
-            panelDetectPlate.TabIndex = 4;
+            panel10.Controls.Add(picLprImage);
+            panel10.Controls.Add(label27);
+            panel10.Dock = DockStyle.Fill;
+            panel10.Location = new Point(0, 0);
+            panel10.Name = "panel10";
+            panel10.Size = new Size(467, 153);
+            panel10.TabIndex = 0;
             // 
             // picLprImage
             // 
             picLprImage.BackColor = Color.WhiteSmoke;
             picLprImage.Dock = DockStyle.Fill;
             picLprImage.Image = (Image)resources.GetObject("picLprImage.Image");
-            picLprImage.Location = new Point(0, 32);
+            picLprImage.Location = new Point(0, 21);
             picLprImage.Margin = new Padding(3, 2, 3, 2);
             picLprImage.Name = "picLprImage";
-            picLprImage.Size = new Size(378, 204);
+            picLprImage.Size = new Size(467, 132);
             picLprImage.SizeMode = PictureBoxSizeMode.StretchImage;
             picLprImage.TabIndex = 4;
             picLprImage.TabStop = false;
+            picLprImage.LoadCompleted += Pic_LoadCompleted;
+            // 
+            // label27
+            // 
+            label27.AutoSize = true;
+            label27.Dock = DockStyle.Top;
+            label27.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label27.ForeColor = Color.Navy;
+            label27.Location = new Point(0, 0);
+            label27.Name = "label27";
+            label27.Size = new Size(149, 21);
+            label27.TabIndex = 5;
+            label27.Text = "ẢNH BIỂN SỐ VÀO";
+            // 
+            // panelDetectPlate
+            // 
+            panelDetectPlate.BorderStyle = BorderStyle.FixedSingle;
+            panelDetectPlate.Controls.Add(txtPlate);
+            panelDetectPlate.Controls.Add(label25);
+            panelDetectPlate.Dock = DockStyle.Bottom;
+            panelDetectPlate.Location = new Point(0, 153);
+            panelDetectPlate.Margin = new Padding(3, 2, 3, 2);
+            panelDetectPlate.Name = "panelDetectPlate";
+            panelDetectPlate.Size = new Size(467, 96);
+            panelDetectPlate.TabIndex = 4;
             // 
             // txtPlate
             // 
             txtPlate.BackColor = SystemColors.HighlightText;
             txtPlate.Dock = DockStyle.Top;
-            txtPlate.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            txtPlate.Location = new Point(0, 0);
+            txtPlate.Font = new Font("Segoe UI", 36F, FontStyle.Bold);
+            txtPlate.Location = new Point(0, 21);
             txtPlate.Margin = new Padding(3, 2, 3, 2);
             txtPlate.Name = "txtPlate";
-            txtPlate.Size = new Size(378, 32);
+            txtPlate.Size = new Size(465, 71);
             txtPlate.TabIndex = 0;
             txtPlate.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label25
+            // 
+            label25.AutoSize = true;
+            label25.Dock = DockStyle.Top;
+            label25.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label25.ForeColor = Color.Navy;
+            label25.Location = new Point(0, 0);
+            label25.Name = "label25";
+            label25.Size = new Size(132, 21);
+            label25.TabIndex = 4;
+            label25.Text = "BIỂN SỐ XE VÀO";
+            // 
+            // panelNote
+            // 
+            panelNote.Controls.Add(tableLayoutPanelNote);
+            panelNote.Dock = DockStyle.Top;
+            panelNote.Location = new Point(0, 0);
+            panelNote.Margin = new Padding(3, 2, 3, 2);
+            panelNote.Name = "panelNote";
+            panelNote.Size = new Size(467, 76);
+            panelNote.TabIndex = 3;
+            // 
+            // tableLayoutPanelNote
+            // 
+            tableLayoutPanelNote.BackColor = Color.FromArgb(255, 128, 0);
+            tableLayoutPanelNote.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
+            tableLayoutPanelNote.ColumnCount = 1;
+            tableLayoutPanelNote.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanelNote.Controls.Add(groupBox1, 0, 0);
+            tableLayoutPanelNote.Dock = DockStyle.Fill;
+            tableLayoutPanelNote.Location = new Point(0, 0);
+            tableLayoutPanelNote.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanelNote.Name = "tableLayoutPanelNote";
+            tableLayoutPanelNote.RowCount = 1;
+            tableLayoutPanelNote.RowStyles.Add(new RowStyle(SizeType.Absolute, 76F));
+            tableLayoutPanelNote.Size = new Size(467, 76);
+            tableLayoutPanelNote.TabIndex = 1;
+            // 
+            // groupBox1
+            // 
+            groupBox1.AutoSize = true;
+            groupBox1.Controls.Add(cbNote);
+            groupBox1.Dock = DockStyle.Fill;
+            groupBox1.Font = new Font("Segoe UI", 15.75F);
+            groupBox1.Location = new Point(1, 1);
+            groupBox1.Margin = new Padding(0);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Padding = new Padding(3, 2, 3, 2);
+            groupBox1.Size = new Size(465, 76);
+            groupBox1.TabIndex = 1;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Dịch vụ";
+            // 
+            // cbNote
+            // 
+            cbNote.BackColor = Color.Silver;
+            cbNote.Dock = DockStyle.Fill;
+            cbNote.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbNote.FlatStyle = FlatStyle.Popup;
+            cbNote.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            cbNote.ForeColor = Color.FromArgb(192, 0, 0);
+            cbNote.FormattingEnabled = true;
+            cbNote.Location = new Point(3, 30);
+            cbNote.Margin = new Padding(3, 2, 3, 2);
+            cbNote.Name = "cbNote";
+            cbNote.Size = new Size(459, 38);
+            cbNote.TabIndex = 3;
+            cbNote.SelectedIndexChanged += CbNote_SelectedIndexChanged;
             // 
             // dgvEventContent
             // 
@@ -587,13 +776,13 @@
             dgvEventContent.ColumnHeadersVisible = false;
             dgvEventContent.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2 });
             dgvEventContent.Dock = DockStyle.Fill;
-            dgvEventContent.Location = new Point(0, 168);
+            dgvEventContent.Location = new Point(0, 0);
             dgvEventContent.Margin = new Padding(3, 2, 3, 2);
             dgvEventContent.Name = "dgvEventContent";
             dgvEventContent.ReadOnly = true;
             dgvEventContent.RowHeadersVisible = false;
             dgvEventContent.RowTemplate.Height = 29;
-            dgvEventContent.Size = new Size(380, 58);
+            dgvEventContent.Size = new Size(467, 260);
             dgvEventContent.TabIndex = 0;
             // 
             // Column1
@@ -616,93 +805,12 @@
             Column2.Name = "Column2";
             Column2.ReadOnly = true;
             // 
-            // panelNote
-            // 
-            panelNote.Controls.Add(tableLayoutPanelNote);
-            panelNote.Dock = DockStyle.Top;
-            panelNote.Location = new Point(0, 0);
-            panelNote.Margin = new Padding(3, 2, 3, 2);
-            panelNote.Name = "panelNote";
-            panelNote.Size = new Size(380, 168);
-            panelNote.TabIndex = 3;
-            // 
-            // tableLayoutPanelNote
-            // 
-            tableLayoutPanelNote.BackColor = Color.FromArgb(255, 128, 0);
-            tableLayoutPanelNote.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
-            tableLayoutPanelNote.ColumnCount = 1;
-            tableLayoutPanelNote.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanelNote.Controls.Add(label3, 0, 0);
-            tableLayoutPanelNote.Controls.Add(label6, 0, 1);
-            tableLayoutPanelNote.Controls.Add(groupBox1, 0, 2);
-            tableLayoutPanelNote.Dock = DockStyle.Fill;
-            tableLayoutPanelNote.Location = new Point(0, 0);
-            tableLayoutPanelNote.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanelNote.Name = "tableLayoutPanelNote";
-            tableLayoutPanelNote.RowCount = 3;
-            tableLayoutPanelNote.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanelNote.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanelNote.RowStyles.Add(new RowStyle(SizeType.Absolute, 76F));
-            tableLayoutPanelNote.Size = new Size(380, 168);
-            tableLayoutPanelNote.TabIndex = 1;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            label3.Location = new Point(4, 1);
-            label3.Name = "label3";
-            label3.Size = new Size(71, 20);
-            label3.TabIndex = 0;
-            label3.Text = "GHI CHÚ";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            label6.Location = new Point(4, 46);
-            label6.Name = "label6";
-            label6.Size = new Size(209, 20);
-            label6.TabIndex = 0;
-            label6.Text = "GHI CHÚ DỊCH VỤ HẠ TẦNG";
-            // 
-            // groupBox1
-            // 
-            groupBox1.AutoSize = true;
-            groupBox1.Controls.Add(cbNote);
-            groupBox1.Dock = DockStyle.Fill;
-            groupBox1.Font = new Font("Segoe UI", 15.75F);
-            groupBox1.Location = new Point(1, 91);
-            groupBox1.Margin = new Padding(0);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(3, 2, 3, 2);
-            groupBox1.Size = new Size(378, 76);
-            groupBox1.TabIndex = 1;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Dịch vụ";
-            // 
-            // cbNote
-            // 
-            cbNote.BackColor = Color.Silver;
-            cbNote.Dock = DockStyle.Fill;
-            cbNote.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbNote.FlatStyle = FlatStyle.Popup;
-            cbNote.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            cbNote.ForeColor = Color.FromArgb(192, 0, 0);
-            cbNote.FormattingEnabled = true;
-            cbNote.Location = new Point(3, 30);
-            cbNote.Margin = new Padding(3, 2, 3, 2);
-            cbNote.Name = "cbNote";
-            cbNote.Size = new Size(372, 38);
-            cbNote.TabIndex = 3;
-            cbNote.SelectedIndexChanged += CbNote_SelectedIndexChanged;
-            // 
             // picSetting
             // 
             picSetting.BackColor = Color.DarkGreen;
             picSetting.Dock = DockStyle.Right;
             picSetting.Image = (Image)resources.GetObject("picSetting.Image");
-            picSetting.Location = new Point(1038, 0);
+            picSetting.Location = new Point(1242, 0);
             picSetting.Margin = new Padding(3, 2, 3, 2);
             picSetting.Name = "picSetting";
             picSetting.Size = new Size(46, 22);
@@ -730,7 +838,7 @@
             panel5.Location = new Point(0, 0);
             panel5.Margin = new Padding(0);
             panel5.Name = "panel5";
-            panel5.Size = new Size(1134, 22);
+            panel5.Size = new Size(1338, 22);
             panel5.TabIndex = 6;
             // 
             // picRetakePhoto
@@ -738,7 +846,7 @@
             picRetakePhoto.BackColor = Color.DarkGreen;
             picRetakePhoto.Dock = DockStyle.Right;
             picRetakePhoto.Image = (Image)resources.GetObject("picRetakePhoto.Image");
-            picRetakePhoto.Location = new Point(888, 0);
+            picRetakePhoto.Location = new Point(1092, 0);
             picRetakePhoto.Margin = new Padding(3, 2, 3, 2);
             picRetakePhoto.Name = "picRetakePhoto";
             picRetakePhoto.Size = new Size(46, 22);
@@ -751,7 +859,7 @@
             // 
             panel8.BackColor = Color.DarkGreen;
             panel8.Dock = DockStyle.Right;
-            panel8.Location = new Point(934, 0);
+            panel8.Location = new Point(1138, 0);
             panel8.Margin = new Padding(0);
             panel8.Name = "panel8";
             panel8.Size = new Size(4, 22);
@@ -762,7 +870,7 @@
             picWriteIn.BackColor = Color.DarkGreen;
             picWriteIn.Dock = DockStyle.Right;
             picWriteIn.Image = (Image)resources.GetObject("picWriteIn.Image");
-            picWriteIn.Location = new Point(938, 0);
+            picWriteIn.Location = new Point(1142, 0);
             picWriteIn.Margin = new Padding(3, 2, 3, 2);
             picWriteIn.Name = "picWriteIn";
             picWriteIn.Size = new Size(46, 22);
@@ -775,7 +883,7 @@
             // 
             panel6.BackColor = Color.DarkGreen;
             panel6.Dock = DockStyle.Right;
-            panel6.Location = new Point(984, 0);
+            panel6.Location = new Point(1188, 0);
             panel6.Margin = new Padding(0);
             panel6.Name = "panel6";
             panel6.Size = new Size(4, 22);
@@ -786,7 +894,7 @@
             picOpenBarrie.BackColor = Color.DarkGreen;
             picOpenBarrie.Dock = DockStyle.Right;
             picOpenBarrie.Image = (Image)resources.GetObject("picOpenBarrie.Image");
-            picOpenBarrie.Location = new Point(988, 0);
+            picOpenBarrie.Location = new Point(1192, 0);
             picOpenBarrie.Margin = new Padding(3, 2, 3, 2);
             picOpenBarrie.Name = "picOpenBarrie";
             picOpenBarrie.Size = new Size(46, 22);
@@ -799,7 +907,7 @@
             // 
             panel1.BackColor = Color.DarkGreen;
             panel1.Dock = DockStyle.Right;
-            panel1.Location = new Point(1034, 0);
+            panel1.Location = new Point(1238, 0);
             panel1.Margin = new Padding(0);
             panel1.Name = "panel1";
             panel1.Size = new Size(4, 22);
@@ -809,7 +917,7 @@
             // 
             panel7.BackColor = Color.DarkGreen;
             panel7.Dock = DockStyle.Right;
-            panel7.Location = new Point(1084, 0);
+            panel7.Location = new Point(1288, 0);
             panel7.Margin = new Padding(0);
             panel7.Name = "panel7";
             panel7.Size = new Size(4, 22);
@@ -820,7 +928,7 @@
             pictureBox2.BackColor = Color.DarkGreen;
             pictureBox2.Dock = DockStyle.Right;
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(1088, 0);
+            pictureBox2.Location = new Point(1292, 0);
             pictureBox2.Margin = new Padding(3, 2, 3, 2);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(46, 22);
@@ -829,91 +937,190 @@
             pictureBox2.TabStop = false;
             pictureBox2.Visible = false;
             // 
+            // btnPrintScale
+            // 
+            btnPrintScale.AutoSize = true;
+            btnPrintScale.BackColor = Color.FromArgb(224, 224, 224);
+            btnPrintScale.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            btnPrintScale.Location = new Point(4, 4);
+            btnPrintScale.Margin = new Padding(3, 2, 3, 2);
+            btnPrintScale.Name = "btnPrintScale";
+            btnPrintScale.Size = new Size(116, 52);
+            btnPrintScale.TabIndex = 0;
+            btnPrintScale.Text = "In phiếu cân";
+            btnPrintScale.TextImageRelation = TextImageRelation.ImageAboveText;
+            toolTip1.SetToolTip(btnPrintScale, "in phieu can");
+            btnPrintScale.UseVisualStyleBackColor = false;
+            btnPrintScale.Click += BtnPrintScale_Click;
+            // 
             // splitterEventInfoWithCamera
             // 
+            splitterEventInfoWithCamera.BackColor = SystemColors.ButtonHighlight;
             splitterEventInfoWithCamera.Dock = DockStyle.Right;
-            splitterEventInfoWithCamera.Location = new Point(750, 22);
+            splitterEventInfoWithCamera.Location = new Point(865, 22);
             splitterEventInfoWithCamera.Margin = new Padding(3, 2, 3, 2);
             splitterEventInfoWithCamera.Name = "splitterEventInfoWithCamera";
-            splitterEventInfoWithCamera.Size = new Size(4, 575);
+            splitterEventInfoWithCamera.Size = new Size(4, 721);
             splitterEventInfoWithCamera.TabIndex = 7;
             splitterEventInfoWithCamera.TabStop = false;
             // 
             // panelEventData
             // 
             panelEventData.Controls.Add(splitContainerEventContent);
-            panelEventData.Controls.Add(panelScaleAction);
             panelEventData.Controls.Add(panelGoodsType);
             panelEventData.Dock = DockStyle.Right;
-            panelEventData.Location = new Point(754, 22);
-            panelEventData.Margin = new Padding(3, 2, 3, 2);
+            panelEventData.Location = new Point(869, 22);
+            panelEventData.Margin = new Padding(0);
             panelEventData.Name = "panelEventData";
-            panelEventData.Size = new Size(380, 575);
+            panelEventData.Size = new Size(469, 721);
             panelEventData.TabIndex = 8;
-            // 
-            // panelScaleAction
-            // 
-            panelScaleAction.Controls.Add(btnopenBarrie);
-            panelScaleAction.Controls.Add(btnPrintScale);
-            panelScaleAction.Dock = DockStyle.Bottom;
-            panelScaleAction.Location = new Point(0, 505);
-            panelScaleAction.Margin = new Padding(3, 2, 3, 2);
-            panelScaleAction.Name = "panelScaleAction";
-            panelScaleAction.Size = new Size(380, 70);
-            panelScaleAction.TabIndex = 1;
-            // 
-            // btnopenBarrie
-            // 
-            btnopenBarrie.Image = (Image)resources.GetObject("btnopenBarrie.Image");
-            btnopenBarrie.Location = new Point(105, 4);
-            btnopenBarrie.Margin = new Padding(3, 2, 3, 2);
-            btnopenBarrie.Name = "btnopenBarrie";
-            btnopenBarrie.Size = new Size(94, 63);
-            btnopenBarrie.TabIndex = 0;
-            btnopenBarrie.Text = "Mở barrie";
-            btnopenBarrie.TextAlign = ContentAlignment.BottomCenter;
-            btnopenBarrie.TextImageRelation = TextImageRelation.ImageAboveText;
-            btnopenBarrie.UseVisualStyleBackColor = true;
-            btnopenBarrie.Click += BtnOpenBarrie_Click;
-            // 
-            // btnPrintScale
-            // 
-            btnPrintScale.Image = (Image)resources.GetObject("btnPrintScale.Image");
-            btnPrintScale.Location = new Point(5, 5);
-            btnPrintScale.Margin = new Padding(3, 2, 3, 2);
-            btnPrintScale.Name = "btnPrintScale";
-            btnPrintScale.Size = new Size(94, 63);
-            btnPrintScale.TabIndex = 0;
-            btnPrintScale.Text = "In phiếu cân";
-            btnPrintScale.TextAlign = ContentAlignment.BottomCenter;
-            btnPrintScale.TextImageRelation = TextImageRelation.ImageAboveText;
-            btnPrintScale.UseVisualStyleBackColor = true;
-            btnPrintScale.Click += BtnPrintScale_Click;
             // 
             // panelGoodsType
             // 
+            panelGoodsType.BorderStyle = BorderStyle.Fixed3D;
+            panelGoodsType.Controls.Add(label26);
+            panelGoodsType.Controls.Add(lblScaleFee);
+            panelGoodsType.Controls.Add(panelScaleAction);
+            panelGoodsType.Controls.Add(panel12);
+            panelGoodsType.Controls.Add(label23);
             panelGoodsType.Controls.Add(cbGoodsType);
             panelGoodsType.Dock = DockStyle.Top;
             panelGoodsType.Location = new Point(0, 0);
-            panelGoodsType.Margin = new Padding(3, 2, 3, 2);
+            panelGoodsType.Margin = new Padding(0);
             panelGoodsType.Name = "panelGoodsType";
-            panelGoodsType.Padding = new Padding(0, 4, 0, 4);
-            panelGoodsType.Size = new Size(380, 38);
+            panelGoodsType.Size = new Size(469, 205);
             panelGoodsType.TabIndex = 3;
+            // 
+            // label26
+            // 
+            label26.Dock = DockStyle.Left;
+            label26.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label26.ForeColor = Color.Navy;
+            label26.Location = new Point(0, 89);
+            label26.Name = "label26";
+            label26.Size = new Size(87, 54);
+            label26.TabIndex = 6;
+            label26.Text = "PHÍ CÂN";
+            label26.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // lblScaleFee
+            // 
+            lblScaleFee.Dock = DockStyle.Fill;
+            lblScaleFee.Font = new Font("Segoe UI", 24.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblScaleFee.ForeColor = Color.Red;
+            lblScaleFee.Location = new Point(0, 89);
+            lblScaleFee.Name = "lblScaleFee";
+            lblScaleFee.Size = new Size(465, 54);
+            lblScaleFee.TabIndex = 7;
+            lblScaleFee.Text = "10.000";
+            lblScaleFee.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // panelScaleAction
+            // 
+            panelScaleAction.Controls.Add(btnPrintScaleOnline);
+            panelScaleAction.Controls.Add(btnPrintScaleOffline);
+            panelScaleAction.Controls.Add(btnPrintScale);
+            panelScaleAction.Dock = DockStyle.Bottom;
+            panelScaleAction.Font = new Font("Segoe UI", 12F);
+            panelScaleAction.Location = new Point(0, 143);
+            panelScaleAction.Margin = new Padding(3, 2, 3, 2);
+            panelScaleAction.Name = "panelScaleAction";
+            panelScaleAction.Size = new Size(465, 58);
+            panelScaleAction.TabIndex = 1;
+            // 
+            // btnPrintScaleOnline
+            // 
+            btnPrintScaleOnline.AutoSize = true;
+            btnPrintScaleOnline.BackColor = Color.FromArgb(224, 224, 224);
+            btnPrintScaleOnline.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            btnPrintScaleOnline.Location = new Point(232, 4);
+            btnPrintScaleOnline.Margin = new Padding(3, 2, 3, 2);
+            btnPrintScaleOnline.Name = "btnPrintScaleOnline";
+            btnPrintScaleOnline.Size = new Size(127, 52);
+            btnPrintScaleOnline.TabIndex = 0;
+            btnPrintScaleOnline.Text = "In hóa đơn \r\nInternet";
+            btnPrintScaleOnline.TextImageRelation = TextImageRelation.ImageAboveText;
+            btnPrintScaleOnline.UseVisualStyleBackColor = false;
+            btnPrintScaleOnline.Click += btnPrintScaleOnline_Click;
+            // 
+            // btnPrintScaleOffline
+            // 
+            btnPrintScaleOffline.AutoSize = true;
+            btnPrintScaleOffline.BackColor = Color.FromArgb(224, 224, 224);
+            btnPrintScaleOffline.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            btnPrintScaleOffline.Location = new Point(124, 4);
+            btnPrintScaleOffline.Margin = new Padding(3, 2, 3, 2);
+            btnPrintScaleOffline.Name = "btnPrintScaleOffline";
+            btnPrintScaleOffline.Size = new Size(106, 52);
+            btnPrintScaleOffline.TabIndex = 0;
+            btnPrintScaleOffline.Text = "In hóa đơn";
+            btnPrintScaleOffline.TextImageRelation = TextImageRelation.ImageAboveText;
+            btnPrintScaleOffline.UseVisualStyleBackColor = false;
+            btnPrintScaleOffline.Click += btnPrintScaleOffline_Click;
+            // 
+            // panel12
+            // 
+            panel12.BackColor = Color.DimGray;
+            panel12.Controls.Add(label24);
+            panel12.Controls.Add(lblScaleInfo);
+            panel12.Dock = DockStyle.Top;
+            panel12.Font = new Font("Segoe UI", 12F);
+            panel12.Location = new Point(0, 41);
+            panel12.Name = "panel12";
+            panel12.Size = new Size(465, 48);
+            panel12.TabIndex = 5;
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.BackColor = SystemColors.ActiveCaptionText;
+            label24.Dock = DockStyle.Left;
+            label24.Font = new Font("Digital-7", 20.25F, FontStyle.Bold);
+            label24.ForeColor = Color.Red;
+            label24.Location = new Point(0, 0);
+            label24.Name = "label24";
+            label24.Size = new Size(38, 28);
+            label24.TabIndex = 0;
+            label24.Text = "KG";
+            // 
+            // lblScaleInfo
+            // 
+            lblScaleInfo.BackColor = SystemColors.ActiveCaptionText;
+            lblScaleInfo.Dock = DockStyle.Fill;
+            lblScaleInfo.Font = new Font("Digital-7", 30F, FontStyle.Bold);
+            lblScaleInfo.ForeColor = Color.Red;
+            lblScaleInfo.Location = new Point(0, 0);
+            lblScaleInfo.Name = "lblScaleInfo";
+            lblScaleInfo.Padding = new Padding(3);
+            lblScaleInfo.Size = new Size(465, 48);
+            lblScaleInfo.TabIndex = 1;
+            lblScaleInfo.Text = "00000";
+            lblScaleInfo.TextAlign = ContentAlignment.BottomRight;
+            // 
+            // label23
+            // 
+            label23.Dock = DockStyle.Top;
+            label23.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label23.ForeColor = Color.Navy;
+            label23.Location = new Point(0, 38);
+            label23.Name = "label23";
+            label23.Size = new Size(465, 3);
+            label23.TabIndex = 4;
+            label23.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // cbGoodsType
             // 
             cbGoodsType.BackColor = Color.Silver;
-            cbGoodsType.Dock = DockStyle.Fill;
+            cbGoodsType.Dock = DockStyle.Top;
             cbGoodsType.DropDownStyle = ComboBoxStyle.DropDownList;
             cbGoodsType.FlatStyle = FlatStyle.Popup;
             cbGoodsType.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             cbGoodsType.ForeColor = Color.FromArgb(192, 0, 0);
             cbGoodsType.FormattingEnabled = true;
-            cbGoodsType.Location = new Point(0, 4);
-            cbGoodsType.Margin = new Padding(3, 2, 3, 2);
+            cbGoodsType.Location = new Point(0, 0);
+            cbGoodsType.Margin = new Padding(0);
             cbGoodsType.Name = "cbGoodsType";
-            cbGoodsType.Size = new Size(380, 38);
+            cbGoodsType.Size = new Size(465, 38);
             cbGoodsType.TabIndex = 2;
             // 
             // tableLayoutPanel3
@@ -963,7 +1170,7 @@
             Controls.Add(panel5);
             Margin = new Padding(0);
             Name = "ucLaneIn";
-            Size = new Size(1134, 597);
+            Size = new Size(1338, 743);
             panelCameras.ResumeLayout(false);
             splitContainerMain.Panel1.ResumeLayout(false);
             splitContainerMain.Panel2.ResumeLayout(false);
@@ -986,14 +1193,16 @@
             splitContainerEventContent.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainerEventContent).EndInit();
             splitContainerEventContent.ResumeLayout(false);
+            panel10.ResumeLayout(false);
+            panel10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picLprImage).EndInit();
             panelDetectPlate.ResumeLayout(false);
             panelDetectPlate.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picLprImage).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dgvEventContent).EndInit();
             panelNote.ResumeLayout(false);
             tableLayoutPanelNote.ResumeLayout(false);
             tableLayoutPanelNote.PerformLayout();
             groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvEventContent).EndInit();
             ((System.ComponentModel.ISupportInitialize)picSetting).EndInit();
             panel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picRetakePhoto).EndInit();
@@ -1001,8 +1210,11 @@
             ((System.ComponentModel.ISupportInitialize)picOpenBarrie).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             panelEventData.ResumeLayout(false);
-            panelScaleAction.ResumeLayout(false);
             panelGoodsType.ResumeLayout(false);
+            panelScaleAction.ResumeLayout(false);
+            panelScaleAction.PerformLayout();
+            panel12.ResumeLayout(false);
+            panel12.PerformLayout();
             tableLayoutPanel3.ResumeLayout(false);
             tableLayoutPanel3.PerformLayout();
             ResumeLayout(false);
@@ -1057,7 +1269,6 @@
         private Panel panelNearestEvent;
         private Panel panelEventData;
         private Panel panelScaleAction;
-        private Button btnopenBarrie;
         private Button btnPrintScale;
         private Panel panelGoodsType;
         private ComboBox cbGoodsType;
@@ -1066,8 +1277,6 @@
         private Label label5;
         private Panel panelNote;
         private TableLayoutPanel tableLayoutPanelNote;
-        private Label label3;
-        private Label label6;
         private GroupBox groupBox1;
         private ComboBox cbNote;
         private MovablePictureBox picOther2;
@@ -1084,5 +1293,22 @@
         private Panel panelOversizeCam;
         private Label label15;
         private Label label16;
+        private Label label18;
+        private Label label17;
+        private Label label20;
+        private Label label19;
+        private Label label22;
+        private Label label21;
+        private Label label23;
+        private Panel panel12;
+        private Label label24;
+        private Label lblScaleInfo;
+        private Label lblScaleFee;
+        private Label label26;
+        private Label label25;
+        private Panel panel10;
+        private Label label27;
+        private Button btnPrintScaleOffline;
+        private Button btnPrintScaleOnline;
     }
 }

@@ -1,4 +1,5 @@
-﻿using iParkingv6.ApiManager.KzParkingv3Apis;
+﻿using iParkingv5.ApiManager.KzParkingv5Apis;
+using iParkingv6.ApiManager.KzParkingv3Apis;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,7 +28,7 @@ namespace iParkingv5_window.Usercontrols
         private async void timerUpdateCount_Tick(object sender, EventArgs e)
         {
             timerUpdateCount.Enabled = false;
-            var eventCountDetail = await KzParkingApiHelper.SummaryEvent();
+            var eventCountDetail = await KzParkingv5ApiHelper.SummaryEvent();
             int totalVehicleInPark = eventCountDetail.countAllEventIn;
             int vehicleInDay = eventCountDetail.totalVehicleIn;
             int vehicleOutDay = eventCountDetail.totalEventOut;

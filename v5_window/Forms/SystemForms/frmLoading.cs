@@ -1,4 +1,5 @@
-﻿using iParkingv5.LprDetecter.LprDetecters;
+﻿using iParkingv5.ApiManager.KzParkingv5Apis;
+using iParkingv5.LprDetecter.LprDetecters;
 using iParkingv5.Objects;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv6.ApiManager.KzParkingv3Apis;
@@ -220,7 +221,8 @@ namespace iParkingv5_window.Forms.SystemForms
             List<string> validIps = NetWorkTools.GetLocalIPAddress();
         GetPCConfig:
             {
-                computer = await KzParkingApiHelper.GetComputerByIPAddressAsync(Environment.MachineName);
+                //computer = await KzParkingApiHelper.GetComputerByIPAddressAsync(Environment.MachineName);
+                computer = (await KzParkingv5ApiHelper.GetComputerByIPAsync(Environment.MachineName)).Item1;
                 if (computer == null)
                 {
                     goto GetPCConfig;
@@ -240,11 +242,14 @@ namespace iParkingv5_window.Forms.SystemForms
             GC.Collect();
             return true;
         }
+
         private async Task<bool> LoadGates()
         {
-            StaticPool.gate = await KzParkingApiHelper.GetGateByIdAsync(StaticPool.selectedComputer.GateId);
+            //StaticPool.gate = await KzParkingApiHelper.GetGateByIdAsync(StaticPool.selectedComputer.GateId);
+            StaticPool.gate = (await KzParkingv5ApiHelper.GetGateByIdAsync(StaticPool.selectedComputer.GateId)).Item1;
             return StaticPool.gate != null;
         }
+
         private async Task<bool> LoadCameras()
         {
             currentDisplayIndex = 0;
@@ -256,7 +261,8 @@ namespace iParkingv5_window.Forms.SystemForms
             List<Camera>? cameras = null;
         GetCameraConfig:
             {
-                cameras = await KzParkingApiHelper.GetCameraByComputerIdAsync(StaticPool.selectedComputer.Id);
+                //cameras = await KzParkingApiHelper.GetCameraByComputerIdAsync(StaticPool.selectedComputer.Id);
+                cameras = (await KzParkingv5ApiHelper.GetCameraByComputerIdAsync(StaticPool.selectedComputer.Id)).Item1;
                 if (cameras == null)
                 {
                     goto GetCameraConfig;
@@ -269,11 +275,13 @@ namespace iParkingv5_window.Forms.SystemForms
             GC.Collect();
             return true;
         }
+
         private async Task<bool> LoadCustomerGroup()
         {
             StaticPool.customerGroupCollection = new iParkingv5.Objects.Datas.CustomerGroupCollection();
 
-            var customerGroups = await KzParkingApiHelper.GetAllCustomerGroups();
+            //var customerGroups = await KzParkingApiHelper.GetAllCustomerGroups();
+            var customerGroups = (await KzParkingv5ApiHelper.GetCustomerGroupsAsync()).Item1;
             if (customerGroups != null)
             {
                 foreach (var item in customerGroups)
@@ -283,6 +291,7 @@ namespace iParkingv5_window.Forms.SystemForms
             }
             return true;
         }
+
         private async Task<bool> LoadLanes()
         {
             currentDisplayIndex = 0;
@@ -291,10 +300,11 @@ namespace iParkingv5_window.Forms.SystemForms
             displayMessages = CreateDisplayListMessage(lblMessage.Text);
             this.isWaiting = true;
             timer1.Enabled = true;
-            List<Lane> laneByComputerIds = null;
+            List<Lane>? laneByComputerIds = null;
         GetLaneConfig:
             {
-                laneByComputerIds = await KzParkingApiHelper.GetLanesAsync(StaticPool.selectedComputer.Id);
+                //laneByComputerIds = await KzParkingApiHelper.GetLanesAsync(StaticPool.selectedComputer.Id);
+                laneByComputerIds = (await KzParkingv5ApiHelper.GetLaneByComputerIdAsync(StaticPool.selectedComputer.Id)).Item1;
                 if (laneByComputerIds == null)
                 {
                     goto GetLaneConfig;
@@ -312,7 +322,9 @@ namespace iParkingv5_window.Forms.SystemForms
             {
                 foreach (var lane in laneByComputerIds)
                 {
-                    Lane? _lane = await KzParkingApiHelper.GetLaneByIdAsync(lane.id);
+                    //Lane? _lane = await KzParkingApiHelper.GetLaneByIdAsync(lane.id);
+                    Lane? _lane = (await KzParkingv5ApiHelper.GetLaneByIdAsync(lane.id)).Item1;
+
                     if (_lane != null)
                     {
                         StaticPool.lanes.Add(_lane);
@@ -323,6 +335,7 @@ namespace iParkingv5_window.Forms.SystemForms
             GC.Collect();
             return true;
         }
+
         private async Task<bool> LoadLeds()
         {
             currentDisplayIndex = 0;
@@ -334,7 +347,8 @@ namespace iParkingv5_window.Forms.SystemForms
             List<Led> leds = null;
         GetLedConfig:
             {
-                leds = await KzParkingApiHelper.GetLedsAsync(StaticPool.selectedComputer.Id);
+                //leds = await KzParkingApiHelper.GetLedsAsync(StaticPool.selectedComputer.Id);
+                leds = (await KzParkingv5ApiHelper.GetLedByComputerIdAsync(StaticPool.selectedComputer.Id)).Item1;
                 if (leds == null)
                 {
                     goto GetLedConfig;
@@ -347,6 +361,7 @@ namespace iParkingv5_window.Forms.SystemForms
             GC.Collect();
             return true;
         }
+
         private async Task<bool> LoadControllers()
         {
             currentDisplayIndex = 0;
@@ -358,7 +373,8 @@ namespace iParkingv5_window.Forms.SystemForms
             List<Bdk> bdks = null;
         GetBDKConfig:
             {
-                bdks = await KzParkingApiHelper.GetControllerByPCId(StaticPool.selectedComputer.Id);
+                //bdks = await KzParkingApiHelper.GetControllerByPCId(StaticPool.selectedComputer.Id);
+                bdks = (await KzParkingv5ApiHelper.GetControlUnitByComputerIdAsync(StaticPool.selectedComputer.Id)).Item1;
                 if (bdks == null)
                 {
                     goto GetBDKConfig;
@@ -371,6 +387,7 @@ namespace iParkingv5_window.Forms.SystemForms
             GC.Collect();
             return true;
         }
+
         private async Task<bool> CreateKztLPR()
         {
             currentDisplayIndex = 0;

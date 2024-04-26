@@ -1,5 +1,6 @@
 ﻿using IPaking.Ultility;
 using iPakrkingv5.Controls.Controls.Buttons;
+using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.Controller;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Databases;
@@ -128,13 +129,9 @@ namespace iParkingv5_window.Forms.DataForms
                         }
                     }
                 }
-                var identityResponse = await KzParkingApiHelper.GetIdentityByCodeAsync(ce.PreferCard);
+                //var identityResponse = await KzParkingApiHelper.GetIdentityByCodeAsync(ce.PreferCard);
+                var identityResponse = (await KzParkingv5ApiHelper.GetIdentityByCodeAsync(ce.PreferCard));
                 this.selectedIdentity = identityResponse.Item1;
-                if (!identityResponse.Item2)
-                {
-                    MessageBox.Show("Không đọc được thông tin định danh, vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
                 if (this.selectedIdentity == null)
                 {
                     MessageBox.Show("Mã định danh không có trong hệ thống", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -219,7 +216,8 @@ namespace iParkingv5_window.Forms.DataForms
                 MessageBox.Show("Hãy quẹt thẻ lấy thông tin định danh", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            IdentityGroup identityGroup = await KzParkingApiHelper.GetIdentityGroupByIdAsync(this.selectedIdentity!.IdentityGroupId);
+            //IdentityGroup identityGroup = await KzParkingApiHelper.GetIdentityGroupByIdAsync(this.selectedIdentity!.IdentityGroupId);
+            IdentityGroup identityGroup = (await KzParkingv5ApiHelper.GetIdentityGroupByIdAsync(this.selectedIdentity!.IdentityGroupId)).Item1;
             if (identityGroup == null)
             {
                 btnOk1.Enabled = true;
@@ -308,7 +306,8 @@ namespace iParkingv5_window.Forms.DataForms
         }
         private async Task LoadVehicleType()
         {
-            vehicleTypes = await KzParkingApiHelper.GetAllVehicleTypes();
+            //vehicleTypes = await KzParkingApiHelper.GetAllVehicleTypes();
+            vehicleTypes = (await KzParkingv5ApiHelper.GetVehicleTypesAsync()).Item1;
             if (vehicleTypes == null)
             {
                 MessageBox.Show("Không nhận được thông tin nhóm phương tiện, vui lòng thử lại sau giây lát!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -358,7 +357,8 @@ namespace iParkingv5_window.Forms.DataForms
                     Name = txtCustomerName.Text,
                     Code = txtCustomerCode.Text,
                 };
-                bool isUpdateCustomerSuccess = await KzParkingApiHelper.UpdateCustomer(_customer);
+                //bool isUpdateCustomerSuccess = await KzParkingApiHelper.UpdateCustomer(_customer);
+                bool isUpdateCustomerSuccess = await KzParkingv5ApiHelper.UpdateCustomer(_customer);
                 if (!isUpdateCustomerSuccess)
                 {
                     MessageBox.Show("Gặp lỗi khi cập nhật thông tin khách hàng, vui lòng thử lại sau giây lát!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -387,7 +387,7 @@ namespace iParkingv5_window.Forms.DataForms
                     Id = this.vehicleId,
                     Name = txtPlate.Text,
                     PlateNumber = txtPlate.Text,
-                    VehicleTypeId = int.Parse(vehicleTypeID),
+                    VehicleTypeId = vehicleTypeID,
                     CustomerId = this.customerID,
                     Enabled = true,
                     Deleted = false,
@@ -396,7 +396,8 @@ namespace iParkingv5_window.Forms.DataForms
                     ExpireUtc = dtpExpireTime.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.ffff"),
                     LastActivatedUtc = DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd"),
                 };
-                bool isSuccess = await KzParkingApiHelper.UpdateRegisteredVehicleAsyncById(vehicle);
+                //bool isSuccess = await KzParkingApiHelper.UpdateRegisteredVehicleAsyncById(vehicle);
+                bool isSuccess = await KzParkingv5ApiHelper.UpdateRegisteredVehicleAsyncById(vehicle);
                 if (isSuccess)
                 {
                     MessageBox.Show("Đăng ký thông tin thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -426,8 +427,9 @@ namespace iParkingv5_window.Forms.DataForms
                 CustomerGroupId = customerGroupId,
                 DateOfBirth = DateTime.MinValue,
             };
-            var createCustomerResponse = await KzParkingApiHelper.CreateCustomer(customer);
-            if (!createCustomerResponse.Item1)
+            //var createCustomerResponse = await KzParkingApiHelper.CreateCustomer(customer);
+            var createCustomerResponse = await KzParkingv5ApiHelper.CreateCustomer(customer);
+            if (createCustomerResponse.Item1 == null)
             {
                 MessageBox.Show(createCustomerResponse.Item2, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return string.Empty;
@@ -442,7 +444,7 @@ namespace iParkingv5_window.Forms.DataForms
             {
                 Name = txtPlate.Text,
                 PlateNumber = txtPlate.Text,
-                VehicleTypeId = int.Parse(vehicleTypeID),
+                VehicleTypeId = vehicleTypeID,
                 CustomerId = customerId,
                 Enabled = true,
                 Deleted = false,
@@ -452,13 +454,15 @@ namespace iParkingv5_window.Forms.DataForms
                 LastActivatedUtc = DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd"),
             };
 
-            var createRegisterVehicleResponse = await KzParkingApiHelper.CreateRegisteredVehicle(registeredVehicle);
-            if (!createRegisterVehicleResponse.Item1)
+            //var createRegisterVehicleResponse = await KzParkingApiHelper.CreateRegisteredVehicle(registeredVehicle);
+            var createRegisterVehicleResponse = await KzParkingv5ApiHelper.CreateRegisteredVehicle(registeredVehicle);
+            if (createRegisterVehicleResponse.Item1 == null)
             {
                 MessageBox.Show(createRegisterVehicleResponse.Item2, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 if (allowDeleteCustomerIfError)
                 {
-                    await KzParkingApiHelper.DeleteCustomerById(customerId);
+                    //await KzParkingApiHelper.DeleteCustomerById(customerId);
+                    await KzParkingv5ApiHelper.DeleteCustomerById(customerId);
                     this.customerID = string.Empty;
                 }
                 return false;

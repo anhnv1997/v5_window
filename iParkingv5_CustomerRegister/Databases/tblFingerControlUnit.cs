@@ -1,6 +1,7 @@
 ﻿using iParkingv5.Objects;
 using iParkingv5_CustomerRegister.Objects;
 using iParkingv6.Objects.Datas;
+using Kztek.Tools;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -25,6 +26,7 @@ namespace iParkingv5_CustomerRegister.Databases
             valid = false;
             string cmd = $@"SELECT TOP 1 {tblColControlUnitUserId} FROM {tblName}
                             WHERE {tblColCustomerId} = '{customerId}' AND {tblColControlUnitId} = '{controlUnitId}'";
+                LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.SQL, cmd);
             DataTable dtData = StaticPool.mdb.FillData(cmd) ?? new DataTable();
             if (dtData.Rows.Count > 0)
             {
@@ -34,7 +36,9 @@ namespace iParkingv5_CustomerRegister.Databases
             else
             {
                 string selectCMD = $@"SELECT TOP 1 {tblColControlUnitUserId} FROM {tblName}
+                                       WHERE {tblColControlUnitId} = '{controlUnitId}'
                                       ORDER BY {tblColControlUnitUserId} DESC";
+                LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.SQL, selectCMD);
                 DataTable dtUserId = StaticPool.mdb.FillData(selectCMD) ?? new DataTable();
                 if (dtUserId.Rows.Count == 0) return 1;
                 return int.Parse(dtUserId.Rows[0][tblColControlUnitUserId].ToString() ?? "") + 1;
@@ -42,8 +46,7 @@ namespace iParkingv5_CustomerRegister.Databases
         }
         public static bool Insert(string controlUnitId, int controlUnitUserId, string customerId)
         {
-            string deleteCMD = $"DELETE {tblName} WHERE {tblColCustomerId} = '{customerId}'";
-            StaticPool.mdb.ExecuteCommand(deleteCMD);
+            Delete(customerId, controlUnitId);
             string insertCMD = $@"INSERT INTO {tblName}({tblColControlUnitId}, {tblColControlUnitUserId}, {tblColCustomerId})
                                   VALUES('{controlUnitId}', '{controlUnitUserId}', '{customerId}')";
             return StaticPool.mdb.ExecuteCommand(insertCMD);
@@ -59,6 +62,7 @@ namespace iParkingv5_CustomerRegister.Databases
         {
             string selectCmd = $@"SELECT TOP 1 {tblColCustomerId} FROM {tblName}
                                   WHERE {tblColControlUnitId} = '{controlUnitId}' AND {tblColControlUnitUserId} = '{userId}'";
+            LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.SQL, selectCmd);
             DataTable dtData = StaticPool.mdb.FillData(selectCmd) ?? new DataTable();
             if (dtData.Rows.Count > 0)
             {

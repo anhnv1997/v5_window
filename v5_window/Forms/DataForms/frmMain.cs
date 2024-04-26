@@ -18,6 +18,7 @@ using Kztek.Tools;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Collections.Concurrent;
+using System.Reflection;
 using System.Text;
 using v5_IScale.Forms.ReportForms;
 using static IPaking.Ultility.TextManagement;
@@ -58,12 +59,14 @@ namespace iParkingv5_window.Forms.DataForms
                 panelDevelopeMode.Visible = true;
                 splitterDevelopeMode.Visible = true;
                 splitterDevelopeMode.BringToFront();
+                return true;
             }
             else if (isDisEnableDevelopeMode)
             {
                 panelDevelopeMode.Visible = false;
                 splitterDevelopeMode.Visible = false;
                 splitterDevelopeMode.BringToFront();
+                return true;
             }
             else
             {
@@ -102,13 +105,15 @@ namespace iParkingv5_window.Forms.DataForms
             {
                 tsmiActiveLanesConfig.Visible = false;
             }
+            lblSoftwareName.Text = this.Text + " - " + Assembly.GetExecutingAssembly().GetName().Version!.ToString();
+            lblSoftwareName.Width = lblSoftwareName.PreferredSize.Width;
         }
         private void FrmMain_Shown(object? sender, EventArgs e)
         {
-            foreach (var item in lanes)
-            {
-                item.DisplayUIConfig();
-            }
+            //foreach (var item in lanes)
+            //{
+            //    item.DisplayUIConfig();
+            //}
         }
         private async void FrmMain_Load(object? sender, EventArgs e)
         {
@@ -364,6 +369,7 @@ namespace iParkingv5_window.Forms.DataForms
 
             ucViewGrid1.SuspendLayout();
             ucViewGrid1.UpdateRowSetting(1, this.activeLanes.Count);
+            lanes.Clear();
             bool isDisplayLastEvent = this.activeLanes.Count == 1;
             foreach (Lane lane in this.activeLanes)
             {
@@ -390,6 +396,7 @@ namespace iParkingv5_window.Forms.DataForms
                 {
                     table.ColumnStyles[i] = new ColumnStyle(SizeType.Percent, 60);
                 }
+                //((iLane)item).DisplayUIConfig();
             }
             ucViewGrid1.ResumeLayout();
         }
@@ -546,6 +553,29 @@ namespace iParkingv5_window.Forms.DataForms
         private async void tsmiActiveLanesConfig_Click(object sender, EventArgs e)
         {
             FormClosing -= frmMain_FormClosing;
+
+            foreach (var item in lanes)
+            {
+                var temp = item.SaveUIConfig();
+                if (laneDisplayConfigs != null)
+                {
+                    foreach (var laneDisplayConfig in laneDisplayConfigs)
+                    {
+                        if (laneDisplayConfig.LaneId == item.lane.id)
+                        {
+                            laneDisplayConfig.DisplayIndex  = temp.DisplayIndex;
+                            laneDisplayConfig.splitContainerEventContent  = temp.splitContainerEventContent;
+                            laneDisplayConfig.splitContainerMain  = temp.splitContainerMain;
+                            laneDisplayConfig.SplitterCameraPosition  = temp.SplitterCameraPosition;
+                            laneDisplayConfig.splitEventInfoWithCameraPosition  = temp.splitEventInfoWithCameraPosition;
+                        }
+                    }
+                }
+                
+
+            }
+            SaveUIConfig();
+
             foreach (var item in controllers)
             {
                 item.PollingStop();
@@ -658,7 +688,7 @@ namespace iParkingv5_window.Forms.DataForms
                     {
                         table.ColumnStyles[i] = new ColumnStyle(SizeType.Percent, 60);
                     }
-                    ((iLane)item).DisplayUIConfig();
+                    //((iLane)item).DisplayUIConfig();
                 }
                 ucViewGrid1.ResumeLayout();
                 GC.Collect();

@@ -16,6 +16,7 @@ using System.Windows.Forms;
 using iPakrkingv5.Controls;
 using iPakrkingv5.Controls.Usercontrols.BuildControls;
 using iPakrkingv5.Controls.Controls.Buttons;
+using iParkingv5.ApiManager.KzParkingv5Apis;
 
 namespace iParkingv5_CustomerRegister.Forms
 {
@@ -102,7 +103,7 @@ namespace iParkingv5_CustomerRegister.Forms
             dgvData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
             dgvData.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
             //await Task.Delay(5000);
-            var registerVehicleTypes = await KzParkingApiHelper.GetVehicleTypes(txtKeyword.Text);
+            var registerVehicleTypes = (await KzParkingv5ApiHelper.GetVehicleTypesAsync(txtKeyword.Text)).Item1;
             if (registerVehicleTypes != null)
             {
                 if (registerVehicleTypes != null)

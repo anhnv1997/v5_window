@@ -47,8 +47,11 @@ namespace iParkingv5_window.Forms.SystemForms
             lblLoginTitle = new Label();
             picLogo = new PictureBox();
             ucNotify1 = new Usercontrols.BuildControls.ucNotify();
+            webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
+            timerRefreshToken = new System.Windows.Forms.Timer(components);
             panelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picLogo).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             SuspendLayout();
             // 
             // lblUsername
@@ -90,7 +93,7 @@ namespace iParkingv5_window.Forms.SystemForms
             txtUsername.Location = new Point(128, 259);
             txtUsername.Margin = new Padding(3, 2, 3, 2);
             txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(336, 29);
+            txtUsername.Size = new Size(0, 29);
             txtUsername.TabIndex = 3;
             txtUsername.Click += Control_Click;
             txtUsername.TextChanged += textBox_TextChanged;
@@ -102,7 +105,7 @@ namespace iParkingv5_window.Forms.SystemForms
             txtPassword.Margin = new Padding(3, 2, 3, 2);
             txtPassword.Name = "txtPassword";
             txtPassword.PasswordChar = '*';
-            txtPassword.Size = new Size(336, 29);
+            txtPassword.Size = new Size(0, 29);
             txtPassword.TabIndex = 4;
             txtPassword.TextChanged += textBox_TextChanged;
             // 
@@ -117,7 +120,7 @@ namespace iParkingv5_window.Forms.SystemForms
             lblStatus.AutoSize = true;
             lblStatus.Font = new Font("Segoe UI", 11.25F, FontStyle.Italic);
             lblStatus.ForeColor = Color.Green;
-            lblStatus.Location = new Point(24, 339);
+            lblStatus.Location = new Point(12, 444);
             lblStatus.Name = "lblStatus";
             lblStatus.Size = new Size(48, 20);
             lblStatus.TabIndex = 6;
@@ -130,7 +133,7 @@ namespace iParkingv5_window.Forms.SystemForms
             btnCancel1.BackColor = Color.FromArgb(230, 230, 230);
             btnCancel1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnCancel1.ForeColor = Color.Black;
-            btnCancel1.Location = new Point(402, 342);
+            btnCancel1.Location = new Point(-82, 342);
             btnCancel1.Margin = new Padding(0);
             btnCancel1.Name = "btnCancel1";
             btnCancel1.Size = new Size(60, 30);
@@ -145,7 +148,7 @@ namespace iParkingv5_window.Forms.SystemForms
             btnLogin.BackColor = Color.FromArgb(230, 230, 230);
             btnLogin.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnLogin.ForeColor = Color.Black;
-            btnLogin.Location = new Point(308, 342);
+            btnLogin.Location = new Point(-176, 342);
             btnLogin.Margin = new Padding(0);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(95, 30);
@@ -165,16 +168,14 @@ namespace iParkingv5_window.Forms.SystemForms
             panelMain.Controls.Add(lblPassword);
             panelMain.Controls.Add(btnCancel1);
             panelMain.Controls.Add(chbIsRemember);
-            panelMain.Controls.Add(lblStatus);
             panelMain.Controls.Add(txtUsername);
             panelMain.Controls.Add(txtPassword);
-            panelMain.Dock = DockStyle.Fill;
             panelMain.Font = new Font("Segoe UI", 12F);
             panelMain.Location = new Point(0, 0);
             panelMain.Margin = new Padding(0);
             panelMain.Name = "panelMain";
             panelMain.Padding = new Padding(21, 18, 21, 18);
-            panelMain.Size = new Size(484, 379);
+            panelMain.Size = new Size(0, 379);
             panelMain.TabIndex = 9;
             // 
             // ucLoading1
@@ -207,7 +208,7 @@ namespace iParkingv5_window.Forms.SystemForms
             picLogo.Location = new Point(21, 18);
             picLogo.Margin = new Padding(3, 2, 3, 2);
             picLogo.Name = "picLogo";
-            picLogo.Size = new Size(442, 177);
+            picLogo.Size = new Size(0, 177);
             picLogo.SizeMode = PictureBoxSizeMode.Zoom;
             picLogo.TabIndex = 11;
             picLogo.TabStop = false;
@@ -225,12 +226,31 @@ namespace iParkingv5_window.Forms.SystemForms
             ucNotify1.Size = new Size(328, 280);
             ucNotify1.TabIndex = 10;
             // 
+            // webView21
+            // 
+            webView21.AllowExternalDrop = true;
+            webView21.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            webView21.CreationProperties = null;
+            webView21.DefaultBackgroundColor = Color.White;
+            webView21.Location = new Point(0, 0);
+            webView21.Name = "webView21";
+            webView21.Size = new Size(631, 473);
+            webView21.TabIndex = 10;
+            webView21.ZoomFactor = 1D;
+            // 
+            // timerRefreshToken
+            // 
+            timerRefreshToken.Interval = 60000;
+            timerRefreshToken.Tick += timerRefreshToken_Tick;
+            // 
             // frmLogin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
-            ClientSize = new Size(484, 379);
+            ClientSize = new Size(631, 473);
+            Controls.Add(lblStatus);
+            Controls.Add(webView21);
             Controls.Add(panelMain);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 2, 3, 2);
@@ -241,7 +261,9 @@ namespace iParkingv5_window.Forms.SystemForms
             panelMain.ResumeLayout(false);
             panelMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picLogo).EndInit();
+            ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -260,5 +282,7 @@ namespace iParkingv5_window.Forms.SystemForms
         private PictureBox picLogo;
         private Label lblLoginTitle;
         private Usercontrols.BuildControls.ucLoading ucLoading1;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
+        private System.Windows.Forms.Timer timerRefreshToken;
     }
 }

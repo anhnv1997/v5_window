@@ -79,7 +79,7 @@
             dgvEventInData.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2 });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11.25F);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
             dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
             dataGridViewCellStyle2.Padding = new Padding(3);
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
@@ -183,7 +183,7 @@
             lblCancel1.AutoSize = true;
             lblCancel1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             lblCancel1.ForeColor = Color.Black;
-            lblCancel1.Location = new Point(815, 7);
+            lblCancel1.Location = new Point(818, 7);
             lblCancel1.Margin = new Padding(3, 2, 3, 2);
             lblCancel1.Name = "lblCancel1";
             lblCancel1.Size = new Size(57, 30);
@@ -196,7 +196,7 @@
             btnOk1.AutoSize = true;
             btnOk1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnOk1.ForeColor = Color.Black;
-            btnOk1.Location = new Point(726, 7);
+            btnOk1.Location = new Point(729, 7);
             btnOk1.Margin = new Padding(3, 2, 3, 2);
             btnOk1.Name = "btnOk1";
             btnOk1.Size = new Size(83, 30);

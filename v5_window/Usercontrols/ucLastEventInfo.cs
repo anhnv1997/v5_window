@@ -85,6 +85,10 @@ namespace iParkingv5_window.Usercontrols
         #region Controls In Form
         private void UcLastEventInfo_Click(object? sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(this.eventId))
+            {
+                return;
+            }
             //if (this.isEventIn)
             {
                 var frm = new frmEventInDetail(this.eventId, plateNumber, vehicleGroupId, IdentityGroupId, datetimeIn, picDirs,

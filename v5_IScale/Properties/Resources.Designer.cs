@@ -73,6 +73,16 @@ namespace v5_IScale.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap defaultImage1 {
+            get {
+                object obj = ResourceManager.GetObject("defaultImage1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_export_csv_32px {
             get {
                 object obj = ResourceManager.GetObject("icons8_export_csv_32px", resourceCulture);

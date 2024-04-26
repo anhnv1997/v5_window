@@ -18,7 +18,7 @@ namespace iParkingv5.Objects
         public static int baseSize = 12;
         public static WeighingDetailCollection WeighingDetailCollection = new WeighingDetailCollection();
         public static WeighingFormCollection WeighingFormCollection = new WeighingFormCollection();
-
+        public static SharedPreferences sharedPreferences = new SharedPreferences();
         #region APP - Datas
         public static Computer selectedComputer = null;
         public static Gate gate = null;
@@ -45,6 +45,16 @@ namespace iParkingv5.Objects
         public static ServerConfig serverConfig = new ServerConfig();
         #endregion End App Datas
 
+        #region EInvoice Data
+        public static string CompanyName = "CÔNG TY CP HỮU NGHỊ XUÂN CƯƠNG";
+        public static string CompanyAddress = "Cửa Khẩu QT Hữu Nghị - Huyện Cao Lộc - Tỉnh Lạng Sơn";
+        public static string TaxCode = "0100109106-503";
+        public static string templateCode = "5/00023";
+        public static string invoiceTypeCode = "5";
+        public static string symbolCode = "C24HAY";
+        public static int TaxRate = 10;
+        #endregion End EInvoice
+
         //--Function
         public static string GetCurrentVersion()
         {
@@ -52,6 +62,6 @@ namespace iParkingv5.Objects
             FileVersionInfo updateFileVersionInfo = FileVersionInfo.GetVersionInfo(filePath);
             string updateFilePathVersion = updateFileVersionInfo.FileVersion;
             return updateFilePathVersion;
-        }        
+        }
     }
 }

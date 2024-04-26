@@ -290,7 +290,7 @@
           }
         }
       },
-      "iParkingv5.Lpr/1.0.0": {
+      "iParkingv5.Lpr/1.0.0.1": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
@@ -916,7 +916,7 @@
         "version.txt"
       ]
     },
-    "iParkingv5.Lpr/1.0.0": {
+    "iParkingv5.Lpr/1.0.0.1": {
       "type": "project",
       "path": "../iParkingv5.Lpr/iParkingv5.Lpr.csproj",
       "msbuildProject": "../iParkingv5.Lpr/iParkingv5.Lpr.csproj"
@@ -927,7 +927,7 @@
       "Newtonsoft.Json >= 13.0.3",
       "System.Data.OleDb >= 8.0.0",
       "System.Data.SqlClient >= 4.8.6",
-      "iParkingv5.Lpr >= 1.0.0"
+      "iParkingv5.Lpr >= 1.0.0.1"
     ]
   },
   "packageFolders": {
@@ -936,7 +936,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.0.1",
+    "version": "1.0.0.2",
     "restore": {
       "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj",
       "projectName": "iParkingv5.Objects",

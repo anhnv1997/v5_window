@@ -39,7 +39,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
         {
             string comport = this.ControllerInfo.Comport;
             int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
-            string cmd = KZTEK_CMD.DeleteEventCMD();
+            string cmd = KZTEK_CMD.DeleteCardEventCMD();
             UdpTools.ExecuteCommand(comport, baudrate, cmd, 500, UdpTools.STX, Encoding.ASCII);
         }
 
@@ -115,7 +115,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
                 {
                     string comport = this.ControllerInfo.Comport;
                     int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
-                    string getEventCmd = KZTEK_CMD.GetEventCMD();
+                    string getEventCmd = KZTEK_CMD.GetCardEventCMD();
                     this.IsBusy = true;
                     string response = string.Empty;
                     await Task.Run(() =>
@@ -130,7 +130,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
                     //AccessCardDenie: Char(2) + GetEvent?/Style=Card/UserID=Null/LenCard=4/Card=7C19F640/Reader=01/DateTime=YYYYMMDDhhmmss/CardState=U/AccessState=1/Door=00/StateMSG=00 + char(3)
                     //InputEvent     : Char(2) + GetEvent?/Style=input/Input=INPUT1/DateTime=YYYYMMDDhhmmss + char(3)
                     //NoEvent        : Char(2) + GetEvent?/NotEvent + char(3)
-                    if (response != "" && (response.Contains("GetEvent?/")) && !response.Contains("NotEvent"))
+                    if (response != "" && (response.Contains("GetCardEvent?/")) && !response.Contains("NotEvent"))
                     {
                         string[] data = response.Split('/');
                         Dictionary<string, string> map = GetEventContent(data);
@@ -176,76 +176,85 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
         }
         private void CallCardEvent(Bdk controller, Dictionary<string, string> map)
         {
-            CardEventArgs e = new CardEventArgs
+            try
             {
-                DeviceId = controller.Id,
-                AllCardFormats = new List<string>(),
-            };
-            string cardNumberHEX = map.ContainsKey("card") ? map["card"] : "";
-            if (!string.IsNullOrEmpty(cardNumberHEX))
-            {
-                e.AllCardFormats.Add(cardNumberHEX);
-
-                if (cardNumberHEX.Length == 6)
+                CardEventArgs e = new CardEventArgs
                 {
-                    string maTruocToiGian = long.Parse(cardNumberHEX, System.Globalization.NumberStyles.HexNumber).ToString();
-                    string maTruocFull = Convert.ToInt64(cardNumberHEX, 16).ToString("0000000000");
+                    DeviceId = controller.Id,
+                    AllCardFormats = new List<string>(),
+                };
+                string cardNumberHEX = map.ContainsKey("card") ? map["card"] : "";
+                if (!string.IsNullOrEmpty(cardNumberHEX))
+                {
+                    e.AllCardFormats.Add(cardNumberHEX);
 
-                    string maSauFormat1 = int.Parse(cardNumberHEX.Substring(0, 2), System.Globalization.NumberStyles.HexNumber).ToString("000") +
-                                          int.Parse(cardNumberHEX.Substring(2, 4), System.Globalization.NumberStyles.HexNumber).ToString("00000");
-
-                    string maSauFormat2 = int.Parse(cardNumberHEX.Substring(0, 2), System.Globalization.NumberStyles.HexNumber).ToString("000") + ":" +
-                                          int.Parse(cardNumberHEX.Substring(2, 4), System.Globalization.NumberStyles.HexNumber).ToString("00000");
-
-                    string maSauFormat3 = int.Parse(cardNumberHEX.Substring(0, 2), System.Globalization.NumberStyles.HexNumber).ToString("000") + ":" +
-                      int.Parse(cardNumberHEX.Substring(2, 4), System.Globalization.NumberStyles.HexNumber).ToString("00000");
-
-                    e.PreferCard = maSauFormat3;
-                    e.PreferCard = maTruocFull;
-                    e.AllCardFormats.Add(maTruocToiGian);
-                    if (maTruocToiGian != maTruocFull)
+                    if (cardNumberHEX.Length == 6)
                     {
-                        e.AllCardFormats.Add(maTruocFull);
+                        string maTruocToiGian = long.Parse(cardNumberHEX, System.Globalization.NumberStyles.HexNumber).ToString();
+                        string maTruocFull = Convert.ToInt64(cardNumberHEX, 16).ToString("0000000000");
+
+                        string maSauFormat1 = int.Parse(cardNumberHEX.Substring(0, 2), System.Globalization.NumberStyles.HexNumber).ToString("000") +
+                                              int.Parse(cardNumberHEX.Substring(2, 4), System.Globalization.NumberStyles.HexNumber).ToString("00000");
+
+                        string maSauFormat2 = int.Parse(cardNumberHEX.Substring(0, 2), System.Globalization.NumberStyles.HexNumber).ToString("000") + ":" +
+                                              int.Parse(cardNumberHEX.Substring(2, 4), System.Globalization.NumberStyles.HexNumber).ToString("00000");
+
+                        string maSauFormat3 = int.Parse(cardNumberHEX.Substring(0, 2), System.Globalization.NumberStyles.HexNumber).ToString("000") + ":" +
+                          int.Parse(cardNumberHEX.Substring(2, 4), System.Globalization.NumberStyles.HexNumber).ToString("00000");
+
+                        e.PreferCard = maSauFormat3;
+                        e.PreferCard = maTruocFull;
+                        e.AllCardFormats.Add(maTruocToiGian);
+                        if (maTruocToiGian != maTruocFull)
+                        {
+                            e.AllCardFormats.Add(maTruocFull);
+                        }
+                        e.AllCardFormats.Add(maSauFormat1);
+                        e.AllCardFormats.Add(maSauFormat2);
+                        e.PreferCard = maSauFormat3;
                     }
-                    e.AllCardFormats.Add(maSauFormat1);
-                    e.AllCardFormats.Add(maSauFormat2);
+                    else
+                    {
+                        //cardNumberHEX = cardNumberHEX.Substring(6, 2) + cardNumberHEX.Substring(4, 2) + 
+                        //                cardNumberHEX.Substring(2, 2) + cardNumberHEX.Substring(0, 2);
+                        string maInt = Convert.ToInt64(cardNumberHEX, 16).ToString();
+                        int a = (int)(Convert.ToInt64(maInt, 10) / 65536);
+                        int b = (int)(Convert.ToInt64(maInt, 10) - a * 65536);
+                        e.PreferCard = a.ToString("00000") + ":" + b.ToString("00000");
+                        //e.PreferCard = maInt;
+                        e.AllCardFormats.Add(maInt);
+                    }
+                }
+                string str_readerIndex = map.ContainsKey("reader") ? map["reader"] : "";
+                e.ReaderIndex = Regex.IsMatch(str_readerIndex, @"^\d+$") ? Convert.ToInt32(str_readerIndex) : -1;
+                string cardState = map.ContainsKey("cardstate") ? map["cardstate"] : "";
+                if (cardState == "R")
+                {
+                    string door = map.ContainsKey("door") ? map["door"] : "";
+                    if (!string.IsNullOrEmpty(door))
+                    {
+                        if (door == "01")
+                        {
+                            e.Doors = "1";
+                        }
+                        if (door == "02")
+                        {
+                            e.Doors = "2";
+                        }
+                    }
                 }
                 else
                 {
-                    //cardNumberHEX = cardNumberHEX.Substring(6, 2) + cardNumberHEX.Substring(4, 2) + 
-                    //                cardNumberHEX.Substring(2, 2) + cardNumberHEX.Substring(0, 2);
-                    string maInt = Convert.ToInt64(cardNumberHEX, 16).ToString();
-                    int a = (int)(Convert.ToInt64(maInt, 10) / 65536);
-                    int b = (int)(Convert.ToInt64(maInt, 10) - a * 65536);
-                    e.PreferCard = a.ToString("00000") + ":" + b.ToString("00000");
-                    //e.PreferCard = maInt;
-                    e.AllCardFormats.Add(maInt);
+                    e.Doors = "";
                 }
+                OnCardEvent(e);
+                DeleteCardEvent();
             }
-            string str_readerIndex = map.ContainsKey("reader") ? map["reader"] : "";
-            e.ReaderIndex = Regex.IsMatch(str_readerIndex, @"^\d+$") ? Convert.ToInt32(str_readerIndex) : -1;
-            string cardState = map.ContainsKey("cardstate") ? map["cardstate"] : "";
-            if (cardState == "R")
+            catch (Exception)
             {
-                string door = map.ContainsKey("door") ? map["door"] : "";
-                if (!string.IsNullOrEmpty(door))
-                {
-                    if (door == "01")
-                    {
-                        e.Doors = "1";
-                    }
-                    if (door == "02")
-                    {
-                        e.Doors = "2";
-                    }
-                }
+                DeleteCardEvent();
             }
-            else
-            {
-                e.Doors = "";
-            }
-            OnCardEvent(e);
-            DeleteCardEvent();
+
         }
 
         public override async Task<bool> OpenDoor(int timeInMilisecond, int relayIndex)
@@ -300,7 +309,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
             int cardlen = 4;// cardFactory.CardLen();
             string comport = this.ControllerInfo.Comport;
             int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
-            string door =int.Parse(doors).ToString("00");
+            string door = int.Parse(doors).ToString("00");
             if (door == "")
             {
                 errorCode = -1;

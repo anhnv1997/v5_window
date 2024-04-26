@@ -47,15 +47,18 @@ namespace v5_IScale.Forms.SystemForms
             lblLoginTitle = new Label();
             picLogo = new PictureBox();
             ucNotify1 = new Usercontrols.BuildControls.ucNotify();
+            webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
+            timerRefreshToken = new System.Windows.Forms.Timer(components);
             panelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picLogo).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             SuspendLayout();
             // 
             // lblUsername
             // 
             lblUsername.AutoSize = true;
             lblUsername.BackColor = Color.Transparent;
-            lblUsername.Location = new Point(32, 348);
+            lblUsername.Location = new Point(28, 261);
             lblUsername.Name = "lblUsername";
             lblUsername.Size = new Size(111, 21);
             lblUsername.TabIndex = 0;
@@ -65,7 +68,7 @@ namespace v5_IScale.Forms.SystemForms
             // 
             lblPassword.AutoSize = true;
             lblPassword.BackColor = Color.Transparent;
-            lblPassword.Location = new Point(32, 387);
+            lblPassword.Location = new Point(28, 290);
             lblPassword.Name = "lblPassword";
             lblPassword.Size = new Size(75, 21);
             lblPassword.TabIndex = 1;
@@ -75,7 +78,8 @@ namespace v5_IScale.Forms.SystemForms
             // 
             chbIsRemember.AutoSize = true;
             chbIsRemember.BackColor = Color.Transparent;
-            chbIsRemember.Location = new Point(146, 417);
+            chbIsRemember.Location = new Point(128, 313);
+            chbIsRemember.Margin = new Padding(3, 2, 3, 2);
             chbIsRemember.Name = "chbIsRemember";
             chbIsRemember.Size = new Size(128, 25);
             chbIsRemember.TabIndex = 5;
@@ -86,9 +90,10 @@ namespace v5_IScale.Forms.SystemForms
             // txtUsername
             // 
             txtUsername.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtUsername.Location = new Point(146, 345);
+            txtUsername.Location = new Point(128, 259);
+            txtUsername.Margin = new Padding(3, 2, 3, 2);
             txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(383, 29);
+            txtUsername.Size = new Size(0, 29);
             txtUsername.TabIndex = 3;
             txtUsername.Click += Control_Click;
             txtUsername.TextChanged += textBox_TextChanged;
@@ -96,10 +101,11 @@ namespace v5_IScale.Forms.SystemForms
             // txtPassword
             // 
             txtPassword.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtPassword.Location = new Point(146, 384);
+            txtPassword.Location = new Point(128, 288);
+            txtPassword.Margin = new Padding(3, 2, 3, 2);
             txtPassword.Name = "txtPassword";
             txtPassword.PasswordChar = '*';
-            txtPassword.Size = new Size(383, 29);
+            txtPassword.Size = new Size(0, 29);
             txtPassword.TabIndex = 4;
             txtPassword.TextChanged += textBox_TextChanged;
             // 
@@ -114,7 +120,7 @@ namespace v5_IScale.Forms.SystemForms
             lblStatus.AutoSize = true;
             lblStatus.Font = new Font("Segoe UI", 11.25F, FontStyle.Italic);
             lblStatus.ForeColor = Color.Green;
-            lblStatus.Location = new Point(27, 452);
+            lblStatus.Location = new Point(24, 339);
             lblStatus.Name = "lblStatus";
             lblStatus.Size = new Size(48, 20);
             lblStatus.TabIndex = 6;
@@ -127,7 +133,7 @@ namespace v5_IScale.Forms.SystemForms
             btnCancel1.BackColor = Color.FromArgb(230, 230, 230);
             btnCancel1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnCancel1.ForeColor = Color.Black;
-            btnCancel1.Location = new Point(469, 466);
+            btnCancel1.Location = new Point(-82, 342);
             btnCancel1.Margin = new Padding(0);
             btnCancel1.Name = "btnCancel1";
             btnCancel1.Size = new Size(60, 30);
@@ -142,7 +148,7 @@ namespace v5_IScale.Forms.SystemForms
             btnLogin.BackColor = Color.FromArgb(230, 230, 230);
             btnLogin.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnLogin.ForeColor = Color.Black;
-            btnLogin.Location = new Point(366, 466);
+            btnLogin.Location = new Point(-176, 342);
             btnLogin.Margin = new Padding(0);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(95, 30);
@@ -165,23 +171,23 @@ namespace v5_IScale.Forms.SystemForms
             panelMain.Controls.Add(lblStatus);
             panelMain.Controls.Add(txtUsername);
             panelMain.Controls.Add(txtPassword);
-            panelMain.Dock = DockStyle.Fill;
             panelMain.Font = new Font("Segoe UI", 12F);
             panelMain.Location = new Point(0, 0);
             panelMain.Margin = new Padding(0);
             panelMain.Name = "panelMain";
-            panelMain.Padding = new Padding(24);
-            panelMain.Size = new Size(553, 505);
+            panelMain.Padding = new Padding(21, 18, 21, 18);
+            panelMain.Size = new Size(0, 379);
             panelMain.TabIndex = 9;
             // 
             // ucLoading1
             // 
             ucLoading1.BackColor = Color.FromArgb(255, 224, 192);
             ucLoading1.Language = TextManagement.EmLanguage.Vietnamese;
-            ucLoading1.Location = new Point(437, 284);
+            ucLoading1.Location = new Point(382, 213);
+            ucLoading1.Margin = new Padding(3, 2, 3, 2);
             ucLoading1.Message = "Preparing to download";
             ucLoading1.Name = "ucLoading1";
-            ucLoading1.Size = new Size(392, 188);
+            ucLoading1.Size = new Size(343, 141);
             ucLoading1.TabIndex = 13;
             // 
             // lblLoginTitle
@@ -189,7 +195,7 @@ namespace v5_IScale.Forms.SystemForms
             lblLoginTitle.AutoSize = true;
             lblLoginTitle.BackColor = Color.Transparent;
             lblLoginTitle.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
-            lblLoginTitle.Location = new Point(24, 274);
+            lblLoginTitle.Location = new Point(21, 206);
             lblLoginTitle.Name = "lblLoginTitle";
             lblLoginTitle.Size = new Size(328, 45);
             lblLoginTitle.TabIndex = 12;
@@ -200,9 +206,10 @@ namespace v5_IScale.Forms.SystemForms
             picLogo.BackColor = Color.Transparent;
             picLogo.Dock = DockStyle.Top;
             picLogo.Image = (Image)resources.GetObject("picLogo.Image");
-            picLogo.Location = new Point(24, 24);
+            picLogo.Location = new Point(21, 18);
+            picLogo.Margin = new Padding(3, 2, 3, 2);
             picLogo.Name = "picLogo";
-            picLogo.Size = new Size(505, 236);
+            picLogo.Size = new Size(0, 177);
             picLogo.SizeMode = PictureBoxSizeMode.Zoom;
             picLogo.TabIndex = 11;
             picLogo.TabStop = false;
@@ -210,23 +217,43 @@ namespace v5_IScale.Forms.SystemForms
             // ucNotify1
             // 
             ucNotify1.BackColor = Color.White;
-            ucNotify1.Location = new Point(87, 123);
-            ucNotify1.MaximumSize = new Size(375, 374);
+            ucNotify1.Location = new Point(76, 92);
+            ucNotify1.Margin = new Padding(3, 2, 3, 2);
+            ucNotify1.MaximumSize = new Size(328, 280);
             ucNotify1.Message = "Nội dung thông báo";
-            ucNotify1.MinimumSize = new Size(375, 374);
+            ucNotify1.MinimumSize = new Size(328, 280);
             ucNotify1.Name = "ucNotify1";
             ucNotify1.NotiType = Usercontrols.BuildControls.ucNotify.EmNotiType.Information;
-            ucNotify1.Size = new Size(375, 374);
+            ucNotify1.Size = new Size(328, 280);
             ucNotify1.TabIndex = 10;
+            // 
+            // webView21
+            // 
+            webView21.AllowExternalDrop = true;
+            webView21.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            webView21.CreationProperties = null;
+            webView21.DefaultBackgroundColor = Color.White;
+            webView21.Location = new Point(0, 0);
+            webView21.Name = "webView21";
+            webView21.Size = new Size(754, 597);
+            webView21.TabIndex = 10;
+            webView21.ZoomFactor = 1D;
+            // 
+            // timerRefreshToken
+            // 
+            timerRefreshToken.Interval = 60000;
+            timerRefreshToken.Tick += timerRefreshToken_Tick;
             // 
             // frmLogin
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
-            ClientSize = new Size(553, 505);
+            ClientSize = new Size(755, 596);
+            Controls.Add(webView21);
             Controls.Add(panelMain);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
             Name = "frmLogin";
             StartPosition = FormStartPosition.CenterScreen;
@@ -234,6 +261,7 @@ namespace v5_IScale.Forms.SystemForms
             panelMain.ResumeLayout(false);
             panelMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picLogo).EndInit();
+            ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             ResumeLayout(false);
         }
 
@@ -253,5 +281,7 @@ namespace v5_IScale.Forms.SystemForms
         private PictureBox picLogo;
         private Label lblLoginTitle;
         private Usercontrols.BuildControls.ucLoading ucLoading1;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
+        private System.Windows.Forms.Timer timerRefreshToken;
     }
 }

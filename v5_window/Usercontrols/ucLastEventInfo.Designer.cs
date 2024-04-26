@@ -38,11 +38,13 @@
             // picVehicle
             // 
             picVehicle.BackColor = SystemColors.Control;
+            picVehicle.BorderStyle = BorderStyle.FixedSingle;
             picVehicle.Dock = DockStyle.Fill;
             picVehicle.Image = Properties.Resources.defaultImage;
-            picVehicle.Location = new Point(0, 10);
+            picVehicle.Location = new Point(0, 8);
+            picVehicle.Margin = new Padding(3, 2, 3, 2);
             picVehicle.Name = "picVehicle";
-            picVehicle.Size = new Size(149, 134);
+            picVehicle.Size = new Size(134, 104);
             picVehicle.SizeMode = PictureBoxSizeMode.StretchImage;
             picVehicle.TabIndex = 0;
             picVehicle.TabStop = false;
@@ -51,24 +53,25 @@
             // 
             pictureBox1.Dock = DockStyle.Right;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(149, 10);
+            pictureBox1.Location = new Point(134, 8);
+            pictureBox1.Margin = new Padding(3, 2, 3, 2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(61, 134);
+            pictureBox1.Size = new Size(53, 104);
             pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
             // 
             // ucLastEventInfo
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ButtonHighlight;
-            BorderStyle = BorderStyle.Fixed3D;
             Controls.Add(picVehicle);
             Controls.Add(pictureBox1);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "ucLastEventInfo";
-            Padding = new Padding(0, 10, 10, 10);
-            Size = new Size(220, 154);
+            Padding = new Padding(0, 8, 9, 8);
+            Size = new Size(196, 120);
             ((System.ComponentModel.ISupportInitialize)picVehicle).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);

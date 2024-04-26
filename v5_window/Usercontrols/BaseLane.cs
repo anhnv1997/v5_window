@@ -23,6 +23,7 @@ namespace iParkingv5_window.Usercontrols
         public static bool CheckNewCardEvent(this iLane iLane, Lane lane, CardEventArgs ce,
                                              out ControllerInLane? controllerInLane, out int thoiGianCho)
         {
+            LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, mo_ta_them: lane, obj: ce);
             thoiGianCho = 0;
             DateTime eventTime = DateTime.Now;
             bool isValidControllerIdAndReader = IsValidControllerAndReader(lane, ce, out controllerInLane);
@@ -154,8 +155,10 @@ namespace iParkingv5_window.Usercontrols
             return imageKey;
         }
 
-        public static async Task OpenBarrieByControllerId(string controllerId, ControllerInLane? controllerInLane)
+        public static async Task OpenBarrieByControllerId(string controllerId, ControllerInLane? controllerInLane, iLane iLane)
         {
+            OpenAllBarrie(iLane);
+            return;
             foreach (IController item in frmMain.controllers)
             {
                 if (item.ControllerInfo.Id.ToLower() == controllerId.ToLower())
