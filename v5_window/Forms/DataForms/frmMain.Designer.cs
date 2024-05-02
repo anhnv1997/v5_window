@@ -93,6 +93,7 @@
             this.tsmiActiveLanesConfig.Name = "tsmiActiveLanesConfig";
             this.tsmiActiveLanesConfig.Size = new System.Drawing.Size(242, 26);
             this.tsmiActiveLanesConfig.Text = "Cấu hình làn hoạt động";
+            this.tsmiActiveLanesConfig.Click += new System.EventHandler(this.tsmiActiveLanesConfig_Click);
             // 
             // tsmiExit
             // 
@@ -100,6 +101,7 @@
             this.tsmiExit.Name = "tsmiExit";
             this.tsmiExit.Size = new System.Drawing.Size(242, 26);
             this.tsmiExit.Text = "Thoát";
+            this.tsmiExit.Click += new System.EventHandler(this.tsmiExit_Click);
             // 
             // miReport
             // 
@@ -117,6 +119,7 @@
             this.tsmiReportIn.Name = "tsmiReportIn";
             this.tsmiReportIn.Size = new System.Drawing.Size(203, 26);
             this.tsmiReportIn.Text = "Xe đang trong bãi";
+            this.tsmiReportIn.Click += new System.EventHandler(this.tsmiReportIn_Click);
             // 
             // tsmiReportInOut
             // 
@@ -124,6 +127,7 @@
             this.tsmiReportInOut.Name = "tsmiReportInOut";
             this.tsmiReportInOut.Size = new System.Drawing.Size(203, 26);
             this.tsmiReportInOut.Text = "Xe ra khỏi bãi";
+            this.tsmiReportInOut.Click += new System.EventHandler(this.tsmiReportInOut_Click);
             // 
             // tsmiAlarmReport
             // 
@@ -131,6 +135,7 @@
             this.tsmiAlarmReport.Name = "tsmiAlarmReport";
             this.tsmiAlarmReport.Size = new System.Drawing.Size(203, 26);
             this.tsmiAlarmReport.Text = "Sự kiện cảnh báo";
+            this.tsmiAlarmReport.Click += new System.EventHandler(this.tsmiAlarmReport_Click);
             // 
             // đăngKýToolStripMenuItem
             // 
@@ -150,6 +155,7 @@
             this.btnRegisterCar.Name = "btnRegisterCar";
             this.btnRegisterCar.Size = new System.Drawing.Size(211, 26);
             this.btnRegisterCar.Text = "Ô tô";
+            this.btnRegisterCar.Click += new System.EventHandler(this.btnRegisterCar_Click);
             // 
             // btnRegisterMotor
             // 
@@ -157,6 +163,7 @@
             this.btnRegisterMotor.Name = "btnRegisterMotor";
             this.btnRegisterMotor.Size = new System.Drawing.Size(211, 26);
             this.btnRegisterMotor.Text = "Xe máy";
+            this.btnRegisterMotor.Click += new System.EventHandler(this.btnRegisterMotor_Click);
             // 
             // btnRegisterWalker
             // 
@@ -165,6 +172,7 @@
             this.btnRegisterWalker.Size = new System.Drawing.Size(211, 26);
             this.btnRegisterWalker.Text = "Người đi bộ";
             this.btnRegisterWalker.Visible = false;
+            this.btnRegisterWalker.Click += new System.EventHandler(this.btnRegisterWalker_Click);
             // 
             // btnRegisterList
             // 
@@ -173,6 +181,7 @@
             this.btnRegisterList.Size = new System.Drawing.Size(211, 26);
             this.btnRegisterList.Text = "Danh sách đăng ký";
             this.btnRegisterList.Visible = false;
+            this.btnRegisterList.Click += new System.EventHandler(this.btnRegisterList_Click);
             // 
             // panelMain
             // 

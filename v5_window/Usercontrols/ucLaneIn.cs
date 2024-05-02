@@ -448,6 +448,7 @@ namespace iParkingv5_window.Usercontrols
                                             isOpenSuccess = await item.OpenDoor(100, controllerInLane.barriers[i]);
                                             if (!isOpenSuccess)
                                             {
+
                                             }
                                         }
                                         else
