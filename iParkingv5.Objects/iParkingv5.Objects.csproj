@@ -22,10 +22,4 @@
     <ProjectReference Include="..\iParkingv5.Lpr\iParkingv5.Lpr.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Kztek.LPR">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\Kztek.LPR.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

@@ -28,8 +28,6 @@ namespace iParkingv5_window.Usercontrols
 {
     public partial class ucLaneOut : UserControl, iLane, IDisposable
     {
-
-
         #region PROPERTIES
         public event OnChangeLaneEvent? OnChangeLaneEvent;
         public event OnControlSizeChanged? onControlSizeChangeEvent;

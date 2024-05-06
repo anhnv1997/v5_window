@@ -1,10 +1,12 @@
 ﻿using IPaking.Ultility;
+using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.ApiManager.KzScaleApis;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.EventDatas;
 using iParkingv5.Objects.ScaleObjects;
 using iParkingv5_window;
+using iParkingv5_window.Helpers;
 using static iParkingv5.Objects.Enums.PrintHelpers;
 
 namespace v5_IScale.Forms.ReportForms
@@ -74,13 +76,72 @@ namespace v5_IScale.Forms.ReportForms
             }
         }
 
-        private void btnPrintEInvoice_Click(object sender, EventArgs e)
+        private async void btnPrintEInvoice_Click(object sender, EventArgs e)
         {
+            if (dgvData.Rows.Count == 0)
+            {
+                MessageBox.Show("Không có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
+            if (dgvData.CurrentRow == null)
+            {
+                MessageBox.Show("Hãy chọn sự kiện cần in phiếu cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            string parkingEventId = dgvData.CurrentRow.Cells[0].Value.ToString() ?? "";
+            string plateNumber = dgvData.CurrentRow.Cells[4].Value.ToString() ?? "";
+            var weighingActionDetails = await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(parkingEventId);
+            if (weighingActionDetails.Count < (cbPrintMode.SelectedIndex + 1))
+            {
+                MessageBox.Show("Không có thông tin hóa đơn", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            this.printCount = 1;
+            var wbPrint = new WebBrowser();
+            wbPrint.DocumentCompleted += WbPrint_DocumentCompleted;
+            wbPrint.DocumentText = PrintHelper.GetPrintScaleInvoiceOfflineContent(weighingActionDetails[cbPrintMode.SelectedIndex], plateNumber);
         }
-        private void btnPrintInternetEInvoice_Click(object sender, EventArgs e)
+        private async void btnPrintInternetEInvoice_Click(object sender, EventArgs e)
         {
 
+            if (dgvData.Rows.Count == 0)
+            {
+                MessageBox.Show("Không có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (dgvData.CurrentRow == null)
+            {
+                MessageBox.Show("Hãy chọn sự kiện cần in phiếu cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            string parkingEventId = dgvData.CurrentRow.Cells[0].Value.ToString() ?? "";
+            string plateNumber = dgvData.CurrentRow.Cells[4].Value.ToString() ?? "";
+
+
+            var weighingActionDetails = await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(parkingEventId);
+            if (weighingActionDetails.Count < (cbPrintMode.SelectedIndex + 1))
+            {
+                MessageBox.Show("Không có thông tin hóa đơn", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            string orderId = await KzScaleApiHelper.CreateInvoice(weighingActionDetails[cbPrintMode.SelectedIndex].Id, StaticPool.userId, StaticPool.user_name);
+            if (string.IsNullOrEmpty(orderId))
+            {
+                MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            var invoiceData = await KzParkingv5ApiHelper.GetInvoiceData(orderId);
+            if (string.IsNullOrEmpty(invoiceData.id))
+            {
+                MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            string pdfContent = invoiceData.signedFileData;
+            PrintHelper.PrintPdf(pdfContent);
         }
         private void btnExcel_Click(object sender, EventArgs e)
         {
@@ -212,7 +273,7 @@ namespace v5_IScale.Forms.ReportForms
                     cbGoodsType.Items.Add(li);
                 }
             }
-            
+
             cbGoodsType.DisplayMember = "Value";
             cbGoodsType.SelectedIndex = cbGoodsType.Items.Count > 0 ? 0 : -1;
             cbPrintMode.SelectedIndex = 0;

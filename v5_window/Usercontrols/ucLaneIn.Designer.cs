@@ -163,7 +163,6 @@
             panelCameras.Name = "panelCameras";
             panelCameras.Size = new Size(211, 440);
             panelCameras.TabIndex = 3;
-            panelCameras.Paint += panelCameras_Paint;
             // 
             // label15
             // 
@@ -818,7 +817,7 @@
             picSetting.TabIndex = 5;
             picSetting.TabStop = false;
             picSetting.Click += picSetting_Click;
-            picSetting.MouseEnter += PicSetting_MouseEnter;
+            picSetting.MouseHover += PicRetakePhoto_MouseHover;
             picSetting.MouseLeave += PicSetting_MouseLeave;
             // 
             // panel5

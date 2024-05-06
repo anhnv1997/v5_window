@@ -54,22 +54,22 @@
 
   <ItemGroup>
     <Reference Include="AForge.Imaging">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\AForge.Imaging.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\4..Library Reference\CameraLib\AForge.Imaging.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Video.DirectShowEx">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\AForge.Video.DirectShowEx.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\4..Library Reference\CameraLib\AForge.Video.DirectShowEx.dll</HintPath>
     </Reference>
     <Reference Include="AForge.VideoEx">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\AForge.VideoEx.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\4..Library Reference\CameraLib\AForge.VideoEx.dll</HintPath>
     </Reference>
     <Reference Include="Kztek.Security">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\KeyLib\Kztek.Security.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\BaseLib\KztekKey_net6\Kztek.Security.dll</HintPath>
     </Reference>
     <Reference Include="Kztek.Utilities">
       <HintPath>C:\Users\Admin\OneDrive\Desktop\KeyLib\Kztek.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="KztekKeyRegister">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\KeyLib\KztekKeyRegister.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\BaseLib\KztekKey_net6\KztekKeyRegister.dll</HintPath>
     </Reference>
     <Reference Include="RtspClientSharp">
       <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\RtspClientSharp.dll</HintPath>

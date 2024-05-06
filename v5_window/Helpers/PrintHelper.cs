@@ -22,10 +22,10 @@ namespace iParkingv5_window.Helpers
             if (File.Exists(printTemplatePath))
             {
                 string baseContent = File.ReadAllText(printTemplatePath);
-                baseContent = baseContent.Replace("$companyTaxCode", companyTaxCode);
-                baseContent = baseContent.Replace("$companyAddress", address);
-                baseContent = baseContent.Replace("$companyName", companyName);
-                baseContent = baseContent.Replace("$templateCode", kyHieuHoaDon);
+                baseContent = baseContent.Replace("$companyTaxCode", StaticPool.TaxCode);
+                baseContent = baseContent.Replace("$companyAddress", StaticPool.CompanyAddress);
+                baseContent = baseContent.Replace("$companyName", StaticPool.CompanyName);
+                baseContent = baseContent.Replace("$templateCode", StaticPool.TaxCode);
 
                 baseContent = baseContent.Replace("$day", DateTime.Now.Day.ToString("00"));
                 baseContent = baseContent.Replace("$month", DateTime.Now.Month.ToString("00"));

@@ -39,7 +39,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
         {
             string comport = this.ControllerInfo.Comport;
             int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
-            string cmd = KZTEK_CMD.DeleteCardEventCMD();
+            string cmd = KZTEK_CMD.DeleteEventCMD();
             UdpTools.ExecuteCommand(comport, baudrate, cmd, 500, UdpTools.STX, Encoding.ASCII);
         }
 
@@ -115,7 +115,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
                 {
                     string comport = this.ControllerInfo.Comport;
                     int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
-                    string getEventCmd = KZTEK_CMD.GetCardEventCMD();
+                    string getEventCmd = KZTEK_CMD.GetEventCMD();
                     this.IsBusy = true;
                     string response = string.Empty;
                     await Task.Run(() =>
@@ -130,7 +130,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
                     //AccessCardDenie: Char(2) + GetEvent?/Style=Card/UserID=Null/LenCard=4/Card=7C19F640/Reader=01/DateTime=YYYYMMDDhhmmss/CardState=U/AccessState=1/Door=00/StateMSG=00 + char(3)
                     //InputEvent     : Char(2) + GetEvent?/Style=input/Input=INPUT1/DateTime=YYYYMMDDhhmmss + char(3)
                     //NoEvent        : Char(2) + GetEvent?/NotEvent + char(3)
-                    if (response != "" && (response.Contains("GetCardEvent?/")) && !response.Contains("NotEvent"))
+                    if (response != "" && (response.Contains("GetEvent?/")) && !response.Contains("NotEvent"))
                     {
                         string[] data = response.Split('/');
                         Dictionary<string, string> map = GetEventContent(data);
