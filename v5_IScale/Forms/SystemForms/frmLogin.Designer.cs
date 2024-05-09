@@ -49,6 +49,7 @@ namespace v5_IScale.Forms.SystemForms
             ucNotify1 = new Usercontrols.BuildControls.ucNotify();
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             timerRefreshToken = new System.Windows.Forms.Timer(components);
+            timerRestartSocket = new System.Windows.Forms.Timer(components);
             panelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picLogo).BeginInit();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
@@ -120,7 +121,7 @@ namespace v5_IScale.Forms.SystemForms
             lblStatus.AutoSize = true;
             lblStatus.Font = new Font("Segoe UI", 11.25F, FontStyle.Italic);
             lblStatus.ForeColor = Color.Green;
-            lblStatus.Location = new Point(24, 339);
+            lblStatus.Location = new Point(12, 567);
             lblStatus.Name = "lblStatus";
             lblStatus.Size = new Size(48, 20);
             lblStatus.TabIndex = 6;
@@ -168,7 +169,6 @@ namespace v5_IScale.Forms.SystemForms
             panelMain.Controls.Add(lblPassword);
             panelMain.Controls.Add(btnCancel1);
             panelMain.Controls.Add(chbIsRemember);
-            panelMain.Controls.Add(lblStatus);
             panelMain.Controls.Add(txtUsername);
             panelMain.Controls.Add(txtPassword);
             panelMain.Font = new Font("Segoe UI", 12F);
@@ -244,14 +244,20 @@ namespace v5_IScale.Forms.SystemForms
             timerRefreshToken.Interval = 60000;
             timerRefreshToken.Tick += timerRefreshToken_Tick;
             // 
+            // timerRestartSocket
+            // 
+            timerRestartSocket.Interval = 3600000;
+            timerRestartSocket.Tick += timerRestartSocket_Tick;
+            // 
             // frmLogin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             ClientSize = new Size(755, 596);
-            Controls.Add(webView21);
+            Controls.Add(lblStatus);
             Controls.Add(panelMain);
+            Controls.Add(webView21);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
@@ -263,6 +269,7 @@ namespace v5_IScale.Forms.SystemForms
             ((System.ComponentModel.ISupportInitialize)picLogo).EndInit();
             ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -283,5 +290,6 @@ namespace v5_IScale.Forms.SystemForms
         private Usercontrols.BuildControls.ucLoading ucLoading1;
         private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
         private System.Windows.Forms.Timer timerRefreshToken;
+        private System.Windows.Forms.Timer timerRestartSocket;
     }
 }

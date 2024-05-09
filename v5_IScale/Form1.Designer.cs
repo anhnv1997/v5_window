@@ -281,10 +281,10 @@
             // 
             panel2.Controls.Add(tableLayoutPanel1);
             panel2.Dock = DockStyle.Bottom;
-            panel2.Location = new Point(0, 308);
+            panel2.Location = new Point(0, 293);
             panel2.Margin = new Padding(3, 2, 3, 2);
             panel2.Name = "panel2";
-            panel2.Size = new Size(318, 147);
+            panel2.Size = new Size(318, 162);
             panel2.TabIndex = 4;
             // 
             // tableLayoutPanel1
@@ -310,16 +310,16 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            tableLayoutPanel1.Size = new Size(318, 147);
+            tableLayoutPanel1.Size = new Size(318, 162);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // label9
             // 
             label9.Dock = DockStyle.Fill;
             label9.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
-            label9.Location = new Point(4, 109);
+            label9.Location = new Point(4, 121);
             label9.Name = "label9";
-            label9.Size = new Size(135, 37);
+            label9.Size = new Size(135, 40);
             label9.TabIndex = 2;
             label9.Text = "Phí cân";
             label9.TextAlign = ContentAlignment.MiddleLeft;
@@ -330,7 +330,7 @@
             label7.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
             label7.Location = new Point(4, 1);
             label7.Name = "label7";
-            label7.Size = new Size(135, 35);
+            label7.Size = new Size(135, 39);
             label7.TabIndex = 0;
             label7.Text = "KL cân lần 1";
             label7.TextAlign = ContentAlignment.MiddleLeft;
@@ -339,9 +339,9 @@
             // 
             label8.Dock = DockStyle.Fill;
             label8.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
-            label8.Location = new Point(4, 37);
+            label8.Location = new Point(4, 41);
             label8.Name = "label8";
-            label8.Size = new Size(135, 35);
+            label8.Size = new Size(135, 39);
             label8.TabIndex = 0;
             label8.Text = "KL cân lần 2";
             label8.TextAlign = ContentAlignment.MiddleLeft;
@@ -350,9 +350,9 @@
             // 
             lblGoodsScaleTitle.Dock = DockStyle.Fill;
             lblGoodsScaleTitle.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
-            lblGoodsScaleTitle.Location = new Point(4, 73);
+            lblGoodsScaleTitle.Location = new Point(4, 81);
             lblGoodsScaleTitle.Name = "lblGoodsScaleTitle";
-            lblGoodsScaleTitle.Size = new Size(135, 35);
+            lblGoodsScaleTitle.Size = new Size(135, 39);
             lblGoodsScaleTitle.TabIndex = 0;
             lblGoodsScaleTitle.Text = "KL hàng";
             lblGoodsScaleTitle.TextAlign = ContentAlignment.MiddleLeft;
@@ -361,9 +361,9 @@
             // 
             lblGoodsScale.Dock = DockStyle.Fill;
             lblGoodsScale.Font = new Font("Digital-7", 28F, FontStyle.Bold);
-            lblGoodsScale.Location = new Point(146, 73);
+            lblGoodsScale.Location = new Point(146, 81);
             lblGoodsScale.Name = "lblGoodsScale";
-            lblGoodsScale.Size = new Size(168, 35);
+            lblGoodsScale.Size = new Size(168, 39);
             lblGoodsScale.TabIndex = 0;
             lblGoodsScale.Text = "0";
             lblGoodsScale.TextAlign = ContentAlignment.MiddleCenter;
@@ -372,9 +372,9 @@
             // 
             lblSecondScale.Dock = DockStyle.Fill;
             lblSecondScale.Font = new Font("Digital-7", 28F, FontStyle.Bold);
-            lblSecondScale.Location = new Point(146, 37);
+            lblSecondScale.Location = new Point(146, 41);
             lblSecondScale.Name = "lblSecondScale";
-            lblSecondScale.Size = new Size(168, 35);
+            lblSecondScale.Size = new Size(168, 39);
             lblSecondScale.TabIndex = 0;
             lblSecondScale.Text = "0";
             lblSecondScale.TextAlign = ContentAlignment.MiddleCenter;
@@ -385,7 +385,7 @@
             lblFirstScale.Font = new Font("Digital-7", 28F, FontStyle.Bold);
             lblFirstScale.Location = new Point(146, 1);
             lblFirstScale.Name = "lblFirstScale";
-            lblFirstScale.Size = new Size(168, 35);
+            lblFirstScale.Size = new Size(168, 39);
             lblFirstScale.TabIndex = 0;
             lblFirstScale.Text = "0";
             lblFirstScale.TextAlign = ContentAlignment.MiddleCenter;
@@ -395,9 +395,9 @@
             lblMoney.Dock = DockStyle.Fill;
             lblMoney.Font = new Font("Digital-7", 28F, FontStyle.Bold);
             lblMoney.ForeColor = Color.FromArgb(192, 0, 0);
-            lblMoney.Location = new Point(146, 109);
+            lblMoney.Location = new Point(146, 121);
             lblMoney.Name = "lblMoney";
-            lblMoney.Size = new Size(168, 37);
+            lblMoney.Size = new Size(168, 40);
             lblMoney.TabIndex = 0;
             lblMoney.Text = "0";
             lblMoney.TextAlign = ContentAlignment.MiddleCenter;

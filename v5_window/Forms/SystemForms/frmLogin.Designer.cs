@@ -49,6 +49,7 @@ namespace iParkingv5_window.Forms.SystemForms
             ucNotify1 = new Usercontrols.BuildControls.ucNotify();
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             timerRefreshToken = new System.Windows.Forms.Timer(components);
+            timerRestartSocket = new System.Windows.Forms.Timer(components);
             panelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picLogo).BeginInit();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
@@ -243,6 +244,11 @@ namespace iParkingv5_window.Forms.SystemForms
             timerRefreshToken.Interval = 60000;
             timerRefreshToken.Tick += timerRefreshToken_Tick;
             // 
+            // timerRestartSocket
+            // 
+            timerRestartSocket.Interval = 3600000;
+            timerRestartSocket.Tick += timerRestartSocket_Tick;
+            // 
             // frmLogin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -284,5 +290,6 @@ namespace iParkingv5_window.Forms.SystemForms
         private Usercontrols.BuildControls.ucLoading ucLoading1;
         private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
         private System.Windows.Forms.Timer timerRefreshToken;
+        private System.Windows.Forms.Timer timerRestartSocket;
     }
 }

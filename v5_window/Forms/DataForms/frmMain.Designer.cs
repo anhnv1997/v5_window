@@ -60,6 +60,7 @@
             label1 = new Label();
             splitterDevelopeMode = new Splitter();
             timerUpdateControllerConnection = new System.Windows.Forms.Timer(components);
+            timerRestartSockerServer = new System.Windows.Forms.Timer(components);
             menuStrip1.SuspendLayout();
             panelMain.SuspendLayout();
             panelAppStatus.SuspendLayout();
@@ -137,6 +138,7 @@
             tsmiAlarmReport.Name = "tsmiAlarmReport";
             tsmiAlarmReport.Size = new Size(203, 26);
             tsmiAlarmReport.Text = "Sự kiện cảnh báo";
+            tsmiAlarmReport.Visible = false;
             tsmiAlarmReport.Click += tsmiAlarmReport_Click;
             tsmiAlarmReport.MouseEnter += tsmiReport_MouseEnter;
             tsmiAlarmReport.MouseLeave += tsmiReport_MouseLeave;
@@ -375,6 +377,10 @@
             timerUpdateControllerConnection.Interval = 1000;
             timerUpdateControllerConnection.Tick += timerUpdateControllerConnection_Tick;
             // 
+            // timerRestartSockerServer
+            // 
+            timerRestartSockerServer.Interval = 3600000;
+            // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -434,5 +440,6 @@
         private Label lblScale;
         private ToolStripMenuItem báoCáoCânToolStripMenuItem;
         private ToolStripMenuItem btnScaleReport;
+        private System.Windows.Forms.Timer timerRestartSockerServer;
     }
 }

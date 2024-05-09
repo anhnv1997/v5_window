@@ -12,6 +12,10 @@ using Kztek.Tool;
 using Kztek.Tools;
 using KztekKeyRegister;
 using System.Diagnostics;
+using static Kztek.Tools.LogHelper;
+using System.Net.Sockets;
+using System.Net;
+using System.Text;
 
 namespace v6_window
 {
@@ -33,6 +37,10 @@ namespace v6_window
                 PathManagement.baseBath = LogHelper.SaveLogFolder = Application.StartupPath;
                 LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Khởi chạy ứng dụng");
                 string appCode = "IP_DA_V5_LU";
+                List<string> notes = new List<string>();
+                notes.Add("note1");
+                notes.Add("note2");
+                string a = Newtonsoft.Json.JsonConvert.SerializeObject(notes);
                 using (Mutex mutex = new Mutex(true, appName, out bool ownmutex))
                 {
                     if (ownmutex)
@@ -113,6 +121,8 @@ namespace v6_window
                 }
             }
         }
+
+
         private static void LoadSystemConfig()
         {
             try
@@ -179,14 +189,29 @@ namespace v6_window
                     string fileName = realUpdateFiles[i];
                     if (realCurrentFiles.Contains(fileName))
                     {
-                        string currentFilePath = Path.Combine(Application.StartupPath, fileName);
-                        string updateFilePath = updatefiles[i];
+                        string currentFilePath = currentVersionFiles.Where(e => e.Contains(fileName)).FirstOrDefault() ?? "";
+                         string updateFilePath = updatefiles[i];
 
-                        FileVersionInfo currentFileVersionInfo = FileVersionInfo.GetVersionInfo(currentFilePath);
-                        string currentFilePathVersion = currentFileVersionInfo.FileVersion!;
+                        string? currentFilePathVersion = null;
+                        string? updateFilePathVersion = null;
+                        try
+                        {
+                            FileVersionInfo currentFileVersionInfo = FileVersionInfo.GetVersionInfo(currentFilePath);
+                            currentFilePathVersion = currentFileVersionInfo?.FileVersion;
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        try
+                        {
+                            FileVersionInfo updateFileVersionInfo = FileVersionInfo.GetVersionInfo(updateFilePath);
+                            updateFilePathVersion = updateFileVersionInfo?.FileVersion;
+                        }
+                        catch (Exception)
+                        {
+                        }
 
-                        FileVersionInfo updateFileVersionInfo = FileVersionInfo.GetVersionInfo(updateFilePath);
-                        string updateFilePathVersion = updateFileVersionInfo.FileVersion!;
+
 
                         if (currentFilePathVersion != updateFilePathVersion)
                         {

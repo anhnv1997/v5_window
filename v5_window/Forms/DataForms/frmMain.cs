@@ -18,6 +18,7 @@ using Kztek.Tools;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Reflection;
 using System.Text;
 using v5_IScale.Forms.ReportForms;
@@ -186,29 +187,36 @@ namespace iParkingv5_window.Forms.DataForms
         {
             FormClosing -= frmMain_FormClosing;
 
-            List<string> orderConfig = this.ucViewGrid1.GetOrderConfig();
-
-            this.laneDisplayConfigs = new List<LaneDisplayConfig>();
-
-            for (int i = 0; i < lanes.Count; i++)
+            
+            this.Invoke(new Action(() =>
             {
-                LaneDisplayConfig displayConfig = lanes[i].SaveUIConfig();
-                displayConfig.DisplayIndex = i;
-                laneDisplayConfigs.Add(displayConfig);
-            }
+                List<string> orderConfig = this.ucViewGrid1.GetOrderConfig();
 
-            List<LaneDisplayConfig> sortedLaneDisplayConfigs = laneDisplayConfigs
-                   .OrderBy(item => orderConfig.IndexOf(item.LaneId))
-                   .ToList();
-            for (int i = 0; i < sortedLaneDisplayConfigs.Count; i++)
+                this.laneDisplayConfigs = new List<LaneDisplayConfig>();
+
+                for (int i = 0; i < lanes.Count; i++)
+                {
+                    LaneDisplayConfig displayConfig = lanes[i].SaveUIConfig();
+                    displayConfig.DisplayIndex = i;
+                    laneDisplayConfigs.Add(displayConfig);
+                }
+
+                List<LaneDisplayConfig> sortedLaneDisplayConfigs = laneDisplayConfigs
+                       .OrderBy(item => orderConfig.IndexOf(item.LaneId))
+                       .ToList();
+                for (int i = 0; i < sortedLaneDisplayConfigs.Count; i++)
+                {
+                    sortedLaneDisplayConfigs[i].DisplayIndex = i;
+                }
+                this.laneDisplayConfigs = sortedLaneDisplayConfigs; SaveUIConfig();
+            }));
+            if (e.CloseReason == CloseReason.UserClosing)
             {
-                sortedLaneDisplayConfigs[i].DisplayIndex = i;
+                Application.Exit();
+                Environment.Exit(0);
             }
-            this.laneDisplayConfigs = sortedLaneDisplayConfigs;
-            SaveUIConfig();
+            //((Form)this.Owner).Close();
 
-            Application.Exit();
-            Environment.Exit(0);
         }
         #endregion
 
@@ -216,6 +224,7 @@ namespace iParkingv5_window.Forms.DataForms
         private void tsmiExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
+            Environment.Exit(0);
         }
         private void tsmiAlarmReport_Click(object sender, EventArgs e)
         {
@@ -563,15 +572,15 @@ namespace iParkingv5_window.Forms.DataForms
                     {
                         if (laneDisplayConfig.LaneId == item.lane.id)
                         {
-                            laneDisplayConfig.DisplayIndex  = temp.DisplayIndex;
-                            laneDisplayConfig.splitContainerEventContent  = temp.splitContainerEventContent;
-                            laneDisplayConfig.splitContainerMain  = temp.splitContainerMain;
-                            laneDisplayConfig.SplitterCameraPosition  = temp.SplitterCameraPosition;
-                            laneDisplayConfig.splitEventInfoWithCameraPosition  = temp.splitEventInfoWithCameraPosition;
+                            laneDisplayConfig.DisplayIndex = temp.DisplayIndex;
+                            laneDisplayConfig.splitContainerEventContent = temp.splitContainerEventContent;
+                            laneDisplayConfig.splitContainerMain = temp.splitContainerMain;
+                            laneDisplayConfig.SplitterCameraPosition = temp.SplitterCameraPosition;
+                            laneDisplayConfig.splitEventInfoWithCameraPosition = temp.splitEventInfoWithCameraPosition;
                         }
                     }
                 }
-                
+
 
             }
             SaveUIConfig();
@@ -768,6 +777,11 @@ namespace iParkingv5_window.Forms.DataForms
         private void btnScaleReport_Click(object sender, EventArgs e)
         {
             new frmReportScaleWithInvoice().ShowDialog();
+        }
+
+        private void aToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
         }
     }
 }

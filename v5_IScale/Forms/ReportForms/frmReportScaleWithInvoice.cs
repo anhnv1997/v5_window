@@ -164,7 +164,7 @@ namespace v5_IScale.Forms.ReportForms
                 if (!string.IsNullOrEmpty(firstScaleImage))
                 {
                     string[] firstScaleImages = firstScaleImage.Split(";");
-                    if (firstScaleImages.Length > 0)
+                    if (firstScaleImages.Length > 1)
                     {
                         string firstWeightPath = await MinioHelper.GetImage(firstScaleImages[1]);
                         this.Invoke(new Action(() =>
@@ -181,7 +181,7 @@ namespace v5_IScale.Forms.ReportForms
                 if (!string.IsNullOrEmpty(secondScaleImage))
                 {
                     string[] secondScaleImages = secondScaleImage.Split(";");
-                    if (secondScaleImages.Length > 0)
+                    if (secondScaleImages.Length > 1)
                     {
                         string tempPath = await MinioHelper.GetImage(secondScaleImages[1]);
                         this.Invoke(new Action(() =>

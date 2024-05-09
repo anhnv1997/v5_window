@@ -71,14 +71,14 @@ namespace v5_IScale.Forms.ReportForms
             panel1 = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
             panel4 = new Panel();
-            picSecondWeight = new iParkingv5_window.Usercontrols.MovablePictureBox();
             label8 = new Label();
+            picSecondWeight = new iParkingv5_window.Usercontrols.MovablePictureBox();
             panel3 = new Panel();
-            picFirstWeight = new iParkingv5_window.Usercontrols.MovablePictureBox();
             label7 = new Label();
+            picFirstWeight = new iParkingv5_window.Usercontrols.MovablePictureBox();
             panel2 = new Panel();
-            movablePictureBox1 = new iParkingv5_window.Usercontrols.MovablePictureBox();
             label6 = new Label();
+            picVehicleImage = new iParkingv5_window.Usercontrols.MovablePictureBox();
             groupBox2 = new GroupBox();
             cbPrintMode = new ComboBox();
             btnPrintInternetEInvoice = new Button();
@@ -93,7 +93,7 @@ namespace v5_IScale.Forms.ReportForms
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picFirstWeight).BeginInit();
             panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)movablePictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picVehicleImage).BeginInit();
             groupBox2.SuspendLayout();
             SuspendLayout();
             // 
@@ -422,7 +422,7 @@ namespace v5_IScale.Forms.ReportForms
             tableLayoutPanel1.Controls.Add(panel3, 1, 0);
             tableLayoutPanel1.Controls.Add(panel2, 0, 0);
             tableLayoutPanel1.Location = new Point(399, 81);
-            tableLayoutPanel1.Margin = new Padding(4, 3, 4, 3);
+            tableLayoutPanel1.Margin = new Padding(0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
@@ -431,29 +431,19 @@ namespace v5_IScale.Forms.ReportForms
             // 
             // panel4
             // 
-            panel4.Controls.Add(picSecondWeight);
             panel4.Controls.Add(label8);
+            panel4.Controls.Add(picSecondWeight);
             panel4.Dock = DockStyle.Fill;
-            panel4.Location = new Point(512, 5);
-            panel4.Margin = new Padding(4, 3, 4, 3);
+            panel4.Location = new Point(508, 2);
+            panel4.Margin = new Padding(0);
             panel4.Name = "panel4";
-            panel4.Size = new Size(244, 153);
+            panel4.Size = new Size(252, 159);
             panel4.TabIndex = 0;
-            // 
-            // picSecondWeight
-            // 
-            picSecondWeight.Dock = DockStyle.Fill;
-            picSecondWeight.Location = new Point(0, 20);
-            picSecondWeight.Margin = new Padding(4);
-            picSecondWeight.Name = "picSecondWeight";
-            picSecondWeight.Size = new Size(244, 133);
-            picSecondWeight.SizeMode = PictureBoxSizeMode.Zoom;
-            picSecondWeight.TabIndex = 1;
-            picSecondWeight.TabStop = false;
             // 
             // label8
             // 
             label8.AutoSize = true;
+            label8.BackColor = Color.Transparent;
             label8.Dock = DockStyle.Top;
             label8.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             label8.ForeColor = Color.FromArgb(0, 0, 192);
@@ -464,31 +454,33 @@ namespace v5_IScale.Forms.ReportForms
             label8.TabIndex = 0;
             label8.Text = "ẢNH XE CÂN 2";
             // 
+            // picSecondWeight
+            // 
+            picSecondWeight.Dock = DockStyle.Fill;
+            picSecondWeight.Location = new Point(0, 0);
+            picSecondWeight.Margin = new Padding(0);
+            picSecondWeight.Name = "picSecondWeight";
+            picSecondWeight.Size = new Size(252, 159);
+            picSecondWeight.SizeMode = PictureBoxSizeMode.Zoom;
+            picSecondWeight.TabIndex = 1;
+            picSecondWeight.TabStop = false;
+            picSecondWeight.LoadCompleted += Pic_LoadCompleted;
+            // 
             // panel3
             // 
-            panel3.Controls.Add(picFirstWeight);
             panel3.Controls.Add(label7);
+            panel3.Controls.Add(picFirstWeight);
             panel3.Dock = DockStyle.Fill;
-            panel3.Location = new Point(259, 5);
-            panel3.Margin = new Padding(4, 3, 4, 3);
+            panel3.Location = new Point(255, 2);
+            panel3.Margin = new Padding(0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(243, 153);
+            panel3.Size = new Size(251, 159);
             panel3.TabIndex = 0;
-            // 
-            // picFirstWeight
-            // 
-            picFirstWeight.Dock = DockStyle.Fill;
-            picFirstWeight.Location = new Point(0, 20);
-            picFirstWeight.Margin = new Padding(4);
-            picFirstWeight.Name = "picFirstWeight";
-            picFirstWeight.Size = new Size(243, 133);
-            picFirstWeight.SizeMode = PictureBoxSizeMode.Zoom;
-            picFirstWeight.TabIndex = 1;
-            picFirstWeight.TabStop = false;
             // 
             // label7
             // 
             label7.AutoSize = true;
+            label7.BackColor = Color.Transparent;
             label7.Dock = DockStyle.Top;
             label7.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             label7.ForeColor = Color.FromArgb(0, 0, 192);
@@ -499,31 +491,33 @@ namespace v5_IScale.Forms.ReportForms
             label7.TabIndex = 0;
             label7.Text = "ẢNH XE CÂN 1";
             // 
+            // picFirstWeight
+            // 
+            picFirstWeight.Dock = DockStyle.Fill;
+            picFirstWeight.Location = new Point(0, 0);
+            picFirstWeight.Margin = new Padding(0);
+            picFirstWeight.Name = "picFirstWeight";
+            picFirstWeight.Size = new Size(251, 159);
+            picFirstWeight.SizeMode = PictureBoxSizeMode.Zoom;
+            picFirstWeight.TabIndex = 1;
+            picFirstWeight.TabStop = false;
+            picFirstWeight.LoadCompleted += Pic_LoadCompleted;
+            // 
             // panel2
             // 
-            panel2.Controls.Add(movablePictureBox1);
             panel2.Controls.Add(label6);
+            panel2.Controls.Add(picVehicleImage);
             panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(6, 5);
-            panel2.Margin = new Padding(4, 3, 4, 3);
+            panel2.Location = new Point(2, 2);
+            panel2.Margin = new Padding(0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(243, 153);
+            panel2.Size = new Size(251, 159);
             panel2.TabIndex = 0;
-            // 
-            // movablePictureBox1
-            // 
-            movablePictureBox1.Dock = DockStyle.Fill;
-            movablePictureBox1.Location = new Point(0, 20);
-            movablePictureBox1.Margin = new Padding(4);
-            movablePictureBox1.Name = "movablePictureBox1";
-            movablePictureBox1.Size = new Size(243, 133);
-            movablePictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            movablePictureBox1.TabIndex = 1;
-            movablePictureBox1.TabStop = false;
             // 
             // label6
             // 
             label6.AutoSize = true;
+            label6.BackColor = Color.Transparent;
             label6.Dock = DockStyle.Top;
             label6.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             label6.ForeColor = Color.FromArgb(0, 0, 192);
@@ -533,6 +527,18 @@ namespace v5_IScale.Forms.ReportForms
             label6.Size = new Size(100, 20);
             label6.TabIndex = 0;
             label6.Text = "ẢNH XE VÀO";
+            // 
+            // picVehicleImage
+            // 
+            picVehicleImage.Dock = DockStyle.Fill;
+            picVehicleImage.Location = new Point(0, 0);
+            picVehicleImage.Margin = new Padding(0);
+            picVehicleImage.Name = "picVehicleImage";
+            picVehicleImage.Size = new Size(251, 159);
+            picVehicleImage.SizeMode = PictureBoxSizeMode.Zoom;
+            picVehicleImage.TabIndex = 1;
+            picVehicleImage.TabStop = false;
+            picVehicleImage.LoadCompleted += Pic_LoadCompleted;
             // 
             // groupBox2
             // 
@@ -634,7 +640,7 @@ namespace v5_IScale.Forms.ReportForms
             ((System.ComponentModel.ISupportInitialize)picFirstWeight).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)movablePictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picVehicleImage).EndInit();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             ResumeLayout(false);
@@ -671,7 +677,7 @@ namespace v5_IScale.Forms.ReportForms
         private Label label6;
         private iParkingv5_window.Usercontrols.MovablePictureBox picSecondWeight;
         private iParkingv5_window.Usercontrols.MovablePictureBox picFirstWeight;
-        private iParkingv5_window.Usercontrols.MovablePictureBox movablePictureBox1;
+        private iParkingv5_window.Usercontrols.MovablePictureBox picVehicleImage;
         private DataGridViewTextBoxColumn Column13;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;

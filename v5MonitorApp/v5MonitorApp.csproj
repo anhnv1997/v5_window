@@ -1,0 +1,60 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>icons8_workspace.ico</ApplicationIcon>
+    <Version>1.0.0.3</Version>
+    <PackageIcon>icons8_workspace_64px_1.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="icons8_workspace.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\Admin\OneDrive\Desktop\ParkingImages\icons8_workspace_64px_1.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IdentityModel" Version="7.0.0" />
+    <PackageReference Include="IdentityModel.OidcClient" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2478.35" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\Kztek.Tool\Kztek.Tool.csproj" />
+    <ProjectReference Include="..\iPakrkingv5.Controls\iPakrkingv5.Controls.csproj" />
+    <ProjectReference Include="..\iParking.ConfigurationManager\iParking.ConfigurationManager.csproj" />
+    <ProjectReference Include="..\iParkingv5.ApiManager\iParkingv5.ApiManager.csproj" />
+    <ProjectReference Include="..\iParkingv5.Objects\iParkingv5.Objects.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Forms\SystemForms\frmLoading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\SystemForms\frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

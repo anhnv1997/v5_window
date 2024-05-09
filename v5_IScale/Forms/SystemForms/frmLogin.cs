@@ -5,7 +5,13 @@ using iParkingv5.Objects;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using Kztek.Tool;
 using Kztek.Tools;
+using System.Diagnostics;
+using System.Net.Sockets;
+using System.Net;
+using System.Reflection;
+using System.Text;
 using v5_IScale.Usercontrols;
+using static Kztek.Tools.LogHelper;
 namespace v5_IScale.Forms.SystemForms
 {
     public partial class frmLogin : Form
@@ -13,6 +19,8 @@ namespace v5_IScale.Forms.SystemForms
         #region Properties
         private int waitTimeForLogin = 0;
         List<Control> activeControls = new List<Control>();
+        public static Socket? socket_listener;
+        private CancellationTokenSource? ctsSocket;
         #endregion End Properties
 
         #region Forms
@@ -57,6 +65,7 @@ namespace v5_IScale.Forms.SystemForms
                         ValidateIssuerName = false
                     },
                 },
+
             };
 
             _oidcClient = new OidcClient(options);
@@ -85,74 +94,20 @@ namespace v5_IScale.Forms.SystemForms
             else
             {
                 timerRefreshToken.Enabled = true;
+                StartSocketServer();
+                timerRestartSocket.Enabled = true;
                 NewtonSoftHelper<string>.SaveConfig(loginResult.RefreshToken, PathManagement.tokenPath);
-
+                this.refreshToken = loginResult.RefreshToken;
                 this.Hide();
                 //KzParkingApiHelper.token = loginResult.TokenResponse.AccessToken;
                 KzParkingv5ApiHelper.token = loginResult.TokenResponse.AccessToken;
                 await KzParkingv5ApiHelper.GetUserInfor();
-
                 frmLoading frm = new()
                 {
                     Owner = this
                 };
                 frm.Show();
             }
-        }
-
-        private void FrmLogin_Load(object? sender, EventArgs e)
-        {
-            activeControls = new()
-            {
-                txtUsername,
-                txtPassword,
-                btnCancel1,
-                btnLogin
-            };
-            ucNotify1.OnSelectResultEvent += UcNotify1_OnSelectResultEvent;
-
-            panelMain.Padding = new Padding(StaticPool.baseSize);
-            panelMain.Font = new Font(panelMain.Font.Name, StaticPool.baseSize);
-
-            btnCancel1.InitControl(btnExit_Click);
-            btnLogin.InitControl(btnLogin_Click);
-
-            lblLoginTitle.Location = new Point(StaticPool.baseSize * 2,
-                                               picLogo.Location.Y + picLogo.Height + StaticPool.baseSize * 2);
-
-            lblUsername.Location = new Point(lblLoginTitle.Location.X,
-                                             lblLoginTitle.Location.Y + lblLoginTitle.Height + StaticPool.baseSize);
-            txtUsername.Location = new Point(lblUsername.Location.X + lblUsername.Width + StaticPool.baseSize,
-                                             lblUsername.Location.Y + (lblUsername.Height - txtUsername.Height) / 2);
-            txtUsername.Width = panelMain.Width - txtUsername.Location.X - StaticPool.baseSize * 2;
-
-            txtPassword.Location = new Point(txtUsername.Location.X,
-                                             txtUsername.Location.Y + txtUsername.Height + StaticPool.baseSize / 2);
-            txtPassword.Width = txtUsername.Width;
-            lblPassword.Location = new Point(lblUsername.Location.X,
-                                             txtPassword.Location.Y + (txtPassword.Height - lblPassword.Height) / 2);
-
-            chbIsRemember.Location = new Point(txtPassword.Location.X,
-                                               txtPassword.Location.Y + txtPassword.Height + StaticPool.baseSize / 2);
-
-            this.Height = chbIsRemember.Location.Y + chbIsRemember.Height + btnCancel1.Height + StaticPool.baseSize * 3 + this.Height - this.DisplayRectangle.Height;
-
-            btnCancel1.Location = new Point(panelMain.Width - btnCancel1.Width - StaticPool.baseSize * 2,
-                                            chbIsRemember.Location.Y + chbIsRemember.Height + StaticPool.baseSize);
-
-            btnLogin.Location = new Point(btnCancel1.Location.X - btnLogin.Width - StaticPool.baseSize / 2,
-                                          btnCancel1.Location.Y);
-
-            lblStatus.Location = new Point(lblLoginTitle.Location.X,
-                                           btnLogin.Location.Y + (btnLogin.Height - lblStatus.Height) / 2);
-
-            timerAutoConnect.Enabled = true;
-            if (File.Exists(Application.StartupPath + @"Resources\defaultImage.png"))
-            {
-                picLogo.Image = Image.FromFile(Application.StartupPath + @"Resources\logo.png");
-            }
-
-            this.ActiveControl = btnLogin;
         }
 
         #endregion End Forms
@@ -285,7 +240,8 @@ namespace v5_IScale.Forms.SystemForms
                     this.refreshToken = refreshToken.RefreshToken;
                     this.Hide();
                     await KzParkingv5ApiHelper.GetUserInfor();
-
+                    StartSocketServer();
+                    timerRestartSocket.Enabled = true;
                     frmLoading frm = new()
                     {
                         Owner = this
@@ -306,8 +262,6 @@ namespace v5_IScale.Forms.SystemForms
                 timerAutoConnect.Enabled = true;
             }
         }
-        #endregion END TIMER
-
         private async void timerRefreshToken_Tick(object sender, EventArgs e)
         {
             timerRefreshToken.Enabled = false;
@@ -322,6 +276,205 @@ namespace v5_IScale.Forms.SystemForms
             }
 
             timerRefreshToken.Enabled = true;
+        }
+        private void timerRestartSocket_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                timerRestartSocket.Enabled = false;
+                ctsSocket?.Cancel();
+                socket_listener?.Close();
+                socket_listener?.Dispose();
+                StartSocketServer();
+            }
+            catch (Exception ex)
+            {
+                Log(EmLogType.ERROR, EmObjectLogType.System,
+                    hanh_dong: "frmMain ", noi_dung_hanh_dong: "Restart socker server",
+                    obj: ex);
+            }
+            finally
+            {
+                timerRestartSocket.Enabled = true;
+            }
+        }
+        #endregion END TIMER
+
+        private void StartSocketServer()
+        {
+            int port = 100;
+            // Get the IP addresses associated with the PC name
+            //IPAddress[] ipAddressList = Dns.GetHostAddresses(Environment.MachineName);
+            var LocalPort = port;
+            var localEndPoint = new IPEndPoint(IPAddress.Any, LocalPort);
+            socket_listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            try
+            {
+                socket_listener.Bind(localEndPoint);
+                socket_listener.Listen(10);
+                //isListening = true;
+                ctsSocket = new CancellationTokenSource();
+                Task.Run(() => PollingReceiveSocketMessage(ctsSocket.Token));
+            }
+            catch (Exception ex)
+            {
+                Log(EmLogType.ERROR, EmObjectLogType.System,
+                    hanh_dong: "frmMain", noi_dung_hanh_dong: "Start Socket Server",
+                    //mo_ta_them: ipAddressList,
+                    obj: ex);
+            }
+        }
+        private async Task PollingReceiveSocketMessage(CancellationToken ctsToken)
+        {
+            while (!ctsToken.IsCancellationRequested)
+            {
+                try
+                {
+                    int recv;
+                    byte[] data = new byte[1024];
+                    while (true)
+                    {
+                        var socket = socket_listener!.Accept();
+
+                        #region: __________________________Receive command__________________________
+                        data = new byte[1024];
+                        recv = socket.Receive(data);
+                        socket.Shutdown(SocketShutdown.Receive);
+                        string receiceMessage = Encoding.ASCII.GetString(data, 0, recv);
+                        #endregion
+
+                        if (!string.IsNullOrEmpty(receiceMessage))
+                        {
+                            if (receiceMessage == "GetVersion?/")
+                            {
+                                string ParkingAppVersion = Assembly.GetExecutingAssembly().GetName().Version!.ToString();
+                                string apiManagerVersion = FileVersionInfo.GetVersionInfo(Path.Combine(PathManagement.baseBath, "iParkingv5.ApiManager.dll")).FileVersion!.ToString();
+                                string lprAIVersion = FileVersionInfo.GetVersionInfo(Path.Combine(PathManagement.baseBath, "NXT.Net6.LPR_AI.dll")).FileVersion!.ToString();
+                                string response = "Parking App Version: " + ParkingAppVersion;
+                                response += "\r\nApi Manager Version" + apiManagerVersion;
+                                response += "\r\nLPR AI Version" + lprAIVersion;
+                                socket.Send(Encoding.UTF8.GetBytes(response));
+                            }
+                            else if (receiceMessage == "RestartSoftware?/")
+                            {
+                                socket.Send(Encoding.UTF8.GetBytes("RestartSoftware?/OK"));
+                                socket.Shutdown(SocketShutdown.Send);
+                                Application.Restart();
+                                Application.Exit();
+                                Environment.Exit(0);
+                                return;
+                            }
+                            else if (receiceMessage == "CheckUpdate?/")
+                            {
+                                bool isHaveUpdate = CheckForUpdate(out List<string> updateDetails);
+                                socket.Send(Encoding.UTF8.GetBytes(isHaveUpdate ? "Có bản update:\r\n" + string.Join("\r\n", updateDetails.ToArray()) : "Phiên bản hiện tại đã là mới nhất"));
+                            }
+                            else if (receiceMessage.Contains("Support?/"))
+                            {
+                                string timeLog = receiceMessage.Substring(receiceMessage.IndexOf("/") + 1);
+                                await GetLogFile(DateTime.Parse(timeLog));
+                                socket.Send(Encoding.UTF8.GetBytes("Saved Log File To Minio"));
+                            }
+                        }
+                        else
+                        {
+                            socket.Send(Encoding.UTF8.GetBytes("Received Empty Message"));
+                        }
+                        socket.Shutdown(SocketShutdown.Send);
+                    }
+                }
+                catch (Exception ex)
+                {
+                }
+                finally
+                {
+                    GC.Collect();
+                    await Task.Delay(500, ctsToken);
+                }
+            }
+        }
+        private static bool CheckForUpdate(out List<string> updateDetail)
+        {
+            updateDetail = new List<string>();
+            if (string.IsNullOrEmpty(StaticPool.appOption.CheckForUpdatePath)) return false;
+
+            if (!Directory.Exists(StaticPool.appOption.CheckForUpdatePath)) return false;
+
+            try
+            {
+                bool isHavingUpdate = false;
+                // Get all files in the specified path and its subdirectories
+                string[] updatefiles = Directory.GetFiles(StaticPool.appOption.CheckForUpdatePath, "*", SearchOption.AllDirectories);
+                List<string> realUpdateFiles = new List<string>();
+                foreach (string file in updatefiles)
+                {
+                    realUpdateFiles.Add(Path.GetFileName(file));
+                }
+
+                string[] currentVersionFiles = Directory.GetFiles(Application.StartupPath, "*", SearchOption.AllDirectories);
+                List<string> realCurrentFiles = new List<string>();
+                foreach (string file in currentVersionFiles)
+                {
+                    string relativePath = file.Remove(0, Application.StartupPath.Length);
+                    realCurrentFiles.Add(Path.GetFileName(file));
+                }
+
+                for (int i = 0; i < realUpdateFiles.Count; i++)
+                {
+                    string fileName = realUpdateFiles[i];
+                    if (realCurrentFiles.Contains(fileName))
+                    {
+                        string currentFilePath = Path.Combine(Application.StartupPath, fileName);
+                        string updateFilePath = updatefiles[i];
+
+                        FileVersionInfo currentFileVersionInfo = FileVersionInfo.GetVersionInfo(currentFilePath);
+                        string currentFilePathVersion = currentFileVersionInfo.FileVersion!;
+
+                        FileVersionInfo updateFileVersionInfo = FileVersionInfo.GetVersionInfo(updateFilePath);
+                        string updateFilePathVersion = updateFileVersionInfo.FileVersion!;
+
+                        if (currentFilePathVersion != updateFilePathVersion)
+                        {
+                            updateDetail.Add(fileName + " " + currentFilePathVersion + " - UPDATE: " + updateFilePathVersion);
+                            isHavingUpdate = true;
+                        }
+                        //update file text
+                        else if (updateFilePathVersion == null && currentFilePathVersion == null)
+                        {
+                            System.IO.File.Delete(currentFilePath);
+                            System.IO.File.Copy(updateFilePath, currentFilePath);
+                        }
+                    }
+                    //THÊM FILE CHƯA CÓ
+                    else
+                    {
+                        updateDetail.Add(fileName + " - ADD");
+                        isHavingUpdate = true;
+                    }
+                }
+
+                if (isHavingUpdate)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        private async Task GetLogFile(DateTime time)
+        {
+            string dir = Path.Combine(PathManagement.baseBath, $@"logs\{time.Year}\{time.Month}\{time.Day}\");
+            if (Directory.Exists(dir))
+            {
+                var files = Directory.GetFiles(dir);
+                foreach (var file in files)
+                {
+                    await MinioHelper.UploadFile(Path.GetFileName(file), file, Environment.MachineName, time);
+                }
+            }
         }
     }
 }

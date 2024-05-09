@@ -1320,7 +1320,6 @@ namespace iParkingv5_window.Usercontrols
         }
         #endregion END EVENT
 
-
         #region PROPERTIES
         public bool isScale { get; set; }
         public int ScaleValue { get; set; }
@@ -1936,9 +1935,7 @@ namespace iParkingv5_window.Usercontrols
             ucTop3Event = new ucLastEventInfo(false);
             ucTop2Event = new ucLastEventInfo(true);
             ucTop1Event = new ucLastEventInfo(true);
-            ucTop3Event.Size = new Size(250, 0);
-            ucTop2Event.Size = new Size(250, 0);
-            ucTop1Event.Size = new Size(250, 0);
+            ucTop1Event.Size = ucTop2Event.Size = ucTop3Event.Size = panel11.Width > 750 ? new Size(250, 0) : new Size(125, 0);
 
             panel11.Controls.Add(ucTop3Event);
             panel11.Controls.Add(ucTop2Event);
@@ -1982,7 +1979,7 @@ namespace iParkingv5_window.Usercontrols
             DateTime endTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,
                                             23, 59, 59);
             //Tuple<List<EventOutReport>, int, int> top3Event = await KzParkingApiHelper.GetEventOuts("", startTime, endTime, "", "", this.lane.id, 1, 3);
-            var top3Event = await KzParkingv5ApiHelper.GetEventOuts("", startTime, endTime, "", "", this.lane.id, 1, 3);
+            var top3Event = await KzParkingv5ApiHelper.GetEventOuts("", startTime, endTime, "", "", this.lane.id, "",1, 3);
             if (top3Event != null)
             {
                 for (int i = 0; i < top3Event.Rows.Count; i++)
@@ -2195,7 +2192,7 @@ namespace iParkingv5_window.Usercontrols
                 dgvEventContent.Columns[0].Visible = laneDirection.IsDisplayTitle;
                 if (!string.IsNullOrEmpty(note))
                 {
-                    string[] noteArray = note.Split(";");
+                    string[] noteArray = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(note)!.ToArray();// note.Split(";");
                     lblNote1.Text = noteArray.Length > 0 ? noteArray[0] : "";
                     lblNote2.Text = noteArray.Length > 1 ? noteArray[1] : "";
                 }
@@ -2386,5 +2383,6 @@ namespace iParkingv5_window.Usercontrols
             }
         }
         #endregion END PUBLIC FUNCTION
+
     }
 }

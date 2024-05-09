@@ -180,21 +180,36 @@ namespace v5_IScale
                     string fileName = realUpdateFiles[i];
                     if (realCurrentFiles.Contains(fileName))
                     {
-                        string currentFilePath = Path.Combine(Application.StartupPath, fileName);
+                        string currentFilePath = currentVersionFiles.Where(e => e.Contains(fileName)).FirstOrDefault() ?? "";
                         string updateFilePath = updatefiles[i];
 
-                        FileVersionInfo currentFileVersionInfo = FileVersionInfo.GetVersionInfo(currentFilePath);
-                        string currentFilePathVersion = currentFileVersionInfo.FileVersion!;
+                        string? currentFilePathVersion = null;
+                        string? updateFilePathVersion = null;
+                        try
+                        {
+                            FileVersionInfo currentFileVersionInfo = FileVersionInfo.GetVersionInfo(currentFilePath);
+                            currentFilePathVersion = currentFileVersionInfo?.FileVersion;
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        try
+                        {
+                            FileVersionInfo updateFileVersionInfo = FileVersionInfo.GetVersionInfo(updateFilePath);
+                            updateFilePathVersion = updateFileVersionInfo?.FileVersion;
+                        }
+                        catch (Exception)
+                        {
+                        }
 
-                        FileVersionInfo updateFileVersionInfo = FileVersionInfo.GetVersionInfo(updateFilePath);
-                        string updateFilePathVersion = updateFileVersionInfo.FileVersion!;
+
 
                         if (currentFilePathVersion != updateFilePathVersion)
                         {
                             isHavingUpdate = true;
                             string newFilePath = Path.Combine(Application.StartupPath, fileName + "_bak_" + currentFilePathVersion + "_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm_ss"));
                             System.IO.File.Move(currentFilePath, newFilePath);
-                            File.Copy(updateFilePath, currentFilePath);
+                            System.IO.File.Copy(updateFilePath, currentFilePath);
                             while (!System.IO.File.Exists(currentFilePath))
                             {
                                 Thread.Sleep(10);

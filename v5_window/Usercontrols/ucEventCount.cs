@@ -27,17 +27,27 @@ namespace iParkingv5_window.Usercontrols
 
         private async void timerUpdateCount_Tick(object sender, EventArgs e)
         {
-            timerUpdateCount.Enabled = false;
-            var eventCountDetail = await KzParkingv5ApiHelper.SummaryEvent();
-            int totalVehicleInPark = eventCountDetail.countAllEventIn;
-            int vehicleInDay = eventCountDetail.totalVehicleIn;
-            int vehicleOutDay = eventCountDetail.totalEventOut;
+            try
+            {
+                timerUpdateCount.Enabled = false;
+                var eventCountDetail = await KzParkingv5ApiHelper.SummaryEvent();
+                int totalVehicleInPark = eventCountDetail.countAllEventIn;
+                int vehicleInDay = eventCountDetail.totalVehicleIn;
+                int vehicleOutDay = eventCountDetail.totalEventOut;
 
-            lblCurrentVehicleInPark.Text = totalVehicleInPark.ToString();
-            lblVehicleIn.Text = vehicleInDay.ToString();
-            lblVehicleOutDay.Text =  vehicleOutDay.ToString();
+                lblCurrentVehicleInPark.Text = totalVehicleInPark.ToString();
+                lblVehicleIn.Text = vehicleInDay.ToString();
+                lblVehicleOutDay.Text = vehicleOutDay.ToString();
 
-            timerUpdateCount.Enabled = true;
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                timerUpdateCount.Enabled = true;
+            }
+
         }
     }
 }

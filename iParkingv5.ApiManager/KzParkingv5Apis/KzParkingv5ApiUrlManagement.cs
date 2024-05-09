@@ -4,6 +4,7 @@
     {
         public enum EmParkingv5ObjectType
         {
+            User,
             Camera,
             Computer,
             ControlUnit,

@@ -60,7 +60,7 @@
             panel1.Location = new Point(0, 44);
             panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(883, 248);
+            panel1.Size = new Size(883, 327);
             panel1.TabIndex = 6;
             // 
             // dgvEventInData
@@ -92,7 +92,7 @@
             dgvEventInData.Name = "dgvEventInData";
             dgvEventInData.RowHeadersVisible = false;
             dgvEventInData.RowTemplate.Height = 29;
-            dgvEventInData.Size = new Size(602, 248);
+            dgvEventInData.Size = new Size(602, 327);
             dgvEventInData.TabIndex = 2;
             // 
             // Column1
@@ -114,7 +114,7 @@
             panelEventPic.Location = new Point(602, 0);
             panelEventPic.Margin = new Padding(3, 2, 3, 2);
             panelEventPic.Name = "panelEventPic";
-            panelEventPic.Size = new Size(281, 248);
+            panelEventPic.Size = new Size(281, 327);
             panelEventPic.TabIndex = 3;
             // 
             // tableLayoutPanel1
@@ -130,7 +130,7 @@
             tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(281, 248);
+            tableLayoutPanel1.Size = new Size(281, 327);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // picOverview
@@ -139,7 +139,7 @@
             picOverview.Location = new Point(3, 2);
             picOverview.Margin = new Padding(3, 2, 3, 2);
             picOverview.Name = "picOverview";
-            picOverview.Size = new Size(275, 120);
+            picOverview.Size = new Size(275, 159);
             picOverview.SizeMode = PictureBoxSizeMode.Zoom;
             picOverview.TabIndex = 0;
             picOverview.TabStop = false;
@@ -147,10 +147,10 @@
             // picVehicle
             // 
             picVehicle.Dock = DockStyle.Fill;
-            picVehicle.Location = new Point(3, 126);
+            picVehicle.Location = new Point(3, 165);
             picVehicle.Margin = new Padding(3, 2, 3, 2);
             picVehicle.Name = "picVehicle";
-            picVehicle.Size = new Size(275, 120);
+            picVehicle.Size = new Size(275, 160);
             picVehicle.SizeMode = PictureBoxSizeMode.Zoom;
             picVehicle.TabIndex = 0;
             picVehicle.TabStop = false;
@@ -171,7 +171,7 @@
             panelAction.Controls.Add(lblCancel1);
             panelAction.Controls.Add(btnOk1);
             panelAction.Dock = DockStyle.Bottom;
-            panelAction.Location = new Point(0, 292);
+            panelAction.Location = new Point(0, 371);
             panelAction.Margin = new Padding(3, 2, 3, 2);
             panelAction.Name = "panelAction";
             panelAction.Size = new Size(883, 46);
@@ -207,7 +207,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(883, 338);
+            ClientSize = new Size(883, 417);
             Controls.Add(panel1);
             Controls.Add(lblMessage);
             Controls.Add(panelAction);

@@ -10,7 +10,9 @@ using iParkingv5_window.Usercontrols.BuildControls;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
 using IPGS.Object.Databases;
+using System.Data;
 using System.Runtime.InteropServices;
+using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper;
 
 namespace iParkingv5_window.Forms.ReportForms
 {
@@ -117,9 +119,9 @@ namespace iParkingv5_window.Forms.ReportForms
             DateTime endTime = dtpEndTime.Value;
             string vehicleTypeId = ((ListItem)cbVehicleType.SelectedItem)?.Value ?? "";
             string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
-            var alarmData = await KzParkingApiHelper.GetAlarms(keyword, startTime, endTime, "", vehicleTypeId, laneId);
-
-            if (alarmData.Item1 == null)
+            //var alarmData = await KzParkingApiHelper.GetAlarms(keyword, startTime, endTime, "", vehicleTypeId, laneId);
+            var dtAlarm = await KzParkingv5ApiHelper.GetAlarmReport(keyword, startTime, endTime, "", vehicleTypeId, laneId);
+            if (dtAlarm == null)
             {
                 DisableFastLoading();
                 ucNotify1.Show(ucNotify.EmNotiType.Error, "Không tải được thông tin xe trong bãi. Vui lòng thử lại!");
@@ -127,9 +129,29 @@ namespace iParkingv5_window.Forms.ReportForms
                 return;
             }
 
-            totalPages = alarmData.Item2;
-            totalEvents = alarmData.Item3;
-            List<AbnormalEvent> abnormalEvent = alarmData.Item1 ?? new List<AbnormalEvent>();
+            totalPages = 1;// alarmData.Item2;
+            totalEvents = dtAlarm.Rows.Count;
+            List<AbnormalEvent> abnormalEvent = new List<AbnormalEvent>();
+            //foreach (DataRow row in dtAlarm.Rows)
+            //{
+            //    AbnormalEvent ev = new AbnormalEvent()
+            //    {
+            //        identityId = row["identityid"].ToString(),
+            //        plateNumber = row["platenumber"].ToString(),
+            //        createdUtc = row["createdutc"].ToString(),
+            //        laneId = row["laneId"].ToString(),
+            //        createdBy = "",
+            //        fileKeys = row["filekeys"].ToString()?.Split(","),
+            //        CustomerId = dtAlarm.Columns.Contains("customerid") ? row["customerid"].ToString() : "",
+            //        RegisteredVehicleId = eventInData.Columns.Contains("vehicleid") ? row["vehicleid"].ToString() : "",
+            //        IdentityGroupId = row["identitygroupid"].ToString(),
+            //        identityCode = dtAlarm.Columns.Contains("identityCode") ? row["identityCode"].ToString() : "",
+            //        identityName = dtAlarm.Columns.Contains("identityName") ? row["identityName"].ToString() : "",
+            //        TransactionType = dtAlarm.Columns.Contains("transactiontype") ? int.Parse(row["transactiontype"].ToString() ?? "0") : 0,
+            //        TransactionCode = dtAlarm.Columns.Contains("transactioncode") ? row["transactioncode"].ToString() : "",
+            //    };
+            //    abnormalEvent.Add(ev);
+            //}
 
             DisplayNavigation();
             DisplayEventInData(abnormalEvent);

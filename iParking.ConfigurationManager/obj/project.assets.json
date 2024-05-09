@@ -520,7 +520,7 @@
           "bin/placeholder/IPaking.Ultility.dll": {}
         }
       },
-      "iParkingv5.ApiManager/1.0.0.4": {
+      "iParkingv5.ApiManager/1.0.0.7": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
@@ -1539,7 +1539,7 @@
       "path": "../IPaking.Ultility/IPaking.Ultility.csproj",
       "msbuildProject": "../IPaking.Ultility/IPaking.Ultility.csproj"
     },
-    "iParkingv5.ApiManager/1.0.0.4": {
+    "iParkingv5.ApiManager/1.0.0.7": {
       "type": "project",
       "path": "../iParkingv5.ApiManager/iParkingv5.ApiManager.csproj",
       "msbuildProject": "../iParkingv5.ApiManager/iParkingv5.ApiManager.csproj"
@@ -1576,7 +1576,7 @@
       "IPaking.Ultility >= 1.0.0.1",
       "Kztek.Scale_net6 >= 1.0.0.10",
       "Kztek.Tool >= 1.0.0.1",
-      "iParkingv5.ApiManager >= 1.0.0.4",
+      "iParkingv5.ApiManager >= 1.0.0.7",
       "iParkingv5.Controller >= 1.0.0.1",
       "iParkingv5.Objects >= 1.0.0.2"
     ]

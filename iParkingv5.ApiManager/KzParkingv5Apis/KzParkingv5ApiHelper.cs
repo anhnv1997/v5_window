@@ -13,6 +13,7 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing.Printing;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -258,6 +259,10 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
 
                 }
             }
+        }
+        public static async Task<Tuple<List<User>, string>> GetAllUsers()
+        {
+            return await GetAllObjectAsync<User>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.User);
         }
         #endregion
 
@@ -679,7 +684,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             //}
         }
         public static async Task<DataTable> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
-                                    string identityGroupId, string vehicleTypeId, string laneId,
+                                    string identityGroupId, string vehicleTypeId, string laneId, string user,
                                     int pageIndex = 1, int pageSize = 100)
         {
             StandardlizeServerName();
@@ -693,7 +698,15 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             if (!string.IsNullOrEmpty(identityGroupId))
             {
-                cmd += $@"AND identityGroupId = '{identityGroupId.ToUpper()}' ";
+                cmd += $@"AND identitygroupid = '{identityGroupId.ToUpper()}' ";
+            }
+            if (!string.IsNullOrEmpty(vehicleTypeId))
+            {
+                cmd += $@"AND vehicletypeid = '{vehicleTypeId.ToUpper()}' ";
+            }
+            if (!string.IsNullOrEmpty(user))
+            {
+                cmd += $@"AND createdby = '{user}' ";
             }
             if (!string.IsNullOrEmpty(keyword))
             {
@@ -787,7 +800,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return false;
         }
-        public static async Task<DataTable> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, int pageIndex = 1, int pageSize = 10000)
+        public static async Task<DataTable> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000)
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.GetBySqlCmd;
@@ -805,6 +818,10 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             if (!string.IsNullOrEmpty(vehicleTypeId))
             {
                 cmd += $@"AND vehicletypeid = '{vehicleTypeId.ToUpper()}' ";
+            }
+            if (!string.IsNullOrEmpty(user))
+            {
+                cmd += $@"AND (eventincreatedby = '{user}' or createdby = '{user}' ) ";
             }
             if (!string.IsNullOrEmpty(keyword))
             {
@@ -1072,12 +1089,101 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 Description = description
             };
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, abnormalEvent, headers, null, timeOut, RestSharp.Method.Post);
+            string a = Newtonsoft.Json.JsonConvert.SerializeObject(abnormalEvent);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                KzBaseResponseData<AbnormalEvent> kzBaseResponse = NewtonSoftHelper<KzBaseResponseData<AbnormalEvent>>.GetBaseResponse(response.Item1);
-                return kzBaseResponse?.metadata?.success ?? false;
+                AbnormalEvent kzBaseResponse = NewtonSoftHelper<AbnormalEvent>.GetBaseResponse(response.Item1);
+                return kzBaseResponse != null;
             }
             return false;
+        }
+        public static async Task<DataTable> GetAlarmReport(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, int pageIndex = 1, int pageSize = 10000)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + KzParkingv5ApiUrlManagement.GetBySqlCmd;
+            string cmd = string.Empty;
+            cmd += "SELECT * FROM index_abnormal_event ";
+            cmd += $"WHERE (createdutc Between '{startTime.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.000Z}' AND '{endTime.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.000Z}') ";
+            if (!string.IsNullOrEmpty(laneId))
+            {
+                cmd += $@"AND (laneid = '{laneId.ToUpper()}' or eventinlaneid = '{laneId.ToUpper()}')  ";
+            }
+            if (!string.IsNullOrEmpty(identityGroupId))
+            {
+                cmd += $@"AND identitygroupid = '{identityGroupId.ToUpper()}' ";
+            }
+            if (!string.IsNullOrEmpty(vehicleTypeId))
+            {
+                cmd += $@"AND vehicletypeid = '{vehicleTypeId.ToUpper()}' ";
+            }
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                cmd += $@"AND ((identityname like '%{keyword}%' OR platenumber like '%{keyword}%' OR identitycode like '%{keyword}%') OR
+                               (eventinidentityname like '%{keyword}%' OR platenumber like '%{keyword}%' OR eventinidentitycode like '%{keyword}%'))";
+            }
+            cmd += "ORDER BY createdutc desc";
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            var data = new
+            {
+                query = cmd,
+                fetch_size = pageSize,
+            };
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                // Deserialize JSON to JObject
+                JObject jsonObject = JObject.Parse(response.Item1);
+
+                // Extract columns and rows from JSON
+                JArray columns = (JArray)jsonObject["columns"];
+                JArray rows = (JArray)jsonObject["rows"];
+
+                // Create a new DataTable
+                DataTable dataTable = new DataTable();
+                if (columns != null)
+                {
+                    foreach (JObject column in columns)
+                    {
+                        string columnName = (string)column["name"];
+                        string columnType = (string)column["type"];
+
+                        Type type;
+
+                        switch (columnType)
+                        {
+                            case "text":
+                                type = typeof(string);
+                                break;
+                            case "long":
+                                type = typeof(long);
+                                break;
+                            case "datetime":
+                                type = typeof(DateTime);
+                                break;
+                            default:
+                                type = typeof(string);
+                                break;
+                        }
+
+                        dataTable.Columns.Add(columnName, type);
+                    }
+                    if (rows != null)
+                    {
+                        foreach (JArray row in rows)
+                        {
+                            object[] rowData = row.ToObject<object[]>();
+                            dataTable.Rows.Add(rowData);
+                        }
+
+                    }
+                }
+                return dataTable;
+            }
+            return null;
         }
         #endregion End Alarm
 
@@ -1274,9 +1380,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         }
         public static async Task<List<InvoiceDataSearch>> GetMultipleInvoiceData(List<string> orderIds, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL)
         {
-            //string url = $"http://14.160.26.45:26868/einvoice/many";
+            //string url = $"http://14.160.26.45:26868/sent-invoice/many";
             StandardlizeServerName();
-            string apiUrl = server + "einvoice/many";
+            string apiUrl = server + "sent-invoice/many";
             apiUrl = apiUrl.Replace(":5000", ":26868");
 
             //Gửi API

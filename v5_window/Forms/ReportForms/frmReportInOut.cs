@@ -5,12 +5,14 @@ using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.Datas;
+using iParkingv5.Objects.Enums;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv5_window.Usercontrols;
 using iParkingv5_window.Usercontrols.BuildControls;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
 using Kztek.Tool.TextFormatingTools;
+using Kztek.Tools;
 using System.Data;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -32,6 +34,7 @@ namespace iParkingv5_window.Forms.ReportForms
         private List<IdentityGroup> identityGroups = new List<IdentityGroup>();
         private List<RegisteredVehicle> registerVehicles = new List<RegisteredVehicle>();
         private List<Customer> customers = new List<Customer>();
+        private List<KzParkingv5ApiHelper.User> users = new List<KzParkingv5ApiHelper.User>();
         List<InvoiceDataSearch> InvoiceDatas = new List<InvoiceDataSearch>();
         #endregion End Properties
 
@@ -63,13 +66,18 @@ namespace iParkingv5_window.Forms.ReportForms
 
             //customers = (await KzParkingApiHelper.GetAllCustomers())?.Item1 ?? new List<Customer>();
             customers = (await KzParkingv5ApiHelper.GetCustomersAsync())?.Item1 ?? new List<Customer>();
-            CreateUI();
+            await CreateUI();
             this.ActiveControl = btnSearch;
             btnSearch.PerformClick();
             picOverviewImageIn.Image = picOverviewImageIn.ErrorImage = defaultImg;
             picVehicleImageIn.Image = picVehicleImageIn.ErrorImage = defaultImg;
             picOverviewImageOut.Image = picOverviewImageOut.ErrorImage = defaultImg;
             picVehicleImageOut.Image = picVehicleImageOut.ErrorImage = defaultImg;
+
+            cbVehicleType.SelectedIndexChanged += ChangeSearchConditionEvent;
+            cbIdentityGroup.SelectedIndexChanged += ChangeSearchConditionEvent;
+            cbLane.SelectedIndexChanged += ChangeSearchConditionEvent;
+            cbUser.SelectedIndexChanged += ChangeSearchConditionEvent;
         }
         private void FrmReportInOut_KeyDown(object? sender, KeyEventArgs e)
         {
@@ -80,7 +88,7 @@ namespace iParkingv5_window.Forms.ReportForms
         }
         private void FrmReportInOut_SizeChanged(object? sender, EventArgs e)
         {
-            dgvData.Location = new Point(TextManagement.ROOT_SIZE * 2, cbVehicleType.Location.Y + cbVehicleType.Height + TextManagement.ROOT_SIZE);
+            dgvData.Location = new Point(TextManagement.ROOT_SIZE * 2, cbLane.Location.Y + cbLane.Height + TextManagement.ROOT_SIZE);
 
             if (ucPages1.Visible)
             {
@@ -110,96 +118,119 @@ namespace iParkingv5_window.Forms.ReportForms
         public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
         private async void btnSearch_Click(object? sender, EventArgs e)
         {
-            EnableFastLoading();
-
-            string keyword = txtKeyword.Text;
-            DateTime startTime = dtpStartTime.Value;
-            DateTime endTime = dtpEndTime.Value;
-            string vehicleTypeId = ((ListItem)cbVehicleType.SelectedItem)?.Value ?? "";
-            string identityGroupId = ((ListItem)cbIdentityGroup.SelectedItem)?.Value ?? "";
-            string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
-
-            var eventOutReportNew = await KzParkingv5ApiHelper.GetEventOuts(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId);
-
-            if (eventOutReportNew == null)
-            {
-                DisableFastLoading();
-                ucNotify1.Show(ucNotify.EmNotiType.Error, "Không tải được thông tin xe trong bãi. Vui lòng thử lại!");
-                return;
-            }
             try
             {
-                long? money = await KzParkingApiHelper.GetSummary(startTime, endTime);
-                if (money == null)
+                btnSearch.Enabled = false;
+                EnableFastLoading();
+
+                string keyword = txtKeyword.Text;
+                DateTime startTime = dtpStartTime.Value;
+                DateTime endTime = dtpEndTime.Value;
+                string vehicleTypeId = ((ListItem)cbVehicleType.SelectedItem)?.Value ?? "";
+                string identityGroupId = ((ListItem)cbIdentityGroup.SelectedItem)?.Value ?? "";
+                string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
+                string user = string.IsNullOrEmpty(((ListItem)cbUser.SelectedItem)?.Value) ? "" : cbUser.Text;
+
+                var eventOutReportNew = await KzParkingv5ApiHelper.GetEventOuts(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user);
+
+                if (eventOutReportNew == null)
                 {
-                    lblMoney.Text = "Tổng Số: _";
+                    DisableFastLoading();
+                    ucNotify1.Show(ucNotify.EmNotiType.Error, "Không tải được thông tin xe trong bãi. Vui lòng thử lại!");
+                    return;
+                }
+                //try
+                //{
+                //    long? money = await KzParkingApiHelper.GetSummary(startTime, endTime);
+                //    if (money == null)
+                //    {
+                //        lblMoney.Text = "Tổng Số: _";
+                //    }
+                //    else
+                //    {
+                //        lblMoney.Text = "Tổng Số: " + TextFormatingTool.GetMoneyFormat(money!.ToString());
+                //    }
+                //    lblMoney.Location = new Point(dgvData.Location.X + (dgvData.Width - lblMoney.Width), dgvData.Location.Y + dgvData.Height + 16);
+                //}
+                //catch (Exception)
+                //{
+                //}
+
+                totalPages = 1;
+                totalEvents = eventOutReportNew.Rows.Count;
+                List<EventOutReport> eventOutData = new List<EventOutReport>();
+
+                List<string> ids = new List<string>();
+                foreach (DataRow item in eventOutReportNew.Rows)
+                {
+                    string transactionCode = eventOutReportNew.Columns.Contains("transactioncode") ? item["transactioncode"].ToString() ?? "" : "";
+                    transactionCode = transactionCode.Contains("0-0") ? "" : transactionCode;
+                    int transactionType = 0;
+                    try
+                    {
+                        transactionType = eventOutReportNew.Columns.Contains("transactiontype") ? int.Parse(item["transactiontype"].ToString() ?? "0") : 0;
+                    }
+                    catch (Exception)
+                    {
+                    }
+                    EventOutReport ev = new EventOutReport()
+                    {
+                        id = eventOutReportNew.Columns.Contains("id") ? item["id"].ToString() : "",
+
+                        eventInCreatedUtc = eventOutReportNew.Columns.Contains("eventincreatedutc") ? item["eventincreatedutc"].ToString() : "",
+                        createdUtc = eventOutReportNew.Columns.Contains("createdutc") ? item["createdutc"].ToString() : "",
+
+                        IdentityName = eventOutReportNew.Columns.Contains("identityname") ? item["identityname"].ToString() : "",
+                        IdentityGroupId = eventOutReportNew.Columns.Contains("identitygroupid") ? item["identitygroupid"].ToString() : "",
+
+                        eventInPlateNumber = eventOutReportNew.Columns.Contains("eventinplatenumber") ? item["eventinplatenumber"].ToString() : "",
+                        plateNumber = eventOutReportNew.Columns.Contains("platenumber") ? item["platenumber"].ToString() : "",
+
+                        eventInLaneId = eventOutReportNew.Columns.Contains("eventinlaneid") ? item["eventinlaneid"].ToString() : "",
+                        laneId = eventOutReportNew.Columns.Contains("laneid") ? item["laneid"].ToString() : "",
+
+                        TransactionType = transactionType,// eventOutReportNew.Columns.Contains("transactiontype") ? int.Parse(item["transactiontype"].ToString() ?? "0") : 0,
+                        TransactionCode = transactionCode,
+
+                        charge = eventOutReportNew.Columns.Contains("charge") ? int.Parse(item["charge"].ToString() ?? "0") : 0,
+
+                        eventInCreatedBy = eventOutReportNew.Columns.Contains("eventincreatedby") ? item["eventincreatedby"].ToString() : "",
+                        createdBy = eventOutReportNew.Columns.Contains("createdby") ? item["createdby"].ToString() : "",
+
+                        eventInFileKeys = eventOutReportNew.Columns.Contains("eventinfilekeys") ? item["eventinfilekeys"].ToString()!.Split(",") : new string[] { },
+                        fileKeys = eventOutReportNew.Columns.Contains("filekeys") ? item["filekeys"].ToString()!.Split(",") : new string[] { },
+
+                        InvoiceNo = "",
+                        InvoiceTemplate = "",
+                    };
+                    eventOutData.Add(ev);
+                    if (ev.charge > 0)
+                    {
+                        ids.Add(ev.id.ToLower());
+                    }
+                }
+                if (ids.Count > 0)
+                {
+                    InvoiceDatas = await KzParkingv5ApiHelper.GetMultipleInvoiceData(ids) ?? new List<InvoiceDataSearch>();
                 }
                 else
                 {
-                    lblMoney.Text = "Tổng Số: " + TextFormatingTool.GetMoneyFormat(money!.ToString());
+                    InvoiceDatas = new List<InvoiceDataSearch>();
                 }
-                lblMoney.Location = new Point(dgvData.Location.X + (dgvData.Width - lblMoney.Width), dgvData.Location.Y + dgvData.Height + 16);
+
+                DisplayNavigation();
+                await DisplayEventOutData(eventOutData);
+                DisableFastLoading();
+                eventOutData.Clear();
             }
             catch (Exception)
             {
             }
-
-            totalPages = 1;
-            totalEvents = eventOutReportNew.Rows.Count;
-            List<EventOutReport> eventOutData = new List<EventOutReport>();
-
-            List<string> ids = new List<string>();
-            foreach (DataRow item in eventOutReportNew.Rows)
+            finally
             {
-                EventOutReport ev = new EventOutReport()
-                {
-                    id = eventOutReportNew.Columns.Contains("id") ? item["id"].ToString() : "",
-
-                    eventInCreatedUtc = eventOutReportNew.Columns.Contains("eventincreatedutc") ? item["eventincreatedutc"].ToString() : "",
-                    createdUtc = eventOutReportNew.Columns.Contains("createdutc") ? item["createdutc"].ToString() : "",
-
-                    IdentityName = eventOutReportNew.Columns.Contains("identityname") ? item["identityname"].ToString() : "",
-                    IdentityGroupId = eventOutReportNew.Columns.Contains("identitygroupid") ? item["identitygroupid"].ToString() : "",
-
-                    eventInPlateNumber = eventOutReportNew.Columns.Contains("eventinplatenumber") ? item["eventinplatenumber"].ToString() : "",
-                    plateNumber = eventOutReportNew.Columns.Contains("platenumber") ? item["platenumber"].ToString() : "",
-
-                    eventInLaneId = eventOutReportNew.Columns.Contains("eventinlaneid") ? item["eventinlaneid"].ToString() : "",
-                    laneId = eventOutReportNew.Columns.Contains("laneid") ? item["laneid"].ToString() : "",
-
-                    TransactionType = eventOutReportNew.Columns.Contains("transactiontype") ? int.Parse(item["transactiontype"].ToString() ?? "0") : 0,
-                    TransactionCode = eventOutReportNew.Columns.Contains("transactioncode") ? item["transactioncode"].ToString() : "",
-
-                    charge = eventOutReportNew.Columns.Contains("charge") ? int.Parse(item["charge"].ToString() ?? "0") : 0,
-
-                    eventInCreatedBy = eventOutReportNew.Columns.Contains("eventincreatedby") ? item["eventincreatedby"].ToString() : "",
-                    createdBy = eventOutReportNew.Columns.Contains("createdby") ? item["createdby"].ToString() : "",
-
-                    eventInFileKeys = eventOutReportNew.Columns.Contains("eventinfilekeys") ? item["eventinfilekeys"].ToString()!.Split(",") : new string[] { },
-                    fileKeys = eventOutReportNew.Columns.Contains("filekeys") ? item["filekeys"].ToString()!.Split(",") : new string[] { },
-
-                    InvoiceNo = "",
-                    InvoiceTemplate = "",
-                };
-                eventOutData.Add(ev);
-                if (ev.charge > 0)
-                {
-                    ids.Add(ev.id.ToLower());
-                }
-            }
-            if (ids.Count > 0)
-            {
-                InvoiceDatas = await KzParkingv5ApiHelper.GetMultipleInvoiceData(ids) ?? new List<InvoiceDataSearch>();
-            }
-            else
-            {
-                InvoiceDatas = new List<InvoiceDataSearch>();
+                btnSearch.Enabled = true;
             }
 
-            DisplayNavigation();
-            await DisplayEventOutData(eventOutData);
-            DisableFastLoading();
-            eventOutData.Clear();
         }
         private void btnCancel_Click(object? sender, EventArgs e)
         {
@@ -390,79 +421,107 @@ namespace iParkingv5_window.Forms.ReportForms
                 }
             }));
         }
+        private void ChangeSearchConditionEvent(object? sender, EventArgs e)
+        {
+            btnSearch.PerformClick();
+        }
         #endregion
 
         #region Private Function
-        private async void CreateUI()
+        private async Task CreateUI()
         {
-            panelData.SuspendLayout();
-            btnCancel.InitControl(btnCancel_Click);
-            btnExportExcel.InitControl(btnExportExcel_Click);
-            btnSearch.InitControl(btnSearch_Click);
-            panelData.ToggleDoubleBuffered(true);
-
-            lblKeyword.Location = new Point(StaticPool.baseSize * 2, StaticPool.baseSize * 2);
-            txtKeyword.Location = new Point(lblKeyword.Location.X + lblKeyword.Width + StaticPool.baseSize,
-                                            lblKeyword.Location.Y + (lblKeyword.Height - txtKeyword.Height) / 2);
-
-            lblIdentityType.Location = new Point(txtKeyword.Location.X + txtKeyword.Width + StaticPool.baseSize, lblKeyword.Location.Y);
-            cbIdentityGroup.Location = new Point(lblIdentityType.Location.X + lblIdentityType.Width + StaticPool.baseSize, txtKeyword.Location.Y);
-
-            dtpStartTime.Location = new Point(txtKeyword.Location.X, txtKeyword.Location.Y + txtKeyword.Height + StaticPool.baseSize);
-            lblStartTime.Location = new Point(lblKeyword.Location.X,
-                                              dtpStartTime.Location.Y + (dtpStartTime.Height - lblStartTime.Height) / 2);
-
-            lblEndTime.Location = new Point(lblIdentityType.Location.X, lblStartTime.Location.Y);
-            dtpEndTime.Location = new Point(cbIdentityGroup.Location.X, dtpStartTime.Location.Y);
-
-            cbVehicleType.Location = new Point(txtKeyword.Location.X, dtpStartTime.Location.Y + dtpStartTime.Height + StaticPool.baseSize);
-            lblVehicleType.Location = new Point(lblKeyword.Location.X,
-                                               cbVehicleType.Location.Y + (cbVehicleType.Height - lblVehicleType.Height) / 2);
-
-            cbLane.Location = new Point(dtpEndTime.Location.X, cbVehicleType.Location.Y);
-            lblLane.Location = new Point(lblEndTime.Location.X, lblVehicleType.Location.Y);
-
-            btnSearch.Location = new Point(cbLane.Location.X + cbLane.Width + TextManagement.ROOT_SIZE,
-                                          cbLane.Location.Y + cbLane.Height - btnSearch.Height);
-
-            btnCancel.Location = new Point(panelData.Width - btnCancel.Width - StaticPool.baseSize * 2,
-                                           panelData.Height - btnCancel.Height - StaticPool.baseSize * 2);
-            btnExportExcel.Location = new Point(btnCancel.Location.X - btnExportExcel.Width - StaticPool.baseSize,
-                                                btnCancel.Location.Y);
-
-            ucPages1.Location = new Point(StaticPool.baseSize * 2, btnCancel.Location.Y - ucPages1.Height - StaticPool.baseSize);
-            ucPages1.Width = panelData.Width - StaticPool.baseSize * 4;
-
-            dgvData.Location = new Point(TextManagement.ROOT_SIZE * 2, cbVehicleType.Location.Y + cbVehicleType.Height + TextManagement.ROOT_SIZE);
-
-            if (ucPages1.Visible)
+            try
             {
-                dgvData.Height = ucPages1.Location.Y - dgvData.Location.Y - TextManagement.ROOT_SIZE * 2 - lblMoney.Height;
+                panelData.SuspendLayout();
+                btnCancel.InitControl(btnCancel_Click);
+                btnExportExcel.InitControl(btnExportExcel_Click);
+                btnSearch.InitControl(btnSearch_Click);
+                panelData.ToggleDoubleBuffered(true);
+
+                //Từ khóa
+                lblKeyword.Location = new Point(StaticPool.baseSize * 2, StaticPool.baseSize * 2);
+                txtKeyword.Location = new Point(lblKeyword.Location.X + lblUser.Width + StaticPool.baseSize,
+                                                lblKeyword.Location.Y + (lblKeyword.Height - txtKeyword.Height) / 2);
+
+                // Giờ bắt đầu
+                dtpStartTime.Location = new Point(txtKeyword.Location.X, txtKeyword.Location.Y + txtKeyword.Height + TextManagement.ROOT_SIZE);
+                lblStartTime.Location = new Point(lblKeyword.Location.X,
+                                                  dtpStartTime.Location.Y + (dtpStartTime.Height - lblStartTime.Height) / 2);
+
+                //Loại phương tiện
+                cbVehicleType.Location = new Point(txtKeyword.Location.X, dtpStartTime.Location.Y + dtpStartTime.Height + TextManagement.ROOT_SIZE);
+                lblVehicleType.Location = new Point(lblKeyword.Location.X,
+                                                   cbVehicleType.Location.Y + (cbVehicleType.Height - lblVehicleType.Height) / 2);
+
+                //Người dùng
+                cbUser.Location = new Point(txtKeyword.Location.X, cbVehicleType.Location.Y + cbVehicleType.Height + TextManagement.ROOT_SIZE);
+                lblUser.Location = new Point(lblKeyword.Location.X, cbUser.Location.Y + (cbUser.Height - lblUser.Height) / 2);
+
+                //Giờ kết thúc
+                lblEndTime.Location = new Point(dtpStartTime.Location.X + dtpStartTime.Width + TextManagement.ROOT_SIZE * 2,
+                                                lblStartTime.Location.Y);
+                dtpEndTime.Location = new Point(lblEndTime.Location.X + lblEndTime.Width + TextManagement.ROOT_SIZE,
+                                                dtpStartTime.Location.Y);
+
+                //Nhóm thẻ
+                lblIdentityGroup.Location = new Point(lblEndTime.Location.X, lblVehicleType.Location.Y);
+                cbIdentityGroup.Location = new Point(dtpEndTime.Location.X, cbVehicleType.Location.Y);
+
+
+                //Làn
+                cbLane.Location = new Point(dtpEndTime.Location.X, cbUser.Location.Y);
+                lblLane.Location = new Point(lblEndTime.Location.X, lblUser.Location.Y);
+
+                txtKeyword.Width = dtpEndTime.Width + dtpEndTime.Location.X - txtKeyword.Location.X;
+
+                btnSearch.Location = new Point(cbLane.Location.X + cbLane.Width + TextManagement.ROOT_SIZE,
+                                              cbLane.Location.Y + cbLane.Height - btnSearch.Height);
+
+                btnCancel.Location = new Point(panelData.Width - btnCancel.Width - StaticPool.baseSize * 2,
+                                               panelData.Height - btnCancel.Height - StaticPool.baseSize * 2);
+                btnExportExcel.Location = new Point(btnCancel.Location.X - btnExportExcel.Width - StaticPool.baseSize,
+                                                    btnCancel.Location.Y);
+
+                ucPages1.Location = new Point(StaticPool.baseSize * 2, btnCancel.Location.Y - ucPages1.Height - StaticPool.baseSize);
+                ucPages1.Width = panelData.Width - StaticPool.baseSize * 4;
+
+                dgvData.Location = new Point(TextManagement.ROOT_SIZE * 2, cbLane.Location.Y + cbLane.Height + TextManagement.ROOT_SIZE);
+
+                if (ucPages1.Visible)
+                {
+                    dgvData.Height = ucPages1.Location.Y - dgvData.Location.Y - TextManagement.ROOT_SIZE * 2 - lblMoney.Height;
+                }
+                else
+                {
+                    dgvData.Height = ucPages1.Location.Y + ucPages1.Height - dgvData.Location.Y - TextManagement.ROOT_SIZE * 2 - lblMoney.Height;
+                }
+                tablePic.Height = dgvData.Height;
+                tablePic.Width = tablePic.Height * 9 * 2 / 16;
+
+                dgvData.Width = this.DisplayRectangle.Width - StaticPool.baseSize * 5 - tablePic.Width;
+
+                tablePic.Location = new Point(panelData.Width - tablePic.Width - StaticPool.baseSize * 2,
+                                              dgvData.Location.Y);
+
+
+                lblTotalEvents.Location = new Point(btnSearch.Location.X + btnSearch.Width + TextManagement.ROOT_SIZE,
+                                                    btnSearch.Location.Y - lblTotalEvents.Height + btnSearch.Height);
+                lblMoney.Location = new Point(dgvData.Location.X + (dgvData.Width - lblMoney.Width), dgvData.Location.Y + dgvData.Height + 16);
+
+                cbVehicleType.DisplayMember = cbIdentityGroup.DisplayMember = cbLane.DisplayMember = cbUser.DisplayMember = "Name";
+                cbVehicleType.ValueMember = cbIdentityGroup.ValueMember = cbLane.ValueMember = cbUser.ValueMember = "Value";
+
+                await LoadVehicleTypeData();
+                await LoadIdentityGroup();
+                await LoadLaneType();
+                await LoadUsers();
+                panelData.ResumeLayout();
             }
-            else
+            catch (Exception ex)
             {
-                dgvData.Height = ucPages1.Location.Y + ucPages1.Height - dgvData.Location.Y - TextManagement.ROOT_SIZE * 2 - lblMoney.Height;
+                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, mo_ta_them: ex);
             }
-            tablePic.Height = dgvData.Height;
-            tablePic.Width = tablePic.Height * 9 * 2 / 16;
 
-            dgvData.Width = this.DisplayRectangle.Width - StaticPool.baseSize * 5 - tablePic.Width;
-
-            tablePic.Location = new Point(panelData.Width - tablePic.Width - StaticPool.baseSize * 2,
-                                          dgvData.Location.Y);
-
-
-            lblTotalEvents.Location = new Point(btnSearch.Location.X + btnSearch.Width + TextManagement.ROOT_SIZE,
-                                                btnSearch.Location.Y - lblTotalEvents.Height + btnSearch.Height);
-            lblMoney.Location = new Point(dgvData.Location.X + (dgvData.Width - lblMoney.Width), dgvData.Location.Y + dgvData.Height + 16);
-
-            cbVehicleType.DisplayMember = cbIdentityGroup.DisplayMember = cbLane.DisplayMember = "Name";
-            cbVehicleType.ValueMember = cbIdentityGroup.ValueMember = cbLane.ValueMember = "Value";
-
-            await LoadVehicleTypeData();
-            await LoadIdentityGroup();
-            await LoadLaneType();
-            panelData.ResumeLayout();
         }
         private void DisableFastLoading()
         {
@@ -584,8 +643,9 @@ namespace iParkingv5_window.Forms.ReportForms
             }));
 
 
-            //var vehicleTypes = await KzParkingApiHelper.GetAllVehicleTypes() ?? new List<iParkingv5.Objects.Enums.VehicleType>();
-            var vehicleTypes = (await KzParkingv5ApiHelper.GetVehicleTypesAsync()).Item1 ?? new List<iParkingv5.Objects.Enums.VehicleType>();
+            //var vehicleTypes = await KzParkingApiHelper.GetAllVehicleTypes() ?? new List<VehicleType>();
+            var vehicleTypes = (await KzParkingv5ApiHelper.GetVehicleTypesAsync()).Item1 ?? new List<VehicleType>();
+            vehicleTypes = vehicleTypes.OrderBy(x => x.Name).ThenBy(x => x.Name.Length).ToList();
             cbVehicleType.Invoke(new Action(() =>
             {
                 foreach (var item in vehicleTypes)
@@ -602,9 +662,6 @@ namespace iParkingv5_window.Forms.ReportForms
         }
         private async Task LoadIdentityGroup()
         {
-            cbIdentityGroup.DisplayMember = "Name";
-            cbIdentityGroup.ValueMember = "Value";
-
             cbIdentityGroup.Invoke(new Action(() =>
             {
                 cbIdentityGroup.Items.Add(new ListItem()
@@ -614,8 +671,10 @@ namespace iParkingv5_window.Forms.ReportForms
                 });
             }));
 
-            //identityGroups = await KzParkingApiHelper.GetIdentityGroupsAsync() ?? new List<iParkingv5.Objects.Datas.IdentityGroup>();
+            //identityGroups = await KzParkingApiHelper.GetIdentityGroupsAsync() ?? new List<IdentityGroup>();
             identityGroups = (await KzParkingv5ApiHelper.GetIdentityGroupsAsync()).Item1 ?? new List<IdentityGroup>();
+            identityGroups = identityGroups.OrderBy(x => x.Name).ThenBy(x => x.Name.Length).ToList();
+
             cbIdentityGroup.Invoke(new Action(() =>
             {
                 foreach (var item in identityGroups)
@@ -629,41 +688,62 @@ namespace iParkingv5_window.Forms.ReportForms
                 }
                 cbIdentityGroup.SelectedIndex = 0;
             }));
-
         }
         private async Task LoadLaneType()
         {
-            try
+            cbLane.Invoke(new Action(() =>
             {
-                cbLane.Invoke(new Action(() =>
+                cbLane.Items.Add(new ListItem()
                 {
-                    cbLane.Items.Add(new ListItem()
-                    {
-                        Name = "Tất cả",
-                        Value = ""
-                    });
-                }));
+                    Name = "Tất cả",
+                    Value = ""
+                });
+            }));
 
-                //lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
-                lanes = (await KzParkingv5ApiHelper.GetLanesAsync()).Item1 ?? new List<iParkingv6.Objects.Datas.Lane>();
-
-                cbLane.Invoke(new Action(() =>
-                {
-                    foreach (var item in lanes)
-                    {
-                        ListItem laneItem = new ListItem()
-                        {
-                            Name = item.name,
-                            Value = item.id
-                        };
-                        cbLane.Items.Add(laneItem);
-                    }
-                    cbLane.SelectedIndex = 0;
-                }));
-            }
-            catch (Exception)
+            //lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
+            lanes = (await KzParkingv5ApiHelper.GetLanesAsync()).Item1 ?? new List<iParkingv6.Objects.Datas.Lane>();
+            lanes = lanes.OrderBy(x => x.name).ThenBy(x => x.name.Length).ToList();
+            cbLane.Invoke(new Action(() =>
             {
-            }
+                foreach (var item in lanes)
+                {
+                    ListItem laneItem = new ListItem()
+                    {
+                        Name = item.name,
+                        Value = item.id
+                    };
+                    cbLane.Items.Add(laneItem);
+                }
+                cbLane.SelectedIndex = 0;
+            }));
+        }
+        private async Task LoadUsers()
+        {
+            cbUser.Invoke(new Action(() =>
+            {
+                cbUser.Items.Add(new ListItem()
+                {
+                    Name = "Tất cả",
+                    Value = ""
+                });
+            }));
+
+            //lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
+            users = (await KzParkingv5ApiHelper.GetAllUsers()).Item1 ?? new List<KzParkingv5ApiHelper.User>();
+            users = users.OrderBy(x => x.upn).ThenBy(x => x.upn.Length).ToList();
+            cbUser.Invoke(new Action(() =>
+            {
+                foreach (var item in users)
+                {
+                    ListItem laneItem = new ListItem()
+                    {
+                        Name = item.upn,
+                        Value = item.id
+                    };
+                    cbUser.Items.Add(laneItem);
+                }
+                cbUser.SelectedIndex = 0;
+            }));
         }
 
         private string GetLaneName(string laneId)
@@ -789,6 +869,14 @@ namespace iParkingv5_window.Forms.ReportForms
         private void dgvData_MouseClick(object sender, MouseEventArgs e)
         {
 
+        }
+        private void Pic_LoadCompleted(object? sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            PictureBox pictureBox = (sender as PictureBox)!;
+            if (e.Error != null)
+            {
+                pictureBox.Image = defaultImg;
+            }
         }
     }
 }

@@ -484,7 +484,7 @@ namespace v5_IScale
             if (!string.IsNullOrEmpty(firstScaleImage))
             {
                 string[] firstScaleImages = firstScaleImage.Split(";");
-                if (firstScaleImages.Length > 0)
+                if (firstScaleImages.Length > 1)
                 {
                     string firstWeightPath = await MinioHelper.GetImage(firstScaleImages[1]);
                     this.Invoke(new Action(() =>
@@ -501,7 +501,7 @@ namespace v5_IScale
             if (!string.IsNullOrEmpty(secondScaleImage))
             {
                 string[] secondScaleImages = secondScaleImage.Split(";");
-                if (secondScaleImages.Length > 0)
+                if (secondScaleImages.Length > 1)
                 {
                     string tempPath = await MinioHelper.GetImage(secondScaleImages[1]);
                     this.Invoke(new Action(() =>
@@ -511,8 +511,8 @@ namespace v5_IScale
                 }
             }
 
-            int firstScale = int.Parse(dgvData.CurrentRow.Cells[5].Value.ToString() ?? "0");
-            string secondScaleStr = dgvData.CurrentRow.Cells[7].Value.ToString() ?? "";
+            int firstScale = int.Parse(dgvData.CurrentRow.Cells[5].Value.ToString()?.Replace(",", "") ?? "0");
+            string secondScaleStr = dgvData.CurrentRow.Cells[7].Value.ToString()?.Replace(",", "") ?? "";
             if (string.IsNullOrEmpty(secondScaleStr))
             {
                 lblFirstScale.Text = firstScale.ToString();
@@ -598,7 +598,7 @@ namespace v5_IScale
                     lblLoadingStatus.Refresh();
                 }));
 
-                var eventInData = await KzParkingv5ApiHelper.GetEventIns(e.PreferCard, DateTime.MinValue, DateTime.Now, "", "", "");
+                var eventInData = await KzParkingv5ApiHelper.GetEventIns(e.PreferCard, DateTime.MinValue, DateTime.Now, "", "", "","");
                 if (eventInData != null)
                 {
                     if (eventInData.Rows.Count > 0)

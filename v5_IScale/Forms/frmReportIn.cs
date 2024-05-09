@@ -148,7 +148,7 @@ namespace v5_IScale.Forms
             string identityGroupId = ((ListItem)cbIdentityGroupType.SelectedItem)?.Value ?? "";
             string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
             //Tuple<List<EventInReport>, int, int> eventInData = await KzParkingApiHelper.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId);
-            DataTable eventInData = await KzParkingv5ApiHelper.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId);
+            DataTable eventInData = await KzParkingv5ApiHelper.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId,"");
             if (eventInData == null)
             {
                 panelData.BackColor = Color.White;

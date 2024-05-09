@@ -6,6 +6,7 @@ using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.EventDatas;
 using iParkingv5.Objects.ScaleObjects;
 using iParkingv5_window;
+using iParkingv5_window.Forms.DataForms;
 using iParkingv5_window.Helpers;
 using static iParkingv5.Objects.Enums.PrintHelpers;
 
@@ -15,6 +16,7 @@ namespace v5_IScale.Forms.ReportForms
     {
         #region Properties
         private int printCount = 0;
+        public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
         #endregion End Properties
 
         #region Forms
@@ -158,21 +160,23 @@ namespace v5_IScale.Forms.ReportForms
                 if (!string.IsNullOrEmpty(firstScaleImage))
                 {
                     string[] firstScaleImages = firstScaleImage.Split(";");
-                    if (firstScaleImages.Length > 0)
+                    if (firstScaleImages.Length > 1)
                     {
-                        string tempPath = await MinioHelper.GetImage(firstScaleImages[0]);
+                        string firstWeightImagePath = await MinioHelper.GetImage(firstScaleImages[1]);
+                        string vehicleImagePath = await MinioHelper.GetImage(firstScaleImages[0]);
                         this.Invoke(new Action(() =>
                         {
-                            picFirstWeight.LoadAsync(tempPath);
+                            picVehicleImage.LoadAsync(vehicleImagePath);
+                            picFirstWeight.LoadAsync(firstWeightImagePath);
                         }));
                     }
                 }
                 if (!string.IsNullOrEmpty(secondScaleImage))
                 {
                     string[] secondScaleImages = secondScaleImage.Split(";");
-                    if (secondScaleImages.Length > 0)
+                    if (secondScaleImages.Length > 1)
                     {
-                        string tempPath = await MinioHelper.GetImage(secondScaleImages[0]);
+                        string tempPath = await MinioHelper.GetImage(secondScaleImages[1]);
                         this.Invoke(new Action(() =>
                         {
                             picSecondWeight.LoadAsync(tempPath);
@@ -385,6 +389,15 @@ namespace v5_IScale.Forms.ReportForms
                 MessageBox.Show(ex.Message);
             }
         }
+        private void Pic_LoadCompleted(object? sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            PictureBox pictureBox = (sender as PictureBox)!;
+            if (e.Error != null)
+            {
+                pictureBox.Image = defaultImg;
+            }
+        }
+
         #endregion End Public Function
     }
 }

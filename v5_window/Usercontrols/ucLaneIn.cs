@@ -20,6 +20,7 @@ using Kztek.Tool.TextFormatingTools;
 using Kztek.Tools;
 using System.Data;
 using System.Diagnostics;
+using System.Windows.Forms;
 using v5_IScale.Forms;
 using static iParkingv5.Objects.Enums.LaneDisplayMode;
 using static iParkingv5.Objects.Enums.PrintHelpers;
@@ -484,8 +485,6 @@ namespace iParkingv5_window.Usercontrols
             //Danh sách biến sử dụng
             Image? overviewImg = null;
             Image? vehicleImg = null;
-            Identity? identity = null;
-            List<Image> optionalImages = new List<Image>();
 
             lblResult.UpdateResultMessage("Đang kiểm trang thông tin sự kiện quẹt thẻ..." + ce.PreferCard, Color.DarkBlue);
 
@@ -495,12 +494,11 @@ namespace iParkingv5_window.Usercontrols
             {
                 return;
             }
-            identity = identityResponse.Item2!;
+            Identity? identity = identityResponse.Item2!;
             #endregion End kiểm tra thông tin định danh
 
             #region Kiểm tra thông tin nhóm định danh
             lblResult.UpdateResultMessage("Đọc thông tin nhóm định danh...", Color.DarkBlue);
-            //IdentityGroup identityGroup = await KzParkingApiHelper.GetIdentityGroupByIdAsync(identity.IdentityGroupId.ToString());
             IdentityGroup identityGroup = (await KzParkingv5ApiHelper.GetIdentityGroupByIdAsync(identity.IdentityGroupId.ToString())).Item1;
             if (identityGroup == null || identityGroup.Id == Guid.Empty)
             {
@@ -513,7 +511,6 @@ namespace iParkingv5_window.Usercontrols
             #region Kiểm tra thông tin loại phương tiện
             lblResult.UpdateResultMessage("Đọc thông tin loại phương tiện...", Color.DarkBlue);
             string vehicleTypeId = identityGroup!.VehicleType.Id;
-            //VehicleType vehicleType = await KzParkingApiHelper.GetVehicleTypeById(vehicleTypeId.ToString());
             VehicleType vehicleType = (await KzParkingv5ApiHelper.GetVehicleTypeByIdAsync(vehicleTypeId.ToString())).Item1;
             VehicleBaseType vehicleBaseType = vehicleType.Type;
             if (vehicleBaseType == VehicleBaseType.Unknown)
@@ -521,6 +518,8 @@ namespace iParkingv5_window.Usercontrols
                 lblResult.UpdateResultMessage("Thông tin loại phương tiện không hợp lệ vui lòng sử dụng thẻ khác", Color.DarkRed);
                 return;
             }
+
+            List<Image> optionalImages;
             #endregion End kiểm tra thông tin loại phương tiện
 
             Image? lprImage = GetPlate(ce, ref overviewImg, ref vehicleImg, vehicleBaseType, out optionalImages);
@@ -994,6 +993,7 @@ namespace iParkingv5_window.Usercontrols
             ucTop3Event.Size = new Size(250, 0);
             ucTop2Event.Size = new Size(250, 0);
             ucTop1Event.Size = new Size(250, 0);
+            ucTop1Event.Size = ucTop2Event.Size = ucTop3Event.Size = panelNearestEvent.Width > 750 ? new Size(250, 0) : new Size(125, 0);
 
             panelNearestEvent.Controls.Add(ucTop3Event);
             panelNearestEvent.Controls.Add(ucTop2Event);
@@ -1030,7 +1030,7 @@ namespace iParkingv5_window.Usercontrols
             ucLastEventInfos.Add(ucTop2Event);
             ucLastEventInfos.Add(ucTop3Event);
             //Tuple<List<EventInReport>, int, int> top3Event = await KzParkingApiHelper.GetEventIns("", startTime, endTime, "", "", this.lane.id, 1, 3);
-            DataTable top3Event = await KzParkingv5ApiHelper.GetEventIns("", startTime, endTime, "", "", this.lane.id, 1, 3);
+            DataTable top3Event = await KzParkingv5ApiHelper.GetEventIns("", startTime, endTime, "", "", this.lane.id, "",1, 3);
             if (top3Event != null)
             {
                 for (int i = 0; i < top3Event.Rows.Count; i++)

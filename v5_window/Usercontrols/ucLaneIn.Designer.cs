@@ -817,8 +817,8 @@
             picSetting.TabIndex = 5;
             picSetting.TabStop = false;
             picSetting.Click += picSetting_Click;
-            picSetting.MouseHover += PicRetakePhoto_MouseHover;
             picSetting.MouseLeave += PicSetting_MouseLeave;
+            picSetting.MouseHover += PicRetakePhoto_MouseHover;
             // 
             // panel5
             // 
