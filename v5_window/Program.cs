@@ -4,6 +4,7 @@ using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
 using iParkingv5_window;
 using iParkingv5_window.Forms.SystemForms;
+using iParkingv5_window.Forms.VETCForm;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using Kztek.Tool;
 using Kztek.Tools;
@@ -81,7 +82,12 @@ namespace v6_window
                         //DahuaAccessControl.Init();
                         LoadSystemConfig();
                         LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Mở giao diện đăng nhập hệ thống");
+                        
+                        
+                        // Fix cung
                         Application.Run(new frmLogin());
+                        //Application.Run(new frmVETCtest());
+
                     }
                     else
                     {

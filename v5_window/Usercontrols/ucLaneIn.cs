@@ -1075,11 +1075,12 @@ namespace iParkingv5_window.Usercontrols
             AddEventInResponse? eventIn = null;
             if (!this.CheckNewCardEvent(this.lane, ce, out ControllerInLane? controllerInLane, out int thoiGianCho))
             {
-                if (thoiGianCho > 0)
-                {
-                    lblResult.UpdateResultMessage($"Đang trong thời gian chờ, vui lòng quẹt lại sau {thoiGianCho}s", Color.DarkBlue);
-                }
-                return;
+                //Fix cung bo check
+                //if (thoiGianCho > 0)
+                //{
+                //    lblResult.UpdateResultMessage($"Đang trong thời gian chờ, vui lòng quẹt lại sau {thoiGianCho}s", Color.DarkBlue);
+                //}
+                //return;
             }
             ClearView();
             //Danh sách biến sử dụng
@@ -2038,6 +2039,19 @@ namespace iParkingv5_window.Usercontrols
         private void cbNote_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.ActiveControl = splitContainerEventContent;
+        }
+
+        private void picTest_Click(object sender, EventArgs e)
+        {
+            CardEventArgs cardEvent = new CardEventArgs()
+            {
+                AllCardFormats = new List<string>()
+                {
+
+                },
+                PreferCard = "189:57891"
+            };
+            ExcecuteCardEvent(cardEvent);
         }
     }
 }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "XkfJThf72egySGZ/CTD7woNrTT9P8mc0TFYF0/Wje+lf5xQ20pHuaCn8OrQ0bXMpCuLJOXNy/RxK1BHrNUthug==",
+  "dgSpecHash": "NrgS58ibxOz+1woxXrsxn/VlGfHklGCBOwnOaREL3uqsfvg0w//qwnj5WFBTSIcpJmlGq3EfXEu9cP7EhwtU7Q==",
   "success": true,
   "projectFilePath": "F:\\KZTEK\\Source ParkingV5\\v5_window\\v5_window\\iParkingv5_window.csproj",
   "expectedPackageFiles": [
@@ -12,6 +12,7 @@
     "C:\\Users\\PC_Kien\\.nuget\\packages\\minio\\5.0.0\\minio.5.0.0.nupkg.sha512",
     "C:\\Users\\PC_Kien\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\PC_Kien\\.nuget\\packages\\opencvsharp4\\4.9.0.20240103\\opencvsharp4.4.9.0.20240103.nupkg.sha512",
+    "C:\\Users\\PC_Kien\\.nuget\\packages\\qrcoder\\1.5.1\\qrcoder.1.5.1.nupkg.sha512",
     "C:\\Users\\PC_Kien\\.nuget\\packages\\rabbitmq.client\\6.8.1\\rabbitmq.client.6.8.1.nupkg.sha512",
     "C:\\Users\\PC_Kien\\.nuget\\packages\\restsharp\\110.2.0\\restsharp.110.2.0.nupkg.sha512",
     "C:\\Users\\PC_Kien\\.nuget\\packages\\runtime.linux-arm.runtime.native.system.io.ports\\8.0.0\\runtime.linux-arm.runtime.native.system.io.ports.8.0.0.nupkg.sha512",

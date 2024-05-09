@@ -1,11 +1,13 @@
 ﻿using IPaking.Ultility;
 using iPakrkingv5.Controls;
 using iParkingv5.ApiManager.KzScaleApis;
+using iParkingv5.ApiManager.VETCParking;
 using iParkingv5.ApiManager.XuanCuong;
 using iParkingv5.Controller;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
 using iParkingv5.Objects.Datas;
+using iParkingv5.Objects.Datas.VETC;
 using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.EventDatas;
 using iParkingv5.Objects.Events;
@@ -20,6 +22,7 @@ using v5_IScale.Forms;
 using static iParkingv5.Objects.ApiInternalErrorMessages;
 using static iParkingv5.Objects.Enums.PrintHelpers;
 using static iParkingv5.Objects.Enums.VehicleType;
+using static iParkingv5.Objects.Enums.VETCType;
 using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper;
 
 namespace iParkingv5_window.Usercontrols
@@ -1190,6 +1193,10 @@ namespace iParkingv5_window.Usercontrols
             {
                 goto LOI_HE_THONG;
             }
+            //Fix cung tiền
+            responseNormal.data.charge = 5000;
+            responseNormal.data.OpenBarrier = false;
+
             if (responseNormal.metadata.success == false)
             {
                 var errorCode = ApiInternalErrorMessages.GetFromName(responseNormal.metadata.message.code);
@@ -1224,9 +1231,63 @@ namespace iParkingv5_window.Usercontrols
                 {
                     await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
                     KzParkingApiHelper.CommitOutAsync(eventOut);
+
+
                 }
                 else
                 {
+                    // Có phí
+                    //Fix SendAPI_CheckOut_VETC
+                    //CheckOutModel model = new CheckOutModel();
+                    //model.transId = "20240305123000139";
+                    //model.checkoutLaneId = "6";
+                    //model.etag = "";
+                    //model.plate = "30A12345";
+                    //model.laneCardId = "";
+                    //model.totalAmount = 10000;
+                    //model.description = "Gửi xe 12h-18h 50k, gửi xe 18h-23h 50k";
+                    //model.checkinTime = 1713857142000;
+                    //model.base64Image = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADIAQAAAACFI5MzAAACm0lEQVR4XrWXUYojMQwFDb6WQVcX+FoGb5U6G5iw87MoIcy0VQ1uPT3JnXF/" +
+                    //    "+4zPwPszcox5D9+4Z6w1VpzYBpvJvnfnzHkmbJ8RLgx2E/4Ty3nvWcHWPMI0+AWSa/gEiy955oovkWua4DGIRYa5txPEY1m6XjZnte9b6z6iGfbn5+2dT/D/RHOjZYb77ls3Po7vJTkmq1HmwPubu0h4rWgmbF" +
+                    //    "tm141BmO2tYjsxTZNld9L0DhuZO7qJdkgy3T4ENVumiiW7Saooue6npzSm985mwuoUQEUbi2SFJ7pJaHFkTbuKUaHhobud5PIBtv7gqvx+VLSX7DIiez6+L8cj6e4mZjfdPpzmxyPqyKObpHXjZIq/rmfSCp" +
+                    //    "uJ21IzUlXQcnyxbnId4c+woHpPEcv2zQSLa7+neGE7s1TgdkL/6nHeGoZaLju6NOglOo/C2b54BMcbyXbC6uVDT0KUxffTpm4m6cYl4fXCoh3PpppIjWSXfpfKKWg1FpKSfTOxXYeCGt7leNxoB/cSymbN" +
+                    //    "bGI8SI+ZpW+rzYRqoSWa8hT6Q+s72aOZVLVqSFCz+9RPrnc6CUktPGh02GJe15BtJmSFfKeys8kcsaT9OksaiUVbWIKq2bwkrrRq3UoAPgPb1t4YpBJW61biEsvXfN0/HN9MKv70FiHzHo+ivaTcHlpPIf2L" +
+                    //    "shwb1cGNhKwGM7WOc8I4fjvYw4nUSkb9UlXH6fDjQCdAys0ka945LEbFEVRtM5oJ74uvdjqmyvbmnTq+leRj8OOw8NXkeAsXddY3kjry4lHUnJV06v5uorsd56WolkwVdSK1E/VMt30cX4v7BcL0W8pKvjUwyL" +
+                    //    "mfoKiRqt61jRkb287qJTqEGaTjA2EtHAlff1G2Eh3/z8/v5A+jQasPKWdzUQAAAABJRU5ErkJggg==";
+                    //model.additionalBase64Image = "";
+                    //model.forceQR = false;
+
+                    //var vetcData = await VETCParkingApihelper.CheckOut(model);
+                    //if (vetcData.data != null)
+                    //{
+                    //    if (model.transId != vetcData.data.transId)
+                    //    {
+                    //        // warning
+                    //        return;
+                    //    }
+                    //    if(vetcData.message.ToUpper() != "SUCCESS")
+                    //    {
+
+                    //    }
+
+                    //    if (vetcData.data.status == Em_PaymentStatus.SUCCESS.ToString())
+                    //    {
+                    //        if (vetcData.data.amount <= 0)
+                    //        {
+                    //            // Mở Barrier
+                    //            await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                    //            responseNormal.data.plateNumber = plateNumber;
+                    //            KzParkingApiHelper.CommitOutAsync(responseNormal.data);
+                    //        }
+                    //    }
+                    //    else if (vetcData.data.status == Em_PaymentStatus.PENDING.ToString())
+                    //    {
+                    //        CheckOutData check = vetcData.data;
+                    //    }
+
+                    //}
+
+
                     frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, "Bạn có xác nhận mở barrie?", responseNormal.data?.eventInPlateNumber ?? "", responseNormal.data?.eventInIdentityId ?? "", responseNormal.data?.eventInLaneId ?? "", responseNormal.data?.eventInFileKeys, responseNormal.data?.DatetimeIn ?? DateTime.Now, false, responseNormal.data?.charge ?? 0);
                     bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
                     if (!isConfirm)
@@ -1242,6 +1303,8 @@ namespace iParkingv5_window.Usercontrols
                         KzParkingApiHelper.CommitOutAsync(responseNormal.data);
                     }
                 }
+
+
                 goto SU_KIEN_HOP_LE;
             }
         CheckOutWithForce:
@@ -1598,6 +1661,8 @@ namespace iParkingv5_window.Usercontrols
                 }
                 XuanCuongApiHelper.SendParkingInfo(lastEvent.Id, "out", detectedPlate, eventTime, imageUrl);
             }
+
+
         }
 
         public async void OnKeyPress(Keys keys)
@@ -2249,7 +2314,7 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
         }
-       
+
 
         private int printCount = 0;
         private async void btnPrintScale_Click(object sender, EventArgs e)
