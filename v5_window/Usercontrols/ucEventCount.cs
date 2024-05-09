@@ -1,42 +1,44 @@
-﻿using iParkingv6.ApiManager.KzParkingv3Apis;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using iParkingv5.ApiManager.KzParkingv5Apis;
 
 namespace iParkingv5_window.Usercontrols
 {
     public partial class ucEventCount : UserControl
     {
+        #region Forms
         public ucEventCount()
         {
             InitializeComponent();
             this.Load += UcEventCount_Load;
         }
-
         private void UcEventCount_Load(object? sender, EventArgs e)
         {
             timerUpdateCount.Enabled = true;
         }
+        #endregion End Forms
 
+        #region Timer
         private async void timerUpdateCount_Tick(object sender, EventArgs e)
         {
-            timerUpdateCount.Enabled = false;
-            var eventCountDetail = await KzParkingApiHelper.SummaryEvent();
-            int totalVehicleInPark = eventCountDetail.countAllEventIn;
-            int vehicleInDay = eventCountDetail.totalVehicleIn;
-            int vehicleOutDay = eventCountDetail.totalEventOut;
+            try
+            {
+                timerUpdateCount.Enabled = false;
+                var eventCountDetail = await KzParkingv5ApiHelper.SummaryEventAsync();
+                int totalVehicleInPark = eventCountDetail.countAllEventIn;
+                int vehicleInDay = eventCountDetail.totalVehicleIn;
+                int vehicleOutDay = eventCountDetail.totalEventOut;
 
-            lblCurrentVehicleInPark.Text = totalVehicleInPark.ToString();
-            lblVehicleIn.Text = vehicleInDay.ToString();
-            lblVehicleOutDay.Text =  vehicleOutDay.ToString();
-
-            timerUpdateCount.Enabled = true;
+                lblCurrentVehicleInPark.Text = totalVehicleInPark.ToString();
+                lblVehicleIn.Text = vehicleInDay.ToString();
+                lblVehicleOutDay.Text = vehicleOutDay.ToString();
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                timerUpdateCount.Enabled = true;
+            }
         }
+        #endregion End Timer
     }
 }

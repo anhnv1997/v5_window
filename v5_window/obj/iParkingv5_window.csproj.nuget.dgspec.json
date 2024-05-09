@@ -4,8 +4,92 @@
     "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\v5_window\\iParkingv5_window.csproj": {}
   },
   "projects": {
+    "E:\\2.Workspace\\2.Projects\\2023\\3.Lotte_TayHo\\1.source\\iPGS_2023_NET6\\Kztek.Tool\\Kztek.Tool.csproj": {
+      "version": "1.0.0.1",
+      "restore": {
+        "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\3.Lotte_TayHo\\1.source\\iPGS_2023_NET6\\Kztek.Tool\\Kztek.Tool.csproj",
+        "projectName": "Kztek.Tool",
+        "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\3.Lotte_TayHo\\1.source\\iPGS_2023_NET6\\Kztek.Tool\\Kztek.Tool.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "E:\\2.Workspace\\2.Projects\\2023\\3.Lotte_TayHo\\1.source\\iPGS_2023_NET6\\Kztek.Tool\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "RestSharp": {
+              "target": "Package",
+              "version": "[110.2.0, )"
+            },
+            "RestSharp.Authenticators.Digest": {
+              "target": "Package",
+              "version": "[1.6.0, )"
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[7.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\IPaking.Ultility\\IPaking.Ultility.csproj": {
-      "version": "1.0.0",
+      "version": "1.0.0.1",
       "restore": {
         "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\IPaking.Ultility\\IPaking.Ultility.csproj",
         "projectName": "IPaking.Ultility",
@@ -71,7 +155,7 @@
       }
     },
     "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iPakrkingv5.Controls\\iPakrkingv5.Controls.csproj": {
-      "version": "1.0.0",
+      "version": "1.0.0.1",
       "restore": {
         "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iPakrkingv5.Controls\\iPakrkingv5.Controls.csproj",
         "projectName": "iPakrkingv5.Controls",
@@ -229,7 +313,7 @@
       }
     },
     "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.ApiManager\\iParkingv5.ApiManager.csproj": {
-      "version": "1.0.0.1",
+      "version": "1.0.0.8",
       "restore": {
         "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.ApiManager\\iParkingv5.ApiManager.csproj",
         "projectName": "iParkingv5.ApiManager",
@@ -388,7 +472,7 @@
       }
     },
     "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.LedDisplay\\iParkingv5.LedDisplay.csproj": {
-      "version": "1.0.0",
+      "version": "1.0.0.1",
       "restore": {
         "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.LedDisplay\\iParkingv5.LedDisplay.csproj",
         "projectName": "iParkingv5.LedDisplay",
@@ -417,8 +501,11 @@
           "netstandard2.1": {
             "targetAlias": "netstandard2.1",
             "projectReferences": {
-              "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj": {
-                "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj"
+              "E:\\2.Workspace\\2.Projects\\2023\\3.Lotte_TayHo\\1.source\\iPGS_2023_NET6\\Kztek.Tool\\Kztek.Tool.csproj": {
+                "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\3.Lotte_TayHo\\1.source\\iPGS_2023_NET6\\Kztek.Tool\\Kztek.Tool.csproj"
+              },
+              "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Lpr\\iParkingv5.Lpr.csproj": {
+                "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Lpr\\iParkingv5.Lpr.csproj"
               }
             }
           }
@@ -458,7 +545,7 @@
       }
     },
     "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Lpr\\iParkingv5.Lpr.csproj": {
-      "version": "1.0.0",
+      "version": "1.0.0.1",
       "restore": {
         "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Lpr\\iParkingv5.Lpr.csproj",
         "projectName": "iParkingv5.Lpr",
@@ -538,7 +625,7 @@
       }
     },
     "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj": {
-      "version": "1.0.0.1",
+      "version": "1.0.0.2",
       "restore": {
         "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj",
         "projectName": "iParkingv5.Objects",
@@ -566,11 +653,7 @@
         "frameworks": {
           "netstandard2.1": {
             "targetAlias": "netstandard2.1",
-            "projectReferences": {
-              "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Lpr\\iParkingv5.Lpr.csproj": {
-                "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Lpr\\iParkingv5.Lpr.csproj"
-              }
-            }
+            "projectReferences": {}
           }
         },
         "warningProperties": {
@@ -694,7 +777,7 @@
       }
     },
     "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\v5_window\\iParkingv5_window.csproj": {
-      "version": "1.0.0.1",
+      "version": "1.0.3.4",
       "restore": {
         "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\v5_window\\iParkingv5_window.csproj",
         "projectName": "iParkingv5_window",
@@ -749,6 +832,9 @@
               },
               "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Scale\\Net6\\Kztek.Scale\\Kztek.Scale_net6.csproj": {
                 "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Scale\\Net6\\Kztek.Scale\\Kztek.Scale_net6.csproj"
+              },
+              "E:\\BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj": {
+                "projectPath": "E:\\BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj"
               }
             }
           }
@@ -768,6 +854,18 @@
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "dependencies": {
+            "IdentityModel": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "IdentityModel.OidcClient": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.Web.WebView2": {
+              "target": "Package",
+              "version": "[1.0.2420.47, )"
+            },
             "Minio": {
               "target": "Package",
               "version": "[5.0.0, )"
@@ -783,6 +881,154 @@
             "System.Management": {
               "target": "Package",
               "version": "[7.0.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WindowsForms": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "E:\\BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj": {
+      "version": "1.0.0.2",
+      "restore": {
+        "projectUniqueName": "E:\\BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj",
+        "projectName": "Kztek.Cameras",
+        "projectPath": "E:\\BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "E:\\BaseLib\\Kztek.Cameras\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0-windows"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0-windows7.0": {
+            "targetAlias": "net5.0-windows",
+            "projectReferences": {
+              "E:\\BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj": {
+                "projectPath": "E:\\BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net5.0-windows7.0": {
+          "targetAlias": "net5.0-windows",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WindowsForms": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "E:\\BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj": {
+      "version": "1.0.0.2",
+      "restore": {
+        "projectUniqueName": "E:\\BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj",
+        "projectName": "Kztek.RtspPlayer",
+        "projectPath": "E:\\BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "E:\\BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0-windows"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0-windows7.0": {
+            "targetAlias": "net5.0-windows",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net5.0-windows7.0": {
+          "targetAlias": "net5.0-windows",
+          "dependencies": {
+            "RtspClientSharpSPG": {
+              "target": "Package",
+              "version": "[0.0.3, )"
             }
           },
           "imports": [

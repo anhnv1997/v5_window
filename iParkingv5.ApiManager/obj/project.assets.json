@@ -57,23 +57,6 @@
           }
         }
       },
-      "OpenCvSharp4/4.9.0.20240103": {
-        "type": "package",
-        "dependencies": {
-          "System.Memory": "4.5.5",
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
-        },
-        "compile": {
-          "lib/netstandard2.1/OpenCvSharp.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.1/OpenCvSharp.dll": {
-            "related": ".xml"
-          }
-        }
-      },
       "RestSharp/110.2.0": {
         "type": "package",
         "dependencies": {
@@ -196,19 +179,6 @@
         "runtime": {
           "lib/netstandard1.3/System.Diagnostics.DiagnosticSource.dll": {
             "related": ".xml"
-          }
-        }
-      },
-      "System.Drawing.Common/8.0.1": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/System.Drawing.Common.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/System.Drawing.Common.dll": {
-            "related": ".pdb;.xml"
           }
         }
       },
@@ -378,29 +348,13 @@
           }
         }
       },
-      "iParkingv5.Lpr/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.1",
-        "dependencies": {
-          "Newtonsoft.Json": "13.0.3",
-          "OpenCvSharp4": "4.9.0.20240103",
-          "System.Drawing.Common": "8.0.1"
-        },
-        "compile": {
-          "bin/placeholder/iParkingv5.Lpr.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/iParkingv5.Lpr.dll": {}
-        }
-      },
-      "iParkingv5.Objects/1.0.0.1": {
+      "iParkingv5.Objects/1.0.0.2": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
           "Newtonsoft.Json": "13.0.3",
           "System.Data.OleDb": "8.0.0",
-          "System.Data.SqlClient": "4.8.6",
-          "iParkingv5.Lpr": "1.0.0"
+          "System.Data.SqlClient": "4.8.6"
         },
         "compile": {
           "bin/placeholder/iParkingv5.Objects.dll": {}
@@ -510,25 +464,6 @@
         "newtonsoft.json.13.0.3.nupkg.sha512",
         "newtonsoft.json.nuspec",
         "packageIcon.png"
-      ]
-    },
-    "OpenCvSharp4/4.9.0.20240103": {
-      "sha512": "+BJMqToSH3dl+5SUF2YaPI+1eY/o/aTtvCQsY3qgcE4YS8qvPNS7MObzzVy4avYrBmcEEFnCvNF+1VbFnQjU9w==",
-      "type": "package",
-      "path": "opencvsharp4/4.9.0.20240103",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net48/OpenCvSharp.dll",
-        "lib/net48/OpenCvSharp.xml",
-        "lib/net6.0/OpenCvSharp.dll",
-        "lib/net6.0/OpenCvSharp.xml",
-        "lib/netstandard2.0/OpenCvSharp.dll",
-        "lib/netstandard2.0/OpenCvSharp.xml",
-        "lib/netstandard2.1/OpenCvSharp.dll",
-        "lib/netstandard2.1/OpenCvSharp.xml",
-        "opencvsharp4.4.9.0.20240103.nupkg.sha512",
-        "opencvsharp4.nuspec"
       ]
     },
     "RestSharp/110.2.0": {
@@ -790,46 +725,6 @@
         "system.diagnostics.diagnosticsource.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
-      ]
-    },
-    "System.Drawing.Common/8.0.1": {
-      "sha512": "x0rAZECxIGx/YVjN28YRdpqka0+H7YMN9741FUDzipXPDzesd60gef/LI0ZCOcYSDsacTLTHvMAvxHG+TjbNNQ==",
-      "type": "package",
-      "path": "system.drawing.common/8.0.1",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "LICENSE.TXT",
-        "THIRD-PARTY-NOTICES.TXT",
-        "buildTransitive/net461/System.Drawing.Common.targets",
-        "buildTransitive/net462/_._",
-        "buildTransitive/net6.0/_._",
-        "buildTransitive/netcoreapp2.0/System.Drawing.Common.targets",
-        "lib/MonoAndroid10/_._",
-        "lib/MonoTouch10/_._",
-        "lib/net462/System.Drawing.Common.dll",
-        "lib/net462/System.Drawing.Common.pdb",
-        "lib/net462/System.Drawing.Common.xml",
-        "lib/net6.0/System.Drawing.Common.dll",
-        "lib/net6.0/System.Drawing.Common.pdb",
-        "lib/net6.0/System.Drawing.Common.xml",
-        "lib/net7.0/System.Drawing.Common.dll",
-        "lib/net7.0/System.Drawing.Common.pdb",
-        "lib/net7.0/System.Drawing.Common.xml",
-        "lib/net8.0/System.Drawing.Common.dll",
-        "lib/net8.0/System.Drawing.Common.pdb",
-        "lib/net8.0/System.Drawing.Common.xml",
-        "lib/netstandard2.0/System.Drawing.Common.dll",
-        "lib/netstandard2.0/System.Drawing.Common.pdb",
-        "lib/netstandard2.0/System.Drawing.Common.xml",
-        "lib/xamarinios10/_._",
-        "lib/xamarinmac20/_._",
-        "lib/xamarintvos10/_._",
-        "lib/xamarinwatchos10/_._",
-        "system.drawing.common.8.0.1.nupkg.sha512",
-        "system.drawing.common.nuspec",
-        "useSharedDesignerContext.txt"
       ]
     },
     "System.Memory/4.5.5": {
@@ -1206,12 +1101,7 @@
         "version.txt"
       ]
     },
-    "iParkingv5.Lpr/1.0.0": {
-      "type": "project",
-      "path": "../iParkingv5.Lpr/iParkingv5.Lpr.csproj",
-      "msbuildProject": "../iParkingv5.Lpr/iParkingv5.Lpr.csproj"
-    },
-    "iParkingv5.Objects/1.0.0.1": {
+    "iParkingv5.Objects/1.0.0.2": {
       "type": "project",
       "path": "../iParkingv5.Objects/iParkingv5.Objects.csproj",
       "msbuildProject": "../iParkingv5.Objects/iParkingv5.Objects.csproj"
@@ -1221,7 +1111,7 @@
     ".NETStandard,Version=v2.1": [
       "Newtonsoft.Json >= 13.0.3",
       "RestSharp >= 110.2.0",
-      "iParkingv5.Objects >= 1.0.0.1"
+      "iParkingv5.Objects >= 1.0.0.2"
     ]
   },
   "packageFolders": {
@@ -1230,7 +1120,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.0.1",
+    "version": "1.0.0.8",
     "restore": {
       "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.ApiManager\\iParkingv5.ApiManager.csproj",
       "projectName": "iParkingv5.ApiManager",

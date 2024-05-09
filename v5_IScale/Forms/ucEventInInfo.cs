@@ -89,7 +89,7 @@ namespace v5_IScale.Forms
                 identityGroup = await KzParkingApiHelper.GetIdentityGroupByIdAsync(identity.IdentityGroupId.ToString());
                 if (identityGroup != null)
                 {
-                    vehicleType = await KzParkingApiHelper.GetVehicleTypeById(identityGroup.VehicleTypeId.ToString());
+                    vehicleType = await KzParkingApiHelper.GetVehicleTypeById(identityGroup.VehicleType.Id.ToString());
                 }
             }
             lblLaneName.Text = lane == null ? "_" : lane.name;

@@ -1,10 +1,13 @@
 ﻿using IPaking.Ultility;
+using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.ApiManager.KzScaleApis;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.EventDatas;
 using iParkingv5.Objects.ScaleObjects;
 using iParkingv5_window;
+using iParkingv5_window.Forms.DataForms;
+using iParkingv5_window.Helpers;
 using static iParkingv5.Objects.Enums.PrintHelpers;
 
 namespace v5_IScale.Forms.ReportForms
@@ -13,6 +16,7 @@ namespace v5_IScale.Forms.ReportForms
     {
         #region Properties
         private int printCount = 0;
+        public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
         #endregion End Properties
 
         #region Forms
@@ -38,7 +42,6 @@ namespace v5_IScale.Forms.ReportForms
                 btnSearch.PerformClick();
             }
         }
-
         #endregion End Forms
 
         #region Controls In Form
@@ -54,13 +57,17 @@ namespace v5_IScale.Forms.ReportForms
                 MessageBox.Show("Không có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
             if (dgvData.CurrentRow == null)
             {
                 MessageBox.Show("Hãy chọn sự kiện cần in phiếu cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
             string parkingEventId = dgvData.CurrentRow.Cells[0].Value.ToString() ?? "";
+
             var frm = new frmSelectPrintCount();
+
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 this.printCount = frm.PrintCount;
@@ -70,13 +77,73 @@ namespace v5_IScale.Forms.ReportForms
                 wbPrint.DocumentText = GetPrintContent(await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(parkingEventId));
             }
         }
-        private void btnPrintEInvoice_Click(object sender, EventArgs e)
-        {
 
+        private async void btnPrintEInvoice_Click(object sender, EventArgs e)
+        {
+            if (dgvData.Rows.Count == 0)
+            {
+                MessageBox.Show("Không có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (dgvData.CurrentRow == null)
+            {
+                MessageBox.Show("Hãy chọn sự kiện cần in phiếu cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            string parkingEventId = dgvData.CurrentRow.Cells[0].Value.ToString() ?? "";
+            string plateNumber = dgvData.CurrentRow.Cells[4].Value.ToString() ?? "";
+            var weighingActionDetails = await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(parkingEventId);
+            if (weighingActionDetails.Count < (cbPrintMode.SelectedIndex + 1))
+            {
+                MessageBox.Show("Không có thông tin hóa đơn", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            this.printCount = 1;
+            var wbPrint = new WebBrowser();
+            wbPrint.DocumentCompleted += WbPrint_DocumentCompleted;
+            wbPrint.DocumentText = PrintHelper.GetPrintScaleInvoiceOfflineContent(weighingActionDetails[cbPrintMode.SelectedIndex], plateNumber);
         }
-        private void btnPrintInternetEInvoice_Click(object sender, EventArgs e)
+        private async void btnPrintInternetEInvoice_Click(object sender, EventArgs e)
         {
 
+            if (dgvData.Rows.Count == 0)
+            {
+                MessageBox.Show("Không có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (dgvData.CurrentRow == null)
+            {
+                MessageBox.Show("Hãy chọn sự kiện cần in phiếu cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            string parkingEventId = dgvData.CurrentRow.Cells[0].Value.ToString() ?? "";
+            string plateNumber = dgvData.CurrentRow.Cells[4].Value.ToString() ?? "";
+
+
+            var weighingActionDetails = await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(parkingEventId);
+            if (weighingActionDetails.Count < (cbPrintMode.SelectedIndex + 1))
+            {
+                MessageBox.Show("Không có thông tin hóa đơn", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            string orderId = await KzScaleApiHelper.CreateInvoice(weighingActionDetails[cbPrintMode.SelectedIndex].Id, StaticPool.userId, StaticPool.user_name);
+            if (string.IsNullOrEmpty(orderId))
+            {
+                MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            var invoiceData = await KzParkingv5ApiHelper.GetInvoiceData(orderId);
+            if (string.IsNullOrEmpty(invoiceData.id))
+            {
+                MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            string pdfContent = invoiceData.signedFileData;
+            PrintHelper.PrintPdf(pdfContent);
         }
         private void btnExcel_Click(object sender, EventArgs e)
         {
@@ -93,21 +160,23 @@ namespace v5_IScale.Forms.ReportForms
                 if (!string.IsNullOrEmpty(firstScaleImage))
                 {
                     string[] firstScaleImages = firstScaleImage.Split(";");
-                    if (firstScaleImages.Length > 0)
+                    if (firstScaleImages.Length > 1)
                     {
-                        string tempPath = await MinioHelper.GetImage(firstScaleImages[0]);
+                        string firstWeightImagePath = await MinioHelper.GetImage(firstScaleImages[1]);
+                        string vehicleImagePath = await MinioHelper.GetImage(firstScaleImages[0]);
                         this.Invoke(new Action(() =>
                         {
-                            picFirstWeight.LoadAsync(tempPath);
+                            picVehicleImage.LoadAsync(vehicleImagePath);
+                            picFirstWeight.LoadAsync(firstWeightImagePath);
                         }));
                     }
                 }
                 if (!string.IsNullOrEmpty(secondScaleImage))
                 {
                     string[] secondScaleImages = secondScaleImage.Split(";");
-                    if (secondScaleImages.Length > 0)
+                    if (secondScaleImages.Length > 1)
                     {
-                        string tempPath = await MinioHelper.GetImage(secondScaleImages[0]);
+                        string tempPath = await MinioHelper.GetImage(secondScaleImages[1]);
                         this.Invoke(new Action(() =>
                         {
                             picSecondWeight.LoadAsync(tempPath);
@@ -129,7 +198,7 @@ namespace v5_IScale.Forms.ReportForms
             DateTime endTime = dtpEndTime.Value;
             string plateNumber = txtPlateNumber.Text;
             string userCode = txtUsername.Text;
-            string goodsTypeId = ((ListItem)cbGoodsType.SelectedItem)?.Name??"";
+            string goodsTypeId = ((ListItem)cbGoodsType.SelectedItem)?.Name ?? "";
             return await KzScaleApiHelper.GetWeighingActionDetails(startTime, endTime, plateNumber, userCode, goodsTypeId);
         }
         private void DisplayInGridview(List<WeighingDetail> data)
@@ -172,7 +241,7 @@ namespace v5_IScale.Forms.ReportForms
                         }
                     }
                     largerThan2TimesScale = largerThan2TimesScale.TrimEnd();
-                    string userAction = item.weighing_action_detail.Count > 0 ? item.weighing_action_detail[0].User_action : "";
+                    string userAction = item.weighing_action_detail.Count > 0 ? item.weighing_action_detail[0].User_code : "";
                     string vehicleImage = "";
                     string firstScaleImage = item.weighing_action_detail.Count > 0 ? item.weighing_action_detail[0].list_image : "";
                     string secondScaleImage = item.weighing_action_detail.Count > 1 ? item.weighing_action_detail[1].list_image : "";
@@ -194,16 +263,21 @@ namespace v5_IScale.Forms.ReportForms
                 Name = "",
                 Value = "Tất cả",
             });
-            foreach (var item in weighingForms)
+
+            if (weighingForms != null)
             {
-                StaticPool.WeighingFormCollection.Add(item);
-                ListItem li = new ListItem()
+                foreach (var item in weighingForms)
                 {
-                    Name = item.Id,
-                    Value = item.Name,
-                };
-                cbGoodsType.Items.Add(li);
+                    StaticPool.WeighingFormCollection.Add(item);
+                    ListItem li = new()
+                    {
+                        Name = item.Id,
+                        Value = item.Name,
+                    };
+                    cbGoodsType.Items.Add(li);
+                }
             }
+
             cbGoodsType.DisplayMember = "Value";
             cbGoodsType.SelectedIndex = cbGoodsType.Items.Count > 0 ? 0 : -1;
             cbPrintMode.SelectedIndex = 0;
@@ -315,6 +389,15 @@ namespace v5_IScale.Forms.ReportForms
                 MessageBox.Show(ex.Message);
             }
         }
+        private void Pic_LoadCompleted(object? sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            PictureBox pictureBox = (sender as PictureBox)!;
+            if (e.Error != null)
+            {
+                pictureBox.Image = defaultImg;
+            }
+        }
+
         #endregion End Public Function
     }
 }

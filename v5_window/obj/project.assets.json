@@ -31,6 +31,71 @@
           }
         }
       },
+      "IdentityModel/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/IdentityModel.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/IdentityModel.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "IdentityModel.OidcClient/6.0.0": {
+        "type": "package",
+        "dependencies": {
+          "IdentityModel": "7.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/IdentityModel.OidcClient.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/IdentityModel.OidcClient.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Extensions.DependencyInjection.Abstractions/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "Microsoft.Extensions.Logging.Abstractions/8.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/Microsoft.Extensions.Logging.Abstractions.targets": {}
+        }
+      },
       "Microsoft.NETCore.Platforms/3.1.0": {
         "type": "package",
         "compile": {
@@ -38,6 +103,48 @@
         },
         "runtime": {
           "lib/netstandard1.0/_._": {}
+        }
+      },
+      "Microsoft.Web.WebView2/1.0.2420.47": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.0/Microsoft.Web.WebView2.Core.dll": {
+            "related": ".xml"
+          },
+          "lib/netcoreapp3.0/Microsoft.Web.WebView2.WinForms.dll": {
+            "related": ".xml"
+          },
+          "lib/netcoreapp3.0/Microsoft.Web.WebView2.Wpf.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/Microsoft.Web.WebView2.Core.dll": {
+            "related": ".xml"
+          },
+          "lib/netcoreapp3.0/Microsoft.Web.WebView2.WinForms.dll": {
+            "related": ".xml"
+          },
+          "lib/netcoreapp3.0/Microsoft.Web.WebView2.Wpf.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "build/Microsoft.Web.WebView2.targets": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win-arm64/native/WebView2Loader.dll": {
+            "assetType": "native",
+            "rid": "win-arm64"
+          },
+          "runtimes/win-x64/native/WebView2Loader.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
+          "runtimes/win-x86/native/WebView2Loader.dll": {
+            "assetType": "native",
+            "rid": "win-x86"
+          }
         }
       },
       "Microsoft.Win32.Registry/4.7.0": {
@@ -168,6 +275,28 @@
           "lib/net6.0/RestSharp.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "RestSharp.Authenticators.Digest/1.6.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "3.1.32",
+          "RestSharp": "110.2.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/RestSharp.Authenticators.Digest.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/RestSharp.Authenticators.Digest.dll": {}
+        }
+      },
+      "RtspClientSharpSPG/0.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/RtspClientSharp.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/RtspClientSharp.dll": {}
         }
       },
       "runtime.linux-arm.runtime.native.System.IO.Ports/8.0.0": {
@@ -638,7 +767,7 @@
           }
         }
       },
-      "System.Text.Json/7.0.2": {
+      "System.Text.Json/7.0.3": {
         "type": "package",
         "dependencies": {
           "System.Runtime.CompilerServices.Unsafe": "6.0.0",
@@ -683,7 +812,7 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
-      "IPaking.Ultility/1.0.0": {
+      "IPaking.Ultility/1.0.0.1": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "compile": {
@@ -693,11 +822,11 @@
           "bin/placeholder/IPaking.Ultility.dll": {}
         }
       },
-      "iPakrkingv5.Controls/1.0.0": {
+      "iPakrkingv5.Controls/1.0.0.1": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "IPaking.Ultility": "1.0.0"
+          "IPaking.Ultility": "1.0.0.1"
         },
         "compile": {
           "bin/placeholder/iPakrkingv5.Controls.dll": {}
@@ -713,11 +842,11 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "IPaking.Ultility": "1.0.0",
+          "IPaking.Ultility": "1.0.0.1",
           "Kztek.Scale_net6": "1.0.0.10",
-          "iParkingv5.ApiManager": "1.0.0.1",
+          "iParkingv5.ApiManager": "1.0.0.8",
           "iParkingv5.Controller": "1.0.0.1",
-          "iParkingv5.Objects": "1.0.0.1"
+          "iParkingv5.Objects": "1.0.0.2"
         },
         "compile": {
           "bin/placeholder/iParking.ConfigurationManager.dll": {}
@@ -729,13 +858,13 @@
           "Microsoft.WindowsDesktop.App.WindowsForms"
         ]
       },
-      "iParkingv5.ApiManager/1.0.0.1": {
+      "iParkingv5.ApiManager/1.0.0.8": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
           "Newtonsoft.Json": "13.0.3",
           "RestSharp": "110.2.0",
-          "iParkingv5.Objects": "1.0.0.1"
+          "iParkingv5.Objects": "1.0.0.2"
         },
         "compile": {
           "bin/placeholder/iParkingv5.ApiManager.dll": {}
@@ -749,7 +878,7 @@
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
           "System.IO.Ports": "8.0.0",
-          "iParkingv5.Objects": "1.0.0.1"
+          "iParkingv5.Objects": "1.0.0.2"
         },
         "compile": {
           "bin/placeholder/iParkingv5.Controller.dll": {}
@@ -761,11 +890,12 @@
           "Microsoft.WindowsDesktop.App.WindowsForms"
         ]
       },
-      "iParkingv5.LedDisplay/1.0.0": {
+      "iParkingv5.LedDisplay/1.0.0.1": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
-          "iParkingv5.Objects": "1.0.0.1"
+          "Kztek.Tool": "1.0.0.1",
+          "iParkingv5.Lpr": "1.0.0.1"
         },
         "compile": {
           "bin/placeholder/iParkingv5.LedDisplay.dll": {}
@@ -774,7 +904,7 @@
           "bin/placeholder/iParkingv5.LedDisplay.dll": {}
         }
       },
-      "iParkingv5.Lpr/1.0.0": {
+      "iParkingv5.Lpr/1.0.0.1": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
@@ -789,14 +919,13 @@
           "bin/placeholder/iParkingv5.Lpr.dll": {}
         }
       },
-      "iParkingv5.Objects/1.0.0.1": {
+      "iParkingv5.Objects/1.0.0.2": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
           "Newtonsoft.Json": "13.0.3",
           "System.Data.OleDb": "8.0.0",
-          "System.Data.SqlClient": "4.8.6",
-          "iParkingv5.Lpr": "1.0.0"
+          "System.Data.SqlClient": "4.8.6"
         },
         "compile": {
           "bin/placeholder/iParkingv5.Objects.dll": {}
@@ -804,6 +933,38 @@
         "runtime": {
           "bin/placeholder/iParkingv5.Objects.dll": {}
         }
+      },
+      "Kztek.Cameras/1.0.0.2": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Kztek.RtspPlayer": "1.0.0.2"
+        },
+        "compile": {
+          "bin/placeholder/Kztek.Cameras.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Kztek.Cameras.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WindowsForms"
+        ]
+      },
+      "Kztek.RtspPlayer/1.0.0.2": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "RtspClientSharpSPG": "0.0.3"
+        },
+        "compile": {
+          "bin/placeholder/Kztek.RtspPlayer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Kztek.RtspPlayer.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WindowsForms"
+        ]
       },
       "Kztek.Scale_net6/1.0.0.10": {
         "type": "project",
@@ -816,6 +977,22 @@
         },
         "runtime": {
           "bin/placeholder/Kztek.Scale_net6.dll": {}
+        }
+      },
+      "Kztek.Tool/1.0.0.1": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.1",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3",
+          "RestSharp": "110.2.0",
+          "RestSharp.Authenticators.Digest": "1.6.0",
+          "System.Text.Json": "7.0.3"
+        },
+        "compile": {
+          "bin/placeholder/Kztek.Tool.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Kztek.Tool.dll": {}
         }
       }
     }
@@ -869,6 +1046,153 @@
         "lib/netstandard2.0/DocumentFormat.OpenXml.xml"
       ]
     },
+    "IdentityModel/7.0.0": {
+      "sha512": "to99aLL5Gev1GOb2gUao/UZXT/uXMyjEmHPNrf/vJI2HBD1LMCTeC4SBCe/cqMIB12V9v+eSieq7ff0lju9pOQ==",
+      "type": "package",
+      "path": "identitymodel/7.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "icon.jpg",
+        "identitymodel.7.0.0.nupkg.sha512",
+        "identitymodel.nuspec",
+        "lib/net462/IdentityModel.dll",
+        "lib/net462/IdentityModel.pdb",
+        "lib/net462/IdentityModel.xml",
+        "lib/net472/IdentityModel.dll",
+        "lib/net472/IdentityModel.pdb",
+        "lib/net472/IdentityModel.xml",
+        "lib/net6.0/IdentityModel.dll",
+        "lib/net6.0/IdentityModel.pdb",
+        "lib/net6.0/IdentityModel.xml",
+        "lib/netstandard2.0/IdentityModel.dll",
+        "lib/netstandard2.0/IdentityModel.pdb",
+        "lib/netstandard2.0/IdentityModel.xml"
+      ]
+    },
+    "IdentityModel.OidcClient/6.0.0": {
+      "sha512": "m2PZbjeG3nXIQ72NLZvFz3FLFk7GmqLnxO/ifUvaTEE3BDZXp7DXAdjDP6TQKaL20+wDnej2ffA1Yh3vVcJOkA==",
+      "type": "package",
+      "path": "identitymodel.oidcclient/6.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "icon.jpg",
+        "identitymodel.oidcclient.6.0.0.nupkg.sha512",
+        "identitymodel.oidcclient.nuspec",
+        "lib/net6.0/IdentityModel.OidcClient.dll",
+        "lib/net6.0/IdentityModel.OidcClient.xml",
+        "lib/netstandard2.0/IdentityModel.OidcClient.dll",
+        "lib/netstandard2.0/IdentityModel.OidcClient.xml"
+      ]
+    },
+    "Microsoft.Extensions.DependencyInjection.Abstractions/8.0.0": {
+      "sha512": "cjWrLkJXK0rs4zofsK4bSdg+jhDLTaxrkXu4gS6Y7MAlCvRyNNgwY/lJi5RDlQOnSZweHqoyvgvbdvQsRIW+hg==",
+      "type": "package",
+      "path": "microsoft.extensions.dependencyinjection.abstractions/8.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/Microsoft.Extensions.DependencyInjection.Abstractions.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/Microsoft.Extensions.DependencyInjection.Abstractions.targets",
+        "lib/net462/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/net462/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "lib/net6.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/net6.0/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "lib/net7.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/net7.0/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "lib/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "lib/netstandard2.1/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/netstandard2.1/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+        "microsoft.extensions.dependencyinjection.abstractions.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "Microsoft.Extensions.Logging.Abstractions/8.0.0": {
+      "sha512": "arDBqTgFCyS0EvRV7O3MZturChstm50OJ0y9bDJvAcmEPJm0FFpFyjU/JLYyStNGGey081DvnQYlncNX5SJJGA==",
+      "type": "package",
+      "path": "microsoft.extensions.logging.abstractions/8.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "analyzers/dotnet/roslyn3.11/cs/Microsoft.Extensions.Logging.Generators.dll",
+        "analyzers/dotnet/roslyn3.11/cs/cs/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/de/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/es/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/fr/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/it/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/ja/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/ko/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/pl/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/pt-BR/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/ru/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/tr/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/zh-Hans/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/zh-Hant/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/Microsoft.Extensions.Logging.Generators.dll",
+        "analyzers/dotnet/roslyn4.0/cs/cs/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/de/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/es/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/fr/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/it/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/ja/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/ko/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/pl/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/pt-BR/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/ru/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/tr/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/zh-Hans/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/zh-Hant/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/Microsoft.Extensions.Logging.Generators.dll",
+        "analyzers/dotnet/roslyn4.4/cs/cs/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/de/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/es/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/fr/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/it/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/ja/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/ko/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/pl/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/pt-BR/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/ru/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/tr/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/zh-Hans/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/zh-Hant/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "buildTransitive/net461/Microsoft.Extensions.Logging.Abstractions.targets",
+        "buildTransitive/net462/Microsoft.Extensions.Logging.Abstractions.targets",
+        "buildTransitive/net6.0/Microsoft.Extensions.Logging.Abstractions.targets",
+        "buildTransitive/netcoreapp2.0/Microsoft.Extensions.Logging.Abstractions.targets",
+        "buildTransitive/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.targets",
+        "lib/net462/Microsoft.Extensions.Logging.Abstractions.dll",
+        "lib/net462/Microsoft.Extensions.Logging.Abstractions.xml",
+        "lib/net6.0/Microsoft.Extensions.Logging.Abstractions.dll",
+        "lib/net6.0/Microsoft.Extensions.Logging.Abstractions.xml",
+        "lib/net7.0/Microsoft.Extensions.Logging.Abstractions.dll",
+        "lib/net7.0/Microsoft.Extensions.Logging.Abstractions.xml",
+        "lib/net8.0/Microsoft.Extensions.Logging.Abstractions.dll",
+        "lib/net8.0/Microsoft.Extensions.Logging.Abstractions.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.xml",
+        "microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
+        "microsoft.extensions.logging.abstractions.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
     "Microsoft.NETCore.Platforms/3.1.0": {
       "sha512": "z7aeg8oHln2CuNulfhiLYxCVMPEwBl3rzicjvIX+4sUuCwvXw5oXQEtbiU2c0z4qYL5L3Kmx0mMA/+t/SbY67w==",
       "type": "package",
@@ -884,6 +1208,98 @@
         "runtime.json",
         "useSharedDesignerContext.txt",
         "version.txt"
+      ]
+    },
+    "Microsoft.Web.WebView2/1.0.2420.47": {
+      "sha512": "XYZjxkepD+MwmIdeiWqjm2T8x4UmVZq4CDKUe7U6L1r+9VGo2Q88OeEgvyLYtgvebGGuSP6D74Z3wxdRwjH8IQ==",
+      "type": "package",
+      "path": "microsoft.web.webview2/1.0.2420.47",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "NOTICE.txt",
+        "WebView2.idl",
+        "WebView2.tlb",
+        "build/Common.targets",
+        "build/Microsoft.Web.WebView2.targets",
+        "build/WebView2Rules.Project.xml",
+        "build/native/Microsoft.Web.WebView2.targets",
+        "build/native/arm64/WebView2Loader.dll",
+        "build/native/arm64/WebView2Loader.dll.lib",
+        "build/native/arm64/WebView2LoaderStatic.lib",
+        "build/native/include-winrt/WebView2Interop.h",
+        "build/native/include-winrt/WebView2Interop.idl",
+        "build/native/include-winrt/WebView2Interop.tlb",
+        "build/native/include/WebView2.h",
+        "build/native/include/WebView2EnvironmentOptions.h",
+        "build/native/x64/WebView2Loader.dll",
+        "build/native/x64/WebView2Loader.dll.lib",
+        "build/native/x64/WebView2LoaderStatic.lib",
+        "build/native/x86/WebView2Loader.dll",
+        "build/native/x86/WebView2Loader.dll.lib",
+        "build/native/x86/WebView2LoaderStatic.lib",
+        "build/wv2winrt.targets",
+        "lib/Microsoft.Web.WebView2.Core.winmd",
+        "lib/net45/Microsoft.Web.WebView2.Core.dll",
+        "lib/net45/Microsoft.Web.WebView2.Core.xml",
+        "lib/net45/Microsoft.Web.WebView2.WinForms.dll",
+        "lib/net45/Microsoft.Web.WebView2.WinForms.xml",
+        "lib/net45/Microsoft.Web.WebView2.Wpf.dll",
+        "lib/net45/Microsoft.Web.WebView2.Wpf.xml",
+        "lib/netcoreapp3.0/Microsoft.Web.WebView2.Core.dll",
+        "lib/netcoreapp3.0/Microsoft.Web.WebView2.Core.xml",
+        "lib/netcoreapp3.0/Microsoft.Web.WebView2.WinForms.dll",
+        "lib/netcoreapp3.0/Microsoft.Web.WebView2.WinForms.xml",
+        "lib/netcoreapp3.0/Microsoft.Web.WebView2.Wpf.dll",
+        "lib/netcoreapp3.0/Microsoft.Web.WebView2.Wpf.xml",
+        "microsoft.web.webview2.1.0.2420.47.nupkg.sha512",
+        "microsoft.web.webview2.nuspec",
+        "runtimes/win-arm64/native/WebView2Loader.dll",
+        "runtimes/win-arm64/native_uap/Microsoft.Web.WebView2.Core.dll",
+        "runtimes/win-x64/native/WebView2Loader.dll",
+        "runtimes/win-x64/native_uap/Microsoft.Web.WebView2.Core.dll",
+        "runtimes/win-x86/native/WebView2Loader.dll",
+        "runtimes/win-x86/native_uap/Microsoft.Web.WebView2.Core.dll",
+        "tools/VisualStudioToolsManifest.xml",
+        "tools/wv2winrt/Antlr3.Runtime.dll",
+        "tools/wv2winrt/Antlr4.StringTemplate.dll",
+        "tools/wv2winrt/System.Buffers.dll",
+        "tools/wv2winrt/System.CommandLine.DragonFruit.dll",
+        "tools/wv2winrt/System.CommandLine.Rendering.dll",
+        "tools/wv2winrt/System.CommandLine.dll",
+        "tools/wv2winrt/System.Memory.dll",
+        "tools/wv2winrt/System.Numerics.Vectors.dll",
+        "tools/wv2winrt/System.Runtime.CompilerServices.Unsafe.dll",
+        "tools/wv2winrt/codegen_util.dll",
+        "tools/wv2winrt/concrt140_app.dll",
+        "tools/wv2winrt/cs/System.CommandLine.resources.dll",
+        "tools/wv2winrt/de/System.CommandLine.resources.dll",
+        "tools/wv2winrt/es/System.CommandLine.resources.dll",
+        "tools/wv2winrt/fr/System.CommandLine.resources.dll",
+        "tools/wv2winrt/it/System.CommandLine.resources.dll",
+        "tools/wv2winrt/ja/System.CommandLine.resources.dll",
+        "tools/wv2winrt/ko/System.CommandLine.resources.dll",
+        "tools/wv2winrt/msvcp140_1_app.dll",
+        "tools/wv2winrt/msvcp140_2_app.dll",
+        "tools/wv2winrt/msvcp140_app.dll",
+        "tools/wv2winrt/pl/System.CommandLine.resources.dll",
+        "tools/wv2winrt/pt-BR/System.CommandLine.resources.dll",
+        "tools/wv2winrt/ru/System.CommandLine.resources.dll",
+        "tools/wv2winrt/tr/System.CommandLine.resources.dll",
+        "tools/wv2winrt/type_hierarchy.dll",
+        "tools/wv2winrt/vcamp140_app.dll",
+        "tools/wv2winrt/vccorlib140_app.dll",
+        "tools/wv2winrt/vcomp140_app.dll",
+        "tools/wv2winrt/vcruntime140_app.dll",
+        "tools/wv2winrt/winrt_winmd.dll",
+        "tools/wv2winrt/winrt_winmd.winmd",
+        "tools/wv2winrt/wv2winrt.exe",
+        "tools/wv2winrt/wv2winrt.exe.config",
+        "tools/wv2winrt/wv2winrt.xml",
+        "tools/wv2winrt/zh-Hans/System.CommandLine.resources.dll",
+        "tools/wv2winrt/zh-Hant/System.CommandLine.resources.dll"
       ]
     },
     "Microsoft.Win32.Registry/4.7.0": {
@@ -1072,6 +1488,33 @@
         "restsharp.110.2.0.nupkg.sha512",
         "restsharp.nuspec",
         "restsharp.png"
+      ]
+    },
+    "RestSharp.Authenticators.Digest/1.6.0": {
+      "sha512": "wcoXyVbko3WppcsF5te1DwiklKmG6tup9LP3h4CAIPeOQxPC4Ct63jEy+s826Wj2gwuohAs9BUTNLNofl1yfeg==",
+      "type": "package",
+      "path": "restsharp.authenticators.digest/1.6.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "RELEASES.md",
+        "icon.png",
+        "lib/netstandard2.0/RestSharp.Authenticators.Digest.dll",
+        "restsharp.authenticators.digest.1.6.0.nupkg.sha512",
+        "restsharp.authenticators.digest.nuspec"
+      ]
+    },
+    "RtspClientSharpSPG/0.0.3": {
+      "sha512": "zynym3QRbFwgZhuiu2KvroJ2HnT0M+Y/Io7SbI8V/w0X3hS3YrpfN4OwxsyLa/Je981NSeOFsaT1pe2bEgtoEQ==",
+      "type": "package",
+      "path": "rtspclientsharpspg/0.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/RtspClientSharp.dll",
+        "rtspclientsharpspg.0.0.3.nupkg.sha512",
+        "rtspclientsharpspg.nuspec"
       ]
     },
     "runtime.linux-arm.runtime.native.System.IO.Ports/8.0.0": {
@@ -1887,10 +2330,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "System.Text.Json/7.0.2": {
-      "sha512": "/LZf/JrGyilojqwpaywb+sSz8Tew7ij4K/Sk+UW8AKfAK7KRhR6mKpKtTm06cYA7bCpGTWfYksIW+mVsdxPegQ==",
+    "System.Text.Json/7.0.3": {
+      "sha512": "AyjhwXN1zTFeIibHimfJn6eAsZ7rTBib79JQpzg8WAuR/HKDu9JGNHTuu3nbbXQ/bgI+U4z6HtZmCHNXB1QXrQ==",
       "type": "package",
-      "path": "system.text.json/7.0.2",
+      "path": "system.text.json/7.0.3",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1953,7 +2396,7 @@
         "lib/net7.0/System.Text.Json.xml",
         "lib/netstandard2.0/System.Text.Json.dll",
         "lib/netstandard2.0/System.Text.Json.xml",
-        "system.text.json.7.0.2.nupkg.sha512",
+        "system.text.json.7.0.3.nupkg.sha512",
         "system.text.json.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -2024,12 +2467,12 @@
         "version.txt"
       ]
     },
-    "IPaking.Ultility/1.0.0": {
+    "IPaking.Ultility/1.0.0.1": {
       "type": "project",
       "path": "../IPaking.Ultility/IPaking.Ultility.csproj",
       "msbuildProject": "../IPaking.Ultility/IPaking.Ultility.csproj"
     },
-    "iPakrkingv5.Controls/1.0.0": {
+    "iPakrkingv5.Controls/1.0.0.1": {
       "type": "project",
       "path": "../iPakrkingv5.Controls/iPakrkingv5.Controls.csproj",
       "msbuildProject": "../iPakrkingv5.Controls/iPakrkingv5.Controls.csproj"
@@ -2039,7 +2482,7 @@
       "path": "../iParking.ConfigurationManager/iParking.ConfigurationManager.csproj",
       "msbuildProject": "../iParking.ConfigurationManager/iParking.ConfigurationManager.csproj"
     },
-    "iParkingv5.ApiManager/1.0.0.1": {
+    "iParkingv5.ApiManager/1.0.0.8": {
       "type": "project",
       "path": "../iParkingv5.ApiManager/iParkingv5.ApiManager.csproj",
       "msbuildProject": "../iParkingv5.ApiManager/iParkingv5.ApiManager.csproj"
@@ -2049,42 +2492,61 @@
       "path": "../iParkingv5.Controller/iParkingv5.Controller.csproj",
       "msbuildProject": "../iParkingv5.Controller/iParkingv5.Controller.csproj"
     },
-    "iParkingv5.LedDisplay/1.0.0": {
+    "iParkingv5.LedDisplay/1.0.0.1": {
       "type": "project",
       "path": "../iParkingv5.LedDisplay/iParkingv5.LedDisplay.csproj",
       "msbuildProject": "../iParkingv5.LedDisplay/iParkingv5.LedDisplay.csproj"
     },
-    "iParkingv5.Lpr/1.0.0": {
+    "iParkingv5.Lpr/1.0.0.1": {
       "type": "project",
       "path": "../iParkingv5.Lpr/iParkingv5.Lpr.csproj",
       "msbuildProject": "../iParkingv5.Lpr/iParkingv5.Lpr.csproj"
     },
-    "iParkingv5.Objects/1.0.0.1": {
+    "iParkingv5.Objects/1.0.0.2": {
       "type": "project",
       "path": "../iParkingv5.Objects/iParkingv5.Objects.csproj",
       "msbuildProject": "../iParkingv5.Objects/iParkingv5.Objects.csproj"
+    },
+    "Kztek.Cameras/1.0.0.2": {
+      "type": "project",
+      "path": "../../../../../../../BaseLib/Kztek.Cameras/Kztek.Cameras.csproj",
+      "msbuildProject": "../../../../../../../BaseLib/Kztek.Cameras/Kztek.Cameras.csproj"
+    },
+    "Kztek.RtspPlayer/1.0.0.2": {
+      "type": "project",
+      "path": "../../../../../../../BaseLib/Kztek.RtspPlayer/Kztek.RtspPlayer/Kztek.RtspPlayer.csproj",
+      "msbuildProject": "../../../../../../../BaseLib/Kztek.RtspPlayer/Kztek.RtspPlayer/Kztek.RtspPlayer.csproj"
     },
     "Kztek.Scale_net6/1.0.0.10": {
       "type": "project",
       "path": "../Kztek.Scale/Net6/Kztek.Scale/Kztek.Scale_net6.csproj",
       "msbuildProject": "../Kztek.Scale/Net6/Kztek.Scale/Kztek.Scale_net6.csproj"
+    },
+    "Kztek.Tool/1.0.0.1": {
+      "type": "project",
+      "path": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/Kztek.Tool/Kztek.Tool.csproj",
+      "msbuildProject": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/Kztek.Tool/Kztek.Tool.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0-windows7.0": [
-      "IPaking.Ultility >= 1.0.0",
+      "IPaking.Ultility >= 1.0.0.1",
+      "IdentityModel >= 7.0.0",
+      "IdentityModel.OidcClient >= 6.0.0",
+      "Kztek.Cameras >= 1.0.0.2",
       "Kztek.Scale_net6 >= 1.0.0.10",
+      "Microsoft.Web.WebView2 >= 1.0.2420.47",
       "Minio >= 5.0.0",
       "RabbitMQ.Client >= 6.8.1",
       "SpreadsheetLight >= 3.5.0",
       "System.Management >= 7.0.2",
-      "iPakrkingv5.Controls >= 1.0.0",
+      "iPakrkingv5.Controls >= 1.0.0.1",
       "iParking.ConfigurationManager >= 1.0.0.1",
-      "iParkingv5.ApiManager >= 1.0.0.1",
+      "iParkingv5.ApiManager >= 1.0.0.8",
       "iParkingv5.Controller >= 1.0.0.1",
-      "iParkingv5.LedDisplay >= 1.0.0",
-      "iParkingv5.Lpr >= 1.0.0",
-      "iParkingv5.Objects >= 1.0.0.1"
+      "iParkingv5.LedDisplay >= 1.0.0.1",
+      "iParkingv5.Lpr >= 1.0.0.1",
+      "iParkingv5.Objects >= 1.0.0.2"
     ]
   },
   "packageFolders": {
@@ -2093,7 +2555,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.0.1",
+    "version": "1.0.3.4",
     "restore": {
       "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\v5_window\\iParkingv5_window.csproj",
       "projectName": "iParkingv5_window",
@@ -2148,6 +2610,9 @@
             },
             "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Scale\\Net6\\Kztek.Scale\\Kztek.Scale_net6.csproj": {
               "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Scale\\Net6\\Kztek.Scale\\Kztek.Scale_net6.csproj"
+            },
+            "E:\\BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj": {
+              "projectPath": "E:\\BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj"
             }
           }
         }
@@ -2167,6 +2632,18 @@
       "net6.0-windows7.0": {
         "targetAlias": "net6.0-windows",
         "dependencies": {
+          "IdentityModel": {
+            "target": "Package",
+            "version": "[7.0.0, )"
+          },
+          "IdentityModel.OidcClient": {
+            "target": "Package",
+            "version": "[6.0.0, )"
+          },
+          "Microsoft.Web.WebView2": {
+            "target": "Package",
+            "version": "[1.0.2420.47, )"
+          },
           "Minio": {
             "target": "Package",
             "version": "[5.0.0, )"

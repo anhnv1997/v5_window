@@ -26,6 +26,7 @@ namespace iParking.ConfigurationManager.UserControls
                 numLoopDelay.Value = appOption.LoopDelay;
                 numRetakePhotoTurn.Value = appOption.RetakePhotoTimes;
                 numRetakePhotoDelayTime.Value = appOption.RetakePhotoDelay;
+                txtUpdatePath.Text = appOption.CheckForUpdatePath;
             }
             txtWaitSwipeCardTime.TextChanged += TxtWaitSwipeCardTime_TextChanged;
             txtAllowOpenBarrieTime.TextChanged += TxtAllowOpenBarrieTime_TextChanged;
@@ -63,6 +64,7 @@ namespace iParking.ConfigurationManager.UserControls
                 LoopDelay = (int)numLoopDelay.Value,
                 RetakePhotoTimes = (int)numRetakePhotoTurn.Value,
                 RetakePhotoDelay = (int)numRetakePhotoDelayTime.Value,
+                CheckForUpdatePath = txtUpdatePath.Text,
             };
         }
         #endregion End Public Function

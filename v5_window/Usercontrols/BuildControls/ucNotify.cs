@@ -145,6 +145,7 @@ namespace iParkingv5_window.Usercontrols.BuildControls
             }
 
             this.Visible = true;
+            this.MaximumSize = this.MinimumSize = new Size(this.Width, lblMessage.Location.Y + lblMessage.Height + 100);
             this.Parent.SizeChanged += Parent_SizeChanged;
 
             this.BringToFront();

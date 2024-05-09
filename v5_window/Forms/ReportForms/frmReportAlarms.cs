@@ -1,6 +1,7 @@
 ﻿using IPaking.Ultility;
 using iPakrkingv5.Controls;
 using iPakrkingv5.Controls.Controls.Buttons;
+using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.Datas;
@@ -9,7 +10,13 @@ using iParkingv5_window.Forms.DataForms;
 using iParkingv5_window.Usercontrols.BuildControls;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
+<<<<<<< HEAD
+=======
+using IPGS.Object.Databases;
+using System.Data;
+>>>>>>> XuanCuong
 using System.Runtime.InteropServices;
+using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper;
 
 namespace iParkingv5_window.Forms.ReportForms
 {
@@ -60,10 +67,17 @@ namespace iParkingv5_window.Forms.ReportForms
 
         private async void FrmReportIn_Load(object? sender, EventArgs e)
         {
-            registerVehicles = await KzParkingApiHelper.GetRegisteredVehicles("");
-            customers = (await KzParkingApiHelper.GetAllCustomers())?.Item1 ?? new List<Customer>();
-            identityGroups = await KzParkingApiHelper.GetIdentityGroupsAsync() ?? new List<IdentityGroup>();
+            //registerVehicles = await KzParkingApiHelper.GetRegisteredVehicles("");
 
+            registerVehicles = (await KzParkingv5ApiHelper.GetRegisterVehiclesAsync("")).Item1;
+
+            //customers = (await KzParkingApiHelper.GetAllCustomers())?.Item1 ?? new List<Customer>();
+            customers = (await KzParkingv5ApiHelper.GetCustomersAsync())?.Item1 ?? new List<Customer>();
+
+            //identityGroups = await KzParkingApiHelper.GetIdentityGroupsAsync() ?? new List<IdentityGroup>();
+            identityGroups = (await KzParkingv5ApiHelper.GetIdentityGroupsAsync()).Item1 ?? new List<IdentityGroup>();
+
+            picOverviewImageIn.Image = picVehicleImageIn.Image = defaultImg;
             await CreateUI();
             this.ActiveControl = btnSearch;
             btnSearch.PerformClick();
@@ -109,9 +123,9 @@ namespace iParkingv5_window.Forms.ReportForms
             DateTime endTime = dtpEndTime.Value;
             string vehicleTypeId = ((ListItem)cbVehicleType.SelectedItem)?.Value ?? "";
             string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
-            var alarmData = await KzParkingApiHelper.GetAlarms(keyword, startTime, endTime, "", vehicleTypeId, laneId);
-
-            if (alarmData.Item1 == null)
+            //var alarmData = await KzParkingApiHelper.GetAlarms(keyword, startTime, endTime, "", vehicleTypeId, laneId);
+            var dtAlarm = await KzParkingv5ApiHelper.GetAlarmReport(keyword, startTime, endTime, "", vehicleTypeId, laneId);
+            if (dtAlarm == null)
             {
                 DisableFastLoading();
                 ucNotify1.Show(ucNotify.EmNotiType.Error, "Không tải được thông tin xe trong bãi. Vui lòng thử lại!");
@@ -119,9 +133,29 @@ namespace iParkingv5_window.Forms.ReportForms
                 return;
             }
 
-            totalPages = alarmData.Item2;
-            totalEvents = alarmData.Item3;
-            List<AbnormalEvent> abnormalEvent = alarmData.Item1 ?? new List<AbnormalEvent>();
+            totalPages = 1;// alarmData.Item2;
+            totalEvents = dtAlarm.Rows.Count;
+            List<AbnormalEvent> abnormalEvent = new List<AbnormalEvent>();
+            //foreach (DataRow row in dtAlarm.Rows)
+            //{
+            //    AbnormalEvent ev = new AbnormalEvent()
+            //    {
+            //        identityId = row["identityid"].ToString(),
+            //        plateNumber = row["platenumber"].ToString(),
+            //        createdUtc = row["createdutc"].ToString(),
+            //        laneId = row["laneId"].ToString(),
+            //        createdBy = "",
+            //        fileKeys = row["filekeys"].ToString()?.Split(","),
+            //        CustomerId = dtAlarm.Columns.Contains("customerid") ? row["customerid"].ToString() : "",
+            //        RegisteredVehicleId = eventInData.Columns.Contains("vehicleid") ? row["vehicleid"].ToString() : "",
+            //        IdentityGroupId = row["identitygroupid"].ToString(),
+            //        identityCode = dtAlarm.Columns.Contains("identityCode") ? row["identityCode"].ToString() : "",
+            //        identityName = dtAlarm.Columns.Contains("identityName") ? row["identityName"].ToString() : "",
+            //        TransactionType = dtAlarm.Columns.Contains("transactiontype") ? int.Parse(row["transactiontype"].ToString() ?? "0") : 0,
+            //        TransactionCode = dtAlarm.Columns.Contains("transactioncode") ? row["transactioncode"].ToString() : "",
+            //    };
+            //    abnormalEvent.Add(ev);
+            //}
 
             DisplayNavigation();
             DisplayEventInData(abnormalEvent);
@@ -523,7 +557,8 @@ namespace iParkingv5_window.Forms.ReportForms
             }));
 
 
-            var vehicleTypes = await KzParkingApiHelper.GetAllVehicleTypes() ?? new List<iParkingv5.Objects.Enums.VehicleType>();
+            //var vehicleTypes = await KzParkingApiHelper.GetAllVehicleTypes() ?? new List<iParkingv5.Objects.Enums.VehicleType>();
+            var vehicleTypes = (await KzParkingv5ApiHelper.GetVehicleTypesAsync()).Item1 ?? new List<iParkingv5.Objects.Enums.VehicleType>();
             cbVehicleType.Invoke(new Action(() =>
             {
                 foreach (var item in vehicleTypes)
@@ -552,7 +587,8 @@ namespace iParkingv5_window.Forms.ReportForms
                 });
             }));
 
-            lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
+            //lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
+            lanes = (await KzParkingv5ApiHelper.GetLanesAsync()).Item1 ?? new List<iParkingv6.Objects.Datas.Lane>();
             cbLane.Invoke(new Action(() =>
             {
                 foreach (var item in lanes)

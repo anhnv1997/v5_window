@@ -5,6 +5,7 @@ using iParkingv5.Objects.Databases;
 using iParkingv5_CustomerRegister.Databases;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
+using Kztek.Tools;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -226,6 +227,7 @@ namespace iParkingv5_CustomerRegister.Forms.SystemForms
                 foreach (var item in fingerDatas)
                 {
                     downloadFingers.Add(item.Item2);
+                    LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "", "Đăng ký " + customer.Item1 + "SL vân tay: " + downloadFingers.Count);
                 }
                 registedFingers.Clear();
                 fingerDatas.Clear();
@@ -268,11 +270,11 @@ namespace iParkingv5_CustomerRegister.Forms.SystemForms
                         if (isSuccess)
                         {
                             tblFingerControlUnit.Insert(controllers[i].ControllerInfo.Id, userId, customer.Item1);
-                            results.Add(Tuple.Create<string, string, string>(customer.Item2, controllers[i].ControllerInfo.Name, "Đăng ký thông tin vân tay thành công"));
+                            results.Add(Tuple.Create<string, string, string>(customer.Item2, controllers[i].ControllerInfo.Name, "Đăng ký thông tin vân tay thành công: - " + controllers[i].ControllerInfo.Comport));
                         }
                         else
                         {
-                            results.Add(Tuple.Create<string, string, string>(customer.Item2, controllers[i].ControllerInfo.Name, "Đăng ký thông tin vân tay lỗi"));
+                            results.Add(Tuple.Create<string, string, string>(customer.Item2, controllers[i].ControllerInfo.Name, "Đăng ký thông tin vân tay lỗi: - " + controllers[i].ControllerInfo.Comport));
                         }
                     }
                 }

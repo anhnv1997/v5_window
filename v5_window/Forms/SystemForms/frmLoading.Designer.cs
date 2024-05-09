@@ -43,8 +43,9 @@
             // 
             panelTittle.Dock = DockStyle.Top;
             panelTittle.Location = new Point(0, 0);
+            panelTittle.Margin = new Padding(3, 2, 3, 2);
             panelTittle.Name = "panelTittle";
-            panelTittle.Size = new Size(800, 82);
+            panelTittle.Size = new Size(1011, 62);
             panelTittle.TabIndex = 1;
             // 
             // panelBackground
@@ -52,9 +53,10 @@
             panelBackground.BackgroundImageLayout = ImageLayout.Center;
             panelBackground.Controls.Add(pictureBox1);
             panelBackground.Dock = DockStyle.Fill;
-            panelBackground.Location = new Point(0, 82);
+            panelBackground.Location = new Point(0, 62);
+            panelBackground.Margin = new Padding(3, 2, 3, 2);
             panelBackground.Name = "panelBackground";
-            panelBackground.Size = new Size(800, 193);
+            panelBackground.Size = new Size(1011, 361);
             panelBackground.TabIndex = 2;
             // 
             // pictureBox1
@@ -62,18 +64,20 @@
             pictureBox1.Dock = DockStyle.Fill;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(0, 0);
+            pictureBox1.Margin = new Padding(3, 2, 3, 2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(800, 193);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.Size = new Size(1011, 361);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
             // panelMessage
             // 
             panelMessage.Dock = DockStyle.Bottom;
-            panelMessage.Location = new Point(0, 275);
+            panelMessage.Location = new Point(0, 423);
+            panelMessage.Margin = new Padding(3, 2, 3, 2);
             panelMessage.Name = "panelMessage";
-            panelMessage.Size = new Size(800, 175);
+            panelMessage.Size = new Size(1011, 131);
             panelMessage.TabIndex = 3;
             // 
             // timer1
@@ -83,17 +87,17 @@
             // 
             // frmLoading
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1011, 554);
             Controls.Add(panelBackground);
             Controls.Add(panelMessage);
             Controls.Add(panelTittle);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(3, 2, 3, 2);
             Name = "frmLoading";
-            StartPosition = FormStartPosition.Manual;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "frmLoading";
-            WindowState = FormWindowState.Maximized;
             FormClosing += frmLoading_FormClosing;
             panelBackground.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

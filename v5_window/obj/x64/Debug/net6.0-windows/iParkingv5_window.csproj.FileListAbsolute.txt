@@ -42,7 +42,6 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\D
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.DataForms.frmCustomerRegister.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.DataForms.Registers.frmRegisteredList.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.DataForms.frmWalkerRegister.resources
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.frmTest.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.ReportForms.frmReportAlarms.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.ReportForms.frmReportIn.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.ReportForms.frmReportInOut.resources
@@ -427,7 +426,6 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\D
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Scale_net6.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Security.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Tool.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Utilities.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\KztekKeyRegister.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\ParkingHelper.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\SayMoney.dll
@@ -484,6 +482,7 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\D
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Sdcb.PaddleOCR.Models.LocalV3.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Sdcb.PaddleOCR.Models.LocalV4.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\NXT.Net6.LPR_AI.pdb
+<<<<<<< HEAD
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.dll
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\obj\x64\Debug\net6.0-windows\refint\iParkingv5_window.dll
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.pdb
@@ -658,3 +657,16 @@ F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\RtspC
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Security.dll
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Utilities.dll
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\KztekKeyRegister.dll
+=======
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\runtimes\win-x64\native\WebView2Loader.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\IdentityModel.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\IdentityModel.OidcClient.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Microsoft.Web.WebView2.Core.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Microsoft.Web.WebView2.WinForms.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Microsoft.Web.WebView2.Wpf.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\runtimes\win-arm64\native\WebView2Loader.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\runtimes\win-x86\native\WebView2Loader.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.frmTest.resources
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Security.pdb
+>>>>>>> XuanCuong

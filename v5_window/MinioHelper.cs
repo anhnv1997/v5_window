@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing.Imaging;
 using Kztek.Tools;
 using Minio;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace iParkingv5_window
-{   
+{
     public static class MinioHelper
     {
         public static string EndPoint = string.Empty;
@@ -16,7 +12,8 @@ namespace iParkingv5_window
         public static string SecretKey = string.Empty;
         public static bool secure = false;
         public static string bucketName = "parking-images";
-        public static async Task<string> GetImage(string path)
+
+        public static async Task<string> GetImage(string key)
         {
             try
             {
@@ -29,7 +26,7 @@ namespace iParkingv5_window
                 var getListBucketsTask = await minio.ListBucketsAsync().ConfigureAwait(false);
                 PresignedGetObjectArgs args = new PresignedGetObjectArgs()
                                         .WithBucket(bucketName)
-                                        .WithObject(path)
+                                        .WithObject(key)
                                         .WithExpiry(60 * 60 * 24);
                 string url = await minio.PresignedGetObjectAsync(args);
                 return url;
@@ -46,7 +43,6 @@ namespace iParkingv5_window
             stream.Position = 0;
             return stream;
         }
-
         public static async Task<string> UploadPicture(Image? image, string imageKey)
         {
             try
@@ -82,8 +78,46 @@ namespace iParkingv5_window
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lưu hình ảnh lỗi", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, mo_ta_them: ex);
+                //MessageBox.Show("Lưu hình ảnh lỗi", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return string.Empty;
+            }
+        }
+        public static async Task<bool> UploadFile(string? fileName, string filePath, string machineName, DateTime logTime)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(fileName))
+                {
+                    return false;
+                }
+                MinioClient minio = new MinioClient()
+                            .WithEndpoint(EndPoint)
+                            .WithCredentials(AccessKey, SecretKey)
+                            .WithSSL(secure)
+                            .Build()
+                            .WithRegion("us-west-rack");
+
+                BucketExistsArgs bucketExistsArgs = new BucketExistsArgs().WithBucket(bucketName);
+                bool bucketExists = await minio.BucketExistsAsync(bucketExistsArgs);
+                if (!bucketExists)
+                {
+                    MakeBucketArgs makeBucketArgs = new MakeBucketArgs().WithBucket(bucketName);
+                    await minio.MakeBucketAsync(makeBucketArgs);
+                }
+                PutObjectArgs putObjectArgs = new PutObjectArgs()
+                .WithBucket(bucketName)
+                .WithFileName(filePath)
+                .WithObject("support/" + machineName + $@"/{logTime.Year}_{logTime.Month}_{logTime.Day}/" + fileName)
+                    .WithContentType("text/plain");
+                var response = await minio.PutObjectAsync(putObjectArgs);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, mo_ta_them: ex);
+                //MessageBox.Show("Lưu hình ảnh lỗi", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
         }
     }

@@ -46,7 +46,8 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 16F);
-            label1.Location = new Point(3, 14);
+            label1.Location = new Point(4, 14);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Size = new Size(79, 30);
             label1.TabIndex = 0;
@@ -56,7 +57,8 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 16F);
-            label2.Location = new Point(3, 62);
+            label2.Location = new Point(4, 64);
+            label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
             label2.Size = new Size(63, 30);
             label2.TabIndex = 0;
@@ -66,7 +68,8 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 16F);
-            label3.Location = new Point(0, 126);
+            label3.Location = new Point(0, 132);
+            label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
             label3.Size = new Size(104, 30);
             label3.TabIndex = 0;
@@ -78,7 +81,8 @@
             lblCurrentVehicleInPark.AutoSize = true;
             lblCurrentVehicleInPark.Font = new Font("Digital-7", 32.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblCurrentVehicleInPark.ForeColor = Color.Navy;
-            lblCurrentVehicleInPark.Location = new Point(123, 112);
+            lblCurrentVehicleInPark.Location = new Point(139, 118);
+            lblCurrentVehicleInPark.Margin = new Padding(4, 0, 4, 0);
             lblCurrentVehicleInPark.Name = "lblCurrentVehicleInPark";
             lblCurrentVehicleInPark.Size = new Size(99, 44);
             lblCurrentVehicleInPark.TabIndex = 1;
@@ -89,7 +93,8 @@
             lblVehicleIn.AutoSize = true;
             lblVehicleIn.Font = new Font("Digital-7", 24F);
             lblVehicleIn.ForeColor = Color.Green;
-            lblVehicleIn.Location = new Point(123, 11);
+            lblVehicleIn.Location = new Point(139, 11);
+            lblVehicleIn.Margin = new Padding(4, 0, 4, 0);
             lblVehicleIn.Name = "lblVehicleIn";
             lblVehicleIn.Size = new Size(75, 33);
             lblVehicleIn.TabIndex = 1;
@@ -100,7 +105,8 @@
             lblVehicleOutDay.AutoSize = true;
             lblVehicleOutDay.Font = new Font("Digital-7", 24F);
             lblVehicleOutDay.ForeColor = Color.FromArgb(192, 0, 0);
-            lblVehicleOutDay.Location = new Point(123, 59);
+            lblVehicleOutDay.Location = new Point(139, 62);
+            lblVehicleOutDay.Margin = new Padding(4, 0, 4, 0);
             lblVehicleOutDay.Name = "lblVehicleOutDay";
             lblVehicleOutDay.Size = new Size(75, 33);
             lblVehicleOutDay.TabIndex = 1;
@@ -118,12 +124,13 @@
             tableLayoutPanel1.Controls.Add(panel1, 0, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Margin = new Padding(4, 3, 4, 3);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 3;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 171F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 179F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(317, 212);
+            tableLayoutPanel1.Size = new Size(355, 205);
             tableLayoutPanel1.TabIndex = 2;
             // 
             // panel1
@@ -135,19 +142,21 @@
             panel1.Controls.Add(label3);
             panel1.Controls.Add(lblCurrentVehicleInPark);
             panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(0, 20);
+            panel1.Location = new Point(0, 13);
             panel1.Margin = new Padding(0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(317, 171);
+            panel1.Size = new Size(355, 179);
             panel1.TabIndex = 0;
             // 
             // ucEventCount
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(tableLayoutPanel1);
+            Font = new Font("Segoe UI", 12F);
+            Margin = new Padding(4, 3, 4, 3);
             Name = "ucEventCount";
-            Size = new Size(317, 212);
+            Size = new Size(355, 205);
             tableLayoutPanel1.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();

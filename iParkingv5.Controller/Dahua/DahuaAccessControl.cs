@@ -5,6 +5,7 @@ using iParkingv5.Objects.Events;
 using iParkingv6.Objects.Datas;
 using Kztek.Tool.NetworkTools;
 using Kztek.Tool.SocketHelpers;
+using Kztek.Tools;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,17 +26,18 @@ namespace iParkingv5.Controller.Dahua
         private bool m_IsListen = false;
         private static fDisConnectCallBack? m_DisConnectCallBack;//断线回调
         private static fHaveReConnectCallBack? m_ReConnectCallBack;//重连回调
-        public static fMessCallBackEx? m_AlarmCallBack; //报警回调
+        public fMessCallBackEx? m_AlarmCallBack; //报警回调
 
         const string TimeFormat = "yyyyMMddHHmmss";
 
         public Bdk ControllerInfo { get; set; }
-
-        public DahuaAccessControl()
+        private string id;
+        public DahuaAccessControl(string id)
         {
             m_DisConnectCallBack = new fDisConnectCallBack(DisConnectCallBack);
             m_ReConnectCallBack = new fHaveReConnectCallBack(ReConnectCallBack);
             m_AlarmCallBack = new fMessCallBackEx(AlarmCallBack);
+            this.id = id;
         }
         #region Event
         public event CardEventHandler? CardEvent;
@@ -197,7 +199,7 @@ namespace iParkingv5.Controller.Dahua
         {
             this.ControllerInfo.IsConnect = true;
         }
-        private bool AlarmCallBack(int lCommand, IntPtr lLoginID, IntPtr pBuf, uint dwBufLen, IntPtr pchDVRIP, int nDVRPort, bool bAlarmAckFlag, int nEventID, IntPtr dwUser)
+        private bool AlarmCallBack(int lCommand, IntPtr lLoginID, IntPtr pBuf, uint dwBufLen, string pchDVRIP, int nDVRPort, bool bAlarmAckFlag, int nEventID, IntPtr dwUser)
         {
             EM_ALARM_TYPE type = (EM_ALARM_TYPE)lCommand;
             switch (type)
@@ -205,6 +207,7 @@ namespace iParkingv5.Controller.Dahua
                 case EM_ALARM_TYPE.ALARM_ACCESS_CTL_EVENT:
                     NET_ALARM_ACCESS_CTL_EVENT_INFO access_info = (NET_ALARM_ACCESS_CTL_EVENT_INFO)Marshal.PtrToStructure(pBuf, typeof(NET_ALARM_ACCESS_CTL_EVENT_INFO));
 
+                    LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.Controller, obj: access_info);
                     if (access_info.emOpenMethod == EM_ACCESS_DOOROPEN_METHOD.FINGERPRINT)
                     {
                         int userId = 0;
@@ -213,18 +216,18 @@ namespace iParkingv5.Controller.Dahua
                             userId = int.Parse(Encoding.Default.GetString(access_info.szUserID));
                             if (userId > 0)
                             {
-                                CallFingerEvent(this.ControllerInfo, userId, 1);
+                                CallFingerEvent(pchDVRIP, userId, 1);
                             }
                         }
                         catch (Exception)
                         {
-                            CallFingerEvent(this.ControllerInfo, 0, 1);
+                            CallFingerEvent(pchDVRIP, 0, 1);
                         }
                     }
                     else
                     {
                         string cardNumber = access_info.szCardNo.ToString();
-                        CallCardEvent(this.ControllerInfo, cardNumber, 1);
+                        CallCardEvent(pchDVRIP, cardNumber, 1);
                     }
 
                     break;
@@ -234,11 +237,11 @@ namespace iParkingv5.Controller.Dahua
 
             return true;
         }
-        private void CallCardEvent(Bdk controller, string cardNumber, int readerIndex)
+        private void CallCardEvent(string ip, string cardNumber, int readerIndex)
         {
             CardEventArgs e = new CardEventArgs
             {
-                DeviceId = controller.Id,
+                DeviceId = ip,
                 AllCardFormats = new List<string>(),
             };
             string cardNumberHEX = cardNumber;
@@ -281,11 +284,11 @@ namespace iParkingv5.Controller.Dahua
             e.ReaderIndex = readerIndex;
             this.CardEvent?.Invoke(this, e);
         }
-        private void CallFingerEvent(Bdk controller, int userId, int readerIndex)
+        private void CallFingerEvent(string ip, int userId, int readerIndex)
         {
             FingerEventArgs e = new FingerEventArgs
             {
-                DeviceId = controller.Id,
+                DeviceId = ip,
                 UserId = userId.ToString(),
                 ReaderIndex = readerIndex
             };
@@ -306,7 +309,7 @@ namespace iParkingv5.Controller.Dahua
             //Xóa toàn bộ thông tin vân tay cũ
             result = false;
             string[] userid = new string[] { userId.ToString() };
-            result = NETClient.RemoveOperateAccessFingerprintService(m_LoginID, userid, out stuOutErrArray, 3000);
+            result = NETClient.RemoveOperateAccessFingerprintService(m_LoginID, userid, out stuOutErrArray, 5000);
 
             //Đăng ký vân tay mới
             bool isAllSuccess = true;
@@ -324,7 +327,7 @@ namespace iParkingv5.Controller.Dahua
         {
             NET_EM_FAILCODE[] stuOutErrArray = new NET_EM_FAILCODE[1];
             string[] InUserid = new string[] { userId };
-            bool result = NETClient.RemoveOperateAccessUserService(m_LoginID, InUserid, out stuOutErrArray, 3000);
+            bool result = NETClient.RemoveOperateAccessUserService(m_LoginID, InUserid, out stuOutErrArray, 5000);
             var lastError = NETClient.GetLastError();
             return result;
         }
@@ -353,7 +356,7 @@ namespace iParkingv5.Controller.Dahua
             NET_ACCESS_FINGERPRINT_INFO[] stuFingerInArray = new NET_ACCESS_FINGERPRINT_INFO[1] { fingerprint_info };
             NET_EM_FAILCODE[] stuOutArray;
 
-            bool bRet = NETClient.InsertOperateAccessFingerprintService(m_LoginID, stuFingerInArray, out stuOutArray, 3000);
+            bool bRet = NETClient.InsertOperateAccessFingerprintService(m_LoginID, stuFingerInArray, out stuOutArray, 5000);
             if (!bRet)
             {
                 isAllSuccess = false;

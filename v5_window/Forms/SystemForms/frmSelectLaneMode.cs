@@ -10,7 +10,7 @@ namespace iParkingv5_window.Forms.SystemForms
     public partial class frmSelectLaneMode : Form
     {
         #region Properties
-        BtnOk btnOk;
+        BtnOk? btnOk;
         int waitTimes = 0;
         #endregion End Properties
 
@@ -68,7 +68,6 @@ namespace iParkingv5_window.Forms.SystemForms
             this.KeyDown += FrmSelectLaneMode_KeyDown;
 
         }
-
         private void FrmSelectLaneMode_KeyDown(object? sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Return)
@@ -76,12 +75,9 @@ namespace iParkingv5_window.Forms.SystemForms
                 BtnOk_Click(null, null);
             }
         }
-
         #endregion End Forms
 
         #region Controls In Form
-
-        #endregion End Controls In Form
         private void ChbSelectAll_CheckedChanged(object? sender, EventArgs e)
         {
             timer1.Enabled = false;
@@ -101,7 +97,7 @@ namespace iParkingv5_window.Forms.SystemForms
             timer1.Enabled = false;
             lblStatus.Visible = false;
         }
-       
+
         private void BtnOk_Click(object? sender, EventArgs e)
         {
             timer1.Enabled = false;
@@ -143,6 +139,9 @@ namespace iParkingv5_window.Forms.SystemForms
             this.Close();
             GC.Collect();
         }
+        #endregion End Controls In Form
+
+        #region Timer
         private void timer1_Tick(object sender, EventArgs e)
         {
             waitTimes++;
@@ -157,10 +156,6 @@ namespace iParkingv5_window.Forms.SystemForms
                 lblStatus.Text = $"Tự động mở giao diện phần mềm sau {10 - waitTimes} s";
             }
         }
-        #region Private Function
-        #endregion End Private Function
-
-        #region Public Function
-        #endregion End Public Function
+        #endregion End Timer
     }
 }

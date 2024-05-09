@@ -373,6 +373,12 @@ namespace iParkingv5.Controller.Aopu
                 e.AllCardFormats.Add(maSauFormat2);
                 e.PreferCard = maSauFormat3;
             }
+            else
+            {
+                int a = (int)(Convert.ToInt64(cardNumberInt, 10) / 65536);
+                int b = (int)(Convert.ToInt64(cardNumberInt, 10) - a * 65536);
+                e.PreferCard = a.ToString("00000") + ":" + b.ToString("00000");
+            }
             e.ReaderIndex = Regex.IsMatch(readerIndex, @"^\d+$") ? Convert.ToInt32(readerIndex) : -1;
             OnCardEvent(e);
         }

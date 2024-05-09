@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSelectVehicle));
             lblTitle = new Label();
             btnOk1 = new iPakrkingv5.Controls.Controls.Buttons.BtnOk();
             lblCancel1 = new iPakrkingv5.Controls.Controls.Buttons.LblCancel();
@@ -38,7 +39,7 @@
             lblTitle.AutoSize = true;
             lblTitle.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
             lblTitle.Location = new Point(18, 17);
-            lblTitle.Margin = new Padding(0, 0, 0, 0);
+            lblTitle.Margin = new Padding(0);
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(468, 45);
             lblTitle.TabIndex = 0;
@@ -49,7 +50,7 @@
             btnOk1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnOk1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnOk1.Location = new Point(457, 251);
-            btnOk1.Margin = new Padding(2, 2, 2, 2);
+            btnOk1.Margin = new Padding(2);
             btnOk1.Name = "btnOk1";
             btnOk1.Size = new Size(74, 29);
             btnOk1.TabIndex = 1;
@@ -60,7 +61,7 @@
             // 
             lblCancel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             lblCancel1.Location = new Point(536, 251);
-            lblCancel1.Margin = new Padding(2, 2, 2, 2);
+            lblCancel1.Margin = new Padding(2);
             lblCancel1.Name = "lblCancel1";
             lblCancel1.Size = new Size(83, 29);
             lblCancel1.TabIndex = 2;
@@ -76,7 +77,8 @@
             Controls.Add(btnOk1);
             Controls.Add(lblTitle);
             Font = new Font("Segoe UI", 12F);
-            Margin = new Padding(0, 0, 0, 0);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(0);
             Name = "frmSelectVehicle";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Xác nhận phương tiện vào bãi";

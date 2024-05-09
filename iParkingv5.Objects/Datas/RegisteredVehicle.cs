@@ -13,7 +13,7 @@ namespace iParkingv5.Objects.Datas
         public string Id { get; set; }
         public string Name { get; set; }
         public string PlateNumber { get; set; }
-        public int VehicleTypeId { get; set; }
+        public string VehicleTypeId { get; set; }
         public string CustomerId { get; set; }
         public string ExpireUtc { get; set; }
 

@@ -86,5 +86,42 @@ namespace v5_IScale
                 return string.Empty;
             }
         }
+        public static async Task<bool> UploadFile(string? fileName, string filePath, string machineName, DateTime logTime)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(fileName))
+                {
+                    return false;
+                }
+                MinioClient minio = new MinioClient()
+                            .WithEndpoint(EndPoint)
+                            .WithCredentials(AccessKey, SecretKey)
+                            .WithSSL(secure)
+                            .Build()
+                            .WithRegion("us-west-rack");
+
+                BucketExistsArgs bucketExistsArgs = new BucketExistsArgs().WithBucket(bucketName);
+                bool bucketExists = await minio.BucketExistsAsync(bucketExistsArgs);
+                if (!bucketExists)
+                {
+                    MakeBucketArgs makeBucketArgs = new MakeBucketArgs().WithBucket(bucketName);
+                    await minio.MakeBucketAsync(makeBucketArgs);
+                }
+                PutObjectArgs putObjectArgs = new PutObjectArgs()
+                .WithBucket(bucketName)
+                .WithFileName(filePath)
+                .WithObject("support/" + machineName + $@"/{logTime.Year}_{logTime.Month}_{logTime.Day}/" + fileName)
+                    .WithContentType("text/plain");
+                var response = await minio.PutObjectAsync(putObjectArgs);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, mo_ta_them: ex);
+                //MessageBox.Show("Lưu hình ảnh lỗi", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
     }
 }

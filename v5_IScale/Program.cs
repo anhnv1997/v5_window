@@ -1,4 +1,5 @@
 ﻿using IPaking.Ultility;
+using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.Lpr.Objects;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
@@ -79,6 +80,7 @@ namespace v5_IScale
                         //}
                         //DahuaAccessControl.Init();
                         LoadSystemConfig();
+                        CheckForUpdate();
                         LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Mở giao diện đăng nhập hệ thống");
                         Application.Run(new frmLogin());
                     }
@@ -125,6 +127,9 @@ namespace v5_IScale
                 MinioHelper.AccessKey = StaticPool.serverConfig.MinioServerUsername;
                 MinioHelper.SecretKey = StaticPool.serverConfig.MinioServerPassword;
                 KzParkingApiHelper.server = StaticPool.serverConfig.ParkingServerUrl;
+                KzParkingv5ApiHelper.server = StaticPool.serverConfig.ParkingServerUrl;
+
+                StaticPool.sharedPreferences = NewtonSoftHelper<SharedPreferences>.DeserializeObjectFromPath(PathManagement.sharedPreferencesPath()) ?? new SharedPreferences();
             }
             catch (Exception ex)
             {
@@ -145,5 +150,106 @@ namespace v5_IScale
             }
 
         }
+        private static void CheckForUpdate()
+        {
+            if (string.IsNullOrEmpty(StaticPool.appOption.CheckForUpdatePath)) return;
+
+            if (!Directory.Exists(StaticPool.appOption.CheckForUpdatePath)) return;
+
+            try
+            {
+                bool isHavingUpdate = false;
+                // Get all files in the specified path and its subdirectories
+                string[] updatefiles = Directory.GetFiles(StaticPool.appOption.CheckForUpdatePath, "*", SearchOption.AllDirectories);
+                List<string> realUpdateFiles = new List<string>();
+                foreach (string file in updatefiles)
+                {
+                    realUpdateFiles.Add(Path.GetFileName(file));
+                }
+
+                string[] currentVersionFiles = Directory.GetFiles(Application.StartupPath, "*", SearchOption.AllDirectories);
+                List<string> realCurrentFiles = new List<string>();
+                foreach (string file in currentVersionFiles)
+                {
+                    string relativePath = file.Remove(0, Application.StartupPath.Length);
+                    realCurrentFiles.Add(Path.GetFileName(file));
+                }
+
+                for (int i = 0; i < realUpdateFiles.Count; i++)
+                {
+                    string fileName = realUpdateFiles[i];
+                    if (realCurrentFiles.Contains(fileName))
+                    {
+                        string currentFilePath = currentVersionFiles.Where(e => e.Contains(fileName)).FirstOrDefault() ?? "";
+                        string updateFilePath = updatefiles[i];
+
+                        string? currentFilePathVersion = null;
+                        string? updateFilePathVersion = null;
+                        try
+                        {
+                            FileVersionInfo currentFileVersionInfo = FileVersionInfo.GetVersionInfo(currentFilePath);
+                            currentFilePathVersion = currentFileVersionInfo?.FileVersion;
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        try
+                        {
+                            FileVersionInfo updateFileVersionInfo = FileVersionInfo.GetVersionInfo(updateFilePath);
+                            updateFilePathVersion = updateFileVersionInfo?.FileVersion;
+                        }
+                        catch (Exception)
+                        {
+                        }
+
+
+
+                        if (currentFilePathVersion != updateFilePathVersion)
+                        {
+                            isHavingUpdate = true;
+                            string newFilePath = Path.Combine(Application.StartupPath, fileName + "_bak_" + currentFilePathVersion + "_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm_ss"));
+                            System.IO.File.Move(currentFilePath, newFilePath);
+                            System.IO.File.Copy(updateFilePath, currentFilePath);
+                            while (!System.IO.File.Exists(currentFilePath))
+                            {
+                                Thread.Sleep(10);
+                            }
+                        }
+                        else if (updateFilePathVersion == null && currentFilePathVersion == null)
+                        {
+                            System.IO.File.Delete(currentFilePath);
+                            System.IO.File.Copy(updateFilePath, currentFilePath);
+                        }
+                    }
+                    //THÊM FILE CHƯA CÓ
+                    else
+                    {
+                        isHavingUpdate = true;
+                        string updateFilePath = updatefiles[i];
+
+                        // Get the destination directory path
+                        string destinationDirectory = Path.Combine(Application.StartupPath, Path.GetDirectoryName(fileName)!);
+                        // Create the directory if it doesn't exist
+                        Directory.CreateDirectory(destinationDirectory);
+
+                        System.IO.File.Copy(updateFilePath, Path.Combine(Application.StartupPath, fileName));
+                    }
+                }
+
+                if (isHavingUpdate)
+                {
+                    Application.Restart();
+                    Application.Exit();
+                    Environment.Exit(0);
+                    Application.DoEvents();
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
     }
 }

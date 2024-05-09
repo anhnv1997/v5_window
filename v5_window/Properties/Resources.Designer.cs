@@ -93,6 +93,26 @@ namespace iParkingv5_window.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap defaultWhite {
+            get {
+                object obj = ResourceManager.GetObject("defaultWhite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap defaultWhite1 {
+            get {
+                object obj = ResourceManager.GetObject("defaultWhite1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Excel_0_0_0_32px {
             get {
                 object obj = ResourceManager.GetObject("Excel_0_0_0_32px", resourceCulture);

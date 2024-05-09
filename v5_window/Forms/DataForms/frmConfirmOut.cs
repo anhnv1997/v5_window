@@ -1,4 +1,5 @@
-﻿using iParkingv5.Objects;
+﻿using iParkingv5.ApiManager.KzParkingv5Apis;
+using iParkingv5.Objects;
 using iParkingv5.Objects.Datas;
 using iParkingv5.Objects.Enums;
 using iParkingv6.ApiManager.KzParkingv3Apis;
@@ -41,6 +42,7 @@ namespace iParkingv5_window.Forms.DataForms
             this.fileKeys = fileKeys;
             this.datetimeIn = datetimeIn?.ToString() ?? "";
             this.charge = charge;
+            this.updatePlate = detectedPlate;
             btnOk.Focus();
             //this.Size = new Size(lblMessage.Width, lblMessage.Height + panelAction.Height + 100);
             this.Load += FrmConfirm_Load;
@@ -68,7 +70,7 @@ namespace iParkingv5_window.Forms.DataForms
 
         private void BtnOk_Click(object? sender, EventArgs e)
         {
-            updatePlate = dgvEventInData.Rows[3].Cells[1].Value.ToString();
+            updatePlate = dgvEventInData.Rows[4].Cells[1].Value.ToString();
             this.DialogResult = DialogResult.OK;
         }
 
@@ -92,17 +94,21 @@ namespace iParkingv5_window.Forms.DataForms
             try
             {
                 this.SuspendLayout();
-
-                Lane? laneIn = await KzParkingApiHelper.GetLaneByIdAsync(laneIdIn);
-                Identity? identityIn = await KzParkingApiHelper.GetIdentityById(identityIdIn);
+                this.updatePlate= detectedPlate;
+                //Lane? laneIn = await KzParkingApiHelper.GetLaneByIdAsync(laneIdIn);
+                Lane? laneIn = (await KzParkingv5ApiHelper.GetLaneByIdAsync(laneIdIn)).Item1;
+                //Identity? identityIn = await KzParkingApiHelper.GetIdentityById(identityIdIn);
+                Identity? identityIn = (await KzParkingv5ApiHelper.GetIdentityByIdAsync(identityIdIn)).Item1;
                 IdentityGroup? identityGroupIn = null;
                 VehicleType? vehicleTypeIn = null;
                 if (identityIn != null)
                 {
-                    identityGroupIn = await KzParkingApiHelper.GetIdentityGroupByIdAsync(identityIn.IdentityGroupId.ToString());
+                    //identityGroupIn = await KzParkingApiHelper.GetIdentityGroupByIdAsync(identityIn.IdentityGroupId.ToString());
+                    identityGroupIn = (await KzParkingv5ApiHelper.GetIdentityGroupByIdAsync(identityIn.IdentityGroupId.ToString())).Item1;
                     if (identityGroupIn != null)
                     {
-                        vehicleTypeIn = await KzParkingApiHelper.GetVehicleTypeById(identityGroupIn.VehicleTypeId.ToString());
+                        //vehicleTypeIn = await KzParkingApiHelper.GetVehicleTypeById(identityGroupIn.VehicleTypeId.ToString());
+                        vehicleTypeIn = (await KzParkingv5ApiHelper.GetVehicleTypeByIdAsync(identityGroupIn.VehicleType.Id.ToString())).Item1;
                     }
                 }
 

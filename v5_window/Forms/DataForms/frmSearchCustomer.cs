@@ -5,6 +5,7 @@ using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
 using System.Runtime.InteropServices;
 using iPakrkingv5.Controls;
+using iParkingv5.ApiManager.KzParkingv5Apis;
 
 namespace iParkingv5_window.Forms.DataForms
 {
@@ -120,7 +121,8 @@ namespace iParkingv5_window.Forms.DataForms
 
             if (!string.IsNullOrEmpty(txtCustomerCode.Text))
             {
-                var getCustomerRespose = await KzParkingApiHelper.GetCustomerByCode(txtCustomerCode.Text);
+                //var getCustomerRespose = await KzParkingApiHelper.GetCustomerByCode(txtCustomerCode.Text);
+                var getCustomerRespose = await KzParkingv5ApiHelper.GetCustomersAsync(txtCustomerCode.Text);
                 if (getCustomerRespose.Item1 != null)
                 {
                     List<Customer> customers = getCustomerRespose.Item1;
@@ -145,7 +147,8 @@ namespace iParkingv5_window.Forms.DataForms
             }
             else
             {
-                var getCustomerRespose = await KzParkingApiHelper.GetAllCustomers();
+                //var getCustomerRespose = await KzParkingApiHelper.GetAllCustomers();
+                var getCustomerRespose = await KzParkingv5ApiHelper.GetCustomersAsync();
                 if (getCustomerRespose.Item1 != null)
                 {
                     List<Customer> customers = getCustomerRespose.Item1;

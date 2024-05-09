@@ -30,6 +30,7 @@
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConfirmIn));
             panel1 = new Panel();
             dgvEventInData = new DataGridView();
             Column1 = new DataGridViewTextBoxColumn();
@@ -56,9 +57,10 @@
             panel1.Controls.Add(dgvEventInData);
             panel1.Controls.Add(panelEventPic);
             panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(0, 58);
+            panel1.Location = new Point(0, 44);
+            panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1009, 330);
+            panel1.Size = new Size(883, 327);
             panel1.TabIndex = 6;
             // 
             // dgvEventInData
@@ -77,7 +79,7 @@
             dgvEventInData.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2 });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11.25F);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
             dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
             dataGridViewCellStyle2.Padding = new Padding(3);
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
@@ -86,10 +88,11 @@
             dgvEventInData.DefaultCellStyle = dataGridViewCellStyle2;
             dgvEventInData.Dock = DockStyle.Fill;
             dgvEventInData.Location = new Point(0, 0);
+            dgvEventInData.Margin = new Padding(3, 2, 3, 2);
             dgvEventInData.Name = "dgvEventInData";
             dgvEventInData.RowHeadersVisible = false;
             dgvEventInData.RowTemplate.Height = 29;
-            dgvEventInData.Size = new Size(688, 330);
+            dgvEventInData.Size = new Size(602, 327);
             dgvEventInData.TabIndex = 2;
             // 
             // Column1
@@ -108,9 +111,10 @@
             // 
             panelEventPic.Controls.Add(tableLayoutPanel1);
             panelEventPic.Dock = DockStyle.Right;
-            panelEventPic.Location = new Point(688, 0);
+            panelEventPic.Location = new Point(602, 0);
+            panelEventPic.Margin = new Padding(3, 2, 3, 2);
             panelEventPic.Name = "panelEventPic";
-            panelEventPic.Size = new Size(321, 330);
+            panelEventPic.Size = new Size(281, 327);
             panelEventPic.TabIndex = 3;
             // 
             // tableLayoutPanel1
@@ -121,19 +125,21 @@
             tableLayoutPanel1.Controls.Add(picVehicle, 0, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Margin = new Padding(3, 2, 3, 2);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(321, 330);
+            tableLayoutPanel1.Size = new Size(281, 327);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // picOverview
             // 
             picOverview.Dock = DockStyle.Fill;
-            picOverview.Location = new Point(3, 3);
+            picOverview.Location = new Point(3, 2);
+            picOverview.Margin = new Padding(3, 2, 3, 2);
             picOverview.Name = "picOverview";
-            picOverview.Size = new Size(315, 159);
+            picOverview.Size = new Size(275, 159);
             picOverview.SizeMode = PictureBoxSizeMode.Zoom;
             picOverview.TabIndex = 0;
             picOverview.TabStop = false;
@@ -141,9 +147,10 @@
             // picVehicle
             // 
             picVehicle.Dock = DockStyle.Fill;
-            picVehicle.Location = new Point(3, 168);
+            picVehicle.Location = new Point(3, 165);
+            picVehicle.Margin = new Padding(3, 2, 3, 2);
             picVehicle.Name = "picVehicle";
-            picVehicle.Size = new Size(315, 159);
+            picVehicle.Size = new Size(275, 160);
             picVehicle.SizeMode = PictureBoxSizeMode.Zoom;
             picVehicle.TabIndex = 0;
             picVehicle.TabStop = false;
@@ -154,7 +161,7 @@
             lblMessage.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
             lblMessage.Location = new Point(0, 0);
             lblMessage.Name = "lblMessage";
-            lblMessage.Size = new Size(1009, 58);
+            lblMessage.Size = new Size(883, 44);
             lblMessage.TabIndex = 4;
             lblMessage.Text = "label1";
             lblMessage.TextAlign = ContentAlignment.MiddleCenter;
@@ -164,9 +171,10 @@
             panelAction.Controls.Add(lblCancel1);
             panelAction.Controls.Add(btnOk1);
             panelAction.Dock = DockStyle.Bottom;
-            panelAction.Location = new Point(0, 388);
+            panelAction.Location = new Point(0, 371);
+            panelAction.Margin = new Padding(3, 2, 3, 2);
             panelAction.Name = "panelAction";
-            panelAction.Size = new Size(1009, 62);
+            panelAction.Size = new Size(883, 46);
             panelAction.TabIndex = 5;
             // 
             // lblCancel1
@@ -175,7 +183,8 @@
             lblCancel1.AutoSize = true;
             lblCancel1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             lblCancel1.ForeColor = Color.Black;
-            lblCancel1.Location = new Point(940, 20);
+            lblCancel1.Location = new Point(818, 7);
+            lblCancel1.Margin = new Padding(3, 2, 3, 2);
             lblCancel1.Name = "lblCancel1";
             lblCancel1.Size = new Size(57, 30);
             lblCancel1.TabIndex = 5;
@@ -187,7 +196,8 @@
             btnOk1.AutoSize = true;
             btnOk1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnOk1.ForeColor = Color.Black;
-            btnOk1.Location = new Point(859, 20);
+            btnOk1.Location = new Point(729, 7);
+            btnOk1.Margin = new Padding(3, 2, 3, 2);
             btnOk1.Name = "btnOk1";
             btnOk1.Size = new Size(83, 30);
             btnOk1.TabIndex = 4;
@@ -195,12 +205,14 @@
             // 
             // frmConfirmIn
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1009, 450);
+            ClientSize = new Size(883, 417);
             Controls.Add(panel1);
             Controls.Add(lblMessage);
             Controls.Add(panelAction);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(3, 2, 3, 2);
             Name = "frmConfirmIn";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Xác nhận thông tin";

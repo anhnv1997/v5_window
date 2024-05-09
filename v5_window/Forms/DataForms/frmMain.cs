@@ -18,11 +18,14 @@ using Kztek.Tools;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Collections.Concurrent;
+using System.Diagnostics;
+using System.Reflection;
 using System.Text;
 using v5_IScale.Forms.ReportForms;
 using static IPaking.Ultility.TextManagement;
 using static iParkingv5.Controller.ControllerFactory;
 using static iParkingv5.Objects.Enums.PrintHelpers;
+using static Kztek.Tools.LogHelper;
 
 namespace iParkingv5_window.Forms.DataForms
 {
@@ -53,17 +56,26 @@ namespace iParkingv5_window.Forms.DataForms
             bool isDisEnableDevelopeMode = (keyData & Keys.Control) == Keys.Control &&
                                 (keyData & Keys.Shift) == Keys.Shift &&
                                 (keyData & Keys.KeyCode) == Keys.D;
+            bool isRevertRestartMode = (keyData & Keys.Control) == Keys.Control &&
+                    (keyData & Keys.Shift) == Keys.Shift &&
+                    (keyData & Keys.KeyCode) == Keys.F12;
             if (isEnableDevelopeMode)
             {
                 panelDevelopeMode.Visible = true;
                 splitterDevelopeMode.Visible = true;
                 splitterDevelopeMode.BringToFront();
+                return true;
             }
             else if (isDisEnableDevelopeMode)
             {
                 panelDevelopeMode.Visible = false;
                 splitterDevelopeMode.Visible = false;
                 splitterDevelopeMode.BringToFront();
+                return true;
+            }
+            else if (isRevertRestartMode)
+            {
+                isNeedToRestart = !isNeedToRestart;
             }
             else
             {
@@ -102,13 +114,25 @@ namespace iParkingv5_window.Forms.DataForms
             {
                 tsmiActiveLanesConfig.Visible = false;
             }
+            lblSoftwareName.Text = this.Text + " - " + Assembly.GetExecutingAssembly().GetName().Version!.ToString();
+            lblSoftwareName.Width = lblSoftwareName.PreferredSize.Width;
+            this.FormClosed += FrmMain_FormClosed;
         }
+        public static bool isNeedToRestart = true;
+        private void FrmMain_FormClosed(object? sender, FormClosedEventArgs e)
+        {
+            //if (isNeedToRestart)
+            //{
+            //    Application.Restart();
+            //}
+        }
+
         private void FrmMain_Shown(object? sender, EventArgs e)
         {
-            foreach (var item in lanes)
-            {
-                item.DisplayUIConfig();
-            }
+            //foreach (var item in lanes)
+            //{
+            //    item.DisplayUIConfig();
+            //}
         }
         private async void FrmMain_Load(object? sender, EventArgs e)
         {
@@ -116,7 +140,7 @@ namespace iParkingv5_window.Forms.DataForms
             {
                 var screenBound = Screen.FromControl(this).WorkingArea;
                 this.Size = new Size(screenBound.Width, screenBound.Height);
-                //this.Size = new Size(1366, 768);
+                this.Size = new Size(1366, 768);
                 this.Location = new Point(0, 0);
 
                 LoadAppDisplayConfig();
@@ -160,29 +184,36 @@ namespace iParkingv5_window.Forms.DataForms
         {
             FormClosing -= frmMain_FormClosing;
 
-            List<string> orderConfig = this.ucViewGrid1.GetOrderConfig();
 
-            this.laneDisplayConfigs = new List<LaneDisplayConfig>();
-
-            for (int i = 0; i < lanes.Count; i++)
+            this.Invoke(new Action(() =>
             {
-                LaneDisplayConfig displayConfig = lanes[i].SaveUIConfig();
-                displayConfig.DisplayIndex = i;
-                laneDisplayConfigs.Add(displayConfig);
-            }
+                List<string> orderConfig = this.ucViewGrid1.GetOrderConfig();
 
-            List<LaneDisplayConfig> sortedLaneDisplayConfigs = laneDisplayConfigs
-                   .OrderBy(item => orderConfig.IndexOf(item.LaneId))
-                   .ToList();
-            for (int i = 0; i < sortedLaneDisplayConfigs.Count; i++)
+                this.laneDisplayConfigs = new List<LaneDisplayConfig>();
+
+                for (int i = 0; i < lanes.Count; i++)
+                {
+                    LaneDisplayConfig displayConfig = lanes[i].SaveUIConfig();
+                    displayConfig.DisplayIndex = i;
+                    laneDisplayConfigs.Add(displayConfig);
+                }
+
+                List<LaneDisplayConfig> sortedLaneDisplayConfigs = laneDisplayConfigs
+                       .OrderBy(item => orderConfig.IndexOf(item.LaneId))
+                       .ToList();
+                for (int i = 0; i < sortedLaneDisplayConfigs.Count; i++)
+                {
+                    sortedLaneDisplayConfigs[i].DisplayIndex = i;
+                }
+                this.laneDisplayConfigs = sortedLaneDisplayConfigs; SaveUIConfig();
+            }));
+            if (e.CloseReason == CloseReason.UserClosing)
             {
-                sortedLaneDisplayConfigs[i].DisplayIndex = i;
+                Application.Exit();
+                Environment.Exit(0);
             }
-            this.laneDisplayConfigs = sortedLaneDisplayConfigs;
-            SaveUIConfig();
+            //((Form)this.Owner).Close();
 
-            Application.Exit();
-            Environment.Exit(0);
         }
         #endregion
 
@@ -190,6 +221,7 @@ namespace iParkingv5_window.Forms.DataForms
         private void tsmiExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
+            Environment.Exit(0);
         }
         private void tsmiAlarmReport_Click(object sender, EventArgs e)
         {
@@ -326,6 +358,7 @@ namespace iParkingv5_window.Forms.DataForms
 
             ucViewGrid1.SuspendLayout();
             ucViewGrid1.UpdateRowSetting(1, this.activeLanes.Count);
+            lanes.Clear();
             bool isDisplayLastEvent = this.activeLanes.Count == 1;
             foreach (Lane lane in this.activeLanes)
             {
@@ -352,6 +385,7 @@ namespace iParkingv5_window.Forms.DataForms
                 {
                     table.ColumnStyles[i] = new ColumnStyle(SizeType.Percent, 60);
                 }
+                //((iLane)item).DisplayUIConfig();
             }
             ucViewGrid1.ResumeLayout();
         }
@@ -402,14 +436,12 @@ namespace iParkingv5_window.Forms.DataForms
                 if (controller != null)
                 {
                     controllers.Add(controller);
-                    //lblLoadingStatus.UpdateResultMessage("Đang kết nối đến bộ điều khiển: " + bdk.Name, lblLoadingStatus.BackColor);
                     bool isConnectSuccess = await controller.ConnectAsync();
                     controller.CardEvent += Controller_CardEvent;
                     controller.ErrorEvent += Controller_ErrorEvent;
                     controller.InputEvent += Controller_InputEvent;
                     controller.ConnectStatusChangeEvent += Controller_ConnectStatusChangeEvent;
                     controller.DeviceInfoChangeEvent += Controller_DeviceInfoChangeEvent;
-                    //lblLoadingStatus.UpdateResultMessage("Kết nối đến bộ điều khiển: " + bdk.Name + (isConnectSuccess ? "thành công" : "thất bại"), lblLoadingStatus.BackColor);
                 }
             }
             lblTime.SendToBack();
@@ -419,7 +451,6 @@ namespace iParkingv5_window.Forms.DataForms
                 controller.PollingStart();
             }
 
-            //lblLoadingStatus.UpdateResultMessage(string.Empty, lblLoadingStatus.BackColor);
         }
 
         //--CLOSING
@@ -511,6 +542,29 @@ namespace iParkingv5_window.Forms.DataForms
         private async void tsmiActiveLanesConfig_Click(object sender, EventArgs e)
         {
             FormClosing -= frmMain_FormClosing;
+
+            foreach (var item in lanes)
+            {
+                var temp = item.SaveUIConfig();
+                if (laneDisplayConfigs != null)
+                {
+                    foreach (var laneDisplayConfig in laneDisplayConfigs)
+                    {
+                        if (laneDisplayConfig.LaneId == item.lane.id)
+                        {
+                            laneDisplayConfig.DisplayIndex = temp.DisplayIndex;
+                            laneDisplayConfig.splitContainerEventContent = temp.splitContainerEventContent;
+                            laneDisplayConfig.splitContainerMain = temp.splitContainerMain;
+                            laneDisplayConfig.SplitterCameraPosition = temp.SplitterCameraPosition;
+                            laneDisplayConfig.splitEventInfoWithCameraPosition = temp.splitEventInfoWithCameraPosition;
+                        }
+                    }
+                }
+
+
+            }
+            SaveUIConfig();
+
             foreach (var item in controllers)
             {
                 item.PollingStop();
@@ -623,7 +677,7 @@ namespace iParkingv5_window.Forms.DataForms
                     {
                         table.ColumnStyles[i] = new ColumnStyle(SizeType.Percent, 60);
                     }
-                    ((iLane)item).DisplayUIConfig();
+                    //((iLane)item).DisplayUIConfig();
                 }
                 ucViewGrid1.ResumeLayout();
                 GC.Collect();
@@ -703,6 +757,25 @@ namespace iParkingv5_window.Forms.DataForms
         private void btnScaleReport_Click(object sender, EventArgs e)
         {
             new frmReportScaleWithInvoice().ShowDialog();
+        }
+
+        private void timerClearLog_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                this.timerClearLog.Enabled = false;
+                DateTime before10Day = DateTime.Now.AddDays(-10);
+                string path = Path.Combine(LogHelper.SaveLogFolder, $"logs/{before10Day.Year}/{before10Day.Month}/{before10Day.Day}");
+                if (Directory.Exists(path))
+                {
+                    Directory.Delete(path, true);
+                }
+                this.timerClearLog.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                Log(EmLogType.ERROR, EmObjectLogType.System, hanh_dong: "frmMain", noi_dung_hanh_dong: "Clear log", obj: ex);
+            }
         }
     }
 }

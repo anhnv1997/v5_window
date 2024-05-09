@@ -5,11 +5,8 @@ using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.Datas;
 using iParkingv5.Objects.ScaleObjects;
 using iParkingv6.Objects.Datas;
-using Kztek.LPR;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 
 namespace iParkingv5.Objects
 {
@@ -18,7 +15,7 @@ namespace iParkingv5.Objects
         public static int baseSize = 12;
         public static WeighingDetailCollection WeighingDetailCollection = new WeighingDetailCollection();
         public static WeighingFormCollection WeighingFormCollection = new WeighingFormCollection();
-
+        public static SharedPreferences sharedPreferences = new SharedPreferences();
         #region APP - Datas
         public static Computer selectedComputer = null;
         public static Gate gate = null;
@@ -27,9 +24,6 @@ namespace iParkingv5.Objects
         public static List<Lane> lanes = new List<Lane>();
         public static List<Led> leds = new List<Led>();
         public static List<Bdk> bdks = new List<Bdk>();
-
-        public static CarANPR carANPR = null;
-        public static MotorANPR motoANPR = null;
         public static string userId = string.Empty;
         public static string user_name = string.Empty;
         public static AppOption appOption = new AppOption();
@@ -45,6 +39,16 @@ namespace iParkingv5.Objects
         public static ServerConfig serverConfig = new ServerConfig();
         #endregion End App Datas
 
+        #region EInvoice Data
+        public static string CompanyName = "CÔNG TY CP HỮU NGHỊ XUÂN CƯƠNG";
+        public static string CompanyAddress = "Cửa Khẩu QT Hữu Nghị - Huyện Cao Lộc - Tỉnh Lạng Sơn";
+        public static string TaxCode = "0100109106-503";
+        public static string templateCode = "5/00023";
+        public static string invoiceTypeCode = "5";
+        public static string symbolCode = "C24HAY";
+        public static int TaxRate = 10;
+        #endregion End EInvoice
+
         //--Function
         public static string GetCurrentVersion()
         {
@@ -52,6 +56,6 @@ namespace iParkingv5.Objects
             FileVersionInfo updateFileVersionInfo = FileVersionInfo.GetVersionInfo(filePath);
             string updateFilePathVersion = updateFileVersionInfo.FileVersion;
             return updateFilePathVersion;
-        }        
+        }
     }
 }

@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
+<<<<<<< HEAD
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.miSystem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiActiveLanesConfig = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,6 +78,58 @@
             this.menuStrip1.Size = new System.Drawing.Size(773, 29);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
+=======
+            menuStrip1 = new MenuStrip();
+            miSystem = new ToolStripMenuItem();
+            tsmiActiveLanesConfig = new ToolStripMenuItem();
+            tsmiExit = new ToolStripMenuItem();
+            miReport = new ToolStripMenuItem();
+            tsmiReportIn = new ToolStripMenuItem();
+            tsmiReportInOut = new ToolStripMenuItem();
+            tsmiAlarmReport = new ToolStripMenuItem();
+            đăngKýToolStripMenuItem = new ToolStripMenuItem();
+            btnRegisterCar = new ToolStripMenuItem();
+            btnRegisterMotor = new ToolStripMenuItem();
+            btnRegisterWalker = new ToolStripMenuItem();
+            btnRegisterList = new ToolStripMenuItem();
+            báoCáoCânToolStripMenuItem = new ToolStripMenuItem();
+            btnScaleReport = new ToolStripMenuItem();
+            panelMain = new Panel();
+            ucViewGrid1 = new Usercontrols.ucViewGrid();
+            panelAppStatus = new Panel();
+            lblLoadingStatus = new Label();
+            lblScale = new Label();
+            lblCompanyName = new Label();
+            lblTime = new Label();
+            lblServerName = new Label();
+            lblSoftwareName = new Label();
+            timerUpdateTime = new System.Windows.Forms.Timer(components);
+            panelDevelopeMode = new Panel();
+            dgvWaitingEvents = new DataGridView();
+            label1 = new Label();
+            splitterDevelopeMode = new Splitter();
+            timerUpdateControllerConnection = new System.Windows.Forms.Timer(components);
+            timerRestartSockerServer = new System.Windows.Forms.Timer(components);
+            timerClearLog = new System.Windows.Forms.Timer(components);
+            menuStrip1.SuspendLayout();
+            panelMain.SuspendLayout();
+            panelAppStatus.SuspendLayout();
+            panelDevelopeMode.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvWaitingEvents).BeginInit();
+            SuspendLayout();
+            // 
+            // menuStrip1
+            // 
+            menuStrip1.Font = new Font("Segoe UI", 12F);
+            menuStrip1.Items.AddRange(new ToolStripItem[] { miSystem, miReport, đăngKýToolStripMenuItem, báoCáoCânToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Padding = new Padding(5, 2, 0, 2);
+            menuStrip1.Size = new Size(803, 29);
+            menuStrip1.TabIndex = 0;
+            menuStrip1.Text = "menuStrip1";
+            menuStrip1.DoubleClick += menuStrip1_DoubleClick;
+>>>>>>> XuanCuong
             // 
             // miSystem
             // 
@@ -131,11 +184,22 @@
             // 
             // tsmiAlarmReport
             // 
+<<<<<<< HEAD
             this.tsmiAlarmReport.Image = ((System.Drawing.Image)(resources.GetObject("tsmiAlarmReport.Image")));
             this.tsmiAlarmReport.Name = "tsmiAlarmReport";
             this.tsmiAlarmReport.Size = new System.Drawing.Size(203, 26);
             this.tsmiAlarmReport.Text = "Sự kiện cảnh báo";
             this.tsmiAlarmReport.Click += new System.EventHandler(this.tsmiAlarmReport_Click);
+=======
+            tsmiAlarmReport.Image = (Image)resources.GetObject("tsmiAlarmReport.Image");
+            tsmiAlarmReport.Name = "tsmiAlarmReport";
+            tsmiAlarmReport.Size = new Size(203, 26);
+            tsmiAlarmReport.Text = "Sự kiện cảnh báo";
+            tsmiAlarmReport.Visible = false;
+            tsmiAlarmReport.Click += tsmiAlarmReport_Click;
+            tsmiAlarmReport.MouseEnter += tsmiReport_MouseEnter;
+            tsmiAlarmReport.MouseLeave += tsmiReport_MouseLeave;
+>>>>>>> XuanCuong
             // 
             // đăngKýToolStripMenuItem
             // 
@@ -183,6 +247,7 @@
             this.btnRegisterList.Visible = false;
             this.btnRegisterList.Click += new System.EventHandler(this.btnRegisterList_Click);
             // 
+<<<<<<< HEAD
             // panelMain
             // 
             this.panelMain.Controls.Add(this.ucViewGrid1);
@@ -344,9 +409,213 @@
             // 
             this.timerUpdateControllerConnection.Enabled = true;
             this.timerUpdateControllerConnection.Interval = 1000;
+=======
+            // báoCáoCânToolStripMenuItem
+            // 
+            báoCáoCânToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { btnScaleReport });
+            báoCáoCânToolStripMenuItem.Name = "báoCáoCânToolStripMenuItem";
+            báoCáoCânToolStripMenuItem.Size = new Size(104, 25);
+            báoCáoCânToolStripMenuItem.Text = "Báo cáo cân";
+            // 
+            // btnScaleReport
+            // 
+            btnScaleReport.Name = "btnScaleReport";
+            btnScaleReport.Size = new Size(202, 26);
+            btnScaleReport.Text = "Báo cáo tổng hợp";
+            btnScaleReport.Click += btnScaleReport_Click;
+>>>>>>> XuanCuong
+            // 
+            // panelMain
+            // 
+            panelMain.Controls.Add(ucViewGrid1);
+            panelMain.Dock = DockStyle.Fill;
+            panelMain.Location = new Point(0, 29);
+            panelMain.Margin = new Padding(0);
+            panelMain.Name = "panelMain";
+            panelMain.Size = new Size(478, 382);
+            panelMain.TabIndex = 1;
+            // 
+            // ucViewGrid1
+            // 
+            ucViewGrid1.BackColor = SystemColors.Control;
+            ucViewGrid1.ColumnsCount = 2;
+            ucViewGrid1.Dock = DockStyle.Fill;
+            ucViewGrid1.Location = new Point(0, 0);
+            ucViewGrid1.Margin = new Padding(0);
+            ucViewGrid1.Name = "ucViewGrid1";
+            ucViewGrid1.RowsCount = 2;
+            ucViewGrid1.Size = new Size(478, 382);
+            ucViewGrid1.TabIndex = 0;
+            // 
+            // panelAppStatus
+            // 
+            panelAppStatus.BorderStyle = BorderStyle.Fixed3D;
+            panelAppStatus.Controls.Add(lblLoadingStatus);
+            panelAppStatus.Controls.Add(lblScale);
+            panelAppStatus.Controls.Add(lblCompanyName);
+            panelAppStatus.Controls.Add(lblTime);
+            panelAppStatus.Controls.Add(lblServerName);
+            panelAppStatus.Controls.Add(lblSoftwareName);
+            panelAppStatus.Dock = DockStyle.Bottom;
+            panelAppStatus.Location = new Point(0, 411);
+            panelAppStatus.Margin = new Padding(3, 2, 3, 2);
+            panelAppStatus.Name = "panelAppStatus";
+            panelAppStatus.Size = new Size(803, 28);
+            panelAppStatus.TabIndex = 2;
+            // 
+            // lblLoadingStatus
+            // 
+            lblLoadingStatus.Dock = DockStyle.Fill;
+            lblLoadingStatus.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            lblLoadingStatus.ForeColor = Color.FromArgb(192, 64, 0);
+            lblLoadingStatus.Location = new Point(317, 0);
+            lblLoadingStatus.Name = "lblLoadingStatus";
+            lblLoadingStatus.Padding = new Padding(9, 0, 0, 0);
+            lblLoadingStatus.Size = new Size(271, 24);
+            lblLoadingStatus.TabIndex = 4;
+            lblLoadingStatus.Text = "Đang Tải Thông Tin ...";
+            lblLoadingStatus.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // lblScale
+            // 
+            lblScale.Dock = DockStyle.Left;
+            lblScale.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            lblScale.Location = new Point(201, 0);
+            lblScale.Name = "lblScale";
+            lblScale.Padding = new Padding(9, 0, 0, 0);
+            lblScale.Size = new Size(116, 24);
+            lblScale.TabIndex = 5;
+            lblScale.Text = "Số Cân: ";
+            lblScale.TextAlign = ContentAlignment.MiddleLeft;
+            lblScale.Visible = false;
+            // 
+            // lblCompanyName
+            // 
+            lblCompanyName.Dock = DockStyle.Right;
+            lblCompanyName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline);
+            lblCompanyName.ForeColor = Color.Navy;
+            lblCompanyName.Location = new Point(588, 0);
+            lblCompanyName.Name = "lblCompanyName";
+            lblCompanyName.Padding = new Padding(9, 0, 0, 0);
+            lblCompanyName.Size = new Size(118, 24);
+            lblCompanyName.TabIndex = 3;
+            lblCompanyName.Text = "KZTEK-Parking";
+            lblCompanyName.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // lblTime
+            // 
+            lblTime.Dock = DockStyle.Right;
+            lblTime.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            lblTime.Location = new Point(706, 0);
+            lblTime.Name = "lblTime";
+            lblTime.Padding = new Padding(9, 0, 0, 0);
+            lblTime.Size = new Size(93, 24);
+            lblTime.TabIndex = 2;
+            lblTime.Text = "16:04:04";
+            lblTime.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // lblServerName
+            // 
+            lblServerName.Dock = DockStyle.Left;
+            lblServerName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            lblServerName.Location = new Point(99, 0);
+            lblServerName.Name = "lblServerName";
+            lblServerName.Padding = new Padding(9, 0, 0, 0);
+            lblServerName.Size = new Size(102, 24);
+            lblServerName.TabIndex = 1;
+            lblServerName.Text = "VIETANHPC";
+            lblServerName.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // lblSoftwareName
+            // 
+            lblSoftwareName.Dock = DockStyle.Left;
+            lblSoftwareName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            lblSoftwareName.Location = new Point(0, 0);
+            lblSoftwareName.Name = "lblSoftwareName";
+            lblSoftwareName.Padding = new Padding(9, 0, 0, 0);
+            lblSoftwareName.Size = new Size(99, 24);
+            lblSoftwareName.TabIndex = 0;
+            lblSoftwareName.Text = "KZTEK-Parking";
+            lblSoftwareName.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // timerUpdateTime
+            // 
+            timerUpdateTime.Enabled = true;
+            timerUpdateTime.Interval = 1000;
+            timerUpdateTime.Tick += timerUpdateTime_Tick;
+            // 
+            // panelDevelopeMode
+            // 
+            panelDevelopeMode.BackColor = SystemColors.Control;
+            panelDevelopeMode.Controls.Add(dgvWaitingEvents);
+            panelDevelopeMode.Controls.Add(label1);
+            panelDevelopeMode.Dock = DockStyle.Right;
+            panelDevelopeMode.Location = new Point(487, 29);
+            panelDevelopeMode.Margin = new Padding(3, 2, 3, 2);
+            panelDevelopeMode.Name = "panelDevelopeMode";
+            panelDevelopeMode.Size = new Size(316, 382);
+            panelDevelopeMode.TabIndex = 3;
+            panelDevelopeMode.Visible = false;
+            // 
+            // dgvWaitingEvents
+            // 
+            dgvWaitingEvents.AllowUserToAddRows = false;
+            dgvWaitingEvents.AllowUserToDeleteRows = false;
+            dgvWaitingEvents.BackgroundColor = SystemColors.Control;
+            dgvWaitingEvents.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvWaitingEvents.Dock = DockStyle.Fill;
+            dgvWaitingEvents.Location = new Point(0, 35);
+            dgvWaitingEvents.Margin = new Padding(3, 2, 3, 2);
+            dgvWaitingEvents.Name = "dgvWaitingEvents";
+            dgvWaitingEvents.ReadOnly = true;
+            dgvWaitingEvents.RowTemplate.Height = 29;
+            dgvWaitingEvents.Size = new Size(316, 347);
+            dgvWaitingEvents.TabIndex = 1;
+            // 
+            // label1
+            // 
+            label1.BackColor = Color.Navy;
+            label1.Dock = DockStyle.Top;
+            label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline);
+            label1.ForeColor = SystemColors.ButtonHighlight;
+            label1.Location = new Point(0, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(316, 35);
+            label1.TabIndex = 0;
+            label1.Text = "Chế độ cho nhà phát triển";
+            label1.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // splitterDevelopeMode
+            // 
+            splitterDevelopeMode.BackColor = Color.FromArgb(192, 0, 0);
+            splitterDevelopeMode.Dock = DockStyle.Right;
+            splitterDevelopeMode.Location = new Point(478, 29);
+            splitterDevelopeMode.Margin = new Padding(3, 2, 3, 2);
+            splitterDevelopeMode.Name = "splitterDevelopeMode";
+            splitterDevelopeMode.Size = new Size(9, 382);
+            splitterDevelopeMode.TabIndex = 4;
+            splitterDevelopeMode.TabStop = false;
+            splitterDevelopeMode.Visible = false;
+            // 
+            // timerUpdateControllerConnection
+            // 
+            timerUpdateControllerConnection.Enabled = true;
+            timerUpdateControllerConnection.Interval = 1000;
+            timerUpdateControllerConnection.Tick += timerUpdateControllerConnection_Tick;
+            // 
+            // timerRestartSockerServer
+            // 
+            timerRestartSockerServer.Interval = 3600000;
+            // 
+            // timerClearLog
+            // 
+            timerClearLog.Enabled = true;
+            timerClearLog.Interval = 60000;
+            timerClearLog.Tick += timerClearLog_Tick;
             // 
             // frmMain
             // 
+<<<<<<< HEAD
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(773, 376);
@@ -370,6 +639,31 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
+=======
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(803, 439);
+            Controls.Add(panelMain);
+            Controls.Add(splitterDevelopeMode);
+            Controls.Add(panelDevelopeMode);
+            Controls.Add(panelAppStatus);
+            Controls.Add(menuStrip1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MainMenuStrip = menuStrip1;
+            Margin = new Padding(3, 2, 3, 2);
+            Name = "frmMain";
+            StartPosition = FormStartPosition.Manual;
+            Text = "KZTEK-Parking";
+            FormClosing += frmMain_FormClosing;
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
+            panelMain.ResumeLayout(false);
+            panelAppStatus.ResumeLayout(false);
+            panelDevelopeMode.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvWaitingEvents).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
+>>>>>>> XuanCuong
         }
 
         #endregion
@@ -401,5 +695,13 @@
         private ToolStripMenuItem btnRegisterMotor;
         private ToolStripMenuItem btnRegisterWalker;
         private ToolStripMenuItem btnRegisterList;
+<<<<<<< HEAD
+=======
+        private Label lblScale;
+        private ToolStripMenuItem báoCáoCânToolStripMenuItem;
+        private ToolStripMenuItem btnScaleReport;
+        private System.Windows.Forms.Timer timerRestartSockerServer;
+        private System.Windows.Forms.Timer timerClearLog;
+>>>>>>> XuanCuong
     }
 }

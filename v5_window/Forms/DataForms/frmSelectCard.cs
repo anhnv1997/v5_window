@@ -1,5 +1,6 @@
 ﻿using iPakrkingv5.Controls;
 using iPakrkingv5.Controls.Controls.Buttons;
+using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Datas;
 using iParkingv5_window.Usercontrols.BuildControls;
@@ -107,14 +108,9 @@ namespace iParkingv5_window.Forms.DataForms
 
             if (!string.IsNullOrEmpty(txtIdentity.Text))
             {
-                var identityResponse = await KzParkingApiHelper.GetIdentityByCodeAsync(txtIdentity.Text);
+                //var identityResponse = await KzParkingApiHelper.GetIdentityByCodeAsync(txtIdentity.Text);
+                var identityResponse = await KzParkingv5ApiHelper.GetIdentityByCodeAsync(txtIdentity.Text);
                 Identity? identity = identityResponse.Item1;
-                if (!identityResponse.Item2)
-                {
-                    ucLoading1.HideLoading();
-                    ucNotify1.Show(ucNotify.EmNotiType.Error, "Không đọc được thông tin định danh, vui lòng thử lại");
-                    return;
-                }
                 if (identity == null)
                 {
                     ucLoading1.HideLoading();
@@ -128,7 +124,7 @@ namespace iParkingv5_window.Forms.DataForms
             }
             else
             {
-                List<Identity> identities = await KzParkingApiHelper.GetIdentities("");
+                List<Identity> identities = (await KzParkingv5ApiHelper.GetIdentitiesAsync("")).Item1;
                 if (identities != null)
                 {
                     for (int i = 0; i < identities.Count; i++)

@@ -299,7 +299,7 @@ namespace iParkingv5_CustomerRegister.Forms.DataForms
                         else
                         {
                             item.CustomerId = this.customerID;
-                            item.VehicleTypeId = int.Parse(this.vehicleTypeId);
+                            item.VehicleTypeId = this.vehicleTypeId;
                             bool isSuccess = await KzParkingApiHelper.UpdateRegisteredVehicleAsyncById(item);
                             if (isSuccess)
                             {
@@ -322,7 +322,7 @@ namespace iParkingv5_CustomerRegister.Forms.DataForms
                 {
                     Name = vehiclePlate,
                     PlateNumber = vehiclePlate,
-                    VehicleTypeId = int.Parse(this.vehicleTypeId),
+                    VehicleTypeId = this.vehicleTypeId,
                     CustomerId = this.customerID,
                     ExpireUtc = dtpExpireTime.Value.ToUniversalTime().ToString(),
                     Enabled = true,
@@ -390,7 +390,7 @@ namespace iParkingv5_CustomerRegister.Forms.DataForms
                 if (existVehicle != null)
                 {
                     existVehicle.CustomerId = this.customerID;
-                    existVehicle.VehicleTypeId = int.Parse(this.vehicleTypeId);
+                    existVehicle.VehicleTypeId = this.vehicleTypeId;
                     bool isSuccess = await KzParkingApiHelper.UpdateRegisteredVehicleAsyncById(existVehicle);
                     if (isSuccess)
                     {
@@ -416,7 +416,7 @@ namespace iParkingv5_CustomerRegister.Forms.DataForms
                         {
                             Name = vehiclePlate,
                             PlateNumber = vehiclePlate,
-                            VehicleTypeId = int.Parse(this.vehicleTypeId),
+                            VehicleTypeId = this.vehicleTypeId,
                             CustomerId = this.customerID,
                             ExpireUtc = dtpExpireTime.Value.ToUniversalTime().ToString(),
                             Enabled = true,
@@ -446,7 +446,7 @@ namespace iParkingv5_CustomerRegister.Forms.DataForms
                 else
                 {
                     registeredVehicle.CustomerId = this.customerID;
-                    registeredVehicle.VehicleTypeId = int.Parse(this.vehicleTypeId);
+                    registeredVehicle.VehicleTypeId = this.vehicleTypeId;
                     bool isSuccess = await KzParkingApiHelper.UpdateRegisteredVehicleAsyncById(registeredVehicle);
                     if (isSuccess)
                     {

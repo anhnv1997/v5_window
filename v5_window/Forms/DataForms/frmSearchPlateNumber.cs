@@ -7,6 +7,7 @@ using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
 using System.Runtime.InteropServices;
 using iPakrkingv5.Controls;
+using iParkingv5.ApiManager.KzParkingv5Apis;
 
 namespace iParkingv5_CustomerRegister.Forms
 {
@@ -116,9 +117,12 @@ namespace iParkingv5_CustomerRegister.Forms
             dgvData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
             dgvData.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
 
-            var registerVehicles = await KzParkingApiHelper.GetRegisteredVehicles(txtKeyword.Text);
-            var customers = await KzParkingApiHelper.GetAllCustomers();
-            var vehicleTypes = await KzParkingApiHelper.GetAllVehicleTypes();
+            //var registerVehicles = await KzParkingApiHelper.GetRegisteredVehicles(txtKeyword.Text);
+            var registerVehicles = (await KzParkingv5ApiHelper.GetRegisterVehiclesAsync(txtKeyword.Text)).Item1;
+            //var customers = await KzParkingApiHelper.GetAllCustomers();
+            var customers = (await KzParkingv5ApiHelper.GetCustomersAsync()).Item1;
+            //var vehicleTypes = await KzParkingApiHelper.GetAllVehicleTypes();
+            var vehicleTypes = (await KzParkingv5ApiHelper.GetVehicleTypesAsync()).Item1;
             if (registerVehicles != null)
             {
                 if (registerVehicles != null)
@@ -129,7 +133,7 @@ namespace iParkingv5_CustomerRegister.Forms
                         string vehicleTypeId = registerVehicles[i].VehicleTypeId.ToString();
                         string customerID = registerVehicles[i].CustomerId;
 
-                        Customer.GetCustomerName(customers.Item1, customerID, out string customerName, out string customerCode,
+                        Customer.GetCustomerName(customers, customerID, out string customerName, out string customerCode,
                                                                               out string customerGroupId, out string customerGroupName);
                         dgvData.Rows.Add(i + 1, registerVehicles[i].Name,
                                                 registerVehicles[i].PlateNumber,
@@ -145,7 +149,7 @@ namespace iParkingv5_CustomerRegister.Forms
                         registerVehicles[i] = null;
                     }
                     registerVehicles.Clear();
-                    customers.Item1?.Clear();
+                    customers?.Clear();
                     vehicleTypes?.Clear();
                     GC.Collect();
                 }

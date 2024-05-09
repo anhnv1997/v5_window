@@ -1,5 +1,4 @@
 ﻿using iParkingv5_window.Forms.DataForms;
-using iParkingv6.Objects.Datas;
 
 namespace iParkingv5_window.Usercontrols
 {
@@ -9,12 +8,12 @@ namespace iParkingv5_window.Usercontrols
         public string eventId = string.Empty;
         public string plateNumber = string.Empty;
 
-        public string CustomerId { get; set; }
+        public string CustomerId { get; set; } = string.Empty;
         public string vehicleGroupId = string.Empty;
         public string IdentityGroupId = string.Empty;
-        public string RegisterVehicleId { get; set; }
-        public string LaneId { get; set; }
-        public string IdentityId { get; set; }
+        public string RegisterVehicleId { get; set; } = string.Empty;
+        public string LaneId { get; set; } = string.Empty;
+        public string IdentityId { get; set; } = string.Empty;
 
         public DateTime datetimeIn = DateTime.Now;
         public List<string> picDirs = new List<string>();
@@ -85,10 +84,14 @@ namespace iParkingv5_window.Usercontrols
         #region Controls In Form
         private void UcLastEventInfo_Click(object? sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(this.eventId))
+            {
+                return;
+            }
             //if (this.isEventIn)
             {
                 var frm = new frmEventInDetail(this.eventId, plateNumber, vehicleGroupId, IdentityGroupId, datetimeIn, picDirs,
-                                          CustomerId, RegisterVehicleId, this.LaneId, this.IdentityId, this.isEventIn);
+                                               CustomerId, RegisterVehicleId, this.LaneId, this.IdentityId, this.isEventIn);
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
                     this.plateNumber = frm.updatePlate;
@@ -96,13 +99,5 @@ namespace iParkingv5_window.Usercontrols
             }
         }
         #endregion End Controls In Form
-
-        #region Private Function
-
-        #endregion End Private Function
-
-        #region Public Function
-
-        #endregion End Public Function
     }
 }

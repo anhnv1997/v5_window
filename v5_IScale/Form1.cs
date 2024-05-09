@@ -1,4 +1,6 @@
 ﻿using IPaking.Ultility;
+using iPakrkingv5.Controls;
+using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.ApiManager.KzScaleApis;
 using iParkingv5.Controller;
 using iParkingv5.Objects;
@@ -14,6 +16,10 @@ using Kztek.Scale_net6.Objects;
 using Kztek.Tool;
 using Kztek.Tool.TextFormatingTools;
 using Kztek.Tools;
+using Microsoft.VisualBasic.ApplicationServices;
+using System.Diagnostics;
+using System.Reflection;
+using System.Windows.Forms;
 using v5_IScale.Forms;
 using v5_IScale.Forms.ReportForms;
 using static iParkingv5.Controller.ControllerFactory;
@@ -90,17 +96,18 @@ namespace v5_IScale
                 }
 
             }
-            else
-            {
-                MessageBox.Show("ERROR1");
-            }
+            lblAppVersion.Text = this.Text + " - " + Assembly.GetExecutingAssembly().GetName().Version!.ToString();
 
             lblTime.Width = lblTime.PreferredWidth;
+            lblAppVersion.Width = lblAppVersion.PreferredSize.Width;
 
-            this.splitterMain.SplitterDistance = Properties.Settings.Default.splitterMainPosition;
-            this.splliterEventList.SplitterDistance = Properties.Settings.Default.SplitterEventDisplayPosition;
-            this.splitterCurrentVehicle.SplitterDistance = Properties.Settings.Default.SplitterCurrentVehiclePosition;
-
+            this.splitterMain.SplitterDistance = StaticPool.sharedPreferences.SplitterMainPosition > 0 ?
+                                                    StaticPool.sharedPreferences.SplitterMainPosition : this.splitterMain.SplitterDistance;
+            this.splliterEventList.SplitterDistance = StaticPool.sharedPreferences.SplitterEventDisplayPosition > 0 ?
+                                                    StaticPool.sharedPreferences.SplitterEventDisplayPosition : this.splliterEventList.SplitterDistance;
+            this.splitterCurrentVehicle.SplitterDistance = StaticPool.sharedPreferences.SplitterCurrentVehiclePosition > 0 ?
+                                                    StaticPool.sharedPreferences.SplitterCurrentVehiclePosition : this.splitterCurrentVehicle.SplitterDistance;
+            dgvData.ToggleDoubleBuffered(true);
             this.ActiveControl = btnSave;
         }
         private void Form1_Shown(object? sender, EventArgs e)
@@ -109,10 +116,10 @@ namespace v5_IScale
         }
         private void Form1_FormClosed(object? sender, FormClosedEventArgs e)
         {
-            Properties.Settings.Default.splitterMainPosition = this.splitterMain.SplitterDistance;
-            Properties.Settings.Default.SplitterEventDisplayPosition = this.splliterEventList.SplitterDistance;
-            Properties.Settings.Default.SplitterCurrentVehiclePosition = this.splitterCurrentVehicle.SplitterDistance;
-            Properties.Settings.Default.Save();
+            StaticPool.sharedPreferences.SplitterMainPosition = this.splitterMain.SplitterDistance;
+            StaticPool.sharedPreferences.SplitterEventDisplayPosition = this.splliterEventList.SplitterDistance;
+            StaticPool.sharedPreferences.SplitterCurrentVehiclePosition = this.splitterCurrentVehicle.SplitterDistance;
+            NewtonSoftHelper<SharedPreferences>.SaveConfig(StaticPool.sharedPreferences, PathManagement.sharedPreferencesPath());
             Application.Exit();
             Environment.Exit(0);
         }
@@ -124,6 +131,7 @@ namespace v5_IScale
             frmReportIn frm = new frmReportIn(true);
             if (frm.ShowDialog() == DialogResult.OK)
             {
+                ClearView();
                 string selectedPlateNumber = frm.selectedPlateNumber;
                 this.Invoke(new Action(() =>
                 {
@@ -134,8 +142,18 @@ namespace v5_IScale
                 string[] physicalFileIds = frm.fileKeys;
 
                 await ShowParkingEventImage(physicalFileIds);
-
                 await DisplayWeightInfo();
+                foreach (DataGridViewRow item in dgvData.Rows)
+                {
+                    if (item.Cells[0].Value.ToString() == selectedParkingEventId)
+                    {
+                        dgvData.SelectionChanged -= dgvData_SelectionChanged;
+                        dgvData.CurrentCell = item.Cells[1];
+                        dgvData.FirstDisplayedScrollingRowIndex = dgvData.SelectedRows[0].Index;
+                        dgvData.SelectionChanged += dgvData_SelectionChanged;
+                        return;
+                    }
+                }
             }
         }
         private async void btnSave_Click(object sender, EventArgs e)
@@ -160,9 +178,9 @@ namespace v5_IScale
             string weightFormId = ((ListItem)cbGoodsType.SelectedItem).Name;
 
             var imageKeys = new List<string>(){
+                                    imageKey + "_EventInImage.jpeg",
                                     imageKey + "_OVERVIEWSCALE.jpeg",
-                                    imageKey + "_VEHICLESCALE.jpeg",
-                                               };
+                                    imageKey + "_VEHICLESCALE.jpeg",};
 
             var result = await KzScaleApiHelper.CreateScaleEvent(txtPlateNumber.Text, this.selectedParkingEventId,
                                                                  weight, weightFormId,
@@ -174,7 +192,7 @@ namespace v5_IScale
                 return;
             }
             RefreshData();
-            lblMoney.Text = TextFormatingTool.GetMoneyFormat(result.weighing_action_detail[result.weighing_action_detail.Count - 1].Price.ToString());
+            lblMoney.Text = TextFormatingTool.GetMoneyFormat(result.weighing_action_detail[^1].Price.ToString());
             await SaveEventImage(this.ucOverView.GetFullCurrentImage(), this.ucCarLpr.GetFullCurrentImage(), imageKey);
         }
 
@@ -194,9 +212,55 @@ namespace v5_IScale
         {
 
         }
-        private void btnPrintInternetInvoice_Click(object sender, EventArgs e)
+        private async void btnPrintInternetInvoice_Click(object sender, EventArgs e)
         {
+            var weighingActionDetails = await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(this.selectedParkingEventId);
+            string orderId = await KzScaleApiHelper.CreateInvoice(weighingActionDetails[^1].Id, StaticPool.userId, StaticPool.user_name);
+            if (string.IsNullOrEmpty(orderId))
+            {
+                MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            var invoiceData = await KzParkingv5ApiHelper.GetInvoiceData(orderId);
+            if (invoiceData == null)
+            {
+                MessageBox.Show("Chưa có thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            try
+            {
+                string pdfContent = invoiceData.signedFileData;
+                byte[] bytes = Convert.FromBase64String(pdfContent);
+                if (!Directory.Exists(@"C:\print"))
+                {
+                    Directory.CreateDirectory(@"C:\print");
+                }
+                string fileName = (@"C:\print\file" + DateTime.Now.ToString("yyyy_mm_dd_HH_mm_ss") + ".pdf");
 
+                System.IO.FileStream stream =
+                    new FileStream(fileName, FileMode.CreateNew);
+                System.IO.BinaryWriter writer =
+                    new BinaryWriter(stream);
+                writer.Write(bytes, 0, bytes.Length);
+                writer.Close();
+                Process p = new Process
+                {
+                    StartInfo = new ProcessStartInfo()
+                    {
+                        CreateNoWindow = true,
+                        Verb = "print",
+                        UseShellExecute = true,
+                        FileName = fileName //put the correct path here
+                    }
+                };
+                p.Start();
+                p.WaitForExit();
+                //p.Dispose();
+                File.Delete(fileName);
+            }
+            catch (Exception ex)
+            {
+            }
         }
 
         private void xeCóGửiHóaĐơnToolStripMenuItem_Click(object sender, EventArgs e)
@@ -411,6 +475,71 @@ namespace v5_IScale
                 }
             }
         }
+        private async void dgvData_SelectionChanged(object? sender, EventArgs e)
+        {
+            string trafficId = "";
+            string vehicleImage = "";
+            string firstScaleImage = dgvData.CurrentRow.Cells[dgvData.ColumnCount - 2].Value.ToString() ?? "";
+            string secondScaleImage = dgvData.CurrentRow.Cells[dgvData.ColumnCount - 1].Value.ToString() ?? "";
+            if (!string.IsNullOrEmpty(firstScaleImage))
+            {
+                string[] firstScaleImages = firstScaleImage.Split(";");
+                if (firstScaleImages.Length > 1)
+                {
+                    string firstWeightPath = await MinioHelper.GetImage(firstScaleImages[1]);
+                    this.Invoke(new Action(() =>
+                    {
+                        picFirstScale.LoadAsync(firstWeightPath);
+                    }));
+                    string vehicleImagePath = await MinioHelper.GetImage(firstScaleImages[0]);
+                    this.Invoke(new Action(() =>
+                    {
+                        picVehicleImageIn.LoadAsync(vehicleImagePath);
+                    }));
+                }
+            }
+            if (!string.IsNullOrEmpty(secondScaleImage))
+            {
+                string[] secondScaleImages = secondScaleImage.Split(";");
+                if (secondScaleImages.Length > 1)
+                {
+                    string tempPath = await MinioHelper.GetImage(secondScaleImages[1]);
+                    this.Invoke(new Action(() =>
+                    {
+                        picSecondScale.LoadAsync(tempPath);
+                    }));
+                }
+            }
+
+            int firstScale = int.Parse(dgvData.CurrentRow.Cells[5].Value.ToString()?.Replace(",", "") ?? "0");
+            string secondScaleStr = dgvData.CurrentRow.Cells[7].Value.ToString()?.Replace(",", "") ?? "";
+            if (string.IsNullOrEmpty(secondScaleStr))
+            {
+                lblFirstScale.Text = firstScale.ToString();
+                lblSecondScale.Text = "_";
+                lblGoodsScale.Text = "_";
+                lblMoney.Text = "_";
+            }
+            else
+            {
+                int secondScale = int.Parse(secondScaleStr);
+                int goodScale = Math.Abs(firstScale - secondScale);
+
+                lblFirstScale.Text = firstScale.ToString();
+                lblSecondScale.Text = secondScale.ToString();
+                lblGoodsScale.Text = goodScale.ToString();
+                lblMoney.Text = "_";
+            }
+            this.selectedParkingEventId = dgvData.CurrentRow.Cells[0].Value.ToString();
+        }
+        private void Pic_LoadCompleted(object? sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            PictureBox pictureBox = (sender as PictureBox)!;
+            if (e.Error != null)
+            {
+                pictureBox.Image = defaultImg;
+            }
+        }
         #endregion End Controls In Form
 
         #region Event
@@ -418,9 +547,9 @@ namespace v5_IScale
         {
             this.Invoke(new Action(() =>
             {
-                if (lblScale.Text !=  e.Gross.ToString())
+                if (lblScale.Text != e.Gross.ToString())
                 {
-                    lblScale.Text =  e.Gross.ToString();
+                    lblScale.Text = e.Gross.ToString();
                 }
             }));
         }
@@ -462,24 +591,28 @@ namespace v5_IScale
             await semaphoreSlimOnNewEvent.WaitAsync();
             try
             {
+                ClearView();
                 this.Invoke(new Action(() =>
                 {
                     lblLoadingStatus.Text = $"Nhận sự kiện quẹt thẻ READER: {e.ReaderIndex}, CARD: {e.PreferCard} từ bộ điều khiển " + e.DeviceName;
                     lblLoadingStatus.Refresh();
                 }));
 
-                var eventInData = await KzParkingApiHelper.GetEventIns(e.PreferCard, DateTime.MinValue, DateTime.Now, "", "", "");
-                if (eventInData != null && eventInData.Item1 != null)
+                var eventInData = await KzParkingv5ApiHelper.GetEventIns(e.PreferCard, DateTime.MinValue, DateTime.Now, "", "", "","");
+                if (eventInData != null)
                 {
-                    string selectedPlateNumber = eventInData.Item1[0].plateNumber;
-                    this.selectedParkingEventId = eventInData.Item1[0].id;
-                    string[] physicalFileIds = eventInData.Item1[0].fileKeys ?? new string[0];
-                    this.Invoke(new Action(() =>
+                    if (eventInData.Rows.Count > 0)
                     {
-                        txtPlateNumber.Text = selectedPlateNumber;
-                    }));
-                    await ShowParkingEventImage(physicalFileIds);
-                    await DisplayWeightInfo();
+                        string selectedPlateNumber = eventInData.Rows[0]["platenumber"].ToString() ?? "";
+                        this.selectedParkingEventId = eventInData.Rows[0]["id"].ToString() ?? "";
+                        string[] physicalFileIds = eventInData.Rows[0]["filekeys"].ToString()?.Split(",") ?? new string[] { };
+                        this.Invoke(new Action(() =>
+                        {
+                            txtPlateNumber.Text = selectedPlateNumber;
+                        }));
+                        await ShowParkingEventImage(physicalFileIds);
+                        await DisplayWeightInfo();
+                    }
                 }
             }
             finally
@@ -544,7 +677,6 @@ namespace v5_IScale
             cbGoodsType.DisplayMember = "Value";
             cbGoodsType.SelectedIndex = cbGoodsType.Items.Count > 0 ? 0 : -1;
         }
-
         private async Task ShowParkingEventImage(string[] physicalFileIds)
         {
             if (physicalFileIds.Length >= 2)
@@ -599,7 +731,10 @@ namespace v5_IScale
                     ListItem li = (ListItem)item;
                     if (li.Name == weighing_form_id)
                     {
-                        cbGoodsType.SelectedItem = item;
+                        this.Invoke(new Action(() =>
+                        {
+                            cbGoodsType.SelectedItem = item;
+                        }));
                         break;
                     }
                 }
@@ -608,12 +743,11 @@ namespace v5_IScale
                     lblFirstScale.Text = weighingActionDetails[0].Weight.ToString();
                     lblSecondScale.Text = weighingActionDetails.Count > 1 ? weighingActionDetails[1].Weight.ToString() : "0";
                     lblGoodsScale.Text = Math.Abs(int.Parse(lblFirstScale.Text) - int.Parse(lblSecondScale.Text)).ToString();
-
                 }));
-                await ShowImage(weighingActionDetails[0].list_image.Split(";")[0], picFirstScale);
+                await ShowImage(weighingActionDetails[0].list_image.Split(";")[1], picFirstScale);
                 if (weighingActionDetails.Count > 1)
                 {
-                    await ShowImage(weighingActionDetails[0].list_image.Split(";")[0], picSecondScale);
+                    await ShowImage(weighingActionDetails[0].list_image.Split(";")[1], picSecondScale);
                 }
             }
             else
@@ -629,8 +763,9 @@ namespace v5_IScale
                 }));
             }
         }
-        public static async Task SaveEventImage(Image? overviewImg, Image? vehicleImg, string imageKey)
+        public async Task SaveEventImage(Image? overviewImg, Image? vehicleImg, string imageKey)
         {
+            var task0 = MinioHelper.UploadPicture(picVehicleImageIn.Image, imageKey + "_EventInImage.jpeg");
             var task1 = MinioHelper.UploadPicture(overviewImg, imageKey + "_OVERVIEWSCALE.jpeg");
             var task2 = MinioHelper.UploadPicture(vehicleImg, imageKey + "_VEHICLESCALE.jpeg");
             await Task.WhenAll(task1, task2);
@@ -759,6 +894,7 @@ namespace v5_IScale
         }
         private void DisplayInGridview()
         {
+            dgvData.SelectionChanged -= dgvData_SelectionChanged;
             dgvData.Rows.Clear();
             foreach (WeighingDetail item in AppData.WeighingDetailCollection)
             {
@@ -769,6 +905,8 @@ namespace v5_IScale
                 string firstWeightScale = "";
                 string secondWeightScale = "";
                 string goodType = "";
+                string firstWeightPrice = "";
+                string secondWeightPrice = "";
                 if (item.weighing_action_detail == null)
                 {
                     continue;
@@ -779,26 +917,57 @@ namespace v5_IScale
                     firstScaleTime = item.weighing_action_detail[0].CreatedAtTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
                     firstWeightScale = item.weighing_action_detail[0].Weight.ToString("#,0");
                     goodType = AppData.WeighingFormCollection.GetObjectById(item.weighing_action_detail[0].Weighting_form_id ?? "")?.Name ?? "";
+                    firstWeightPrice = TextFormatingTool.GetMoneyFormat(item.weighing_action_detail[0].Price.ToString());
                 }
                 if (item.weighing_action_detail.Count > 1)
                 {
                     secondScaleTime = item.weighing_action_detail[1].CreatedAtTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
                     secondWeightScale = item.weighing_action_detail[1].Weight.ToString("#,0");
+                    secondWeightPrice = TextFormatingTool.GetMoneyFormat(item.weighing_action_detail[1].Price.ToString());
                 }
                 if (item.weighing_action_detail.Count > 2)
                 {
-                    for (int i = 1; i < item.weighing_action_detail.Count; i++)
+                    for (int i = 2; i < item.weighing_action_detail.Count; i++)
                     {
                         string tempTime = item.weighing_action_detail[i].CreatedAtTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
                         string tempWeight = item.weighing_action_detail[i].Weight.ToString("#,0");
-                        largerThan2TimesScale += "Lần " + item.weighing_action_detail[i].Order_by + " : " + tempTime + " - " + tempWeight + "\r\n";
+                        string temp_price = TextFormatingTool.GetMoneyFormat(item.weighing_action_detail[i].Price.ToString());
+
+                        largerThan2TimesScale += "Lần " + item.weighing_action_detail[i].Order_by + " : " + tempTime + " - " + tempWeight + " - " + temp_price + "\r\n";
                     }
                 }
                 largerThan2TimesScale = largerThan2TimesScale.TrimEnd();
-                dgvData.Rows.Add(dgvData.Rows.Count + 1, firstScaleTime, secondScaleTime,
-                                plateNumber, firstWeightScale, secondWeightScale, largerThan2TimesScale, goodType,
-                                StaticPool.user_name);
+                string userAction = item.weighing_action_detail.Count > 0 ? item.weighing_action_detail[0].User_code : "";
+                string vehicleImage = item.weighing_action_detail.Count > 0 ? item.weighing_action_detail[0].list_image.Split(";")[0] : "";
+                string firstScaleImage = item.weighing_action_detail.Count > 0 ? item.weighing_action_detail[0].list_image : "";
+                string secondScaleImage = item.weighing_action_detail.Count > 1 ? item.weighing_action_detail[1].list_image : "";
+                dgvData.Rows.Add(item.Traffic_id, dgvData.Rows.Count + 1, firstScaleTime, secondScaleTime,
+                                 plateNumber, firstWeightScale, firstWeightPrice, secondWeightScale, secondWeightPrice, largerThan2TimesScale, goodType,
+                                 userAction, vehicleImage, firstScaleImage, secondScaleImage);
+                //dgvData.Rows.Add(dgvData.Rows.Count + 1, firstScaleTime, secondScaleTime,
+                //                plateNumber, firstWeightScale,firstWeightPrice, secondWeightScale, secondWeightPrice, largerThan2TimesScale, goodType,
+                //                StaticPool.user_name);
+
             }
+            dgvData.SelectionChanged += dgvData_SelectionChanged;
+            if (dgvData.RowCount > 0)
+            {
+                dgvData.CurrentCell = dgvData.CurrentRow.Cells[1];
+                dgvData_SelectionChanged(null, EventArgs.Empty);
+            }
+        }
+        private void ClearView()
+        {
+            this.Invoke(new Action(() =>
+            {
+                lblFirstScale.Text = "0";
+                lblSecondScale.Text = "0";
+                lblGoodsScale.Text = "0";
+                lblMoney.Text = "0";
+                picFirstScale.Image = defaultImg;
+                picVehicleImageIn.Image = defaultImg;
+                picSecondScale.Image = defaultImg;
+            }));
         }
         #endregion End Private Function
     }

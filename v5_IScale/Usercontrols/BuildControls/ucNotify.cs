@@ -144,6 +144,7 @@ namespace v5_IScale.Usercontrols.BuildControls
             }
 
             this.Visible = true;
+            this.Size = this.MaximumSize = this.MinimumSize = new Size(this.Width, lblMessage.Height + lblMessage.Location.Y + 100);
             this.Parent.SizeChanged += Parent_SizeChanged;
 
             this.BringToFront();

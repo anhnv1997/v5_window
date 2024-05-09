@@ -68,7 +68,7 @@ namespace iParkingv5.Objects.Enums
             }
         }
 
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public string Name { get; set; }
 
@@ -91,7 +91,7 @@ namespace iParkingv5.Objects.Enums
             IdentityGroups = new List<IdentityGroup>();
             RegisteredVehicles = new List<RegisteredVehicle>();
         }
-        public static string GetVehicleTypeName(List<VehicleType>? vehicleTypes, int id)
+        public static string GetVehicleTypeName(List<VehicleType>? vehicleTypes, string id)
         {
             if (vehicleTypes == null)
             {

@@ -133,6 +133,9 @@ namespace iParkingv5_CustomerRegister
         private void Controller_CardEvent(object sender, iParkingv5.Objects.Events.CardEventArgs e)
         {
             UpdateEventMessage(e.EventTime.ToString("HH:mm:ss") + " Nhận sự kiện quẹt thẻ " + e.PreferCard);
+            e.DeviceId= (from Bdk bdk in StaticPool.bdks
+                        where bdk.Comport == e.DeviceId
+                        select bdk).First().Id.ToString();
             if (computers != null)
             {
                 foreach (var computer in computers)
@@ -144,6 +147,10 @@ namespace iParkingv5_CustomerRegister
         }
         private void Controller_FingerEvent(object sender, iParkingv5.Objects.Events.FingerEventArgs e)
         {
+
+            e.DeviceId = (from Bdk bdk in StaticPool.bdks
+                          where bdk.Comport == e.DeviceId
+                          select bdk).First().Id.ToString();
             if (e.UserId == "0")
             {
                 UpdateEventMessage(e.EventTime.ToString("HH:mm:ss") + " Vân tay chưa được đăng ký ");
@@ -156,7 +163,7 @@ namespace iParkingv5_CustomerRegister
             string fingerCustomerCode = tblFingerCustomer.GetFingerCustomeCode(customerId, out bool valid);
             if (!string.IsNullOrWhiteSpace(fingerCustomerCode))
             {
-                UpdateEventMessage(e.EventTime.ToString("HH:mm:ss") + " Nhận sự kiện vân tay " + fingerCustomerCode);
+                UpdateEventMessage(e.EventTime.ToString("HH:mm:ss") + " Nhận sự kiện vân tay - " + e.DeviceId);
                 CardEventArgs ce = new CardEventArgs()
                 {
                     DeviceId = e.DeviceId,
@@ -183,12 +190,15 @@ namespace iParkingv5_CustomerRegister
         public static IModel controllerEventChannel;
         private void ConnectToRabbitMQ()
         {
+            //MessageBox.Show(StaticPool.serverConfig.RabbitMqUrl);
+            //MessageBox.Show(StaticPool.serverConfig.RabbitMqUsername);
+            //MessageBox.Show(StaticPool.serverConfig.RabbitMqPassword);
             ConnectionFactory factory = new ConnectionFactory
             {
-                HostName = "192.168.21.20",
+                HostName = StaticPool.serverConfig.RabbitMqUrl,// "192.168.21.140",
                 Port = 5672,
-                UserName = "admin",
-                Password = "Kztek123456",
+                UserName = StaticPool.serverConfig.RabbitMqUsername ,
+                Password = StaticPool.serverConfig.RabbitMqPassword,
                 VirtualHost = "/"
             };
             conn = factory.CreateConnection();
