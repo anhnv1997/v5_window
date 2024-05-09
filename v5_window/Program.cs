@@ -122,7 +122,6 @@ namespace v6_window
             }
         }
 
-
         private static void LoadSystemConfig()
         {
             try

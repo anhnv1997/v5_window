@@ -25,6 +25,7 @@ using v5_IScale.Forms.ReportForms;
 using static IPaking.Ultility.TextManagement;
 using static iParkingv5.Controller.ControllerFactory;
 using static iParkingv5.Objects.Enums.PrintHelpers;
+using static Kztek.Tools.LogHelper;
 
 namespace iParkingv5_window.Forms.DataForms
 {
@@ -55,6 +56,9 @@ namespace iParkingv5_window.Forms.DataForms
             bool isDisEnableDevelopeMode = (keyData & Keys.Control) == Keys.Control &&
                                 (keyData & Keys.Shift) == Keys.Shift &&
                                 (keyData & Keys.KeyCode) == Keys.D;
+            bool isRevertRestartMode = (keyData & Keys.Control) == Keys.Control &&
+                    (keyData & Keys.Shift) == Keys.Shift &&
+                    (keyData & Keys.KeyCode) == Keys.F12;
             if (isEnableDevelopeMode)
             {
                 panelDevelopeMode.Visible = true;
@@ -68,6 +72,10 @@ namespace iParkingv5_window.Forms.DataForms
                 splitterDevelopeMode.Visible = false;
                 splitterDevelopeMode.BringToFront();
                 return true;
+            }
+            else if (isRevertRestartMode)
+            {
+                isNeedToRestart = !isNeedToRestart;
             }
             else
             {
@@ -108,7 +116,17 @@ namespace iParkingv5_window.Forms.DataForms
             }
             lblSoftwareName.Text = this.Text + " - " + Assembly.GetExecutingAssembly().GetName().Version!.ToString();
             lblSoftwareName.Width = lblSoftwareName.PreferredSize.Width;
+            this.FormClosed += FrmMain_FormClosed;
         }
+        public static bool isNeedToRestart = true;
+        private void FrmMain_FormClosed(object? sender, FormClosedEventArgs e)
+        {
+            //if (isNeedToRestart)
+            //{
+            //    Application.Restart();
+            //}
+        }
+
         private void FrmMain_Shown(object? sender, EventArgs e)
         {
             //foreach (var item in lanes)
@@ -122,7 +140,7 @@ namespace iParkingv5_window.Forms.DataForms
             {
                 var screenBound = Screen.FromControl(this).WorkingArea;
                 this.Size = new Size(screenBound.Width, screenBound.Height);
-                //this.Size = new Size(1366, 768);
+                this.Size = new Size(1366, 768);
                 this.Location = new Point(0, 0);
 
                 LoadAppDisplayConfig();
@@ -187,7 +205,7 @@ namespace iParkingv5_window.Forms.DataForms
         {
             FormClosing -= frmMain_FormClosing;
 
-            
+
             this.Invoke(new Action(() =>
             {
                 List<string> orderConfig = this.ucViewGrid1.GetOrderConfig();
@@ -779,9 +797,23 @@ namespace iParkingv5_window.Forms.DataForms
             new frmReportScaleWithInvoice().ShowDialog();
         }
 
-        private void aToolStripMenuItem_Click(object sender, EventArgs e)
+        private void timerClearLog_Tick(object sender, EventArgs e)
         {
-            Application.Restart();
+            try
+            {
+                this.timerClearLog.Enabled = false;
+                DateTime before10Day = DateTime.Now.AddDays(-10);
+                string path = Path.Combine(LogHelper.SaveLogFolder, $"logs/{before10Day.Year}/{before10Day.Month}/{before10Day.Day}");
+                if (Directory.Exists(path))
+                {
+                    Directory.Delete(path, true);
+                }
+                this.timerClearLog.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                Log(EmLogType.ERROR, EmObjectLogType.System, hanh_dong: "frmMain", noi_dung_hanh_dong: "Clear log", obj: ex);
+            }
         }
     }
 }

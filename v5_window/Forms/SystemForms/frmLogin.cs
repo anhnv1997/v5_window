@@ -40,6 +40,7 @@ namespace iParkingv5_window.Forms.SystemForms
         public frmLogin()
         {
             InitializeComponent();
+            this.FormClosed += FrmLogin_FormClosed;
             this.Hide();
             lblStatus.Text = "";
             lblStatus.BackColor = Color.Transparent;
@@ -75,6 +76,12 @@ namespace iParkingv5_window.Forms.SystemForms
 
             //this.Load += FrmLogin_Load;
         }
+
+        private void FrmLogin_FormClosed(object? sender, FormClosedEventArgs e)
+        {
+            Application.Restart();
+        }
+
         LoginResult loginResult;
         private async void Login()
         {
@@ -425,6 +432,10 @@ namespace iParkingv5_window.Forms.SystemForms
                             }
                             else if (receiceMessage == "RestartSoftware?/")
                             {
+                                this.Invoke(new Action(() =>
+                                {
+                                    frmMain.isNeedToRestart = false;
+                                }));
                                 socket.Send(Encoding.UTF8.GetBytes("RestartSoftware?/OK"));
                                 socket.Shutdown(SocketShutdown.Send);
                                 Application.Restart();

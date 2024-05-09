@@ -12,6 +12,7 @@ namespace iParkingv5_window
         public static string SecretKey = string.Empty;
         public static bool secure = false;
         public static string bucketName = "parking-images";
+
         public static async Task<string> GetImage(string key)
         {
             try

@@ -61,6 +61,7 @@
             splitterDevelopeMode = new Splitter();
             timerUpdateControllerConnection = new System.Windows.Forms.Timer(components);
             timerRestartSockerServer = new System.Windows.Forms.Timer(components);
+            timerClearLog = new System.Windows.Forms.Timer(components);
             menuStrip1.SuspendLayout();
             panelMain.SuspendLayout();
             panelAppStatus.SuspendLayout();
@@ -75,7 +76,7 @@
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(5, 2, 0, 2);
-            menuStrip1.Size = new Size(773, 29);
+            menuStrip1.Size = new Size(803, 29);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             menuStrip1.DoubleClick += menuStrip1_DoubleClick;
@@ -206,7 +207,7 @@
             panelMain.Location = new Point(0, 29);
             panelMain.Margin = new Padding(0);
             panelMain.Name = "panelMain";
-            panelMain.Size = new Size(448, 319);
+            panelMain.Size = new Size(478, 382);
             panelMain.TabIndex = 1;
             // 
             // ucViewGrid1
@@ -218,7 +219,7 @@
             ucViewGrid1.Margin = new Padding(0);
             ucViewGrid1.Name = "ucViewGrid1";
             ucViewGrid1.RowsCount = 2;
-            ucViewGrid1.Size = new Size(448, 319);
+            ucViewGrid1.Size = new Size(478, 382);
             ucViewGrid1.TabIndex = 0;
             // 
             // panelAppStatus
@@ -231,10 +232,10 @@
             panelAppStatus.Controls.Add(lblServerName);
             panelAppStatus.Controls.Add(lblSoftwareName);
             panelAppStatus.Dock = DockStyle.Bottom;
-            panelAppStatus.Location = new Point(0, 348);
+            panelAppStatus.Location = new Point(0, 411);
             panelAppStatus.Margin = new Padding(3, 2, 3, 2);
             panelAppStatus.Name = "panelAppStatus";
-            panelAppStatus.Size = new Size(773, 28);
+            panelAppStatus.Size = new Size(803, 28);
             panelAppStatus.TabIndex = 2;
             // 
             // lblLoadingStatus
@@ -245,7 +246,7 @@
             lblLoadingStatus.Location = new Point(317, 0);
             lblLoadingStatus.Name = "lblLoadingStatus";
             lblLoadingStatus.Padding = new Padding(9, 0, 0, 0);
-            lblLoadingStatus.Size = new Size(241, 24);
+            lblLoadingStatus.Size = new Size(271, 24);
             lblLoadingStatus.TabIndex = 4;
             lblLoadingStatus.Text = "Đang Tải Thông Tin ...";
             lblLoadingStatus.TextAlign = ContentAlignment.MiddleCenter;
@@ -268,7 +269,7 @@
             lblCompanyName.Dock = DockStyle.Right;
             lblCompanyName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline);
             lblCompanyName.ForeColor = Color.Navy;
-            lblCompanyName.Location = new Point(558, 0);
+            lblCompanyName.Location = new Point(588, 0);
             lblCompanyName.Name = "lblCompanyName";
             lblCompanyName.Padding = new Padding(9, 0, 0, 0);
             lblCompanyName.Size = new Size(118, 24);
@@ -280,7 +281,7 @@
             // 
             lblTime.Dock = DockStyle.Right;
             lblTime.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblTime.Location = new Point(676, 0);
+            lblTime.Location = new Point(706, 0);
             lblTime.Name = "lblTime";
             lblTime.Padding = new Padding(9, 0, 0, 0);
             lblTime.Size = new Size(93, 24);
@@ -324,10 +325,10 @@
             panelDevelopeMode.Controls.Add(dgvWaitingEvents);
             panelDevelopeMode.Controls.Add(label1);
             panelDevelopeMode.Dock = DockStyle.Right;
-            panelDevelopeMode.Location = new Point(457, 29);
+            panelDevelopeMode.Location = new Point(487, 29);
             panelDevelopeMode.Margin = new Padding(3, 2, 3, 2);
             panelDevelopeMode.Name = "panelDevelopeMode";
-            panelDevelopeMode.Size = new Size(316, 319);
+            panelDevelopeMode.Size = new Size(316, 382);
             panelDevelopeMode.TabIndex = 3;
             panelDevelopeMode.Visible = false;
             // 
@@ -343,7 +344,7 @@
             dgvWaitingEvents.Name = "dgvWaitingEvents";
             dgvWaitingEvents.ReadOnly = true;
             dgvWaitingEvents.RowTemplate.Height = 29;
-            dgvWaitingEvents.Size = new Size(316, 284);
+            dgvWaitingEvents.Size = new Size(316, 347);
             dgvWaitingEvents.TabIndex = 1;
             // 
             // label1
@@ -363,10 +364,10 @@
             // 
             splitterDevelopeMode.BackColor = Color.FromArgb(192, 0, 0);
             splitterDevelopeMode.Dock = DockStyle.Right;
-            splitterDevelopeMode.Location = new Point(448, 29);
+            splitterDevelopeMode.Location = new Point(478, 29);
             splitterDevelopeMode.Margin = new Padding(3, 2, 3, 2);
             splitterDevelopeMode.Name = "splitterDevelopeMode";
-            splitterDevelopeMode.Size = new Size(9, 319);
+            splitterDevelopeMode.Size = new Size(9, 382);
             splitterDevelopeMode.TabIndex = 4;
             splitterDevelopeMode.TabStop = false;
             splitterDevelopeMode.Visible = false;
@@ -381,11 +382,17 @@
             // 
             timerRestartSockerServer.Interval = 3600000;
             // 
+            // timerClearLog
+            // 
+            timerClearLog.Enabled = true;
+            timerClearLog.Interval = 60000;
+            timerClearLog.Tick += timerClearLog_Tick;
+            // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(773, 376);
+            ClientSize = new Size(803, 439);
             Controls.Add(panelMain);
             Controls.Add(splitterDevelopeMode);
             Controls.Add(panelDevelopeMode);
@@ -441,5 +448,6 @@
         private ToolStripMenuItem báoCáoCânToolStripMenuItem;
         private ToolStripMenuItem btnScaleReport;
         private System.Windows.Forms.Timer timerRestartSockerServer;
+        private System.Windows.Forms.Timer timerClearLog;
     }
 }

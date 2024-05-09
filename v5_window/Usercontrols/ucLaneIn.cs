@@ -19,8 +19,6 @@ using Kztek.Tool;
 using Kztek.Tool.TextFormatingTools;
 using Kztek.Tools;
 using System.Data;
-using System.Diagnostics;
-using System.Windows.Forms;
 using v5_IScale.Forms;
 using static iParkingv5.Objects.Enums.LaneDisplayMode;
 using static iParkingv5.Objects.Enums.PrintHelpers;

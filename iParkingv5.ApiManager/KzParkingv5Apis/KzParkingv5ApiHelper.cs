@@ -1410,7 +1410,11 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         #endregion End Private Function
 
         #region SUMARY
-        public static async Task<SumaryCountEvent> SummaryEvent()
+        /// <summary>
+        /// Gửi api lấy thông tin số lượng xe đang trong bãi, số lượng xe vào bãi trong ngày, số lượng xe ra khỏi bãi trong ngày
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<SumaryCountEvent> SummaryEventAsync()
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.GetBySqlCmd;
