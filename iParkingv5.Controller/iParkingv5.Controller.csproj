@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\Kztek.Tool\Kztek.Tool.csproj" />
     <ProjectReference Include="..\iParkingv5.Objects\iParkingv5.Objects.csproj" />
   </ItemGroup>
 
@@ -31,9 +32,6 @@
     </Reference>
     <Reference Include="Interop.AccessTcp">
       <HintPath>..\..\..\..\..\..\4..Library Reference\New folder\Interop.AccessTcp.dll</HintPath>
-    </Reference>
-    <Reference Include="Kztek.Tool">
-      <HintPath>..\packages\Kztek.Tool.dll</HintPath>
     </Reference>
   </ItemGroup>
 

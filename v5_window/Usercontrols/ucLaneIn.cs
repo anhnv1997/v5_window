@@ -107,7 +107,7 @@ namespace iParkingv5_window.Usercontrols
                     break;
             }
 
-            panelLastEvent.Visible = isDisplayLastEvent;
+            //panelLastEvent.Visible = isDisplayLastEvent;
 
             if (this.isTopToBottom)
             {
@@ -192,105 +192,105 @@ namespace iParkingv5_window.Usercontrols
             picOverviewImage.Image = picOverviewImage.InitialImage = picOverviewImage.ErrorImage = defaultImg;
             picVehicleImage.Image = picVehicleImage.InitialImage = picVehicleImage.ErrorImage = defaultImg;
 
-            //Get Top3 Event
-            DateTime startTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,
-                                              0, 0, 0);
-            DateTime endTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,
-                                            23, 59, 59);
+            ////Get Top3 Event
+            //DateTime startTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,
+            //                                  0, 0, 0);
+            //DateTime endTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,
+            //                                23, 59, 59);
 
-            panel9.Dock = DockStyle.Fill;
-            panel9.Location = new Point(0, 36);
-            panel9.Name = "panel9";
-            panel9.Size = new Size(539, 123);
-            panel9.TabIndex = 8;
+            //panel9.Dock = DockStyle.Fill;
+            //panel9.Location = new Point(0, 36);
+            //panel9.Name = "panel9";
+            //panel9.Size = new Size(539, 123);
+            //panel9.TabIndex = 8;
 
-            // 
-            // label2
-            // 
-            label2.Dock = DockStyle.Top;
-            label2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            label2.Location = new Point(0, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(539, 36);
-            label2.TabIndex = 7;
-            label2.Text = "Các lượt xe vào gần đây";
-            label2.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // ucEventCount1
-            // 
-            ucEventCount1.Dock = DockStyle.Left;
-            ucEventCount1.Location = new Point(0, 0);
-            ucEventCount1.Name = "ucEventCount1";
-            ucEventCount1.Size = new Size(225, 161);
-            ucEventCount1.TabIndex = 7;
+            //// 
+            //// label2
+            //// 
+            //label2.Dock = DockStyle.Top;
+            //label2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            //label2.Location = new Point(0, 0);
+            //label2.Name = "label2";
+            //label2.Size = new Size(539, 36);
+            //label2.TabIndex = 7;
+            //label2.Text = "Các lượt xe vào gần đây";
+            //label2.TextAlign = ContentAlignment.MiddleLeft;
+            //// 
+            //// ucEventCount1
+            //// 
+            //ucEventCount1.Dock = DockStyle.Left;
+            //ucEventCount1.Location = new Point(0, 0);
+            //ucEventCount1.Name = "ucEventCount1";
+            //ucEventCount1.Size = new Size(225, 161);
+            //ucEventCount1.TabIndex = 7;
 
-            ucTop3Event = new ucLastEventInfo(false);
-            ucTop2Event = new ucLastEventInfo(true);
-            ucTop1Event = new ucLastEventInfo(true);
-            ucTop3Event.Size = new Size(311, 0);
-            ucTop2Event.Size = new Size(250, 0);
-            ucTop1Event.Size = new Size(250, 0);
+            //ucTop3Event = new ucLastEventInfo(false);
+            //ucTop2Event = new ucLastEventInfo(true);
+            //ucTop1Event = new ucLastEventInfo(true);
+            //ucTop3Event.Size = new Size(311, 0);
+            //ucTop2Event.Size = new Size(250, 0);
+            //ucTop1Event.Size = new Size(250, 0);
 
-            panel9.Controls.Add(ucTop3Event);
-            panel9.Controls.Add(ucTop2Event);
-            panel9.Controls.Add(ucTop1Event);
-            // 
-            // ucTop3Event
-            // 
-            ucTop3Event.BackColor = SystemColors.ButtonHighlight;
-            ucTop3Event.BorderStyle = BorderStyle.Fixed3D;
-            ucTop3Event.Dock = DockStyle.Left;
-            ucTop3Event.Location = new Point(400, 0);
-            ucTop3Event.Name = "ucTop3Event";
-            ucTop3Event.Padding = new Padding(0, 10, 10, 10);
-            ucTop3Event.TabIndex = 6;
-            // 
-            // ucTop2Event
-            // 
-            ucTop2Event.BackColor = SystemColors.ButtonHighlight;
-            ucTop2Event.BorderStyle = BorderStyle.Fixed3D;
-            ucTop2Event.Dock = DockStyle.Left;
-            ucTop2Event.Location = new Point(200, 0);
-            ucTop2Event.Name = "ucTop2Event";
-            ucTop2Event.Padding = new Padding(0, 10, 10, 10);
-            ucTop2Event.TabIndex = 6;
-            // 
-            // ucTop1Event
-            // 
-            ucTop1Event.BackColor = SystemColors.ButtonHighlight;
-            ucTop1Event.BorderStyle = BorderStyle.Fixed3D;
-            ucTop1Event.Dock = DockStyle.Left;
-            ucTop1Event.Location = new Point(0, 0);
-            ucTop1Event.Name = "ucTop1Event";
-            ucTop1Event.Padding = new Padding(0, 10, 10, 10);
-            ucTop1Event.TabIndex = 6;
+            //panel9.Controls.Add(ucTop3Event);
+            //panel9.Controls.Add(ucTop2Event);
+            //panel9.Controls.Add(ucTop1Event);
+            //// 
+            //// ucTop3Event
+            //// 
+            //ucTop3Event.BackColor = SystemColors.ButtonHighlight;
+            //ucTop3Event.BorderStyle = BorderStyle.Fixed3D;
+            //ucTop3Event.Dock = DockStyle.Left;
+            //ucTop3Event.Location = new Point(400, 0);
+            //ucTop3Event.Name = "ucTop3Event";
+            //ucTop3Event.Padding = new Padding(0, 10, 10, 10);
+            //ucTop3Event.TabIndex = 6;
+            //// 
+            //// ucTop2Event
+            //// 
+            //ucTop2Event.BackColor = SystemColors.ButtonHighlight;
+            //ucTop2Event.BorderStyle = BorderStyle.Fixed3D;
+            //ucTop2Event.Dock = DockStyle.Left;
+            //ucTop2Event.Location = new Point(200, 0);
+            //ucTop2Event.Name = "ucTop2Event";
+            //ucTop2Event.Padding = new Padding(0, 10, 10, 10);
+            //ucTop2Event.TabIndex = 6;
+            //// 
+            //// ucTop1Event
+            //// 
+            //ucTop1Event.BackColor = SystemColors.ButtonHighlight;
+            //ucTop1Event.BorderStyle = BorderStyle.Fixed3D;
+            //ucTop1Event.Dock = DockStyle.Left;
+            //ucTop1Event.Location = new Point(0, 0);
+            //ucTop1Event.Name = "ucTop1Event";
+            //ucTop1Event.Padding = new Padding(0, 10, 10, 10);
+            //ucTop1Event.TabIndex = 6;
 
-            ucLastEventInfos.Add(ucTop1Event);
-            ucLastEventInfos.Add(ucTop2Event);
-            ucLastEventInfos.Add(ucTop3Event);
-            Tuple<List<EventInReport>, int, int> top3Event = await KzParkingApiHelper.GetEventIns("", startTime, endTime, "", "", this.lane.id, 1, 3);
-            if (top3Event!.Item1 != null)
-            {
-                for (int i = 0; i < top3Event.Item1!.Count; i++)
-                {
-                    if (ucLastEventInfos.Count <= i)
-                    {
-                        continue;
-                    }
-                    string id = top3Event.Item1![i].id;
-                    string plateNumber = top3Event.Item1![i].plateNumber;
-                    string vehicleGroupId = "";
-                    string cardGroupId = top3Event.Item1![i].IdentityGroupId;
-                    DateTime dateTimeIn = top3Event.Item1![i].DatetimeIn ?? DateTime.Now;
-                    List<string> picDirs = top3Event.Item1![i].fileKeys?.ToList() ?? new List<string>();
-                    string customerId = top3Event.Item1![i].CustomerId;
-                    string registerVehicleId = top3Event.Item1![i].RegisteredVehicleId;
-                    string laneId = top3Event.Item1![i].laneId;
-                    string identityId = top3Event.Item1![i].identityId;
-                    ucLastEventInfos[i].UpdateEventInfo(id, plateNumber, vehicleGroupId, cardGroupId, dateTimeIn, picDirs,
-                                                        customerId, registerVehicleId, laneId, identityId, true);
-                }
-            }
+            //ucLastEventInfos.Add(ucTop1Event);
+            //ucLastEventInfos.Add(ucTop2Event);
+            //ucLastEventInfos.Add(ucTop3Event);
+            //Tuple<List<EventInReport>, int, int> top3Event = await KzParkingApiHelper.GetEventIns("", startTime, endTime, "", "", this.lane.id, 1, 3);
+            //if (top3Event!.Item1 != null)
+            //{
+            //    for (int i = 0; i < top3Event.Item1!.Count; i++)
+            //    {
+            //        if (ucLastEventInfos.Count <= i)
+            //        {
+            //            continue;
+            //        }
+            //        string id = top3Event.Item1![i].id;
+            //        string plateNumber = top3Event.Item1![i].plateNumber;
+            //        string vehicleGroupId = "";
+            //        string cardGroupId = top3Event.Item1![i].IdentityGroupId;
+            //        DateTime dateTimeIn = top3Event.Item1![i].DatetimeIn ?? DateTime.Now;
+            //        List<string> picDirs = top3Event.Item1![i].fileKeys?.ToList() ?? new List<string>();
+            //        string customerId = top3Event.Item1![i].CustomerId;
+            //        string registerVehicleId = top3Event.Item1![i].RegisteredVehicleId;
+            //        string laneId = top3Event.Item1![i].laneId;
+            //        string identityId = top3Event.Item1![i].identityId;
+            //        ucLastEventInfos[i].UpdateEventInfo(id, plateNumber, vehicleGroupId, cardGroupId, dateTimeIn, picDirs,
+            //                                            customerId, registerVehicleId, laneId, identityId, true);
+            //    }
+            //}
             splitContainerMain.BringToFront();
 
             this.ActiveControl = splitContainerMain;
@@ -330,11 +330,11 @@ namespace iParkingv5_window.Usercontrols
         {
             foreach (Control item in panelCameras.Controls)
             {
-                //if (this.isTopToBottom)
-                //{
-                //    item.Width = (panelCameras.Height - 50) * 16 / 9;
-                //}
-                //else
+                if (this.isTopToBottom)
+                {
+                    item.Width = (panelCameras.Height - 50) * 16 / 9;
+                }
+                else
                 {
                     item.Width = panelCameras.Width - panelCameras.Margin.Left - panelCameras.Margin.Right - panelCameras.Padding.Left - panelCameras.Padding.Right
                                                     - item.Margin.Left - item.Margin.Right - item.Padding.Left - item.Padding.Right;
@@ -349,12 +349,12 @@ namespace iParkingv5_window.Usercontrols
                 else
                 {
                     Control lastControl = panelCameras.Controls[i - 1];
-                    //if (this.isTopToBottom)
-                    //{
-                    //    Point location = new Point(lastControl.Location.X + lastControl.Width + 10, lastControl.Location.Y);
-                    //    panelCameras.Controls[i].Location = location;
-                    //}
-                    //else
+                    if (this.isTopToBottom)
+                    {
+                        Point location = new Point(lastControl.Location.X + lastControl.Width + 10, lastControl.Location.Y);
+                        panelCameras.Controls[i].Location = location;
+                    }
+                    else
                     {
                         Point location = new Point(lastControl.Location.X, lastControl.Location.Y + lastControl.Height + 10);
                         panelCameras.Controls[i].Location = location;
@@ -746,13 +746,37 @@ namespace iParkingv5_window.Usercontrols
             this.SuspendLayout();
             if (this.laneDisplayConfig == null) return;
 
-            this.splitContainerMain.SplitterDistance = this.laneDisplayConfig.splitContainerMain;
+            try
+            {
+                this.splitContainerMain.SplitterDistance = this.laneDisplayConfig.splitContainerMain;
+            }
+            catch (Exception)
+            {
+            }
 
-            this.splitContainerEventContent.SplitterDistance = this.laneDisplayConfig.splitContainerEventContent;
+            try
+            {
+                this.splitContainerEventContent.SplitterDistance = this.laneDisplayConfig.splitContainerEventContent;
+            }
+            catch (Exception)
+            {
+            }
 
-            this.splitterCamera.SplitPosition = this.laneDisplayConfig.SplitterCameraPosition;
+            try
+            {
+                this.splitterCamera.SplitPosition = this.laneDisplayConfig.SplitterCameraPosition;
+            }
+            catch (Exception)
+            {
+            }
 
-            this.splitterEventInfoWithCamera.SplitPosition = this.laneDisplayConfig.splitEventInfoWithCameraPosition;
+            try
+            {
+                this.splitterEventInfoWithCamera.SplitPosition = this.laneDisplayConfig.splitEventInfoWithCameraPosition;
+            }
+            catch (Exception)
+            {
+            }
             this.Refresh();
 
             this.ResumeLayout();
@@ -1605,7 +1629,7 @@ namespace iParkingv5_window.Usercontrols
 
             string errorMessage = string.Empty;
             AddEventInResponse? eventIn = null;
-            if (string.IsNullOrEmpty(plateNumber) && identity.RegisteredVehicles.Count == 1)
+            if (string.IsNullOrEmpty(plateNumber) && identity.RegisteredVehicles.Count == 1 && identityGroup.plateCompareLevel != 2)
             {
                 bool isConfirm = MessageBox.Show("Không nhận diện được biển số, bạn có muốn cho xe vào bãi?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
                 if (isConfirm)
@@ -1755,7 +1779,7 @@ namespace iParkingv5_window.Usercontrols
             string errorMessage = string.Empty;
             AddEventInResponse? eventIn = null;
             bool isAlarm = false;
-            if (string.IsNullOrEmpty(plateNumber))
+            if (string.IsNullOrEmpty(plateNumber) && identityGroup.plateCompareLevel != 2)
             {
                 isAlarm = true;
                 bool isConfirm = MessageBox.Show("Không nhận diện được biển số, bạn có muốn cho xe vào bãi?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
@@ -1825,7 +1849,7 @@ namespace iParkingv5_window.Usercontrols
             lblResult.UpdateResultMessage("Xin Mời Qua", Color.DarkGreen);
 
             WeighingDetail? weighingDetail = null;
-            
+
             DisplayEventInfo(eventTime, detectPlate, identity, identityGroup, vehicleType, eventIn?.customer, eventIn?.registeredVehicle, weighingDetail);
             BaseLane.DisplayLed(detectPlate, eventTime, identity, identityGroup, "Hẹn Gặp lại", this.lane.id);
             await BaseLane.SaveEventImage(overviewImg, vehicleImg, lprImage, imageKey, true);
@@ -1849,27 +1873,27 @@ namespace iParkingv5_window.Usercontrols
                                                           imageKey, true, identityGroup?.Id.ToString(), eventIn?.customer?.Id, eventIn?.registeredVehicle?.Id, "Cảnh báo biển số");
             }
 
-            this.Invoke(new Action(() =>
-            {
-                for (int i = ucLastEventInfos.Count - 1; i > 0; i--)
-                {
-                    string customerId = ucLastEventInfos[i - 1].CustomerId;
-                    string registerVehicleId = ucLastEventInfos[i - 1].RegisterVehicleId;
-                    string laneId = ucLastEventInfos[i - 1].LaneId;
-                    string identityId = ucLastEventInfos[i - 1].IdentityId;
-                    ucLastEventInfos[i].UpdateEventInfo(ucLastEventInfos[i - 1].eventId, ucLastEventInfos[i - 1].plateNumber,
-                                                        ucLastEventInfos[i - 1].vehicleGroupId, ucLastEventInfos[i - 1].IdentityGroupId,
-                                                        ucLastEventInfos[i - 1].datetimeIn, ucLastEventInfos[i - 1].picDirs,
-                                                        customerId, registerVehicleId, laneId, identityId, true);
-                }
-                var overviewKey = imageKey + "_OVERVIEWIN.jpeg";
-                var vehicleKey = imageKey + "_VEHICLEIN.jpeg";
-                var vehicleCutKey = imageKey + "_LPRIN.jpeg";
-                var imageKeys = new List<string>() { overviewKey, vehicleKey, vehicleCutKey };
-                ucLastEventInfos[0].UpdateEventInfo(eventIn.Id, detectPlate, "",
-                                                    identityGroup?.Id.ToString() ?? "", eventTime, imageKeys,
-                                                    eventIn.customer.Id, eventIn.registeredVehicle.Id, this.lane.id, identity?.Id, true);
-            }));
+            //this.Invoke(new Action(() =>
+            //{
+            //    for (int i = ucLastEventInfos.Count - 1; i > 0; i--)
+            //    {
+            //        string customerId = ucLastEventInfos[i - 1].CustomerId;
+            //        string registerVehicleId = ucLastEventInfos[i - 1].RegisterVehicleId;
+            //        string laneId = ucLastEventInfos[i - 1].LaneId;
+            //        string identityId = ucLastEventInfos[i - 1].IdentityId;
+            //        ucLastEventInfos[i].UpdateEventInfo(ucLastEventInfos[i - 1].eventId, ucLastEventInfos[i - 1].plateNumber,
+            //                                            ucLastEventInfos[i - 1].vehicleGroupId, ucLastEventInfos[i - 1].IdentityGroupId,
+            //                                            ucLastEventInfos[i - 1].datetimeIn, ucLastEventInfos[i - 1].picDirs,
+            //                                            customerId, registerVehicleId, laneId, identityId, true);
+            //    }
+            //    var overviewKey = imageKey + "_OVERVIEWIN.jpeg";
+            //    var vehicleKey = imageKey + "_VEHICLEIN.jpeg";
+            //    var vehicleCutKey = imageKey + "_LPRIN.jpeg";
+            //    var imageKeys = new List<string>() { overviewKey, vehicleKey, vehicleCutKey };
+            //    ucLastEventInfos[0].UpdateEventInfo(eventIn.Id, detectPlate, "",
+            //                                        identityGroup?.Id.ToString() ?? "", eventTime, imageKeys,
+            //                                        eventIn.customer.Id, eventIn.registeredVehicle.Id, this.lane.id, identity?.Id, true);
+            //}));
             if (((EmPrintTemplate)StaticPool.appOption.PrintTemplate) == EmPrintTemplate.XuanCuong)
             {
                 //SendAPIXuanCuong
@@ -2037,7 +2061,7 @@ namespace iParkingv5_window.Usercontrols
         }
         private void cbNote_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.ActiveControl = splitContainerEventContent;
+            this.ActiveControl = lblLaneName;
         }
     }
 }

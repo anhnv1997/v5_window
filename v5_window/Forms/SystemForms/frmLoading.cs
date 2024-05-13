@@ -3,7 +3,7 @@ using iParkingv5.Objects;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
-using IPGS.Ultility.TextFormats;
+//using IPGS.Ultility.TextFormats;
 using Kztek.Tool.NetworkTools;
 using Kztek.Tools;
 using Minio;

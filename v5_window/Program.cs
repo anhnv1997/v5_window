@@ -35,50 +35,50 @@ namespace v6_window
                     if (ownmutex)
                     {
                         //return;
-                        if (Environment.MachineName.ToUpper() != "VIETANHPC" && Environment.MachineName.ToUpper() != "PC-KIEN")
-                        {
-                            var frmLicenseValidatorForm = new LicenseValidatorForm();
-                            frmLicenseValidatorForm.Init(appCode);
-                            try
-                            {
-                                if (frmLicenseValidatorForm.LoadSavedLicense() == null)
-                                {
-                                    bool isOpenActiveForm = MessageBox.Show("Ứng dụng chưa được kích hoạt, bạn có muốn kích hoạt phần mềm?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
+                        //if (Environment.MachineName.ToUpper() != "VIETANHPC" && Environment.MachineName.ToUpper() != "PC-KIEN")
+                        //{
+                        //    var frmLicenseValidatorForm = new LicenseValidatorForm();
+                        //    frmLicenseValidatorForm.Init(appCode);
+                        //    try
+                        //    {
+                        //        if (frmLicenseValidatorForm.LoadSavedLicense() == null)
+                        //        {
+                        //            bool isOpenActiveForm = MessageBox.Show("Ứng dụng chưa được kích hoạt, bạn có muốn kích hoạt phần mềm?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
 
-                                    if (isOpenActiveForm)
-                                    {
-                                        frmLicenseValidatorForm.ShowActivateForm();
-                                    }
-                                    else
-                                    {
-                                        Application.Exit();
-                                        return;
-                                    }
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                bool isOpenActiveForm = MessageBox.Show("Ứng dụng chưa được kích hoạt, bạn có muốn kích hoạt phần mềm?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
+                        //            if (isOpenActiveForm)
+                        //            {
+                        //                frmLicenseValidatorForm.ShowActivateForm();
+                        //            }
+                        //            else
+                        //            {
+                        //                Application.Exit();
+                        //                return;
+                        //            }
+                        //        }
+                        //    }
+                        //    catch (Exception ex)
+                        //    {
+                        //        bool isOpenActiveForm = MessageBox.Show("Ứng dụng chưa được kích hoạt, bạn có muốn kích hoạt phần mềm?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
 
-                                if (isOpenActiveForm)
-                                {
-                                    frmLicenseValidatorForm.ShowActivateForm();
-                                    if (!frmLicenseValidatorForm.LicenseActivated)
-                                    {
-                                        MessageBox.Show("Kích hoạt không thành công " + ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                        Application.Exit();
-                                        return;
-                                    }
-                                }
-                                else
-                                {
-                                    Application.Exit();
-                                    return;
-                                }
-                            }
+                        //        if (isOpenActiveForm)
+                        //        {
+                        //            frmLicenseValidatorForm.ShowActivateForm();
+                        //            if (!frmLicenseValidatorForm.LicenseActivated)
+                        //            {
+                        //                MessageBox.Show("Kích hoạt không thành công " + ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //                Application.Exit();
+                        //                return;
+                        //            }
+                        //        }
+                        //        else
+                        //        {
+                        //            Application.Exit();
+                        //            return;
+                        //        }
+                        //    }
 
-                        }
-                        //DahuaAccessControl.Init();
+                        //}
+                        ////DahuaAccessControl.Init();
                         LoadSystemConfig();
                         LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Mở giao diện đăng nhập hệ thống");
                         Application.Run(new frmLogin());

@@ -129,6 +129,7 @@ namespace iParkingv5_window.Forms.DataForms
                 lblServerName.Width = lblServerName.PreferredWidth;
                 lblCompanyName.Width = lblCompanyName.PreferredWidth;
                 lblTime.Width = lblTime.PreferredWidth;
+                this.FormClosing += frmMain_FormClosing;
             }
             catch (Exception ex)
             {

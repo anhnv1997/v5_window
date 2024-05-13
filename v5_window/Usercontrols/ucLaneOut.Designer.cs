@@ -12,761 +12,757 @@ namespace iParkingv5_window.Usercontrols
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            components = new System.ComponentModel.Container();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucLaneOut));
-            this.lblLaneName = new System.Windows.Forms.Label();
-            this.panelCameras = new System.Windows.Forms.Panel();
-            this.splitContainerMain = new System.Windows.Forms.SplitContainer();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.picVehicleImageIn = new iParkingv5_window.Usercontrols.MovablePictureBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.picVehicleImageOut = new iParkingv5_window.Usercontrols.MovablePictureBox();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.picOverviewImageOut = new iParkingv5_window.Usercontrols.MovablePictureBox();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.picOverviewImageIn = new iParkingv5_window.Usercontrols.MovablePictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.splitterCamera = new System.Windows.Forms.Splitter();
-            this.panelLastEvent = new System.Windows.Forms.Panel();
-            this.panel11 = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.ucEventCount1 = new iParkingv5_window.Usercontrols.ucEventCount();
-            this.lblResult = new iPakrkingv5.Controls.Controls.Labels.lblResult();
-            this.splitContainerEventContent = new System.Windows.Forms.SplitContainer();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel14 = new System.Windows.Forms.Panel();
-            this.picLprImage = new iParkingv5_window.Usercontrols.MovablePictureBox();
-            this.txtPlate = new System.Windows.Forms.TextBox();
-            this.panel15 = new System.Windows.Forms.Panel();
-            this.picLprImageIn = new iParkingv5_window.Usercontrols.MovablePictureBox();
-            this.lblPlateIn = new System.Windows.Forms.Label();
-            this.dgvEventContent = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.picRetakePhoto = new System.Windows.Forms.PictureBox();
-            this.panel10 = new System.Windows.Forms.Panel();
-            this.picWriteOut = new System.Windows.Forms.PictureBox();
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.picOpenBarrie = new System.Windows.Forms.PictureBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.picPrint = new System.Windows.Forms.PictureBox();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.picSetting = new System.Windows.Forms.PictureBox();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
-            this.toolTip3 = new System.Windows.Forms.ToolTip(this.components);
-            this.splitterEventInfoWithCamera = new System.Windows.Forms.Splitter();
-            this.panelEventData = new System.Windows.Forms.Panel();
-            this.panelScaleAction = new System.Windows.Forms.Panel();
-            this.btnOpenBarrie = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.toolTipPrint = new System.Windows.Forms.ToolTip(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
-            this.splitContainerMain.Panel1.SuspendLayout();
-            this.splitContainerMain.Panel2.SuspendLayout();
-            this.splitContainerMain.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picVehicleImageIn)).BeginInit();
-            this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picVehicleImageOut)).BeginInit();
-            this.panel6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picOverviewImageOut)).BeginInit();
-            this.panel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picOverviewImageIn)).BeginInit();
-            this.panelLastEvent.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEventContent)).BeginInit();
-            this.splitContainerEventContent.Panel1.SuspendLayout();
-            this.splitContainerEventContent.Panel2.SuspendLayout();
-            this.splitContainerEventContent.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
-            this.panel14.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picLprImage)).BeginInit();
-            this.panel15.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picLprImageIn)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvEventContent)).BeginInit();
-            this.panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picRetakePhoto)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picWriteOut)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picOpenBarrie)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picPrint)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picSetting)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            this.panelEventData.SuspendLayout();
-            this.panelScaleAction.SuspendLayout();
-            this.SuspendLayout();
+            lblLaneName = new Label();
+            panelCameras = new Panel();
+            splitContainerMain = new SplitContainer();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            panel3 = new Panel();
+            picVehicleImageIn = new MovablePictureBox();
+            panel2 = new Panel();
+            picVehicleImageOut = new MovablePictureBox();
+            panel6 = new Panel();
+            picOverviewImageOut = new MovablePictureBox();
+            panel5 = new Panel();
+            picOverviewImageIn = new MovablePictureBox();
+            label1 = new Label();
+            label2 = new Label();
+            splitterCamera = new Splitter();
+            panelLastEvent = new Panel();
+            panel11 = new Panel();
+            label3 = new Label();
+            ucEventCount1 = new ucEventCount();
+            lblResult = new lblResult();
+            splitContainerEventContent = new SplitContainer();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            panel14 = new Panel();
+            picLprImage = new MovablePictureBox();
+            txtPlate = new TextBox();
+            panel15 = new Panel();
+            picLprImageIn = new MovablePictureBox();
+            lblPlateIn = new Label();
+            dgvEventContent = new DataGridView();
+            Column1 = new DataGridViewTextBoxColumn();
+            Column2 = new DataGridViewTextBoxColumn();
+            panel4 = new Panel();
+            picRetakePhoto = new PictureBox();
+            panel10 = new Panel();
+            picWriteOut = new PictureBox();
+            panel8 = new Panel();
+            picOpenBarrie = new PictureBox();
+            panel1 = new Panel();
+            picPrint = new PictureBox();
+            panel9 = new Panel();
+            picSetting = new PictureBox();
+            panel7 = new Panel();
+            pictureBox2 = new PictureBox();
+            toolTip1 = new ToolTip(components);
+            toolTip2 = new ToolTip(components);
+            toolTip3 = new ToolTip(components);
+            splitterEventInfoWithCamera = new Splitter();
+            panelEventData = new Panel();
+            panelScaleAction = new Panel();
+            btnOpenBarrie = new Button();
+            button2 = new Button();
+            toolTipPrint = new ToolTip(components);
+            ((System.ComponentModel.ISupportInitialize)splitContainerMain).BeginInit();
+            splitContainerMain.Panel1.SuspendLayout();
+            splitContainerMain.Panel2.SuspendLayout();
+            splitContainerMain.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
+            panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picVehicleImageIn).BeginInit();
+            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picVehicleImageOut).BeginInit();
+            panel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picOverviewImageOut).BeginInit();
+            panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picOverviewImageIn).BeginInit();
+            panelLastEvent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainerEventContent).BeginInit();
+            splitContainerEventContent.Panel1.SuspendLayout();
+            splitContainerEventContent.Panel2.SuspendLayout();
+            splitContainerEventContent.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
+            panel14.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picLprImage).BeginInit();
+            panel15.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picLprImageIn).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvEventContent).BeginInit();
+            panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picRetakePhoto).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picWriteOut).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picOpenBarrie).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picPrint).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picSetting).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            panelEventData.SuspendLayout();
+            panelScaleAction.SuspendLayout();
+            SuspendLayout();
             // 
             // lblLaneName
             // 
-            this.lblLaneName.BackColor = System.Drawing.Color.DarkRed;
-            this.lblLaneName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblLaneName.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
-            this.lblLaneName.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblLaneName.Location = new System.Drawing.Point(0, 0);
-            this.lblLaneName.Margin = new System.Windows.Forms.Padding(0);
-            this.lblLaneName.Name = "lblLaneName";
-            this.lblLaneName.Size = new System.Drawing.Size(838, 22);
-            this.lblLaneName.TabIndex = 0;
-            this.lblLaneName.Text = "label1";
-            this.lblLaneName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            lblLaneName.BackColor = Color.DarkRed;
+            lblLaneName.Dock = DockStyle.Fill;
+            lblLaneName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            lblLaneName.ForeColor = SystemColors.ButtonHighlight;
+            lblLaneName.Location = new Point(0, 0);
+            lblLaneName.Margin = new Padding(0);
+            lblLaneName.Name = "lblLaneName";
+            lblLaneName.Size = new Size(1041, 22);
+            lblLaneName.TabIndex = 0;
+            lblLaneName.Text = "label1";
+            lblLaneName.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panelCameras
             // 
-            this.panelCameras.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelCameras.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelCameras.Location = new System.Drawing.Point(0, 0);
-            this.panelCameras.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panelCameras.Name = "panelCameras";
-            this.panelCameras.Size = new System.Drawing.Size(211, 285);
-            this.panelCameras.TabIndex = 3;
+            panelCameras.BorderStyle = BorderStyle.FixedSingle;
+            panelCameras.Dock = DockStyle.Left;
+            panelCameras.Location = new Point(0, 0);
+            panelCameras.Margin = new Padding(3, 2, 3, 2);
+            panelCameras.Name = "panelCameras";
+            panelCameras.Size = new Size(211, 285);
+            panelCameras.TabIndex = 3;
             // 
             // splitContainerMain
             // 
-            this.splitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerMain.Location = new System.Drawing.Point(0, 22);
-            this.splitContainerMain.Margin = new System.Windows.Forms.Padding(0);
-            this.splitContainerMain.Name = "splitContainerMain";
-            this.splitContainerMain.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            splitContainerMain.Dock = DockStyle.Fill;
+            splitContainerMain.Location = new Point(0, 22);
+            splitContainerMain.Margin = new Padding(0);
+            splitContainerMain.Name = "splitContainerMain";
+            splitContainerMain.Orientation = Orientation.Horizontal;
             // 
             // splitContainerMain.Panel1
             // 
-            this.splitContainerMain.Panel1.Controls.Add(this.tableLayoutPanel1);
-            this.splitContainerMain.Panel1.Controls.Add(this.splitterCamera);
-            this.splitContainerMain.Panel1.Controls.Add(this.panelCameras);
+            splitContainerMain.Panel1.Controls.Add(tableLayoutPanel1);
+            splitContainerMain.Panel1.Controls.Add(splitterCamera);
+            splitContainerMain.Panel1.Controls.Add(panelCameras);
             // 
             // splitContainerMain.Panel2
             // 
-            this.splitContainerMain.Panel2.Controls.Add(this.panelLastEvent);
-            this.splitContainerMain.Panel2.Controls.Add(this.ucEventCount1);
-            this.splitContainerMain.Panel2.Controls.Add(this.lblResult);
-            this.splitContainerMain.Size = new System.Drawing.Size(984, 408);
-            this.splitContainerMain.SplitterDistance = 285;
-            this.splitContainerMain.SplitterWidth = 3;
-            this.splitContainerMain.TabIndex = 4;
+            splitContainerMain.Panel2.Controls.Add(panelLastEvent);
+            splitContainerMain.Panel2.Controls.Add(ucEventCount1);
+            splitContainerMain.Panel2.Controls.Add(lblResult);
+            splitContainerMain.Size = new Size(1187, 408);
+            splitContainerMain.SplitterDistance = 285;
+            splitContainerMain.SplitterWidth = 3;
+            splitContainerMain.TabIndex = 4;
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.panel3, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.panel2, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.panel6, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.panel5, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label2, 1, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(214, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(770, 285);
-            this.tableLayoutPanel1.TabIndex = 5;
+            tableLayoutPanel1.CellBorderStyle = TableLayoutPanelCellBorderStyle.Inset;
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Controls.Add(panel3, 0, 2);
+            tableLayoutPanel1.Controls.Add(panel2, 1, 2);
+            tableLayoutPanel1.Controls.Add(panel6, 1, 1);
+            tableLayoutPanel1.Controls.Add(panel5, 0, 1);
+            tableLayoutPanel1.Controls.Add(label1, 0, 0);
+            tableLayoutPanel1.Controls.Add(label2, 1, 0);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(214, 0);
+            tableLayoutPanel1.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 3;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 31F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Size = new Size(973, 285);
+            tableLayoutPanel1.TabIndex = 5;
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.SystemColors.Control;
-            this.panel3.Controls.Add(this.picVehicleImageIn);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(5, 162);
-            this.panel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(376, 119);
-            this.panel3.TabIndex = 1;
+            panel3.BackColor = SystemColors.Control;
+            panel3.Controls.Add(picVehicleImageIn);
+            panel3.Dock = DockStyle.Fill;
+            panel3.Location = new Point(5, 162);
+            panel3.Margin = new Padding(3, 2, 3, 2);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(477, 119);
+            panel3.TabIndex = 1;
             // 
             // picVehicleImageIn
             // 
-            this.picVehicleImageIn.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.picVehicleImageIn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picVehicleImageIn.Location = new System.Drawing.Point(0, 0);
-            this.picVehicleImageIn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.picVehicleImageIn.Name = "picVehicleImageIn";
-            this.picVehicleImageIn.Size = new System.Drawing.Size(376, 119);
-            this.picVehicleImageIn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picVehicleImageIn.TabIndex = 5;
-            this.picVehicleImageIn.TabStop = false;
+            picVehicleImageIn.BackColor = Color.WhiteSmoke;
+            picVehicleImageIn.Dock = DockStyle.Fill;
+            picVehicleImageIn.Location = new Point(0, 0);
+            picVehicleImageIn.Margin = new Padding(3, 2, 3, 2);
+            picVehicleImageIn.Name = "picVehicleImageIn";
+            picVehicleImageIn.Size = new Size(477, 119);
+            picVehicleImageIn.SizeMode = PictureBoxSizeMode.StretchImage;
+            picVehicleImageIn.TabIndex = 5;
+            picVehicleImageIn.TabStop = false;
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.SystemColors.Control;
-            this.panel2.Controls.Add(this.picVehicleImageOut);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(389, 162);
-            this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(376, 119);
-            this.panel2.TabIndex = 0;
+            panel2.BackColor = SystemColors.Control;
+            panel2.Controls.Add(picVehicleImageOut);
+            panel2.Dock = DockStyle.Fill;
+            panel2.Location = new Point(490, 162);
+            panel2.Margin = new Padding(3, 2, 3, 2);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(478, 119);
+            panel2.TabIndex = 0;
             // 
             // picVehicleImageOut
             // 
-            this.picVehicleImageOut.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.picVehicleImageOut.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picVehicleImageOut.Location = new System.Drawing.Point(0, 0);
-            this.picVehicleImageOut.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.picVehicleImageOut.Name = "picVehicleImageOut";
-            this.picVehicleImageOut.Size = new System.Drawing.Size(376, 119);
-            this.picVehicleImageOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picVehicleImageOut.TabIndex = 5;
-            this.picVehicleImageOut.TabStop = false;
+            picVehicleImageOut.BackColor = Color.WhiteSmoke;
+            picVehicleImageOut.Dock = DockStyle.Fill;
+            picVehicleImageOut.Location = new Point(0, 0);
+            picVehicleImageOut.Margin = new Padding(3, 2, 3, 2);
+            picVehicleImageOut.Name = "picVehicleImageOut";
+            picVehicleImageOut.Size = new Size(478, 119);
+            picVehicleImageOut.SizeMode = PictureBoxSizeMode.StretchImage;
+            picVehicleImageOut.TabIndex = 5;
+            picVehicleImageOut.TabStop = false;
             // 
             // panel6
             // 
-            this.panel6.BackColor = System.Drawing.SystemColors.Control;
-            this.panel6.Controls.Add(this.picOverviewImageOut);
-            this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(389, 37);
-            this.panel6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(376, 119);
-            this.panel6.TabIndex = 3;
+            panel6.BackColor = SystemColors.Control;
+            panel6.Controls.Add(picOverviewImageOut);
+            panel6.Dock = DockStyle.Fill;
+            panel6.Location = new Point(490, 37);
+            panel6.Margin = new Padding(3, 2, 3, 2);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(478, 119);
+            panel6.TabIndex = 3;
             // 
             // picOverviewImageOut
             // 
-            this.picOverviewImageOut.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.picOverviewImageOut.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picOverviewImageOut.Location = new System.Drawing.Point(0, 0);
-            this.picOverviewImageOut.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.picOverviewImageOut.Name = "picOverviewImageOut";
-            this.picOverviewImageOut.Size = new System.Drawing.Size(376, 119);
-            this.picOverviewImageOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picOverviewImageOut.TabIndex = 5;
-            this.picOverviewImageOut.TabStop = false;
+            picOverviewImageOut.BackColor = Color.WhiteSmoke;
+            picOverviewImageOut.Dock = DockStyle.Fill;
+            picOverviewImageOut.Location = new Point(0, 0);
+            picOverviewImageOut.Margin = new Padding(3, 2, 3, 2);
+            picOverviewImageOut.Name = "picOverviewImageOut";
+            picOverviewImageOut.Size = new Size(478, 119);
+            picOverviewImageOut.SizeMode = PictureBoxSizeMode.StretchImage;
+            picOverviewImageOut.TabIndex = 5;
+            picOverviewImageOut.TabStop = false;
             // 
             // panel5
             // 
-            this.panel5.BackColor = System.Drawing.SystemColors.Control;
-            this.panel5.Controls.Add(this.picOverviewImageIn);
-            this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(5, 37);
-            this.panel5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(376, 119);
-            this.panel5.TabIndex = 2;
+            panel5.BackColor = SystemColors.Control;
+            panel5.Controls.Add(picOverviewImageIn);
+            panel5.Dock = DockStyle.Fill;
+            panel5.Location = new Point(5, 37);
+            panel5.Margin = new Padding(3, 2, 3, 2);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(477, 119);
+            panel5.TabIndex = 2;
             // 
             // picOverviewImageIn
             // 
-            this.picOverviewImageIn.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.picOverviewImageIn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picOverviewImageIn.Location = new System.Drawing.Point(0, 0);
-            this.picOverviewImageIn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.picOverviewImageIn.Name = "picOverviewImageIn";
-            this.picOverviewImageIn.Size = new System.Drawing.Size(376, 119);
-            this.picOverviewImageIn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picOverviewImageIn.TabIndex = 5;
-            this.picOverviewImageIn.TabStop = false;
+            picOverviewImageIn.BackColor = Color.WhiteSmoke;
+            picOverviewImageIn.Dock = DockStyle.Fill;
+            picOverviewImageIn.Location = new Point(0, 0);
+            picOverviewImageIn.Margin = new Padding(3, 2, 3, 2);
+            picOverviewImageIn.Name = "picOverviewImageIn";
+            picOverviewImageIn.Size = new Size(477, 119);
+            picOverviewImageIn.SizeMode = PictureBoxSizeMode.StretchImage;
+            picOverviewImageIn.TabIndex = 5;
+            picOverviewImageIn.TabStop = false;
             // 
             // label1
             // 
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 11.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))));
-            this.label1.ForeColor = System.Drawing.Color.Green;
-            this.label1.Location = new System.Drawing.Point(5, 2);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(376, 31);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Ảnh Vào";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            label1.Dock = DockStyle.Fill;
+            label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline);
+            label1.ForeColor = Color.Green;
+            label1.Location = new Point(5, 2);
+            label1.Name = "label1";
+            label1.Size = new Size(477, 31);
+            label1.TabIndex = 4;
+            label1.Text = "Ảnh Vào";
+            label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label2
             // 
-            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 11.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))));
-            this.label2.ForeColor = System.Drawing.Color.Maroon;
-            this.label2.Location = new System.Drawing.Point(389, 2);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(376, 31);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Ảnh Ra";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            label2.Dock = DockStyle.Fill;
+            label2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline);
+            label2.ForeColor = Color.Maroon;
+            label2.Location = new Point(490, 2);
+            label2.Name = "label2";
+            label2.Size = new Size(478, 31);
+            label2.TabIndex = 5;
+            label2.Text = "Ảnh Ra";
+            label2.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // splitterCamera
             // 
-            this.splitterCamera.Location = new System.Drawing.Point(211, 0);
-            this.splitterCamera.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.splitterCamera.Name = "splitterCamera";
-            this.splitterCamera.Size = new System.Drawing.Size(3, 285);
-            this.splitterCamera.TabIndex = 4;
-            this.splitterCamera.TabStop = false;
+            splitterCamera.Location = new Point(211, 0);
+            splitterCamera.Margin = new Padding(3, 2, 3, 2);
+            splitterCamera.Name = "splitterCamera";
+            splitterCamera.Size = new Size(3, 285);
+            splitterCamera.TabIndex = 4;
+            splitterCamera.TabStop = false;
             // 
             // panelLastEvent
             // 
-            this.panelLastEvent.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.panelLastEvent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelLastEvent.Controls.Add(this.panel11);
-            this.panelLastEvent.Controls.Add(this.label3);
-            this.panelLastEvent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelLastEvent.Location = new System.Drawing.Point(214, 26);
-            this.panelLastEvent.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panelLastEvent.Name = "panelLastEvent";
-            this.panelLastEvent.Size = new System.Drawing.Size(770, 94);
-            this.panelLastEvent.TabIndex = 8;
+            panelLastEvent.BackColor = SystemColors.ButtonHighlight;
+            panelLastEvent.BorderStyle = BorderStyle.FixedSingle;
+            panelLastEvent.Controls.Add(panel11);
+            panelLastEvent.Controls.Add(label3);
+            panelLastEvent.Dock = DockStyle.Fill;
+            panelLastEvent.Location = new Point(214, 26);
+            panelLastEvent.Margin = new Padding(3, 2, 3, 2);
+            panelLastEvent.Name = "panelLastEvent";
+            panelLastEvent.Size = new Size(973, 94);
+            panelLastEvent.TabIndex = 8;
             // 
             // panel11
             // 
-            this.panel11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel11.Location = new System.Drawing.Point(0, 27);
-            this.panel11.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(768, 65);
-            this.panel11.TabIndex = 8;
+            panel11.Dock = DockStyle.Fill;
+            panel11.Location = new Point(0, 27);
+            panel11.Margin = new Padding(3, 2, 3, 2);
+            panel11.Name = "panel11";
+            panel11.Size = new Size(971, 65);
+            panel11.TabIndex = 8;
             // 
             // label3
             // 
-            this.label3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
-            this.label3.ForeColor = System.Drawing.Color.Navy;
-            this.label3.Location = new System.Drawing.Point(0, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(768, 27);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Các lượt xe vào gần đây";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            label3.Dock = DockStyle.Top;
+            label3.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            label3.ForeColor = Color.Navy;
+            label3.Location = new Point(0, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(971, 27);
+            label3.TabIndex = 7;
+            label3.Text = "Các lượt xe vào gần đây";
+            label3.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // ucEventCount1
             // 
-            this.ucEventCount1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.ucEventCount1.Location = new System.Drawing.Point(0, 26);
-            this.ucEventCount1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ucEventCount1.Name = "ucEventCount1";
-            this.ucEventCount1.Size = new System.Drawing.Size(214, 94);
-            this.ucEventCount1.TabIndex = 2;
+            ucEventCount1.Dock = DockStyle.Left;
+            ucEventCount1.Location = new Point(0, 26);
+            ucEventCount1.Margin = new Padding(3, 2, 3, 2);
+            ucEventCount1.Name = "ucEventCount1";
+            ucEventCount1.Size = new Size(214, 94);
+            ucEventCount1.TabIndex = 2;
             // 
             // lblResult
             // 
-            this.lblResult.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.lblResult.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblResult.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblResult.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblResult.Location = new System.Drawing.Point(0, 0);
-            this.lblResult.Name = "lblResult";
-            this.lblResult.Size = new System.Drawing.Size(984, 26);
-            this.lblResult.TabIndex = 1;
-            this.lblResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            lblResult.BackColor = Color.FromArgb(0, 64, 0);
+            lblResult.Dock = DockStyle.Top;
+            lblResult.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblResult.ForeColor = SystemColors.ButtonHighlight;
+            lblResult.Location = new Point(0, 0);
+            lblResult.Name = "lblResult";
+            lblResult.Size = new Size(1187, 26);
+            lblResult.TabIndex = 1;
+            lblResult.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // splitContainerEventContent
             // 
-            this.splitContainerEventContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerEventContent.Location = new System.Drawing.Point(0, 0);
-            this.splitContainerEventContent.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.splitContainerEventContent.Name = "splitContainerEventContent";
-            this.splitContainerEventContent.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            splitContainerEventContent.Dock = DockStyle.Fill;
+            splitContainerEventContent.Location = new Point(0, 0);
+            splitContainerEventContent.Margin = new Padding(3, 2, 3, 2);
+            splitContainerEventContent.Name = "splitContainerEventContent";
             // 
             // splitContainerEventContent.Panel1
             // 
-            this.splitContainerEventContent.Panel1.Controls.Add(this.tableLayoutPanel2);
+            splitContainerEventContent.Panel1.Controls.Add(tableLayoutPanel2);
             // 
             // splitContainerEventContent.Panel2
             // 
-            this.splitContainerEventContent.Panel2.AutoScroll = true;
-            this.splitContainerEventContent.Panel2.Controls.Add(this.dgvEventContent);
-            this.splitContainerEventContent.Size = new System.Drawing.Size(308, 332);
-            this.splitContainerEventContent.SplitterDistance = 109;
-            this.splitContainerEventContent.SplitterWidth = 3;
-            this.splitContainerEventContent.TabIndex = 0;
+            splitContainerEventContent.Panel2.AutoScroll = true;
+            splitContainerEventContent.Panel2.Controls.Add(dgvEventContent);
+            splitContainerEventContent.Size = new Size(308, 332);
+            splitContainerEventContent.SplitterDistance = 109;
+            splitContainerEventContent.SplitterWidth = 3;
+            splitContainerEventContent.TabIndex = 0;
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.panel14, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.panel15, 0, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(308, 109);
-            this.tableLayoutPanel2.TabIndex = 5;
+            tableLayoutPanel2.ColumnCount = 2;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.Controls.Add(panel14, 1, 0);
+            tableLayoutPanel2.Controls.Add(panel15, 0, 0);
+            tableLayoutPanel2.Dock = DockStyle.Fill;
+            tableLayoutPanel2.Location = new Point(0, 0);
+            tableLayoutPanel2.Margin = new Padding(3, 2, 3, 2);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 1;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.Size = new Size(109, 332);
+            tableLayoutPanel2.TabIndex = 5;
             // 
             // panel14
             // 
-            this.panel14.Controls.Add(this.picLprImage);
-            this.panel14.Controls.Add(this.txtPlate);
-            this.panel14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel14.Location = new System.Drawing.Point(157, 2);
-            this.panel14.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel14.Name = "panel14";
-            this.panel14.Size = new System.Drawing.Size(148, 105);
-            this.panel14.TabIndex = 0;
+            panel14.Controls.Add(picLprImage);
+            panel14.Controls.Add(txtPlate);
+            panel14.Dock = DockStyle.Fill;
+            panel14.Location = new Point(57, 2);
+            panel14.Margin = new Padding(3, 2, 3, 2);
+            panel14.Name = "panel14";
+            panel14.Size = new Size(49, 328);
+            panel14.TabIndex = 0;
             // 
             // picLprImage
             // 
-            this.picLprImage.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.picLprImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picLprImage.Location = new System.Drawing.Point(0, 32);
-            this.picLprImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.picLprImage.Name = "picLprImage";
-            this.picLprImage.Size = new System.Drawing.Size(148, 73);
-            this.picLprImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picLprImage.TabIndex = 4;
-            this.picLprImage.TabStop = false;
+            picLprImage.BackColor = Color.WhiteSmoke;
+            picLprImage.Dock = DockStyle.Fill;
+            picLprImage.Location = new Point(0, 32);
+            picLprImage.Margin = new Padding(3, 2, 3, 2);
+            picLprImage.Name = "picLprImage";
+            picLprImage.Size = new Size(49, 296);
+            picLprImage.SizeMode = PictureBoxSizeMode.StretchImage;
+            picLprImage.TabIndex = 4;
+            picLprImage.TabStop = false;
             // 
             // txtPlate
             // 
-            this.txtPlate.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.txtPlate.Dock = System.Windows.Forms.DockStyle.Top;
-            this.txtPlate.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.txtPlate.Location = new System.Drawing.Point(0, 0);
-            this.txtPlate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtPlate.Name = "txtPlate";
-            this.txtPlate.Size = new System.Drawing.Size(148, 32);
-            this.txtPlate.TabIndex = 0;
-            this.txtPlate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            txtPlate.BackColor = SystemColors.HighlightText;
+            txtPlate.Dock = DockStyle.Top;
+            txtPlate.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            txtPlate.Location = new Point(0, 0);
+            txtPlate.Margin = new Padding(3, 2, 3, 2);
+            txtPlate.Name = "txtPlate";
+            txtPlate.Size = new Size(49, 32);
+            txtPlate.TabIndex = 0;
+            txtPlate.TextAlign = HorizontalAlignment.Center;
             // 
             // panel15
             // 
-            this.panel15.Controls.Add(this.picLprImageIn);
-            this.panel15.Controls.Add(this.lblPlateIn);
-            this.panel15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel15.Location = new System.Drawing.Point(3, 2);
-            this.panel15.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel15.Name = "panel15";
-            this.panel15.Size = new System.Drawing.Size(148, 105);
-            this.panel15.TabIndex = 1;
+            panel15.Controls.Add(picLprImageIn);
+            panel15.Controls.Add(lblPlateIn);
+            panel15.Dock = DockStyle.Fill;
+            panel15.Location = new Point(3, 2);
+            panel15.Margin = new Padding(3, 2, 3, 2);
+            panel15.Name = "panel15";
+            panel15.Size = new Size(48, 328);
+            panel15.TabIndex = 1;
             // 
             // picLprImageIn
             // 
-            this.picLprImageIn.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.picLprImageIn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picLprImageIn.Location = new System.Drawing.Point(0, 24);
-            this.picLprImageIn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.picLprImageIn.Name = "picLprImageIn";
-            this.picLprImageIn.Size = new System.Drawing.Size(148, 81);
-            this.picLprImageIn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picLprImageIn.TabIndex = 1;
-            this.picLprImageIn.TabStop = false;
+            picLprImageIn.BackColor = Color.WhiteSmoke;
+            picLprImageIn.Dock = DockStyle.Fill;
+            picLprImageIn.Location = new Point(0, 24);
+            picLprImageIn.Margin = new Padding(3, 2, 3, 2);
+            picLprImageIn.Name = "picLprImageIn";
+            picLprImageIn.Size = new Size(48, 304);
+            picLprImageIn.SizeMode = PictureBoxSizeMode.StretchImage;
+            picLprImageIn.TabIndex = 1;
+            picLprImageIn.TabStop = false;
             // 
             // lblPlateIn
             // 
-            this.lblPlateIn.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.lblPlateIn.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblPlateIn.Location = new System.Drawing.Point(0, 0);
-            this.lblPlateIn.Name = "lblPlateIn";
-            this.lblPlateIn.Size = new System.Drawing.Size(148, 24);
-            this.lblPlateIn.TabIndex = 0;
-            this.lblPlateIn.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            lblPlateIn.BackColor = SystemColors.HighlightText;
+            lblPlateIn.Dock = DockStyle.Top;
+            lblPlateIn.Location = new Point(0, 0);
+            lblPlateIn.Name = "lblPlateIn";
+            lblPlateIn.Size = new Size(48, 24);
+            lblPlateIn.TabIndex = 0;
+            lblPlateIn.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // dgvEventContent
             // 
-            this.dgvEventContent.AllowUserToAddRows = false;
-            this.dgvEventContent.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.dgvEventContent.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvEventContent.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dgvEventContent.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dgvEventContent.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.dgvEventContent.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvEventContent.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvEventContent.ColumnHeadersVisible = false;
-            this.dgvEventContent.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column2});
-            this.dgvEventContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvEventContent.Location = new System.Drawing.Point(0, 0);
-            this.dgvEventContent.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.dgvEventContent.Name = "dgvEventContent";
-            this.dgvEventContent.ReadOnly = true;
-            this.dgvEventContent.RowHeadersVisible = false;
-            this.dgvEventContent.RowTemplate.Height = 29;
-            this.dgvEventContent.Size = new System.Drawing.Size(308, 220);
-            this.dgvEventContent.TabIndex = 1;
+            dgvEventContent.AllowUserToAddRows = false;
+            dgvEventContent.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(192, 255, 255);
+            dgvEventContent.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dgvEventContent.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dgvEventContent.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgvEventContent.BackgroundColor = SystemColors.ButtonHighlight;
+            dgvEventContent.BorderStyle = BorderStyle.None;
+            dgvEventContent.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvEventContent.ColumnHeadersVisible = false;
+            dgvEventContent.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2 });
+            dgvEventContent.Dock = DockStyle.Fill;
+            dgvEventContent.Location = new Point(0, 0);
+            dgvEventContent.Margin = new Padding(3, 2, 3, 2);
+            dgvEventContent.Name = "dgvEventContent";
+            dgvEventContent.ReadOnly = true;
+            dgvEventContent.RowHeadersVisible = false;
+            dgvEventContent.RowTemplate.Height = 29;
+            dgvEventContent.Size = new Size(196, 332);
+            dgvEventContent.TabIndex = 1;
             // 
             // Column1
             // 
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Column1.HeaderText = "Header";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Width = 5;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            Column1.DefaultCellStyle = dataGridViewCellStyle2;
+            Column1.HeaderText = "Header";
+            Column1.Name = "Column1";
+            Column1.ReadOnly = true;
+            Column1.Width = 5;
             // 
             // Column2
             // 
-            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 11.25F);
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle3;
-            this.Column2.HeaderText = "Content";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
+            Column2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 11.25F);
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            Column2.DefaultCellStyle = dataGridViewCellStyle3;
+            Column2.HeaderText = "Content";
+            Column2.Name = "Column2";
+            Column2.ReadOnly = true;
             // 
             // panel4
             // 
-            this.panel4.Controls.Add(this.picRetakePhoto);
-            this.panel4.Controls.Add(this.panel10);
-            this.panel4.Controls.Add(this.picWriteOut);
-            this.panel4.Controls.Add(this.panel8);
-            this.panel4.Controls.Add(this.picOpenBarrie);
-            this.panel4.Controls.Add(this.panel1);
-            this.panel4.Controls.Add(this.lblLaneName);
-            this.panel4.Controls.Add(this.picPrint);
-            this.panel4.Controls.Add(this.panel9);
-            this.panel4.Controls.Add(this.picSetting);
-            this.panel4.Controls.Add(this.panel7);
-            this.panel4.Controls.Add(this.pictureBox2);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel4.Location = new System.Drawing.Point(0, 0);
-            this.panel4.Margin = new System.Windows.Forms.Padding(0);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(984, 22);
-            this.panel4.TabIndex = 5;
+            panel4.Controls.Add(picRetakePhoto);
+            panel4.Controls.Add(panel10);
+            panel4.Controls.Add(picWriteOut);
+            panel4.Controls.Add(panel8);
+            panel4.Controls.Add(picOpenBarrie);
+            panel4.Controls.Add(panel1);
+            panel4.Controls.Add(lblLaneName);
+            panel4.Controls.Add(picPrint);
+            panel4.Controls.Add(panel9);
+            panel4.Controls.Add(picSetting);
+            panel4.Controls.Add(panel7);
+            panel4.Controls.Add(pictureBox2);
+            panel4.Dock = DockStyle.Top;
+            panel4.Location = new Point(0, 0);
+            panel4.Margin = new Padding(0);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(1187, 22);
+            panel4.TabIndex = 5;
             // 
             // picRetakePhoto
             // 
-            this.picRetakePhoto.BackColor = System.Drawing.Color.DarkRed;
-            this.picRetakePhoto.Dock = System.Windows.Forms.DockStyle.Right;
-            this.picRetakePhoto.Image = ((System.Drawing.Image)(resources.GetObject("picRetakePhoto.Image")));
-            this.picRetakePhoto.Location = new System.Drawing.Point(688, 0);
-            this.picRetakePhoto.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.picRetakePhoto.Name = "picRetakePhoto";
-            this.picRetakePhoto.Size = new System.Drawing.Size(46, 22);
-            this.picRetakePhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picRetakePhoto.TabIndex = 16;
-            this.picRetakePhoto.TabStop = false;
-            this.picRetakePhoto.Click += new System.EventHandler(this.BtnReTakePhoto_Click);
+            picRetakePhoto.BackColor = Color.DarkRed;
+            picRetakePhoto.Dock = DockStyle.Right;
+            picRetakePhoto.Image = (Image)resources.GetObject("picRetakePhoto.Image");
+            picRetakePhoto.Location = new Point(891, 0);
+            picRetakePhoto.Margin = new Padding(3, 2, 3, 2);
+            picRetakePhoto.Name = "picRetakePhoto";
+            picRetakePhoto.Size = new Size(46, 22);
+            picRetakePhoto.SizeMode = PictureBoxSizeMode.Zoom;
+            picRetakePhoto.TabIndex = 16;
+            picRetakePhoto.TabStop = false;
+            picRetakePhoto.Click += BtnReTakePhoto_Click;
             // 
             // panel10
             // 
-            this.panel10.BackColor = System.Drawing.Color.DarkRed;
-            this.panel10.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel10.Location = new System.Drawing.Point(734, 0);
-            this.panel10.Margin = new System.Windows.Forms.Padding(0);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(4, 22);
-            this.panel10.TabIndex = 15;
+            panel10.BackColor = Color.DarkRed;
+            panel10.Dock = DockStyle.Right;
+            panel10.Location = new Point(937, 0);
+            panel10.Margin = new Padding(0);
+            panel10.Name = "panel10";
+            panel10.Size = new Size(4, 22);
+            panel10.TabIndex = 15;
             // 
             // picWriteOut
             // 
-            this.picWriteOut.BackColor = System.Drawing.Color.DarkRed;
-            this.picWriteOut.Dock = System.Windows.Forms.DockStyle.Right;
-            this.picWriteOut.Image = ((System.Drawing.Image)(resources.GetObject("picWriteOut.Image")));
-            this.picWriteOut.Location = new System.Drawing.Point(738, 0);
-            this.picWriteOut.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.picWriteOut.Name = "picWriteOut";
-            this.picWriteOut.Size = new System.Drawing.Size(46, 22);
-            this.picWriteOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picWriteOut.TabIndex = 14;
-            this.picWriteOut.TabStop = false;
-            this.picWriteOut.Click += new System.EventHandler(this.BtnWriteOut_Click);
+            picWriteOut.BackColor = Color.DarkRed;
+            picWriteOut.Dock = DockStyle.Right;
+            picWriteOut.Image = (Image)resources.GetObject("picWriteOut.Image");
+            picWriteOut.Location = new Point(941, 0);
+            picWriteOut.Margin = new Padding(3, 2, 3, 2);
+            picWriteOut.Name = "picWriteOut";
+            picWriteOut.Size = new Size(46, 22);
+            picWriteOut.SizeMode = PictureBoxSizeMode.Zoom;
+            picWriteOut.TabIndex = 14;
+            picWriteOut.TabStop = false;
+            picWriteOut.Click += BtnWriteOut_Click;
             // 
             // panel8
             // 
-            this.panel8.BackColor = System.Drawing.Color.DarkRed;
-            this.panel8.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel8.Location = new System.Drawing.Point(784, 0);
-            this.panel8.Margin = new System.Windows.Forms.Padding(0);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(4, 22);
-            this.panel8.TabIndex = 11;
+            panel8.BackColor = Color.DarkRed;
+            panel8.Dock = DockStyle.Right;
+            panel8.Location = new Point(987, 0);
+            panel8.Margin = new Padding(0);
+            panel8.Name = "panel8";
+            panel8.Size = new Size(4, 22);
+            panel8.TabIndex = 11;
             // 
             // picOpenBarrie
             // 
-            this.picOpenBarrie.BackColor = System.Drawing.Color.DarkRed;
-            this.picOpenBarrie.Dock = System.Windows.Forms.DockStyle.Right;
-            this.picOpenBarrie.Image = ((System.Drawing.Image)(resources.GetObject("picOpenBarrie.Image")));
-            this.picOpenBarrie.Location = new System.Drawing.Point(788, 0);
-            this.picOpenBarrie.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.picOpenBarrie.Name = "picOpenBarrie";
-            this.picOpenBarrie.Size = new System.Drawing.Size(46, 22);
-            this.picOpenBarrie.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picOpenBarrie.TabIndex = 10;
-            this.picOpenBarrie.TabStop = false;
-            this.picOpenBarrie.Click += new System.EventHandler(this.btnOpenBarrie_Click);
+            picOpenBarrie.BackColor = Color.DarkRed;
+            picOpenBarrie.Dock = DockStyle.Right;
+            picOpenBarrie.Image = (Image)resources.GetObject("picOpenBarrie.Image");
+            picOpenBarrie.Location = new Point(991, 0);
+            picOpenBarrie.Margin = new Padding(3, 2, 3, 2);
+            picOpenBarrie.Name = "picOpenBarrie";
+            picOpenBarrie.Size = new Size(46, 22);
+            picOpenBarrie.SizeMode = PictureBoxSizeMode.Zoom;
+            picOpenBarrie.TabIndex = 10;
+            picOpenBarrie.TabStop = false;
+            picOpenBarrie.Click += btnOpenBarrie_Click;
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.DarkRed;
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(834, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(4, 22);
-            this.panel1.TabIndex = 9;
+            panel1.BackColor = Color.DarkRed;
+            panel1.Dock = DockStyle.Right;
+            panel1.Location = new Point(1037, 0);
+            panel1.Margin = new Padding(0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(4, 22);
+            panel1.TabIndex = 9;
             // 
             // picPrint
             // 
-            this.picPrint.BackColor = System.Drawing.Color.DarkRed;
-            this.picPrint.Dock = System.Windows.Forms.DockStyle.Right;
-            this.picPrint.Image = ((System.Drawing.Image)(resources.GetObject("picPrint.Image")));
-            this.picPrint.Location = new System.Drawing.Point(838, 0);
-            this.picPrint.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.picPrint.Name = "picPrint";
-            this.picPrint.Size = new System.Drawing.Size(46, 22);
-            this.picPrint.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picPrint.TabIndex = 18;
-            this.picPrint.TabStop = false;
-            this.picPrint.Click += new System.EventHandler(this.btnPrintTicket_Click);
+            picPrint.BackColor = Color.DarkRed;
+            picPrint.Dock = DockStyle.Right;
+            picPrint.Image = (Image)resources.GetObject("picPrint.Image");
+            picPrint.Location = new Point(1041, 0);
+            picPrint.Margin = new Padding(3, 2, 3, 2);
+            picPrint.Name = "picPrint";
+            picPrint.Size = new Size(46, 22);
+            picPrint.SizeMode = PictureBoxSizeMode.Zoom;
+            picPrint.TabIndex = 18;
+            picPrint.TabStop = false;
+            picPrint.Click += btnPrintTicket_Click;
             // 
             // panel9
             // 
-            this.panel9.BackColor = System.Drawing.Color.DarkRed;
-            this.panel9.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel9.Location = new System.Drawing.Point(884, 0);
-            this.panel9.Margin = new System.Windows.Forms.Padding(0);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(4, 22);
-            this.panel9.TabIndex = 17;
+            panel9.BackColor = Color.DarkRed;
+            panel9.Dock = DockStyle.Right;
+            panel9.Location = new Point(1087, 0);
+            panel9.Margin = new Padding(0);
+            panel9.Name = "panel9";
+            panel9.Size = new Size(4, 22);
+            panel9.TabIndex = 17;
             // 
             // picSetting
             // 
-            this.picSetting.BackColor = System.Drawing.Color.DarkRed;
-            this.picSetting.Dock = System.Windows.Forms.DockStyle.Right;
-            this.picSetting.Image = ((System.Drawing.Image)(resources.GetObject("picSetting.Image")));
-            this.picSetting.Location = new System.Drawing.Point(888, 0);
-            this.picSetting.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.picSetting.Name = "picSetting";
-            this.picSetting.Size = new System.Drawing.Size(46, 22);
-            this.picSetting.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picSetting.TabIndex = 6;
-            this.picSetting.TabStop = false;
-            this.picSetting.Click += new System.EventHandler(this.picSetting_Click);
+            picSetting.BackColor = Color.DarkRed;
+            picSetting.Dock = DockStyle.Right;
+            picSetting.Image = (Image)resources.GetObject("picSetting.Image");
+            picSetting.Location = new Point(1091, 0);
+            picSetting.Margin = new Padding(3, 2, 3, 2);
+            picSetting.Name = "picSetting";
+            picSetting.Size = new Size(46, 22);
+            picSetting.SizeMode = PictureBoxSizeMode.Zoom;
+            picSetting.TabIndex = 6;
+            picSetting.TabStop = false;
+            picSetting.Click += picSetting_Click;
             // 
             // panel7
             // 
-            this.panel7.BackColor = System.Drawing.Color.DarkRed;
-            this.panel7.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel7.Location = new System.Drawing.Point(934, 0);
-            this.panel7.Margin = new System.Windows.Forms.Padding(0);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(4, 22);
-            this.panel7.TabIndex = 8;
+            panel7.BackColor = Color.DarkRed;
+            panel7.Dock = DockStyle.Right;
+            panel7.Location = new Point(1137, 0);
+            panel7.Margin = new Padding(0);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(4, 22);
+            panel7.TabIndex = 8;
             // 
             // pictureBox2
             // 
-            this.pictureBox2.BackColor = System.Drawing.Color.DarkRed;
-            this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(938, 0);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(46, 22);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 7;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Visible = false;
+            pictureBox2.BackColor = Color.DarkRed;
+            pictureBox2.Dock = DockStyle.Right;
+            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
+            pictureBox2.Location = new Point(1141, 0);
+            pictureBox2.Margin = new Padding(3, 2, 3, 2);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(46, 22);
+            pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox2.TabIndex = 7;
+            pictureBox2.TabStop = false;
+            pictureBox2.Visible = false;
             // 
             // splitterEventInfoWithCamera
             // 
-            this.splitterEventInfoWithCamera.Dock = System.Windows.Forms.DockStyle.Right;
-            this.splitterEventInfoWithCamera.Location = new System.Drawing.Point(672, 22);
-            this.splitterEventInfoWithCamera.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.splitterEventInfoWithCamera.Name = "splitterEventInfoWithCamera";
-            this.splitterEventInfoWithCamera.Size = new System.Drawing.Size(4, 408);
-            this.splitterEventInfoWithCamera.TabIndex = 6;
-            this.splitterEventInfoWithCamera.TabStop = false;
+            splitterEventInfoWithCamera.Dock = DockStyle.Right;
+            splitterEventInfoWithCamera.Location = new Point(875, 22);
+            splitterEventInfoWithCamera.Margin = new Padding(3, 2, 3, 2);
+            splitterEventInfoWithCamera.Name = "splitterEventInfoWithCamera";
+            splitterEventInfoWithCamera.Size = new Size(4, 408);
+            splitterEventInfoWithCamera.TabIndex = 6;
+            splitterEventInfoWithCamera.TabStop = false;
             // 
             // panelEventData
             // 
-            this.panelEventData.Controls.Add(this.splitContainerEventContent);
-            this.panelEventData.Controls.Add(this.panelScaleAction);
-            this.panelEventData.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelEventData.Location = new System.Drawing.Point(676, 22);
-            this.panelEventData.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panelEventData.Name = "panelEventData";
-            this.panelEventData.Size = new System.Drawing.Size(308, 408);
-            this.panelEventData.TabIndex = 7;
+            panelEventData.Controls.Add(splitContainerEventContent);
+            panelEventData.Controls.Add(panelScaleAction);
+            panelEventData.Dock = DockStyle.Right;
+            panelEventData.Location = new Point(879, 22);
+            panelEventData.Margin = new Padding(3, 2, 3, 2);
+            panelEventData.Name = "panelEventData";
+            panelEventData.Size = new Size(308, 408);
+            panelEventData.TabIndex = 7;
             // 
             // panelScaleAction
             // 
-            this.panelScaleAction.Controls.Add(this.btnOpenBarrie);
-            this.panelScaleAction.Controls.Add(this.button2);
-            this.panelScaleAction.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelScaleAction.Location = new System.Drawing.Point(0, 332);
-            this.panelScaleAction.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panelScaleAction.Name = "panelScaleAction";
-            this.panelScaleAction.Size = new System.Drawing.Size(308, 76);
-            this.panelScaleAction.TabIndex = 1;
+            panelScaleAction.Controls.Add(btnOpenBarrie);
+            panelScaleAction.Controls.Add(button2);
+            panelScaleAction.Dock = DockStyle.Bottom;
+            panelScaleAction.Location = new Point(0, 332);
+            panelScaleAction.Margin = new Padding(3, 2, 3, 2);
+            panelScaleAction.Name = "panelScaleAction";
+            panelScaleAction.Size = new Size(308, 76);
+            panelScaleAction.TabIndex = 1;
             // 
             // btnOpenBarrie
             // 
-            this.btnOpenBarrie.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenBarrie.Image")));
-            this.btnOpenBarrie.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnOpenBarrie.Location = new System.Drawing.Point(205, 11);
-            this.btnOpenBarrie.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnOpenBarrie.Name = "btnOpenBarrie";
-            this.btnOpenBarrie.Size = new System.Drawing.Size(94, 63);
-            this.btnOpenBarrie.TabIndex = 1;
-            this.btnOpenBarrie.Text = "Mở barrie";
-            this.btnOpenBarrie.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnOpenBarrie.UseVisualStyleBackColor = true;
-            this.btnOpenBarrie.Click += new System.EventHandler(this.btnOpenBarrie_Click);
+            btnOpenBarrie.Image = (Image)resources.GetObject("btnOpenBarrie.Image");
+            btnOpenBarrie.ImageAlign = ContentAlignment.BottomCenter;
+            btnOpenBarrie.Location = new Point(205, 11);
+            btnOpenBarrie.Margin = new Padding(3, 2, 3, 2);
+            btnOpenBarrie.Name = "btnOpenBarrie";
+            btnOpenBarrie.Size = new Size(94, 63);
+            btnOpenBarrie.TabIndex = 1;
+            btnOpenBarrie.Text = "Mở barrie";
+            btnOpenBarrie.TextImageRelation = TextImageRelation.ImageAboveText;
+            btnOpenBarrie.UseVisualStyleBackColor = true;
+            btnOpenBarrie.Click += btnOpenBarrie_Click;
             // 
             // button2
             // 
-            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
-            this.button2.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.button2.Location = new System.Drawing.Point(105, 11);
-            this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(94, 62);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "In vé xe";
-            this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.btnPrintTicket_Click);
+            button2.Image = (Image)resources.GetObject("button2.Image");
+            button2.ImageAlign = ContentAlignment.BottomCenter;
+            button2.Location = new Point(105, 11);
+            button2.Margin = new Padding(3, 2, 3, 2);
+            button2.Name = "button2";
+            button2.Size = new Size(94, 62);
+            button2.TabIndex = 1;
+            button2.Text = "In vé xe";
+            button2.TextImageRelation = TextImageRelation.ImageAboveText;
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += btnPrintTicket_Click;
             // 
             // ucLaneOut
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.splitterEventInfoWithCamera);
-            this.Controls.Add(this.panelEventData);
-            this.Controls.Add(this.splitContainerMain);
-            this.Controls.Add(this.panel4);
-            this.Margin = new System.Windows.Forms.Padding(0);
-            this.Name = "ucLaneOut";
-            this.Size = new System.Drawing.Size(984, 430);
-            this.splitContainerMain.Panel1.ResumeLayout(false);
-            this.splitContainerMain.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).EndInit();
-            this.splitContainerMain.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picVehicleImageIn)).EndInit();
-            this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picVehicleImageOut)).EndInit();
-            this.panel6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picOverviewImageOut)).EndInit();
-            this.panel5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picOverviewImageIn)).EndInit();
-            this.panelLastEvent.ResumeLayout(false);
-            this.splitContainerEventContent.Panel1.ResumeLayout(false);
-            this.splitContainerEventContent.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEventContent)).EndInit();
-            this.splitContainerEventContent.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.panel14.ResumeLayout(false);
-            this.panel14.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picLprImage)).EndInit();
-            this.panel15.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picLprImageIn)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvEventContent)).EndInit();
-            this.panel4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picRetakePhoto)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picWriteOut)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picOpenBarrie)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picPrint)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picSetting)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            this.panelEventData.ResumeLayout(false);
-            this.panelScaleAction.ResumeLayout(false);
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(splitterEventInfoWithCamera);
+            Controls.Add(panelEventData);
+            Controls.Add(splitContainerMain);
+            Controls.Add(panel4);
+            Margin = new Padding(0);
+            Name = "ucLaneOut";
+            Size = new Size(1187, 430);
+            splitContainerMain.Panel1.ResumeLayout(false);
+            splitContainerMain.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainerMain).EndInit();
+            splitContainerMain.ResumeLayout(false);
+            tableLayoutPanel1.ResumeLayout(false);
+            panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)picVehicleImageIn).EndInit();
+            panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)picVehicleImageOut).EndInit();
+            panel6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)picOverviewImageOut).EndInit();
+            panel5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)picOverviewImageIn).EndInit();
+            panelLastEvent.ResumeLayout(false);
+            splitContainerEventContent.Panel1.ResumeLayout(false);
+            splitContainerEventContent.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainerEventContent).EndInit();
+            splitContainerEventContent.ResumeLayout(false);
+            tableLayoutPanel2.ResumeLayout(false);
+            panel14.ResumeLayout(false);
+            panel14.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picLprImage).EndInit();
+            panel15.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)picLprImageIn).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvEventContent).EndInit();
+            panel4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)picRetakePhoto).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picWriteOut).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picOpenBarrie).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picPrint).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picSetting).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            panelEventData.ResumeLayout(false);
+            panelScaleAction.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion
