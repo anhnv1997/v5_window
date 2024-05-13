@@ -61,23 +61,34 @@ namespace iParkingv5_window.Forms.ReportForms
         }
         private async void FrmReportInOut_Load(object? sender, EventArgs e)
         {
-            //registerVehicles = await KzParkingApiHelper.GetRegisteredVehicles("");
-            registerVehicles = (await KzParkingv5ApiHelper.GetRegisterVehiclesAsync("")).Item1;
+            try
+            {
+                //registerVehicles = await KzParkingApiHelper.GetRegisteredVehicles("");
+                registerVehicles = (await KzParkingv5ApiHelper.GetRegisterVehiclesAsync("")).Item1;
 
-            //customers = (await KzParkingApiHelper.GetAllCustomers())?.Item1 ?? new List<Customer>();
-            customers = (await KzParkingv5ApiHelper.GetCustomersAsync())?.Item1 ?? new List<Customer>();
-            await CreateUI();
-            this.ActiveControl = btnSearch;
-            btnSearch.PerformClick();
-            picOverviewImageIn.Image = picOverviewImageIn.ErrorImage = defaultImg;
-            picVehicleImageIn.Image = picVehicleImageIn.ErrorImage = defaultImg;
-            picOverviewImageOut.Image = picOverviewImageOut.ErrorImage = defaultImg;
-            picVehicleImageOut.Image = picVehicleImageOut.ErrorImage = defaultImg;
+                //customers = (await KzParkingApiHelper.GetAllCustomers())?.Item1 ?? new List<Customer>();
+                customers = (await KzParkingv5ApiHelper.GetCustomersAsync())?.Item1 ?? new List<Customer>();
+                await CreateUI();
+                this.ActiveControl = btnSearch;
+                btnSearch.PerformClick();
+                picOverviewImageIn.Image = picOverviewImageIn.ErrorImage = defaultImg;
+                picVehicleImageIn.Image = picVehicleImageIn.ErrorImage = defaultImg;
+                picOverviewImageOut.Image = picOverviewImageOut.ErrorImage = defaultImg;
+                picVehicleImageOut.Image = picVehicleImageOut.ErrorImage = defaultImg;
 
-            cbVehicleType.SelectedIndexChanged += ChangeSearchConditionEvent;
-            cbIdentityGroup.SelectedIndexChanged += ChangeSearchConditionEvent;
-            cbLane.SelectedIndexChanged += ChangeSearchConditionEvent;
-            cbUser.SelectedIndexChanged += ChangeSearchConditionEvent;
+                cbVehicleType.SelectedIndexChanged += ChangeSearchConditionEvent;
+                cbIdentityGroup.SelectedIndexChanged += ChangeSearchConditionEvent;
+                cbLane.SelectedIndexChanged += ChangeSearchConditionEvent;
+                cbUser.SelectedIndexChanged += ChangeSearchConditionEvent;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, mo_ta_them: ex);
+            }
+            finally
+            {
+                GC.Collect();
+            }
         }
         private void FrmReportInOut_KeyDown(object? sender, KeyEventArgs e)
         {

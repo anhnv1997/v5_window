@@ -37,10 +37,6 @@ namespace v6_window
                 PathManagement.baseBath = LogHelper.SaveLogFolder = Application.StartupPath;
                 LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Khởi chạy ứng dụng");
                 string appCode = "IP_DA_V5_LU";
-                List<string> notes = new List<string>();
-                notes.Add("note1");
-                notes.Add("note2");
-                string a = Newtonsoft.Json.JsonConvert.SerializeObject(notes);
                 using (Mutex mutex = new Mutex(true, appName, out bool ownmutex))
                 {
                     if (ownmutex)

@@ -1,4 +1,5 @@
-﻿using Kztek.Tool.NetworkTools;
+﻿using iParkingv5.ApiManager.KzParkingv5Apis;
+using Kztek.Tool.NetworkTools;
 using Kztek.Tool.TextFormatingTools;
 using Kztek.Tools;
 using RestSharp;
@@ -109,6 +110,16 @@ namespace iParkingv6.ApiManager
             return response.Content;
         }
 
+        public class LoginResult
+        {
+            public string id_token { get; set; }
+            public string access_token { get; set; }
+            public int expires_in { get; set; }
+            public string token_type { get; set; }
+            public string refresh_token { get; set; }
+            public string scope { get; set; }
+        }
+
         /// <summary>
         /// Hàm gửi trả về 1 Tuple trong đó Item1 là kết quả trả về, Item2 là thông tin lỗi nếu có
         /// </summary>
@@ -164,15 +175,50 @@ namespace iParkingv6.ApiManager
                 }
                 string a = Newtonsoft.Json.JsonConvert.SerializeObject(data);
                 var response = await client.ExecuteAsync(request);
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                GetToken:
+                    {
+                        var _client = new RestClient("http://14.160.26.45:3000/connect/token");
+                        var _request = new RestRequest
+                        {
+                            Method = Method.Post,
+                            Timeout = timeOut,
+                        };
+                        _request.AddHeader("content-type", "application/x-www-form-urlencoded");
+                        _request.AddParameter("application/x-www-form-urlencoded", $"grant_type=refresh_token&refresh_token={KzParkingv5ApiHelper.refresh_token}&client_id={KzParkingv5ApiHelper.client_id}", ParameterType.RequestBody);
+                        var _response = _client.Execute(_request);
+                        var LoginResult = Newtonsoft.Json.JsonConvert.DeserializeObject<LoginResult>(_response.Content);
+                        if (string.IsNullOrEmpty(LoginResult.access_token))
+                        {
+                            goto GetToken;
+                        }
+                        else
+                        {
+                            KzParkingv5ApiHelper.token = LoginResult.access_token;
+                            KzParkingv5ApiHelper.refresh_token = LoginResult.refresh_token;
+                            if (KzParkingv5ApiHelper.refresh_token != LoginResult.refresh_token)
+                            {
+
+                            }
+                            if (headerValues.ContainsKey("Authorization"))
+                            {
+                                headerValues["Authorization"] = "Bearer " + KzParkingv5ApiHelper.token;
+                            }
+                            return await GeneralJsonAPIAsync(apiUrl, data, headerValues, requiredParams, timeOut, method);
+                        }
+                    }
+                    
+                }
                 if (!response.IsSuccessful)
                 {
                     var logResponse = response;
                     logResponse.Request = null;
                     LogHelper.Log(logType: LogHelper.EmLogType.ERROR,
-                                  doi_tuong_tac_dong: LogHelper.EmObjectLogType.Api,
-                                  hanh_dong: method.ToString(),
-                                  noi_dung_hanh_dong: $"Gửi {apiUrl} lần {i + 1}",
-                                  mo_ta_them: TextFormatingTool.BeautyJson(dataSend),
+                    doi_tuong_tac_dong: LogHelper.EmObjectLogType.Api,
+                    hanh_dong: method.ToString(),
+                    noi_dung_hanh_dong: $"Gửi {apiUrl} lần {i + 1}",
+                    mo_ta_them: TextFormatingTool.BeautyJson(dataSend),
                                   obj: logResponse);
                     if (string.IsNullOrEmpty(response.Content))
                     {

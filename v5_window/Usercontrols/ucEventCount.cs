@@ -40,5 +40,10 @@ namespace iParkingv5_window.Usercontrols
             }
         }
         #endregion End Timer
+
+        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

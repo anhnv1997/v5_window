@@ -45,7 +45,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         public static string username = "admin";
         public static string password = "123456";
         public static int timeOut = 10000;
-
+        public static string refresh_token = "";
+        public static string client_id = "";
         public static int expireTime = 1000;
         public static string token = string.Empty;
         public static CancellationTokenSource cts;
@@ -910,6 +911,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/identity";
             //Gửi API
+            //apiUrl = "http://192.168.21.13:3004/pk/event-out/identity";
             Dictionary<string, string> headers = new Dictionary<string, string>()
                 {
                 { "Authorization","Bearer " + token  }

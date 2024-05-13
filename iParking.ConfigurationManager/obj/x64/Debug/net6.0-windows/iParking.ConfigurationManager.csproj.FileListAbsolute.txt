@@ -92,3 +92,4 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.Configurat
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\Sdcb.PaddleOCR.Models.LocalV4.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\NXT.Net6.LPR_AI.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\iParking.ConfigurationManager.UserControls.ucThirdParty.resources
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\IdentityModel.dll

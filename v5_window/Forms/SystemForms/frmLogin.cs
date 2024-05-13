@@ -52,10 +52,12 @@ namespace iParkingv5_window.Forms.SystemForms
                     timerAutoConnect.Enabled = true;
                 }
             }
-            var options = new OidcClientOptions
+            string clientId = "910ae83b-5205-4c35-bf45-8926ff620386";
+            KzParkingv5ApiHelper.client_id = clientId;
+            options = new OidcClientOptions
             {
-                Authority = KzParkingv5ApiHelper.server.Replace(":5000", ":3000"),// "http://14.160.26.45:3000",
-                ClientId = "910ae83b-5205-4c35-bf45-8926ff620386",
+                Authority = KzParkingv5ApiHelper.server.Replace(":5000", ":3000"),//"http://192.168.21.13:3000",// 
+                ClientId = clientId,
                 Scope = "openid role-data user-data parking-data offline_access device-data",
                 RedirectUri = "http://localhost/winforms.client",
                 Browser = new WinFormsWebView(webView21, this),
@@ -67,16 +69,13 @@ namespace iParkingv5_window.Forms.SystemForms
                         ValidateIssuerName = false
                     },
                 },
-
             };
 
             _oidcClient = new OidcClient(options);
 
             Login();
-
-            //this.Load += FrmLogin_Load;
         }
-
+        OidcClientOptions options = null;
         private void FrmLogin_FormClosed(object? sender, FormClosedEventArgs e)
         {
             Application.Restart();
@@ -106,6 +105,8 @@ namespace iParkingv5_window.Forms.SystemForms
                 timerRestartSocket.Enabled = true;
                 NewtonSoftHelper<string>.SaveConfig(loginResult.RefreshToken, PathManagement.tokenPath);
                 this.refreshToken = loginResult.RefreshToken;
+                KzParkingv5ApiHelper.refresh_token = this.refreshToken;
+
                 this.Hide();
                 //KzParkingApiHelper.token = loginResult.TokenResponse.AccessToken;
                 KzParkingv5ApiHelper.token = loginResult.TokenResponse.AccessToken;
@@ -310,9 +311,10 @@ namespace iParkingv5_window.Forms.SystemForms
                 {
                     lblStatus.Text = "Đăng nhập thành công";
                     KzParkingv5ApiHelper.token = refreshToken.AccessToken;
-                    timerRefreshToken.Enabled = true;
                     NewtonSoftHelper<string>.SaveConfig(refreshToken.RefreshToken, PathManagement.tokenPath);
                     this.refreshToken = refreshToken.RefreshToken;
+                    KzParkingv5ApiHelper.refresh_token = refreshToken.RefreshToken;
+                    timerRefreshToken.Enabled = true;
                     this.Hide();
                     await KzParkingv5ApiHelper.GetUserInfor();
                     StartSocketServer();
@@ -340,17 +342,34 @@ namespace iParkingv5_window.Forms.SystemForms
         private async void timerRefreshToken_Tick(object sender, EventArgs e)
         {
             timerRefreshToken.Enabled = false;
-            var refreshToken = await _oidcClient.RefreshTokenAsync(this.refreshToken);
-            if (refreshToken != null)
+            try
             {
-                if (!refreshToken.IsError)
+                if (this.refreshToken != KzParkingv5ApiHelper.refresh_token)
                 {
-                    KzParkingv5ApiHelper.token = refreshToken.AccessToken;
-                    NewtonSoftHelper<string>.SaveConfig(refreshToken.RefreshToken, PathManagement.tokenPath);
+                    this.refreshToken = KzParkingv5ApiHelper.refresh_token;
+                    NewtonSoftHelper<string>.SaveConfig(this.refreshToken, PathManagement.tokenPath);
                 }
+                //var refreshToken = await _oidcClient.RefreshTokenAsync(this.refreshToken);
+                //if (refreshToken != null)
+                //{
+                //    if (!refreshToken.IsError)
+                //    {
+                //        KzParkingv5ApiHelper.token = refreshToken.AccessToken;
+                //        if (this.refreshToken != refreshToken.RefreshToken)
+                //        {
+                //            this.refreshToken = refreshToken.RefreshToken;
+                //        }
+                //        NewtonSoftHelper<string>.SaveConfig(refreshToken.RefreshToken, PathManagement.tokenPath);
+                //    }
+                //}
             }
-
-            timerRefreshToken.Enabled = true;
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                timerRefreshToken.Enabled = true;
+            }
         }
         private async void timerRestartSocket_Tick(object sender, EventArgs e)
         {

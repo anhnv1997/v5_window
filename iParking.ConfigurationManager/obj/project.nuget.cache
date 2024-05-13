@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "BXXZfRK7QCGH8bezX6ugNS5INDfFp/2OdOupePUR4XnQgZY5lQXK/qyzocG3NL+3omi9X0IBzqy2C5MZt2KBvw==",
+  "dgSpecHash": "fwfllL4yDvS03kQaxzKd/A4DIS2Iiw/XZZTlIWRmQ9Y0XgfpFPuDRsoNzA99VwpFMobjKKM4KoEeKuE0wXmM9g==",
   "success": true,
   "projectFilePath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParking.ConfigurationManager\\iParking.ConfigurationManager.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\identitymodel\\7.0.0\\identitymodel.7.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\3.1.32\\microsoft.extensions.logging.abstractions.3.1.32.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",

@@ -213,25 +213,25 @@ namespace iParkingv5_window.Usercontrols
             {
                 if (File.Exists(PathManagement.appServicesConfigPath))
                 {
-                    string[] serviceSupport = File.ReadAllText(PathManagement.appServicesConfigPath).Split(";");
-                    foreach (var item in serviceSupport)
-                    {
-                        cbNote.Items.Add(item);
-                    }
-                    if (cbNote.Items.Count > 0)
-                    {
-                        cbNote.SelectedIndex = 0;
-                        cbNote.Refresh();
-                    }
-                    else
-                    {
-                        for (int i = 0; i < tableLayoutPanelNote.ColumnCount; i++)
-                        {
-                            Control Control = tableLayoutPanelNote.GetControlFromPosition(i, tableLayoutPanelNote.RowCount - 1);
-                            tableLayoutPanelNote.Controls.Remove(Control);
-                        }
-                        tableLayoutPanelNote.RowStyles.RemoveAt(tableLayoutPanelNote.RowCount - 1);
-                    }
+                    //string[] serviceSupport = File.ReadAllText(PathManagement.appServicesConfigPath).Split(";");
+                    //foreach (var item in serviceSupport)
+                    //{
+                    //    cbNote.Items.Add(item);
+                    //}
+                    //if (cbNote.Items.Count > 0)
+                    //{
+                    //    cbNote.SelectedIndex = 0;
+                    //    cbNote.Refresh();
+                    //}
+                    //else
+                    //{
+                    //    for (int i = 0; i < tableLayoutPanelNote.ColumnCount; i++)
+                    //    {
+                    //        Control Control = tableLayoutPanelNote.GetControlFromPosition(i, tableLayoutPanelNote.RowCount - 1);
+                    //        tableLayoutPanelNote.Controls.Remove(Control);
+                    //    }
+                    //    tableLayoutPanelNote.RowStyles.RemoveAt(tableLayoutPanelNote.RowCount - 1);
+                    //}
                 }
                 else
                 {
@@ -1947,7 +1947,7 @@ namespace iParkingv5_window.Usercontrols
             ucTop3Event.Dock = DockStyle.Left;
             ucTop3Event.Location = new Point(400, 0);
             ucTop3Event.Name = "ucTop3Event";
-            ucTop3Event.Padding = new Padding(0, 10, 10, 10);
+            ucTop3Event.Padding = new Padding(0);
             ucTop3Event.TabIndex = 6;
             // 
             // ucTop2Event
@@ -1956,7 +1956,7 @@ namespace iParkingv5_window.Usercontrols
             ucTop2Event.Dock = DockStyle.Left;
             ucTop2Event.Location = new Point(200, 0);
             ucTop2Event.Name = "ucTop2Event";
-            ucTop2Event.Padding = new Padding(0, 10, 10, 10);
+            ucTop2Event.Padding = new Padding(0);
             ucTop2Event.TabIndex = 6;
             // 
             // ucTop1Event
@@ -1965,7 +1965,7 @@ namespace iParkingv5_window.Usercontrols
             ucTop1Event.Dock = DockStyle.Left;
             ucTop1Event.Location = new Point(0, 0);
             ucTop1Event.Name = "ucTop1Event";
-            ucTop1Event.Padding = new Padding(0, 10, 10, 10);
+            ucTop1Event.Padding = new Padding(0);
             ucTop1Event.TabIndex = 6;
 
             ucLastEventInfos.Add(ucTop1Event);
@@ -1979,7 +1979,7 @@ namespace iParkingv5_window.Usercontrols
             DateTime endTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,
                                             23, 59, 59);
             //Tuple<List<EventOutReport>, int, int> top3Event = await KzParkingApiHelper.GetEventOuts("", startTime, endTime, "", "", this.lane.id, 1, 3);
-            var top3Event = await KzParkingv5ApiHelper.GetEventOuts("", startTime, endTime, "", "", this.lane.id, "",1, 3);
+            var top3Event = await KzParkingv5ApiHelper.GetEventOuts("", startTime, endTime, "", "", this.lane.id, "", 1, 3);
             if (top3Event != null)
             {
                 for (int i = 0; i < top3Event.Rows.Count; i++)
@@ -2200,7 +2200,16 @@ namespace iParkingv5_window.Usercontrols
                 dgvEventContent.Rows.Clear();
 
                 dgvEventContent.Rows.Add("Phí gửi xe", TextFormatingTool.GetMoneyFormat(fee.ToString()));
-                dgvEventContent.Rows[dgvEventContent.RowCount - 1].DefaultCellStyle.Font = new Font(dgvEventContent.DefaultCellStyle.Font.Name, dgvEventContent.DefaultCellStyle.Font.Size * 3);
+                if (this.Width < 1500)
+                {
+                    dgvEventContent.Rows[dgvEventContent.RowCount - 1].DefaultCellStyle.Font = new Font(dgvEventContent.DefaultCellStyle.Font.Name,
+                                                                                                        20, FontStyle.Bold);
+                }
+                else
+                {
+                    dgvEventContent.Rows[dgvEventContent.RowCount - 1].DefaultCellStyle.Font = new Font(dgvEventContent.DefaultCellStyle.Font.Name,
+                                                                                                        dgvEventContent.DefaultCellStyle.Font.Size * 3, FontStyle.Bold);
+                }
                 dgvEventContent.Rows[dgvEventContent.RowCount - 1].DefaultCellStyle.ForeColor = Color.Red;
 
                 if (weighingDetail != null)
@@ -2213,9 +2222,6 @@ namespace iParkingv5_window.Usercontrols
 
                 if (timeIn != null)
                 {
-                    dgvEventContent.Rows.Add("Giờ Vào", timeIn?.ToString("dd/MM/yyyy HH:mm:ss"));
-                    dgvEventContent.Rows.Add("Giờ ra", timeOut.ToString("dd/MM/yyyy HH:mm:ss"));
-
                     TimeSpan ParkingTime = (TimeSpan)(timeOut - timeIn)!;
                     string formattedTime = "";
                     if (ParkingTime.TotalDays > 1)
@@ -2227,6 +2233,9 @@ namespace iParkingv5_window.Usercontrols
                         formattedTime = string.Format("{0} giờ {1} phút", ParkingTime.Hours, ParkingTime.Minutes, ParkingTime.Seconds);
                     }
                     dgvEventContent.Rows.Add("Thời gian lưu bãi", formattedTime);
+
+                    dgvEventContent.Rows.Add("Giờ Vào", timeIn?.ToString("dd/MM/yyyy HH:mm:ss"));
+                    dgvEventContent.Rows.Add("Giờ ra", timeOut.ToString("dd/MM/yyyy HH:mm:ss"));
                 }
                 else
                 {
@@ -2249,7 +2258,8 @@ namespace iParkingv5_window.Usercontrols
 
                 dgvEventContent.Rows.Add("Nhóm định danh", identityGroup?.Name);
                 dgvEventContent.BringToFront();
-
+                dgvEventContent.CurrentCell = null;
+                this.ActiveControl = lblLaneName;
             }));
         }
         public async void UnregisterTurnVehicle(Identity? identity, RegisteredVehicle? vehicle, IdentityGroup identityGroup)

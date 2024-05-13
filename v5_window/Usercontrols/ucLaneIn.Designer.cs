@@ -389,10 +389,10 @@
             panelLastEvent.Controls.Add(panel9);
             panelLastEvent.Controls.Add(label2);
             panelLastEvent.Dock = DockStyle.Fill;
-            panelLastEvent.Location = new Point(286, 0);
+            panelLastEvent.Location = new Point(260, 0);
             panelLastEvent.Margin = new Padding(3, 2, 3, 2);
             panelLastEvent.Name = "panelLastEvent";
-            panelLastEvent.Size = new Size(583, 234);
+            panelLastEvent.Size = new Size(609, 234);
             panelLastEvent.TabIndex = 7;
             // 
             // panelNearestEvent
@@ -401,7 +401,7 @@
             panelNearestEvent.Location = new Point(0, 27);
             panelNearestEvent.Margin = new Padding(0);
             panelNearestEvent.Name = "panelNearestEvent";
-            panelNearestEvent.Size = new Size(581, 126);
+            panelNearestEvent.Size = new Size(607, 142);
             panelNearestEvent.TabIndex = 8;
             // 
             // panel9
@@ -421,155 +421,155 @@
             panel9.Controls.Add(label8);
             panel9.Controls.Add(label7);
             panel9.Dock = DockStyle.Bottom;
-            panel9.Location = new Point(0, 153);
+            panel9.Location = new Point(0, 169);
             panel9.Name = "panel9";
-            panel9.Size = new Size(581, 79);
+            panel9.Size = new Size(607, 63);
             panel9.TabIndex = 9;
             // 
             // label20
             // 
             label20.AutoSize = true;
-            label20.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            label20.Location = new Point(262, 45);
+            label20.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label20.Location = new Point(225, 38);
             label20.Name = "label20";
-            label20.Size = new Size(149, 25);
+            label20.Size = new Size(133, 21);
             label20.TabIndex = 0;
             label20.Text = "Đóng/Mở barrie";
             // 
             // label19
             // 
             label19.AutoSize = true;
-            label19.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            label19.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             label19.ForeColor = Color.Navy;
-            label19.Location = new Point(195, 45);
+            label19.Location = new Point(165, 38);
             label19.Name = "label19";
-            label19.Size = new Size(72, 25);
+            label19.Size = new Size(63, 21);
             label19.TabIndex = 0;
             label19.Text = "Space: ";
             // 
             // label18
             // 
             label18.AutoSize = true;
-            label18.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            label18.Location = new Point(41, 45);
+            label18.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label18.Location = new Point(34, 38);
             label18.Name = "label18";
-            label18.Size = new Size(141, 25);
+            label18.Size = new Size(125, 21);
             label18.TabIndex = 0;
             label18.Text = "In phiếu thứ tự";
             // 
             // label17
             // 
             label17.AutoSize = true;
-            label17.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            label17.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             label17.ForeColor = Color.Navy;
-            label17.Location = new Point(4, 45);
+            label17.Location = new Point(3, 38);
             label17.Name = "label17";
-            label17.Size = new Size(41, 25);
+            label17.Size = new Size(35, 21);
             label17.TabIndex = 0;
             label17.Text = "F8 :";
             // 
             // label22
             // 
             label22.AutoSize = true;
-            label22.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            label22.Location = new Point(532, 45);
+            label22.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label22.Location = new Point(406, 38);
             label22.Name = "label22";
-            label22.Size = new Size(123, 25);
+            label22.Size = new Size(110, 21);
             label22.TabIndex = 0;
             label22.Text = "Cam quá khổ";
             // 
             // label21
             // 
             label21.AutoSize = true;
-            label21.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            label21.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             label21.ForeColor = Color.Navy;
-            label21.Location = new Point(475, 45);
+            label21.Location = new Point(365, 38);
             label21.Name = "label21";
-            label21.Size = new Size(51, 25);
+            label21.Size = new Size(44, 21);
             label21.TabIndex = 0;
             label21.Text = "F12 :";
             // 
             // label14
             // 
             label14.AutoSize = true;
-            label14.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            label14.Location = new Point(532, 16);
+            label14.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label14.Location = new Point(406, 9);
             label14.Name = "label14";
-            label14.Size = new Size(81, 25);
+            label14.Size = new Size(70, 21);
             label14.TabIndex = 0;
             label14.Text = "Xe Khác";
             // 
             // label13
             // 
             label13.AutoSize = true;
-            label13.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            label13.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             label13.ForeColor = Color.Navy;
-            label13.Location = new Point(475, 16);
+            label13.Location = new Point(365, 9);
             label13.Name = "label13";
-            label13.Size = new Size(41, 25);
+            label13.Size = new Size(35, 21);
             label13.TabIndex = 0;
             label13.Text = "F4 :";
             // 
             // label12
             // 
             label12.AutoSize = true;
-            label12.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            label12.Location = new Point(370, 16);
+            label12.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label12.Location = new Point(283, 9);
             label12.Name = "label12";
-            label12.Size = new Size(85, 25);
+            label12.Size = new Size(75, 21);
             label12.TabIndex = 0;
             label12.Text = "Sang Tải";
             // 
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            label11.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             label11.ForeColor = Color.Navy;
-            label11.Location = new Point(333, 16);
+            label11.Location = new Point(246, 9);
             label11.Name = "label11";
-            label11.Size = new Size(41, 25);
+            label11.Size = new Size(35, 21);
             label11.TabIndex = 0;
             label11.Text = "F3 :";
             // 
             // label10
             // 
             label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            label10.Location = new Point(232, 16);
+            label10.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label10.Location = new Point(153, 9);
             label10.Name = "label10";
-            label10.Size = new Size(79, 25);
+            label10.Size = new Size(68, 21);
             label10.TabIndex = 0;
             label10.Text = "Xe Xuất";
             // 
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            label9.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             label9.ForeColor = Color.Navy;
-            label9.Location = new Point(195, 16);
+            label9.Location = new Point(123, 9);
             label9.Name = "label9";
-            label9.Size = new Size(41, 25);
+            label9.Size = new Size(35, 21);
             label9.TabIndex = 0;
             label9.Text = "F2 :";
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            label8.Location = new Point(41, 16);
+            label8.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label8.Location = new Point(34, 9);
             label8.Name = "label8";
-            label8.Size = new Size(85, 25);
+            label8.Size = new Size(75, 21);
             label8.TabIndex = 0;
             label8.Text = "Xe Nhập";
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            label7.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             label7.ForeColor = Color.Navy;
-            label7.Location = new Point(4, 16);
+            label7.Location = new Point(3, 9);
             label7.Name = "label7";
-            label7.Size = new Size(41, 25);
+            label7.Size = new Size(35, 21);
             label7.TabIndex = 0;
             label7.Text = "F1 :";
             // 
@@ -580,7 +580,7 @@
             label2.ForeColor = Color.Navy;
             label2.Location = new Point(0, 0);
             label2.Name = "label2";
-            label2.Size = new Size(581, 27);
+            label2.Size = new Size(607, 27);
             label2.TabIndex = 7;
             label2.Text = "Các lượt xe vào gần đây";
             label2.TextAlign = ContentAlignment.MiddleLeft;
@@ -593,7 +593,7 @@
             ucEventCount1.Location = new Point(0, 0);
             ucEventCount1.Margin = new Padding(3, 2, 3, 2);
             ucEventCount1.Name = "ucEventCount1";
-            ucEventCount1.Size = new Size(286, 234);
+            ucEventCount1.Size = new Size(260, 234);
             ucEventCount1.TabIndex = 7;
             // 
             // lblResult

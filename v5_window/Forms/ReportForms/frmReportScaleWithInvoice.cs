@@ -28,12 +28,18 @@ namespace v5_IScale.Forms.ReportForms
         }
         private async void frmReportScaleWithInvoice_Load(object sender, EventArgs e)
         {
-            dtpStartTime.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
-            dtpEndTime.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
+            try
+            {
+                dtpStartTime.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                dtpEndTime.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
 
-            await LoadGoodsType();
-            btnSearch.PerformClick();
-            this.ActiveControl = btnSearch;
+                await LoadGoodsType();
+                btnSearch.PerformClick();
+                this.ActiveControl = btnSearch;
+            }
+            catch (Exception)
+            {
+            }
         }
         private void frmReportScaleWithInvoice_KeyDown(object? sender, KeyEventArgs e)
         {

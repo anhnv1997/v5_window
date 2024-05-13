@@ -29,7 +29,15 @@ namespace iParkingv5_window.Usercontrols
             picVehicle.Image = defaultImg;
             pictureBox1.Visible = isDisplayArrow;
             this.Load += UcLastEventInfo_Load;
+            this.SizeChanged += UcLastEventInfo_SizeChanged;
         }
+
+        private void UcLastEventInfo_SizeChanged(object? sender, EventArgs e)
+        {
+            //this.Width = this.Height;
+            this.Width = pictureBox1.Visible ? this.Height + pictureBox1.Width: this.Height;
+        }
+
         private void UcLastEventInfo_Load(object? sender, EventArgs e)
         {
             this.Click += UcLastEventInfo_Click;

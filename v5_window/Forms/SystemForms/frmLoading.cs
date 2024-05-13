@@ -4,7 +4,6 @@ using iParkingv5.Objects;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
-using IPGS.Ultility.TextFormats;
 using Kztek.Tool.NetworkTools;
 using Kztek.Tools;
 using Minio;
@@ -165,8 +164,7 @@ namespace iParkingv5_window.Forms.SystemForms
         {
             lblMessage = new Label();
             lblMessage.AutoSize = false;
-            lblMessage.SetKioskSecondary("Đang tải thông tin hệ thống, vui lòng chờ trong giây lát...",
-                                        panelMessage.Width, panelMessage.Height, false);
+            lblMessage.Text = "Đang tải thông tin hệ thống, vui lòng chờ trong giây lát...";
             lblMessage.TextAlign = ContentAlignment.MiddleCenter;
 
             panelMessage.MinimumSize = new Size(0, lblMessage.Height);
@@ -219,10 +217,23 @@ namespace iParkingv5_window.Forms.SystemForms
             timer1.Enabled = true;
             Computer? computer = null;
             List<string> validIps = NetWorkTools.GetLocalIPAddress();
+            validIps.Add(Environment.MachineName);
         GetPCConfig:
             {
+                var computers = await KzParkingv5ApiHelper.GetComputersAsync();
                 //computer = await KzParkingApiHelper.GetComputerByIPAddressAsync(Environment.MachineName);
-                computer = (await KzParkingv5ApiHelper.GetComputerByIPAsync(Environment.MachineName)).Item1;
+                if (computers.Item1 == null)
+                {
+                    goto GetPCConfig;
+                }
+                foreach (var item in computers.Item1)
+                {
+                    if (validIps.Contains(item.IpAddress))
+                    {
+                        computer = item;
+                        break;
+                    }
+                }
                 if (computer == null)
                 {
                     goto GetPCConfig;

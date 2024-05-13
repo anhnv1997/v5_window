@@ -2,13 +2,13 @@
 using iPakrkingv5.Controls;
 using iPakrkingv5.Controls.Controls.Buttons;
 using iParkingv5.ApiManager.KzParkingv5Apis;
+using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.Datas;
 using iParkingv5.Objects.Enums;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv5_window.Usercontrols.BuildControls;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
-using IPGS.Object.Databases;
 using Kztek.Tools;
 using System.Data;
 using System.Runtime.InteropServices;
@@ -85,7 +85,6 @@ namespace iParkingv5_window.Forms.ReportForms
             cbUser.SelectedIndexChanged += ChangeSearchConditionEvent;
 
             btnSearch.PerformClick();
-            this.ActiveControl = btnSearch;
             this.FormClosing += FrmReportIn_FormClosing;
         }
 
@@ -202,6 +201,7 @@ namespace iParkingv5_window.Forms.ReportForms
                 DisableFastLoading();
                 eventInReports.Clear();
                 panelData.ResumeLayout();
+                this.ActiveControl = btnSearch;
             }
             catch (Exception ex)
             {

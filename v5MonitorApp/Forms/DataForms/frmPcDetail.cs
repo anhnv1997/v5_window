@@ -43,45 +43,27 @@ namespace v5MonitorApp.Forms.DataForms
         {
             try
             {
-                IPAddress[] ipAddressList = Dns.GetHostAddresses(this.Computer.IpAddress);
-
-                IPAddress ipAddress = null;
-                foreach (var ip in ipAddressList)
+                //MessageBox.Show(this.Computer.IpAddress);
+                var ip = IPAddress.Parse(this.Computer.IpAddress);
+                var LocalPort = 100;
+                var localEndPoint = new IPEndPoint(ip, LocalPort);
+                var client = new TcpClient();
+                await client.ConnectAsync(localEndPoint);
+                if (client.Connected)
                 {
-                    if (ip.AddressFamily == AddressFamily.InterNetwork) // IPv4
-                    {
-                        Ping pingSender = new Ping();
-                        PingReply reply = await pingSender.SendPingAsync(ip);
-
-                        if (reply.Status == IPStatus.Success)
-                        {
-                            ipAddress = ip;
-                            break;
-                        }
-                    }
-                }
-
-                if (ipAddress != null)
-                {
-                    var LocalPort = 100;
-                    var localEndPoint = new IPEndPoint(ipAddress, LocalPort);
-                    var client = new TcpClient();
-                    await client.ConnectAsync(localEndPoint);
-                    if (client.Connected)
-                    {
-                        UpdateConnectStatus();
-                        client.Close();
-                        client.Dispose();
-                    }
-                    else
-                    {
-                        UpdateDisconnectStatus();
-                    }
+                    UpdateConnectStatus();
+                    client.Close();
+                    client.Dispose();
                 }
                 else
                 {
                     UpdateDisconnectStatus();
                 }
+                //}
+                //else
+                //{
+                //    UpdateDisconnectStatus();
+                //}
             }
             catch (Exception ex)
             {
@@ -190,58 +172,40 @@ namespace v5MonitorApp.Forms.DataForms
         #region Private Function
         private async Task SendCmd(string cmd)
         {
-            IPAddress[] ipAddressList = Dns.GetHostAddresses(this.Computer.IpAddress);
-            IPAddress ipAddress = null;
-            foreach (var ip in ipAddressList)
+            var ip = IPAddress.Parse(this.Computer.IpAddress);
+            var LocalPort = 100;
+            var localEndPoint = new IPEndPoint(ip, LocalPort);
+            var client = new TcpClient();
+            await client.ConnectAsync(localEndPoint);
+            if (client.Connected)
             {
-                if (ip.AddressFamily == AddressFamily.InterNetwork) // IPv4
+                lblResult1.Message = this.Computer.IpAddress;
+                // Get a network stream for sending and receiving data
+                using (NetworkStream stream = client.GetStream())
                 {
-                    Ping pingSender = new Ping();
-                    PingReply reply = await pingSender.SendPingAsync(ip, 500);
+                    // Message to send
+                    string message = cmd;
+                    // Convert the message to bytes
+                    byte[] data = Encoding.UTF8.GetBytes(message);
 
-                    if (reply.Status == IPStatus.Success)
-                    {
-                        ipAddress = ip;
-                        break;
-                    }
+                    // Send the data
+                    stream.Write(data, 0, data.Length);
+
+                    // Receive response
+                    byte[] buffer = new byte[1024];
+                    int bytesRead = stream.Read(buffer, 0, buffer.Length);
+                    string response = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                    UpdateConnectStatus();
+                    MessageBox.Show(response);
                 }
-            }
 
-            if (ipAddress != null)
-            {
-                var LocalPort = 100;
-                var localEndPoint = new IPEndPoint(ipAddress, LocalPort);
-                var client = new TcpClient();
-                await client.ConnectAsync(localEndPoint);
-                if (client.Connected)
-                {
-                    lblResult1.Message = this.Computer.IpAddress;
-                    // Get a network stream for sending and receiving data
-                    using (NetworkStream stream = client.GetStream())
-                    {
-                        // Message to send
-                        string message = cmd;
-                        // Convert the message to bytes
-                        byte[] data = Encoding.UTF8.GetBytes(message);
-
-                        // Send the data
-                        stream.Write(data, 0, data.Length);
-
-                        // Receive response
-                        byte[] buffer = new byte[1024];
-                        int bytesRead = stream.Read(buffer, 0, buffer.Length);
-                        string response = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                        UpdateConnectStatus();
-                        MessageBox.Show(response);
-                    }
-
-                    client.Close();
-                    client.Dispose();
-                }
-                else
-                {
-                    UpdateDisconnectStatus();
-                }
+                client.Close();
+                client.Dispose();
+                //}
+                //else
+                //{
+                //    UpdateDisconnectStatus();
+                //}
             }
             else
             {

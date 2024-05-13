@@ -1003,7 +1003,7 @@ namespace iParkingv5_window.Usercontrols
             ucTop3Event.Dock = DockStyle.Left;
             ucTop3Event.Location = new Point(400, 0);
             ucTop3Event.Name = "ucTop3Event";
-            ucTop3Event.Padding = new Padding(0, 10, 10, 10);
+            ucTop3Event.Padding = new Padding(0);
             ucTop3Event.TabIndex = 6;
             // 
             // ucTop2Event
@@ -1012,7 +1012,7 @@ namespace iParkingv5_window.Usercontrols
             ucTop2Event.Dock = DockStyle.Left;
             ucTop2Event.Location = new Point(200, 0);
             ucTop2Event.Name = "ucTop2Event";
-            ucTop2Event.Padding = new Padding(0, 10, 10, 10);
+            ucTop2Event.Padding = new Padding(0);
             ucTop2Event.TabIndex = 6;
             // 
             // ucTop1Event
@@ -1021,7 +1021,7 @@ namespace iParkingv5_window.Usercontrols
             ucTop1Event.Dock = DockStyle.Left;
             ucTop1Event.Location = new Point(0, 0);
             ucTop1Event.Name = "ucTop1Event";
-            ucTop1Event.Padding = new Padding(0, 10, 10, 10);
+            ucTop1Event.Padding = new Padding(0);
             ucTop1Event.TabIndex = 6;
 
             ucLastEventInfos.Add(ucTop1Event);
@@ -1777,7 +1777,7 @@ namespace iParkingv5_window.Usercontrols
             }));
             if (((EmPrintTemplate)StaticPool.appOption.PrintTemplate) == EmPrintTemplate.XuanCuong)
             {
-                XuanCuongApiHelper.SendParkingInfo(lastEvent.Id, "in", detectPlate, eventTime, imageKeys);
+                //XuanCuongApiHelper.SendParkingInfo(lastEvent.Id, "in", detectPlate, eventTime, imageKeys);
             }
             await KzParkingv5ApiHelper.CreateWarehouseService(lastEvent.Id, "", detectPlate, iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper.TransactionType.EmTransactionType.InBound, false);
         }

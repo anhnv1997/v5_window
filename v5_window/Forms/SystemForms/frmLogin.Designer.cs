@@ -205,7 +205,6 @@ namespace iParkingv5_window.Forms.SystemForms
             // 
             picLogo.BackColor = Color.Transparent;
             picLogo.Dock = DockStyle.Top;
-            picLogo.Image = (Image)resources.GetObject("picLogo.Image");
             picLogo.Location = new Point(21, 18);
             picLogo.Margin = new Padding(3, 2, 3, 2);
             picLogo.Name = "picLogo";
@@ -241,7 +240,7 @@ namespace iParkingv5_window.Forms.SystemForms
             // 
             // timerRefreshToken
             // 
-            timerRefreshToken.Interval = 60000;
+            timerRefreshToken.Interval = 1000;
             timerRefreshToken.Tick += timerRefreshToken_Tick;
             // 
             // timerRestartSocket

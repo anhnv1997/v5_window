@@ -874,6 +874,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
+          "IdentityModel": "7.0.0",
           "Kztek.Tool": "1.0.0.1",
           "Newtonsoft.Json": "13.0.3",
           "RestSharp": "110.2.0",
@@ -951,42 +952,6 @@
           "bin/placeholder/iParkingv5.Objects.dll": {}
         }
       },
-      "IPGS.Object/1.0.0.1": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.1",
-        "dependencies": {
-          "DahuaLib": "1.0.0.1",
-          "Newtonsoft.Json": "13.0.3",
-          "ParkingHelper": "1.0.0.1",
-          "System.Data.OleDb": "7.0.0",
-          "System.Data.SqlClient": "4.8.6",
-          "System.Drawing.Common": "7.0.0",
-          "System.IO.Ports": "8.0.0",
-          "System.Text.Json": "7.0.3"
-        },
-        "compile": {
-          "bin/placeholder/IPGS.Object.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/IPGS.Object.dll": {}
-        }
-      },
-      "IPGS.Ultility/1.0.0.1": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "dependencies": {
-          "IPGS.Object": "1.0.0.1"
-        },
-        "compile": {
-          "bin/placeholder/IPGS.Ultility.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/IPGS.Ultility.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.WindowsDesktop.App.WindowsForms"
-        ]
-      },
       "Kztek.Cameras/1.0.0.2": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
@@ -998,19 +963,6 @@
         },
         "runtime": {
           "bin/placeholder/Kztek.Cameras.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.WindowsDesktop.App.WindowsForms"
-        ]
-      },
-      "Kztek.LPR/1.0.0.9": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "compile": {
-          "bin/placeholder/Kztek.LPR.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Kztek.LPR.dll": {}
         },
         "frameworkReferences": [
           "Microsoft.WindowsDesktop.App.WindowsForms"
@@ -1059,20 +1011,6 @@
         },
         "runtime": {
           "bin/placeholder/Kztek.Tool.dll": {}
-        }
-      },
-      "ParkingHelper/1.0.0.1": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.1",
-        "dependencies": {
-          "Kztek.Tool": "1.0.0.1",
-          "Newtonsoft.Json": "13.0.3"
-        },
-        "compile": {
-          "bin/placeholder/ParkingHelper.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/ParkingHelper.dll": {}
         }
       }
     }
@@ -2592,25 +2530,10 @@
       "path": "../iParkingv5.Objects/iParkingv5.Objects.csproj",
       "msbuildProject": "../iParkingv5.Objects/iParkingv5.Objects.csproj"
     },
-    "IPGS.Object/1.0.0.1": {
-      "type": "project",
-      "path": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/IPGS.Object/IPGS.Object.csproj",
-      "msbuildProject": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/IPGS.Object/IPGS.Object.csproj"
-    },
-    "IPGS.Ultility/1.0.0.1": {
-      "type": "project",
-      "path": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/IPGS.Ultility/IPGS.Ultility.csproj",
-      "msbuildProject": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/IPGS.Ultility/IPGS.Ultility.csproj"
-    },
     "Kztek.Cameras/1.0.0.2": {
       "type": "project",
       "path": "../../../../../../../BaseLib/Kztek.Cameras/Kztek.Cameras.csproj",
       "msbuildProject": "../../../../../../../BaseLib/Kztek.Cameras/Kztek.Cameras.csproj"
-    },
-    "Kztek.LPR/1.0.0.9": {
-      "type": "project",
-      "path": "../../../../../../../BaseLib/Kztek.LPR/Kztek.LPR.csproj",
-      "msbuildProject": "../../../../../../../BaseLib/Kztek.LPR/Kztek.LPR.csproj"
     },
     "Kztek.RtspPlayer/1.0.0.2": {
       "type": "project",
@@ -2626,24 +2549,15 @@
       "type": "project",
       "path": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/Kztek.Tool/Kztek.Tool.csproj",
       "msbuildProject": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/Kztek.Tool/Kztek.Tool.csproj"
-    },
-    "ParkingHelper/1.0.0.1": {
-      "type": "project",
-      "path": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/ParkingHelper/ParkingHelper.csproj",
-      "msbuildProject": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/ParkingHelper/ParkingHelper.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0-windows7.0": [
-      "IPGS.Ultility >= 1.0.0.1",
       "IPaking.Ultility >= 1.0.0.1",
       "IdentityModel >= 7.0.0",
       "IdentityModel.OidcClient >= 6.0.0",
       "Kztek.Cameras >= 1.0.0.2",
-      "Kztek.LPR >= 1.0.0.9",
-      "Kztek.RtspPlayer >= 1.0.0.2",
       "Kztek.Scale_net6 >= 1.0.0.10",
-      "Kztek.Tool >= 1.0.0.1",
       "Microsoft.Web.WebView2 >= 1.0.2420.47",
       "Minio >= 5.0.0",
       "RabbitMQ.Client >= 6.8.1",
@@ -2664,7 +2578,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.3.4",
+    "version": "1.0.4.2",
     "restore": {
       "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\v5_window\\iParkingv5_window.csproj",
       "projectName": "iParkingv5_window",
@@ -2687,18 +2601,13 @@
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "C:\\Program Files\\dotnet\\library-packs": {},
+        "C:\\Users\\Admin\\OneDrive\\Desktop\\vosk-api-master\\vosk-api-master\\csharp\\nuget\\lib\\netstandard2.0": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "projectReferences": {
-            "E:\\2.Workspace\\2.Projects\\2023\\3.Lotte_TayHo\\1.source\\iPGS_2023_NET6\\IPGS.Ultility\\IPGS.Ultility.csproj": {
-              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\3.Lotte_TayHo\\1.source\\iPGS_2023_NET6\\IPGS.Ultility\\IPGS.Ultility.csproj"
-            },
-            "E:\\2.Workspace\\2.Projects\\2023\\3.Lotte_TayHo\\1.source\\iPGS_2023_NET6\\Kztek.Tool\\Kztek.Tool.csproj": {
-              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\3.Lotte_TayHo\\1.source\\iPGS_2023_NET6\\Kztek.Tool\\Kztek.Tool.csproj"
-            },
             "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\IPaking.Ultility\\IPaking.Ultility.csproj": {
               "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\IPaking.Ultility\\IPaking.Ultility.csproj"
             },
@@ -2728,12 +2637,6 @@
             },
             "E:\\BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj": {
               "projectPath": "E:\\BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj"
-            },
-            "E:\\BaseLib\\Kztek.LPR\\Kztek.LPR.csproj": {
-              "projectPath": "E:\\BaseLib\\Kztek.LPR\\Kztek.LPR.csproj"
-            },
-            "E:\\BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj": {
-              "projectPath": "E:\\BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj"
             }
           }
         }

@@ -140,7 +140,7 @@ namespace iParkingv5_window.Forms.DataForms
             {
                 var screenBound = Screen.FromControl(this).WorkingArea;
                 this.Size = new Size(screenBound.Width, screenBound.Height);
-                this.Size = new Size(1366, 768);
+                //this.Size = new Size(1366, 768);
                 this.Location = new Point(0, 0);
 
                 LoadAppDisplayConfig();

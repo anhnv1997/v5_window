@@ -39,6 +39,7 @@ namespace v5_IScale.Forms.SystemForms
         public frmLogin()
         {
             InitializeComponent();
+            this.FormClosed += FrmLogin_FormClosed;
             this.Hide();
             lblStatus.Text = "";
             lblStatus.BackColor = Color.Transparent;
@@ -52,7 +53,7 @@ namespace v5_IScale.Forms.SystemForms
             }
             var options = new OidcClientOptions
             {
-                Authority = KzParkingv5ApiHelper.server.Replace(":5000", ":3000"),// "http://14.160.26.45:3000",
+                Authority = KzParkingv5ApiHelper.server.Replace(":5000", ":3000"),//"http://192.168.21.13:3000",// 
                 ClientId = "910ae83b-5205-4c35-bf45-8926ff620386",
                 Scope = "openid role-data user-data parking-data offline_access device-data",
                 RedirectUri = "http://localhost/winforms.client",
@@ -71,9 +72,13 @@ namespace v5_IScale.Forms.SystemForms
             _oidcClient = new OidcClient(options);
 
             Login();
-
-            //this.Load += FrmLogin_Load;
         }
+
+        private void FrmLogin_FormClosed(object? sender, FormClosedEventArgs e)
+        {
+            Application.Restart();
+        }
+
         LoginResult loginResult;
         private async void Login()
         {
@@ -108,6 +113,68 @@ namespace v5_IScale.Forms.SystemForms
                 };
                 frm.Show();
             }
+        }
+
+        private void FrmLogin_Load(object? sender, EventArgs e)
+        {
+            //chbIsRemember.Checked = Properties.Settings.Default.isRemember;
+            //if (chbIsRemember.Checked)
+            //{
+            //    txtUsername.Text = Properties.Settings.Default.username;
+            //    txtPassword.Text = Properties.Settings.Default.password;
+            //}
+
+            activeControls = new()
+            {
+                txtUsername,
+                txtPassword,
+                btnCancel1,
+                btnLogin
+            };
+            ucNotify1.OnSelectResultEvent += UcNotify1_OnSelectResultEvent;
+
+            panelMain.Padding = new Padding(StaticPool.baseSize);
+            panelMain.Font = new Font(panelMain.Font.Name, StaticPool.baseSize);
+
+            btnCancel1.InitControl(btnExit_Click);
+            btnLogin.InitControl(btnLogin_Click);
+
+            lblLoginTitle.Location = new Point(StaticPool.baseSize * 2,
+                                               picLogo.Location.Y + picLogo.Height + StaticPool.baseSize * 2);
+
+            lblUsername.Location = new Point(lblLoginTitle.Location.X,
+                                             lblLoginTitle.Location.Y + lblLoginTitle.Height + StaticPool.baseSize);
+            txtUsername.Location = new Point(lblUsername.Location.X + lblUsername.Width + StaticPool.baseSize,
+                                             lblUsername.Location.Y + (lblUsername.Height - txtUsername.Height) / 2);
+            txtUsername.Width = panelMain.Width - txtUsername.Location.X - StaticPool.baseSize * 2;
+
+            txtPassword.Location = new Point(txtUsername.Location.X,
+                                             txtUsername.Location.Y + txtUsername.Height + StaticPool.baseSize / 2);
+            txtPassword.Width = txtUsername.Width;
+            lblPassword.Location = new Point(lblUsername.Location.X,
+                                             txtPassword.Location.Y + (txtPassword.Height - lblPassword.Height) / 2);
+
+            chbIsRemember.Location = new Point(txtPassword.Location.X,
+                                               txtPassword.Location.Y + txtPassword.Height + StaticPool.baseSize / 2);
+
+            this.Height = chbIsRemember.Location.Y + chbIsRemember.Height + btnCancel1.Height + StaticPool.baseSize * 3 + this.Height - this.DisplayRectangle.Height;
+
+            btnCancel1.Location = new Point(panelMain.Width - btnCancel1.Width - StaticPool.baseSize * 2,
+                                            chbIsRemember.Location.Y + chbIsRemember.Height + StaticPool.baseSize);
+
+            btnLogin.Location = new Point(btnCancel1.Location.X - btnLogin.Width - StaticPool.baseSize / 2,
+                                          btnCancel1.Location.Y);
+
+            lblStatus.Location = new Point(lblLoginTitle.Location.X,
+                                           btnLogin.Location.Y + (btnLogin.Height - lblStatus.Height) / 2);
+
+            timerAutoConnect.Enabled = true;
+            if (File.Exists(Application.StartupPath + @"Resources\defaultImage.png"))
+            {
+                picLogo.Image = Image.FromFile(Application.StartupPath + @"Resources\logo.png");
+            }
+
+            this.ActiveControl = btnLogin;
         }
 
         #endregion End Forms
@@ -199,6 +266,7 @@ namespace v5_IScale.Forms.SystemForms
             lblStatus.Visible = false;
             timerAutoConnect.Enabled = false;
         }
+
         private void UcNotify1_OnSelectResultEvent(DialogResult result)
         {
             panelMain.BackColor = Color.White;
@@ -265,19 +333,31 @@ namespace v5_IScale.Forms.SystemForms
         private async void timerRefreshToken_Tick(object sender, EventArgs e)
         {
             timerRefreshToken.Enabled = false;
-            var refreshToken = await _oidcClient.RefreshTokenAsync(this.refreshToken);
-            if (refreshToken != null)
+            try
             {
-                if (!refreshToken.IsError)
+                var refreshToken = await _oidcClient.RefreshTokenAsync(this.refreshToken);
+                if (refreshToken != null)
                 {
-                    KzParkingv5ApiHelper.token = refreshToken.AccessToken;
-                    NewtonSoftHelper<string>.SaveConfig(refreshToken.RefreshToken, PathManagement.tokenPath);
+                    if (!refreshToken.IsError)
+                    {
+                        KzParkingv5ApiHelper.token = refreshToken.AccessToken;
+                        if (this.refreshToken != refreshToken.RefreshToken)
+                        {
+                            this.refreshToken = refreshToken.RefreshToken;
+                        }
+                        NewtonSoftHelper<string>.SaveConfig(refreshToken.RefreshToken, PathManagement.tokenPath);
+                    }
                 }
             }
-
-            timerRefreshToken.Enabled = true;
+            catch (Exception ex)
+            {
+            }
+            finally
+            {
+                timerRefreshToken.Enabled = true;
+            }
         }
-        private void timerRestartSocket_Tick(object sender, EventArgs e)
+        private async void timerRestartSocket_Tick(object sender, EventArgs e)
         {
             try
             {
@@ -375,6 +455,11 @@ namespace v5_IScale.Forms.SystemForms
                                 await GetLogFile(DateTime.Parse(timeLog));
                                 socket.Send(Encoding.UTF8.GetBytes("Saved Log File To Minio"));
                             }
+                            else if (receiceMessage == "ClearLog?/")
+                            {
+                                ClearLog();
+                                socket.Send(Encoding.UTF8.GetBytes("Clear Completed"));
+                            }
                         }
                         else
                         {
@@ -462,6 +547,38 @@ namespace v5_IScale.Forms.SystemForms
             catch (Exception ex)
             {
                 return false;
+            }
+        }
+        private void ClearLog()
+        {
+            string logDir = Path.Combine(PathManagement.baseBath, $@"logs");
+            var files = Directory.GetFiles(PathManagement.baseBath, "*", SearchOption.AllDirectories);
+            if (Directory.Exists(logDir))
+            {
+                var directories = Directory.GetDirectories(logDir);
+                foreach (var directory in directories)
+                {
+                    try
+                    {
+                        Directory.Delete(directory, true);
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+            }
+            foreach (var file in files)
+            {
+                try
+                {
+                    if (file.Contains("_bak_"))
+                    {
+                        File.Delete(file);
+                    }
+                }
+                catch (Exception)
+                {
+                }
             }
         }
         private async Task GetLogFile(DateTime time)

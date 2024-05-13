@@ -42,7 +42,7 @@ namespace iParkingv5_window.Forms
                 if (IsBrowserNavigatingToRedirectUri(new Uri(e.Uri)))
                 {
                     e.Cancel = true;
-
+                    var test = BrowserResultType.Success;
                     browserResult = new BrowserResult()
                     {
                         ResultType = BrowserResultType.Success,

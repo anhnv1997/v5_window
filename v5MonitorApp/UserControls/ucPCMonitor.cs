@@ -66,27 +66,28 @@ namespace v5MonitorApp.UserControls
             {
                 try
                 {
-                    IPAddress[] ipAddressList = Dns.GetHostAddresses(this.Computer.IpAddress);
-                    IPAddress ipAddress = null;
-                    foreach (var ip in ipAddressList)
-                    {
-                        if (ip.AddressFamily == AddressFamily.InterNetwork) // IPv4
-                        {
-                            Ping pingSender = new Ping();
-                            PingReply reply = await pingSender.SendPingAsync(ip);
+                    //IPAddress[] ipAddressList = Dns.GetHostAddresses(this.Computer.IpAddress);
+                    //IPAddress ipAddress = null;
+                    //foreach (var ip in ipAddressList)
+                    //{
+                    //    if (ip.AddressFamily == AddressFamily.InterNetwork) // IPv4
+                    //    {
+                    //        Ping pingSender = new Ping();
+                    //        PingReply reply = await pingSender.SendPingAsync(ip);
 
-                            if (reply.Status == IPStatus.Success)
-                            {
-                                ipAddress = ip;
-                                break;
-                            }
-                        }
-                    }
+                    //        if (reply.Status == IPStatus.Success)
+                    //        {
+                    //            ipAddress = ip;
+                    //            break;
+                    //        }
+                    //    }
+                    //}
 
-                    if (ipAddress != null)
+                    //if (ipAddress != null)
                     {
+                        var ip = IPAddress.Parse(this.Computer.IpAddress);
                         var LocalPort = 100;
-                        var localEndPoint = new IPEndPoint(ipAddress, LocalPort);
+                        var localEndPoint = new IPEndPoint(ip, LocalPort);
                         var client = new TcpClient();
                         await client.ConnectAsync(localEndPoint);
                         if (client.Connected)
@@ -100,10 +101,10 @@ namespace v5MonitorApp.UserControls
                             updateDeviceDisconnected("Invalid Socket Connection");
                         }
                     }
-                    else
-                    {
-                        updateDeviceDisconnected("Invalid Ip Address");
-                    }
+                    //else
+                    //{
+                    //    updateDeviceDisconnected("Invalid Ip Address");
+                    //}
                 }
                 catch (Exception ex)
                 {

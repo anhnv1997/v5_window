@@ -28,6 +28,21 @@ namespace iParkingv5.Lpr.LprDetecters.AmericalLprs
         {
             return true;
         }
+        public static Bitmap Zoom(Bitmap originalBitmap, float zoomFactor)
+        {
+            int newWidth = (int)(originalBitmap.Width * zoomFactor);
+            int newHeight = (int)(originalBitmap.Height * zoomFactor);
+
+            Bitmap zoomedBitmap = new Bitmap(newWidth, newHeight);
+
+            using (Graphics g = Graphics.FromImage(zoomedBitmap))
+            {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.DrawImage(originalBitmap, new Rectangle(0, 0, newWidth, newHeight));
+            }
+
+            return zoomedBitmap;
+        }
 
         public string GetPlateNumber(Image? originalImage, bool isCar, Rectangle? detectRegion, out Image? lprImage)
         {
@@ -40,6 +55,7 @@ namespace iParkingv5.Lpr.LprDetecters.AmericalLprs
             Bitmap bitmapCut = detectRegion != null ? CropBitmap((Bitmap)originalImage, (Rectangle)detectRegion!) : (Bitmap)originalImage;
 
             Bitmap detectBitmap = bitmapCut.Clone(new Rectangle(0, 0, originalImage.Width, originalImage.Height), PixelFormat.Format24bppRgb);
+
             MemoryStream ms = new MemoryStream();
             detectBitmap.Save(ms, ImageFormat.Jpeg);
             byte[] bytearray = ms.ToArray();
