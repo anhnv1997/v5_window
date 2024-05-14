@@ -32,14 +32,15 @@ namespace iParkingv5_window.Forms.DataForms
             {
                 if (lane.type == 0)
                 {
-                    if (baseType == VehicleType.VehicleBaseType.Car && lane.loop)
+                    if (/*baseType == VehicleType.VehicleBaseType.Car && */lane.loop)
                     {
                         this.lane = lane;
+                        break;
                     }
-                    else if (baseType != VehicleType.VehicleBaseType.Car && !lane.loop)
-                    {
-                        this.lane = lane;
-                    }
+                    //else if (baseType != VehicleType.VehicleBaseType.Car && !lane.loop)
+                    //{
+                    //    this.lane = lane;
+                    //}
                 }
             }
             this.vehicleType = baseType;
@@ -72,6 +73,7 @@ namespace iParkingv5_window.Forms.DataForms
                         {
                             if (controllerInLane.controlUnitId.ToLower() == controller.ControllerInfo.Id.ToLower())
                             {
+                                //MessageBox.Show("Đăng ký sự kiện" + this.lane.name);
                                 controller.CardEvent += Controller_CardEvent;
                             }
                         }
@@ -118,16 +120,17 @@ namespace iParkingv5_window.Forms.DataForms
             await semaphoreSlimOnNewEvent.WaitAsync();
             try
             {
-                foreach (ControllerInLane controllerInLane in this.lane.controlUnits)
-                {
-                    if (controllerInLane.controlUnitId.ToLower() == ce.DeviceId)
-                    {
-                        if (!controllerInLane.readers.Contains(ce.ReaderIndex))
-                        {
-                            return;
-                        }
-                    }
-                }
+                //MessageBox.Show("Nhận sự kiện " + ce.PreferCard);
+                //foreach (ControllerInLane controllerInLane in this.lane.controlUnits)
+                //{
+                //    if (controllerInLane.controlUnitId.ToLower() == ce.DeviceId)
+                //    {
+                //        if (!controllerInLane.readers.Contains(ce.ReaderIndex))
+                //        {
+                //            return;
+                //        }
+                //    }
+                //}
                 var identityResponse = await KzParkingApiHelper.GetIdentityByCodeAsync(ce.PreferCard);
                 this.selectedIdentity = identityResponse.Item1;
                 if (!identityResponse.Item2)
