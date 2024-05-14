@@ -58,7 +58,7 @@ namespace iParkingv5_window.Forms.SystemForms
             {
                 Authority = KzParkingv5ApiHelper.server.Replace(":5000", ":3000"),//"http://192.168.21.13:3000",// 
                 ClientId = clientId,
-                Scope = "openid role-data user-data parking-data offline_access device-data",
+                Scope = "openid role-data user-data parking-data offline_access device-data electronic-invoice-data",
                 RedirectUri = "http://localhost/winforms.client",
                 Browser = new WinFormsWebView(webView21, this),
                 Policy = new Policy

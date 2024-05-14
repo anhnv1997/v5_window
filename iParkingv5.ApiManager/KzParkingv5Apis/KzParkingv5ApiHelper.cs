@@ -1266,8 +1266,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         {
             //string url = $"http://14.160.26.45:26868/einvoice?provider=VIETTEL";
             StandardlizeServerName();
-            string apiUrl = server + "einvoice?provider=VIETTEL";
-            apiUrl = apiUrl.Replace(":5000", ":26868");
+            string apiUrl = server + "e-invoice?provider=VIETTEL";
+            //apiUrl = apiUrl.Replace(":5000", ":26868");
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
@@ -1358,8 +1358,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         {
             // string url = $"http://14.160.26.45:26868/einvoice?provider=65";
             StandardlizeServerName();
-            string apiUrl = server + "einvoice?einvoice?provider=65";
-            apiUrl = apiUrl.Replace(":5000", ":26868");
+            string apiUrl = server + "e-invoice/search?provider=65";
+            //apiUrl = apiUrl.Replace(":5000", ":26868");
 
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
@@ -1373,7 +1373,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 GetFile = true,
                 FileType = "Pdf"
             };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, Method.Get);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
                 return NewtonSoftHelper<InvoiceData>.GetBaseResponse(response.Item1);
@@ -1384,15 +1384,15 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         {
             //string url = $"http://14.160.26.45:26868/sent-invoice/many";
             StandardlizeServerName();
-            string apiUrl = server + "sent-invoice/many";
-            apiUrl = apiUrl.Replace(":5000", ":26868");
+            string apiUrl = server + "e-invoice-sent/many";
+            //apiUrl = apiUrl.Replace(":5000", ":26868");
 
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
                 { "Authorization","Bearer " + token  }
             };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, orderIds, headers, null, timeOut, Method.Get);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, orderIds, headers, null, timeOut, Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
                 return NewtonSoftHelper<List<InvoiceDataSearch>>.GetBaseResponse(response.Item1);

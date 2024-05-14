@@ -131,7 +131,6 @@ namespace iParkingv5.Controller.KztekDevices.KZE16AccessControl
                     this.IsBusy = false;
                     // Trang thai thiet bij
                     this.ControllerInfo.IsConnect = response != "";
-                    //response = "GetEvent?/Style=Card/UserID=100/LenCard=4/Card=00000010/Reader=02/DateTime=YYYYMMDDhhmmss/CardState=U/AccessState=1/Door=00/StateMSG=00";
                     //AccessCardGrant: Char(2) + GetEvent?/Style=Card/UserID=100/LenCard=4/Card=7C19F640/Reader=01/DateTime=YYYYMMDDhhmmss/CardState=U/AccessState=1/Door=00/StateMSG=00 + char(3)
                     //AccessCardDenie: Char(2) + GetEvent?/Style=Card/UserID=Null/LenCard=4/Card=7C19F640/Reader=01/DateTime=YYYYMMDDhhmmss/CardState=U/AccessState=1/Door=00/StateMSG=00 + char(3)
                     //InputEvent     : Char(2) + GetEvent?/Style=input/Input=INPUT1/DateTime=YYYYMMDDhhmmss + char(3)
@@ -191,6 +190,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE16AccessControl
                     AllCardFormats = new List<string>(),
                 };
                 string cardNumberHEX = map.ContainsKey("card") ? map["card"] : "";
+                //string cardNumberHEX = "BDE223";
                 if (!string.IsNullOrEmpty(cardNumberHEX))
                 {
                     e.AllCardFormats.Add(cardNumberHEX);
