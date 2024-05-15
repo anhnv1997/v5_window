@@ -30,198 +30,270 @@ namespace iParkingv5_window.Forms.DataForms
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConfirmOut));
-            lblMessage = new Label();
-            panelAction = new Panel();
-            btnCancel1 = new LblCancel();
-            btnOk = new BtnOk();
-            dgvEventInData = new DataGridView();
-            Column1 = new DataGridViewTextBoxColumn();
-            Column2 = new DataGridViewTextBoxColumn();
-            panel1 = new Panel();
-            panelEventPic = new Panel();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            picOverview = new Usercontrols.MovablePictureBox();
-            picVehicle = new Usercontrols.MovablePictureBox();
-            panelAction.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvEventInData).BeginInit();
-            panel1.SuspendLayout();
-            panelEventPic.SuspendLayout();
-            tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picOverview).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)picVehicle).BeginInit();
-            SuspendLayout();
+            this.lblMessage = new System.Windows.Forms.Label();
+            this.panelAction = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnCancel1 = new iPakrkingv5.Controls.Controls.Buttons.LblCancel();
+            this.btnOk2 = new iPakrkingv5.Controls.Controls.Buttons.BtnOk();
+            this.btnOk1 = new iPakrkingv5.Controls.Controls.Buttons.BtnOk();
+            this.btnOk = new iPakrkingv5.Controls.Controls.Buttons.BtnOk();
+            this.picQR = new System.Windows.Forms.PictureBox();
+            this.dgvEventInData = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panelEventPic = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.picOverview = new iParkingv5_window.Usercontrols.MovablePictureBox();
+            this.picVehicle = new iParkingv5_window.Usercontrols.MovablePictureBox();
+            this.pnlQR = new System.Windows.Forms.Panel();
+            this.panelAction.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picQR)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEventInData)).BeginInit();
+            this.panel1.SuspendLayout();
+            this.panelEventPic.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picOverview)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picVehicle)).BeginInit();
+            this.pnlQR.SuspendLayout();
+            this.SuspendLayout();
             // 
             // lblMessage
             // 
-            lblMessage.Dock = DockStyle.Top;
-            lblMessage.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
-            lblMessage.Location = new Point(0, 0);
-            lblMessage.Name = "lblMessage";
-            lblMessage.Size = new Size(945, 58);
-            lblMessage.TabIndex = 0;
-            lblMessage.Text = "label1";
-            lblMessage.TextAlign = ContentAlignment.MiddleCenter;
+            this.lblMessage.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblMessage.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.lblMessage.Location = new System.Drawing.Point(0, 0);
+            this.lblMessage.Name = "lblMessage";
+            this.lblMessage.Size = new System.Drawing.Size(976, 58);
+            this.lblMessage.TabIndex = 0;
+            this.lblMessage.Text = "label1";
+            this.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panelAction
             // 
-            panelAction.Controls.Add(btnCancel1);
-            panelAction.Controls.Add(btnOk);
-            panelAction.Dock = DockStyle.Bottom;
-            panelAction.Location = new Point(0, 423);
-            panelAction.Name = "panelAction";
-            panelAction.Size = new Size(945, 62);
-            panelAction.TabIndex = 1;
+            this.panelAction.Controls.Add(this.label1);
+            this.panelAction.Controls.Add(this.btnCancel1);
+            this.panelAction.Controls.Add(this.btnOk2);
+            this.panelAction.Controls.Add(this.btnOk1);
+            this.panelAction.Controls.Add(this.btnOk);
+            this.panelAction.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelAction.Location = new System.Drawing.Point(0, 405);
+            this.panelAction.Name = "panelAction";
+            this.panelAction.Size = new System.Drawing.Size(976, 100);
+            this.panelAction.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 32);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 15);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "label1";
             // 
             // btnCancel1
             // 
-            btnCancel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnCancel1.AutoSize = true;
-            btnCancel1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            btnCancel1.ForeColor = Color.Black;
-            btnCancel1.Location = new Point(865, 14);
-            btnCancel1.Name = "btnCancel1";
-            btnCancel1.Size = new Size(57, 30);
-            btnCancel1.TabIndex = 3;
-            btnCancel1.Text = "Đóng";
+            this.btnCancel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel1.AutoSize = true;
+            this.btnCancel1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.btnCancel1.ForeColor = System.Drawing.Color.Black;
+            this.btnCancel1.Location = new System.Drawing.Point(907, 54);
+            this.btnCancel1.Name = "btnCancel1";
+            this.btnCancel1.Size = new System.Drawing.Size(57, 30);
+            this.btnCancel1.TabIndex = 3;
+            this.btnCancel1.Text = "Đóng";
+            // 
+            // btnOk2
+            // 
+            this.btnOk2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOk2.AutoSize = true;
+            this.btnOk2.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.btnOk2.ForeColor = System.Drawing.Color.Black;
+            this.btnOk2.Location = new System.Drawing.Point(375, 19);
+            this.btnOk2.Name = "btnOk2";
+            this.btnOk2.Size = new System.Drawing.Size(144, 59);
+            this.btnOk2.TabIndex = 2;
+            this.btnOk2.Text = "Thanh toán QR";
+            // 
+            // btnOk1
+            // 
+            this.btnOk1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOk1.AutoSize = true;
+            this.btnOk1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.btnOk1.ForeColor = System.Drawing.Color.Black;
+            this.btnOk1.Location = new System.Drawing.Point(553, 19);
+            this.btnOk1.Name = "btnOk1";
+            this.btnOk1.Size = new System.Drawing.Size(159, 59);
+            this.btnOk1.TabIndex = 2;
+            this.btnOk1.Text = "Thanh toán VETC";
+            this.btnOk1.Click += new System.EventHandler(this.btnVETC_Click);
             // 
             // btnOk
             // 
-            btnOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnOk.AutoSize = true;
-            btnOk.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            btnOk.ForeColor = Color.Black;
-            btnOk.Location = new Point(784, 14);
-            btnOk.Name = "btnOk";
-            btnOk.Size = new Size(83, 30);
-            btnOk.TabIndex = 2;
-            btnOk.Text = "Xác nhận";
+            this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOk.AutoSize = true;
+            this.btnOk.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.btnOk.ForeColor = System.Drawing.Color.Black;
+            this.btnOk.Location = new System.Drawing.Point(185, 19);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(144, 59);
+            this.btnOk.TabIndex = 2;
+            this.btnOk.Text = "Tiền mặt";
+            // 
+            // picQR
+            // 
+            this.picQR.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picQR.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picQR.Location = new System.Drawing.Point(20, 20);
+            this.picQR.Name = "picQR";
+            this.picQR.Size = new System.Drawing.Size(305, 307);
+            this.picQR.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picQR.TabIndex = 5;
+            this.picQR.TabStop = false;
             // 
             // dgvEventInData
             // 
-            dgvEventInData.AllowUserToAddRows = false;
-            dgvEventInData.AllowUserToDeleteRows = false;
-            dgvEventInData.AllowUserToResizeColumns = false;
-            dgvEventInData.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(192, 255, 255);
-            dgvEventInData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            dgvEventInData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            dgvEventInData.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            dgvEventInData.BackgroundColor = SystemColors.Control;
-            dgvEventInData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvEventInData.ColumnHeadersVisible = false;
-            dgvEventInData.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2 });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11.25F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.Padding = new Padding(3);
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dgvEventInData.DefaultCellStyle = dataGridViewCellStyle2;
-            dgvEventInData.Dock = DockStyle.Fill;
-            dgvEventInData.Location = new Point(0, 0);
-            dgvEventInData.Name = "dgvEventInData";
-            dgvEventInData.RowHeadersVisible = false;
-            dgvEventInData.RowTemplate.Height = 29;
-            dgvEventInData.Size = new Size(624, 365);
-            dgvEventInData.TabIndex = 2;
+            this.dgvEventInData.AllowUserToAddRows = false;
+            this.dgvEventInData.AllowUserToDeleteRows = false;
+            this.dgvEventInData.AllowUserToResizeColumns = false;
+            this.dgvEventInData.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.dgvEventInData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvEventInData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvEventInData.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvEventInData.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvEventInData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvEventInData.ColumnHeadersVisible = false;
+            this.dgvEventInData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 11.25F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvEventInData.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvEventInData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvEventInData.Location = new System.Drawing.Point(0, 0);
+            this.dgvEventInData.Name = "dgvEventInData";
+            this.dgvEventInData.RowHeadersVisible = false;
+            this.dgvEventInData.RowTemplate.Height = 29;
+            this.dgvEventInData.Size = new System.Drawing.Size(373, 347);
+            this.dgvEventInData.TabIndex = 2;
             // 
             // Column1
             // 
-            Column1.HeaderText = "Header";
-            Column1.Name = "Column1";
-            Column1.Width = 5;
+            this.Column1.HeaderText = "Header";
+            this.Column1.Name = "Column1";
+            this.Column1.Width = 5;
             // 
             // Column2
             // 
-            Column2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Column2.HeaderText = "Content";
-            Column2.Name = "Column2";
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column2.HeaderText = "Content";
+            this.Column2.Name = "Column2";
             // 
             // panel1
             // 
-            panel1.Controls.Add(dgvEventInData);
-            panel1.Controls.Add(panelEventPic);
-            panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(0, 58);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(945, 365);
-            panel1.TabIndex = 3;
+            this.panel1.Controls.Add(this.dgvEventInData);
+            this.panel1.Controls.Add(this.panelEventPic);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(345, 58);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(631, 347);
+            this.panel1.TabIndex = 3;
             // 
             // panelEventPic
             // 
-            panelEventPic.Controls.Add(tableLayoutPanel1);
-            panelEventPic.Dock = DockStyle.Right;
-            panelEventPic.Location = new Point(624, 0);
-            panelEventPic.Name = "panelEventPic";
-            panelEventPic.Size = new Size(321, 365);
-            panelEventPic.TabIndex = 3;
+            this.panelEventPic.Controls.Add(this.tableLayoutPanel1);
+            this.panelEventPic.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelEventPic.Location = new System.Drawing.Point(373, 0);
+            this.panelEventPic.Name = "panelEventPic";
+            this.panelEventPic.Size = new System.Drawing.Size(258, 347);
+            this.panelEventPic.TabIndex = 3;
             // 
             // tableLayoutPanel1
             // 
-            tableLayoutPanel1.ColumnCount = 1;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Controls.Add(picOverview, 0, 0);
-            tableLayoutPanel1.Controls.Add(picVehicle, 0, 1);
-            tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(321, 365);
-            tableLayoutPanel1.TabIndex = 0;
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.picOverview, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.picVehicle, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(258, 347);
+            this.tableLayoutPanel1.TabIndex = 0;
             // 
             // picOverview
             // 
-            picOverview.Dock = DockStyle.Fill;
-            picOverview.Location = new Point(3, 3);
-            picOverview.Name = "picOverview";
-            picOverview.Size = new Size(315, 176);
-            picOverview.SizeMode = PictureBoxSizeMode.Zoom;
-            picOverview.TabIndex = 0;
-            picOverview.TabStop = false;
+            this.picOverview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picOverview.Location = new System.Drawing.Point(3, 3);
+            this.picOverview.Name = "picOverview";
+            this.picOverview.Size = new System.Drawing.Size(252, 167);
+            this.picOverview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picOverview.TabIndex = 0;
+            this.picOverview.TabStop = false;
             // 
             // picVehicle
             // 
-            picVehicle.Dock = DockStyle.Fill;
-            picVehicle.Location = new Point(3, 185);
-            picVehicle.Name = "picVehicle";
-            picVehicle.Size = new Size(315, 177);
-            picVehicle.SizeMode = PictureBoxSizeMode.Zoom;
-            picVehicle.TabIndex = 0;
-            picVehicle.TabStop = false;
+            this.picVehicle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picVehicle.Location = new System.Drawing.Point(3, 176);
+            this.picVehicle.Name = "picVehicle";
+            this.picVehicle.Size = new System.Drawing.Size(252, 168);
+            this.picVehicle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picVehicle.TabIndex = 0;
+            this.picVehicle.TabStop = false;
+            // 
+            // pnlQR
+            // 
+            this.pnlQR.Controls.Add(this.picQR);
+            this.pnlQR.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pnlQR.Location = new System.Drawing.Point(0, 58);
+            this.pnlQR.Name = "pnlQR";
+            this.pnlQR.Padding = new System.Windows.Forms.Padding(20);
+            this.pnlQR.Size = new System.Drawing.Size(345, 347);
+            this.pnlQR.TabIndex = 4;
             // 
             // frmConfirmOut
             // 
-            AutoScaleDimensions = new SizeF(96F, 96F);
-            AutoScaleMode = AutoScaleMode.Dpi;
-            AutoSize = true;
-            ClientSize = new Size(945, 485);
-            Controls.Add(panel1);
-            Controls.Add(lblMessage);
-            Controls.Add(panelAction);
-            DoubleBuffered = true;
-            FormBorderStyle = FormBorderStyle.Fixed3D;
-            Icon = (Icon)resources.GetObject("$this.Icon");
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Name = "frmConfirmOut";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "Xác nhận thông tin";
-            panelAction.ResumeLayout(false);
-            panelAction.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvEventInData).EndInit();
-            panel1.ResumeLayout(false);
-            panelEventPic.ResumeLayout(false);
-            tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)picOverview).EndInit();
-            ((System.ComponentModel.ISupportInitialize)picVehicle).EndInit();
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(976, 505);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pnlQR);
+            this.Controls.Add(this.lblMessage);
+            this.Controls.Add(this.panelAction);
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "frmConfirmOut";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Xác nhận thông tin";
+            this.Load += new System.EventHandler(this.frmConfirmOut_Load);
+            this.panelAction.ResumeLayout(false);
+            this.panelAction.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picQR)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEventInData)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panelEventPic.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picOverview)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picVehicle)).EndInit();
+            this.pnlQR.ResumeLayout(false);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
@@ -238,5 +310,10 @@ namespace iParkingv5_window.Forms.DataForms
         private Usercontrols.MovablePictureBox picVehicle;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
+        private PictureBox picQR;
+        private Label label1;
+        private BtnOk btnOk2;
+        private BtnOk btnOk1;
+        private Panel pnlQR;
     }
 }

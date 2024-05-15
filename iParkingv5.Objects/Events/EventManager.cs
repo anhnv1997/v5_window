@@ -51,6 +51,7 @@ namespace iParkingv5.Objects.Events
         public int ReaderIndex { get; set; }
         public string Doors { get; set; }
         public string PlateNumber { get; set; } = string.Empty;
+        public string lanecode { get; set; } = string.Empty;
         public bool IsInWaitingTime(CardEventArgs e, int waitingTime, out int thoiGianCho)
         {
             thoiGianCho = 0;

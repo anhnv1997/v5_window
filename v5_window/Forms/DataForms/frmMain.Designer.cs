@@ -147,7 +147,6 @@
             this.đăngKýToolStripMenuItem.Name = "đăngKýToolStripMenuItem";
             this.đăngKýToolStripMenuItem.Size = new System.Drawing.Size(79, 25);
             this.đăngKýToolStripMenuItem.Text = "Đăng ký";
-            this.đăngKýToolStripMenuItem.Visible = false;
             // 
             // btnRegisterCar
             // 

@@ -330,15 +330,15 @@ namespace iParkingv5_window.Usercontrols
         {
             foreach (Control item in panelCameras.Controls)
             {
-                //if (this.isTopToBottom)
-                //{
-                //    item.Width = (panelCameras.Height - 50) * 16 / 9;
-                //}
-                //else
+                if (this.isTopToBottom)
                 {
-                    item.Width = panelCameras.Width - panelCameras.Margin.Left - panelCameras.Margin.Right - panelCameras.Padding.Left - panelCameras.Padding.Right
-                                                    - item.Margin.Left - item.Margin.Right - item.Padding.Left - item.Padding.Right;
+                    item.Width = (panelCameras.Height - 50) * 16 / 9;
                 }
+                //else
+                //{
+                //    item.Width = panelCameras.Width - panelCameras.Margin.Left - panelCameras.Margin.Right - panelCameras.Padding.Left - panelCameras.Padding.Right
+                //                                    - item.Margin.Left - item.Margin.Right - item.Padding.Left - item.Padding.Right;
+                //}
             }
             for (int i = 0; i < panelCameras.Controls.Count; i++)
             {
@@ -351,14 +351,14 @@ namespace iParkingv5_window.Usercontrols
                     Control lastControl = panelCameras.Controls[i - 1];
                     //if (this.isTopToBottom)
                     //{
-                    //    Point location = new Point(lastControl.Location.X + lastControl.Width + 10, lastControl.Location.Y);
-                    //    panelCameras.Controls[i].Location = location;
+                    Point location = new Point(lastControl.Location.X + lastControl.Width + 10, lastControl.Location.Y);
+                    panelCameras.Controls[i].Location = location;
                     //}
                     //else
-                    {
-                        Point location = new Point(lastControl.Location.X, lastControl.Location.Y + lastControl.Height + 10);
-                        panelCameras.Controls[i].Location = location;
-                    }
+                    //{
+                    //    Point location = new Point(lastControl.Location.X, lastControl.Location.Y + lastControl.Height + 10);
+                    //    panelCameras.Controls[i].Location = location;
+                    //}
                 }
             }
         }
@@ -1606,24 +1606,24 @@ namespace iParkingv5_window.Usercontrols
 
             string errorMessage = string.Empty;
             AddEventInResponse? eventIn = null;
-            if (string.IsNullOrEmpty(plateNumber) && identity.RegisteredVehicles.Count == 1)
-            {
-                bool isConfirm = MessageBox.Show("Không nhận diện được biển số, bạn có muốn cho xe vào bãi?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
-                if (isConfirm)
-                {
-                    isAlarm = true;
-                    goto CheckInWithForce;
-                }
-                else
-                {
-                    ClearView();
-                    return;
-                }
-            }
-            else
-            {
-                goto CheckInNormal;
-            }
+            //if (string.IsNullOrEmpty(plateNumber) && identity.RegisteredVehicles.Count == 1)
+            //{
+            //    bool isConfirm = MessageBox.Show("Không nhận diện được biển số, bạn có muốn cho xe vào bãi?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
+            //    if (isConfirm)
+            //    {
+            //        isAlarm = true;
+            //        goto CheckInWithForce;
+            //    }
+            //    else
+            //    {
+            //        ClearView();
+            //        return;
+            //    }
+            //}
+            //else
+            //{
+            //    goto CheckInNormal;
+            //}
 
         CheckInNormal:
             {
@@ -1869,7 +1869,7 @@ namespace iParkingv5_window.Usercontrols
                 var imageKeys = new List<string>() { overviewKey, vehicleKey, vehicleCutKey };
                 ucLastEventInfos[0].UpdateEventInfo(eventIn.Id, detectPlate, "",
                                                     identityGroup?.Id.ToString() ?? "", eventTime, imageKeys,
-                                                    eventIn.customer.Id, eventIn.registeredVehicle.Id, this.lane.id, identity?.Id, true);
+                                                    eventIn.customer?.Id, eventIn.registeredVehicle?.Id, this.lane.id, identity?.Id, true);
             }));
             if (((EmPrintTemplate)StaticPool.appOption.PrintTemplate) == EmPrintTemplate.XuanCuong)
             {

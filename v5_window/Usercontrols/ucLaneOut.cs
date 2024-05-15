@@ -111,8 +111,8 @@ namespace iParkingv5_window.Usercontrols
 
             if (this.isTopToBottom)
             {
-                //panelCameras.Dock = DockStyle.Top;
-                //splitterCamera.Dock = DockStyle.Top;
+                panelCameras.Dock = DockStyle.Top;
+                splitterCamera.Dock = DockStyle.Top;
                 splitterEventInfoWithCamera.Dock = DockStyle.Bottom;
                 panelEventData.Dock = DockStyle.Bottom;
             }
@@ -389,14 +389,15 @@ namespace iParkingv5_window.Usercontrols
         {
             foreach (Control item in panelCameras.Controls)
             {
-                //if (this.isTopToBottom)
-                //{
-                //    item.Width = (panelCameras.Height - 50) * 16 / 9;
-                //}
-                //else
+                if (this.isTopToBottom)
                 {
-                    item.Width = panelCameras.Width - 5;
+                    item.Width = (panelCameras.Height - 50) * 16 / 9;
                 }
+                //else
+                //{
+                //    item.Width = panelCameras.Width - panelCameras.Margin.Left - panelCameras.Margin.Right - panelCameras.Padding.Left - panelCameras.Padding.Right
+                //                                    - item.Margin.Left - item.Margin.Right - item.Padding.Left - item.Padding.Right;
+                //}
             }
             for (int i = 0; i < panelCameras.Controls.Count; i++)
             {
@@ -409,14 +410,14 @@ namespace iParkingv5_window.Usercontrols
                     Control lastControl = panelCameras.Controls[i - 1];
                     //if (this.isTopToBottom)
                     //{
-                    //    Point location = new Point(lastControl.Location.X + lastControl.Width + 10, lastControl.Location.Y);
-                    //    panelCameras.Controls[i].Location = location;
+                    Point location = new Point(lastControl.Location.X + lastControl.Width + 10, lastControl.Location.Y);
+                    panelCameras.Controls[i].Location = location;
                     //}
                     //else
-                    {
-                        Point location = new Point(lastControl.Location.X, lastControl.Location.Y + lastControl.Height + 10);
-                        panelCameras.Controls[i].Location = location;
-                    }
+                    //{
+                    //    Point location = new Point(lastControl.Location.X, lastControl.Location.Y + lastControl.Height + 10);
+                    //    panelCameras.Controls[i].Location = location;
+                    //}
                 }
             }
         }
@@ -1237,55 +1238,7 @@ namespace iParkingv5_window.Usercontrols
                 else
                 {
                     // Có phí
-                    //Fix SendAPI_CheckOut_VETC
-                    //CheckOutModel model = new CheckOutModel();
-                    //model.transId = "20240305123000139";
-                    //model.checkoutLaneId = "6";
-                    //model.etag = "";
-                    //model.plate = "30A12345";
-                    //model.laneCardId = "";
-                    //model.totalAmount = 10000;
-                    //model.description = "Gửi xe 12h-18h 50k, gửi xe 18h-23h 50k";
-                    //model.checkinTime = 1713857142000;
-                    //model.base64Image = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADIAQAAAACFI5MzAAACm0lEQVR4XrWXUYojMQwFDb6WQVcX+FoGb5U6G5iw87MoIcy0VQ1uPT3JnXF/" +
-                    //    "+4zPwPszcox5D9+4Z6w1VpzYBpvJvnfnzHkmbJ8RLgx2E/4Ty3nvWcHWPMI0+AWSa/gEiy955oovkWua4DGIRYa5txPEY1m6XjZnte9b6z6iGfbn5+2dT/D/RHOjZYb77ls3Po7vJTkmq1HmwPubu0h4rWgmbF" +
-                    //    "tm141BmO2tYjsxTZNld9L0DhuZO7qJdkgy3T4ENVumiiW7Saooue6npzSm985mwuoUQEUbi2SFJ7pJaHFkTbuKUaHhobud5PIBtv7gqvx+VLSX7DIiez6+L8cj6e4mZjfdPpzmxyPqyKObpHXjZIq/rmfSCp" +
-                    //    "uJ21IzUlXQcnyxbnId4c+woHpPEcv2zQSLa7+neGE7s1TgdkL/6nHeGoZaLju6NOglOo/C2b54BMcbyXbC6uVDT0KUxffTpm4m6cYl4fXCoh3PpppIjWSXfpfKKWg1FpKSfTOxXYeCGt7leNxoB/cSymbN" +
-                    //    "bGI8SI+ZpW+rzYRqoSWa8hT6Q+s72aOZVLVqSFCz+9RPrnc6CUktPGh02GJe15BtJmSFfKeys8kcsaT9OksaiUVbWIKq2bwkrrRq3UoAPgPb1t4YpBJW61biEsvXfN0/HN9MKv70FiHzHo+ivaTcHlpPIf2L" +
-                    //    "shwb1cGNhKwGM7WOc8I4fjvYw4nUSkb9UlXH6fDjQCdAys0ka945LEbFEVRtM5oJ74uvdjqmyvbmnTq+leRj8OOw8NXkeAsXddY3kjry4lHUnJV06v5uorsd56WolkwVdSK1E/VMt30cX4v7BcL0W8pKvjUwyL" +
-                    //    "mfoKiRqt61jRkb287qJTqEGaTjA2EtHAlff1G2Eh3/z8/v5A+jQasPKWdzUQAAAABJRU5ErkJggg==";
-                    //model.additionalBase64Image = "";
-                    //model.forceQR = false;
-
-                    //var vetcData = await VETCParkingApihelper.CheckOut(model);
-                    //if (vetcData.data != null)
-                    //{
-                    //    if (model.transId != vetcData.data.transId)
-                    //    {
-                    //        // warning
-                    //        return;
-                    //    }
-                    //    if(vetcData.message.ToUpper() != "SUCCESS")
-                    //    {
-
-                    //    }
-
-                    //    if (vetcData.data.status == Em_PaymentStatus.SUCCESS.ToString())
-                    //    {
-                    //        if (vetcData.data.amount <= 0)
-                    //        {
-                    //            // Mở Barrier
-                    //            await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
-                    //            responseNormal.data.plateNumber = plateNumber;
-                    //            KzParkingApiHelper.CommitOutAsync(responseNormal.data);
-                    //        }
-                    //    }
-                    //    else if (vetcData.data.status == Em_PaymentStatus.PENDING.ToString())
-                    //    {
-                    //        CheckOutData check = vetcData.data;
-                    //    }
-
-                    //}
+                   
 
 
                     frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, "Bạn có xác nhận mở barrie?", responseNormal.data?.eventInPlateNumber ?? "", responseNormal.data?.eventInIdentityId ?? "", responseNormal.data?.eventInLaneId ?? "", responseNormal.data?.eventInFileKeys, responseNormal.data?.DatetimeIn ?? DateTime.Now, false, responseNormal.data?.charge ?? 0);
@@ -1649,7 +1602,7 @@ namespace iParkingv5_window.Usercontrols
                 var imageKeys = new List<string>() { overviewKey, vehicleKey, vehicleCutKey };
                 ucLastEventInfos[0].UpdateEventInfo(lastEvent.Id, detectedPlate, identityGroup?.Id.ToString() ?? "",
                                                     identityGroup?.Id.ToString() ?? "", eventTime, imageKeys,
-                                                    lastEvent.customer.Id, lastEvent.RegisteredVehicle.Id, this.lane.id, identity?.Id, false);
+                                                    lastEvent.customer?.Id, lastEvent.RegisteredVehicle?.Id, this.lane.id, identity?.Id, false);
             }));
             //SendAPIXuanCuong
             if (((EmPrintTemplate)StaticPool.appOption.PrintTemplate) == EmPrintTemplate.XuanCuong)

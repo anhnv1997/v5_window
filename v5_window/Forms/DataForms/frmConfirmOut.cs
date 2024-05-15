@@ -1,9 +1,14 @@
-﻿using iParkingv5.Objects;
+﻿using iParkingv5.ApiManager.VETCParking;
+using iParkingv5.Objects;
 using iParkingv5.Objects.Datas;
+using iParkingv5.Objects.Datas.VETC;
 using iParkingv5.Objects.Enums;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
 using Kztek.Tool.TextFormatingTools;
+using QRCoder;
+using System.Transactions;
+using static iParkingv5.Objects.Enums.VETCType;
 
 namespace iParkingv5_window.Forms.DataForms
 {
@@ -18,6 +23,9 @@ namespace iParkingv5_window.Forms.DataForms
         private string datetimeIn;
         private long charge = 0;
         public string updatePlate;
+        public CheckOutData DataCheck;
+
+
         #region Forms
         public frmConfirmOut(string detectedPlate, string errorMessage, string plateIn, string identityIdIn,
                             string laneId, List<string> fileKeys, DateTime? datetimeIn, bool isDisplayQuestion = true, long charge = 0)
@@ -64,6 +72,8 @@ namespace iParkingv5_window.Forms.DataForms
 
             ShowInfo(this.detectedPlate, this.laneId, this.datetimeIn, this.plateIn, this.identityIdIn);
             this.ActiveControl = btnOk;
+
+            pnlQR.Size = new Size(10, pnlQR.Height);
         }
 
         private void BtnOk_Click(object? sender, EventArgs e)
@@ -177,6 +187,129 @@ namespace iParkingv5_window.Forms.DataForms
                 }
             }
             pic.Image = defaultImg;
+        }
+
+        private async void btnVETC_Click(object sender, EventArgs e)
+        {
+            pnlQR.Size = new Size(pnlQR.Height, pnlQR.Height);
+
+            picQR.Image = Properties.Resources.Loading;
+
+            //Fix SendAPI_CheckOut_VETC
+            CheckOutModel model = new CheckOutModel();
+            model.transId = Guid.NewGuid().ToString();
+            model.checkoutLaneId = "1";
+            model.etag = "3416214B881B000006801436";
+            model.plate = plateIn;
+            model.laneCardId = "";
+            model.totalAmount = (int)charge;
+            model.description = "Gửi xe 12h-18h 50k, gửi xe 18h-23h 50k";
+            model.checkinTime = ConvertToUnixTimestamp(DateTime.Parse(this.datetimeIn));
+            byte[] imageBytes = File.ReadAllBytes(frmMain.defaultImagePath);
+            model.base64Image = Convert.ToBase64String(imageBytes);
+
+            //model.base64Image = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADIAQAAAACFI5MzAAACm0lEQVR4XrWXUYojMQwFDb6WQVcX+FoGb5U6G5iw87MoIcy0VQ1uPT3JnXF/" +
+            //    "+4zPwPszcox5D9+4Z6w1VpzYBpvJvnfnzHkmbJ8RLgx2E/4Ty3nvWcHWPMI0+AWSa/gEiy955oovkWua4DGIRYa5txPEY1m6XjZnte9b6z6iGfbn5+2dT/D/RHOjZYb77ls3Po7vJTkmq1HmwPubu0h4rWgmbF" +
+            //    "tm141BmO2tYjsxTZNld9L0DhuZO7qJdkgy3T4ENVumiiW7Saooue6npzSm985mwuoUQEUbi2SFJ7pJaHFkTbuKUaHhobud5PIBtv7gqvx+VLSX7DIiez6+L8cj6e4mZjfdPpzmxyPqyKObpHXjZIq/rmfSCp" +
+            //    "uJ21IzUlXQcnyxbnId4c+woHpPEcv2zQSLa7+neGE7s1TgdkL/6nHeGoZaLju6NOglOo/C2b54BMcbyXbC6uVDT0KUxffTpm4m6cYl4fXCoh3PpppIjWSXfpfKKWg1FpKSfTOxXYeCGt7leNxoB/cSymbN" +
+            //    "bGI8SI+ZpW+rzYRqoSWa8hT6Q+s72aOZVLVqSFCz+9RPrnc6CUktPGh02GJe15BtJmSFfKeys8kcsaT9OksaiUVbWIKq2bwkrrRq3UoAPgPb1t4YpBJW61biEsvXfN0/HN9MKv70FiHzHo+ivaTcHlpPIf2L" +
+            //    "shwb1cGNhKwGM7WOc8I4fjvYw4nUSkb9UlXH6fDjQCdAys0ka945LEbFEVRtM5oJ74uvdjqmyvbmnTq+leRj8OOw8NXkeAsXddY3kjry4lHUnJV06v5uorsd56WolkwVdSK1E/VMt30cX4v7BcL0W8pKvjUwyL" +
+            //    "mfoKiRqt61jRkb287qJTqEGaTjA2EtHAlff1G2Eh3/z8/v5A+jQasPKWdzUQAAAABJRU5ErkJggg==";
+            model.additionalBase64Image = "";
+            model.forceQR = false;
+
+            var vetcData = await VETCParkingApihelper.CheckOut(model);
+            if (vetcData.data != null)
+            {
+                if (model.transId != vetcData.data.transId)
+                {
+                    // warning
+                    return;
+                }
+                if (vetcData.message.ToUpper() != "SUCCESS")
+                {
+
+                }
+
+                if (vetcData.data.status == Em_PaymentStatus.SUCCESS.ToString())
+                {
+                    if (vetcData.data.amount <= 0)
+                    {
+                        // Mở Barrier
+                        this.DialogResult = DialogResult.OK;
+                    }
+                }
+                else if (vetcData.data.status == Em_PaymentStatus.PENDING.ToString())
+                {
+                    DataCheck = vetcData.data;
+
+                    dgvEventInData.Rows.Add("Phí đã thanh toán VETC", DataCheck.paidAmount);
+                    dgvEventInData.Rows.Add("Phí còn thiếu", DataCheck.amount);
+
+
+                    if (DataCheck.qrData != null && DataCheck.qrData != "")
+                    {
+                        Bitmap qrCodeImage = GenerateQRCode(DataCheck.qrData);
+
+                        picQR.Image = qrCodeImage;
+                    }
+                    CheckTransaction();
+                }
+
+            }
+        }
+
+        private async void CheckTransaction()
+        {
+            int i = 0;
+            while (true)
+            {
+                i++;
+                var paymentCheck = await VETCParkingApihelper.CheckPaymentStatus(DataCheck.transactionId);
+
+                if (paymentCheck.message.ToUpper() == "SUCCESS")
+                {
+                    if (paymentCheck.data.status == Em_PaymentStatus.SUCCESS.ToString())
+                    {
+                        label1.Text = paymentCheck.data.status;
+                        this.DialogResult = DialogResult.OK;
+                        return;
+                    }
+                    else
+                    {
+                        label1.Text = paymentCheck.data.status + " lần: " + i;
+                        await Task.Delay(1000);
+
+                    }
+                }
+                else
+                {
+                    await Task.Delay(300);
+                }
+            }
+        }
+        static Bitmap GenerateQRCode(string data)
+        {
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(data, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+            Bitmap qrCodeImage = qrCode.GetGraphic(20);
+
+            return qrCodeImage;
+        }
+
+        private void frmConfirmOut_Load(object sender, EventArgs e)
+        {
+
+        }
+        public static long ConvertToUnixTimestamp(DateTime dateTime)
+        {
+            dateTime = dateTime.ToUniversalTime();
+
+            var unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            var ticks = dateTime.Ticks - unixEpoch.Ticks;
+
+            return ticks / TimeSpan.TicksPerSecond;
         }
     }
 }

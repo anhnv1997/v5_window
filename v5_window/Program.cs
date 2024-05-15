@@ -1,4 +1,5 @@
-﻿using IPaking.Ultility;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using IPaking.Ultility;
 using iParkingv5.Lpr.Objects;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
@@ -87,6 +88,7 @@ namespace v6_window
                         // Fix cung
                         Application.Run(new frmLogin());
                         //Application.Run(new frmVETCtest());
+
 
                     }
                     else

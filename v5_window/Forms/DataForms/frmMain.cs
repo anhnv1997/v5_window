@@ -18,6 +18,7 @@ using Kztek.Tools;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Collections.Concurrent;
+using System.Net.WebSockets;
 using System.Text;
 using v5_IScale.Forms.ReportForms;
 using static IPaking.Ultility.TextManagement;
@@ -129,6 +130,8 @@ namespace iParkingv5_window.Forms.DataForms
                 lblServerName.Width = lblServerName.PreferredWidth;
                 lblCompanyName.Width = lblCompanyName.PreferredWidth;
                 lblTime.Width = lblTime.PreferredWidth;
+                this.FormClosing += frmMain_FormClosing;
+                StartVETCService();
             }
             catch (Exception ex)
             {
@@ -136,7 +139,64 @@ namespace iParkingv5_window.Forms.DataForms
             }
         }
 
-        
+        private async Task StartVETCService()
+        {
+            using (ClientWebSocket ws = new ClientWebSocket())
+            {
+                Uri serverUri = new Uri("ws://localhost:50050/etag-reader");
+
+                try
+                {
+                    await ws.ConnectAsync(serverUri, CancellationToken.None);
+
+                    while (true)
+                    {
+                        ArraySegment<byte> buffer = new ArraySegment<byte>(new byte[4096]);
+                        WebSocketReceiveResult result = await ws.ReceiveAsync(buffer, CancellationToken.None);
+
+                        if (result.MessageType == WebSocketMessageType.Close)
+                        {
+                            await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+                            break;
+                        }
+                        else
+                        {
+                            string message = System.Text.Encoding.UTF8.GetString(buffer.Array, 0, result.Count);
+
+                            string[] parts = message.Split('-');
+
+                            if (parts.Length != 3)
+                            {
+                                // Canhr baso
+                            }
+                            string laneCode = parts[0];
+                            string status = parts[1];
+                            string etag = parts[2];
+
+
+                            CardEventArgs ce = new()
+                            {
+                                EventTime = DateTime.Now,
+                                //DeviceId = controllerInLane.controlUnitId,
+                                //ReaderIndex = controllerInLane.readers[0],
+                                //AllCardFormats = new List<string>() { identity.Code },
+                                lanecode = laneCode,
+                                PreferCard = etag
+                            };
+                            if (status == "1")
+                            {
+                                Controller_CardEvent(this, ce);
+                            }
+
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //
+                }
+            }
+        }
         private void LoadThirdPartyConfig()
         {
             if (File.Exists(PathManagement.thirtPartyConfigPath))
@@ -236,7 +296,7 @@ namespace iParkingv5_window.Forms.DataForms
         #endregion End Timer
 
         #region Controller Event
-       
+
 
         private void Controller_DeviceInfoChangeEvent(object sender, DeviceInfoChangeArgs e)
         {
@@ -283,7 +343,11 @@ namespace iParkingv5_window.Forms.DataForms
 
                 foreach (iLane iLane in lanes)
                 {
-                    iLane.OnNewEvent(e);
+                    // Fix cung
+                    if (e.lanecode == iLane.lane.code)
+                    {
+                        iLane.OnNewEvent(e);
+                    }
                 }
             }));
         }

@@ -236,6 +236,7 @@ namespace iParkingv5.Controller.Dahua
         }
         private void CallCardEvent(Bdk controller, string cardNumber, int readerIndex)
         {
+            // Fix
             CardEventArgs e = new CardEventArgs
             {
                 DeviceId = controller.Id,
