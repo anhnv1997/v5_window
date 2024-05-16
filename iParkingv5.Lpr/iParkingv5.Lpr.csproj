@@ -15,10 +15,10 @@
 
   <ItemGroup>
     <Reference Include="DarknetYolo">
-      <HintPath>..\..\..\..\..\..\..\BaseLib\NXT AI LPR\NXT AI LPR\DarknetYolo.dll</HintPath>
+      <HintPath>..\packages\DarknetYolo.dll</HintPath>
     </Reference>
     <Reference Include="NXT.Net6.LPR_AI">
-      <HintPath>..\..\..\..\..\..\..\BaseLib\NXT AI LPR\NXT AI LPR\NXT.Net6.LPR_AI.dll</HintPath>
+      <HintPath>..\packages\NXT.Net6.LPR_AI.dll</HintPath>
     </Reference>
   </ItemGroup>
 
