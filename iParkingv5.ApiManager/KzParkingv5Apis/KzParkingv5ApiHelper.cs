@@ -13,19 +13,15 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing.Printing;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using static iParkingv5.ApiManager.KzParkingv5Apis.Filter;
-using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5ApiHelper;
 using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper;
 using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper.TransactionType;
 
 namespace iParkingv5.ApiManager.KzParkingv5Apis
 {
-    public static class KzParkingv5ApiHelper
+    public class KzParkingv5ApiHelper : iParkingApi
     {
         #region SubClass
         public class BaseEventReport<T> where T : class
@@ -152,7 +148,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 { "Authorization","Bearer " + token  }
             };
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null,
-                                                                   timeOut, RestSharp.Method.Post);
+                                                                   timeOut, Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
                 KzParkingv5BaseResponse<List<T>> kzBaseResponse =
@@ -218,25 +214,13 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return Tuple.Create<T, string>(null, "Empty Data");
         }
+
         #endregion End ADD
 
         #endregion End Base
 
         #region USER
-        public class User
-        {
-            public string id { get; set; }
-            public string firstName { get; set; }
-            public string lastName { get; set; }
-            public string upn { get; set; }
-            public object[] groups { get; set; }
-            public string[] rightHashes { get; set; }
-            public object[] objectRightHashes { get; set; }
-            public string[] rights { get; set; }
-            public object[] objectRights { get; set; }
-        }
-
-        public static async Task GetUserInfor()
+        public async Task GetUserInfor()
         {
             StandardlizeServerName();
             string apiUrl = server + "user/info";
@@ -261,18 +245,18 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 }
             }
         }
-        public static async Task<Tuple<List<User>, string>> GetAllUsers()
+        public async Task<Tuple<List<User>, string>> GetAllUsers()
         {
             return await GetAllObjectAsync<User>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.User);
         }
         #endregion
 
         #region Computer --OK
-        public static async Task<Tuple<List<Computer>, string>> GetComputersAsync()
+        public async Task<Tuple<List<Computer>, string>> GetComputersAsync()
         {
             return await GetAllObjectAsync<Computer>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Computer);
         }
-        public static async Task<Tuple<Computer, string>> GetComputerByIPAsync(string ip)
+        public async Task<Tuple<Computer, string>> GetComputerByIPAsync(string ip)
         {
             return await GetTop1ObjectAsync<Computer>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Computer,
                                                       EmPageSearchType.TEXT, EmPageSearchKey.IpAddress, ip);
@@ -280,22 +264,22 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         #endregion End Computer
 
         #region Gate --OK
-        public static async Task<Tuple<List<Gate>, string>> GetGatesAsync()
+        public async Task<Tuple<List<Gate>, string>> GetGatesAsync()
         {
             return await GetAllObjectAsync<Gate>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Gate);
         }
-        public static async Task<Tuple<Gate, string>> GetGateByIdAsync(string gateId)
+        public async Task<Tuple<Gate, string>> GetGateByIdAsync(string gateId)
         {
             return await GetObjectDetailByIdAsync<Gate>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Gate, gateId);
         }
         #endregion End Gate
 
         #region Camera
-        public static async Task<Tuple<List<Camera>, string>> GetCamerasAsync()
+        public async Task<Tuple<List<Camera>, string>> GetCamerasAsync()
         {
             return await GetAllObjectAsync<Camera>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Camera);
         }
-        public static async Task<Tuple<List<Camera>, string>> GetCameraByComputerIdAsync(string computerId)
+        public async Task<Tuple<List<Camera>, string>> GetCameraByComputerIdAsync(string computerId)
         {
             return await GetObjectByConditionAsync<Camera>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Camera,
                                                            EmPageSearchType.GUID, EmPageSearchKey.ComputerId, computerId, EmOperation._eq);
@@ -303,28 +287,28 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         #endregion End Camera
 
         #region Lane
-        public static async Task<Tuple<List<Lane>, string>> GetLanesAsync()
+        public async Task<Tuple<List<Lane>, string>> GetLanesAsync()
         {
             return await GetAllObjectAsync<Lane>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Lane);
         }
-        public static async Task<Tuple<List<Lane>, string>> GetLaneByComputerIdAsync(string computerId)
+        public async Task<Tuple<List<Lane>, string>> GetLaneByComputerIdAsync(string computerId)
         {
             return await GetObjectByConditionAsync<Lane>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Lane,
                                                         EmPageSearchType.GUID, EmPageSearchKey.ComputerId, computerId, EmOperation._eq);
 
         }
-        public static async Task<Tuple<Lane, string>> GetLaneByIdAsync(string laneId)
+        public async Task<Tuple<Lane, string>> GetLaneByIdAsync(string laneId)
         {
             return await GetObjectDetailByIdAsync<Lane>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Lane, laneId);
         }
         #endregion End Lane
 
         #region Parking Led
-        public static async Task<Tuple<List<Led>, string>> GetLedsAsync()
+        public async Task<Tuple<List<Led>, string>> GetLedsAsync()
         {
             return await GetAllObjectAsync<Led>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Led);
         }
-        public static async Task<Tuple<List<Led>, string>> GetLedByComputerIdAsync(string computerId)
+        public async Task<Tuple<List<Led>, string>> GetLedByComputerIdAsync(string computerId)
         {
             return await GetObjectByConditionAsync<Led>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Led,
                                                         EmPageSearchType.GUID, EmPageSearchKey.ComputerId, computerId, EmOperation._eq);
@@ -332,11 +316,11 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         #endregion End Parking Led
 
         #region Control Unit
-        public static async Task<Tuple<List<Bdk>, string>> GetControlUnitsAsync()
+        public async Task<Tuple<List<Bdk>, string>> GetControlUnitsAsync()
         {
             return await GetAllObjectAsync<Bdk>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.ControlUnit);
         }
-        public static async Task<Tuple<List<Bdk>, string>> GetControlUnitByComputerIdAsync(string computerId)
+        public async Task<Tuple<List<Bdk>, string>> GetControlUnitByComputerIdAsync(string computerId)
         {
             return await GetObjectByConditionAsync<Bdk>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.ControlUnit,
                                                         EmPageSearchType.GUID, EmPageSearchKey.ComputerId, computerId, EmOperation._eq);
@@ -344,15 +328,15 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         #endregion End Control Unit
 
         #region Vehicle Type
-        public static async Task<Tuple<VehicleType, string>> GetVehicleTypeByIdAsync(string vehicleTypeId)
+        public async Task<Tuple<VehicleType, string>> GetVehicleTypeByIdAsync(string vehicleTypeId)
         {
             return await GetObjectDetailByIdAsync<VehicleType>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.VehicleType, vehicleTypeId);
         }
-        public static async Task<Tuple<List<VehicleType>, string>> GetVehicleTypesAsync()
+        public async Task<Tuple<List<VehicleType>, string>> GetVehicleTypesAsync()
         {
             return await GetAllObjectAsync<VehicleType>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.VehicleType);
         }
-        public static async Task<Tuple<List<VehicleType>, string>> GetVehicleTypesAsync(string keyword)
+        public async Task<Tuple<List<VehicleType>, string>> GetVehicleTypesAsync(string keyword)
         {
             return await GetObjectByConditionAsync<VehicleType>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.VehicleType,
                                                         EmPageSearchType.TEXT, EmPageSearchKey.name, keyword, EmOperation._contains);
@@ -361,57 +345,61 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         #endregion End Vehicle Type
 
         #region Identity
-        public static async Task<Tuple<Identity, string>> GetIdentityByIdAsync(string id)
+        public async Task<Tuple<Identity, string>> GetIdentityByIdAsync(string id)
         {
             return await GetObjectDetailByIdAsync<Identity>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Identity, id);
         }
-        public static async Task<Tuple<List<Identity>, string>> GetIdentitiesAsync(string keyword)
+        public async Task<Tuple<List<Identity>, string>> GetIdentitiesAsync(string keyword)
         {
             return await GetObjectByConditionAsync<Identity>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Identity,
                                                         EmPageSearchType.TEXT, EmPageSearchKey.name, keyword, EmOperation._contains);
 
         }
-        public static async Task<Tuple<Identity, string>> GetIdentityByCodeAsync(string code)
+        public async Task<Tuple<Identity, string>> GetIdentityByCodeAsync(string code)
         {
             return await GetTop1ObjectAsync<Identity>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Identity, EmPageSearchType.TEXT,
                                                       EmPageSearchKey.code, code);
         }
+        public async Task<Tuple<Identity, string>> CreateIdentityAsync(Identity identity)
+        {
+            return await CreateObjectAsync<Identity>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Identity,
+                                                              identity);
+        }
         #endregion End Identity
 
         #region Identity Group
-        public static async Task<Tuple<IdentityGroup, string>> GetIdentityGroupByIdAsync(string id)
+        public async Task<Tuple<IdentityGroup, string>> GetIdentityGroupByIdAsync(string id)
         {
             return await GetObjectDetailByIdAsync<IdentityGroup>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.IdentityGroup, id);
         }
-        public static async Task<Tuple<List<IdentityGroup>, string>> GetIdentityGroupsAsync()
+        public async Task<Tuple<List<IdentityGroup>, string>> GetIdentityGroupsAsync()
         {
             return await GetAllObjectAsync<IdentityGroup>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.IdentityGroup);
         }
-
         #endregion End Identity Group
 
         #region Register Vehicle
-        public static async Task<Tuple<RegisteredVehicle, string>> GetRegistedVehilceByPlateAsync(string plateNumber)
+        public async Task<Tuple<RegisteredVehicle, string>> GetRegistedVehilceByPlateAsync(string plateNumber)
         {
             return await GetTop1ObjectAsync<RegisteredVehicle>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.RegisteredVehicle, EmPageSearchType.TEXT,
                                                       EmPageSearchKey.plateNumber, plateNumber);
         }
-        public static async Task<Tuple<RegisteredVehicle, string>> GetRegistedVehilceByIdAsync(string id)
+        public async Task<Tuple<RegisteredVehicle, string>> GetRegistedVehilceByIdAsync(string id)
         {
             return await GetObjectDetailByIdAsync<RegisteredVehicle>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.RegisteredVehicle, id);
         }
-        public static async Task<Tuple<List<RegisteredVehicle>, string>> GetRegisterVehiclesAsync(string keyword)
+        public async Task<Tuple<List<RegisteredVehicle>, string>> GetRegisterVehiclesAsync(string keyword)
         {
             return await GetObjectByConditionAsync<RegisteredVehicle>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.RegisteredVehicle,
                                                             EmPageSearchType.TEXT, EmPageSearchKey.name, keyword, EmOperation._contains);
 
         }
-        public static async Task<Tuple<RegisteredVehicle, string>> CreateRegisteredVehicle(RegisteredVehicle registeredVehicle)
+        public async Task<Tuple<RegisteredVehicle, string>> CreateRegisteredVehicle(RegisteredVehicle registeredVehicle)
         {
             return await CreateObjectAsync<RegisteredVehicle>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.RegisteredVehicle,
                                                               registeredVehicle);
         }
-        public static async Task<bool> UpdateRegisteredVehicleAsyncById(RegisteredVehicle registeredVehicle)
+        public async Task<bool> UpdateRegisteredVehicleAsyncById(RegisteredVehicle registeredVehicle)
         {
             StandardlizeServerName();
             string apiUrl = server + KzApiUrlManagement.EmObjectType.RegisteredVehicle.UpdateRouteById(registeredVehicle.Id);
@@ -436,26 +424,26 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         #endregion End Register Vehicle
 
         #region Customer
-        public static async Task<Tuple<Customer, string>> CreateCustomer(Customer customer)
+        public async Task<Tuple<Customer, string>> CreateCustomer(Customer customer)
         {
             return await CreateObjectAsync<Customer>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Customer,
                                                              customer);
         }
-        public static async Task<Tuple<Customer, string>> GetCustomerByIdAsync(string id)
+        public async Task<Tuple<Customer, string>> GetCustomerByIdAsync(string id)
         {
             return await GetObjectDetailByIdAsync<Customer>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Customer, id);
         }
-        public static async Task<Tuple<List<Customer>, string>> GetCustomersAsync()
+        public async Task<Tuple<List<Customer>, string>> GetCustomersAsync()
         {
             return await GetAllObjectAsync<Customer>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Customer);
         }
-        public static async Task<Tuple<List<Customer>, string>> GetCustomersAsync(string keyword)
+        public async Task<Tuple<List<Customer>, string>> GetCustomersAsync(string keyword)
         {
             return await GetObjectByConditionAsync<Customer>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Customer,
                                                             EmPageSearchType.TEXT, EmPageSearchKey.name, keyword, EmOperation._contains);
 
         }
-        public static async Task<bool> UpdateCustomer(Customer customer)
+        public async Task<bool> UpdateCustomer(Customer customer)
         {
             StandardlizeServerName();
             string apiUrl = server + KzApiUrlManagement.EmObjectType.Customer.UpdateRouteById(customer.Id);
@@ -473,7 +461,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return false;
         }
-        public static async Task<Tuple<bool, string>> DeleteCustomerById(string customerId)
+        public async Task<Tuple<bool, string>> DeleteCustomerById(string customerId)
         {
             StandardlizeServerName();
             string apiUrl = server + KzApiUrlManagement.EmObjectType.Customer.DeleteByIdRoute(customerId);
@@ -503,14 +491,14 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         #endregion End Customer
 
         #region Customer Group
-        public static async Task<Tuple<List<CustomerGroup>, string>> GetCustomerGroupsAsync()
+        public async Task<Tuple<List<CustomerGroup>, string>> GetCustomerGroupsAsync()
         {
             return await GetAllObjectAsync<CustomerGroup>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.CustomerGroup);
         }
         #endregion End Customer Group
 
         #region Event In
-        public static async Task<bool> UpdateEventInPlateAsync(string eventId, string newPlate)
+        public async Task<bool> UpdateEventInPlateAsync(string eventId, string newPlate)
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/" + eventId;
@@ -533,19 +521,19 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return false;
         }
-        public static async Task<AddEventInResponse> PostCheckInAsync(
-            string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null)
+        public async Task<AddEventInResponse> PostCheckInAsync(
+            string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null, string _note = "")
         {
             if (identity == null)
             {
-                return await PostCheckInByPlateAsync(_laneId, _plateNumber, identity, imageKeys, isForce, registeredVehicle);
+                return await PostCheckInByPlateAsync(_laneId, _plateNumber, identity, imageKeys, isForce, registeredVehicle, _note);
             }
             else
             {
-                return await PostCheckInByIdentityAsync(_laneId, _plateNumber, identity, imageKeys, isForce, registeredVehicle);
+                return await PostCheckInByIdentityAsync(_laneId, _plateNumber, identity, imageKeys, isForce, registeredVehicle, _note);
             }
         }
-        public static async Task<AddEventInResponse> PostCheckInByIdentityAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null)
+        public async Task<AddEventInResponse> PostCheckInByIdentityAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null, string _note = "")
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/identity";
@@ -566,15 +554,16 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                     type = 0,
                 },
                 plateNumber = _plateNumber,
-                forceEntrance = isForce,
+                force = isForce,
                 fileKeys = new List<string>(),
+                note = _note
             };
 
             foreach (var item in imageKeys)
             {
                 data.fileKeys.Add(item);
             }
-            string a = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+            string a = JsonConvert.SerializeObject(data);
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
@@ -589,11 +578,10 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return null;
         }
-        public static async Task<AddEventInResponse> PostCheckInByPlateAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null)
+        public async Task<AddEventInResponse> PostCheckInByPlateAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null, string _note = "")
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/vehicle";
-
             return null;
             //StandardlizeServerName();
             //string apiUrl = string.Empty;
@@ -684,7 +672,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             //    }
             //}
         }
-        public static async Task<DataTable> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
+        public async Task<DataTable> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
                                     string identityGroupId, string vehicleTypeId, string laneId, string user,
                                     int pageIndex = 1, int pageSize = 100)
         {
@@ -778,7 +766,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         #endregion End Event In
 
         #region Event Out
-        public static async Task<bool> UpdateEventOutPlate(string eventId, string newPlate)
+        public async Task<bool> UpdateEventOutPlate(string eventId, string newPlate)
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/" + eventId;
@@ -801,7 +789,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return false;
         }
-        public static async Task<DataTable> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000)
+        public async Task<DataTable> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000)
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.GetBySqlCmd;
@@ -893,7 +881,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return null;
         }
-        public static async Task<AddEventOutResponse> PostCheckOutAsync(string _laneId, string _plateNumber, Identity? identitiy, List<string> imageKeys, bool isForce)
+        public async Task<AddEventOutResponse> PostCheckOutAsync(string _laneId, string _plateNumber, Identity? identitiy, List<string> imageKeys, bool isForce)
         {
             StandardlizeServerName();
             string apiUrl = server + KzApiUrlManagement.EmObjectType.EventOut.CreateRoute();
@@ -906,7 +894,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 return await PostCheckOutByIdentityAsync(_laneId, _plateNumber, identitiy, imageKeys, isForce);
             }
         }
-        public static async Task<AddEventOutResponse> PostCheckOutByIdentityAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false)
+        public async Task<AddEventOutResponse> PostCheckOutByIdentityAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false)
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/identity";
@@ -955,7 +943,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return null;
         }
-        public static async Task<AddEventOutResponse> PostCheckOutByPlateAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null)
+        public async Task<AddEventOutResponse> PostCheckOutByPlateAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null)
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/vehicle";
@@ -963,7 +951,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             return null;
         }
 
-        public static async Task<bool> CommitOutAsync(AddEventOutResponse eventOut)
+        public async Task<bool> CommitOutAsync(AddEventOutResponse eventOut)
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/" + eventOut.Id;
@@ -988,7 +976,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return false;
         }
-        public static async Task<bool> CancelCheckOut(string eventOutId)
+        public async Task<bool> CancelCheckOut(string eventOutId)
         {
             StandardlizeServerName();
             string apiUrl = server + KzApiUrlManagement.DeleteCheckOutRoute(eventOutId);
@@ -1033,7 +1021,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         {
             ParkingCharge,
         }
-        public static async Task<PaymentTransaction> CreatePaymentTransaction(AddEventOutResponse eventOut)
+        public async Task<PaymentTransaction> CreatePaymentTransaction(AddEventOutResponse eventOut)
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.PaymentTransaction);
@@ -1063,7 +1051,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         #endregion End Event Out
 
         #region Alarm
-        public static async Task<bool> CreateAlarmAsync(string identityId, string laneId, string plate, AbnormalCode abnormalCode,
+        public async Task<bool> CreateAlarmAsync(string identityId, string laneId, string plate, AbnormalCode abnormalCode,
                                                         string imageKey, bool isLaneIn, string _identityGroupId, string customerId,
                                                         string registerVehicleId, string description)
         {
@@ -1082,7 +1070,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                     identityGroupId = _identityGroupId,
                 },
                 PlateNumber = plate,
-                AbnormalCode = abnormalCode,
+                Code = abnormalCode,
                 FileKeys = new List<string>()
                         {
                             imageKey + (isLaneIn? "_OVERVIEWIN.jpeg" : "_OVERVIEWOUT.jpeg"),
@@ -1099,7 +1087,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return false;
         }
-        public static async Task<DataTable> GetAlarmReport(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, int pageIndex = 1, int pageSize = 10000)
+        public async Task<DataTable> GetAlarmReport(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, int pageIndex = 1, int pageSize = 10000)
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.GetBySqlCmd;
@@ -1262,7 +1250,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             public int total { get; set; }
         }
 
-        public static async Task<InvoiceDto> CreateEinvoice(long price, string plateNumber, DateTime datetimeIn, DateTime datetimeOut, string eventOutId)
+        public async Task<InvoiceDto> CreateEinvoice(long price, string plateNumber, DateTime datetimeIn, DateTime datetimeOut, string eventOutId)
         {
             //string url = $"http://14.160.26.45:26868/einvoice?provider=VIETTEL";
             StandardlizeServerName();
@@ -1354,7 +1342,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return null;
         }
-        public static async Task<InvoiceData> GetInvoiceData(string orderId, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL)
+        public async Task<InvoiceData> GetInvoiceData(string orderId, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL)
         {
             // string url = $"http://14.160.26.45:26868/einvoice?provider=65";
             StandardlizeServerName();
@@ -1380,7 +1368,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return null;
         }
-        public static async Task<List<InvoiceDataSearch>> GetMultipleInvoiceData(List<string> orderIds, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL)
+        public async Task<List<InvoiceDataSearch>> GetMultipleInvoiceData(List<string> orderIds, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL)
         {
             //string url = $"http://14.160.26.45:26868/sent-invoice/many";
             StandardlizeServerName();
@@ -1416,7 +1404,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         /// Gửi api lấy thông tin số lượng xe đang trong bãi, số lượng xe vào bãi trong ngày, số lượng xe ra khỏi bãi trong ngày
         /// </summary>
         /// <returns></returns>
-        public static async Task<SumaryCountEvent> SummaryEventAsync()
+        public async Task<SumaryCountEvent> SummaryEventAsync()
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.GetBySqlCmd;
@@ -1462,7 +1450,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             };
         }
 
-        private static async Task<int> GetRecordCountByCmd(string apiUrl, Dictionary<string, string> headers, object data)
+        private async Task<int> GetRecordCountByCmd(string apiUrl, Dictionary<string, string> headers, object data)
         {
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
@@ -1522,7 +1510,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             public bool PrintPaper { get; set; }
         }
 
-        public static async Task<WarehouseService> CreateWarehouseService(string eventInId, string eventOutId, string plate, EmTransactionType type, bool isPrint = false)
+        public async Task<WarehouseService> CreateWarehouseService(string eventInId, string eventOutId, string plate, EmTransactionType type, bool isPrint = false)
         {
 
             StandardlizeServerName();

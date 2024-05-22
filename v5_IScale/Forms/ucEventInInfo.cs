@@ -74,43 +74,5 @@ namespace v5_IScale.Forms
             this.Visible = false;
             onBackClickEvent?.Invoke(this);
         }
-        public async void ShowInfo(Point position, string laneId, string datetimeIn, string plateNumber,
-                                             string identityId, string userId)
-        {
-            this.SuspendLayout();
-            this.Location = position;
-            this.BackColor = Color.FromArgb(255, 224, 192);
-            Lane? lane = await KzParkingApiHelper.GetLaneByIdAsync(laneId);
-            Identity? identity = await KzParkingApiHelper.GetIdentityById(identityId);
-            IdentityGroup? identityGroup = null;
-            VehicleType? vehicleType = null;
-            if (identity != null)
-            {
-                identityGroup = await KzParkingApiHelper.GetIdentityGroupByIdAsync(identity.IdentityGroupId.ToString());
-                if (identityGroup != null)
-                {
-                    vehicleType = await KzParkingApiHelper.GetVehicleTypeById(identityGroup.VehicleType.Id.ToString());
-                }
-            }
-            lblLaneName.Text = lane == null ? "_" : lane.name;
-            lblTimeIn.Text = datetimeIn;
-            lblPlateNumber.Text = plateNumber;
-            lblVehilceType.Text = vehicleType == null ? "_" : vehicleType.Name;
-            lblIdentityName.Text = identity == null ? "_" : identity.Name;
-            lblIdentityCode.Text = identity == null ? "_" : identity.Code;
-            lblIdentityGroup.Text = identityGroup == null ? "_" : identityGroup.Name;
-
-            lblLaneName.Location = new Point(this.DisplayRectangle.Width - lblLaneName.Width - StaticPool.baseSize * 2, lblLaneNameTitle.Location.Y);
-            lblTimeIn.Location = new Point(this.DisplayRectangle.Width - lblTimeIn.Width - StaticPool.baseSize * 2, lblTimeInTitle.Location.Y);
-            lblPlateNumber.Location = new Point(this.DisplayRectangle.Width - lblPlateNumber.Width - StaticPool.baseSize * 2, lblPlateNumberTitle.Location.Y);
-            lblVehilceType.Location = new Point(this.DisplayRectangle.Width - lblVehilceType.Width - StaticPool.baseSize * 2, lblVehilceTypeTitle.Location.Y);
-            lblIdentityName.Location = new Point(this.DisplayRectangle.Width - lblIdentityName.Width - StaticPool.baseSize * 2, lblIdentityNameTitle.Location.Y);
-            lblIdentityCode.Location = new Point(this.DisplayRectangle.Width - lblIdentityCode.Width - StaticPool.baseSize * 2, lblIdentityCodeTitle.Location.Y);
-            lblIdentityGroup.Location = new Point(this.DisplayRectangle.Width - lblIdentityGroup.Width - StaticPool.baseSize * 2, lblIdentityGroupTitle.Location.Y);
-            this.BringToFront();
-            this.ResumeLayout();
-            this.Visible = true;
-            this.ActiveControl = lblCancel1;
-        }
     }
 }

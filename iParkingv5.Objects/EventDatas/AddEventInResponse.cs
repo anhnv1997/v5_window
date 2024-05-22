@@ -48,6 +48,7 @@ namespace iParkingv5.Objects.EventDatas
         public string detailCode { get; set; } = string.Empty;
         public List<ErrorDescription> fields { get; set; } = null;
         public string Note { get; set; }
+        public string thirdPartyNote { get; set; }
         //public RegisteredVehicle registeredVehicle { get; set; }
         //public Customer customer { get; set; }
     }
@@ -62,6 +63,13 @@ namespace iParkingv5.Objects.EventDatas
                 if (errorCode == "ERROR.ENTITY.VALIDATION.FIELD_NOT_MATCH_WITH_EVENT_IN")
                 {
                     return "Biển số vào ra không khớp".ToUpper();
+                }
+            }
+            if (name.ToUpper() == "vehicle".ToUpper())
+            {
+                if (errorCode == "ERROR.ENTITY.VALIDATION.FIELD_NOT_FOUND")
+                {
+                    return "Biển Số Không Hợp Lệ".ToUpper();
                 }
             }
             else if (name.ToUpper() == "IdentityGroup".ToUpper())

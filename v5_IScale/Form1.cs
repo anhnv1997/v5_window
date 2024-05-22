@@ -221,7 +221,7 @@ namespace v5_IScale
                 MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            var invoiceData = await KzParkingv5ApiHelper.GetInvoiceData(orderId);
+            var invoiceData = await  AppData.ApiServer.GetInvoiceData(orderId);
             if (invoiceData == null)
             {
                 MessageBox.Show("Chưa có thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -598,7 +598,7 @@ namespace v5_IScale
                     lblLoadingStatus.Refresh();
                 }));
 
-                var eventInData = await KzParkingv5ApiHelper.GetEventIns(e.PreferCard, DateTime.MinValue, DateTime.Now, "", "", "","");
+                var eventInData = await  AppData.ApiServer.GetEventIns(e.PreferCard, DateTime.MinValue, DateTime.Now, "", "", "","");
                 if (eventInData != null)
                 {
                     if (eventInData.Rows.Count > 0)

@@ -19,11 +19,10 @@ namespace iParkingv5_window.Usercontrols
         #region Timer
         private async void timerUpdateCount_Tick(object sender, EventArgs e)
         {
-            return;
             try
             {
                 timerUpdateCount.Enabled = false;
-                var eventCountDetail = await KzParkingv5ApiHelper.SummaryEventAsync();
+                var eventCountDetail = await AppData.ApiServer.SummaryEventAsync();
                 int totalVehicleInPark = eventCountDetail.countAllEventIn;
                 int vehicleInDay = eventCountDetail.totalVehicleIn;
                 int vehicleOutDay = eventCountDetail.totalEventOut;

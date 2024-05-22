@@ -48,6 +48,7 @@
             picVehicle.SizeMode = PictureBoxSizeMode.StretchImage;
             picVehicle.TabIndex = 0;
             picVehicle.TabStop = false;
+            picVehicle.LoadCompleted += picVehicle_LoadCompleted;
             // 
             // pictureBox1
             // 

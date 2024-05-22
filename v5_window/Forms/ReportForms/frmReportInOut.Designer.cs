@@ -45,25 +45,6 @@ namespace iParkingv5_window.Forms.ReportForms
             lblKeyword = new Label();
             txtKeyword = new TextBox();
             dgvData = new DataGridView();
-            Column1 = new DataGridViewTextBoxColumn();
-            Column8 = new DataGridViewTextBoxColumn();
-            Column11 = new DataGridViewTextBoxColumn();
-            Column3 = new DataGridViewTextBoxColumn();
-            Column2 = new DataGridViewTextBoxColumn();
-            Column18 = new DataGridViewTextBoxColumn();
-            Column7 = new DataGridViewTextBoxColumn();
-            Column10 = new DataGridViewTextBoxColumn();
-            Column4 = new DataGridViewTextBoxColumn();
-            Column5 = new DataGridViewTextBoxColumn();
-            Column15 = new DataGridViewTextBoxColumn();
-            Column6 = new DataGridViewTextBoxColumn();
-            Column12 = new DataGridViewTextBoxColumn();
-            Column13 = new DataGridViewTextBoxColumn();
-            Column19 = new DataGridViewTextBoxColumn();
-            Column9 = new DataGridViewTextBoxColumn();
-            Column14 = new DataGridViewTextBoxColumn();
-            Column17 = new DataGridViewTextBoxColumn();
-            Column16 = new DataGridViewTextBoxColumn();
             lblEndTime = new Label();
             tableLayoutPanel2 = new TableLayoutPanel();
             picOverviewImageOut = new MovablePictureBox();
@@ -87,6 +68,28 @@ namespace iParkingv5_window.Forms.ReportForms
             ucNotify1 = new Usercontrols.BuildControls.ucNotify();
             ucLoading1 = new Usercontrols.BuildControls.ucLoading();
             tablePic = new TableLayoutPanel();
+            Column1 = new DataGridViewTextBoxColumn();
+            Column8 = new DataGridViewTextBoxColumn();
+            Column11 = new DataGridViewTextBoxColumn();
+            Column3 = new DataGridViewTextBoxColumn();
+            Column2 = new DataGridViewTextBoxColumn();
+            Column18 = new DataGridViewTextBoxColumn();
+            Column7 = new DataGridViewTextBoxColumn();
+            Column10 = new DataGridViewTextBoxColumn();
+            Column4 = new DataGridViewTextBoxColumn();
+            Column5 = new DataGridViewTextBoxColumn();
+            Column15 = new DataGridViewTextBoxColumn();
+            Column6 = new DataGridViewTextBoxColumn();
+            Column12 = new DataGridViewTextBoxColumn();
+            Column13 = new DataGridViewTextBoxColumn();
+            Column19 = new DataGridViewTextBoxColumn();
+            Column9 = new DataGridViewTextBoxColumn();
+            Column14 = new DataGridViewTextBoxColumn();
+            Column17 = new DataGridViewTextBoxColumn();
+            Column16 = new DataGridViewTextBoxColumn();
+            Column20 = new DataGridViewTextBoxColumn();
+            Column21 = new DataGridViewTextBoxColumn();
+            Column22 = new DataGridViewTextBoxColumn();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picOverviewImageIn).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picVehicleImageIn).BeginInit();
@@ -215,7 +218,7 @@ namespace iParkingv5_window.Forms.ReportForms
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvData.Columns.AddRange(new DataGridViewColumn[] { Column1, Column8, Column11, Column3, Column2, Column18, Column7, Column10, Column4, Column5, Column15, Column6, Column12, Column13, Column19, Column9, Column14, Column17, Column16 });
+            dgvData.Columns.AddRange(new DataGridViewColumn[] { Column1, Column8, Column11, Column3, Column2, Column18, Column7, Column10, Column4, Column5, Column15, Column6, Column12, Column13, Column19, Column9, Column14, Column17, Column16, Column20, Column21, Column22 });
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = SystemColors.Window;
             dataGridViewCellStyle4.Font = new Font("Segoe UI", 12F);
@@ -236,144 +239,6 @@ namespace iParkingv5_window.Forms.ReportForms
             dgvData.TabIndex = 50;
             dgvData.CellMouseClick += dgvData_CellMouseClick;
             dgvData.MouseClick += dgvData_MouseClick;
-            // 
-            // Column1
-            // 
-            Column1.Frozen = true;
-            Column1.HeaderText = "STT";
-            Column1.Name = "Column1";
-            Column1.ReadOnly = true;
-            Column1.Width = 66;
-            // 
-            // Column8
-            // 
-            Column8.HeaderText = "Giờ Vào";
-            Column8.Name = "Column8";
-            Column8.ReadOnly = true;
-            Column8.Width = 96;
-            // 
-            // Column11
-            // 
-            Column11.HeaderText = "Giờ Ra";
-            Column11.Name = "Column11";
-            Column11.ReadOnly = true;
-            Column11.Width = 88;
-            // 
-            // Column3
-            // 
-            Column3.HeaderText = "Thời Gian Lưu Bãi";
-            Column3.Name = "Column3";
-            Column3.ReadOnly = true;
-            Column3.Width = 163;
-            // 
-            // Column2
-            // 
-            Column2.HeaderText = "Vé Xe";
-            Column2.Name = "Column2";
-            Column2.ReadOnly = true;
-            Column2.Width = 79;
-            // 
-            // Column18
-            // 
-            Column18.HeaderText = "Loại";
-            Column18.Name = "Column18";
-            Column18.ReadOnly = true;
-            Column18.Width = 70;
-            // 
-            // Column7
-            // 
-            Column7.HeaderText = "Biển Số Vào";
-            Column7.Name = "Column7";
-            Column7.ReadOnly = true;
-            Column7.Width = 123;
-            // 
-            // Column10
-            // 
-            Column10.HeaderText = "Biển Số Ra";
-            Column10.Name = "Column10";
-            Column10.ReadOnly = true;
-            Column10.Width = 115;
-            // 
-            // Column4
-            // 
-            Column4.HeaderText = "Phân Loại";
-            Column4.Name = "Column4";
-            Column4.ReadOnly = true;
-            Column4.Width = 109;
-            // 
-            // Column5
-            // 
-            Column5.HeaderText = "Số phiếu xuất";
-            Column5.Name = "Column5";
-            Column5.ReadOnly = true;
-            Column5.Width = 135;
-            // 
-            // Column15
-            // 
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
-            Column15.DefaultCellStyle = dataGridViewCellStyle3;
-            Column15.HeaderText = "Phí";
-            Column15.Name = "Column15";
-            Column15.ReadOnly = true;
-            Column15.Width = 63;
-            // 
-            // Column6
-            // 
-            Column6.HeaderText = "Người Dùng Vào";
-            Column6.Name = "Column6";
-            Column6.ReadOnly = true;
-            Column6.Width = 157;
-            // 
-            // Column12
-            // 
-            Column12.HeaderText = "Người Dùng Ra";
-            Column12.Name = "Column12";
-            Column12.ReadOnly = true;
-            Column12.Width = 149;
-            // 
-            // Column13
-            // 
-            Column13.HeaderText = "Mẫu hóa đơn";
-            Column13.Name = "Column13";
-            Column13.ReadOnly = true;
-            Column13.Width = 134;
-            // 
-            // Column19
-            // 
-            Column19.HeaderText = "Số hóa đơn";
-            Column19.Name = "Column19";
-            Column19.ReadOnly = true;
-            Column19.Width = 121;
-            // 
-            // Column9
-            // 
-            Column9.HeaderText = "physicalFileIdIns";
-            Column9.Name = "Column9";
-            Column9.ReadOnly = true;
-            Column9.Visible = false;
-            Column9.Width = 168;
-            // 
-            // Column14
-            // 
-            Column14.HeaderText = "physicalIdOuts";
-            Column14.Name = "Column14";
-            Column14.ReadOnly = true;
-            Column14.Visible = false;
-            Column14.Width = 154;
-            // 
-            // Column17
-            // 
-            Column17.HeaderText = "Làn Vào";
-            Column17.Name = "Column17";
-            Column17.ReadOnly = true;
-            Column17.Width = 96;
-            // 
-            // Column16
-            // 
-            Column16.HeaderText = "Làn Ra";
-            Column16.Name = "Column16";
-            Column16.ReadOnly = true;
-            Column16.Width = 88;
             // 
             // lblEndTime
             // 
@@ -675,6 +540,165 @@ namespace iParkingv5_window.Forms.ReportForms
             tablePic.Size = new Size(392, 287);
             tablePic.TabIndex = 60;
             // 
+            // Column1
+            // 
+            Column1.Frozen = true;
+            Column1.HeaderText = "STT";
+            Column1.Name = "Column1";
+            Column1.ReadOnly = true;
+            Column1.Width = 66;
+            // 
+            // Column8
+            // 
+            Column8.HeaderText = "Giờ Vào";
+            Column8.Name = "Column8";
+            Column8.ReadOnly = true;
+            Column8.Width = 96;
+            // 
+            // Column11
+            // 
+            Column11.HeaderText = "Giờ Ra";
+            Column11.Name = "Column11";
+            Column11.ReadOnly = true;
+            Column11.Width = 88;
+            // 
+            // Column3
+            // 
+            Column3.HeaderText = "Thời Gian Lưu Bãi";
+            Column3.Name = "Column3";
+            Column3.ReadOnly = true;
+            Column3.Width = 163;
+            // 
+            // Column2
+            // 
+            Column2.HeaderText = "Vé Xe";
+            Column2.Name = "Column2";
+            Column2.ReadOnly = true;
+            Column2.Width = 79;
+            // 
+            // Column18
+            // 
+            Column18.HeaderText = "Loại";
+            Column18.Name = "Column18";
+            Column18.ReadOnly = true;
+            Column18.Width = 70;
+            // 
+            // Column7
+            // 
+            Column7.HeaderText = "Biển Số Vào";
+            Column7.Name = "Column7";
+            Column7.ReadOnly = true;
+            Column7.Width = 123;
+            // 
+            // Column10
+            // 
+            Column10.HeaderText = "Biển Số Ra";
+            Column10.Name = "Column10";
+            Column10.ReadOnly = true;
+            Column10.Width = 115;
+            // 
+            // Column4
+            // 
+            Column4.HeaderText = "Phân Loại";
+            Column4.Name = "Column4";
+            Column4.ReadOnly = true;
+            Column4.Width = 109;
+            // 
+            // Column5
+            // 
+            Column5.HeaderText = "Số phiếu xuất";
+            Column5.Name = "Column5";
+            Column5.ReadOnly = true;
+            Column5.Width = 135;
+            // 
+            // Column15
+            // 
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
+            Column15.DefaultCellStyle = dataGridViewCellStyle3;
+            Column15.HeaderText = "Phí";
+            Column15.Name = "Column15";
+            Column15.ReadOnly = true;
+            Column15.Width = 63;
+            // 
+            // Column6
+            // 
+            Column6.HeaderText = "Người Dùng Vào";
+            Column6.Name = "Column6";
+            Column6.ReadOnly = true;
+            Column6.Width = 157;
+            // 
+            // Column12
+            // 
+            Column12.HeaderText = "Người Dùng Ra";
+            Column12.Name = "Column12";
+            Column12.ReadOnly = true;
+            Column12.Width = 149;
+            // 
+            // Column13
+            // 
+            Column13.HeaderText = "Mẫu hóa đơn";
+            Column13.Name = "Column13";
+            Column13.ReadOnly = true;
+            Column13.Width = 134;
+            // 
+            // Column19
+            // 
+            Column19.HeaderText = "Số hóa đơn";
+            Column19.Name = "Column19";
+            Column19.ReadOnly = true;
+            Column19.Width = 121;
+            // 
+            // Column9
+            // 
+            Column9.HeaderText = "physicalFileIdIns";
+            Column9.Name = "Column9";
+            Column9.ReadOnly = true;
+            Column9.Visible = false;
+            Column9.Width = 154;
+            // 
+            // Column14
+            // 
+            Column14.HeaderText = "physicalIdOuts";
+            Column14.Name = "Column14";
+            Column14.ReadOnly = true;
+            Column14.Visible = false;
+            Column14.Width = 143;
+            // 
+            // Column17
+            // 
+            Column17.HeaderText = "Làn Vào";
+            Column17.Name = "Column17";
+            Column17.ReadOnly = true;
+            Column17.Width = 96;
+            // 
+            // Column16
+            // 
+            Column16.HeaderText = "Làn Ra";
+            Column16.Name = "Column16";
+            Column16.ReadOnly = true;
+            Column16.Width = 88;
+            // 
+            // Column20
+            // 
+            Column20.HeaderText = "Ghi chú BSX";
+            Column20.Name = "Column20";
+            Column20.ReadOnly = true;
+            Column20.Width = 125;
+            // 
+            // Column21
+            // 
+            Column21.HeaderText = "Ghi chú";
+            Column21.Name = "Column21";
+            Column21.ReadOnly = true;
+            Column21.Width = 94;
+            // 
+            // Column22
+            // 
+            Column22.HeaderText = "Ghi chú DVHT";
+            Column22.Name = "Column22";
+            Column22.ReadOnly = true;
+            Column22.Width = 138;
+            // 
             // frmReportInOut
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -731,6 +755,8 @@ namespace iParkingv5_window.Forms.ReportForms
         private Label lblIdentityGroup;
         private ComboBox cbLane;
         private Label lblLane;
+        private Label lblUser;
+        private ComboBox cbUser;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column8;
         private DataGridViewTextBoxColumn Column11;
@@ -750,7 +776,8 @@ namespace iParkingv5_window.Forms.ReportForms
         private DataGridViewTextBoxColumn Column14;
         private DataGridViewTextBoxColumn Column17;
         private DataGridViewTextBoxColumn Column16;
-        private Label lblUser;
-        private ComboBox cbUser;
+        private DataGridViewTextBoxColumn Column20;
+        private DataGridViewTextBoxColumn Column21;
+        private DataGridViewTextBoxColumn Column22;
     }
 }

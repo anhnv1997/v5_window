@@ -8,6 +8,7 @@ using iParkingv6.Objects.Datas;
 using System.Runtime.InteropServices;
 using iPakrkingv5.Controls;
 using iParkingv5.ApiManager.KzParkingv5Apis;
+using iParkingv5_window;
 
 namespace iParkingv5_CustomerRegister.Forms
 {
@@ -118,11 +119,11 @@ namespace iParkingv5_CustomerRegister.Forms
             dgvData.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
 
             //var registerVehicles = await KzParkingApiHelper.GetRegisteredVehicles(txtKeyword.Text);
-            var registerVehicles = (await KzParkingv5ApiHelper.GetRegisterVehiclesAsync(txtKeyword.Text)).Item1;
+            var registerVehicles = (await  AppData.ApiServer.GetRegisterVehiclesAsync(txtKeyword.Text)).Item1;
             //var customers = await KzParkingApiHelper.GetAllCustomers();
-            var customers = (await KzParkingv5ApiHelper.GetCustomersAsync()).Item1;
+            var customers = (await  AppData.ApiServer.GetCustomersAsync()).Item1;
             //var vehicleTypes = await KzParkingApiHelper.GetAllVehicleTypes();
-            var vehicleTypes = (await KzParkingv5ApiHelper.GetVehicleTypesAsync()).Item1;
+            var vehicleTypes = (await  AppData.ApiServer.GetVehicleTypesAsync()).Item1;
             if (registerVehicles != null)
             {
                 if (registerVehicles != null)

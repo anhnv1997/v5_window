@@ -117,9 +117,9 @@ namespace iParkingv5_window.Forms.DataForms
             dgvData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
             dgvData.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
 
-            var registerVehicles = await KzParkingApiHelper.GetRegisteredVehicles(txtKeyword.Text);
-            var customers = await KzParkingApiHelper.GetAllCustomers();
-            var vehicleTypes = await KzParkingApiHelper.GetAllVehicleTypes();
+            var registerVehicles = (await AppData.ApiServer.GetRegisterVehiclesAsync(txtKeyword.Text)).Item1;
+            var customers = await AppData.ApiServer.GetCustomersAsync();
+            var vehicleTypes = (await AppData.ApiServer.GetVehicleTypesAsync()).Item1;
             if (registerVehicles != null)
             {
                 if (registerVehicles != null)

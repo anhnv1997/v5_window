@@ -104,21 +104,21 @@ namespace iParkingv5_window.Usercontrols
                 this.Visible = true;
 
                 //Lane? laneIn = await KzParkingApiHelper.GetLaneByIdAsync(laneIdIn);
-                Lane? laneIn = (await KzParkingv5ApiHelper.GetLaneByIdAsync(laneIdIn)).Item1;
+                Lane? laneIn = (await  AppData.ApiServer.GetLaneByIdAsync(laneIdIn)).Item1;
 
                 //Identity? identityIn = await KzParkingApiHelper.GetIdentityById(identityIdIn);
-                Identity? identityIn = (await KzParkingv5ApiHelper.GetIdentityByIdAsync(identityIdIn)).Item1;
+                Identity? identityIn = (await  AppData.ApiServer.GetIdentityByIdAsync(identityIdIn)).Item1;
 
                 IdentityGroup? identityGroupIn = null;
                 VehicleType? vehicleTypeIn = null;
                 if (identityIn != null)
                 {
                     //identityGroupIn = await KzParkingApiHelper.GetIdentityGroupByIdAsync(identityIn.IdentityGroupId.ToString());
-                    identityGroupIn = (await KzParkingv5ApiHelper.GetIdentityGroupByIdAsync(identityIn.IdentityGroupId.ToString())).Item1;
+                    identityGroupIn = (await  AppData.ApiServer.GetIdentityGroupByIdAsync(identityIn.IdentityGroupId.ToString())).Item1;
                     if (identityGroupIn != null)
                     {
                         //vehicleTypeIn = await KzParkingApiHelper.GetVehicleTypeById(identityGroupIn.VehicleTypeId.ToString());
-                        vehicleTypeIn = (await KzParkingv5ApiHelper.GetVehicleTypeByIdAsync(identityGroupIn.VehicleType.Id.ToString())).Item1;
+                        vehicleTypeIn = (await  AppData.ApiServer.GetVehicleTypeByIdAsync(identityGroupIn.VehicleType.Id.ToString())).Item1;
                     }
                 }
                 lblLaneNameIn.Text = laneIn == null ? "_" : laneIn.name;
@@ -130,19 +130,19 @@ namespace iParkingv5_window.Usercontrols
                 lblIdentityGroupIn.Text = identityGroupIn == null ? "_" : identityGroupIn.Name;
 
                 //Lane? laneOut = await KzParkingApiHelper.GetLaneByIdAsync(laneIdOut);
-                Lane? laneOut = (await KzParkingv5ApiHelper.GetLaneByIdAsync(laneIdOut)).Item1;
+                Lane? laneOut = (await  AppData.ApiServer.GetLaneByIdAsync(laneIdOut)).Item1;
                 //Identity? identityOut = await KzParkingApiHelper.GetIdentityById(identityIdOut);
-                Identity? identityOut = (await KzParkingv5ApiHelper.GetIdentityByIdAsync(identityIdOut)).Item1;
+                Identity? identityOut = (await  AppData.ApiServer.GetIdentityByIdAsync(identityIdOut)).Item1;
                 IdentityGroup? identityGroupOut = null;
                 VehicleType? vehicleTypeOut = null;
                 if (identityOut != null)
                 {
                     //identityGroupOut = await KzParkingApiHelper.GetIdentityGroupByIdAsync(identityOut.IdentityGroupId.ToString());
-                    identityGroupOut = (await KzParkingv5ApiHelper.GetIdentityGroupByIdAsync(identityOut.IdentityGroupId.ToString())).Item1;
+                    identityGroupOut = (await  AppData.ApiServer.GetIdentityGroupByIdAsync(identityOut.IdentityGroupId.ToString())).Item1;
                     if (identityGroupOut != null)
                     {
                         //vehicleTypeOut = await KzParkingApiHelper.GetVehicleTypeById(identityGroupOut.VehicleTypeId.ToString());
-                        vehicleTypeOut = (await KzParkingv5ApiHelper.GetVehicleTypeByIdAsync(identityGroupOut.VehicleType.Id.ToString())).Item1;
+                        vehicleTypeOut = (await  AppData.ApiServer.GetVehicleTypeByIdAsync(identityGroupOut.VehicleType.Id.ToString())).Item1;
                     }
                 }
                 lblLaneNameOut.Text = laneOut == null ? "_" : laneOut.name;

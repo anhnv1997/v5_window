@@ -18,6 +18,7 @@
         public static string databaseConfigPath => baseBath + "/configs/app/database.xml";
         public static string appActiveLaneConfigPath() => baseBath + $"/configs/app/activeLane.txt";
         public static string appPrintTemplateConfigPath(string printTemplateName) => baseBath + $"/configs/app/print/{printTemplateName}.html";
+        public static string appPrintTemplateWarehousePath(string printTemplateName) => baseBath + $"/configs/app/print/{printTemplateName}Warehouse.html";
         public static string appPrintScaleTemplateConfigPath(string printTemplateName) => baseBath + $"/configs/app/print/{printTemplateName}Scale.html";
         public static string appPrintScaleInvoiceOfflineTemplateConfigPath(string printTemplateName) => baseBath + $"/configs/app/print/{printTemplateName}ScaleInvoiceOffline.html";
         #endregion END APP CONFIG PATH

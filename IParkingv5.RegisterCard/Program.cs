@@ -1,4 +1,5 @@
 ﻿using IPaking.Ultility;
+using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
 using iParkingv6.ApiManager.KzParkingv3Apis;
@@ -118,6 +119,7 @@ namespace IParkingv5.RegisterCard
                     return;
                 }
                 KzParkingApiHelper.server = StaticPool.serverConfig.ParkingServerUrl;
+                KzParkingv5ApiHelper.server = StaticPool.serverConfig.ParkingServerUrl;
             }
             catch (Exception ex)
             {

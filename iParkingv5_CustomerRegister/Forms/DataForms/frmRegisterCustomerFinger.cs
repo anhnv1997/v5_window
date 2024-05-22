@@ -3,6 +3,7 @@ using iParkingv5.Objects;
 using iParkingv5.Objects.Datas;
 using iParkingv5_CustomerRegister.Databases;
 using iParkingv5_CustomerRegister.UserControls;
+using iParkingv5_window;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
 using System;
@@ -158,7 +159,7 @@ namespace iParkingv5_CustomerRegister.Forms
                     }
 
                     //Kiểm tra xem người dùng có đăng ký trước đó hay không
-                    var identityResponse = await KzParkingApiHelper.GetIdentityByCodeAsync(fingerCustomerCode);
+                    Tuple<Identity, string> identityResponse = null;// await KzParkingApiHelper.GetIdentityByCodeAsync(fingerCustomerCode);
                     if (identityResponse.Item1 != null)
                     {
                         this.identity = identityResponse.Item1;
@@ -167,7 +168,7 @@ namespace iParkingv5_CustomerRegister.Forms
                         if (!string.IsNullOrEmpty(identityGroupId))
                         {
                             this.identityGroupId = identityGroupId;
-                            IdentityGroup identityGroup = await KzParkingApiHelper.GetIdentityGroupByIdAsync(identityGroupId);
+                            IdentityGroup identityGroup = null;// await KzParkingApiHelper.GetIdentityGroupByIdAsync(identityGroupId);
                             if (identityGroup != null)
                             {
                                 btnChooseIdentityGroup.Text = identityGroup.Name;
@@ -287,7 +288,7 @@ namespace iParkingv5_CustomerRegister.Forms
                             IdentityGroupId = this.identityGroupId,
                             Note = "Vân tay " + customerName,
                         };
-                        bool isUpdateSuccess = await KzParkingApiHelper.UpdateIdentityById(updateIdentity);
+                        bool isUpdateSuccess = false;// await AppData.ApiServer.UpdateIdentityById(updateIdentity);
                         if (isUpdateSuccess)
                         {
                             this.identity.IdentityGroupId = this.identityGroupId;
@@ -310,7 +311,7 @@ namespace iParkingv5_CustomerRegister.Forms
                         Type = IdentityType.FingerPrint,
                         Note = "Vân tay " + customerName,
                     };
-                    Identity _identity = await KzParkingApiHelper.CreateIdentity(insertIdentity);
+                    Identity _identity = null;// await AppData.ApiServer.crea(insertIdentity);
                     if (_identity != null)
                     {
                         this.isExistIdentity = true;

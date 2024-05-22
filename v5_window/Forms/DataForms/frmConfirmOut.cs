@@ -96,19 +96,19 @@ namespace iParkingv5_window.Forms.DataForms
                 this.SuspendLayout();
                 this.updatePlate= detectedPlate;
                 //Lane? laneIn = await KzParkingApiHelper.GetLaneByIdAsync(laneIdIn);
-                Lane? laneIn = (await KzParkingv5ApiHelper.GetLaneByIdAsync(laneIdIn)).Item1;
+                Lane? laneIn = (await  AppData.ApiServer.GetLaneByIdAsync(laneIdIn)).Item1;
                 //Identity? identityIn = await KzParkingApiHelper.GetIdentityById(identityIdIn);
-                Identity? identityIn = (await KzParkingv5ApiHelper.GetIdentityByIdAsync(identityIdIn)).Item1;
+                Identity? identityIn = (await  AppData.ApiServer.GetIdentityByIdAsync(identityIdIn)).Item1;
                 IdentityGroup? identityGroupIn = null;
                 VehicleType? vehicleTypeIn = null;
                 if (identityIn != null)
                 {
                     //identityGroupIn = await KzParkingApiHelper.GetIdentityGroupByIdAsync(identityIn.IdentityGroupId.ToString());
-                    identityGroupIn = (await KzParkingv5ApiHelper.GetIdentityGroupByIdAsync(identityIn.IdentityGroupId.ToString())).Item1;
+                    identityGroupIn = (await  AppData.ApiServer.GetIdentityGroupByIdAsync(identityIn.IdentityGroupId.ToString())).Item1;
                     if (identityGroupIn != null)
                     {
                         //vehicleTypeIn = await KzParkingApiHelper.GetVehicleTypeById(identityGroupIn.VehicleTypeId.ToString());
-                        vehicleTypeIn = (await KzParkingv5ApiHelper.GetVehicleTypeByIdAsync(identityGroupIn.VehicleType.Id.ToString())).Item1;
+                        vehicleTypeIn = (await  AppData.ApiServer.GetVehicleTypeByIdAsync(identityGroupIn.VehicleType.Id.ToString())).Item1;
                     }
                 }
 

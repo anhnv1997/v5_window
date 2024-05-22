@@ -525,7 +525,7 @@
           "bin/placeholder/iParkingv5.Lpr.dll": {}
         }
       },
-      "iParkingv5.Objects/1.0.0.2": {
+      "iParkingv5.Objects/1.0.0.3": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
@@ -1481,7 +1481,7 @@
       "path": "../iParkingv5.Lpr/iParkingv5.Lpr.csproj",
       "msbuildProject": "../iParkingv5.Lpr/iParkingv5.Lpr.csproj"
     },
-    "iParkingv5.Objects/1.0.0.2": {
+    "iParkingv5.Objects/1.0.0.3": {
       "type": "project",
       "path": "../iParkingv5.Objects/iParkingv5.Objects.csproj",
       "msbuildProject": "../iParkingv5.Objects/iParkingv5.Objects.csproj"
@@ -1497,7 +1497,7 @@
       "DahuaLib >= 1.0.0.1",
       "Kztek.Tool >= 1.0.0.1",
       "System.IO.Ports >= 8.0.0",
-      "iParkingv5.Objects >= 1.0.0.2"
+      "iParkingv5.Objects >= 1.0.0.3"
     ]
   },
   "packageFolders": {

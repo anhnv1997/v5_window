@@ -122,7 +122,7 @@ namespace iParkingv5_window.Forms.DataForms
             if (!string.IsNullOrEmpty(txtCustomerCode.Text))
             {
                 //var getCustomerRespose = await KzParkingApiHelper.GetCustomerByCode(txtCustomerCode.Text);
-                var getCustomerRespose = await KzParkingv5ApiHelper.GetCustomersAsync(txtCustomerCode.Text);
+                var getCustomerRespose = await  AppData.ApiServer.GetCustomersAsync(txtCustomerCode.Text);
                 if (getCustomerRespose.Item1 != null)
                 {
                     List<Customer> customers = getCustomerRespose.Item1;
@@ -148,7 +148,7 @@ namespace iParkingv5_window.Forms.DataForms
             else
             {
                 //var getCustomerRespose = await KzParkingApiHelper.GetAllCustomers();
-                var getCustomerRespose = await KzParkingv5ApiHelper.GetCustomersAsync();
+                var getCustomerRespose = await  AppData.ApiServer.GetCustomersAsync();
                 if (getCustomerRespose.Item1 != null)
                 {
                     List<Customer> customers = getCustomerRespose.Item1;

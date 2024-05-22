@@ -251,6 +251,7 @@
             picOverviewImageIn.SizeMode = PictureBoxSizeMode.Zoom;
             picOverviewImageIn.TabIndex = 0;
             picOverviewImageIn.TabStop = false;
+            picOverviewImageIn.LoadCompleted += Pic_LoadCompleted;
             // 
             // picVehicleImageIn
             // 
@@ -262,6 +263,7 @@
             picVehicleImageIn.SizeMode = PictureBoxSizeMode.Zoom;
             picVehicleImageIn.TabIndex = 1;
             picVehicleImageIn.TabStop = false;
+            picVehicleImageIn.LoadCompleted += Pic_LoadCompleted;
             // 
             // tableLayoutPanel2
             // 

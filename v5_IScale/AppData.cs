@@ -1,4 +1,6 @@
-﻿using iParkingv5.Objects.ScaleObjects;
+﻿using iParkingv5.ApiManager;
+using iParkingv5.ApiManager.KzParkingv5Apis;
+using iParkingv5.Objects.ScaleObjects;
 using Kztek.Scale_net6.Objects;
 using System;
 using System.Collections.Generic;
@@ -13,5 +15,6 @@ namespace v5_IScale
         public static WeighingDetailCollection WeighingDetailCollection = new WeighingDetailCollection();
         public static WeighingFormCollection WeighingFormCollection = new WeighingFormCollection();
         public static ScaleConfig ScaleConfig = new ScaleConfig();
+        public static iParkingApi ApiServer= new KzParkingv5ApiHelper();
     }
 }

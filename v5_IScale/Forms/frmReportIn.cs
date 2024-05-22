@@ -65,10 +65,10 @@ namespace v5_IScale.Forms
         private async void FrmReportIn_Load(object? sender, EventArgs e)
         {
             //registerVehicles = await KzParkingApiHelper.GetRegisteredVehicles("");
-            registerVehicles = (await KzParkingv5ApiHelper.GetRegisterVehiclesAsync("")).Item1;
+            registerVehicles = (await  AppData.ApiServer.GetRegisterVehiclesAsync("")).Item1;
 
             //customers = (await KzParkingApiHelper.GetAllCustomers())?.Item1 ?? new List<Customer>();
-            customers = (await KzParkingv5ApiHelper.GetCustomersAsync())?.Item1 ?? new List<Customer>();
+            customers = (await  AppData.ApiServer.GetCustomersAsync())?.Item1 ?? new List<Customer>();
 
             await CreateUI();
             this.ActiveControl = btnSearch;
@@ -148,7 +148,7 @@ namespace v5_IScale.Forms
             string identityGroupId = ((ListItem)cbIdentityGroupType.SelectedItem)?.Value ?? "";
             string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
             //Tuple<List<EventInReport>, int, int> eventInData = await KzParkingApiHelper.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId);
-            DataTable eventInData = await KzParkingv5ApiHelper.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId,"");
+            DataTable eventInData = await  AppData.ApiServer.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId,"");
             if (eventInData == null)
             {
                 panelData.BackColor = Color.White;
@@ -266,7 +266,7 @@ namespace v5_IScale.Forms
                 string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
 
                 Application.DoEvents();
-                Tuple<List<EventInReport>, int, int> eventInData = await KzParkingApiHelper.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, pageIndex);
+                Tuple<List<EventInReport>, int, int> eventInData = null;// await KzParkingApiHelper.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, pageIndex);
 
                 if (eventInData.Item1 == null)
                 {
@@ -504,7 +504,7 @@ namespace v5_IScale.Forms
 
 
             //var vehicleTypes = await KzParkingApiHelper.GetAllVehicleTypes() ?? new List<VehicleType>();
-            var vehicleTypes = (await KzParkingv5ApiHelper.GetVehicleTypesAsync()).Item1 ?? new List<VehicleType>();
+            var vehicleTypes = (await  AppData.ApiServer.GetVehicleTypesAsync()).Item1 ?? new List<VehicleType>();
             cbVehicleType.Invoke(new Action(() =>
             {
                 foreach (var item in vehicleTypes)
@@ -531,7 +531,7 @@ namespace v5_IScale.Forms
             }));
 
             //identityGroups = await KzParkingApiHelper.GetIdentityGroupsAsync() ?? new List<IdentityGroup>();
-            identityGroups = (await KzParkingv5ApiHelper.GetIdentityGroupsAsync()).Item1 ?? new List<IdentityGroup>();
+            identityGroups = (await  AppData.ApiServer.GetIdentityGroupsAsync()).Item1 ?? new List<IdentityGroup>();
             cbIdentityGroupType.Invoke(new Action(() =>
             {
                 foreach (var item in identityGroups)
@@ -558,7 +558,7 @@ namespace v5_IScale.Forms
             }));
 
             //lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
-            lanes = (await KzParkingv5ApiHelper.GetLanesAsync()).Item1 ?? new List<iParkingv6.Objects.Datas.Lane>();
+            lanes = (await  AppData.ApiServer.GetLanesAsync()).Item1 ?? new List<iParkingv6.Objects.Datas.Lane>();
             cbLane.Invoke(new Action(() =>
             {
                 foreach (var item in lanes)

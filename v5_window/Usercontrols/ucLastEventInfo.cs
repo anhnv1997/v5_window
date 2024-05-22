@@ -35,7 +35,7 @@ namespace iParkingv5_window.Usercontrols
         private void UcLastEventInfo_SizeChanged(object? sender, EventArgs e)
         {
             //this.Width = this.Height;
-            this.Width = pictureBox1.Visible ? this.Height + pictureBox1.Width: this.Height;
+            this.Width = pictureBox1.Visible ? this.Height + pictureBox1.Width : this.Height;
         }
 
         private void UcLastEventInfo_Load(object? sender, EventArgs e)
@@ -107,5 +107,14 @@ namespace iParkingv5_window.Usercontrols
             }
         }
         #endregion End Controls In Form
+
+        private void picVehicle_LoadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            PictureBox pictureBox = (sender as PictureBox)!;
+            if (e.Error != null)
+            {
+                pictureBox.Image = defaultImg;
+            }
+        }
     }
 }

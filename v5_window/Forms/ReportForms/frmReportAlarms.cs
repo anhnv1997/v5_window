@@ -65,13 +65,13 @@ namespace iParkingv5_window.Forms.ReportForms
         {
             //registerVehicles = await KzParkingApiHelper.GetRegisteredVehicles("");
 
-            registerVehicles = (await KzParkingv5ApiHelper.GetRegisterVehiclesAsync("")).Item1;
+            registerVehicles = (await  AppData.ApiServer.GetRegisterVehiclesAsync("")).Item1;
 
             //customers = (await KzParkingApiHelper.GetAllCustomers())?.Item1 ?? new List<Customer>();
-            customers = (await KzParkingv5ApiHelper.GetCustomersAsync())?.Item1 ?? new List<Customer>();
+            customers = (await  AppData.ApiServer.GetCustomersAsync())?.Item1 ?? new List<Customer>();
 
             //identityGroups = await KzParkingApiHelper.GetIdentityGroupsAsync() ?? new List<IdentityGroup>();
-            identityGroups = (await KzParkingv5ApiHelper.GetIdentityGroupsAsync()).Item1 ?? new List<IdentityGroup>();
+            identityGroups = (await  AppData.ApiServer.GetIdentityGroupsAsync()).Item1 ?? new List<IdentityGroup>();
 
             picOverviewImageIn.Image = picVehicleImageIn.Image = defaultImg;
             await CreateUI();
@@ -120,7 +120,7 @@ namespace iParkingv5_window.Forms.ReportForms
             string vehicleTypeId = ((ListItem)cbVehicleType.SelectedItem)?.Value ?? "";
             string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
             //var alarmData = await KzParkingApiHelper.GetAlarms(keyword, startTime, endTime, "", vehicleTypeId, laneId);
-            var dtAlarm = await KzParkingv5ApiHelper.GetAlarmReport(keyword, startTime, endTime, "", vehicleTypeId, laneId);
+            var dtAlarm = await  AppData.ApiServer.GetAlarmReport(keyword, startTime, endTime, "", vehicleTypeId, laneId);
             if (dtAlarm == null)
             {
                 DisableFastLoading();
@@ -282,7 +282,7 @@ namespace iParkingv5_window.Forms.ReportForms
                 string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
 
                 Application.DoEvents();
-                Tuple<List<AbnormalEvent>, int, int> abnormalEvent = await KzParkingApiHelper.GetAlarms(keyword, startTime, endTime, "", vehicleTypeId, laneId, pageIndex);
+                Tuple<List<AbnormalEvent>, int, int> abnormalEvent = null;// await AppData.ApiServer.GetAlarmReport(keyword, startTime, endTime, "", vehicleTypeId, laneId, pageIndex);
 
                 if (abnormalEvent.Item1 == null)
                 {
@@ -554,7 +554,7 @@ namespace iParkingv5_window.Forms.ReportForms
 
 
             //var vehicleTypes = await KzParkingApiHelper.GetAllVehicleTypes() ?? new List<iParkingv5.Objects.Enums.VehicleType>();
-            var vehicleTypes = (await KzParkingv5ApiHelper.GetVehicleTypesAsync()).Item1 ?? new List<iParkingv5.Objects.Enums.VehicleType>();
+            var vehicleTypes = (await  AppData.ApiServer.GetVehicleTypesAsync()).Item1 ?? new List<iParkingv5.Objects.Enums.VehicleType>();
             cbVehicleType.Invoke(new Action(() =>
             {
                 foreach (var item in vehicleTypes)
@@ -584,7 +584,7 @@ namespace iParkingv5_window.Forms.ReportForms
             }));
 
             //lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
-            lanes = (await KzParkingv5ApiHelper.GetLanesAsync()).Item1 ?? new List<iParkingv6.Objects.Datas.Lane>();
+            lanes = (await  AppData.ApiServer.GetLanesAsync()).Item1 ?? new List<iParkingv6.Objects.Datas.Lane>();
             cbLane.Invoke(new Action(() =>
             {
                 foreach (var item in lanes)

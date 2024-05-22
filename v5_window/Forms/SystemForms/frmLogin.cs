@@ -110,7 +110,7 @@ namespace iParkingv5_window.Forms.SystemForms
                 this.Hide();
                 //KzParkingApiHelper.token = loginResult.TokenResponse.AccessToken;
                 KzParkingv5ApiHelper.token = loginResult.TokenResponse.AccessToken;
-                await KzParkingv5ApiHelper.GetUserInfor();
+                await AppData.ApiServer.GetUserInfor();
                 frmLoading frm = new()
                 {
                     Owner = this
@@ -212,7 +212,7 @@ namespace iParkingv5_window.Forms.SystemForms
             try
             {
                 await Task.Delay(500);
-                var tokenResponse = await KzParkingApiHelper.GetToken(txtUsername.Text, txtPassword.Text);
+                var tokenResponse = Tuple.Create<string, string>("", "");// await KzParkingApiHelper.GetToken(txtUsername.Text, txtPassword.Text);
                 string token = tokenResponse.Item1;
                 panelMain.SuspendLayout();
                 ucLoading1.HideLoading();
@@ -233,7 +233,7 @@ namespace iParkingv5_window.Forms.SystemForms
                 Application.DoEvents();
                 await Task.Delay(500);
 
-                KzParkingApiHelper.StartPollingAuthorize();
+                //KzParkingApiHelper.StartPollingAuthorize();
 
                 Properties.Settings.Default.isRemember = chbIsRemember.Checked;
                 Properties.Settings.Default.username = txtUsername.Text;
@@ -316,7 +316,7 @@ namespace iParkingv5_window.Forms.SystemForms
                     KzParkingv5ApiHelper.refresh_token = refreshToken.RefreshToken;
                     timerRefreshToken.Enabled = true;
                     this.Hide();
-                    await KzParkingv5ApiHelper.GetUserInfor();
+                    await AppData.ApiServer.GetUserInfor();
                     StartSocketServer();
                     timerRestartSocket.Enabled = true;
                     frmLoading frm = new()
@@ -418,6 +418,7 @@ namespace iParkingv5_window.Forms.SystemForms
                     obj: ex);
             }
         }
+
         private async Task PollingReceiveSocketMessage(CancellationToken ctsToken)
         {
             while (!ctsToken.IsCancellationRequested)
@@ -496,6 +497,7 @@ namespace iParkingv5_window.Forms.SystemForms
                 }
             }
         }
+
         private static bool CheckForUpdate(out List<string> updateDetail)
         {
             updateDetail = new List<string>();
@@ -567,6 +569,7 @@ namespace iParkingv5_window.Forms.SystemForms
                 return false;
             }
         }
+
         private void ClearLog()
         {
             string logDir = Path.Combine(PathManagement.baseBath, $@"logs");
@@ -599,6 +602,7 @@ namespace iParkingv5_window.Forms.SystemForms
                 }
             }
         }
+
         private async Task GetLogFile(DateTime time)
         {
             string dir = Path.Combine(PathManagement.baseBath, $@"logs\{time.Year}\{time.Month}\{time.Day}\");

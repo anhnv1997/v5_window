@@ -34,6 +34,7 @@ namespace iParkingv5.Objects
         public static ILpr LprDetect3;
         public static ILpr LprDetect4;
 
+
         public static CustomerGroupCollection customerGroupCollection = new CustomerGroupCollection();
         public static Mdb mdb;
         public static ServerConfig serverConfig = new ServerConfig();

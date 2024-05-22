@@ -81,6 +81,9 @@ namespace iParkingv5_window.Forms.ReportForms
             lblVehicleType = new Label();
             lblIdentityType = new Label();
             ucPages1 = new ucPages();
+            Column19 = new DataGridViewTextBoxColumn();
+            Column20 = new DataGridViewTextBoxColumn();
+            Column21 = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)picOverviewImageIn).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picVehicleImageIn).BeginInit();
             tablePic.SuspendLayout();
@@ -168,7 +171,7 @@ namespace iParkingv5_window.Forms.ReportForms
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvData.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column7, Column15, Column16, Column8, Column5, Column6, Column9, Column13, Column14, Column4, Column10, Column12, Column11, Column3, Column17, Column18 });
+            dgvData.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column7, Column15, Column16, Column8, Column5, Column6, Column9, Column13, Column14, Column4, Column10, Column12, Column11, Column3, Column17, Column18, Column19, Column20, Column21 });
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = SystemColors.Window;
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 12F);
@@ -578,6 +581,27 @@ namespace iParkingv5_window.Forms.ReportForms
             ucPages1.TabIndex = 43;
             ucPages1.Visible = false;
             // 
+            // Column19
+            // 
+            Column19.HeaderText = "Ghi chú BSX";
+            Column19.Name = "Column19";
+            Column19.ReadOnly = true;
+            Column19.Width = 125;
+            // 
+            // Column20
+            // 
+            Column20.HeaderText = "Ghi chú";
+            Column20.Name = "Column20";
+            Column20.ReadOnly = true;
+            Column20.Width = 94;
+            // 
+            // Column21
+            // 
+            Column21.HeaderText = "Ghi chú DVHT";
+            Column21.Name = "Column21";
+            Column21.ReadOnly = true;
+            Column21.Width = 138;
+            // 
             // frmReportIn
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -646,5 +670,8 @@ namespace iParkingv5_window.Forms.ReportForms
         private DataGridViewButtonColumn Column3;
         private DataGridViewTextBoxColumn Column17;
         private DataGridViewTextBoxColumn Column18;
+        private DataGridViewTextBoxColumn Column19;
+        private DataGridViewTextBoxColumn Column20;
+        private DataGridViewTextBoxColumn Column21;
     }
 }

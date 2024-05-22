@@ -2,6 +2,7 @@
 using iPakrkingv5.Controls;
 using iPakrkingv5.Controls.Usercontrols.BuildControls;
 using iParkingv5.Objects.Datas;
+using iParkingv5_window;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
 using System;
@@ -281,7 +282,7 @@ namespace iParkingv5_CustomerRegister.Forms.DataForms
                 return;
             }
 
-            List<RegisteredVehicle> vehicles = await KzParkingApiHelper.GetRegisteredVehicles(vehiclePlate) ?? new List<RegisteredVehicle>();
+            List<RegisteredVehicle> vehicles = (await AppData.ApiServer.GetRegisterVehiclesAsync(vehiclePlate)).Item1 ?? new List<RegisteredVehicle>();
             bool isExistPlate = false;
             if (vehicles.Count > 0)
             {
@@ -300,7 +301,7 @@ namespace iParkingv5_CustomerRegister.Forms.DataForms
                         {
                             item.CustomerId = this.customerID;
                             item.VehicleTypeId = this.vehicleTypeId;
-                            bool isSuccess = await KzParkingApiHelper.UpdateRegisteredVehicleAsyncById(item);
+                            bool isSuccess = await AppData.ApiServer.UpdateRegisteredVehicleAsyncById(item);
                             if (isSuccess)
                             {
                                 MessageBox.Show("Cập nhật thông tin phương tiện thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -327,8 +328,8 @@ namespace iParkingv5_CustomerRegister.Forms.DataForms
                     ExpireUtc = dtpExpireTime.Value.ToUniversalTime().ToString(),
                     Enabled = true,
                 };
-                var insertResponse = await KzParkingApiHelper.CreateRegisteredVehicle(registeredVehicle);
-                if (insertResponse.Item1)
+                var insertResponse = await AppData.ApiServer.CreateRegisteredVehicle(registeredVehicle);
+                if (insertResponse.Item1 != null)
                 {
                     MessageBox.Show("Thêm mới phương tiện thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.DialogResult = DialogResult.OK;
@@ -378,7 +379,7 @@ namespace iParkingv5_CustomerRegister.Forms.DataForms
             }
             if (string.IsNullOrEmpty(vehicleId))
             {
-                List<RegisteredVehicle> vehicles = await KzParkingApiHelper.GetRegisteredVehicles(vehiclePlate) ?? new List<RegisteredVehicle>();
+                List<RegisteredVehicle> vehicles = (await AppData.ApiServer.GetRegisterVehiclesAsync(vehiclePlate)).Item1 ?? new List<RegisteredVehicle>();
                 RegisteredVehicle? existVehicle = null;
                 foreach (RegisteredVehicle item in vehicles)
                 {
@@ -391,7 +392,7 @@ namespace iParkingv5_CustomerRegister.Forms.DataForms
                 {
                     existVehicle.CustomerId = this.customerID;
                     existVehicle.VehicleTypeId = this.vehicleTypeId;
-                    bool isSuccess = await KzParkingApiHelper.UpdateRegisteredVehicleAsyncById(existVehicle);
+                    bool isSuccess = await AppData.ApiServer.UpdateRegisteredVehicleAsyncById(existVehicle);
                     if (isSuccess)
                     {
                         MessageBox.Show("Cập nhật thông tin phương tiện thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -421,8 +422,8 @@ namespace iParkingv5_CustomerRegister.Forms.DataForms
                             ExpireUtc = dtpExpireTime.Value.ToUniversalTime().ToString(),
                             Enabled = true,
                         };
-                        var insertResponse = await KzParkingApiHelper.CreateRegisteredVehicle(registeredVehicle);
-                        if (insertResponse.Item1)
+                        var insertResponse = await AppData.ApiServer.CreateRegisteredVehicle(registeredVehicle);
+                        if (insertResponse.Item1 != null)
                         {
                             MessageBox.Show("Thêm mới phương tiện thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             this.DialogResult = DialogResult.OK;
@@ -437,7 +438,7 @@ namespace iParkingv5_CustomerRegister.Forms.DataForms
             }
             else
             {
-                RegisteredVehicle? registeredVehicle = await KzParkingApiHelper.GetRegisteredVehicleById(this.vehicleId);
+                RegisteredVehicle? registeredVehicle = (await AppData.ApiServer.GetRegistedVehilceByIdAsync(this.vehicleId)).Item1;
                 if (registeredVehicle == null)
                 {
                     MessageBox.Show("Gặp lỗi khi thêm mới phương tiện, vui lòng thử lại sau giây lát", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -447,7 +448,7 @@ namespace iParkingv5_CustomerRegister.Forms.DataForms
                 {
                     registeredVehicle.CustomerId = this.customerID;
                     registeredVehicle.VehicleTypeId = this.vehicleTypeId;
-                    bool isSuccess = await KzParkingApiHelper.UpdateRegisteredVehicleAsyncById(registeredVehicle);
+                    bool isSuccess = await AppData.ApiServer.UpdateRegisteredVehicleAsyncById(registeredVehicle);
                     if (isSuccess)
                     {
                         MessageBox.Show("Cập nhật thông tin phương tiện thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);

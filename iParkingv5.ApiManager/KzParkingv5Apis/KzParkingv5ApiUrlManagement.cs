@@ -60,7 +60,7 @@
                 case EmParkingv5ObjectType.IdentityGroup:
                     return "identity-group";
                 case EmParkingv5ObjectType.RegisteredVehicle:
-                    return "register-vehicle";
+                    return "vehicle";
                 case EmParkingv5ObjectType.VehicleType:
                     return "vehicle-type";
                 case EmParkingv5ObjectType.AbnormalEvent:

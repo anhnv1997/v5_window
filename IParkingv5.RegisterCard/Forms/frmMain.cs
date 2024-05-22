@@ -84,7 +84,7 @@ namespace IParkingv5.RegisterCard
         private void BtnStop_Click(object? sender, EventArgs e)
         {
             btnStart.Enabled = true;
-            if (this.controller !=null)
+            if (this.controller != null)
             {
                 this.controller.CardEvent -= Controller_CardEvent;
             }
@@ -101,7 +101,7 @@ namespace IParkingv5.RegisterCard
                 cbIdentityType.Items.Add(item);
             }
             //Load IdentityGroups
-            IdentityGroups = await KzParkingApiHelper.GetIdentityGroupsAsync();
+            IdentityGroups = (await AppData.ApiServer.GetIdentityGroupsAsync())?.Item1 ?? new List<IdentityGroup>();
             foreach (var item in IdentityGroups)
             {
                 ListItem li = new ListItem();
@@ -110,7 +110,7 @@ namespace IParkingv5.RegisterCard
                 cbIdentityGroup.Items.Add(li);
             }
             //Load Controllers
-            Bdks = await KzParkingApiHelper.GetAllController();
+            Bdks = (await AppData.ApiServer.GetControlUnitsAsync()).Item1 ?? new List<Bdk>();
             foreach (var item in Bdks)
             {
                 ListItem li = new ListItem();
@@ -152,7 +152,7 @@ namespace IParkingv5.RegisterCard
                 }
             }));
             string code = e.PreferCard;
-            Identity identity = (await KzParkingApiHelper.GetIdentityByCodeAsync(code)).Item1;
+            Identity? identity = (await AppData.ApiServer.GetIdentityByCodeAsync(code)).Item1;
             if (identity == null)
             {
                 int currentIndex = (int)numericUpDown1.Value + 1;
@@ -172,7 +172,8 @@ namespace IParkingv5.RegisterCard
                     IdentityGroupId = identityGroupId,
                     Type = type,
                 };
-                identity = await KzParkingApiHelper.CreateIdentity(identity);
+
+                identity = (await AppData.ApiServer.CreateIdentityAsync(identity))?.Item1 ?? null;
                 if (identity != null)
                 {
                     this.Invoke(new Action(() =>

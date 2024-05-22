@@ -948,7 +948,6 @@
             btnPrintScale.TabIndex = 0;
             btnPrintScale.Text = "In phiếu cân";
             btnPrintScale.TextImageRelation = TextImageRelation.ImageAboveText;
-            toolTip1.SetToolTip(btnPrintScale, "in phieu can");
             btnPrintScale.UseVisualStyleBackColor = false;
             btnPrintScale.Click += BtnPrintScale_Click;
             // 

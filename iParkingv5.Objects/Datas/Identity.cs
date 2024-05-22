@@ -34,6 +34,6 @@ namespace iParkingv5.Objects.Datas
         public bool Deleted { get; set; }
         public Guid CreatedBy { get; set; }
         public Guid? UpdatedBy { get; set; }
-        public List<RegisteredVehicle> RegisteredVehicles { get; set; } = new List<RegisteredVehicle>();
+        public List<RegisteredVehicle> Vehicles { get; set; } = new List<RegisteredVehicle>();
     }
 }

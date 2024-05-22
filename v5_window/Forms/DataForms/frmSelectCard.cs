@@ -109,7 +109,7 @@ namespace iParkingv5_window.Forms.DataForms
             if (!string.IsNullOrEmpty(txtIdentity.Text))
             {
                 //var identityResponse = await KzParkingApiHelper.GetIdentityByCodeAsync(txtIdentity.Text);
-                var identityResponse = await KzParkingv5ApiHelper.GetIdentityByCodeAsync(txtIdentity.Text);
+                var identityResponse = await AppData.ApiServer.GetIdentityByCodeAsync(txtIdentity.Text);
                 Identity? identity = identityResponse.Item1;
                 if (identity == null)
                 {
@@ -124,7 +124,7 @@ namespace iParkingv5_window.Forms.DataForms
             }
             else
             {
-                List<Identity> identities = (await KzParkingv5ApiHelper.GetIdentitiesAsync("")).Item1;
+                List<Identity> identities = (await AppData.ApiServer.GetIdentitiesAsync("")).Item1;
                 if (identities != null)
                 {
                     for (int i = 0; i < identities.Count; i++)

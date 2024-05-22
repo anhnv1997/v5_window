@@ -1,5 +1,6 @@
 ﻿using IPaking.Ultility;
 using iPakrkingv5.Controls;
+using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.ApiManager.KzScaleApis;
 using iParkingv5.ApiManager.XuanCuong;
 using iParkingv5.Controller;
@@ -154,6 +155,7 @@ namespace iParkingv5_window.Forms.DataForms
                 lblServerName.Width = lblServerName.PreferredWidth;
                 lblCompanyName.Width = lblCompanyName.PreferredWidth;
                 lblTime.Width = lblTime.PreferredWidth;
+                var identities = await  AppData.ApiServer.GetIdentitiesAsync("");
             }
             catch (Exception ex)
             {
@@ -348,12 +350,18 @@ namespace iParkingv5_window.Forms.DataForms
         {
             this.Invoke(new Action(() =>
             {
-                lblLoadingStatus.Text = $"Nhận sự kiện quẹt thẻ READER: {e.ReaderIndex}, CARD: {e.PreferCard} từ bộ điều khiển " + e.DeviceName;
-                lblLoadingStatus.Refresh();
-
-                foreach (iLane iLane in lanes)
+                try
                 {
-                    iLane.OnNewEvent(e);
+                    lblLoadingStatus.Text = $"Nhận sự kiện quẹt thẻ READER: {e.ReaderIndex}, CARD: {e.PreferCard} từ bộ điều khiển " + e.DeviceName;
+                    lblLoadingStatus.Refresh();
+
+                    foreach (iLane iLane in lanes)
+                    {
+                        iLane.OnNewEvent(e);
+                    }
+                }
+                catch (Exception)
+                {
                 }
             }));
         }

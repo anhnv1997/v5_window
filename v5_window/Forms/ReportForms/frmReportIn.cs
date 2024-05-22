@@ -23,7 +23,7 @@ namespace iParkingv5_window.Forms.ReportForms
         private List<IdentityGroup> identityGroups = new List<IdentityGroup>();
         private List<RegisteredVehicle> registerVehicles = new List<RegisteredVehicle>();
         private List<Customer> customers = new List<Customer>();
-        private List<KzParkingv5ApiHelper.User> users = new List<KzParkingv5ApiHelper.User>();
+        private List<User> users = new List<User>();
         public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
         #endregion End Properties
 
@@ -62,9 +62,9 @@ namespace iParkingv5_window.Forms.ReportForms
 
         private async void FrmReportIn_Load(object? sender, EventArgs e)
         {
-            registerVehicles = (await KzParkingv5ApiHelper.GetRegisterVehiclesAsync("")).Item1;
-            customers = (await KzParkingv5ApiHelper.GetCustomersAsync())?.Item1 ?? new List<Customer>();
-            users = (await KzParkingv5ApiHelper.GetAllUsers())?.Item1 ?? new List<KzParkingv5ApiHelper.User>();
+            registerVehicles = (await AppData.ApiServer.GetRegisterVehiclesAsync("")).Item1;
+            customers = (await AppData.ApiServer.GetCustomersAsync())?.Item1 ?? new List<Customer>();
+            users = (await AppData.ApiServer.GetAllUsers())?.Item1 ?? new List<User>();
 
             await CreateUI();
 
@@ -150,7 +150,7 @@ namespace iParkingv5_window.Forms.ReportForms
                 string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
                 string user = string.IsNullOrEmpty(((ListItem)cbUser.SelectedItem)?.Value) ? "" : cbUser.Text;
                 //Tuple<List<EventInReport>, int, int> eventInData = await KzParkingApiHelper.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId);
-                DataTable eventInData = await KzParkingv5ApiHelper.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user);
+                DataTable eventInData = await AppData.ApiServer.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user);
                 if (eventInData == null)
                 {
                     panelData.BackColor = Color.White;
@@ -190,6 +190,8 @@ namespace iParkingv5_window.Forms.ReportForms
                         identityName = eventInData.Columns.Contains("identityName") ? row["identityName"].ToString() : "",
                         TransactionType = transactionType,//eventInData.Columns.Contains("transactiontype") ? int.Parse(row["transactiontype"].ToString() ?? "0") : 0,
                         TransactionCode = transactionCode,
+                        note = eventInData.Columns.Contains("note") ? row["note"].ToString() : "",
+                        thirdpartynote = eventInData.Columns.Contains("thirdpartynote") ? row["thirdpartynote"].ToString() : "",
                     };
                     eventInReports.Add(ev);
                 }
@@ -227,7 +229,7 @@ namespace iParkingv5_window.Forms.ReportForms
         {
             try
             {
-                string physicalFileId = dgvData.CurrentRow?.Cells[dgvData.ColumnCount - 10].Value.ToString() ?? "";
+                string physicalFileId = dgvData.CurrentRow?.Cells[dgvData.ColumnCount - 13].Value.ToString() ?? "";
                 string[] physicalFileIds = physicalFileId.Split(';');
                 if (physicalFileIds.Length >= 2)
                 {
@@ -324,7 +326,7 @@ namespace iParkingv5_window.Forms.ReportForms
                 string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
 
                 Application.DoEvents();
-                Tuple<List<EventInReport>, int, int> eventInData = await KzParkingApiHelper.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, pageIndex);
+                Tuple<List<EventInReport>, int, int> eventInData = null;// await KzParkingApiHelper.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, pageIndex);
 
                 if (eventInData.Item1 == null)
                 {
@@ -553,7 +555,25 @@ namespace iParkingv5_window.Forms.ReportForms
                 row.Cells[i++].Value = "Xem Thêm";//15
                 row.Cells[i++].Value = TransactionType.GetTransactionTypeStr(item.TransactionType); //8
                 row.Cells[i++].Value = item.TransactionCode;              //9
+                row.Cells[i++].Value = item.note;              //
 
+                if (string.IsNullOrEmpty(item.thirdpartynote))
+                {
+                    row.Cells[i++].Value = "";              //
+                    row.Cells[i++].Value = "";             //
+                }
+                else
+                {
+                    try
+                    {
+                        string[] noteArray = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(item.thirdpartynote)!.ToArray();// note.Split(";");
+                        row.Cells[i++].Value = noteArray.Length > 0 ? noteArray[0] : "";
+                        row.Cells[i++].Value = noteArray.Length > 1 ? noteArray[1] : "";
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
                 rows.Add(row);
             }
             this.Invoke(new Action(() =>
@@ -592,7 +612,7 @@ namespace iParkingv5_window.Forms.ReportForms
 
 
             //var vehicleTypes = await KzParkingApiHelper.GetAllVehicleTypes() ?? new List<VehicleType>();
-            var vehicleTypes = (await KzParkingv5ApiHelper.GetVehicleTypesAsync()).Item1 ?? new List<VehicleType>();
+            var vehicleTypes = (await AppData.ApiServer.GetVehicleTypesAsync()).Item1 ?? new List<VehicleType>();
             vehicleTypes = vehicleTypes.OrderBy(x => x.Name).ThenBy(x => x.Name.Length).ToList();
             cbVehicleType.Invoke(new Action(() =>
             {
@@ -620,7 +640,7 @@ namespace iParkingv5_window.Forms.ReportForms
             }));
 
             //identityGroups = await KzParkingApiHelper.GetIdentityGroupsAsync() ?? new List<IdentityGroup>();
-            identityGroups = (await KzParkingv5ApiHelper.GetIdentityGroupsAsync()).Item1 ?? new List<IdentityGroup>();
+            identityGroups = (await AppData.ApiServer.GetIdentityGroupsAsync()).Item1 ?? new List<IdentityGroup>();
             identityGroups = identityGroups.OrderBy(x => x.Name).ThenBy(x => x.Name.Length).ToList();
 
             cbIdentityGroupType.Invoke(new Action(() =>
@@ -649,7 +669,7 @@ namespace iParkingv5_window.Forms.ReportForms
             }));
 
             //lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
-            lanes = (await KzParkingv5ApiHelper.GetLanesAsync()).Item1 ?? new List<iParkingv6.Objects.Datas.Lane>();
+            lanes = (await AppData.ApiServer.GetLanesAsync()).Item1 ?? new List<iParkingv6.Objects.Datas.Lane>();
             lanes = lanes.OrderBy(x => x.name).ThenBy(x => x.name.Length).ToList();
             cbLane.Invoke(new Action(() =>
             {
@@ -677,7 +697,7 @@ namespace iParkingv5_window.Forms.ReportForms
             }));
 
             //lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
-            users = (await KzParkingv5ApiHelper.GetAllUsers()).Item1 ?? new List<KzParkingv5ApiHelper.User>();
+            users = (await AppData.ApiServer.GetAllUsers()).Item1 ?? new List<User>();
             users = users.OrderBy(x => x.upn).ThenBy(x => x.upn.Length).ToList();
             cbUser.Invoke(new Action(() =>
             {

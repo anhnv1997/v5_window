@@ -51,11 +51,13 @@ namespace v5_IScale.Forms.SystemForms
                     timerAutoConnect.Enabled = true;
                 }
             }
-            var options = new OidcClientOptions
+            string clientId = "910ae83b-5205-4c35-bf45-8926ff620386";
+            KzParkingv5ApiHelper.client_id = clientId;
+            options = new OidcClientOptions
             {
                 Authority = KzParkingv5ApiHelper.server.Replace(":5000", ":3000"),//"http://192.168.21.13:3000",// 
-                ClientId = "910ae83b-5205-4c35-bf45-8926ff620386",
-                Scope = "openid role-data user-data parking-data offline_access device-data",
+                ClientId = clientId,
+                Scope = "openid role-data user-data parking-data offline_access device-data electronic-invoice-data",
                 RedirectUri = "http://localhost/winforms.client",
                 Browser = new WinFormsWebView(webView21, this),
                 Policy = new Policy
@@ -66,14 +68,13 @@ namespace v5_IScale.Forms.SystemForms
                         ValidateIssuerName = false
                     },
                 },
-
             };
 
             _oidcClient = new OidcClient(options);
 
             Login();
         }
-
+        OidcClientOptions options = null;
         private void FrmLogin_FormClosed(object? sender, FormClosedEventArgs e)
         {
             Application.Restart();
@@ -103,10 +104,12 @@ namespace v5_IScale.Forms.SystemForms
                 timerRestartSocket.Enabled = true;
                 NewtonSoftHelper<string>.SaveConfig(loginResult.RefreshToken, PathManagement.tokenPath);
                 this.refreshToken = loginResult.RefreshToken;
+                KzParkingv5ApiHelper.refresh_token = this.refreshToken;
+
                 this.Hide();
                 //KzParkingApiHelper.token = loginResult.TokenResponse.AccessToken;
                 KzParkingv5ApiHelper.token = loginResult.TokenResponse.AccessToken;
-                await KzParkingv5ApiHelper.GetUserInfor();
+                await AppData.ApiServer.GetUserInfor();
                 frmLoading frm = new()
                 {
                     Owner = this
@@ -117,13 +120,6 @@ namespace v5_IScale.Forms.SystemForms
 
         private void FrmLogin_Load(object? sender, EventArgs e)
         {
-            //chbIsRemember.Checked = Properties.Settings.Default.isRemember;
-            //if (chbIsRemember.Checked)
-            //{
-            //    txtUsername.Text = Properties.Settings.Default.username;
-            //    txtPassword.Text = Properties.Settings.Default.password;
-            //}
-
             activeControls = new()
             {
                 txtUsername,
@@ -201,14 +197,14 @@ namespace v5_IScale.Forms.SystemForms
                     item.Visible = false;
                 }
             }
-            ucLoading1.Show("Đang đăng nhập hệ thống", 0);
+            ucLoading1.Show("Đang đăng nhập hệ thống",0);
             panelMain.ResumeLayout();
             Application.DoEvents();
 
             try
             {
                 await Task.Delay(500);
-                var tokenResponse = await KzParkingApiHelper.GetToken(txtUsername.Text, txtPassword.Text);
+                var tokenResponse = Tuple.Create<string, string>("", "");// await KzParkingApiHelper.GetToken(txtUsername.Text, txtPassword.Text);
                 string token = tokenResponse.Item1;
                 panelMain.SuspendLayout();
                 ucLoading1.HideLoading();
@@ -229,7 +225,7 @@ namespace v5_IScale.Forms.SystemForms
                 Application.DoEvents();
                 await Task.Delay(500);
 
-                KzParkingApiHelper.StartPollingAuthorize();
+                //KzParkingApiHelper.StartPollingAuthorize();
 
                 this.Hide();
                 frmLoading frm = new()
@@ -303,11 +299,12 @@ namespace v5_IScale.Forms.SystemForms
                 {
                     lblStatus.Text = "Đăng nhập thành công";
                     KzParkingv5ApiHelper.token = refreshToken.AccessToken;
-                    timerRefreshToken.Enabled = true;
                     NewtonSoftHelper<string>.SaveConfig(refreshToken.RefreshToken, PathManagement.tokenPath);
                     this.refreshToken = refreshToken.RefreshToken;
+                    KzParkingv5ApiHelper.refresh_token = refreshToken.RefreshToken;
+                    timerRefreshToken.Enabled = true;
                     this.Hide();
-                    await KzParkingv5ApiHelper.GetUserInfor();
+                    await AppData.ApiServer.GetUserInfor();
                     StartSocketServer();
                     timerRestartSocket.Enabled = true;
                     frmLoading frm = new()
@@ -335,19 +332,24 @@ namespace v5_IScale.Forms.SystemForms
             timerRefreshToken.Enabled = false;
             try
             {
-                var refreshToken = await _oidcClient.RefreshTokenAsync(this.refreshToken);
-                if (refreshToken != null)
+                if (this.refreshToken != KzParkingv5ApiHelper.refresh_token)
                 {
-                    if (!refreshToken.IsError)
-                    {
-                        KzParkingv5ApiHelper.token = refreshToken.AccessToken;
-                        if (this.refreshToken != refreshToken.RefreshToken)
-                        {
-                            this.refreshToken = refreshToken.RefreshToken;
-                        }
-                        NewtonSoftHelper<string>.SaveConfig(refreshToken.RefreshToken, PathManagement.tokenPath);
-                    }
+                    this.refreshToken = KzParkingv5ApiHelper.refresh_token;
+                    NewtonSoftHelper<string>.SaveConfig(this.refreshToken, PathManagement.tokenPath);
                 }
+                //var refreshToken = await _oidcClient.RefreshTokenAsync(this.refreshToken);
+                //if (refreshToken != null)
+                //{
+                //    if (!refreshToken.IsError)
+                //    {
+                //        KzParkingv5ApiHelper.token = refreshToken.AccessToken;
+                //        if (this.refreshToken != refreshToken.RefreshToken)
+                //        {
+                //            this.refreshToken = refreshToken.RefreshToken;
+                //        }
+                //        NewtonSoftHelper<string>.SaveConfig(refreshToken.RefreshToken, PathManagement.tokenPath);
+                //    }
+                //}
             }
             catch (Exception ex)
             {
@@ -404,6 +406,7 @@ namespace v5_IScale.Forms.SystemForms
                     obj: ex);
             }
         }
+
         private async Task PollingReceiveSocketMessage(CancellationToken ctsToken)
         {
             while (!ctsToken.IsCancellationRequested)
@@ -478,6 +481,7 @@ namespace v5_IScale.Forms.SystemForms
                 }
             }
         }
+
         private static bool CheckForUpdate(out List<string> updateDetail)
         {
             updateDetail = new List<string>();
@@ -549,6 +553,7 @@ namespace v5_IScale.Forms.SystemForms
                 return false;
             }
         }
+
         private void ClearLog()
         {
             string logDir = Path.Combine(PathManagement.baseBath, $@"logs");
@@ -581,6 +586,7 @@ namespace v5_IScale.Forms.SystemForms
                 }
             }
         }
+
         private async Task GetLogFile(DateTime time)
         {
             string dir = Path.Combine(PathManagement.baseBath, $@"logs\{time.Year}\{time.Month}\{time.Day}\");

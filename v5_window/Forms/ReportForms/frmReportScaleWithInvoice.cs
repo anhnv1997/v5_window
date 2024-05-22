@@ -142,7 +142,7 @@ namespace v5_IScale.Forms.ReportForms
                 MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            var invoiceData = await KzParkingv5ApiHelper.GetInvoiceData(orderId);
+            var invoiceData = await AppData.ApiServer.GetInvoiceData(orderId);
             if (string.IsNullOrEmpty(invoiceData.id))
             {
                 MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);

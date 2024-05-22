@@ -34,7 +34,7 @@ namespace iParkingv5_window.Forms.ReportForms
         private List<IdentityGroup> identityGroups = new List<IdentityGroup>();
         private List<RegisteredVehicle> registerVehicles = new List<RegisteredVehicle>();
         private List<Customer> customers = new List<Customer>();
-        private List<KzParkingv5ApiHelper.User> users = new List<KzParkingv5ApiHelper.User>();
+        private List<User> users = new List<User>();
         List<InvoiceDataSearch> InvoiceDatas = new List<InvoiceDataSearch>();
         #endregion End Properties
 
@@ -64,10 +64,10 @@ namespace iParkingv5_window.Forms.ReportForms
             try
             {
                 //registerVehicles = await KzParkingApiHelper.GetRegisteredVehicles("");
-                registerVehicles = (await KzParkingv5ApiHelper.GetRegisterVehiclesAsync("")).Item1;
+                registerVehicles = (await AppData.ApiServer.GetRegisterVehiclesAsync("")).Item1;
 
                 //customers = (await KzParkingApiHelper.GetAllCustomers())?.Item1 ?? new List<Customer>();
-                customers = (await KzParkingv5ApiHelper.GetCustomersAsync())?.Item1 ?? new List<Customer>();
+                customers = (await AppData.ApiServer.GetCustomersAsync())?.Item1 ?? new List<Customer>();
                 await CreateUI();
                 this.ActiveControl = btnSearch;
                 btnSearch.PerformClick();
@@ -142,7 +142,7 @@ namespace iParkingv5_window.Forms.ReportForms
                 string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
                 string user = string.IsNullOrEmpty(((ListItem)cbUser.SelectedItem)?.Value) ? "" : cbUser.Text;
 
-                var eventOutReportNew = await KzParkingv5ApiHelper.GetEventOuts(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user);
+                var eventOutReportNew = await AppData.ApiServer.GetEventOuts(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user);
 
                 if (eventOutReportNew == null)
                 {
@@ -213,6 +213,8 @@ namespace iParkingv5_window.Forms.ReportForms
 
                         InvoiceNo = "",
                         InvoiceTemplate = "",
+                        note = eventOutReportNew.Columns.Contains("note") ? item["note"].ToString() : "",
+                        thirdpartynote = eventOutReportNew.Columns.Contains("thirdpartynote") ? item["thirdpartynote"].ToString() : "",
                     };
                     eventOutData.Add(ev);
                     if (ev.charge > 0)
@@ -222,7 +224,7 @@ namespace iParkingv5_window.Forms.ReportForms
                 }
                 if (ids.Count > 0)
                 {
-                    InvoiceDatas = await KzParkingv5ApiHelper.GetMultipleInvoiceData(ids) ?? new List<InvoiceDataSearch>();
+                    InvoiceDatas = await AppData.ApiServer.GetMultipleInvoiceData(ids) ?? new List<InvoiceDataSearch>();
                 }
                 else
                 {
@@ -255,7 +257,7 @@ namespace iParkingv5_window.Forms.ReportForms
         {
             try
             {
-                string physicalFileOutId = dgvData.CurrentRow?.Cells[dgvData.ColumnCount - 3].Value?.ToString() ?? "";
+                string physicalFileOutId = dgvData.CurrentRow?.Cells[dgvData.ColumnCount - 6].Value?.ToString() ?? "";
                 string[] physicalFileIdOuts = physicalFileOutId.Split(';');
                 if (physicalFileIdOuts.Length >= 2)
                 {
@@ -279,7 +281,7 @@ namespace iParkingv5_window.Forms.ReportForms
                     }));
                 }
 
-                string physicalFileInId = dgvData.CurrentRow?.Cells[dgvData.ColumnCount - 4].Value?.ToString() ?? "";
+                string physicalFileInId = dgvData.CurrentRow?.Cells[dgvData.ColumnCount - 7].Value?.ToString() ?? "";
                 string[] physicalFileIdIns = physicalFileInId.Split(';');
                 if (physicalFileIdIns.Length >= 2)
                 {
@@ -353,38 +355,6 @@ namespace iParkingv5_window.Forms.ReportForms
         }
         private void UcPages1_OnpageSelect(int pageIndex)
         {
-            this.Invoke(new Action(async () =>
-            {
-                EnableFastLoading();
-
-                string keyword = txtKeyword.Text;
-                DateTime startTime = dtpStartTime.Value;
-                DateTime endTime = dtpEndTime.Value;
-                string vehicleTypeId = ((ListItem)cbVehicleType.SelectedItem)?.Value ?? "";
-                string identityGroupId = ((ListItem)cbIdentityGroup.SelectedItem)?.Value ?? "";
-                string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
-
-                Tuple<List<EventOutReport>, int, int> eventOutReport = await KzParkingApiHelper.GetEventOuts(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, pageIndex);
-
-                if (eventOutReport.Item1 == null)
-                {
-                    DisableFastLoading();
-                    panelData.BackColor = Color.White;
-                    ucLoading1.HideLoading();
-                    ucNotify1.Show(ucNotify.EmNotiType.Error, "Không tải được thông tin xe trong bãi. Vui lòng thử lại!");
-                    ucNotify1.OnSelectResultEvent += UcNotify1_OnSelectResultEvent;
-                    return;
-                }
-
-                EnableFastLoading();
-
-                totalPages = eventOutReport.Item2;
-                totalEvents = eventOutReport.Item3;
-                List<EventOutReport> eventOutData = eventOutReport.Item1 ?? new List<EventOutReport>();
-                await DisplayEventOutData(eventOutData);
-                DisableFastLoading();
-                eventOutData.Clear();
-            }));
         }
         private void UcNotify1_OnSelectResultEvent(DialogResult result)
         {
@@ -617,6 +587,26 @@ namespace iParkingv5_window.Forms.ReportForms
                 row.Cells[i++].Value = GetLaneName(item.laneId);       //16
                 row.Cells[i++].Value = GetLaneName(item.eventInLaneId);//17
 
+                row.Cells[i++].Value = item.note;              //
+
+                if (string.IsNullOrEmpty(item.thirdpartynote))
+                {
+                    row.Cells[i++].Value = "";              //
+                    row.Cells[i++].Value = "";             //
+                }
+                else
+                {
+                    try
+                    {
+                        string[] noteArray = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(item.thirdpartynote)!.ToArray();// note.Split(";");
+                        row.Cells[i++].Value = noteArray.Length > 0 ? noteArray[0] : "";
+                        row.Cells[i++].Value = noteArray.Length > 1 ? noteArray[1] : "";
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+
                 rows.Add(row);
                 total += item.charge;
             }
@@ -655,7 +645,7 @@ namespace iParkingv5_window.Forms.ReportForms
 
 
             //var vehicleTypes = await KzParkingApiHelper.GetAllVehicleTypes() ?? new List<VehicleType>();
-            var vehicleTypes = (await KzParkingv5ApiHelper.GetVehicleTypesAsync()).Item1 ?? new List<VehicleType>();
+            var vehicleTypes = (await AppData.ApiServer.GetVehicleTypesAsync()).Item1 ?? new List<VehicleType>();
             vehicleTypes = vehicleTypes.OrderBy(x => x.Name).ThenBy(x => x.Name.Length).ToList();
             cbVehicleType.Invoke(new Action(() =>
             {
@@ -683,7 +673,7 @@ namespace iParkingv5_window.Forms.ReportForms
             }));
 
             //identityGroups = await KzParkingApiHelper.GetIdentityGroupsAsync() ?? new List<IdentityGroup>();
-            identityGroups = (await KzParkingv5ApiHelper.GetIdentityGroupsAsync()).Item1 ?? new List<IdentityGroup>();
+            identityGroups = (await AppData.ApiServer.GetIdentityGroupsAsync()).Item1 ?? new List<IdentityGroup>();
             identityGroups = identityGroups.OrderBy(x => x.Name).ThenBy(x => x.Name.Length).ToList();
 
             cbIdentityGroup.Invoke(new Action(() =>
@@ -712,7 +702,7 @@ namespace iParkingv5_window.Forms.ReportForms
             }));
 
             //lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
-            lanes = (await KzParkingv5ApiHelper.GetLanesAsync()).Item1 ?? new List<iParkingv6.Objects.Datas.Lane>();
+            lanes = (await AppData.ApiServer.GetLanesAsync()).Item1 ?? new List<iParkingv6.Objects.Datas.Lane>();
             lanes = lanes.OrderBy(x => x.name).ThenBy(x => x.name.Length).ToList();
             cbLane.Invoke(new Action(() =>
             {
@@ -740,7 +730,7 @@ namespace iParkingv5_window.Forms.ReportForms
             }));
 
             //lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
-            users = (await KzParkingv5ApiHelper.GetAllUsers()).Item1 ?? new List<KzParkingv5ApiHelper.User>();
+            users = (await AppData.ApiServer.GetAllUsers()).Item1 ?? new List<User>();
             users = users.OrderBy(x => x.upn).ThenBy(x => x.upn.Length).ToList();
             cbUser.Invoke(new Action(() =>
             {
