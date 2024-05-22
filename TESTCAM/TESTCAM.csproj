@@ -9,21 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\..\BaseLib\Kztek.Cameras\Kztek.Cameras.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="AForge.Imaging">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\AForge.Imaging.dll</HintPath>
+      <HintPath>..\packages\Camera_LPR\AForge.Imaging.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Video.DirectShowEx">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\AForge.Video.DirectShowEx.dll</HintPath>
+      <HintPath>..\packages\Camera_LPR\AForge.Video.DirectShowEx.dll</HintPath>
     </Reference>
     <Reference Include="AForge.VideoEx">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\AForge.VideoEx.dll</HintPath>
+      <HintPath>..\packages\Camera_LPR\AForge.VideoEx.dll</HintPath>
+    </Reference>
+    <Reference Include="Kztek.Cameras">
+      <HintPath>..\packages\Camera_LPR\Kztek.Cameras.dll</HintPath>
     </Reference>
     <Reference Include="RtspClientSharp">
-      <HintPath>C:\Users\Admin\OneDrive\Desktop\Lib\RtspClientSharp.dll</HintPath>
+      <HintPath>..\packages\Camera_LPR\RtspClientSharp.dll</HintPath>
     </Reference>
   </ItemGroup>
 

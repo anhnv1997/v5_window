@@ -31,244 +31,242 @@ namespace iParkingv5_window.Forms.SystemForms
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLogin));
-            lblUsername = new Label();
-            lblPassword = new Label();
-            chbIsRemember = new CheckBox();
-            txtUsername = new TextBox();
-            txtPassword = new TextBox();
-            timerAutoConnect = new System.Windows.Forms.Timer(components);
-            lblStatus = new Label();
-            btnCancel1 = new LblCancel();
-            btnLogin = new BtnLogin();
-            panelMain = new Panel();
-            ucLoading1 = new Usercontrols.BuildControls.ucLoading();
-            lblLoginTitle = new Label();
-            picLogo = new PictureBox();
-            ucNotify1 = new Usercontrols.BuildControls.ucNotify();
-            webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
-            timerRefreshToken = new System.Windows.Forms.Timer(components);
-            timerRestartSocket = new System.Windows.Forms.Timer(components);
-            panelMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picLogo).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
-            SuspendLayout();
+            this.lblUsername = new System.Windows.Forms.Label();
+            this.lblPassword = new System.Windows.Forms.Label();
+            this.chbIsRemember = new System.Windows.Forms.CheckBox();
+            this.txtUsername = new System.Windows.Forms.TextBox();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.timerAutoConnect = new System.Windows.Forms.Timer(this.components);
+            this.lblStatus = new System.Windows.Forms.Label();
+            this.btnCancel1 = new iPakrkingv5.Controls.Controls.Buttons.LblCancel();
+            this.btnLogin = new iPakrkingv5.Controls.Controls.Buttons.BtnLogin();
+            this.panelMain = new System.Windows.Forms.Panel();
+            this.ucLoading1 = new iParkingv5_window.Usercontrols.BuildControls.ucLoading();
+            this.lblLoginTitle = new System.Windows.Forms.Label();
+            this.picLogo = new System.Windows.Forms.PictureBox();
+            this.ucNotify1 = new iParkingv5_window.Usercontrols.BuildControls.ucNotify();
+            this.webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
+            this.timerRefreshToken = new System.Windows.Forms.Timer(this.components);
+            this.timerRestartSocket = new System.Windows.Forms.Timer(this.components);
+            this.panelMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.webView21)).BeginInit();
+            this.SuspendLayout();
             // 
             // lblUsername
             // 
-            lblUsername.AutoSize = true;
-            lblUsername.BackColor = Color.Transparent;
-            lblUsername.Location = new Point(28, 261);
-            lblUsername.Name = "lblUsername";
-            lblUsername.Size = new Size(111, 21);
-            lblUsername.TabIndex = 0;
-            lblUsername.Text = "Tên đăng nhập";
+            this.lblUsername.AutoSize = true;
+            this.lblUsername.BackColor = System.Drawing.Color.Transparent;
+            this.lblUsername.Location = new System.Drawing.Point(28, 261);
+            this.lblUsername.Name = "lblUsername";
+            this.lblUsername.Size = new System.Drawing.Size(111, 21);
+            this.lblUsername.TabIndex = 0;
+            this.lblUsername.Text = "Tên đăng nhập";
             // 
             // lblPassword
             // 
-            lblPassword.AutoSize = true;
-            lblPassword.BackColor = Color.Transparent;
-            lblPassword.Location = new Point(28, 290);
-            lblPassword.Name = "lblPassword";
-            lblPassword.Size = new Size(75, 21);
-            lblPassword.TabIndex = 1;
-            lblPassword.Text = "Mật khẩu";
+            this.lblPassword.AutoSize = true;
+            this.lblPassword.BackColor = System.Drawing.Color.Transparent;
+            this.lblPassword.Location = new System.Drawing.Point(28, 290);
+            this.lblPassword.Name = "lblPassword";
+            this.lblPassword.Size = new System.Drawing.Size(75, 21);
+            this.lblPassword.TabIndex = 1;
+            this.lblPassword.Text = "Mật khẩu";
             // 
             // chbIsRemember
             // 
-            chbIsRemember.AutoSize = true;
-            chbIsRemember.BackColor = Color.Transparent;
-            chbIsRemember.Location = new Point(128, 313);
-            chbIsRemember.Margin = new Padding(3, 2, 3, 2);
-            chbIsRemember.Name = "chbIsRemember";
-            chbIsRemember.Size = new Size(128, 25);
-            chbIsRemember.TabIndex = 5;
-            chbIsRemember.Text = "Nhớ tài khoản";
-            chbIsRemember.UseVisualStyleBackColor = false;
-            chbIsRemember.CheckedChanged += chbIsRemember_CheckedChanged;
+            this.chbIsRemember.AutoSize = true;
+            this.chbIsRemember.BackColor = System.Drawing.Color.Transparent;
+            this.chbIsRemember.Location = new System.Drawing.Point(128, 313);
+            this.chbIsRemember.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.chbIsRemember.Name = "chbIsRemember";
+            this.chbIsRemember.Size = new System.Drawing.Size(128, 25);
+            this.chbIsRemember.TabIndex = 5;
+            this.chbIsRemember.Text = "Nhớ tài khoản";
+            this.chbIsRemember.UseVisualStyleBackColor = false;
             // 
             // txtUsername
             // 
-            txtUsername.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtUsername.Location = new Point(128, 259);
-            txtUsername.Margin = new Padding(3, 2, 3, 2);
-            txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(0, 29);
-            txtUsername.TabIndex = 3;
-            txtUsername.Click += Control_Click;
-            txtUsername.TextChanged += textBox_TextChanged;
+            this.txtUsername.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtUsername.Location = new System.Drawing.Point(128, 259);
+            this.txtUsername.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtUsername.Name = "txtUsername";
+            this.txtUsername.Size = new System.Drawing.Size(0, 29);
+            this.txtUsername.TabIndex = 3;
             // 
             // txtPassword
             // 
-            txtPassword.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtPassword.Location = new Point(128, 288);
-            txtPassword.Margin = new Padding(3, 2, 3, 2);
-            txtPassword.Name = "txtPassword";
-            txtPassword.PasswordChar = '*';
-            txtPassword.Size = new Size(0, 29);
-            txtPassword.TabIndex = 4;
-            txtPassword.TextChanged += textBox_TextChanged;
+            this.txtPassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPassword.Location = new System.Drawing.Point(128, 288);
+            this.txtPassword.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '*';
+            this.txtPassword.Size = new System.Drawing.Size(0, 29);
+            this.txtPassword.TabIndex = 4;
             // 
             // timerAutoConnect
             // 
-            timerAutoConnect.Interval = 1000;
-            timerAutoConnect.Tick += timerAutoConnect_Tick;
+            this.timerAutoConnect.Interval = 1000;
             // 
             // lblStatus
             // 
-            lblStatus.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            lblStatus.AutoSize = true;
-            lblStatus.Font = new Font("Segoe UI", 11.25F, FontStyle.Italic);
-            lblStatus.ForeColor = Color.Green;
-            lblStatus.Location = new Point(12, 444);
-            lblStatus.Name = "lblStatus";
-            lblStatus.Size = new Size(48, 20);
-            lblStatus.TabIndex = 6;
-            lblStatus.Text = "label1";
+            this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Italic);
+            this.lblStatus.ForeColor = System.Drawing.Color.Green;
+            this.lblStatus.Location = new System.Drawing.Point(12, 444);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(48, 20);
+            this.lblStatus.TabIndex = 6;
+            this.lblStatus.Text = "label1";
             // 
             // btnCancel1
             // 
-            btnCancel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnCancel1.AutoSize = true;
-            btnCancel1.BackColor = Color.FromArgb(230, 230, 230);
-            btnCancel1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            btnCancel1.ForeColor = Color.Black;
-            btnCancel1.Location = new Point(-82, 342);
-            btnCancel1.Margin = new Padding(0);
-            btnCancel1.Name = "btnCancel1";
-            btnCancel1.Size = new Size(60, 30);
-            btnCancel1.TabIndex = 7;
-            btnCancel1.Text = "Thoát";
-            btnCancel1.UseVisualStyleBackColor = false;
+            this.btnCancel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel1.AutoSize = true;
+            this.btnCancel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.btnCancel1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.btnCancel1.ForeColor = System.Drawing.Color.Black;
+            this.btnCancel1.Location = new System.Drawing.Point(-82, 342);
+            this.btnCancel1.Margin = new System.Windows.Forms.Padding(0);
+            this.btnCancel1.Name = "btnCancel1";
+            this.btnCancel1.Size = new System.Drawing.Size(60, 30);
+            this.btnCancel1.TabIndex = 7;
+            this.btnCancel1.Text = "Thoát";
+            this.btnCancel1.UseVisualStyleBackColor = false;
             // 
             // btnLogin
             // 
-            btnLogin.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnLogin.AutoSize = true;
-            btnLogin.BackColor = Color.FromArgb(230, 230, 230);
-            btnLogin.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            btnLogin.ForeColor = Color.Black;
-            btnLogin.Location = new Point(-176, 342);
-            btnLogin.Margin = new Padding(0);
-            btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(95, 30);
-            btnLogin.TabIndex = 8;
-            btnLogin.Text = "Đăng nhập";
-            btnLogin.UseVisualStyleBackColor = false;
+            this.btnLogin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLogin.AutoSize = true;
+            this.btnLogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.btnLogin.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.btnLogin.ForeColor = System.Drawing.Color.Black;
+            this.btnLogin.Location = new System.Drawing.Point(-176, 342);
+            this.btnLogin.Margin = new System.Windows.Forms.Padding(0);
+            this.btnLogin.Name = "btnLogin";
+            this.btnLogin.Size = new System.Drawing.Size(95, 30);
+            this.btnLogin.TabIndex = 8;
+            this.btnLogin.Text = "Đăng nhập";
+            this.btnLogin.UseVisualStyleBackColor = false;
             // 
             // panelMain
             // 
-            panelMain.BackColor = Color.White;
-            panelMain.Controls.Add(ucLoading1);
-            panelMain.Controls.Add(lblLoginTitle);
-            panelMain.Controls.Add(picLogo);
-            panelMain.Controls.Add(ucNotify1);
-            panelMain.Controls.Add(lblUsername);
-            panelMain.Controls.Add(btnLogin);
-            panelMain.Controls.Add(lblPassword);
-            panelMain.Controls.Add(btnCancel1);
-            panelMain.Controls.Add(chbIsRemember);
-            panelMain.Controls.Add(txtUsername);
-            panelMain.Controls.Add(txtPassword);
-            panelMain.Font = new Font("Segoe UI", 12F);
-            panelMain.Location = new Point(0, 0);
-            panelMain.Margin = new Padding(0);
-            panelMain.Name = "panelMain";
-            panelMain.Padding = new Padding(21, 18, 21, 18);
-            panelMain.Size = new Size(0, 379);
-            panelMain.TabIndex = 9;
+            this.panelMain.BackColor = System.Drawing.Color.White;
+            this.panelMain.Controls.Add(this.ucLoading1);
+            this.panelMain.Controls.Add(this.lblLoginTitle);
+            this.panelMain.Controls.Add(this.picLogo);
+            this.panelMain.Controls.Add(this.ucNotify1);
+            this.panelMain.Controls.Add(this.lblUsername);
+            this.panelMain.Controls.Add(this.btnLogin);
+            this.panelMain.Controls.Add(this.lblPassword);
+            this.panelMain.Controls.Add(this.btnCancel1);
+            this.panelMain.Controls.Add(this.chbIsRemember);
+            this.panelMain.Controls.Add(this.txtUsername);
+            this.panelMain.Controls.Add(this.txtPassword);
+            this.panelMain.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.panelMain.Location = new System.Drawing.Point(0, 0);
+            this.panelMain.Margin = new System.Windows.Forms.Padding(0);
+            this.panelMain.Name = "panelMain";
+            this.panelMain.Padding = new System.Windows.Forms.Padding(21, 18, 21, 18);
+            this.panelMain.Size = new System.Drawing.Size(0, 379);
+            this.panelMain.TabIndex = 9;
             // 
             // ucLoading1
             // 
-            ucLoading1.BackColor = Color.FromArgb(255, 224, 192);
-            ucLoading1.Language = TextManagement.EmLanguage.Vietnamese;
-            ucLoading1.Location = new Point(382, 213);
-            ucLoading1.Margin = new Padding(3, 2, 3, 2);
-            ucLoading1.Message = "Preparing to download";
-            ucLoading1.Name = "ucLoading1";
-            ucLoading1.Size = new Size(343, 141);
-            ucLoading1.TabIndex = 13;
+            this.ucLoading1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.ucLoading1.Language = IPaking.Ultility.TextManagement.EmLanguage.Vietnamese;
+            this.ucLoading1.Location = new System.Drawing.Point(382, 213);
+            this.ucLoading1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ucLoading1.Message = "Preparing to download";
+            this.ucLoading1.Name = "ucLoading1";
+            this.ucLoading1.Size = new System.Drawing.Size(343, 141);
+            this.ucLoading1.TabIndex = 13;
             // 
             // lblLoginTitle
             // 
-            lblLoginTitle.AutoSize = true;
-            lblLoginTitle.BackColor = Color.Transparent;
-            lblLoginTitle.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
-            lblLoginTitle.Location = new Point(21, 206);
-            lblLoginTitle.Name = "lblLoginTitle";
-            lblLoginTitle.Size = new Size(328, 45);
-            lblLoginTitle.TabIndex = 12;
-            lblLoginTitle.Text = "Đăng nhập hệ thống";
+            this.lblLoginTitle.AutoSize = true;
+            this.lblLoginTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblLoginTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
+            this.lblLoginTitle.Location = new System.Drawing.Point(21, 206);
+            this.lblLoginTitle.Name = "lblLoginTitle";
+            this.lblLoginTitle.Size = new System.Drawing.Size(328, 45);
+            this.lblLoginTitle.TabIndex = 12;
+            this.lblLoginTitle.Text = "Đăng nhập hệ thống";
             // 
             // picLogo
             // 
-            picLogo.BackColor = Color.Transparent;
-            picLogo.Dock = DockStyle.Top;
-            picLogo.Location = new Point(21, 18);
-            picLogo.Margin = new Padding(3, 2, 3, 2);
-            picLogo.Name = "picLogo";
-            picLogo.Size = new Size(0, 177);
-            picLogo.SizeMode = PictureBoxSizeMode.Zoom;
-            picLogo.TabIndex = 11;
-            picLogo.TabStop = false;
+            this.picLogo.BackColor = System.Drawing.Color.Transparent;
+            this.picLogo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.picLogo.Location = new System.Drawing.Point(21, 18);
+            this.picLogo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.picLogo.Name = "picLogo";
+            this.picLogo.Size = new System.Drawing.Size(0, 177);
+            this.picLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picLogo.TabIndex = 11;
+            this.picLogo.TabStop = false;
             // 
             // ucNotify1
             // 
-            ucNotify1.BackColor = Color.White;
-            ucNotify1.Location = new Point(76, 92);
-            ucNotify1.Margin = new Padding(3, 2, 3, 2);
-            ucNotify1.MaximumSize = new Size(328, 280);
-            ucNotify1.Message = "Nội dung thông báo";
-            ucNotify1.MinimumSize = new Size(328, 280);
-            ucNotify1.Name = "ucNotify1";
-            ucNotify1.NotiType = Usercontrols.BuildControls.ucNotify.EmNotiType.Information;
-            ucNotify1.Size = new Size(328, 280);
-            ucNotify1.TabIndex = 10;
+            this.ucNotify1.BackColor = System.Drawing.Color.White;
+            this.ucNotify1.Location = new System.Drawing.Point(76, 92);
+            this.ucNotify1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ucNotify1.MaximumSize = new System.Drawing.Size(328, 280);
+            this.ucNotify1.Message = "Nội dung thông báo";
+            this.ucNotify1.MinimumSize = new System.Drawing.Size(328, 280);
+            this.ucNotify1.Name = "ucNotify1";
+            this.ucNotify1.NotiType = iParkingv5_window.Usercontrols.BuildControls.ucNotify.EmNotiType.Information;
+            this.ucNotify1.Size = new System.Drawing.Size(328, 280);
+            this.ucNotify1.TabIndex = 10;
             // 
             // webView21
             // 
-            webView21.AllowExternalDrop = true;
-            webView21.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            webView21.CreationProperties = null;
-            webView21.DefaultBackgroundColor = Color.White;
-            webView21.Location = new Point(0, 0);
-            webView21.Name = "webView21";
-            webView21.Size = new Size(631, 473);
-            webView21.TabIndex = 10;
-            webView21.ZoomFactor = 1D;
+            this.webView21.AllowExternalDrop = true;
+            this.webView21.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.webView21.CreationProperties = null;
+            this.webView21.DefaultBackgroundColor = System.Drawing.Color.White;
+            this.webView21.Location = new System.Drawing.Point(0, 0);
+            this.webView21.Name = "webView21";
+            this.webView21.Size = new System.Drawing.Size(631, 473);
+            this.webView21.TabIndex = 10;
+            this.webView21.ZoomFactor = 1D;
             // 
             // timerRefreshToken
             // 
-            timerRefreshToken.Interval = 1000;
-            timerRefreshToken.Tick += timerRefreshToken_Tick;
+            this.timerRefreshToken.Interval = 1000;
             // 
             // timerRestartSocket
             // 
-            timerRestartSocket.Interval = 3600000;
-            timerRestartSocket.Tick += timerRestartSocket_Tick;
+            this.timerRestartSocket.Interval = 3600000;
             // 
             // frmLogin
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            AutoSize = true;
-            ClientSize = new Size(631, 473);
-            Controls.Add(lblStatus);
-            Controls.Add(webView21);
-            Controls.Add(panelMain);
-            Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(3, 2, 3, 2);
-            MaximizeBox = false;
-            Name = "frmLogin";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "Đăng nhập hệ thống";
-            panelMain.ResumeLayout(false);
-            panelMain.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picLogo).EndInit();
-            ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(631, 473);
+            this.Controls.Add(this.lblStatus);
+            this.Controls.Add(this.webView21);
+            this.Controls.Add(this.panelMain);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MaximizeBox = false;
+            this.Name = "frmLogin";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Đăng nhập hệ thống";
+            this.panelMain.ResumeLayout(false);
+            this.panelMain.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.webView21)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
