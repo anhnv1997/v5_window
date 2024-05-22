@@ -28,6 +28,8 @@ namespace iParkingv5_window.Usercontrols
             bool isValidControllerIdAndReader = IsValidControllerAndReader(lane, ce, out controllerInLane);
             if (!isValidControllerIdAndReader) return false;
 
+            
+
             foreach (CardEventArgs oldEvent in iLane.lastCardEventDatas)
             {
                 if (ce.IsInWaitingTime(oldEvent, StaticPool.appOption.MinDelayCardTime, out thoiGianCho))

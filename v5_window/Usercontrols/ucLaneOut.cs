@@ -858,7 +858,10 @@ namespace iParkingv5_window.Usercontrols
                 {
                     BaseLane.GetPlate(this.lane.id, out vehicleImg, out plate, out lprImage, ucMotoLpr, camBienSoXeMayDuPhongs, false);
                 }
-                registeredVehicle = await KzParkingApiHelper.GetRegisteredVehicle(plate);
+                if (string.IsNullOrEmpty(plate))
+                    registeredVehicle = null;
+                else
+                    registeredVehicle = await KzParkingApiHelper.GetRegisteredVehicle(plate);
 
                 if (string.IsNullOrEmpty(plate) || registeredVehicle == null)
                 {
@@ -1035,11 +1038,14 @@ namespace iParkingv5_window.Usercontrols
         LOI_HE_THONG:
             {
                 ExcecuteSystemErrorCheckOut();
+                DisplayEventOutInfo(eventOut?.DatetimeIn, ie.EventTime, plate, null, null, vehicleType, registeredVehicle, -1, eventOut?.Customer);
+
                 return;
             }
         SU_KIEN_LOI:
             {
                 ExcecuteUnvalidEvent(null, vehicleType, plate, ie.EventTime, eventOut, errorMessage);
+                DisplayEventOutInfo(eventOut?.DatetimeIn, ie.EventTime, plate, null, null, vehicleType, registeredVehicle, -1, eventOut?.Customer);
                 return;
             }
         SU_KIEN_HOP_LE:
@@ -1338,11 +1344,13 @@ namespace iParkingv5_window.Usercontrols
             if (identity.RegisteredVehicles == null)
             {
                 lblResult.UpdateResultMessage("Thẻ tháng chưa đăng ký phương tiện", Color.DarkRed);
+                DisplayEventOutInfo(null, ce.EventTime, plateNumber, identity, identityGroup, vehicleType, null, -1, null);
                 return;
             }
             if (identity.RegisteredVehicles.Count == 0)
             {
                 lblResult.UpdateResultMessage("Thẻ tháng chưa đăng ký phương tiện", Color.DarkRed);
+                DisplayEventOutInfo(null, ce.EventTime, plateNumber, identity, identityGroup, vehicleType, null, -1, null);
                 return;
             }
 
@@ -1522,11 +1530,14 @@ namespace iParkingv5_window.Usercontrols
         LOI_HE_THONG:
             {
                 ExcecuteSystemErrorCheckOut();
+                DisplayEventOutInfo(eventOut?.DatetimeIn, ce.EventTime, plateNumber, identity, identityGroup, vehicleType, eventOut?.RegisteredVehicle, -1, eventOut?.Customer);
+
                 return;
             }
         SU_KIEN_LOI:
             {
                 ExcecuteUnvalidEvent(identity, vehicleType, ce.PlateNumber, ce.EventTime, eventOut, errorMessage);
+                DisplayEventOutInfo(eventOut?.DatetimeIn, ce.EventTime, plateNumber, identity, identityGroup, vehicleType, eventOut?.RegisteredVehicle, -1, eventOut?.Customer);
                 return;
             }
         SU_KIEN_HOP_LE:
@@ -1979,7 +1990,10 @@ namespace iParkingv5_window.Usercontrols
                 dgvEventContent.Rows.Clear();
                 dgvEventContent.Rows.Add("Loại Xe", VehicleType.GetDisplayStr(vehicle.Type));
 
-                dgvEventContent.Rows.Add("Phí gửi xe", TextFormatingTool.GetMoneyFormat(fee.ToString()));
+                if (fee != -1)
+                {
+                    dgvEventContent.Rows.Add("Phí gửi xe", TextFormatingTool.GetMoneyFormat(fee.ToString()));
+                }
                 dgvEventContent.Rows[dgvEventContent.RowCount - 1].DefaultCellStyle.Font = new Font(dgvEventContent.DefaultCellStyle.Font.Name, dgvEventContent.DefaultCellStyle.Font.Size * 3);
                 dgvEventContent.Rows[dgvEventContent.RowCount - 1].DefaultCellStyle.ForeColor = Color.Red; if (weighingDetail != null)
                 {
@@ -2013,7 +2027,10 @@ namespace iParkingv5_window.Usercontrols
 
                 //dgvEventContent.Rows.Add("Mã định danh", identity?.Code);
                 //dgvEventContent.Rows.Add("Biển số nhận diện", plateNumber);
-
+                if (identity != null)
+                {
+                    dgvEventContent.Rows.Add("Mã định danh", identity.Name + "-" + identity.Code);
+                }
                 if (customer != null)
                 {
                     dgvEventContent.Rows.Add("Khách hàng", customer.Name + " " + customer.Address);
@@ -2273,7 +2290,7 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
         }
-       
+
 
         private int printCount = 0;
         private async void btnPrintScale_Click(object sender, EventArgs e)

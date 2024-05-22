@@ -1297,12 +1297,12 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
                     {
                         foreach (var item in kzBaseResponse?.data)
                         {
-                            if (item.PlateNumber == plateNumber)
+                            if (item.PlateNumber.Replace("-","").Replace(".","").ToUpper() == plateNumber.Replace("-", "").Replace(".", "").ToUpper())
                             {
                                 return item;
                             }
                         }
-                        return kzBaseResponse?.data[0];
+                        return null;
                     }
                 }
                 return null;

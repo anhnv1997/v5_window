@@ -472,6 +472,8 @@ namespace iParkingv5_window.Usercontrols
         LOI_HE_THONG:
             {
                 ExcecuteSystemErrorCheckIn();
+                DisplayEventInfo(DateTime.Now, eventIn?.registeredVehicle?.PlateNumber, null, null, vehicleType, eventIn?.customer, null);
+
                 return;
             }
         SU_KIEN_LOI:
@@ -913,7 +915,12 @@ namespace iParkingv5_window.Usercontrols
                 {
                     BaseLane.GetPlate(this.lane.id, out vehicleImg, out plate, out lprImage, ucMotoLpr, camBienSoXeMayDuPhongs, false);
                 }
-                registeredVehicle = await KzParkingApiHelper.GetRegisteredVehicle(plate);
+                if (string.IsNullOrEmpty(plate))
+                {
+                    registeredVehicle = null;
+                }
+                else
+                    registeredVehicle = await KzParkingApiHelper.GetRegisteredVehicle(plate);
                 if (string.IsNullOrEmpty(plate) || registeredVehicle == null)
                 {
                     if (retry < StaticPool.appOption.RetakePhotoTimes)
@@ -1044,6 +1051,7 @@ namespace iParkingv5_window.Usercontrols
             LOI_HE_THONG:
                 {
                     ExcecuteSystemErrorCheckIn();
+                    DisplayEventInfo(DateTime.Now, eventIn?.registeredVehicle?.PlateNumber, null, null, vehicleType, eventIn?.customer, null);
                     return;
                 }
             SU_KIEN_LOI:
@@ -1529,11 +1537,20 @@ namespace iParkingv5_window.Usercontrols
                         default:
                             break;
                     }
+
+                    //if(identity.Name != null && identity.Name != "")
+                    //{
+                    //    dgvEventContent.Rows.Add("Tên", identity.Name);
+                    //}
+                    if (identity.Code != null && identity.Code != "")
+                    {
+                        dgvEventContent.Rows.Add("Mã định danh", identity.Code);
+                    }
                 }
-                if (identityGroup != null)
-                {
-                    dgvEventContent.Rows.Add("Nhóm", identityGroup.Name);
-                }
+                //if (identityGroup != null)
+                //{
+                //    dgvEventContent.Rows.Add("Nhóm", identityGroup.Name);
+                //}
                 if (vehicle != null)
                 {
                     dgvEventContent.Rows.Add("Loại phương tiện", VehicleType.GetDisplayStr(vehicle.Type));
@@ -1619,16 +1636,19 @@ namespace iParkingv5_window.Usercontrols
             if (identity.RegisteredVehicles == null)
             {
                 lblResult.UpdateResultMessage("Thẻ tháng chưa đăng ký phương tiện", Color.DarkRed);
+                DisplayEventInfo(ce.EventTime, plateNumber, identity, identityGroup, vehicleType, null, null);
                 return;
             }
             if (identity.RegisteredVehicles.Count == 0)
             {
                 lblResult.UpdateResultMessage("Thẻ tháng chưa đăng ký phương tiện", Color.DarkRed);
+                DisplayEventInfo(ce.EventTime, plateNumber, identity, identityGroup, vehicleType, null, null);
                 return;
             }
 
             string errorMessage = string.Empty;
             AddEventInResponse? eventIn = null;
+
             if (string.IsNullOrEmpty(plateNumber) && identity.RegisteredVehicles.Count == 1 && identityGroup.plateCompareLevel != 2)
             {
                 bool isConfirm = MessageBox.Show("Không nhận diện được biển số, bạn có muốn cho xe vào bãi?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
@@ -1734,6 +1754,7 @@ namespace iParkingv5_window.Usercontrols
         CheckInWithForce:
             {
                 var responseWithForce = await PostCheckInAsync(lane.id, plateNumber, identity, imageKeys, true);
+                
                 if (responseWithForce == null)
                 {
                     goto LOI_HE_THONG;
@@ -1757,6 +1778,8 @@ namespace iParkingv5_window.Usercontrols
         LOI_HE_THONG:
             {
                 ExcecuteSystemErrorCheckIn();
+                DisplayEventInfo(ce.EventTime, plateNumber, identity, identityGroup, vehicleType, eventIn?.customer, null);
+
                 return;
             }
         SU_KIEN_LOI:
@@ -1830,6 +1853,7 @@ namespace iParkingv5_window.Usercontrols
         private void ExcecuteSystemErrorCheckIn()
         {
             lblResult.UpdateResultMessage("Không gửi được thông tin xe vào lên hệ thống, vui lòng thử lại sau giây lát", Color.DarkRed);
+
         }
         private void ExcecuteUnvalidEvent(Identity identity, IdentityGroup identityGroup, VehicleType vehicleType, string detectPlate, DateTime eventTime, string errorMessage, Customer? customer, string registerPlate)
         {
@@ -2062,6 +2086,16 @@ namespace iParkingv5_window.Usercontrols
         private void cbNote_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.ActiveControl = lblLaneName;
+        }
+
+        private void btnTestCard_Click(object sender, EventArgs e)
+        {
+            CardEventArgs ie = new()
+            {
+                PreferCard = "12345678",
+                EventTime = DateTime.Now
+            };
+            _ = OnNewEvent(ie);
         }
     }
 }

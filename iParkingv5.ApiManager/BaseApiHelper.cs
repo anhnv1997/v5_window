@@ -168,12 +168,14 @@ namespace iParkingv6.ApiManager
                 {
                     var logResponse = response;
                     logResponse.Request = null;
+
                     LogHelper.Log(logType: LogHelper.EmLogType.ERROR,
-                                  doi_tuong_tac_dong: LogHelper.EmObjectLogType.Api,
-                                  hanh_dong: method.ToString(),
-                                  noi_dung_hanh_dong: $"Gửi {apiUrl} lần {i + 1}",
-                                  mo_ta_them: TextFormatingTool.BeautyJson(dataSend),
-                                  obj: logResponse);
+                                 doi_tuong_tac_dong: LogHelper.EmObjectLogType.Api,
+                                 hanh_dong: method.ToString(),
+                                 noi_dung_hanh_dong: $"Gửi {apiUrl} lần {i + 1}",
+                                 mo_ta_them: TextFormatingTool.BeautyJson(dataSend),
+                                 obj: logResponse);
+
                     if (string.IsNullOrEmpty(response.Content))
                     {
                         continue;
@@ -184,12 +186,16 @@ namespace iParkingv6.ApiManager
                     }
                 }
 
-                LogHelper.Log(logType: LogHelper.EmLogType.INFOR,
+                if (!apiUrl.Contains("report/SummaryEvents"))
+                {
+                    LogHelper.Log(logType: LogHelper.EmLogType.INFOR,
                               doi_tuong_tac_dong: LogHelper.EmObjectLogType.Api,
                               hanh_dong: method.ToString(),
                               noi_dung_hanh_dong: apiUrl,
                               mo_ta_them: TextFormatingTool.BeautyJson(dataSend),
                               obj: response.Content);
+                }
+                    
                 return Tuple.Create<string, string>(response.Content, string.Empty);
             }
             return Tuple.Create<string, string>(string.Empty, errorMessage);
