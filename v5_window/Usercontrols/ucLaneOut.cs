@@ -933,7 +933,7 @@ namespace iParkingv5_window.Usercontrols
                     {
                         isAlarm = true;
                         string message = ApiInternalErrorMessages.ToString(errorCode);
-                        frmConfirmOut frmConfirmOut = new frmConfirmOut(plate, message, responseNormal.data?.plateNumber ?? "", responseNormal.data?.identityId ?? "", responseNormal.data?.laneId ?? "", responseNormal.data?.fileKeys, responseNormal.data?.DatetimeOut ?? DateTime.Now, true, responseNormal.data?.charge ?? 0);
+                        frmConfirmOut frmConfirmOut = new frmConfirmOut(plate, message, responseNormal.data?.plateNumber ?? "", responseNormal.data?.identityId ?? "", responseNormal.data?.laneId ?? "", responseNormal.data?.fileKeys, responseNormal.data?.DatetimeOut ?? DateTime.Now, true, responseNormal.data?.charge ?? 0, registeredVehicle);
                         bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
                         if (isConfirm)
                         {
@@ -965,7 +965,7 @@ namespace iParkingv5_window.Usercontrols
                     }
                     else
                     {
-                        frmConfirmOut frmConfirmOut = new frmConfirmOut(plate, "Bạn có xác nhận mở barrie?", responseNormal.data?.eventInPlateNumber ?? "", responseNormal.data?.eventInIdentityId ?? "", responseNormal.data?.eventInLaneId ?? "", responseNormal.data?.eventInFileKeys, responseNormal.data?.DatetimeIn ?? DateTime.Now, false, responseNormal.data?.charge ?? 0);
+                        frmConfirmOut frmConfirmOut = new frmConfirmOut(plate, "Bạn có xác nhận mở barrie?", responseNormal.data?.eventInPlateNumber ?? "", responseNormal.data?.eventInIdentityId ?? "", responseNormal.data?.eventInLaneId ?? "", responseNormal.data?.eventInFileKeys, responseNormal.data?.DatetimeIn ?? DateTime.Now, false, responseNormal.data?.charge ?? 0, registeredVehicle);
                         bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
                         if (!isConfirm)
                         {
@@ -1013,7 +1013,7 @@ namespace iParkingv5_window.Usercontrols
                     {
                         frmConfirmOut frmConfirmOut = new frmConfirmOut(plate, "Bạn có xác nhận mở barrie?",
                                                                                 responseWithForce.data?.eventInPlateNumber ?? "", responseWithForce.data?.eventInIdentityId ?? "", responseWithForce.data?.eventInLaneId ?? "", responseWithForce.data?.eventInFileKeys,
-                                                                                responseWithForce.data?.DatetimeIn ?? DateTime.Now, false, responseWithForce.data?.charge ?? 0);
+                                                                                responseWithForce.data?.DatetimeIn ?? DateTime.Now, false, responseWithForce.data?.charge ?? 0, registeredVehicle);
                         bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
                         if (!isConfirm)
                         {
@@ -1399,7 +1399,7 @@ namespace iParkingv5_window.Usercontrols
                     {
                         frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, "Bạn có xác nhận mở barrie?",
                                                                         responseWithForce.data?.eventInPlateNumber ?? "", responseWithForce.data?.eventInIdentityId ?? "", responseWithForce.data?.eventInLaneId ?? "", responseWithForce.data?.eventInFileKeys,
-                                                                        responseWithForce.data?.DatetimeIn ?? DateTime.Now, false, responseWithForce.data?.charge ?? 0);
+                                                                        responseWithForce.data?.DatetimeIn ?? DateTime.Now, false, responseWithForce.data?.charge ?? 0, eventOut?.RegisteredVehicle);
                         bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
                         if (!isConfirm)
                         {
@@ -1436,6 +1436,7 @@ namespace iParkingv5_window.Usercontrols
                         string registerPlate = "";
                         string customerName = "";
                         string customerAddress = "";
+                        string phone = "";
                         if (identity.RegisteredVehicles != null)
                         {
                             if (identity.RegisteredVehicles.Count > 0)
@@ -1443,6 +1444,7 @@ namespace iParkingv5_window.Usercontrols
                                 registerPlate = identity.RegisteredVehicles[0].PlateNumber;
                                 customerName = identity.RegisteredVehicles[0].Customer?.Name ?? "";
                                 customerAddress = identity.RegisteredVehicles[0].Customer?.Address ?? "";
+                                phone = identity.RegisteredVehicles[0].Customer?.PhoneNumber ?? "";
                             }
                         }
                         string message = "";
@@ -1451,7 +1453,12 @@ namespace iParkingv5_window.Usercontrols
                         {
                             message = "Biển số không khớp với biển số đăng ký" + "\r\nBạn có muốn cho xe ra khỏi bãi?";
                             frmConfirmIn frmConfirmIn = new frmConfirmIn(message, identity?.Code ?? "", identity?.Name ?? "", identityGroup?.Name ?? "",
-                                                                                          customerName, registerPlate, customerAddress, vehicleImg, overviewImg, plateNumber);
+                                                                                          customerName, phone, registerPlate, customerAddress, vehicleImg, overviewImg, plateNumber);
+
+                            //frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, "Biển số không khớp với biển số đăng ký" + "\r\nBạn có muốn cho xe ra khỏi bãi?",
+                            //                                            responseNormal.data?.eventInPlateNumber ?? "", responseNormal.data?.eventInIdentityId ?? "", responseNormal.data?.eventInLaneId ?? "", responseNormal.data?.eventInFileKeys,
+                            //                                            responseNormal.data?.DatetimeIn ?? DateTime.Now, false, responseNormal.data?.charge ?? 0, eventOut?.RegisteredVehicle);
+
                             isConfirm = frmConfirmIn.ShowDialog() == DialogResult.OK;
                             if (isConfirm)
                             {
@@ -1473,7 +1480,7 @@ namespace iParkingv5_window.Usercontrols
                         }
                         else
                         {
-                            frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, ApiInternalErrorMessages.ToString(errorCode), responseNormal.data?.plateNumber, responseNormal.data?.identityId, responseNormal.data?.laneId, responseNormal.data?.fileKeys, responseNormal.data?.DatetimeOut ?? null, true, responseNormal.data?.charge ?? 0);
+                            frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, ApiInternalErrorMessages.ToString(errorCode), responseNormal.data?.plateNumber, responseNormal.data?.identityId, responseNormal.data?.laneId, responseNormal.data?.fileKeys, responseNormal.data?.DatetimeOut ?? null, true, responseNormal.data?.charge ?? 0, eventOut?.RegisteredVehicle);
                             isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
                             if (isConfirm)
                             {
@@ -1508,7 +1515,7 @@ namespace iParkingv5_window.Usercontrols
                     {
                         frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, "Bạn có xác nhận mở barrie?",
                                                                                 responseNormal.data?.eventInPlateNumber ?? "", responseNormal.data?.eventInIdentityId ?? "", responseNormal.data?.eventInLaneId ?? "", responseNormal.data?.eventInFileKeys,
-                                                                                responseNormal.data?.DatetimeIn ?? DateTime.Now, false, responseNormal.data?.charge ?? 0);
+                                                                                responseNormal.data?.DatetimeIn ?? DateTime.Now, false, responseNormal.data?.charge ?? 0, eventOut?.RegisteredVehicle);
                         bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
                         if (!isConfirm)
                         {

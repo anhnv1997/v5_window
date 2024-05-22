@@ -18,9 +18,10 @@ namespace iParkingv5_window.Forms.DataForms
         private string datetimeIn;
         private long charge = 0;
         public string updatePlate;
+        public RegisteredVehicle registeredVehicle;
         #region Forms
         public frmConfirmOut(string detectedPlate, string errorMessage, string plateIn, string identityIdIn,
-                            string laneId, List<string> fileKeys, DateTime? datetimeIn, bool isDisplayQuestion = true, long charge = 0)
+                            string laneId, List<string> fileKeys, DateTime? datetimeIn, bool isDisplayQuestion = true, long charge = 0, RegisteredVehicle registeredV = null)
         {
             InitializeComponent();
             this.Text = "Xác nhận xe ra khỏi bãi";
@@ -41,6 +42,7 @@ namespace iParkingv5_window.Forms.DataForms
             this.fileKeys = fileKeys;
             this.datetimeIn = datetimeIn?.ToString() ?? "";
             this.charge = charge;
+            this.registeredVehicle = registeredV;
             btnOk.Focus();
             //this.Size = new Size(lblMessage.Width, lblMessage.Height + panelAction.Height + 100);
             this.Load += FrmConfirm_Load;
@@ -129,6 +131,16 @@ namespace iParkingv5_window.Forms.DataForms
                     {
                         dgvEventInData.Rows.Add("Phí gửi xe", TextFormatingTool.GetMoneyFormat(this.charge.ToString()));
                     }
+                    if (identityIn != null)
+                    {
+                        dgvEventInData.Rows.Add("Mã định danh", identityIn.Name + "-" + identityIn.Code);
+                    }
+                    if (registeredVehicle?.Customer != null)
+                    {
+                        dgvEventInData.Rows.Add("Khách hàng", registeredVehicle?.Customer.Name + " " + registeredVehicle?.Customer.Address);
+                        dgvEventInData.Rows.Add("SĐT", registeredVehicle?.Customer.PhoneNumber);
+                    }
+
                     dgvEventInData.Rows[dgvEventInData.RowCount - 1].DefaultCellStyle.Font = new Font(dgvEventInData.DefaultCellStyle.Font.Name, dgvEventInData.DefaultCellStyle.Font.Size * 2);
                     dgvEventInData.Rows[dgvEventInData.RowCount - 1].DefaultCellStyle.ForeColor = Color.Red;
 

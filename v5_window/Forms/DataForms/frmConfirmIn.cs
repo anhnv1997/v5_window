@@ -22,7 +22,7 @@ namespace iParkingv5_window.Forms.DataForms
         //private iPakrkingv5.Controls.Controls.Buttons.BtnOk btnOk;
         public string updatePlate;
         public frmConfirmIn(string message, string identityCode, string identityName, string identityGroupName,
-                            string customer, string plateNumber, string address, Image vehicleImage, Image overviewImage, string detectedPlate)
+                            string customer, string phone,  string plateNumber, string address, Image vehicleImage, Image overviewImage, string detectedPlate)
         {
             InitializeComponent();
             this.Text = "Xác nhận xe ra khỏi bãi";
@@ -37,6 +37,7 @@ namespace iParkingv5_window.Forms.DataForms
             dgvEventInData.Rows[dgvEventInData.RowCount - 1].DefaultCellStyle.Font = new Font(dgvEventInData.DefaultCellStyle.Font.Name, dgvEventInData.DefaultCellStyle.Font.Size * 2);
             dgvEventInData.Rows[dgvEventInData.RowCount - 1].DefaultCellStyle.ForeColor = Color.Red; dgvEventInData.Rows.Add("Khách hàng", customer);
             dgvEventInData.Rows.Add("Địa chỉ", address);
+            dgvEventInData.Rows.Add("Số điện thoại", phone);
             dgvEventInData.Rows.Add("Biển số đăng ký", plateNumber);
             dgvEventInData.Rows[dgvEventInData.RowCount - 1].DefaultCellStyle.Font = new Font(dgvEventInData.DefaultCellStyle.Font.Name, dgvEventInData.DefaultCellStyle.Font.Size * 2);
             dgvEventInData.Rows[dgvEventInData.RowCount - 1].DefaultCellStyle.ForeColor = Color.Red;

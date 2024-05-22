@@ -632,6 +632,7 @@ namespace iParkingv5_window.Usercontrols
             this.picSetting.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picSetting.TabIndex = 6;
             this.picSetting.TabStop = false;
+            this.picSetting.Click += new System.EventHandler(this.picSetting_Click);
             this.picSetting.MouseEnter += new System.EventHandler(this.picSetting_MouseEnter);
             // 
             // panel7

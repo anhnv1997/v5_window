@@ -1107,6 +1107,7 @@ namespace iParkingv5_window.Usercontrols
             AddEventInResponse? eventIn = null;
             if (!this.CheckNewCardEvent(this.lane, ce, out ControllerInLane? controllerInLane, out int thoiGianCho))
             {
+                // Fix cung
                 if (thoiGianCho > 0)
                 {
                     lblResult.UpdateResultMessage($"Đang trong thời gian chờ, vui lòng quẹt lại sau {thoiGianCho}s", Color.DarkBlue);
@@ -1176,6 +1177,7 @@ namespace iParkingv5_window.Usercontrols
                      imageKey + "_LPRIN.jpeg",
                  };
             bool isMonthCard = identityGroup.Type == IdentityGroupType.Monthly;
+
             if (isMonthCard)
             {
                 await ExcecuteMonthCardEventIn(identity, identityGroup, vehicleType, ce.PlateNumber, imageKeys,
@@ -1538,13 +1540,9 @@ namespace iParkingv5_window.Usercontrols
                             break;
                     }
 
-                    //if(identity.Name != null && identity.Name != "")
-                    //{
-                    //    dgvEventContent.Rows.Add("Tên", identity.Name);
-                    //}
-                    if (identity.Code != null && identity.Code != "")
+                    if (identity.Name != null && identity.Code != null)
                     {
-                        dgvEventContent.Rows.Add("Mã định danh", identity.Code);
+                        dgvEventContent.Rows.Add("Mã định danh", identity.Name + "-" + identity.Code);
                     }
                 }
                 //if (identityGroup != null)
@@ -1686,6 +1684,7 @@ namespace iParkingv5_window.Usercontrols
                         string registerPlate = "";
                         string customerName = "";
                         string customerAddress = "";
+                        string phone = "";
                         if (identity.RegisteredVehicles != null)
                         {
                             if (identity.RegisteredVehicles.Count > 0)
@@ -1693,6 +1692,7 @@ namespace iParkingv5_window.Usercontrols
                                 registerPlate = identity.RegisteredVehicles[0].PlateNumber;
                                 customerName = identity.RegisteredVehicles[0].Customer?.Name ?? "";
                                 customerAddress = identity.RegisteredVehicles[0].Customer?.Address ?? "";
+                                phone = identity.RegisteredVehicles[0].Customer?.PhoneNumber ?? "";
                             }
                         }
                         string message = "";
@@ -1701,7 +1701,7 @@ namespace iParkingv5_window.Usercontrols
                         {
                             message = "Biển số không khớp với biển số đăng ký" + "\r\nBạn có muốn cho xe vào bãi?";
                             frmConfirmIn frmConfirmIn = new frmConfirmIn(message, identity?.Code ?? "", identity?.Name ?? "", identityGroup?.Name ?? "",
-                                                                                          customerName, registerPlate, customerAddress, vehicleImg, overviewImg, plateNumber);
+                                                                                          customerName, phone, registerPlate, customerAddress, vehicleImg, overviewImg, plateNumber);
                             isConfirm = frmConfirmIn.ShowDialog()
                                                     == DialogResult.OK;
                             plateNumber = frmConfirmIn.updatePlate;
@@ -1719,7 +1719,7 @@ namespace iParkingv5_window.Usercontrols
                         {
                             message = ApiInternalErrorMessages.ToString(errorCode) + "\r\nBạn có muốn cho xe vào bãi?";
                             isConfirm = new frmConfirmIn(message, identity?.Code ?? "", identity?.Name ?? "", identityGroup?.Name ?? "",
-                                                             customerName, registerPlate, customerAddress, vehicleImg, overviewImg, plateNumber).ShowDialog()
+                                                             customerName, phone, registerPlate, customerAddress, vehicleImg, overviewImg, plateNumber).ShowDialog()
                                                    == DialogResult.OK;
                         }
 
