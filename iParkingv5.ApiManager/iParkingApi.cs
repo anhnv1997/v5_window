@@ -17,6 +17,7 @@ namespace iParkingv5.ApiManager
 {
     public interface iParkingApi
     {
+        Task<string> GetFeeCalculate(string dateTimeIn, string dateTimeOut, string identityGroupID);
         Task GetUserInfor();
         Task<Tuple<List<User>, string>> GetAllUsers();
 

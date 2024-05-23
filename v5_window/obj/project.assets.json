@@ -869,6 +869,25 @@
           "Microsoft.WindowsDesktop.App.WindowsForms"
         ]
       },
+      "iParkingv5.FeeTest/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "IdentityModel": "7.0.0",
+          "IdentityModel.OidcClient": "6.0.0",
+          "Microsoft.Web.WebView2": "1.0.2420.47",
+          "iParkingv5.ApiManager": "1.0.0.9"
+        },
+        "compile": {
+          "bin/placeholder/iParkingv5.FeeTest.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/iParkingv5.FeeTest.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WindowsForms"
+        ]
+      },
       "iParkingv5.LedDisplay/1.0.0.1": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
@@ -2397,6 +2416,11 @@
       "path": "../iParkingv5.Controller/iParkingv5.Controller.csproj",
       "msbuildProject": "../iParkingv5.Controller/iParkingv5.Controller.csproj"
     },
+    "iParkingv5.FeeTest/1.0.0": {
+      "type": "project",
+      "path": "../iParkingv5.FeeTest/iParkingv5.FeeTest.csproj",
+      "msbuildProject": "../iParkingv5.FeeTest/iParkingv5.FeeTest.csproj"
+    },
     "iParkingv5.LedDisplay/1.0.0.1": {
       "type": "project",
       "path": "../iParkingv5.LedDisplay/iParkingv5.LedDisplay.csproj",
@@ -2433,6 +2457,7 @@
       "iParking.ConfigurationManager >= 1.0.0.1",
       "iParkingv5.ApiManager >= 1.0.0.9",
       "iParkingv5.Controller >= 1.0.0.1",
+      "iParkingv5.FeeTest >= 1.0.0",
       "iParkingv5.LedDisplay >= 1.0.0.1",
       "iParkingv5.Lpr >= 1.0.0.1",
       "iParkingv5.Objects >= 1.0.0.3"
@@ -2480,6 +2505,9 @@
             },
             "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.Controller\\iParkingv5.Controller.csproj": {
               "projectPath": "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.Controller\\iParkingv5.Controller.csproj"
+            },
+            "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.FeeTest\\iParkingv5.FeeTest.csproj": {
+              "projectPath": "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.FeeTest\\iParkingv5.FeeTest.csproj"
             },
             "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.LedDisplay\\iParkingv5.LedDisplay.csproj": {
               "projectPath": "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.LedDisplay\\iParkingv5.LedDisplay.csproj"

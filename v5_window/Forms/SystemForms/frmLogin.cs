@@ -111,6 +111,7 @@ namespace iParkingv5_window.Forms.SystemForms
                 //KzParkingApiHelper.token = loginResult.TokenResponse.AccessToken;
                 KzParkingv5ApiHelper.token = loginResult.TokenResponse.AccessToken;
                 await AppData.ApiServer.GetUserInfor();
+
                 frmLoading frm = new()
                 {
                     Owner = this

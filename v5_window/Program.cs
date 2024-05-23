@@ -242,7 +242,8 @@ namespace v6_window
 
                 if (isHavingUpdate)
                 {
-                    Application.Restart();
+                    //Fix cung bo restart()
+                    //Application.Restart();
                     Application.Exit();
                     Environment.Exit(0);
                     Application.DoEvents();

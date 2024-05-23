@@ -1769,6 +1769,16 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
                 server += "/";
             }
         }
+
+        public Task<string> GetFeeCalculate()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> GetFeeCalculate(string dateTimeIn, string dateTimeOut, string identityGroupID)
+        {
+            throw new NotImplementedException();
+        }
         #endregion END PRIVATE FUNCTION
 
         public class InvoiceData

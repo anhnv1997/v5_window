@@ -41,6 +41,7 @@
     <ProjectReference Include="..\iParking.ConfigurationManager\iParking.ConfigurationManager.csproj" />
     <ProjectReference Include="..\iParkingv5.ApiManager\iParkingv5.ApiManager.csproj" />
     <ProjectReference Include="..\iParkingv5.Controller\iParkingv5.Controller.csproj" />
+    <ProjectReference Include="..\iParkingv5.FeeTest\iParkingv5.FeeTest.csproj" />
     <ProjectReference Include="..\iParkingv5.LedDisplay\iParkingv5.LedDisplay.csproj" />
     <ProjectReference Include="..\iParkingv5.Lpr\iParkingv5.Lpr.csproj" />
     <ProjectReference Include="..\iParkingv5.Objects\iParkingv5.Objects.csproj" />
@@ -60,6 +61,9 @@
     <Reference Include="Kztek.Cameras">
       <HintPath>..\packages\Camera_LPR\Kztek.Cameras.dll</HintPath>
     </Reference>
+    <Reference Include="Kztek.RtspPlayer">
+      <HintPath>..\..\..\..\Kztek.RtspPlayer.dll</HintPath>
+    </Reference>
     <Reference Include="Kztek.Security">
       <HintPath>..\packages\KeyLib\Kztek.Security.dll</HintPath>
     </Reference>
@@ -68,9 +72,6 @@
     </Reference>
     <Reference Include="KztekKeyRegister">
       <HintPath>..\packages\KeyLib\KztekKeyRegister.dll</HintPath>
-    </Reference>
-    <Reference Include="RtspClientSharp">
-      <HintPath>..\packages\Camera_LPR\RtspClientSharp.dll</HintPath>
     </Reference>
     <Reference Include="SayMoney">
       <HintPath>..\packages\SayMoney.dll</HintPath>

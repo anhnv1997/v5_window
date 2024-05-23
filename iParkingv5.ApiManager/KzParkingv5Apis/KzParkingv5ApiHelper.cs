@@ -245,6 +245,37 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 }
             }
         }
+        public async Task<string> GetFeeCalculate(string dateTimeIn, string dateTimeOut, string identityGroupID)
+        {
+            StandardlizeServerName();
+            string apiUrl = $"{server}charge/calculate";
+
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            var data = new
+            {
+                dateTimeIn = dateTimeIn,
+                dateTimeOut = dateTimeOut,
+                identityGroupId = identityGroupID,
+            };
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null,
+                                                                  timeOut, Method.Post);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                try
+                {
+                    return response.Item1.ToString();
+                }
+                catch (Exception)
+                {
+                    return "";
+                }
+            }
+            return "";
+        }
+        
         public async Task<Tuple<List<User>, string>> GetAllUsers()
         {
             return await GetAllObjectAsync<User>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.User);
@@ -1543,6 +1574,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return null;
         }
+
+        
         #endregion
     }
 }

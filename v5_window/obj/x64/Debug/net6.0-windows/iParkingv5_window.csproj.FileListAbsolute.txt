@@ -362,7 +362,6 @@ F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Security.dll
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Tool.dll
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\KztekKeyRegister.dll
-F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\RtspClientSharp.dll
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\SayMoney.dll
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\NXT.Net6.LPR_AI.dll
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\AForge.dll
@@ -396,3 +395,9 @@ F:\KZTEK\Source ParkingV5\v5_window\v5_window\obj\x64\Debug\net6.0-windows\ref\i
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Ingressus.dll
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\DahuaLib.dll
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Aopu_Controller.dll
+F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.RtspPlayer.dll
+F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.FeeTest.deps.json
+F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.FeeTest.runtimeconfig.json
+F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.FeeTest.exe
+F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.FeeTest.dll
+F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.FeeTest.pdb

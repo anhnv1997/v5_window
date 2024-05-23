@@ -45,6 +45,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TESTCAM", "..\TESTCAM\TESTC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "v5MonitorApp", "..\v5MonitorApp\v5MonitorApp.csproj", "{40D040E3-F567-469E-A2B2-C63802E3A2C1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iParkingv5.FeeTest", "..\iParkingv5.FeeTest\iParkingv5.FeeTest.csproj", "{EFF98FEB-B576-4322-9EE0-A1255D6A39D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -300,6 +302,18 @@ Global
 		{40D040E3-F567-469E-A2B2-C63802E3A2C1}.Release|x64.Build.0 = Release|Any CPU
 		{40D040E3-F567-469E-A2B2-C63802E3A2C1}.Release|x86.ActiveCfg = Release|Any CPU
 		{40D040E3-F567-469E-A2B2-C63802E3A2C1}.Release|x86.Build.0 = Release|Any CPU
+		{EFF98FEB-B576-4322-9EE0-A1255D6A39D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFF98FEB-B576-4322-9EE0-A1255D6A39D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFF98FEB-B576-4322-9EE0-A1255D6A39D1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EFF98FEB-B576-4322-9EE0-A1255D6A39D1}.Debug|x64.Build.0 = Debug|Any CPU
+		{EFF98FEB-B576-4322-9EE0-A1255D6A39D1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EFF98FEB-B576-4322-9EE0-A1255D6A39D1}.Debug|x86.Build.0 = Debug|Any CPU
+		{EFF98FEB-B576-4322-9EE0-A1255D6A39D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFF98FEB-B576-4322-9EE0-A1255D6A39D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFF98FEB-B576-4322-9EE0-A1255D6A39D1}.Release|x64.ActiveCfg = Release|Any CPU
+		{EFF98FEB-B576-4322-9EE0-A1255D6A39D1}.Release|x64.Build.0 = Release|Any CPU
+		{EFF98FEB-B576-4322-9EE0-A1255D6A39D1}.Release|x86.ActiveCfg = Release|Any CPU
+		{EFF98FEB-B576-4322-9EE0-A1255D6A39D1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

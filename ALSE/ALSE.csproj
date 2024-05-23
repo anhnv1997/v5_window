@@ -22,6 +22,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="DahuaLib">
+      <HintPath>..\packages\DahuaLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Kztek.Tool">
+      <HintPath>..\packages\Kztek.Tool.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
