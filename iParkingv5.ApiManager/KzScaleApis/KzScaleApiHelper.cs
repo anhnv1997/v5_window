@@ -160,6 +160,34 @@ namespace iParkingv5.ApiManager.KzScaleApis
             }
             return new List<WeighingDetail>();
         }
+        public static async Task<WeighingActionDetail> UpdateWeighingActionDetailById(string weighingActionDetailId, string weighingFormId)
+        {
+            if (string.IsNullOrEmpty(server))
+            {
+                return null;
+            }
+            StandardlizeServerName();
+            string apiUrl = server + KzScaleUrlManagement.updateWeighingActionDetailById(weighingActionDetailId);
+
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            Dictionary<string, string> parameters = new Dictionary<string, string>()
+            {
+                { "weighting_form_id", weighingFormId },
+                { "weighing_action_detail_id", weighingActionDetailId },
+            };
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Post);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                KzScaleBaseResponse<WeighingActionDetail> data =
+                    Newtonsoft.Json.JsonConvert.DeserializeObject<KzScaleBaseResponse<WeighingActionDetail>>(response.Item1);
+                return data?.result;
+            }
+            return null;
+        }
         #endregion End Weighing Action
 
         #region Weighing Detail

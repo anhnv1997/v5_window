@@ -19,7 +19,6 @@ using Kztek.Tool;
 using Kztek.Tool.TextFormatingTools;
 using Kztek.Tools;
 using System.Data;
-using System.Windows.Forms;
 using v5_IScale.Forms;
 using static iParkingv5.Objects.Enums.LaneDisplayMode;
 using static iParkingv5.Objects.Enums.PrintHelpers;
@@ -1883,6 +1882,36 @@ namespace iParkingv5_window.Usercontrols
                 MessageBox.Show("Chưa có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
+            if (this.WeighingActionDetail == null)
+            {
+                MessageBox.Show("Chưa có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (cbGoodsType.Items.Count > 0)
+            {
+                string weighingFormId = ((ListItem)cbGoodsType.SelectedItem).Name;
+                if (this.WeighingActionDetail.Weighting_form_id != weighingFormId)
+                {
+                    this.WeighingActionDetail = await KzScaleApiHelper.UpdateWeighingActionDetailById(this.WeighingActionDetail.Id, weighingFormId);
+                    if (this.WeighingActionDetail == null)
+                    {
+                        MessageBox.Show("Chưa có thông tin cân xe", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                    else
+                    {
+                        this.Invoke(new Action(() =>
+                        {
+                            lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(this.WeighingActionDetail.Price.ToString());
+                        }));
+                    }
+                }
+                
+            }
+
+
             var frm = new frmSelectPrintCount();
             if (frm.ShowDialog() == DialogResult.OK)
             {
@@ -1893,7 +1922,7 @@ namespace iParkingv5_window.Usercontrols
                 wbPrint.DocumentText = GetPrintContent(await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(this.lastEvent.Id));
             }
         }
-        private void btnPrintScaleOffline_Click(object sender, EventArgs e)
+        private async void btnPrintScaleOffline_Click(object sender, EventArgs e)
         {
             //Ra lệnh gửi hóa đơn điện tử
             if (this.WeighingActionDetail == null)
@@ -1901,6 +1930,28 @@ namespace iParkingv5_window.Usercontrols
                 MessageBox.Show("Chưa có thông tin cân xe", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            if (cbGoodsType.Items.Count > 0)
+            {
+                string weighingFormId = ((ListItem)cbGoodsType.SelectedItem).Name;
+                if (this.WeighingActionDetail.Weighting_form_id != weighingFormId)
+                {
+                    this.WeighingActionDetail = await KzScaleApiHelper.UpdateWeighingActionDetailById(this.WeighingActionDetail.Id, weighingFormId);
+                    if (this.WeighingActionDetail == null)
+                    {
+                        MessageBox.Show("Chưa có thông tin cân xe", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                    else
+                    {
+                        this.Invoke(new Action(() =>
+                        {
+                            lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(this.WeighingActionDetail.Price.ToString());
+                        }));
+                    }
+                }
+               
+            }
+
             this.printCount = 1;
             var wbPrint = new WebBrowser();
             wbPrint.DocumentCompleted += WbPrint_DocumentCompleted;
@@ -1914,6 +1965,28 @@ namespace iParkingv5_window.Usercontrols
                 MessageBox.Show("Chưa có thông tin cân xe", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            if (cbGoodsType.Items.Count > 0)
+            {
+                string weighingFormId = ((ListItem)cbGoodsType.SelectedItem).Name;
+                if (this.WeighingActionDetail.Weighting_form_id != weighingFormId)
+                {
+                    this.WeighingActionDetail = await KzScaleApiHelper.UpdateWeighingActionDetailById(this.WeighingActionDetail.Id, weighingFormId);
+                    if (this.WeighingActionDetail == null)
+                    {
+                        MessageBox.Show("Chưa có thông tin cân xe", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                    else
+                    {
+                        this.Invoke(new Action(() =>
+                        {
+                            lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(this.WeighingActionDetail.Price.ToString());
+                        }));
+                    }
+                }
+                
+            }
+
             if (this.WeighingActionDetail.Price == 0)
             {
                 MessageBox.Show("Phương tiện không phát sinh phí cân xe.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -2342,7 +2415,12 @@ namespace iParkingv5_window.Usercontrols
                             Name = item.Id,
                             Value = item.Name,
                         };
-                        cbGoodsType.Items.Add(li);
+                        if (item.Price == 0)
+                        {
+                            cbGoodsType.Items.Insert(0, li);
+                        }
+                        else
+                            cbGoodsType.Items.Add(li);
                     }
                     cbGoodsType.DisplayMember = "Value";
                     cbGoodsType.SelectedIndex = cbGoodsType.Items.Count > 0 ? 0 : -1;

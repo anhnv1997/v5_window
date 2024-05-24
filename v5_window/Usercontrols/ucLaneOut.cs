@@ -1359,6 +1359,32 @@ namespace iParkingv5_window.Usercontrols
                     MessageBox.Show("Chưa có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
+                if (this.WeighingActionDetail == null)
+                {
+                    MessageBox.Show("Chưa có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                if (cbGoodsType.Items.Count > 0)
+                {
+                    string weighingFormId = ((ListItem)cbGoodsType.SelectedItem).Name;
+                    if (this.WeighingActionDetail.Weighting_form_id != weighingFormId)
+                    {
+                        this.WeighingActionDetail = await KzScaleApiHelper.UpdateWeighingActionDetailById(this.WeighingActionDetail.Id, weighingFormId);
+                        if (this.WeighingActionDetail == null)
+                        {
+                            MessageBox.Show("Chưa có thông tin cân xe", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
+                        else
+                        {
+                            this.Invoke(new Action(() =>
+                            {
+                                lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(this.WeighingActionDetail.Price.ToString());
+                            }));
+                        }
+                    }
+                    
+                }
                 var frm = new frmSelectPrintCount();
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
@@ -1375,7 +1401,7 @@ namespace iParkingv5_window.Usercontrols
                 return;
             }
         }
-        private void btnPrintScaleOffline_Click(object sender, EventArgs e)
+        private async  void btnPrintScaleOffline_Click(object sender, EventArgs e)
         {
             FocusOnTitle();
             //Ra lệnh gửi hóa đơn điện tử
@@ -1384,6 +1410,28 @@ namespace iParkingv5_window.Usercontrols
                 MessageBox.Show("Chưa có thông tin cân xe", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            if (cbGoodsType.Items.Count > 0)
+            {
+                string weighingFormId = ((ListItem)cbGoodsType.SelectedItem).Name;
+                if (this.WeighingActionDetail.Weighting_form_id != weighingFormId)
+                {
+                    this.WeighingActionDetail = await KzScaleApiHelper.UpdateWeighingActionDetailById(this.WeighingActionDetail.Id, weighingFormId);
+                    if (this.WeighingActionDetail == null)
+                    {
+                        MessageBox.Show("Chưa có thông tin cân xe", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                    else
+                    {
+                        this.Invoke(new Action(() =>
+                        {
+                            lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(this.WeighingActionDetail.Price.ToString());
+                        }));
+                    }
+                }
+                
+            }
+
             this.printCount = 1;
             var wbPrint = new WebBrowser();
             wbPrint.DocumentCompleted += WbPrint_DocumentCompleted;
@@ -1399,6 +1447,28 @@ namespace iParkingv5_window.Usercontrols
                 MessageBox.Show("Chưa có thông tin cân xe", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            if (cbGoodsType.Items.Count > 0)
+            {
+                string weighingFormId = ((ListItem)cbGoodsType.SelectedItem).Name;
+                if (this.WeighingActionDetail.Weighting_form_id != weighingFormId)
+                {
+                    this.WeighingActionDetail = await KzScaleApiHelper.UpdateWeighingActionDetailById(this.WeighingActionDetail.Id, weighingFormId);
+                    if (this.WeighingActionDetail == null)
+                    {
+                        MessageBox.Show("Chưa có thông tin cân xe", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                    else
+                    {
+                        this.Invoke(new Action(() =>
+                        {
+                            lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(this.WeighingActionDetail.Price.ToString());
+                        }));
+                    }
+                }
+                
+            }
+
             if (this.WeighingActionDetail.Price == 0)
             {
                 MessageBox.Show("Phương tiện không phát sinh phí cân xe.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -1765,7 +1835,12 @@ namespace iParkingv5_window.Usercontrols
                         Name = item.Id,
                         Value = item.Name,
                     };
-                    cbGoodsType.Items.Add(li);
+                    if (item.Price == 0)
+                    {
+                        cbGoodsType.Items.Insert(0, li);
+                    }
+                    else
+                        cbGoodsType.Items.Add(li);
                 }
                 cbGoodsType.DisplayMember = "Value";
                 cbGoodsType.SelectedIndex = cbGoodsType.Items.Count > 0 ? 0 : -1;
@@ -2087,11 +2162,12 @@ namespace iParkingv5_window.Usercontrols
 
                 lblScaleFee.Text = TextFormatingTool.GetMoneyFormat("0");
 
-                lblNote1.Text = "";
-                lblNote2.Text = "";
+                lblNote1.Text = "Ghi chú";
+                lblNote2.Text = "Ghi chú DVHT";
 
                 this.WeighingActionDetail = null;
                 FocusOnTitle();
+                cbGoodsType.SelectedIndex = 0;
             }));
         }
         private Image? GetPlate(CardEventArgs ce, ref Image? overviewImg, ref Image? vehicleImg, VehicleBaseType vehicleBaseType)
@@ -2192,8 +2268,8 @@ namespace iParkingv5_window.Usercontrols
                 if (!string.IsNullOrEmpty(note.Trim()))
                 {
                     string[] noteArray = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(note)!.ToArray();// note.Split(";");
-                    lblNote1.Text = noteArray.Length > 0 ? noteArray[0] : "";
-                    lblNote2.Text = noteArray.Length > 1 ? noteArray[1] : "";
+                    lblNote1.Text = noteArray.Length > 0 ? noteArray[0] : "Ghi chú";
+                    lblNote2.Text = noteArray.Length > 1 ? noteArray[1] : "Ghi chú DVHT";
                 }
 
                 dgvEventContent.Rows.Clear();
