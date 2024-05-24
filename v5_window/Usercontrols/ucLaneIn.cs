@@ -1017,7 +1017,8 @@ namespace iParkingv5_window.Usercontrols
                             ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
                                                                   where _controllerInLane.controlUnitId == ie.DeviceId
                                                                   select _controllerInLane).FirstOrDefault();
-                            await BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane);
+                            //await BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane);
+                            await BaseLane.OpenAllBarrie(this);
                         }
                         goto SU_KIEN_HOP_LE;
                     }
@@ -1043,7 +1044,9 @@ namespace iParkingv5_window.Usercontrols
                             ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
                                                                   where _controllerInLane.controlUnitId == ie.DeviceId
                                                                   select _controllerInLane).FirstOrDefault();
-                            await BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane);
+                            //await BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane);
+                            await BaseLane.OpenAllBarrie(this);
+
                         }
                         goto SU_KIEN_HOP_LE;
                     }
@@ -1110,7 +1113,7 @@ namespace iParkingv5_window.Usercontrols
                 // Fix cung
                 if (thoiGianCho > 0)
                 {
-                    lblResult.UpdateResultMessage($"Đang trong thời gian chờ, vui lòng quẹt lại sau {thoiGianCho}s", Color.DarkBlue);
+                    //lblResult.UpdateResultMessage($"Đang trong thời gian chờ, vui lòng quẹt lại sau {thoiGianCho}s", Color.DarkBlue);
                 }
                 return;
             }
@@ -1745,7 +1748,10 @@ namespace iParkingv5_window.Usercontrols
                     eventIn = responseNormal.data;
                     if (eventIn.OpenBarrier)
                     {
-                        await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                        LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ra lenh mo barie");
+                        //await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                        await BaseLane.OpenAllBarrie(this);
+
                     }
                     goto SU_KIEN_HOP_LE;
                 }
@@ -1769,7 +1775,10 @@ namespace iParkingv5_window.Usercontrols
                     eventIn = responseWithForce.data;
                     if (eventIn.OpenBarrier)
                     {
-                        await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                        LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ra lenh mo barie");
+                        //await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                        await BaseLane.OpenAllBarrie(this);
+
                     }
                     goto SU_KIEN_HOP_LE;
                 }
@@ -1828,7 +1837,9 @@ namespace iParkingv5_window.Usercontrols
                 eventIn = responseNormal.data;
                 if (eventIn.OpenBarrier)
                 {
-                    await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                    //await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                    await BaseLane.OpenAllBarrie(this);
+
                 }
                 goto SU_KIEN_HOP_LE;
             }
@@ -1876,7 +1887,8 @@ namespace iParkingv5_window.Usercontrols
 
             DisplayEventInfo(eventTime, detectPlate, identity, identityGroup, vehicleType, eventIn?.customer, eventIn?.registeredVehicle, weighingDetail);
             BaseLane.DisplayLed(detectPlate, eventTime, identity, identityGroup, "Hẹn Gặp lại", this.lane.id);
-            await BaseLane.SaveEventImage(overviewImg, vehicleImg, lprImage, imageKey, true);
+            // Fix
+            BaseLane.SaveEventImage(overviewImg, vehicleImg, lprImage, imageKey, true);
 
             lastEvent = new EventIn()
             {

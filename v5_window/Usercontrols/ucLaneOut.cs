@@ -132,6 +132,10 @@ namespace iParkingv5_window.Usercontrols
         }
         private async void UcLaneOut_Load(object? sender, EventArgs e)
         {
+            panelLastEvent.Visible = false;
+            ucEventCount1.Visible = false;
+
+
             GetShortcutConfig();
             LoadCamera();
             this.Dock = DockStyle.Top;
@@ -960,7 +964,9 @@ namespace iParkingv5_window.Usercontrols
                         ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
                                                               where _controllerInLane.controlUnitId == ie.DeviceId
                                                               select _controllerInLane).FirstOrDefault();
-                        await BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane);
+                        //await BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane);
+                        await BaseLane.OpenAllBarrie(this);
+
                         await KzParkingApiHelper.CommitOutAsync(responseNormal.data);
                     }
                     else
@@ -978,7 +984,8 @@ namespace iParkingv5_window.Usercontrols
                             ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
                                                                   where _controllerInLane.controlUnitId == ie.DeviceId
                                                                   select _controllerInLane).FirstOrDefault();
-                            await BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane);
+                            //await BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane);
+                            await BaseLane.OpenAllBarrie(this);
                             responseNormal.data.plateNumber = plate;
                             await KzParkingApiHelper.CommitOutAsync(responseNormal.data);
                         }
@@ -1006,7 +1013,8 @@ namespace iParkingv5_window.Usercontrols
                         ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
                                                               where _controllerInLane.controlUnitId == ie.DeviceId
                                                               select _controllerInLane).FirstOrDefault();
-                        await BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane);
+                        //await BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane);
+                        await BaseLane.OpenAllBarrie(this);
                         await KzParkingApiHelper.CommitOutAsync(eventOut);
                     }
                     else
@@ -1026,7 +1034,8 @@ namespace iParkingv5_window.Usercontrols
                             ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
                                                                   where _controllerInLane.controlUnitId == ie.DeviceId
                                                                   select _controllerInLane).FirstOrDefault();
-                            await BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane);
+                            //await BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane);
+                            await BaseLane.OpenAllBarrie(this);
                             responseWithForce.data.plateNumber = plate;
                             KzParkingApiHelper.CommitOutAsync(responseWithForce.data);
                         }
@@ -1093,7 +1102,7 @@ namespace iParkingv5_window.Usercontrols
             {
                 if (thoiGianCho > 0)
                 {
-                    lblResult.UpdateResultMessage($"Đang trong thời gian chờ, vui lòng quẹt lại sau {thoiGianCho}s", Color.DarkBlue);
+                    //lblResult.UpdateResultMessage($"Đang trong thời gian chờ, vui lòng quẹt lại sau {thoiGianCho}s", Color.DarkBlue);
                 }
                 return;
             }
@@ -1253,7 +1262,8 @@ namespace iParkingv5_window.Usercontrols
                 eventOut = responseNormal.data;
                 if (eventOut.OpenBarrier)
                 {
-                    await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                    //await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                    await BaseLane.OpenAllBarrie(this);
                     KzParkingApiHelper.CommitOutAsync(eventOut);
                 }
                 else
@@ -1268,7 +1278,8 @@ namespace iParkingv5_window.Usercontrols
                     else
                     {
                         plateNumber = frmConfirmOut.updatePlate;
-                        await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                        //await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                        await BaseLane.OpenAllBarrie(this);
                         responseNormal.data.plateNumber = plateNumber;
                         KzParkingApiHelper.CommitOutAsync(responseNormal.data);
                     }
@@ -1292,7 +1303,8 @@ namespace iParkingv5_window.Usercontrols
                     eventOut = responseWithForce.data;
                     if (eventOut.OpenBarrier)
                     {
-                        await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                        //await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                        await BaseLane.OpenAllBarrie(this);
                         KzParkingApiHelper.CommitOutAsync(responseWithForce.data);
                     }
                     else
@@ -1309,7 +1321,8 @@ namespace iParkingv5_window.Usercontrols
                         else
                         {
                             plateNumber = frmConfirmOut.updatePlate;
-                            await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                            //await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                            await BaseLane.OpenAllBarrie(this);
                             responseWithForce.data.plateNumber = plateNumber;
                             KzParkingApiHelper.CommitOutAsync(responseWithForce.data);
                         }
@@ -1392,7 +1405,8 @@ namespace iParkingv5_window.Usercontrols
                     eventOut = responseWithForce.data;
                     if (eventOut.OpenBarrier)
                     {
-                        await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                        //await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                        await BaseLane.OpenAllBarrie(this);
                         await KzParkingApiHelper.CommitOutAsync(eventOut);
                     }
                     else
@@ -1410,7 +1424,8 @@ namespace iParkingv5_window.Usercontrols
                         {
                             plateNumber = frmConfirmOut.updatePlate;
                             responseWithForce.data.plateNumber = plateNumber;
-                            await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                            //await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                            await BaseLane.OpenAllBarrie(this);
                             await KzParkingApiHelper.CommitOutAsync(responseWithForce.data);
                         }
                     }
@@ -1508,7 +1523,8 @@ namespace iParkingv5_window.Usercontrols
                     eventOut = responseNormal.data;
                     if (eventOut.OpenBarrier)
                     {
-                        await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                        //await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                        await BaseLane.OpenAllBarrie(this);
                         await KzParkingApiHelper.CommitOutAsync(responseNormal.data);
                     }
                     else
@@ -1525,7 +1541,8 @@ namespace iParkingv5_window.Usercontrols
                         else
                         {
                             plateNumber = frmConfirmOut.updatePlate;
-                            await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                            //await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane);
+                            await BaseLane.OpenAllBarrie(this);
                             responseNormal.data.plateNumber = plateNumber;
                             await KzParkingApiHelper.CommitOutAsync(responseNormal.data);
                         }
@@ -1591,7 +1608,9 @@ namespace iParkingv5_window.Usercontrols
             DisplayEventOutInfo(eventOut?.DatetimeIn, eventTime, detectedPlate, identity, identityGroup, vehicleType, eventOut?.RegisteredVehicle, (long)(eventOut?.charge ?? 0), eventOut?.Customer, weighingDetail);
             ShowEventInData(eventOut);
             BaseLane.DisplayLed(detectedPlate, eventTime, identity, identityGroup, "Hẹn gặp lại", this.lane.id);
-            await BaseLane.SaveEventImage(overviewImg, vehicleImg, lprImage, imageKey, false);
+            
+            // Fix
+            BaseLane.SaveEventImage(overviewImg, vehicleImg, lprImage, imageKey, false);
 
             lastEvent = new EventOut()
             {

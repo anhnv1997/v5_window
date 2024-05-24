@@ -28,7 +28,7 @@ namespace iParkingv5_window.Usercontrols
             bool isValidControllerIdAndReader = IsValidControllerAndReader(lane, ce, out controllerInLane);
             if (!isValidControllerIdAndReader) return false;
 
-            
+
 
             foreach (CardEventArgs oldEvent in iLane.lastCardEventDatas)
             {
@@ -119,10 +119,9 @@ namespace iParkingv5_window.Usercontrols
         }
         public static async Task SaveEventImage(Image? overviewImg, Image? vehicleImg, Image? lprImage, string imageKey, bool isInEvent)
         {
-            var task1 = MinioHelper.UploadPicture(overviewImg, imageKey + (isInEvent ? "_OVERVIEWIN.jpeg" : "_OVERVIEWOUT.jpeg"));
-            var task2 = MinioHelper.UploadPicture(vehicleImg, imageKey + (isInEvent ? "_VEHICLEIN.jpeg" : "_VEHICLEOUT.jpeg"));
-            var task3 = MinioHelper.UploadPicture(lprImage, imageKey + (isInEvent ? "_LPRIN.jpeg" : "_LPROUT.jpeg"));
-            await Task.WhenAll(task1, task2, task3);
+            MinioHelper.UploadPicture(overviewImg, imageKey + (isInEvent ? "_OVERVIEWIN.jpeg" : "_OVERVIEWOUT.jpeg"));
+            MinioHelper.UploadPicture(vehicleImg, imageKey + (isInEvent ? "_VEHICLEIN.jpeg" : "_VEHICLEOUT.jpeg"));
+            MinioHelper.UploadPicture(lprImage, imageKey + (isInEvent ? "_LPRIN.jpeg" : "_LPROUT.jpeg"));
         }
 
         public static void ShowImage(MovablePictureBox pictureBox, Image? img)
@@ -146,24 +145,41 @@ namespace iParkingv5_window.Usercontrols
         }
         public static string GetBaseImageKey(string laneName, string cardNumber, string plate, DateTime eventTime)
         {
-            string imageKey = $"{laneName}/{eventTime.ToString("yyyy/MM/dd")}/{cardNumber}_{plate.Replace("-","").Replace(" ","").Replace(".", "")}" + eventTime.ToString("_HH_mm_ss_ffff");
+            string imageKey = $"{laneName}/{eventTime.ToString("yyyy/MM/dd")}/{cardNumber}_{plate.Replace("-", "").Replace(" ", "").Replace(".", "")}" + eventTime.ToString("_HH_mm_ss_ffff");
             return imageKey;
         }
 
         public static async Task OpenBarrieByControllerId(string controllerId, ControllerInLane? controllerInLane)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, 
+                $"Ra lệnh mở barrier: controllerID = {controllerId}," +
+                $" controllerInLane = {Newtonsoft.Json.JsonConvert.SerializeObject(controllerInLane)}, " +
+                $"frmMain.controllers = {Newtonsoft.Json.JsonConvert.SerializeObject(frmMain.controllers)}");
+
             foreach (IController item in frmMain.controllers)
             {
+                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, 
+                    $"controllerID = {item.ControllerInfo.Id}",
+                    obj: item);
+
                 if (item.ControllerInfo.Id.ToLower() == controllerId.ToLower())
                 {
+                    LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, $"ID = ID {Newtonsoft.Json.JsonConvert.SerializeObject(controllerInLane?.barriers)}");
+
                     for (int i = 0; i < controllerInLane?.barriers.Length; i++)
                     {
                         bool isOpenSuccess = false;
+                        LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Ra lệnh mở barrier lần 1");
+
                         if (!await item.OpenDoor(100, controllerInLane.barriers[i]))
                         {
+                            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Ra lệnh mở barrier lần 2");
+
                             isOpenSuccess = await item.OpenDoor(100, controllerInLane.barriers[i]);
                             if (!isOpenSuccess)
                             {
+                                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Mở barrier thất bại");
+
                             }
                         }
                         else
@@ -171,6 +187,7 @@ namespace iParkingv5_window.Usercontrols
                         }
                         if (isOpenSuccess)
                         {
+                            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Mở barrier thành công");
                         }
                     }
                     break;

@@ -127,13 +127,13 @@ namespace iParkingv5_window.Forms.DataForms
                         dgvEventInData.Rows.Add("Loại phương tiện", VehicleType.GetDisplayStr(vehicleTypeIn.Type));
                     }
 
-                    //if (this.charge > 0)
-                    {
-                        dgvEventInData.Rows.Add("Phí gửi xe", TextFormatingTool.GetMoneyFormat(this.charge.ToString()));
-                    }
                     if (identityIn != null)
                     {
                         dgvEventInData.Rows.Add("Mã định danh", identityIn.Name + "-" + identityIn.Code);
+                    }
+                    //if (this.charge > 0)
+                    {
+                        dgvEventInData.Rows.Add("Phí gửi xe", TextFormatingTool.GetMoneyFormat(this.charge.ToString()));
                     }
                     if (registeredVehicle?.Customer != null)
                     {

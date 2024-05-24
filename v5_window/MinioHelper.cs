@@ -82,7 +82,8 @@ namespace iParkingv5_window
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lưu hình ảnh lỗi", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+               // MessageBox.Show("Lưu hình ảnh lỗi", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, ex.Message);
                 return string.Empty;
             }
         }

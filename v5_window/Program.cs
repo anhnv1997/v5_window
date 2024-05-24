@@ -29,6 +29,8 @@ namespace v6_window
                 const string appName = "IP_DA_V3_WD";
                 PathManagement.baseBath = LogHelper.SaveLogFolder = Application.StartupPath;
                 LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Khởi chạy ứng dụng");
+
+
                 string appCode = "IP_DA_V3_WD";
                 using (Mutex mutex = new Mutex(true, appName, out bool ownmutex))
                 {
@@ -79,8 +81,10 @@ namespace v6_window
 
                         //}
                         ////DahuaAccessControl.Init();
+                        ///
                         LoadSystemConfig();
-                        LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Mở giao diện đăng nhập hệ thống");
+
+                        LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "1111121", "Mở giao diện đăng nhập hệ thống");
                         Application.Run(new frmLogin());
                     }
                     else
@@ -115,6 +119,8 @@ namespace v6_window
         {
             try
             {
+                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Config", "LoadSysytem");
+
                 StaticPool.serverConfig = NewtonSoftHelper<ServerConfig>.DeserializeObjectFromPath(PathManagement.serverConfigPath);
                 if (StaticPool.serverConfig == null)
                 {
