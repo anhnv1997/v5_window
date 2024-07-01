@@ -1,6 +1,4 @@
 ﻿using IPaking.Ultility;
-using iPakrkingv5.Controls;
-using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.ApiManager.KzScaleApis;
 using iParkingv5.ApiManager.XuanCuong;
 using iParkingv5.Controller;
@@ -19,11 +17,9 @@ using iParkingv6.Objects.Datas;
 using Kztek.Tool;
 using Kztek.Tool.TextFormatingTools;
 using Kztek.Tools;
-using Microsoft.Extensions.Logging;
-using System.Diagnostics;
 using v5_IScale.Forms;
+using static iParkingv5.ApiManager.iParkingApi;
 using static iParkingv5.Objects.Configs.LaneDirectionConfig;
-using static iParkingv5.Objects.Enums.LaneDirectionType;
 using static iParkingv5.Objects.Enums.PrintHelpers;
 using static iParkingv5.Objects.Enums.VehicleType;
 
@@ -594,87 +590,58 @@ namespace iParkingv5_window.Usercontrols
                 //customer = await KzParkingApiHelper.GetCustomerById(customerId);
                 customer = (await AppData.ApiServer.GetCustomerByIdAsync(customerId)).Item1;
             }
-            List<string> imageKeys = new List<string>()
-             {
-                     imageKey + "_OVERVIEWOUT.jpeg",
-                     imageKey + "_VEHICLEOUT.jpeg",
-                     imageKey + "_LPROUT.jpeg",
-             };
+            Dictionary<emParkingImageType, List<byte>> imageDatas = new Dictionary<emParkingImageType, List<byte>>
+                {
+                    { emParkingImageType.Overview, overviewImage.ImageToByteArray() },
+                    { emParkingImageType.Vehicle, vehicleImg.ImageToByteArray() },
+                    { emParkingImageType.Plate, lprImage.ImageToByteArray() }
+                };
             AddEventOutResponse? eventOut = null;
             string errorMessage = string.Empty;
 
         CheckOutNormal:
             {
-                eventOut = await AppData.ApiServer.PostCheckOutAsync(lane.id, plate, null, imageKeys, false);
+                eventOut = await AppData.ApiServer.PostCheckOutAsync(lane.id, plate, null, imageDatas, false);
                 if (eventOut == null)
                 {
                     goto LOI_HE_THONG;
                 }
-                if (eventOut.IsSuccess == false)
+                if (eventOut.OpenBarrier)
                 {
-                    //var errorCode = ApiInternalErrorMessages.GetFromName(responseNormal.metadata.message.code);
-                    //if (errorCode == EmApiErrorMessage.PINT_1013 || errorCode == EmApiErrorMessage.PINT_1018 || errorCode == EmApiErrorMessage.PINT_4011)
-                    //{
-                    //    isAlarm = true;
-                    //    string message = ApiInternalErrorMessages.ToString(errorCode);
-                    //    frmConfirmOut frmConfirmOut = new frmConfirmOut(plate, message, eventOut.plateNumber ?? "", eventOut.identityId ?? "", eventOut.laneId ?? "", eventOut.fileKeys, eventOut.DatetimeOut ?? DateTime.Now, true, eventOut.charge ?? 0);
-                    //    bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
-                    //    if (isConfirm)
-                    //    {
-                    //        plate = frmConfirmOut.updatePlate;
-                    //        goto CheckOutWithForce;
-                    //    }
-                    //    else
-                    //    {
-                    //        ClearView();
-                    //        return;
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    errorMessage = ApiInternalErrorMessages.ToString(errorCode);
-                    //    goto SU_KIEN_LOI;
-                    //}
+                    ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
+                                                          where _controllerInLane.controlUnitId == ie.DeviceId
+                                                          select _controllerInLane).FirstOrDefault();
+                    await BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
+                    await AppData.ApiServer.CommitOutAsync(eventOut);
                 }
                 else
                 {
-                    if (eventOut.OpenBarrier)
+                    frmConfirmOut frmConfirmOut = new frmConfirmOut(plate, "Bạn có xác nhận mở barrie?",
+                                                                    eventOut.eventIn.PlateNumber ?? "", eventOut.eventIn?.identity?.Id ?? "",
+                                                                    eventOut.eventIn?.lane?.id ?? "", eventOut.eventIn?.fileKeys ?? new List<string>(),
+                                                                    eventOut.eventIn?.DatetimeIn ?? DateTime.Now, false, eventOut.charge.Amount);
+                    bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
+                    if (!isConfirm)
                     {
+                        lblResult.UpdateResultMessage("Không xác nhận mở barrie", Color.DarkOrange);
+                        return;
+                    }
+                    else
+                    {
+                        plate = frmConfirmOut.updatePlate.ToUpper();
                         ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
                                                               where _controllerInLane.controlUnitId == ie.DeviceId
                                                               select _controllerInLane).FirstOrDefault();
                         await BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
+                        eventOut.PlateNumber = plate;
                         await AppData.ApiServer.CommitOutAsync(eventOut);
                     }
-                    else
-                    {
-                        frmConfirmOut frmConfirmOut = new frmConfirmOut(plate, "Bạn có xác nhận mở barrie?",
-                                                                        eventOut.eventIn.PlateNumber ?? "", eventOut.eventIn?.identity?.Id ?? "",
-                                                                        eventOut.eventIn?.lane?.id ?? "", eventOut.eventIn?.fileKeys ?? new List<string>(),
-                                                                        eventOut.eventIn?.DatetimeIn ?? DateTime.Now, false, eventOut.charge.Amount);
-                        bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
-                        if (!isConfirm)
-                        {
-                            lblResult.UpdateResultMessage("Không xác nhận mở barrie", Color.DarkOrange);
-                            return;
-                        }
-                        else
-                        {
-                            plate = frmConfirmOut.updatePlate.ToUpper();
-                            ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
-                                                                  where _controllerInLane.controlUnitId == ie.DeviceId
-                                                                  select _controllerInLane).FirstOrDefault();
-                            await BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
-                            eventOut.PlateNumber = plate;
-                            await AppData.ApiServer.CommitOutAsync(eventOut);
-                        }
-                    }
-                    goto SU_KIEN_HOP_LE;
                 }
+                goto SU_KIEN_HOP_LE;
             }
         CheckOutWithForce:
             {
-                var responseWithForce = await AppData.ApiServer.PostCheckOutAsync(lane.id, plate, null, imageKeys, true);
+                var responseWithForce = await AppData.ApiServer.PostCheckOutAsync(lane.id, plate, null, imageDatas, true);
                 if (responseWithForce == null)
                 {
                     goto LOI_HE_THONG;
@@ -735,7 +702,7 @@ namespace iParkingv5_window.Usercontrols
         SU_KIEN_HOP_LE:
             {
                 await ExcecuteValidEvent(null, null, vehicleType.Type, plate, ie.EventTime, overviewImage, vehicleImg,
-                                         lprImage, imageKey, eventOut, eventOut.RegisteredVehicle, isAlarm, imageKeys);
+                                         lprImage, eventOut, eventOut.RegisteredVehicle, isAlarm, imageDatas);
                 return;
             }
         }
@@ -751,17 +718,15 @@ namespace iParkingv5_window.Usercontrols
             //--Chưa có sự kiện vào hoặc thời gian từ lúc có sự kiện đến khi bấm mở barrie quá 5s thì lưu sự kiện cảnh báo
             if (lastEvent == null)
             {
-                string imageKey = BaseLane.GetBaseImageKey(this.lane.name, "", "", DateTime.Now);
-                await AppData.ApiServer.CreateAlarmAsync("", this.lane.id, "", AbnormalCode.OpenBarrierByButton, imageKey, false, "", "", "", "");
-                SaveAllCameraImage(imageKey);
+                var imageDatas = SaveAllCameraImage();
+                await AppData.ApiServer.CreateAlarmAsync("", this.lane.id, "", AbnormalCode.OpenBarrierByButton, imageDatas, false, "", "", "", "");
             }
             else if ((DateTime.Now - lastEvent.DatetimeOut)?.TotalSeconds >= StaticPool.appOption.AllowBarrieDelayOpenTime)
             {
-                string imageKey = BaseLane.GetBaseImageKey(this.lane.name, "", "", DateTime.Now);
+                var imageDatas = SaveAllCameraImage();
                 await AppData.ApiServer.CreateAlarmAsync(lastEvent.Identity?.Id, this.lane.id, lastEvent.PlateNumber, AbnormalCode.OpenBarrierByButton,
-                                                          imageKey, false,
+                                                          imageDatas, false,
                                                           lastEvent?.IdentityGroup?.Id.ToString() ?? "", "", "", "");
-                SaveAllCameraImage(imageKey);
             }
         }
 
@@ -881,32 +846,34 @@ namespace iParkingv5_window.Usercontrols
             //Đọc thông tin loại phương tiện
             string imageKey = BaseLane.GetBaseImageKey(this.lane.name, ce.PreferCard, ce.PlateNumber, ce.EventTime);
             lblResult.UpdateResultMessage("Đang check out..." + ce.PreferCard, Color.DarkBlue);
-            List<string> imageKeys = new List<string>()
-                 {
-                     imageKey + "_OVERVIEWOUT.jpeg",
-                     imageKey + "_VEHICLEOUT.jpeg",
-                     imageKey + "_LPROUT.jpeg",
-                 };
+            Dictionary<emParkingImageType, List<byte>> imageDatas = new Dictionary<emParkingImageType, List<byte>>
+                {
+                    { emParkingImageType.Overview, overviewImg.ImageToByteArray() },
+                    { emParkingImageType.Vehicle, vehicleImg.ImageToByteArray() },
+                    { emParkingImageType.Plate, lprImage.ImageToByteArray() }
+                };
             bool isMonthCard = identityGroup.Type == IdentityGroupType.Monthly;
             if (isMonthCard)
             {
-                await ExcecuteMonthCardEventOut(identity, identityGroup, vehicleBaseType, ce.PlateNumber, imageKeys,
+                await ExcecuteMonthCardEventOut(identity, identityGroup, vehicleBaseType, ce.PlateNumber, imageDatas,
                                                ce, controllerInLane,
-                                               overviewImg, vehicleImg, lprImage, imageKey);
+                                               overviewImg, vehicleImg, lprImage);
             }
             else
             {
-                await ExcecuteNonMonthCardEventOut(identity, identityGroup, vehicleBaseType, ce.PlateNumber, imageKeys,
+                await ExcecuteNonMonthCardEventOut(identity, identityGroup, vehicleBaseType, ce.PlateNumber, imageDatas,
                                                   ce, controllerInLane,
-                                                  overviewImg, vehicleImg, lprImage, imageKey);
+                                                  overviewImg, vehicleImg, lprImage);
             }
         }
 
-        private async Task ExcecuteNonMonthCardEventOut(Identity identity, IdentityGroup identityGroup, VehicleBaseType vehicleType, string plateNumber, List<string> imageKeys,
-                                                        CardEventArgs ce, ControllerInLane? controllerInLane, Image? overviewImg, Image? vehicleImg, Image? lprImage, string imageKey)
+        private async Task ExcecuteNonMonthCardEventOut(Identity identity, IdentityGroup identityGroup, VehicleBaseType vehicleType,
+                                                        string plateNumber, Dictionary<emParkingImageType, List<byte>> imageDatas,
+                                                        CardEventArgs ce, ControllerInLane? controllerInLane,
+                                                        Image? overviewImg, Image? vehicleImg, Image? lprImage)
         {
             bool isAlarm = false;
-            AddEventOutResponse? eventOut = await AppData.ApiServer.PostCheckOutAsync(lane.id, plateNumber, identity, imageKeys, false);
+            AddEventOutResponse? eventOut = await AppData.ApiServer.PostCheckOutAsync(lane.id, plateNumber, identity, imageDatas, false);
             if (eventOut == null)
             {
                 goto LOI_HE_THONG;
@@ -939,7 +906,7 @@ namespace iParkingv5_window.Usercontrols
                                                                 true, eventOut.eventIn.charge);
                 if (frmConfirmOut.ShowDialog() == DialogResult.OK)
                 {
-                    if (plateNumber.ToUpper()!=frmConfirmOut.updatePlate.ToUpper())
+                    if (plateNumber.ToUpper() != frmConfirmOut.updatePlate.ToUpper())
                     {
                         LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, specailName: "LPR_EDIT_OUT", mo_ta_them: "Sửa biển số khi quẹt thẻ EventInId: " + eventIn.Id +
                                                                                                                                    "\r\nOld Plate: " + plateNumber +
@@ -987,7 +954,7 @@ namespace iParkingv5_window.Usercontrols
 
         CheckOutWithForce:
             {
-                eventOut = await AppData.ApiServer.PostCheckOutAsync(lane.id, plateNumber, identity, imageKeys, true);
+                eventOut = await AppData.ApiServer.PostCheckOutAsync(lane.id, plateNumber, identity, imageDatas, true);
                 if (eventOut == null)
                 {
                     goto LOI_HE_THONG;
@@ -1052,15 +1019,16 @@ namespace iParkingv5_window.Usercontrols
         SU_KIEN_HOP_LE:
             {
                 await ExcecuteValidEvent(identity, identityGroup, vehicleType, plateNumber,
-                                         ce.EventTime, overviewImg, vehicleImg, lprImage, imageKey,
-                                         eventOut, eventOut.RegisteredVehicle, isAlarm, imageKeys);
+                                         ce.EventTime, overviewImg, vehicleImg, lprImage,
+                                         eventOut, eventOut.RegisteredVehicle, isAlarm, imageDatas);
                 return;
             }
         }
 
         private async Task ExcecuteMonthCardEventOut(Identity identity, IdentityGroup identityGroup, VehicleBaseType vehicleType,
-                                                     string plateNumber, List<string> imageKeys, CardEventArgs ce, ControllerInLane? controllerInLane,
-                                                     Image? overviewImg, Image? vehicleImg, Image? lprImage, string imageKey)
+                                                     string plateNumber, Dictionary<emParkingImageType, List<byte>> imageDatas,
+                                                     CardEventArgs ce, ControllerInLane? controllerInLane,
+                                                     Image? overviewImg, Image? vehicleImg, Image? lprImage)
         {
             bool isAlarm = false;
             if (identity.Vehicles == null)
@@ -1097,7 +1065,7 @@ namespace iParkingv5_window.Usercontrols
 
         CheckOutWithForce:
             {
-                eventOut = await AppData.ApiServer.PostCheckOutAsync(lane.id, plateNumber, identity, imageKeys, true);
+                eventOut = await AppData.ApiServer.PostCheckOutAsync(lane.id, plateNumber, identity, imageDatas, true);
                 if (eventOut == null)
                 {
                     goto LOI_HE_THONG;
@@ -1140,7 +1108,7 @@ namespace iParkingv5_window.Usercontrols
 
         CheckOutNormal:
             {
-                eventOut = await AppData.ApiServer.PostCheckOutAsync(lane.id, ce.PlateNumber, identity, imageKeys, false);
+                eventOut = await AppData.ApiServer.PostCheckOutAsync(lane.id, ce.PlateNumber, identity, imageDatas, false);
                 if (eventOut == null)
                 {
                     goto LOI_HE_THONG;
@@ -1229,8 +1197,8 @@ namespace iParkingv5_window.Usercontrols
         SU_KIEN_HOP_LE:
             {
                 await ExcecuteValidEvent(identity, identityGroup, vehicleType, plateNumber,
-                                         ce.EventTime, overviewImg, vehicleImg, lprImage, imageKey,
-                                         eventOut, eventOut.RegisteredVehicle, isAlarm, imageKeys);
+                                         ce.EventTime, overviewImg, vehicleImg, lprImage,
+                                         eventOut, eventOut.RegisteredVehicle, isAlarm, imageDatas);
                 return;
             }
         }
@@ -1249,8 +1217,8 @@ namespace iParkingv5_window.Usercontrols
         DateTime lastTime = DateTime.Now;
         private async Task ExcecuteValidEvent(Identity identity, IdentityGroup identityGroup, VehicleBaseType vehicleType,
                                               string detectedPlate, DateTime eventTime, Image? overviewImg, Image? vehicleImg,
-                                              Image? lprImage, string imageKey, AddEventOutResponse eventOut,
-                                              RegisteredVehicle? registeredVehicle, bool isAlarm, List<string> imageKeys)
+                                              Image? lprImage, AddEventOutResponse eventOut,
+                                              RegisteredVehicle? registeredVehicle, bool isAlarm, Dictionary<emParkingImageType, List<byte>> imageDatas)
         {
             txtPlate.Invoke(new Action(() =>
             {
@@ -1271,7 +1239,7 @@ namespace iParkingv5_window.Usercontrols
             {
                 string weightFormId = ((ListItem)cbGoodsType.SelectedItem)?.Name ?? "";
                 weighingDetail = await KzScaleApiHelper.CreateScaleEvent(detectedPlate, eventOut?.eventIn?.Id, this.ScaleValue, weightFormId,
-                                                                         StaticPool.userId, StaticPool.user_name, imageKeys, eventOut.Id);
+                                                                         StaticPool.userId, StaticPool.user_name, eventOut.fileKeys, eventOut.Id);
                 if (weighingDetail != null)
                 {
                     this.WeighingActionDetail = weighingDetail.weighing_action_detail[weighingDetail.weighing_action_detail.Count - 1];
@@ -1281,13 +1249,13 @@ namespace iParkingv5_window.Usercontrols
             DisplayEventOutInfo(eventOut?.eventIn?.DatetimeIn, eventTime, detectedPlate, identity, identityGroup, vehicleType, eventOut?.RegisteredVehicle, (long)(eventOut?.charge?.Amount ?? 0), eventOut?.Customer, weighingDetail, eventOut?.eventIn?.thirdPartyNote ?? "", eventOut?.eventIn?.Note ?? "");
             ShowEventInData(eventOut);
             BaseLane.DisplayLed(detectedPlate, eventTime, identity, identityGroup, "Hẹn gặp lại", this.lane.id, eventOut.charge.Amount.ToString());
-            await BaseLane.SaveEventImage(overviewImg, vehicleImg, lprImage, imageKey, false, new List<Image>());
+            //await BaseLane.SaveEventImage(overviewImg, vehicleImg, lprImage, imageKey, false, new List<Image>());
             lastEvent = eventOut;
             UnregisterTurnVehicle(identity, registeredVehicle, identityGroup);
             if (isAlarm)
             {
                 await AppData.ApiServer.CreateAlarmAsync(identity.Id, this.lane.id, detectedPlate, AbnormalCode.InvalidPlateNumber,
-                                                          imageKey, false, identityGroup?.Id.ToString(), eventOut?.Customer?.Id, eventOut?.RegisteredVehicle?.Id, "Cảnh báo biển số");
+                                                          imageDatas, false, identityGroup?.Id.ToString(), eventOut?.Customer?.Id, eventOut?.RegisteredVehicle?.Id, "Cảnh báo biển số");
             }
             this.Invoke(new Action(() =>
             {
@@ -1302,20 +1270,20 @@ namespace iParkingv5_window.Usercontrols
                                                         ucLastEventInfos[i - 1].datetimeIn, ucLastEventInfos[i - 1].picDirs,
                                                         customerId, registerVehicleId, laneId, identityId, false);
                 }
-                var overviewKey = imageKey + "_OVERVIEWOUT.jpeg";
-                var vehicleKey = imageKey + "_VEHICLEOUT.jpeg";
-                var vehicleCutKey = imageKey + "_LPROUT.jpeg";
-                var imageKeys = new List<string>() { overviewKey, vehicleKey, vehicleCutKey };
+                //var overviewKey = imageKey + "_OVERVIEWOUT.jpeg";
+                //var vehicleKey = imageKey + "_VEHICLEOUT.jpeg";
+                //var vehicleCutKey = imageKey + "_LPROUT.jpeg";
+                //var imageKeys = new List<string>() { overviewKey, vehicleKey, vehicleCutKey };
                 ucLastEventInfos[0].UpdateEventInfo(lastEvent.Id, detectedPlate, identityGroup?.Id.ToString() ?? "",
-                                                    identityGroup?.Id.ToString() ?? "", eventTime, imageKeys,
+                                                    identityGroup?.Id.ToString() ?? "", eventTime, eventOut.fileKeys,
                                                     "", "", this.lane.id, identity?.Id, false);
             }));
             //SendAPIXuanCuong
             if (((EmPrintTemplate)StaticPool.appOption.PrintTemplate) == EmPrintTemplate.XuanCuong)
             {
-                lastImageKeys = imageKeys;
+                lastImageKeys = eventOut.fileKeys;
                 lastTime = eventTime;
-                await XuanCuongApiHelper.SendParkingInfo(lastEvent.Id, "out", detectedPlate, eventTime, imageKeys, lastEvent.eventIn.Id);
+                await XuanCuongApiHelper.SendParkingInfo(lastEvent.Id, "out", detectedPlate, eventTime, eventOut.fileKeys, lastEvent.eventIn.Id);
             }
             if ((eventOut?.charge?.Amount ?? 0) > 0)
             {
@@ -1347,17 +1315,15 @@ namespace iParkingv5_window.Usercontrols
             //--Chưa có sự kiện vào hoặc thời gian từ lúc có sự kiện đến khi bấm mở barrie quá 5s thì lưu sự kiện cảnh báo
             if (lastEvent == null)
             {
-                string imageKey = BaseLane.GetBaseImageKey(this.lane.name, "", "", DateTime.Now);
-                await AppData.ApiServer.CreateAlarmAsync("", this.lane.id, "", AbnormalCode.OpenBarrierByKeyboard, imageKey, false, "", "", "", "");
-                SaveAllCameraImage(imageKey);
+                var imageDatas = SaveAllCameraImage();
+                await AppData.ApiServer.CreateAlarmAsync("", this.lane.id, "", AbnormalCode.OpenBarrierByKeyboard, imageDatas, false, "", "", "", "");
             }
             else if ((DateTime.Now - lastEvent.DatetimeOut)?.TotalSeconds >= StaticPool.appOption.AllowBarrieDelayOpenTime)
             {
-                string imageKey = BaseLane.GetBaseImageKey(this.lane.name, "", "", DateTime.Now);
+                var imageDatas = SaveAllCameraImage();
                 await AppData.ApiServer.CreateAlarmAsync(lastEvent.Identity?.Id, this.lane.id, lastEvent.PlateNumber, AbnormalCode.OpenBarrierByKeyboard,
-                                                          imageKey, false,
+                                                          imageDatas, false,
                                                           lastEvent?.IdentityGroup?.Id.ToString() ?? "", "", "", "");
-                SaveAllCameraImage(imageKey);
             }
         }
         #endregion END EVENT
@@ -1683,17 +1649,16 @@ namespace iParkingv5_window.Usercontrols
 
             if (lastEvent == null)
             {
-                string imageKey = BaseLane.GetBaseImageKey(this.lane.name, "", "", DateTime.Now);
-                await AppData.ApiServer.CreateAlarmAsync("", this.lane.id, "", AbnormalCode.OpenBarrierByKeyboard, imageKey, false, "", "", "", "");
-                SaveAllCameraImage(imageKey);
+                var imageDatas = SaveAllCameraImage();
+                await AppData.ApiServer.CreateAlarmAsync("", this.lane.id, "", AbnormalCode.OpenBarrierByKeyboard, imageDatas, false, "", "", "", "");
             }
             else if ((DateTime.Now - lastEvent.DatetimeOut)?.TotalSeconds >= StaticPool.appOption.AllowBarrieDelayOpenTime)
             {
-                string imageKey = BaseLane.GetBaseImageKey(this.lane.name, "", "", DateTime.Now);
+                var imageDatas = SaveAllCameraImage();
+
                 await AppData.ApiServer.CreateAlarmAsync(lastEvent.Identity?.Id, this.lane.id, lastEvent.PlateNumber, AbnormalCode.OpenBarrierByKeyboard,
-                                                          imageKey, false,
+                                                          imageDatas, false,
                                                           lastEvent?.IdentityGroup?.Id.ToString() ?? "", "", "", "");
-                SaveAllCameraImage(imageKey);
             }
         }
 
@@ -1732,11 +1697,11 @@ namespace iParkingv5_window.Usercontrols
                         //Lưu sự kiện cảnh báo
                         if (lastEvent != null)
                         {
-                            string imageKey = BaseLane.GetBaseImageKey(this.lane.name, "", "", DateTime.Now);
+                            var imageDatas = SaveAllCameraImage();
+
                             await AppData.ApiServer.CreateAlarmAsync(lastEvent.Identity?.Id, this.lane.id, lastEvent.PlateNumber, AbnormalCode.ManualEvent,
-                                                                      imageKey, false,
+                                                                      imageDatas, false,
                                                                       lastEvent?.IdentityGroup?.Id.ToString() ?? "", "", "", "");
-                            SaveAllCameraImage(imageKey);
                         }
                     }
 
@@ -2368,8 +2333,9 @@ namespace iParkingv5_window.Usercontrols
 
         }
 
-        private void SaveAllCameraImage(string imageKey)
+        private Dictionary<emParkingImageType, List<byte>> SaveAllCameraImage()
         {
+            var imageData = new Dictionary<emParkingImageType, List<byte>>();
             //--Lưu hình ảnh sự kiện
             //Danh sách biến sử dụng
             Image? overviewImg = null;
@@ -2381,27 +2347,23 @@ namespace iParkingv5_window.Usercontrols
                 {
                     case CameraPurposeType.EmCameraPurposeType.MainOverView:
                         overviewImg = ucOverView?.GetFullCurrentImage();
+                        imageData.Add(emParkingImageType.Overview, overviewImg.ImageToByteArray());
                         break;
                     case CameraPurposeType.EmCameraPurposeType.CarLPR:
                         carVehicleImage = ucCarLpr?.GetFullCurrentImage();
+                        if (!imageData.ContainsKey(emParkingImageType.Vehicle))
+                            imageData.Add(emParkingImageType.Vehicle, carVehicleImage.ImageToByteArray());
                         break;
                     case CameraPurposeType.EmCameraPurposeType.MotorLPR:
                         motorVehicleImage = ucMotoLpr?.GetFullCurrentImage();
+                        if (!imageData.ContainsKey(emParkingImageType.Vehicle))
+                            imageData.Add(emParkingImageType.Vehicle, motorVehicleImage.ImageToByteArray());
                         break;
                     default:
                         break;
                 }
             }
-
-            _ = MinioHelper.UploadPicture(overviewImg, imageKey + "_OVERVIEWOUT.jpeg");
-            if (carVehicleImage != null)
-            {
-                _ = MinioHelper.UploadPicture(carVehicleImage, imageKey + "_VEHICLEOUT.jpeg");
-            }
-            else
-            {
-                _ = MinioHelper.UploadPicture(motorVehicleImage, imageKey + "_VEHICLEOUT.jpeg");
-            }
+            return imageData;
         }
 
         private void DisplayEventOutInfo(DateTime? timeIn, DateTime timeOut, string plateNumber, Identity identity, IdentityGroup? identityGroup, VehicleBaseType vehicle,

@@ -116,19 +116,17 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
         }
-        public static async Task SaveEventImage(Image? overviewImg, Image? vehicleImg, Image? lprImage, string imageKey, bool isInEvent, List<Image> optionImages)
-        {
-            for (int i = 0; i < optionImages.Count; i++)
-            {
-                await MinioHelper.UploadPicture(optionImages[i], imageKey + (isInEvent ? $"_OPTIONIN{i}.jpeg" : $"_OPTIONOUT{i}.jpeg"));
-            }
-            var task1 = MinioHelper.UploadPicture(overviewImg, imageKey + (isInEvent ? "_OVERVIEWIN.jpeg" : "_OVERVIEWOUT.jpeg"));
-            var task2 = MinioHelper.UploadPicture(vehicleImg, imageKey + (isInEvent ? "_VEHICLEIN.jpeg" : "_VEHICLEOUT.jpeg"));
-            var task3 = MinioHelper.UploadPicture(lprImage, imageKey + (isInEvent ? "_LPRIN.jpeg" : "_LPROUT.jpeg"));
-            await Task.WhenAll(task1, task2, task3);
-
-
-        }
+        //public static async Task SaveEventImage(Image? overviewImg, Image? vehicleImg, Image? lprImage, string imageKey, bool isInEvent, List<Image> optionImages)
+        //{
+        //    for (int i = 0; i < optionImages.Count; i++)
+        //    {
+        //        await MinioHelper.UploadPicture(optionImages[i], imageKey + (isInEvent ? $"_OPTIONIN{i}.jpeg" : $"_OPTIONOUT{i}.jpeg"));
+        //    }
+        //    var task1 = MinioHelper.UploadPicture(overviewImg, imageKey + (isInEvent ? "_OVERVIEWIN.jpeg" : "_OVERVIEWOUT.jpeg"));
+        //    var task2 = MinioHelper.UploadPicture(vehicleImg, imageKey + (isInEvent ? "_VEHICLEIN.jpeg" : "_VEHICLEOUT.jpeg"));
+        //    var task3 = MinioHelper.UploadPicture(lprImage, imageKey + (isInEvent ? "_LPRIN.jpeg" : "_LPROUT.jpeg"));
+        //    await Task.WhenAll(task1, task2, task3);
+        //}
 
         public static void ShowImage(MovablePictureBox pictureBox, Image? img)
         {

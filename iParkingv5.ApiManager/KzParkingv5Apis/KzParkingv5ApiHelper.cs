@@ -18,6 +18,7 @@ using System.Data;
 using System.Drawing.Printing;
 using System.Threading;
 using System.Threading.Tasks;
+using static iParkingv5.ApiManager.iParkingApi;
 using static iParkingv5.ApiManager.KzParkingv5Apis.Filter;
 using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5ApiHelper;
 using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper;
@@ -626,15 +627,15 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, commitData, headers, null, timeOut, RestSharp.Method.Patch);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, specailName: "LPR_EDIT_IN", mo_ta_them:"EventId: " + eventId +
-                                                                                                                                 "\r\nOld Plate: " + oldPlate + 
+                LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, specailName: "LPR_EDIT_IN", mo_ta_them: "EventId: " + eventId +
+                                                                                                                                 "\r\nOld Plate: " + oldPlate +
                                                                                                                                  " => New Plate: " + newPlate);
                 return true;
             }
             return false;
         }
         public async Task<AddEventInResponse> PostCheckInAsync(
-            string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null, string _note = "")
+            string _laneId, string _plateNumber, Identity? identity, Dictionary<emParkingImageType, List<byte>> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null, string _note = "")
         {
             if (identity == null)
             {
@@ -645,43 +646,42 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 return await PostCheckInByIdentityAsync(_laneId, _plateNumber, identity, imageKeys, isForce, registeredVehicle, _note);
             }
         }
-        public async Task<AddEventInResponse> PostCheckInByIdentityAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null, string _note = "")
+
+
+
+        public async Task<AddEventInResponse> PostCheckInByIdentityAsync(string _laneId, string _plateNumber, Identity? identity,
+                                                                         Dictionary<emParkingImageType, List<byte>> imageDatas, bool isForce = false,
+                                                                         RegisteredVehicle? registeredVehicle = null, string _note = "")
         {
             StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/identity";
-            //Gửi API
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-                {
-                { "Authorization","Bearer " + token  }
-                };
 
-            var data = new
+            var options = new RestClientOptions(server)
             {
-                laneId = _laneId,
-                //identity = new
-                //{
-                //id = identity.Id,
-                identityCode = identity.Code,
-                //identityGroupId = identity.IdentityGroupId,
-                identityType = 0,
-                //},
-                plateNumber = _plateNumber,
-                force = isForce,
-                fileKeys = new List<string>(),
-                note = _note
+                MaxTimeout = 10000,
             };
+            var client = new RestClient(options);
+            var request = new RestRequest("/event-in", Method.Post);
+            request.AddHeader("Authorization", "Bearer" + token);
+            request.AlwaysMultipartFormData = true;
+            request.AddParameter("laneId", _laneId);
+            request.AddParameter("identityCode", identity.Code);
+            request.AddParameter("identityType", "0");
+            request.AddParameter("plateNumber", _plateNumber);
+            request.AddParameter("force", isForce);
 
-            foreach (var item in imageKeys)
+            int i = 0;
+            foreach (KeyValuePair<emParkingImageType, List<byte>> kvp in imageDatas)
             {
-                data.fileKeys.Add(item);
+                request.AddFile($"images[{i}].File", kvp.Value.ToArray(), "x.jpg");
+                request.AddParameter($"images[{i}].Type", (int)kvp.Key);
+                i++;
             }
-            string a = JsonConvert.SerializeObject(data);
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
-            if (!string.IsNullOrEmpty(response.Item1))
+            RestResponse response = await client.ExecuteAsync(request);
+            if (!string.IsNullOrEmpty(response.Content))
             {
                 try
                 {
-                    AddEventInResponse addEventInResponse = NewtonSoftHelper<AddEventInResponse>.GetBaseResponse(response.Item1);
+                    AddEventInResponse addEventInResponse = NewtonSoftHelper<AddEventInResponse>.GetBaseResponse(response.Content);
                     return addEventInResponse;
                 }
                 catch (Exception)
@@ -691,45 +691,39 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             return null;
         }
         public async Task<AddEventInResponse> PostCheckInByPlateAsync(string _laneId, string _plateNumber, Identity? identity,
-                                                                      List<string> imageKeys, bool isForce = false,
+                                                                      Dictionary<emParkingImageType, List<byte>> imageDatas, bool isForce = false,
                                                                       RegisteredVehicle? registeredVehicle = null,
                                                                       string _note = "")
         {
             StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/vehicle";
 
-            //Gửi API
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-                {
-                { "Authorization","Bearer " + token  }
-                };
-
-            var data = new
+            var options = new RestClientOptions(server)
             {
-                laneId = _laneId,
-                plateNumber = _plateNumber,
-                //vehicle = new
-                //{
-                //    id = registeredVehicle.Id,
-                //    _plateNumber = registeredVehicle.PlateNumber,
-                //    customerId = registeredVehicle.CustomerId,
-                //},
-                force = isForce,
-                fileKeys = new List<string>(),
-                note = _note
+                MaxTimeout = 10000,
             };
+            var client = new RestClient(options);
+            var request = new RestRequest("/event-in", Method.Post);
+            request.AddHeader("Authorization", "Bearer" + token);
+            request.AlwaysMultipartFormData = true;
+            request.AddParameter("laneId", _laneId);
+            request.AddParameter("identityCode", _plateNumber);
+            request.AddParameter("identityType", 1);
+            request.AddParameter("plateNumber", _plateNumber);
+            request.AddParameter("force", isForce);
 
-            foreach (var item in imageKeys)
+            int i = 0;
+            foreach (KeyValuePair<emParkingImageType, List<byte>> kvp in imageDatas)
             {
-                data.fileKeys.Add(item);
+                request.AddFile($"images[{i}].File", kvp.Value.ToArray(), "x.jpg");
+                request.AddParameter($"images[{i}].Type", (int)kvp.Key);
+                i++;
             }
-            string a = JsonConvert.SerializeObject(data);
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
-            if (!string.IsNullOrEmpty(response.Item1))
+            RestResponse response = await client.ExecuteAsync(request);
+            if (!string.IsNullOrEmpty(response.Content))
             {
                 try
                 {
-                    AddEventInResponse addEventInResponse = NewtonSoftHelper<AddEventInResponse>.GetBaseResponse(response.Item1);
+                    AddEventInResponse addEventInResponse = NewtonSoftHelper<AddEventInResponse>.GetBaseResponse(response.Content);
                     return addEventInResponse;
                 }
                 catch (Exception)
@@ -1003,60 +997,52 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             return null;
         }
 
-        public async Task<AddEventOutResponse> PostCheckOutAsync(string _laneId, string _plateNumber, Identity? identitiy, List<string> imageKeys, bool isForce)
+        public async Task<AddEventOutResponse> PostCheckOutAsync(string _laneId, string _plateNumber, Identity? identitiy,
+                                                                 Dictionary<emParkingImageType, List<byte>> imageDatas, bool isForce)
         {
             StandardlizeServerName();
             string apiUrl = server + KzApiUrlManagement.EmObjectType.EventOut.CreateRoute();
             if (identitiy == null)
             {
-                return await PostCheckOutByPlateAsync(_laneId, _plateNumber, identitiy, imageKeys, isForce);
+                return await PostCheckOutByPlateAsync(_laneId, _plateNumber, identitiy, imageDatas, isForce);
             }
             else
             {
-                return await PostCheckOutByIdentityAsync(_laneId, _plateNumber, identitiy, imageKeys, isForce);
+                return await PostCheckOutByIdentityAsync(_laneId, _plateNumber, identitiy, imageDatas, isForce);
             }
         }
-        public async Task<AddEventOutResponse> PostCheckOutByIdentityAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false)
+        public async Task<AddEventOutResponse> PostCheckOutByIdentityAsync(string _laneId, string _plateNumber, Identity? identity,
+                                                                           Dictionary<emParkingImageType, List<byte>> imageDatas, bool isForce = false)
         {
             StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/identity";
-            //Gửi API
-            //apiUrl = "http://192.168.21.13:3004/pk/event-out/identity";
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-                {
-                { "Authorization","Bearer " + token  }
-                };
 
-            var data = new
+            var options = new RestClientOptions(server)
             {
-                laneId = _laneId,
-                //identity = new
-                //{
-                //id = identity.Id,
-                identityCode = identity.Code,
-                //identityGroupId = identity.IdentityGroupId,
-                identityType = 0,
-                //},
-                plateNumber = _plateNumber,
-                force = isForce,
-                fileKeys = new List<string>()
+                MaxTimeout = 10000,
             };
+            var client = new RestClient(options);
+            var request = new RestRequest("/event-iout", Method.Post);
+            request.AddHeader("Authorization", "Bearer" + token);
+            request.AlwaysMultipartFormData = true;
+            request.AddParameter("laneId", _laneId);
+            request.AddParameter("identityCode", identity.Code);
+            request.AddParameter("identityType", 0);
+            request.AddParameter("plateNumber", _plateNumber);
+            request.AddParameter("force", isForce);
 
-            foreach (var item in imageKeys)
+            int i = 0;
+            foreach (KeyValuePair<emParkingImageType, List<byte>> kvp in imageDatas)
             {
-                data.fileKeys.Add(item);
+                request.AddFile($"images[{i}].File", kvp.Value.ToArray(), "x.jpg");
+                request.AddParameter($"images[{i}].Type", (int)kvp.Key);
+                i++;
             }
-            string a = JsonConvert.SerializeObject(data);
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
-            if (!string.IsNullOrEmpty(response.Item1))
+            RestResponse response = await client.ExecuteAsync(request);
+            if (!string.IsNullOrEmpty(response.Content))
             {
                 try
                 {
-                    AddEventOutResponse addEventOutResponse = NewtonSoftHelper<AddEventOutResponse>.GetBaseResponse(response.Item1);
-                    if (!addEventOutResponse.IsSuccess)
-                    {
-                        addEventOutResponse.eventIn = addEventOutResponse.payload.ContainsKey("EventIn") ? addEventOutResponse.payload["EventIn"] : null;
-                    }
+                    AddEventOutResponse addEventOutResponse = NewtonSoftHelper<AddEventOutResponse>.GetBaseResponse(response.Content);
                     return addEventOutResponse;
                 }
                 catch (Exception)
@@ -1065,45 +1051,38 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return null;
         }
-        public async Task<AddEventOutResponse> PostCheckOutByPlateAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null)
+        public async Task<AddEventOutResponse> PostCheckOutByPlateAsync(string _laneId, string _plateNumber, Identity? identity,
+                                                                        Dictionary<emParkingImageType, List<byte>> imageDatas, bool isForce = false, RegisteredVehicle? registeredVehicle = null)
         {
             StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/vehicle";
 
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-                {
-                { "Authorization","Bearer " + token  }
-                };
-
-            var data = new
+            var options = new RestClientOptions(server)
             {
-                laneId = _laneId,
-                plateNumber = _plateNumber,
-                //vehicle = new
-                //{
-                //    id = registeredVehicle.Id,
-                //    plateNumber = registeredVehicle.PlateNumber,
-                //    customerId = registeredVehicle.CustomerId,
-                //},
-                force = isForce,
-                fileKeys = new List<string>()
+                MaxTimeout = 10000,
             };
+            var client = new RestClient(options);
+            var request = new RestRequest("/event-iout", Method.Post);
+            request.AddHeader("Authorization", "Bearer" + token);
+            request.AlwaysMultipartFormData = true;
+            request.AddParameter("laneId", _laneId);
+            request.AddParameter("identityCode", _plateNumber);
+            request.AddParameter("identityType", 1);
+            request.AddParameter("plateNumber", _plateNumber);
+            request.AddParameter("force", isForce);
 
-            foreach (var item in imageKeys)
+            int i = 0;
+            foreach (KeyValuePair<emParkingImageType, List<byte>> kvp in imageDatas)
             {
-                data.fileKeys.Add(item);
+                request.AddFile($"images[{i}].File", kvp.Value.ToArray(), "x.jpg");
+                request.AddParameter($"images[{i}].Type", (int)kvp.Key);
+                i++;
             }
-            string a = JsonConvert.SerializeObject(data);
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
-            if (!string.IsNullOrEmpty(response.Item1))
+            RestResponse response = await client.ExecuteAsync(request);
+            if (!string.IsNullOrEmpty(response.Content))
             {
                 try
                 {
-                    AddEventOutResponse addEventOutResponse = NewtonSoftHelper<AddEventOutResponse>.GetBaseResponse(response.Item1);
-                    if (!addEventOutResponse.IsSuccess)
-                    {
-                        addEventOutResponse.eventIn = addEventOutResponse.payload.ContainsKey("EventIn") ? addEventOutResponse.payload["EventIn"] : null;
-                    }
+                    AddEventOutResponse addEventOutResponse = NewtonSoftHelper<AddEventOutResponse>.GetBaseResponse(response.Content);
                     return addEventOutResponse;
                 }
                 catch (Exception)
@@ -1235,39 +1214,40 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
 
         #region Alarm
         public async Task<bool> CreateAlarmAsync(string identityId, string laneId, string plate, AbnormalCode abnormalCode,
-                                                        string imageKey, bool isLaneIn, string _identityGroupId, string customerId,
-                                                        string registerVehicleId, string description)
+                                                Dictionary<emParkingImageType, List<byte>> imageDatas, bool isLaneIn,
+                                                string _identityGroupId, string customerId,
+                                                string registerVehicleId, string description)
         {
             StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.AbnormalEvent);
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-                    {
-                        { "Authorization","Bearer " + token  }
-                    };
-            var abnormalEvent = new
-            {
-                LaneId = laneId,
-                identity = new
-                {
-                    id = identityId,
-                    identityGroupId = _identityGroupId,
-                },
-                PlateNumber = plate,
-                Code = abnormalCode,
-                FileKeys = new List<string>()
-                        {
-                            imageKey + (isLaneIn? "_OVERVIEWIN.jpeg" : "_OVERVIEWOUT.jpeg"),
-                            imageKey + (isLaneIn ? "_VEHICLEIN.jpeg" : "_VEHICLEOUT.jpeg")
-                        },
-                Description = description
-            };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, abnormalEvent, headers, null, timeOut, RestSharp.Method.Post);
-            string a = Newtonsoft.Json.JsonConvert.SerializeObject(abnormalEvent);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                AbnormalEvent kzBaseResponse = NewtonSoftHelper<AbnormalEvent>.GetBaseResponse(response.Item1);
-                return kzBaseResponse != null;
-            }
+            //string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.AbnormalEvent);
+            //Dictionary<string, string> headers = new Dictionary<string, string>()
+            //        {
+            //            { "Authorization","Bearer " + token  }
+            //        };
+            //var abnormalEvent = new
+            //{
+            //    LaneId = laneId,
+            //    identity = new
+            //    {
+            //        id = identityId,
+            //        identityGroupId = _identityGroupId,
+            //    },
+            //    PlateNumber = plate,
+            //    Code = abnormalCode,
+            //    FileKeys = new List<string>()
+            //            {
+            //                imageDatas + (isLaneIn? "_OVERVIEWIN.jpeg" : "_OVERVIEWOUT.jpeg"),
+            //                imageDatas + (isLaneIn ? "_VEHICLEIN.jpeg" : "_VEHICLEOUT.jpeg")
+            //            },
+            //    Description = description
+            //};
+            //var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, abnormalEvent, headers, null, timeOut, RestSharp.Method.Post);
+            //string a = Newtonsoft.Json.JsonConvert.SerializeObject(abnormalEvent);
+            //if (!string.IsNullOrEmpty(response.Item1))
+            //{
+            //    AbnormalEvent kzBaseResponse = NewtonSoftHelper<AbnormalEvent>.GetBaseResponse(response.Item1);
+            //    return kzBaseResponse != null;
+            //}
             return false;
         }
         public async Task<DataTable> GetAlarmReport(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, int pageIndex = 1, int pageSize = 10000)

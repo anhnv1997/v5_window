@@ -22,7 +22,7 @@ using Newtonsoft.Json.Linq;
 
 namespace iParkingv6.ApiManager.KzParkingv3Apis
 {
-    public class KzParkingApiHelper : iParkingApi
+    public class KzParkingApiHelper
     {
         public static string server = "http://14.160.26.45:13000";
         public static string username = "admin";

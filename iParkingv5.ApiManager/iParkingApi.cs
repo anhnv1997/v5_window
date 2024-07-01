@@ -95,9 +95,15 @@ namespace iParkingv5.ApiManager
         #endregion End Customer Group
 
         #region Event In
+        public enum emParkingImageType
+        {
+            Overview,
+            Vehicle,
+            Plate,
+        }
         Task<bool> UpdateEventInPlateAsync(string eventId, string newPlate, string oldPlate);
         Task<AddEventInResponse> PostCheckInAsync(
-            string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys,
+            string _laneId, string _plateNumber, Identity? identity, Dictionary<emParkingImageType, List<byte>> images,
             bool isForce = false, RegisteredVehicle? registeredVehicle = null, string note = "");
         Task<DataTable> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
                                     string identityGroupId, string vehicleTypeId, string laneId, string user,
@@ -109,7 +115,7 @@ namespace iParkingv5.ApiManager
 
         Task<bool> UpdateEventOutPlate(string eventId, string newPlate, string oldPlate);
         Task<DataTable> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000);
-        Task<AddEventOutResponse> PostCheckOutAsync(string _laneId, string _plateNumber, Identity? identitiy, List<string> imageKeys, bool isForce);
+        Task<AddEventOutResponse> PostCheckOutAsync(string _laneId, string _plateNumber, Identity? identitiy, Dictionary<emParkingImageType, List<byte>> images, bool isForce);
         Task<bool> CommitOutAsync(AddEventOutResponse eventOut);
         Task<bool> CancelCheckOut(string eventOutId);
         Task<KzParkingv5ApiHelper.PaymentTransaction> CreatePaymentTransaction(AddEventOutResponse eventOut);
@@ -117,8 +123,8 @@ namespace iParkingv5.ApiManager
 
         #region Alarm
         Task<bool> CreateAlarmAsync(string identityId, string laneId, string plate, AbnormalCode abnormalCode,
-                                                        string imageKey, bool isLaneIn, string _identityGroupId, string customerId,
-                                                        string registerVehicleId, string description);
+                                    Dictionary<emParkingImageType, List<byte>> imageDatas, bool isLaneIn, string _identityGroupId, string customerId,
+                                    string registerVehicleId, string description);
         Task<DataTable> GetAlarmReport(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, int pageIndex = 1, int pageSize = 10000);
         #endregion End Alarm
 
