@@ -1018,6 +1018,8 @@ namespace iParkingv5_window.Forms.ReportForms
                 if (!string.IsNullOrEmpty(pendingOrderId))
                 {
                     ctx.Items.Add("Gửi hóa đơn", Properties.Resources.setting_0_0_0_32px).Name = "SendPendingEInvoice";
+                    ctx.Items.Add("Sửa biển số vào", Properties.Resources.setting_0_0_0_32px).Name = "UpdatePlateIn";
+                    ctx.Items.Add("Sửa biển số ra", Properties.Resources.setting_0_0_0_32px).Name = "UpdatePlateOut";
                 }
                 ctx.Font = new Font(dgvData.Font.Name, 16, FontStyle.Bold);
                 ctx.BackColor = Color.DarkOrange;

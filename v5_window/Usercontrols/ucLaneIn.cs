@@ -527,15 +527,14 @@ namespace iParkingv5_window.Usercontrols
 
             #region Kiểm tra thông tin loại phương tiện
             lblResult.UpdateResultMessage("Đọc thông tin loại phương tiện...", Color.DarkBlue);
-            //string vehicleTypeId = identityGroup!.VehicleType.Id;
-            //VehicleType vehicleType = (await AppData.ApiServer.GetVehicleTypeByIdAsync(vehicleTypeId.ToString())).Item1;
-            //if (vehicleType == null)
-            //{
-            //    lblResult.UpdateResultMessage("Không đọc được thông tin phương tiện, vui lòng thử lại", Color.DarkRed);
-            //    return;
-            //}
-            //VehicleBaseType vehicleBaseType = vehicleType.Type;
-            VehicleBaseType vehicleBaseType = identityGroup.VehicleType;
+            string vehicleTypeId = identityGroup!.VehicleType.Id;
+            VehicleType vehicleType = (await AppData.ApiServer.GetVehicleTypeByIdAsync(vehicleTypeId.ToString())).Item1;
+            if (vehicleType == null)
+            {
+                lblResult.UpdateResultMessage("Không đọc được thông tin phương tiện, vui lòng thử lại", Color.DarkRed);
+                return;
+            }
+            VehicleBaseType vehicleBaseType = vehicleType.Type;
             if (vehicleBaseType == VehicleBaseType.Unknown)
             {
                 lblResult.UpdateResultMessage("Thông tin loại phương tiện không hợp lệ, vui lòng sử dụng thẻ khác", Color.DarkRed);

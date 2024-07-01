@@ -827,7 +827,7 @@ namespace iParkingv5_window.Usercontrols
             lblResult.UpdateResultMessage("Đọc thông tin loại phương tiện...", Color.DarkBlue);
             //string vehicleTypeId = identityGroup!.VehicleType.Id;
             //VehicleType vehicleType = await KzParkingApiHelper.GetVehicleTypeById(vehicleTypeId.ToString());
-            VehicleBaseType vehicleBaseType = identityGroup.VehicleType;
+            VehicleBaseType vehicleBaseType = identityGroup.VehicleType.Type;
             //(await AppData.ApiServer.GetVehicleTypeByIdAsync(vehicleTypeId.ToString())).Item1;
             //VehicleBaseType vehicleBaseType = vehicleType.Type;
             switch (vehicleBaseType)
@@ -1320,8 +1320,8 @@ namespace iParkingv5_window.Usercontrols
             if ((eventOut?.charge?.Amount ?? 0) > 0)
             {
                 await AppData.ApiServer.CreatePaymentTransaction(eventOut);
-                //bool isConfirmSendEinvoie = MessageBox.Show($"Bạn có muốn gửi hóa đơn ({TextFormatingTool.GetMoneyFormat(eventOut.charge.Amount.ToString())}) không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
-                bool isConfirmSendEinvoie = true;
+                bool isConfirmSendEinvoie = MessageBox.Show($"Bạn có muốn gửi hóa đơn ({TextFormatingTool.GetMoneyFormat(eventOut.charge.Amount.ToString())}) không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
+                //bool isConfirmSendEinvoie = true;
                 if (isConfirmSendEinvoie)
                 {
                     var invoiceDto = await AppData.ApiServer.CreateEinvoice(eventOut.charge.Amount, eventOut.eventIn.PlateNumber,
