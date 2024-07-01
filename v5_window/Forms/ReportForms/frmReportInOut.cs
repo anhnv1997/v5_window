@@ -1063,7 +1063,7 @@ namespace iParkingv5_window.Forms.ReportForms
                             break;
                         case "SendPendingEInvoice":
                             {
-                                bool isSendSuccess = await AppData.ApiServer.sendPendingEInvoice(pendingOrderId);
+                                bool isSendSuccess = await AppData.ApiServer.sendPendingEInvoice(eventOutId);
                                 if (isSendSuccess)
                                 {
                                     MessageBox.Show("Gửi hóa đơn thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);

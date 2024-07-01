@@ -626,8 +626,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, commitData, headers, null, timeOut, RestSharp.Method.Patch);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, specailName: "LPR_EDIT_IN", mo_ta_them:"EventId: " + eventId +
-                                                                                                                                 "\r\nOld Plate: " + oldPlate + 
+                LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, specailName: "LPR_EDIT_IN", mo_ta_them: "EventId: " + eventId +
+                                                                                                                                 "\r\nOld Plate: " + oldPlate +
                                                                                                                                  " => New Plate: " + newPlate);
                 return true;
             }
@@ -1590,51 +1590,51 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             TimeSpan parkingTime = datetimeOut - datetimeIn;
             var data = new
             {
-                targetType = (int)TargetType.EventOut,
+                //targetType = (int)TargetType.EventOut,
                 targetId = eventOutId,
                 send = isSendNow ? 1 : 0,
                 provider = (int)Provider.Viettel,
-                items = new List<object>()
-                {
-                    new
-                    {
-                        name = string.IsNullOrEmpty( cardGroupName) ? "Hàng hóa" : cardGroupName,
-                        code = "HH1",
-                        quantity = 1,
-                        price = _price,
-                    }
-                },
-                extraInformation = new List<object>()
-                {
-                    new
-                    {
-                        tag =  "licensePlate",
-                        name = "Biển kiểm soát",
-                        value =  plateNumber,
-                        type=  "text"
-                    },
-                    new
-                    {
-                        tag =  "checkIn",
-                        name = "Giờ vào",
-                        value =  datetimeIn.ToString("dd/MM/yyyy HH:mm:ss"),
-                        type=  "text"
-                    },
-                    new
-                    {
-                        tag =  "checkOut",
-                        name = "Giờ ra",
-                        value =  datetimeOut.ToString("dd/MM/yyyy HH:mm:ss"),
-                        type=  "text"
-                    },
-                    new
-                    {
-                        tag =  "parkingTime",
-                        name = "Thời gian lưu bãi",
-                        value = (int)parkingTime.TotalHours + " giờ " + ((int)parkingTime.TotalMinutes - 60 * (int)parkingTime.TotalHours) + " phút",
-                        type=  "text"
-                    },
-                },
+                //items = new List<object>()
+                //{
+                //    new
+                //    {
+                //        name = string.IsNullOrEmpty( cardGroupName) ? "Hàng hóa" : cardGroupName,
+                //        code = "HH1",
+                //        quantity = 1,
+                //        price = _price,
+                //    }
+                //},
+                //extraInformation = new List<object>()
+                //{
+                //    new
+                //    {
+                //        tag =  "licensePlate",
+                //        name = "Biển kiểm soát",
+                //        value =  plateNumber,
+                //        type=  "text"
+                //    },
+                //    new
+                //    {
+                //        tag =  "checkIn",
+                //        name = "Giờ vào",
+                //        value =  datetimeIn.ToString("dd/MM/yyyy HH:mm:ss"),
+                //        type=  "text"
+                //    },
+                //    new
+                //    {
+                //        tag =  "checkOut",
+                //        name = "Giờ ra",
+                //        value =  datetimeOut.ToString("dd/MM/yyyy HH:mm:ss"),
+                //        type=  "text"
+                //    },
+                //    new
+                //    {
+                //        tag =  "parkingTime",
+                //        name = "Thời gian lưu bãi",
+                //        value = (int)parkingTime.TotalHours + " giờ " + ((int)parkingTime.TotalMinutes - 60 * (int)parkingTime.TotalHours) + " phút",
+                //        type=  "text"
+                //    },
+                //},
             };
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
@@ -1691,7 +1691,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             };
             var filter = Filter.CreateFilter(new List<FilterModel>()
             {
-                new FilterModel("success", "BOOLEAN", "true", "eq"),
+                new FilterModel("sent", "BOOLEAN", "true", "eq"),
                 new FilterModel("createdUtc", "DATETIME", startTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), "gte"),
                 new FilterModel("createdUtc", "DATETIME", endTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), "lte"),
             }, EmMainOperation.and, 0, 10000);
@@ -1717,9 +1717,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             };
             var filter = Filter.CreateFilter(new List<FilterModel>()
             {
-                new FilterModel("success", "BOOLEAN", "true", "neq"),
-                new FilterModel("success", "BOOLEAN", "false", "neq"),
-                new FilterModel("createdUtc", "DATETIME", startTime.ToUniversalTime().ToString("2023-MM-ddTHH:mm:ss:0000"), "gte"),
+                new FilterModel("sent", "BOOLEAN", "false", "eq"),
+                //new FilterModel("success", "BOOLEAN", "false", "neq"),
+                new FilterModel("createdUtc", "DATETIME", startTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), "gte"),
                 new FilterModel("createdUtc", "DATETIME", endTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), "lte"),
             }, EmMainOperation.and, 0, 10000);
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, Method.Post);
@@ -1730,19 +1730,25 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return new List<InvoiceResponse>();
         }
-        public async Task<bool> sendPendingEInvoice(string orderId)
+        public async Task<bool> sendPendingEInvoice(string eventId)
         {
             StandardlizeServerName();
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
                 { "Authorization","Bearer " + token  }
             };
-            string apiUrl = server + $"invoice/{orderId}/resend";
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, Method.Post);
+            string apiUrl = server + $"invoice";
+            var data = new
+            {
+                targetId = eventId,
+                send = 1,
+                provider = (int)Provider.Viettel,
+            };
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
                 var pendingData = NewtonSoftHelper<InvoiceResponse>.GetBaseResponse(response.Item1);
-                return pendingData != null;
+                return pendingData != null && !string.IsNullOrEmpty(pendingData.id);
             }
             return false;
         }
