@@ -16,7 +16,7 @@ namespace iParking.ConfigurationManager.UserControls
             InitializeComponent();
             this.appOption = appOption;
             LoadPrintTemplate();
-            
+
             if (this.appOption != null)
             {
                 txtAllowOpenBarrieTime.Text = appOption!.AllowBarrieDelayOpenTime.ToString();
@@ -27,11 +27,13 @@ namespace iParking.ConfigurationManager.UserControls
                 numRetakePhotoTurn.Value = appOption.RetakePhotoTimes;
                 numRetakePhotoDelayTime.Value = appOption.RetakePhotoDelay;
                 txtUpdatePath.Text = appOption.CheckForUpdatePath;
+                chbIsAllowEditPlateOut.Checked = appOption.IsAllowEditPlateOut;
+                chbIsIntergratedScaleStation.Checked = appOption.IsIntergratedScaleStation;
             }
             txtWaitSwipeCardTime.TextChanged += TxtWaitSwipeCardTime_TextChanged;
             txtAllowOpenBarrieTime.TextChanged += TxtAllowOpenBarrieTime_TextChanged;
 
-            
+
         }
         #endregion End Forms
 
@@ -65,6 +67,8 @@ namespace iParking.ConfigurationManager.UserControls
                 RetakePhotoTimes = (int)numRetakePhotoTurn.Value,
                 RetakePhotoDelay = (int)numRetakePhotoDelayTime.Value,
                 CheckForUpdatePath = txtUpdatePath.Text,
+                IsAllowEditPlateOut = chbIsAllowEditPlateOut.Checked,
+                IsIntergratedScaleStation = chbIsIntergratedScaleStation.Checked,
             };
         }
         #endregion End Public Function

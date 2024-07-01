@@ -3,6 +3,7 @@ using iParkingv5.Objects.Datas;
 using iParkingv6.Objects.Datas;
 using Kztek.Tool.SocketHelpers;
 using Kztek.Tool.TextFormatingTools;
+using Kztek.Tools;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -91,7 +92,9 @@ namespace iParkingv5.LedDisplay.LEDs.KztekLeds
             string result = string.Empty;
             await Task.Run(() =>
             {
+                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Controller, specailName: this.Comport, noi_dung_hanh_dong: changeScreenCmd);
                 result = UdpTools.ExecuteCommand_UTF8(this.Comport, this.Baudrate, changeScreenCmd);
+                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Controller, specailName: this.Comport, noi_dung_hanh_dong: changeScreenCmd, mo_ta_them: result);
             });
             return result.Contains("OK");
         }

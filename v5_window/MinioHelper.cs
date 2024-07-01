@@ -72,7 +72,9 @@ namespace iParkingv5_window
                     .WithStreamData(data)
                     .WithObjectSize(data.Length)
                     .WithObject(imageKey)
-                    .WithContentType("application/octet-stream");
+                    //.WithContentType("application/octet-stream");
+                    .WithContentType("image/jpeg");
+
                 var response = await minio.PutObjectAsync(putObjectArgs);
                 return imageKey;
             }

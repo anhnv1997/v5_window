@@ -98,7 +98,7 @@ namespace iParkingv5_window.Forms.SystemForms
                 this.Hide();
                 //KzParkingApiHelper.token = loginResult.TokenResponse.AccessToken;
                 KzParkingv5ApiHelper.token = loginResult.TokenResponse.AccessToken;
-                await KzParkingv5ApiHelper.GetUserInfor();
+                await AppData.ApiServer.GetUserInfor();
                 frmLoading frm = new()
                 {
                     Owner = this
@@ -168,7 +168,7 @@ namespace iParkingv5_window.Forms.SystemForms
                     NewtonSoftHelper<string>.SaveConfig(refreshToken.RefreshToken, PathManagement.tokenPath);
                     this.refreshToken = refreshToken.RefreshToken;
                     this.Hide();
-                    await KzParkingv5ApiHelper.GetUserInfor();
+                    await AppData.ApiServer.GetUserInfor();
                     timerRestartSocket.Enabled = true;
                     frmLoading frm = new()
                     {

@@ -149,7 +149,7 @@ namespace iParkingv5_window.Forms.SystemForms
         GetPCConfig:
             {
                 //computer = await KzParkingApiHelper.GetComputerByIPAddressAsync(Environment.MachineName);
-                computers = (await KzParkingv5ApiHelper.GetComputersAsync()).Item1;
+                computers = (await AppData.ApiServer.GetComputersAsync()).Item1;
                 if (computers == null)
                 {
                     goto GetPCConfig;

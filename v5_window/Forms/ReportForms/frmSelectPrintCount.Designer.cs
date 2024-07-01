@@ -37,10 +37,12 @@
             // 
             // btnSelect1
             // 
-            btnSelect1.Location = new Point(108, 34);
-            btnSelect1.Margin = new Padding(3, 2, 3, 2);
+            btnSelect1.AutoSize = true;
+            btnSelect1.Font = new Font("Segoe UI", 24F);
+            btnSelect1.Location = new Point(139, 48);
+            btnSelect1.Margin = new Padding(4, 3, 4, 3);
             btnSelect1.Name = "btnSelect1";
-            btnSelect1.Size = new Size(132, 96);
+            btnSelect1.Size = new Size(172, 134);
             btnSelect1.TabIndex = 0;
             btnSelect1.Tag = "1";
             btnSelect1.Text = "In 1 phiếu";
@@ -49,10 +51,12 @@
             // 
             // btnSelect2
             // 
-            btnSelect2.Location = new Point(255, 34);
-            btnSelect2.Margin = new Padding(3, 2, 3, 2);
+            btnSelect2.AutoSize = true;
+            btnSelect2.Font = new Font("Segoe UI", 24F);
+            btnSelect2.Location = new Point(328, 48);
+            btnSelect2.Margin = new Padding(4, 3, 4, 3);
             btnSelect2.Name = "btnSelect2";
-            btnSelect2.Size = new Size(132, 96);
+            btnSelect2.Size = new Size(172, 134);
             btnSelect2.TabIndex = 1;
             btnSelect2.Tag = "2";
             btnSelect2.Text = "In 2 phiếu";
@@ -61,10 +65,12 @@
             // 
             // btnSelect3
             // 
-            btnSelect3.Location = new Point(108, 134);
-            btnSelect3.Margin = new Padding(3, 2, 3, 2);
+            btnSelect3.AutoSize = true;
+            btnSelect3.Font = new Font("Segoe UI", 24F);
+            btnSelect3.Location = new Point(139, 188);
+            btnSelect3.Margin = new Padding(4, 3, 4, 3);
             btnSelect3.Name = "btnSelect3";
-            btnSelect3.Size = new Size(132, 96);
+            btnSelect3.Size = new Size(172, 134);
             btnSelect3.TabIndex = 2;
             btnSelect3.Tag = "3";
             btnSelect3.Text = "In 3 phiếu";
@@ -73,10 +79,12 @@
             // 
             // btnSelect4
             // 
-            btnSelect4.Location = new Point(255, 134);
-            btnSelect4.Margin = new Padding(3, 2, 3, 2);
+            btnSelect4.AutoSize = true;
+            btnSelect4.Font = new Font("Segoe UI", 24F);
+            btnSelect4.Location = new Point(328, 188);
+            btnSelect4.Margin = new Padding(4, 3, 4, 3);
             btnSelect4.Name = "btnSelect4";
-            btnSelect4.Size = new Size(132, 96);
+            btnSelect4.Size = new Size(172, 134);
             btnSelect4.TabIndex = 3;
             btnSelect4.Tag = "4";
             btnSelect4.Text = "In 4 phiếu";
@@ -85,20 +93,22 @@
             // 
             // frmSelectPrintCount
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(492, 264);
+            ClientSize = new Size(633, 370);
             Controls.Add(btnSelect4);
             Controls.Add(btnSelect2);
             Controls.Add(btnSelect3);
             Controls.Add(btnSelect1);
+            Font = new Font("Segoe UI", 12F);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(3, 2, 3, 2);
+            Margin = new Padding(4, 3, 4, 3);
             MaximizeBox = false;
             Name = "frmSelectPrintCount";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Chọn số lượng phiếu in";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

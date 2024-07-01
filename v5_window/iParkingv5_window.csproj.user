@@ -37,6 +37,15 @@
     <Compile Update="Forms\DataForms\Registers\frmWalkerRegister.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\frmEditNote.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\frmEditPlate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\frmSelectWarehouseType.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\frmTest.cs">
       <SubType>Form</SubType>
     </Compile>

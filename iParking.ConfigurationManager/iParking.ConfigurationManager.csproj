@@ -7,7 +7,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>x64;x86</Platforms>
-    <Version>1.0.0.1</Version>
+    <Version>1.0.0.2</Version>
     <ApplicationIcon>icons8_settings.ico</ApplicationIcon>
     <PackageIcon>configuration.png</PackageIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -29,7 +29,6 @@
     <ProjectReference Include="..\IPaking.Ultility\IPaking.Ultility.csproj" />
     <ProjectReference Include="..\iParkingv5.ApiManager\iParkingv5.ApiManager.csproj" />
     <ProjectReference Include="..\iParkingv5.Controller\iParkingv5.Controller.csproj" />
-    <ProjectReference Include="..\iParkingv5.Objects\iParkingv5.Objects.csproj" />
     <ProjectReference Include="..\Kztek.Scale\Net6\Kztek.Scale\Kztek.Scale_net6.csproj" />
   </ItemGroup>
 
@@ -40,9 +39,6 @@
   <ItemGroup>
     <Reference Include="DahuaLib">
       <HintPath>..\packages\DahuaLib.dll</HintPath>
-    </Reference>
-    <Reference Include="Kztek.Tool">
-      <HintPath>..\packages\Kztek.Tool.dll</HintPath>
     </Reference>
   </ItemGroup>
 

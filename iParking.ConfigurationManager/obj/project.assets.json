@@ -15,6 +15,19 @@
           }
         }
       },
+      "Microsoft.Extensions.Logging.Abstractions/3.1.32": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.NETCore.Platforms/3.1.0": {
         "type": "package",
         "compile": {
@@ -117,6 +130,19 @@
           "lib/net6.0/RestSharp.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "RestSharp.Authenticators.Digest/1.6.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "3.1.32",
+          "RestSharp": "110.2.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/RestSharp.Authenticators.Digest.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/RestSharp.Authenticators.Digest.dll": {}
         }
       },
       "runtime.linux-arm.runtime.native.System.IO.Ports/8.0.0": {
@@ -467,7 +493,7 @@
           }
         }
       },
-      "System.Text.Json/7.0.2": {
+      "System.Text.Json/7.0.3": {
         "type": "package",
         "dependencies": {
           "System.Runtime.CompilerServices.Unsafe": "6.0.0",
@@ -497,14 +523,15 @@
           "bin/placeholder/IPaking.Ultility.dll": {}
         }
       },
-      "iParkingv5.ApiManager/1.0.1": {
+      "iParkingv5.ApiManager/1.0.1.2": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
           "IdentityModel": "7.0.0",
+          "Kztek.Tool": "1.0.0.1",
           "Newtonsoft.Json": "13.0.3",
           "RestSharp": "110.2.0",
-          "iParkingv5.Objects": "1.0.0.4"
+          "iParkingv5.Objects": "1.0.0.5"
         },
         "compile": {
           "bin/placeholder/iParkingv5.ApiManager.dll": {}
@@ -517,8 +544,9 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
+          "Kztek.Tool": "1.0.0.1",
           "System.IO.Ports": "8.0.0",
-          "iParkingv5.Objects": "1.0.0.4"
+          "iParkingv5.Objects": "1.0.0.5"
         },
         "compile": {
           "bin/placeholder/iParkingv5.Controller.dll": {}
@@ -545,7 +573,7 @@
           "bin/placeholder/iParkingv5.Lpr.dll": {}
         }
       },
-      "iParkingv5.Objects/1.0.0.4": {
+      "iParkingv5.Objects/1.0.0.5": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
@@ -572,6 +600,22 @@
         },
         "runtime": {
           "bin/placeholder/Kztek.Scale_net6.dll": {}
+        }
+      },
+      "Kztek.Tool/1.0.0.1": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.1",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3",
+          "RestSharp": "110.2.0",
+          "RestSharp.Authenticators.Digest": "1.6.0",
+          "System.Text.Json": "7.0.3"
+        },
+        "compile": {
+          "bin/placeholder/Kztek.Tool.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Kztek.Tool.dll": {}
         }
       }
     }
@@ -600,6 +644,20 @@
         "lib/netstandard2.0/IdentityModel.dll",
         "lib/netstandard2.0/IdentityModel.pdb",
         "lib/netstandard2.0/IdentityModel.xml"
+      ]
+    },
+    "Microsoft.Extensions.Logging.Abstractions/3.1.32": {
+      "sha512": "BShtU4APsEGa72vaj42rHc8CW40xpFp1dousoNeziHwOUFJLNOJP2wxKX2jyfer0nFaLSkIMtgKn+qeJtS3Pcw==",
+      "type": "package",
+      "path": "microsoft.extensions.logging.abstractions/3.1.32",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.xml",
+        "microsoft.extensions.logging.abstractions.3.1.32.nupkg.sha512",
+        "microsoft.extensions.logging.abstractions.nuspec"
       ]
     },
     "Microsoft.NETCore.Platforms/3.1.0": {
@@ -768,6 +826,21 @@
         "restsharp.110.2.0.nupkg.sha512",
         "restsharp.nuspec",
         "restsharp.png"
+      ]
+    },
+    "RestSharp.Authenticators.Digest/1.6.0": {
+      "sha512": "wcoXyVbko3WppcsF5te1DwiklKmG6tup9LP3h4CAIPeOQxPC4Ct63jEy+s826Wj2gwuohAs9BUTNLNofl1yfeg==",
+      "type": "package",
+      "path": "restsharp.authenticators.digest/1.6.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "RELEASES.md",
+        "icon.png",
+        "lib/netstandard2.0/RestSharp.Authenticators.Digest.dll",
+        "restsharp.authenticators.digest.1.6.0.nupkg.sha512",
+        "restsharp.authenticators.digest.nuspec"
       ]
     },
     "runtime.linux-arm.runtime.native.System.IO.Ports/8.0.0": {
@@ -1413,10 +1486,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "System.Text.Json/7.0.2": {
-      "sha512": "/LZf/JrGyilojqwpaywb+sSz8Tew7ij4K/Sk+UW8AKfAK7KRhR6mKpKtTm06cYA7bCpGTWfYksIW+mVsdxPegQ==",
+    "System.Text.Json/7.0.3": {
+      "sha512": "AyjhwXN1zTFeIibHimfJn6eAsZ7rTBib79JQpzg8WAuR/HKDu9JGNHTuu3nbbXQ/bgI+U4z6HtZmCHNXB1QXrQ==",
       "type": "package",
-      "path": "system.text.json/7.0.2",
+      "path": "system.text.json/7.0.3",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1479,7 +1552,7 @@
         "lib/net7.0/System.Text.Json.xml",
         "lib/netstandard2.0/System.Text.Json.dll",
         "lib/netstandard2.0/System.Text.Json.xml",
-        "system.text.json.7.0.2.nupkg.sha512",
+        "system.text.json.7.0.3.nupkg.sha512",
         "system.text.json.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -1489,7 +1562,7 @@
       "path": "../IPaking.Ultility/IPaking.Ultility.csproj",
       "msbuildProject": "../IPaking.Ultility/IPaking.Ultility.csproj"
     },
-    "iParkingv5.ApiManager/1.0.1": {
+    "iParkingv5.ApiManager/1.0.1.2": {
       "type": "project",
       "path": "../iParkingv5.ApiManager/iParkingv5.ApiManager.csproj",
       "msbuildProject": "../iParkingv5.ApiManager/iParkingv5.ApiManager.csproj"
@@ -1504,7 +1577,7 @@
       "path": "../iParkingv5.Lpr/iParkingv5.Lpr.csproj",
       "msbuildProject": "../iParkingv5.Lpr/iParkingv5.Lpr.csproj"
     },
-    "iParkingv5.Objects/1.0.0.4": {
+    "iParkingv5.Objects/1.0.0.5": {
       "type": "project",
       "path": "../iParkingv5.Objects/iParkingv5.Objects.csproj",
       "msbuildProject": "../iParkingv5.Objects/iParkingv5.Objects.csproj"
@@ -1513,15 +1586,19 @@
       "type": "project",
       "path": "../Kztek.Scale/Net6/Kztek.Scale/Kztek.Scale_net6.csproj",
       "msbuildProject": "../Kztek.Scale/Net6/Kztek.Scale/Kztek.Scale_net6.csproj"
+    },
+    "Kztek.Tool/1.0.0.1": {
+      "type": "project",
+      "path": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/Kztek.Tool/Kztek.Tool.csproj",
+      "msbuildProject": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/Kztek.Tool/Kztek.Tool.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0-windows7.0": [
       "IPaking.Ultility >= 1.0.0.2",
       "Kztek.Scale_net6 >= 1.0.0.10",
-      "iParkingv5.ApiManager >= 1.0.1",
-      "iParkingv5.Controller >= 1.0.0.1",
-      "iParkingv5.Objects >= 1.0.0.4"
+      "iParkingv5.ApiManager >= 1.0.1.2",
+      "iParkingv5.Controller >= 1.0.0.1"
     ]
   },
   "packageFolders": {
@@ -1530,7 +1607,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.0.1",
+    "version": "1.0.0.2",
     "restore": {
       "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParking.ConfigurationManager\\iParking.ConfigurationManager.csproj",
       "projectName": "iParking.ConfigurationManager",
@@ -1568,9 +1645,6 @@
             },
             "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Controller\\iParkingv5.Controller.csproj": {
               "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Controller\\iParkingv5.Controller.csproj"
-            },
-            "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj": {
-              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj"
             },
             "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Scale\\Net6\\Kztek.Scale\\Kztek.Scale_net6.csproj": {
               "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Scale\\Net6\\Kztek.Scale\\Kztek.Scale_net6.csproj"
@@ -1611,16 +1685,8 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.302\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParking.ConfigurationManager\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  }
 }

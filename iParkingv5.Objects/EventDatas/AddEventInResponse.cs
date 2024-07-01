@@ -41,6 +41,7 @@ namespace iParkingv5.Objects.EventDatas
                 }
             }
         }
+        public long charge { get; set; }
 
         public bool IsSuccess { get; set; } = true;
         public string message { get; set; } = string.Empty;

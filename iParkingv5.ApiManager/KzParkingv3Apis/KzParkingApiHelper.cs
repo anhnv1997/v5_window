@@ -18,6 +18,7 @@ using iParkingv5.ApiManager.KzParkingv5Apis;
 using System.Data;
 using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5ApiHelper;
 using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper.TransactionType;
+using Newtonsoft.Json.Linq;
 
 namespace iParkingv6.ApiManager.KzParkingv3Apis
 {
@@ -763,7 +764,7 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         #endregion End SUMARY
 
         #region -- EVENT IN
-        public async Task<bool> UpdateEventInPlateAsync(string eventId, string plate)
+        public async Task<bool> UpdateEventInPlateAsync(string eventId, string plate, string oldPlate)
         {
             StandardlizeServerName();
             string apiUrl = server + KzApiUrlManagement.EmObjectType.EventIn.UpdateRouteById(eventId);
@@ -973,7 +974,12 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         #endregion
 
         #region -- EVENT OUT
-        public async Task<bool> UpdateEventOutPlate(string eventId, string plate)
+        public async Task<string> GetLastEventOutIdentityGroupIdByPlateNumber(string plateNumber)
+        {
+            return "";
+        }
+
+        public async Task<bool> UpdateEventOutPlate(string eventId, string plate, string oldPlate)
         {
             StandardlizeServerName();
             string apiUrl = server + KzApiUrlManagement.EmObjectType.EventOut.UpdateRouteById(eventId);
@@ -1203,6 +1209,7 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         {
             //Thông tin sự kiện ra
             public string id { get; set; }
+            public string eventinid { get; set; }
             public string identityId { get; set; }
             public string[] fileKeys { get; set; }
             public string lastPaymentUtc { get; set; }
@@ -1316,7 +1323,7 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
                     case (int)EmTransactionType.Overweight:
                         return "Sang tải";
                     default:
-                        return "Khac";
+                        return "khác";
                 }
             }
         }
@@ -1738,17 +1745,23 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         #endregion
 
         #region --INVOICE
-        public async Task<InvoiceDto> CreateEinvoice(long price, string plateNumber, DateTime datetimeIn, DateTime datetimeOut, string eventOutId)
+        public async Task<InvoiceResponse> CreateEinvoice(long price, string plateNumber, DateTime datetimeIn, DateTime datetimeOut, string eventOutId, bool isSendNow = true, string cardGroupName = "")
         {
             return null;
         }
-        public async Task<InvoiceData> GetInvoiceData(string orderId, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL)
+        public async Task<FileInfor> GetInvoiceData(string orderId, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL)
         {
             return null;
         }
-        public async Task<List<InvoiceDataSearch>> GetMultipleInvoiceData(List<string> orderIds, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL)
+        public async Task<List<InvoiceResponse>> GetMultipleInvoiceData(DateTime startTime, DateTime endTime, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL)
         {
             return null;
+        }
+        public async Task<List<InvoiceResponse>> getPendingEInvoice(DateTime startTime, DateTime endTime) { return new List<InvoiceResponse>(); }
+        public async Task<bool> sendPendingEInvoice(string orderId)
+        {
+            StandardlizeServerName();
+            return true;
         }
         #endregion
 
@@ -1779,85 +1792,11 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         {
             throw new NotImplementedException();
         }
-        #endregion END PRIVATE FUNCTION
 
-        public class InvoiceData
+        public Task<SystemConfig> GetSystemConfigAsync()
         {
-            public string id { get; set; }
-            public string orderId { get; set; }
-            public object requestId { get; set; }
-            public int serviceProvider { get; set; }
-            public Creator creator { get; set; }
-            public string signedFileData { get; set; }
-            public Company company { get; set; }
-            public Paymentitem[] paymentItems { get; set; }
-            public DateTime createdAt { get; set; }
-            public object modifiedAt { get; set; }
-            public Lookupinformation lookupInformation { get; set; }
-            public object note { get; set; }
-            public Taxdetails taxDetails { get; set; }
-            public Invoiceconfiguration invoiceConfiguration { get; set; }
+            throw new NotImplementedException();
         }
-        public class InvoiceDataSearch
-        {
-            public string orderId { get; set; }
-            public Lookupinformation lookupInformation { get; set; }
-            public Invoiceconfiguration invoiceConfiguration { get; set; }
-        }
-
-        public class Creator
-        {
-            public string id { get; set; }
-            public string name { get; set; }
-            public object code { get; set; }
-            public object phone { get; set; }
-            public object email { get; set; }
-            public object description { get; set; }
-        }
-
-        public class Company
-        {
-            public string name { get; set; }
-            public object code { get; set; }
-            public string taxCode { get; set; }
-            public object description { get; set; }
-            public object phoneNumber { get; set; }
-            public object email { get; set; }
-        }
-
-        public class Lookupinformation
-        {
-            public object mappingId { get; set; }
-            public string invoiceNumber { get; set; }
-            public string reservationCode { get; set; }
-        }
-
-        public class Taxdetails
-        {
-            public int totalWithTax { get; set; }
-            public int taxAmount { get; set; }
-            public int taxRate { get; set; }
-        }
-
-        public class Invoiceconfiguration
-        {
-            public string templateCode { get; set; }
-            public string invoiceTypeCode { get; set; }
-            public string symbolCode { get; set; }
-        }
-
-        public class Paymentitem
-        {
-            public string name { get; set; }
-            public string code { get; set; }
-            public object description { get; set; }
-            public string unitName { get; set; }
-            public object category { get; set; }
-            public int quantity { get; set; }
-            public int unitPrice { get; set; }
-            public int taxRate { get; set; }
-            public int total { get; set; }
-        }
-
+        #endregion END PRIVATE FUNCTION       
     }
 }

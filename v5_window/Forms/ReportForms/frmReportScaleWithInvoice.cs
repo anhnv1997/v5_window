@@ -8,6 +8,7 @@ using iParkingv5.Objects.ScaleObjects;
 using iParkingv5_window;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv5_window.Helpers;
+using Kztek.Tools;
 using static iParkingv5.Objects.Enums.PrintHelpers;
 
 namespace v5_IScale.Forms.ReportForms
@@ -53,8 +54,15 @@ namespace v5_IScale.Forms.ReportForms
         #region Controls In Form
         private async void btnSearch_Click(object sender, EventArgs e)
         {
-            var data = await GetReportData();
-            DisplayInGridview(data);
+            try
+            {
+                var data = await GetReportData();
+                DisplayInGridview(data);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
+            }
         }
         private async void btnPrintScaleTicket_Click(object sender, EventArgs e)
         {
@@ -143,17 +151,17 @@ namespace v5_IScale.Forms.ReportForms
                 return;
             }
             var invoiceData = await AppData.ApiServer.GetInvoiceData(orderId);
-            if (string.IsNullOrEmpty(invoiceData.id))
+            if (string.IsNullOrEmpty(invoiceData.fileName))
             {
                 MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            string pdfContent = invoiceData.signedFileData;
+            string pdfContent = invoiceData.fileToBytes;
             PrintHelper.PrintPdf(pdfContent);
         }
         private void btnExcel_Click(object sender, EventArgs e)
         {
-            ExcelTools.CreatReportFile(dgvData, "Báo cáo sự kiện cân");
+            ExcelTools.CreatReportFile(dgvData, "Báo cáo sự kiện cân", new List<string>());
         }
         private async void dgvData_CellClick(object sender, DataGridViewCellEventArgs e)
         {

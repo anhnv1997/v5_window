@@ -50,7 +50,7 @@ namespace IParkingv5.RegisterCard
             {
                 Authority = KzParkingv5ApiHelper.server.Replace(":5000", ":3000"),//"http://192.168.21.13:3000",// 
                 ClientId = clientId,
-                Scope = "openid role-data user-data parking-data offline_access device-data electronic-invoice-data",
+                Scope = "openid role-data user-data parking-data offline_access device-data invoice-data project-data payment-data tenant-data warehouse-data",
                 RedirectUri = "http://localhost/winforms.client",
                 Browser = new WinFormsWebView(webView21, this),
                 Policy = new Policy
@@ -70,7 +70,7 @@ namespace IParkingv5.RegisterCard
         OidcClientOptions options = null;
         private void FrmLogin_FormClosed(object? sender, FormClosedEventArgs e)
         {
-            Application.Restart();
+            //Application.Restart();
         }
 
         LoginResult loginResult;

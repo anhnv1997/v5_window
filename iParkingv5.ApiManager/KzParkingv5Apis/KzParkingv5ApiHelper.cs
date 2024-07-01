@@ -7,17 +7,22 @@ using iParkingv6.ApiManager;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
 using Kztek.Tool;
+using Kztek.Tools;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing.Printing;
 using System.Threading;
 using System.Threading.Tasks;
 using static iParkingv5.ApiManager.KzParkingv5Apis.Filter;
+using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5ApiHelper;
 using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper;
 using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper.TransactionType;
+using static OpenCvSharp.ML.DTrees;
 
 namespace iParkingv5.ApiManager.KzParkingv5Apis
 {
@@ -183,11 +188,19 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 { "Authorization","Bearer " + token  }
             };
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null,
-                                                                   timeOut, RestSharp.Method.Get);
+                                                                   timeOut, Method.Get);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                var data = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(response.Item1);
-                return Tuple.Create<T, string>(data, response.Item2);
+                try
+                {
+
+                    var data = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(response.Item1);
+                    return Tuple.Create<T, string>(data, response.Item2);
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
             }
             return Tuple.Create<T, string>(null, "Empty Data");
         }
@@ -218,6 +231,71 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         #endregion End ADD
 
         #endregion End Base
+
+        #region System Config
+
+        public class CompanyInfo
+        {
+            public string id { get; set; }
+            public string companyName { get; set; }
+            public string companyAddress { get; set; }
+            public string companyTelephone { get; set; }
+            public string companyTax { get; set; }
+            public DateTime createdUtc { get; set; }
+            public DateTime updatedUtc { get; set; }
+        }
+
+        public async Task<SystemConfig> GetSystemConfigAsync()
+        {
+            StandardlizeServerName();
+            string apiUrl = server + "project/BF195768-4C7F-4F59-A50F-F41AD693BBC0";
+
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null,
+                                                                  timeOut, Method.Get);
+
+            apiUrl = server + "tenant/" + "00f43ef8-f67b-446a-870a-c219b59c0c4e".ToUpper();
+            var response2 = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null,
+                                                               timeOut, Method.Get);
+            if (!string.IsNullOrEmpty(response2.Item1))
+            {
+                var companyInfo = Newtonsoft.Json.JsonConvert.DeserializeObject<CompanyInfo>(response2.Item1);
+                if (companyInfo != null)
+                {
+                    StaticPool.TaxCode = companyInfo.companyTax;
+                    StaticPool.CompanyName = companyInfo.companyName;
+                    StaticPool.CompanyAddress = companyInfo.companyAddress;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                var data = Newtonsoft.Json.JsonConvert.DeserializeObject<SystemConfig>(response.Item1);
+                if (data != null)
+                {
+                    StaticPool.templateCode = data.InvoiceTemplateCode;
+                    StaticPool.invoiceTypeCode = data.InvoiceTypeCode;
+                    StaticPool.symbolCode = data.InvoiceSymbolCode;
+                    StaticPool.TaxRate = data.taxRate;
+                    LogHelper.Log(LogHelper.EmLogType.INFOR,
+                        LogHelper.EmObjectLogType.System,
+                        noi_dung_hanh_dong: $@"Tải hóa đơn điện tử {StaticPool.CompanyName} - {StaticPool.CompanyAddress} - 
+                                                                   {StaticPool.TaxCode} - {StaticPool.templateCode} - 
+                                                                   {StaticPool.symbolCode} - {StaticPool.TaxRate}");
+                }
+                return data;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+        #endregion
 
         #region USER
         public async Task GetUserInfor()
@@ -275,7 +353,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return "";
         }
-        
+
         public async Task<Tuple<List<User>, string>> GetAllUsers()
         {
             return await GetAllObjectAsync<User>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.User);
@@ -529,7 +607,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         #endregion End Customer Group
 
         #region Event In
-        public async Task<bool> UpdateEventInPlateAsync(string eventId, string newPlate)
+        public async Task<bool> UpdateEventInPlateAsync(string eventId, string newPlate, string oldPlate)
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/" + eventId;
@@ -548,6 +626,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, commitData, headers, null, timeOut, RestSharp.Method.Patch);
             if (!string.IsNullOrEmpty(response.Item1))
             {
+                LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, specailName: "LPR_EDIT_IN", mo_ta_them:"EventId: " + eventId +
+                                                                                                                                 "\r\nOld Plate: " + oldPlate + 
+                                                                                                                                 " => New Plate: " + newPlate);
                 return true;
             }
             return false;
@@ -577,13 +658,13 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             var data = new
             {
                 laneId = _laneId,
-                identity = new
-                {
-                    id = identity.Id,
-                    code = identity.Code,
-                    identityGroupId = identity.IdentityGroupId,
-                    type = 0,
-                },
+                //identity = new
+                //{
+                //id = identity.Id,
+                identityCode = identity.Code,
+                //identityGroupId = identity.IdentityGroupId,
+                identityType = 0,
+                //},
                 plateNumber = _plateNumber,
                 force = isForce,
                 fileKeys = new List<string>(),
@@ -609,99 +690,53 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return null;
         }
-        public async Task<AddEventInResponse> PostCheckInByPlateAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null, string _note = "")
+        public async Task<AddEventInResponse> PostCheckInByPlateAsync(string _laneId, string _plateNumber, Identity? identity,
+                                                                      List<string> imageKeys, bool isForce = false,
+                                                                      RegisteredVehicle? registeredVehicle = null,
+                                                                      string _note = "")
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/vehicle";
+
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+                {
+                { "Authorization","Bearer " + token  }
+                };
+
+            var data = new
+            {
+                laneId = _laneId,
+                plateNumber = _plateNumber,
+                //vehicle = new
+                //{
+                //    id = registeredVehicle.Id,
+                //    _plateNumber = registeredVehicle.PlateNumber,
+                //    customerId = registeredVehicle.CustomerId,
+                //},
+                force = isForce,
+                fileKeys = new List<string>(),
+                note = _note
+            };
+
+            foreach (var item in imageKeys)
+            {
+                data.fileKeys.Add(item);
+            }
+            string a = JsonConvert.SerializeObject(data);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                try
+                {
+                    AddEventInResponse addEventInResponse = NewtonSoftHelper<AddEventInResponse>.GetBaseResponse(response.Item1);
+                    return addEventInResponse;
+                }
+                catch (Exception)
+                {
+                }
+            }
             return null;
-            //StandardlizeServerName();
-            //string apiUrl = string.Empty;
-
-            //if (identity == null)
-            //{
-            //    apiUrl = server + KzApiUrlManagement.EmObjectType.EventIn.CreateRoute() + "/vehicle";
-            //    //Gửi API
-            //    Dictionary<string, string> headers = new Dictionary<string, string>()
-            //    {
-            //    { "Authorization","Bearer " + token  }
-            //    };
-            //    var _vehicle = new
-            //    {
-            //        id = registeredVehicle.Id,
-            //        plateNumber = _plateNumber,
-            //        customerId = registeredVehicle.CustomerId,
-            //    };
-            //    var data = new
-            //    {
-            //        laneId = _laneId,
-            //        vehicle = _vehicle,
-            //        forceEntrance = isForce,
-            //        fileKeys = new List<string>()
-            //    };
-
-            //    foreach (var item in imageKeys)
-            //    {
-            //        data.fileKeys.Add(item);
-            //    }
-            //    string a = Newtonsoft.Json.JsonConvert.SerializeObject(data);
-            //    var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
-            //    if (!string.IsNullOrEmpty(response.Item1))
-            //    {
-            //        try
-            //        {
-            //            KzBaseResponseData<AddEventInResponse> addEventInResponse = NewtonSoftHelper<KzBaseResponseData<AddEventInResponse>>.GetBaseResponse(response.Item1);
-            //            return addEventInResponse;
-            //        }
-            //        catch (Exception)
-            //        {
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    apiUrl = server + KzApiUrlManagement.EmObjectType.EventIn.CreateRoute() + "/vehicle";
-            //    //Gửi API
-            //    Dictionary<string, string> headers = new Dictionary<string, string>()
-            //    {
-            //    { "Authorization","Bearer " + token  }
-            //    };
-
-            //    var _identityCheckIn = new
-            //    {
-            //        id = identity.Id,
-            //        code = identity.Code,
-            //        identityGroupId = identity.IdentityGroupId,
-            //    };
-
-            //    var data = new
-            //    {
-            //        laneId = _laneId,
-            //        identity = _identityCheckIn,
-            //        plateNumber = _plateNumber,
-            //        //identityCode = identity == null ? null : identity?.Code,
-            //        //identityType = identity == null ? null : identity?.Type,
-            //        forceEntrance = isForce,
-            //        fileKeys = new List<string>()
-            //    };
-
-            //    foreach (var item in imageKeys)
-            //    {
-            //        data.fileKeys.Add(item);
-            //    }
-            //    string a = Newtonsoft.Json.JsonConvert.SerializeObject(data);
-            //    var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
-            //    if (!string.IsNullOrEmpty(response.Item1))
-            //    {
-            //        try
-            //        {
-            //            KzBaseResponseData<AddEventInResponse> addEventInResponse = NewtonSoftHelper<KzBaseResponseData<AddEventInResponse>>.GetBaseResponse(response.Item1);
-            //            return addEventInResponse;
-            //        }
-            //        catch (Exception)
-            //        {
-            //        }
-            //    }
-            //}
         }
         public async Task<DataTable> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
                                     string identityGroupId, string vehicleTypeId, string laneId, string user,
@@ -732,6 +767,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             {
                 cmd += $@"AND (identityname like '%{keyword}%' OR platenumber like '%{keyword}%' OR identitycode like '%{keyword}%')";
             }
+            cmd += " ORDER BY createdutc desc";
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
@@ -797,29 +833,83 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         #endregion End Event In
 
         #region Event Out
-        public async Task<bool> UpdateEventOutPlate(string eventId, string newPlate)
+        public async Task<string> GetLastEventOutIdentityGroupIdByPlateNumber(string plateNumber)
         {
             StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/" + eventId;
-            //Gửi API
+            string apiUrl = server + KzParkingv5ApiUrlManagement.GetBySqlCmd;
+            string cmd = string.Empty;
+            cmd += $"SELECT * FROM index_event_out WHERE platenumber = '{plateNumber}' ORDER BY createdutc desc";
+
             Dictionary<string, string> headers = new Dictionary<string, string>()
-             {
-                 { "Authorization","Bearer " + token  }
-             };
-            var commitData = new List<CommitData>();
-            commitData.Add(new CommitData()
             {
-                op = "replace",
-                path = "plateNumber",
-                value = newPlate
-            });
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, commitData, headers, null, timeOut, RestSharp.Method.Patch);
+                { "Authorization","Bearer " + token  }
+            };
+            var data = new
+            {
+                query = cmd,
+                fetch_size = 1,
+            };
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                return true;
+                // Deserialize JSON to JObject
+                JObject jsonObject = JObject.Parse(response.Item1);
+
+                // Extract columns and rows from JSON
+                JArray columns = (JArray)jsonObject["columns"];
+                JArray rows = (JArray)jsonObject["rows"];
+
+                // Create a new DataTable
+                DataTable dataTable = new DataTable();
+                if (columns != null)
+                {
+                    foreach (JObject column in columns)
+                    {
+                        string columnName = (string)column["name"];
+                        string columnType = (string)column["type"];
+
+                        Type type;
+
+                        switch (columnType)
+                        {
+                            case "text":
+                                type = typeof(string);
+                                break;
+                            case "long":
+                                type = typeof(long);
+                                break;
+                            case "datetime":
+                                type = typeof(DateTime);
+                                break;
+                            default:
+                                type = typeof(string);
+                                break;
+                        }
+
+                        dataTable.Columns.Add(columnName, type);
+                    }
+                    if (rows != null)
+                    {
+                        foreach (JArray row in rows)
+                        {
+                            object[] rowData = row.ToObject<object[]>();
+                            dataTable.Rows.Add(rowData);
+                        }
+
+                    }
+                }
+                if (dataTable.Rows.Count > 0)
+                {
+                    return dataTable.Rows[0]["identitygroupid"].ToString();
+                }
+                else
+                {
+                    return string.Empty;
+                }
             }
-            return false;
+            return null;
         }
+
         public async Task<DataTable> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000)
         {
             StandardlizeServerName();
@@ -912,6 +1002,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return null;
         }
+
         public async Task<AddEventOutResponse> PostCheckOutAsync(string _laneId, string _plateNumber, Identity? identitiy, List<string> imageKeys, bool isForce)
         {
             StandardlizeServerName();
@@ -939,13 +1030,13 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             var data = new
             {
                 laneId = _laneId,
-                identity = new
-                {
-                    id = identity.Id,
-                    code = identity.Code,
-                    identityGroupId = identity.IdentityGroupId,
-                    type = 0,
-                },
+                //identity = new
+                //{
+                //id = identity.Id,
+                identityCode = identity.Code,
+                //identityGroupId = identity.IdentityGroupId,
+                identityType = 0,
+                //},
                 plateNumber = _plateNumber,
                 force = isForce,
                 fileKeys = new List<string>()
@@ -977,11 +1068,76 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         public async Task<AddEventOutResponse> PostCheckOutByPlateAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null)
         {
             StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/vehicle";
+            string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/vehicle";
 
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+                {
+                { "Authorization","Bearer " + token  }
+                };
+
+            var data = new
+            {
+                laneId = _laneId,
+                plateNumber = _plateNumber,
+                //vehicle = new
+                //{
+                //    id = registeredVehicle.Id,
+                //    plateNumber = registeredVehicle.PlateNumber,
+                //    customerId = registeredVehicle.CustomerId,
+                //},
+                force = isForce,
+                fileKeys = new List<string>()
+            };
+
+            foreach (var item in imageKeys)
+            {
+                data.fileKeys.Add(item);
+            }
+            string a = JsonConvert.SerializeObject(data);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                try
+                {
+                    AddEventOutResponse addEventOutResponse = NewtonSoftHelper<AddEventOutResponse>.GetBaseResponse(response.Item1);
+                    if (!addEventOutResponse.IsSuccess)
+                    {
+                        addEventOutResponse.eventIn = addEventOutResponse.payload.ContainsKey("EventIn") ? addEventOutResponse.payload["EventIn"] : null;
+                    }
+                    return addEventOutResponse;
+                }
+                catch (Exception)
+                {
+                }
+            }
             return null;
         }
 
+        public async Task<bool> UpdateEventOutPlate(string eventId, string newPlate, string oldPlate)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/" + eventId;
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+             {
+                 { "Authorization","Bearer " + token  }
+             };
+            var commitData = new List<CommitData>();
+            commitData.Add(new CommitData()
+            {
+                op = "replace",
+                path = "plateNumber",
+                value = newPlate
+            });
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, commitData, headers, null, timeOut, RestSharp.Method.Patch);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, specailName: "LPR_EDIT_OUT", mo_ta_them: "EventId: " + eventId +
+                                                                                                                                    "\r\nOld Plate: " + oldPlate +
+                                                                                                                                    " => New Plate: " + newPlate); return true;
+            }
+            return false;
+        }
         public async Task<bool> CommitOutAsync(AddEventOutResponse eventOut)
         {
             StandardlizeServerName();
@@ -1029,19 +1185,13 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             return false;
         }
 
+
         public class PaymentTransaction
         {
-            public string id { get; set; }
-            public string eventInId { get; set; }
-            public string eventOutId { get; set; }
-            public int method { get; set; }
-            public int purpose { get; set; }
-            public long charge { get; set; }
-            public long discount { get; set; }
-            public long paid { get; set; }
-            public string note { get; set; }
-            public DateTime createdUtc { get; set; }
-            public DateTime updatedUtc { get; set; }
+            public string targetId { get; set; }
+            public TargetType targetType { get; set; } = TargetType.EventOut;
+            public long amount { get; set; }
+            public List<PaymentDetail> details { get; set; }
         }
         public enum PaymentTransactionMethod
         {
@@ -1062,14 +1212,16 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             };
             var data = new PaymentTransaction
             {
-                eventInId = eventOut.eventIn.Id,
-                eventOutId = eventOut.Id,
-                method = (int)PaymentTransactionMethod.CashAtBooth,
-                purpose = (int)PaymentTransactionPurpose.ParkingCharge,
-                charge = eventOut.charge,
-                discount = eventOut.discount,
-                paid = eventOut.charge,
-                note = "",
+                targetId = eventOut.Id,
+                targetType = TargetType.EventOut,
+                amount = eventOut.charge.Amount,
+
+                details = new List<PaymentDetail>()
+                {
+                    new PaymentDetail(){purpose = Purpose.ParkingDay, quantity = eventOut.charge.Day, amount = eventOut.charge.DayAmount, price = eventOut.charge.DayPrice },
+                    new PaymentDetail(){purpose = Purpose.ParkingNight, quantity = eventOut.charge.Night, amount = eventOut.charge.NightAmount, price = eventOut.charge.NightPrice },
+                    new PaymentDetail(){purpose = Purpose.ParkingNormalCharge, quantity = 1, amount =eventOut.charge.FullDayAmount, price =eventOut.charge.FullDayPrice },
+                },
             };
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
@@ -1209,84 +1361,227 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         #endregion End Alarm
 
         #region EInvoice
-        public class InvoiceDto
+
+        //public class InvoiceDto
+        //{
+        //    public string id { get; set; }
+        //    public string orderId { get; set; }
+        //    public object requestId { get; set; }
+        //    public int serviceProvider { get; set; }
+        //    public Creator creator { get; set; }
+        //    public string signedFileData { get; set; }
+        //    public Company company { get; set; }
+        //    public Paymentitem[] paymentItems { get; set; }
+        //    public DateTime createdAt { get; set; }
+        //    public object modifiedAt { get; set; }
+        //    public Lookupinformation lookupInformation { get; set; }
+        //    public object note { get; set; }
+        //    public Taxdetails taxDetails { get; set; }
+        //    public Invoiceconfiguration invoiceConfiguration { get; set; }
+        //}
+
+        //public class Creator
+        //{
+        //    public string id { get; set; }
+        //    public string name { get; set; }
+        //    public object code { get; set; }
+        //    public object phone { get; set; }
+        //    public object email { get; set; }
+        //    public object description { get; set; }
+        //}
+
+        //public class Company
+        //{
+        //    public string name { get; set; }
+        //    public object code { get; set; }
+        //    public string taxCode { get; set; }
+        //    public object description { get; set; }
+        //    public object phoneNumber { get; set; }
+        //    public object email { get; set; }
+        //}
+
+        //public class Lookupinformation
+        //{
+        //    public object mappingId { get; set; }
+        //    public string invoiceNumber { get; set; }
+        //    public string reservationCode { get; set; }
+        //}
+
+        //public class Taxdetails
+        //{
+        //    public int totalWithTax { get; set; }
+        //    public int taxAmount { get; set; }
+        //    public int taxRate { get; set; }
+        //}
+
+        //public class Invoiceconfiguration
+        //{
+        //    public string templateCode { get; set; }
+        //    public string invoiceTypeCode { get; set; }
+        //    public string symbolCode { get; set; }
+        //}
+
+        //public class Paymentitem
+        //{
+        //    public string name { get; set; }
+        //    public string code { get; set; }
+        //    public object description { get; set; }
+        //    public string unitName { get; set; }
+        //    public object category { get; set; }
+        //    public int quantity { get; set; }
+        //    public int unitPrice { get; set; }
+        //    public int taxRate { get; set; }
+        //    public int total { get; set; }
+        //}
+
+
+
+        public enum Provider
+        {
+            ThaiSon,
+            Misa,
+            Viettel
+        }
+        public enum TargetType
+        {
+            EventIn,
+            EventOut,
+            Vehicle
+        }
+
+        //public async Task<InvoiceDto> CreateEinvoice(long price, string plateNumber, DateTime datetimeIn, DateTime datetimeOut, string eventOutId, bool isSendNow = true, string cardGroupName = "")
+        //{
+        //    //string url = $"http://14.160.26.45:26868/einvoice?provider=VIETTEL";
+        //    string apiUrl = "";
+        //    StandardlizeServerName();
+        //    if (isSendNow)
+        //    {
+        //        apiUrl = server + "e-invoice?provider=VIETTEL";
+        //    }
+        //    else
+        //    {
+        //        apiUrl = server + "e-invoice-pending?provider=VIETTEL";
+        //    }
+        //    //apiUrl = apiUrl.Replace(":5000", ":26868");
+        //    //Gửi API
+        //    Dictionary<string, string> headers = new Dictionary<string, string>()
+        //    {
+        //        { "Authorization","Bearer " + token  }
+        //    };
+        //    TimeSpan parkingTime = datetimeOut - datetimeIn;
+        //    var data = new
+        //    {
+        //        Id = eventOutId,
+        //        Company = new
+        //        {
+        //            Name = StaticPool.CompanyName,
+        //            taxCode = StaticPool.TaxCode,
+        //        },
+        //        Creator = new
+        //        {
+        //            Id = StaticPool.userId,
+        //            Name = StaticPool.user_name,
+        //        },
+        //        paymentItems = new List<object>()
+        //        {
+        //            new
+        //            {
+        //                name = string.IsNullOrEmpty( cardGroupName) ? "Hàng hóa" : cardGroupName,
+        //                code = "HH1",
+        //                unitName = "Cái",
+        //                quantity = 1,
+        //                unitPrice = price,
+        //                taxRate = StaticPool.TaxRate,
+        //            }
+        //        },
+        //        additionalData = new List<object>()
+        //        {
+        //            new
+        //            {
+        //                tag =  "licensePlate",
+        //                name = "Biển kiểm soát",
+        //                value =  plateNumber,
+        //                type=  "text"
+        //            },
+        //            new
+        //            {
+        //                tag =  "checkIn",
+        //                name = "Giờ vào",
+        //                value =  datetimeIn.ToString("dd/MM/yyyy HH:mm:ss"),
+        //                type=  "text"
+        //            },
+        //            new
+        //            {
+        //                tag =  "checkOut",
+        //                name = "Giờ ra",
+        //                value =  datetimeOut.ToString("dd/MM/yyyy HH:mm:ss"),
+        //                type=  "text"
+        //            },
+        //            new
+        //            {
+        //                tag =  "parkingTime",
+        //                name = "Thời gian lưu bãi",
+        //                value = (int)parkingTime.TotalHours + " giờ " + ((int)parkingTime.TotalMinutes - 60 * (int)parkingTime.TotalHours) + " phút",
+        //                type=  "text"
+        //            },
+        //        },
+        //        invoiceConfiguration = new
+        //        {
+        //            templateCode = StaticPool.templateCode,
+        //            invoiceTypeCode = StaticPool.invoiceTypeCode,
+        //            symbolCode = StaticPool.symbolCode,
+        //        },
+        //        taxRate = StaticPool.TaxRate,
+        //        createdAt = DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:sss.fffZ"),
+        //        MappingId = eventOutId,
+        //    };
+        //    var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, Method.Post);
+        //    if (!string.IsNullOrEmpty(response.Item1))
+        //    {
+        //        try
+        //        {
+        //            return Newtonsoft.Json.JsonConvert.DeserializeObject<InvoiceDto>(response.Item1);
+        //        }
+        //        catch (Exception)
+        //        {
+        //            return null;
+
+        //        }
+        //    }
+        //    return null;
+        //}
+
+
+        public class InvoiceResponse
         {
             public string id { get; set; }
-            public string orderId { get; set; }
-            public object requestId { get; set; }
-            public int serviceProvider { get; set; }
-            public Creator creator { get; set; }
-            public string signedFileData { get; set; }
-            public Company company { get; set; }
-            public Paymentitem[] paymentItems { get; set; }
-            public DateTime createdAt { get; set; }
-            public object modifiedAt { get; set; }
-            public Lookupinformation lookupInformation { get; set; }
-            public object note { get; set; }
-            public Taxdetails taxDetails { get; set; }
-            public Invoiceconfiguration invoiceConfiguration { get; set; }
-        }
-
-        public class Creator
-        {
-            public string id { get; set; }
-            public string name { get; set; }
-            public object code { get; set; }
-            public object phone { get; set; }
-            public object email { get; set; }
-            public object description { get; set; }
-        }
-
-        public class Company
-        {
-            public string name { get; set; }
-            public object code { get; set; }
-            public string taxCode { get; set; }
-            public object description { get; set; }
-            public object phoneNumber { get; set; }
-            public object email { get; set; }
-        }
-
-        public class Lookupinformation
-        {
-            public object mappingId { get; set; }
-            public string invoiceNumber { get; set; }
-            public string reservationCode { get; set; }
-        }
-
-        public class Taxdetails
-        {
-            public int totalWithTax { get; set; }
-            public int taxAmount { get; set; }
-            public int taxRate { get; set; }
-        }
-
-        public class Invoiceconfiguration
-        {
-            public string templateCode { get; set; }
-            public string invoiceTypeCode { get; set; }
-            public string symbolCode { get; set; }
-        }
-
-        public class Paymentitem
-        {
-            public string name { get; set; }
+            public string targetId { get; set; }
+            public int targetType { get; set; }
             public string code { get; set; }
-            public object description { get; set; }
-            public string unitName { get; set; }
-            public object category { get; set; }
-            public int quantity { get; set; }
-            public int unitPrice { get; set; }
-            public int taxRate { get; set; }
-            public int total { get; set; }
+            public string reservationCode { get; set; }
+            public int provider { get; set; }
+            public float amount { get; set; }
+            public float taxRate { get; set; }
+            public float amountAfterTax { get; set; }
+            public bool success { get; set; }
+            public bool send { get; set; }
+            public int retryAttempt { get; set; }
+            public string createdBy { get; set; }
+            public string createdUtc { get; set; }
         }
 
-        public async Task<InvoiceDto> CreateEinvoice(long price, string plateNumber, DateTime datetimeIn, DateTime datetimeOut, string eventOutId)
+        public class FileInfor
+        {
+            public string fileName { get; set; }
+            public string fileToBytes { get; set; }
+        }
+        public async Task<InvoiceResponse> CreateEinvoice(long _price, string plateNumber, DateTime datetimeIn, DateTime datetimeOut, string eventOutId, bool isSendNow = true, string cardGroupName = "")
         {
             //string url = $"http://14.160.26.45:26868/einvoice?provider=VIETTEL";
+            string apiUrl = "";
             StandardlizeServerName();
-            string apiUrl = server + "e-invoice?provider=VIETTEL";
-            //apiUrl = apiUrl.Replace(":5000", ":26868");
+            apiUrl = server + "invoice";
+
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
@@ -1295,30 +1590,21 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             TimeSpan parkingTime = datetimeOut - datetimeIn;
             var data = new
             {
-                Id = eventOutId,
-                Company = new
-                {
-                    Name = StaticPool.CompanyName,
-                    taxCode = StaticPool.TaxCode,
-                },
-                Creator = new
-                {
-                    Id = StaticPool.userId,
-                    Name = StaticPool.user_name,
-                },
-                paymentItems = new List<object>()
+                targetType = (int)TargetType.EventOut,
+                targetId = eventOutId,
+                send = isSendNow ? 1 : 0,
+                provider = (int)Provider.Viettel,
+                items = new List<object>()
                 {
                     new
                     {
-                        name = "Hàng hóa 1",
+                        name = string.IsNullOrEmpty( cardGroupName) ? "Hàng hóa" : cardGroupName,
                         code = "HH1",
-                        unitName = "Cái",
                         quantity = 1,
-                        unitPrice = price,
-                        taxRate = StaticPool.TaxRate,
+                        price = _price,
                     }
                 },
-                additionalData = new List<object>()
+                extraInformation = new List<object>()
                 {
                     new
                     {
@@ -1349,75 +1635,118 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                         type=  "text"
                     },
                 },
-                invoiceConfiguration = new
-                {
-                    templateCode = StaticPool.templateCode,
-                    invoiceTypeCode = StaticPool.invoiceTypeCode,
-                    symbolCode = StaticPool.symbolCode,
-                },
-                taxRate = StaticPool.TaxRate,
-                createdAt = DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:sss.fffZ"),
-                MappingId = eventOutId,
             };
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
                 try
                 {
-                    return Newtonsoft.Json.JsonConvert.DeserializeObject<InvoiceDto>(response.Item1);
+                    return JsonConvert.DeserializeObject<InvoiceResponse>(response.Item1);
                 }
                 catch (Exception)
                 {
                     return null;
+
                 }
             }
             return null;
         }
-        public async Task<InvoiceData> GetInvoiceData(string orderId, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL)
+
+
+        public async Task<FileInfor> GetInvoiceData(string orderId, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL)
         {
             // string url = $"http://14.160.26.45:26868/einvoice?provider=65";
             StandardlizeServerName();
-            string apiUrl = server + "e-invoice/search?provider=65";
-            //apiUrl = apiUrl.Replace(":5000", ":26868");
+            string apiUrl = server + $"invoice/{orderId}/representation";
 
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
                 { "Authorization","Bearer " + token  }
             };
-            var data = new
+            Dictionary<string, string> parameters = new Dictionary<string, string>()
             {
-                InvoiceNumber = "",
-                OrderId = orderId,
-                GetFile = true,
-                FileType = "Pdf"
+                { "provider","2"  },
+                { "filetType","1"  }
             };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, Method.Post);
+
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, Method.Get);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                return NewtonSoftHelper<InvoiceData>.GetBaseResponse(response.Item1);
+                return NewtonSoftHelper<FileInfor>.GetBaseResponse(response.Item1);
             }
             return null;
         }
-        public async Task<List<InvoiceDataSearch>> GetMultipleInvoiceData(List<string> orderIds, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL)
+
+        public async Task<List<InvoiceResponse>> GetMultipleInvoiceData(DateTime startTime, DateTime endTime, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL)
+        {
+            //string url = $"http://14.160.26.45:26868/invoice/many";
+            StandardlizeServerName();
+            string apiUrl = server + "invoice/search";
+
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            var filter = Filter.CreateFilter(new List<FilterModel>()
+            {
+                new FilterModel("success", "BOOLEAN", "true", "eq"),
+                new FilterModel("createdUtc", "DATETIME", startTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), "gte"),
+                new FilterModel("createdUtc", "DATETIME", endTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), "lte"),
+            }, EmMainOperation.and, 0, 10000);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, Method.Post);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+
+                return NewtonSoftHelper<KzParkingv5BaseResponse<List<InvoiceResponse>>>.GetBaseResponse(response.Item1)?.data ?? new List<InvoiceResponse>();
+            }
+            return null;
+        }
+
+        public async Task<List<InvoiceResponse>> getPendingEInvoice(DateTime startTime, DateTime endTime)
         {
             //string url = $"http://14.160.26.45:26868/sent-invoice/many";
             StandardlizeServerName();
-            string apiUrl = server + "e-invoice-sent/many";
-            //apiUrl = apiUrl.Replace(":5000", ":26868");
+            string apiUrl = server + "invoice/search";
 
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
                 { "Authorization","Bearer " + token  }
             };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, orderIds, headers, null, timeOut, Method.Post);
+            var filter = Filter.CreateFilter(new List<FilterModel>()
+            {
+                new FilterModel("success", "BOOLEAN", "true", "neq"),
+                new FilterModel("success", "BOOLEAN", "false", "neq"),
+                new FilterModel("createdUtc", "DATETIME", startTime.ToUniversalTime().ToString("2023-MM-ddTHH:mm:ss:0000"), "gte"),
+                new FilterModel("createdUtc", "DATETIME", endTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), "lte"),
+            }, EmMainOperation.and, 0, 10000);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                return NewtonSoftHelper<List<InvoiceDataSearch>>.GetBaseResponse(response.Item1);
+                var pendingData = NewtonSoftHelper<KzParkingv5BaseResponse<List<InvoiceResponse>>>.GetBaseResponse(response.Item1)?.data ?? new List<InvoiceResponse>();
+                return pendingData;
             }
-            return null;
+            return new List<InvoiceResponse>();
         }
+        public async Task<bool> sendPendingEInvoice(string orderId)
+        {
+            StandardlizeServerName();
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            string apiUrl = server + $"invoice/{orderId}/resend";
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, Method.Post);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                var pendingData = NewtonSoftHelper<InvoiceResponse>.GetBaseResponse(response.Item1);
+                return pendingData != null;
+            }
+            return false;
+        }
+
         #endregion End Einvoice
 
         #region Private Function
@@ -1448,7 +1777,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             };
             string vehicleInParkCmd = string.Empty;
             vehicleInParkCmd += "SELECT Count(id) FROM index_event_in ";
-            vehicleInParkCmd += $"WHERE status != 'Exited' ";
+            vehicleInParkCmd += $"WHERE (status != 'Exited' and status is not null) ";
             var data = new
             {
                 query = vehicleInParkCmd
@@ -1575,7 +1904,79 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             return null;
         }
 
-        
+        public static async Task<bool> UpdateNoteIn(string eventId, string note1, string note2, string note3)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/" + eventId;
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+             {
+                 { "Authorization","Bearer " + token  }
+             };
+            var commitData = new List<CommitData>();
+            commitData.Add(new CommitData()
+            {
+                op = "replace",
+                path = "note",
+                value = new List<string>() { note1, note2, note3 }
+            });
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, commitData, headers, null, timeOut, Method.Patch);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                return true;
+            }
+            return false;
+        }
+        public static async Task<bool> UpdateNoteOut(string eventId, string note1, string note2, string note3)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/" + eventId;
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+             {
+                 { "Authorization","Bearer " + token  }
+             };
+            var commitData = new List<CommitData>();
+            commitData.Add(new CommitData()
+            {
+                op = "replace",
+                path = "note",
+                value = new List<string>() { note1, note2, note3 }
+            });
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, commitData, headers, null, timeOut, Method.Patch);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static async Task<bool> UpdateBSXNote(string newNote, string eventId, bool isEventIn)
+        {
+            StandardlizeServerName();
+            string apiUrl = isEventIn ?
+                server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/" + eventId :
+                server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/" + eventId
+                ;
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+             {
+                 { "Authorization","Bearer " + token  }
+             };
+            var commitData = new List<CommitData>();
+            commitData.Add(new CommitData()
+            {
+                op = "replace",
+                path = "baseNote",
+                value = newNote
+            });
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, commitData, headers, null, timeOut, Method.Patch);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                return true;
+            }
+            return false;
+        }
         #endregion
     }
 }

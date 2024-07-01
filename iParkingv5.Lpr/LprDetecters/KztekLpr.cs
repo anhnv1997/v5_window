@@ -25,51 +25,61 @@ namespace iParkingv5.LprDetecter.LprDetecters
 
         public string GetPlateNumber(Image? originalImage, bool isCar, Rectangle? detectRegion, out Image? lprImage)
         {
-            lprImage = null;
-            string plateNumber = string.Empty;
-            if (originalImage == null) { goto ReturnResult; }
-            if (isCar && carANPR == null) { goto ReturnResult; }
-            if (!isCar && motorANPR == null) { goto ReturnResult; }
-            Bitmap bitmapCut = detectRegion != null ? CropBitmap((Bitmap)originalImage, (Rectangle)detectRegion!) : (Bitmap)originalImage;
+            try
+            {
+                lprImage = null;
+                string plateNumber = string.Empty;
+                if (originalImage == null) { goto ReturnResult; }
+                if (isCar && carANPR == null) { goto ReturnResult; }
+                if (!isCar && motorANPR == null) { goto ReturnResult; }
+                Bitmap bitmapCut = detectRegion != null ? CropBitmap((Bitmap)originalImage, (Rectangle)detectRegion!) : (Bitmap)originalImage;
 
-            var lPRObject_Result = new LPR_Result_Object
-            {
-                enableMultiplePlateNumber = true,
-                vehicleImage = bitmapCut
-            };
-            if (isCar)
-            {
-                carANPR!.Analyze(ref lPRObject_Result);
-
-                plateNumber = lPRObject_Result.plateNumber;
-                lprImage = lPRObject_Result.plateImage;
-            }
-            else
-            {
-                motorANPR!.Analyze(ref lPRObject_Result);
-
-                plateNumber = lPRObject_Result.plateNumber;
-                lprImage = lPRObject_Result.plateImage;
-                //if (detectRegion != null)
-                //{
-                //    originalImage = DrawRectangle((Bitmap)originalImage, detectRegion.Value.X, detectRegion.Value.Y, detectRegion.Value.Width, detectRegion.Value.Height, Color.Red);
-                //    originalImage = DrawRectangle((Bitmap)originalImage, lPRObject_Result.plateLocation.X + detectRegion.Value.X,
-                //                                                         lPRObject_Result.plateLocation.Y + detectRegion.Value.Y,
-                //                                                         lPRObject_Result.plateLocation.Width,
-                //                                                         lPRObject_Result.plateLocation.Height, Color.Blue);
-                //}
-            }
-           
-        ReturnResult:
-            {
-                onLprDetectCompleteEvent?.Invoke(this, new Events.Events.LprDetectEventArgs()
+                var lPRObject_Result = new LPR_Result_Object
                 {
-                    LprImage = lprImage,
-                    OriginalImage = originalImage,
-                    Result = plateNumber,
-                });
-                return plateNumber;
+                    enableMultiplePlateNumber = true,
+                    vehicleImage = bitmapCut
+                };
+                if (isCar)
+                {
+                    carANPR!.Analyze(ref lPRObject_Result);
+
+                    plateNumber = lPRObject_Result.plateNumber;
+                    lprImage = lPRObject_Result.plateImage;
+                }
+                else
+                {
+                    motorANPR!.Analyze(ref lPRObject_Result);
+
+                    plateNumber = lPRObject_Result.plateNumber;
+                    lprImage = lPRObject_Result.plateImage;
+                    //if (detectRegion != null)
+                    //{
+                    //    originalImage = DrawRectangle((Bitmap)originalImage, detectRegion.Value.X, detectRegion.Value.Y, detectRegion.Value.Width, detectRegion.Value.Height, Color.Red);
+                    //    originalImage = DrawRectangle((Bitmap)originalImage, lPRObject_Result.plateLocation.X + detectRegion.Value.X,
+                    //                                                         lPRObject_Result.plateLocation.Y + detectRegion.Value.Y,
+                    //                                                         lPRObject_Result.plateLocation.Width,
+                    //                                                         lPRObject_Result.plateLocation.Height, Color.Blue);
+                    //}
+                }
+
+            ReturnResult:
+                {
+                    plateNumber = "30A12345";
+                    onLprDetectCompleteEvent?.Invoke(this, new Events.Events.LprDetectEventArgs()
+                    {
+                        LprImage = lprImage,
+                        OriginalImage = originalImage,
+                        Result = plateNumber.Replace("-", "").Replace(".", "").Replace(" ", ""),
+                    });
+                    return plateNumber.Replace("-", "").Replace(".", "").Replace(" ", "");
+                }
             }
+            catch (Exception)
+            {
+                lprImage = null;
+                return "";
+            }
+
         }
         public async Task<Tuple<string, Image?>> GetPlateNumberAsync(Image? originalImage, bool isCar, Rectangle? detectRegion)
         {
@@ -100,7 +110,7 @@ namespace iParkingv5.LprDetecter.LprDetecters
                 carANPR!.Analyze(ref lPRObject_Result);
             });
             string plateNumber = lPRObject_Result?.plateNumber ?? string.Empty;
-            response = Tuple.Create<string, Image?>(plateNumber, lPRObject_Result?.plateImage);
+            response = Tuple.Create<string, Image?>(plateNumber.Replace("-", "").Replace(".", "").Replace(" ", ""), lPRObject_Result?.plateImage);
         ReturnResult:
             {
                 onLprDetectCompleteEvent?.Invoke(this, new Events.Events.LprDetectEventArgs()

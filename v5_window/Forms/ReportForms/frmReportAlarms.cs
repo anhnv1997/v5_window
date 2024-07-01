@@ -162,7 +162,7 @@ namespace iParkingv5_window.Forms.ReportForms
 
         private void btnExportExcel_Click(object? sender, EventArgs e)
         {
-            ExcelTools.CreatReportFile(dgvData, "Báo cáo Xe Đang Trong Bãi");
+            ExcelTools.CreatReportFile(dgvData, "Báo cáo Xe Đang Trong Bãi", new List<string>() { });
         }
         private void btnCancel_Click(object? sender, EventArgs e)
         {

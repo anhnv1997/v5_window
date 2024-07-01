@@ -25,7 +25,7 @@ namespace v6_window
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static  void Main()
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
@@ -33,7 +33,7 @@ namespace v6_window
 
         StartApp:
             {
-                const string appName = "IP_DA_V5_LU";
+                const string appName = "IP_DA_V5_LU_TEST";
                 PathManagement.baseBath = LogHelper.SaveLogFolder = Application.StartupPath;
                 LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Khởi chạy ứng dụng");
                 string appCode = "IP_DA_V5_LU";

@@ -58,7 +58,7 @@ namespace iParkingv5_window.Forms.SystemForms
             {
                 Authority = KzParkingv5ApiHelper.server.Replace(":5000", ":3000"),//"http://192.168.21.13:3000",// 
                 ClientId = clientId,
-                Scope = "openid role-data user-data parking-data offline_access device-data electronic-invoice-data",
+                Scope = "openid role-data user-data parking-data offline_access device-data invoice-data project-data payment-data tenant-data warehouse-data",
                 RedirectUri = "http://localhost/winforms.client",
                 Browser = new WinFormsWebView(webView21, this),
                 Policy = new Policy
@@ -78,7 +78,8 @@ namespace iParkingv5_window.Forms.SystemForms
         OidcClientOptions options = null;
         private void FrmLogin_FormClosed(object? sender, FormClosedEventArgs e)
         {
-            Application.Restart();
+            Application.Exit();
+            Environment.Exit(0);
         }
 
         LoginResult loginResult;
@@ -612,7 +613,8 @@ namespace iParkingv5_window.Forms.SystemForms
                 var files = Directory.GetFiles(dir);
                 foreach (var file in files)
                 {
-                    await MinioHelper.UploadFile(Path.GetFileName(file), file, Environment.MachineName, time);
+                    await MinioHelper.UploadFile(Path.GetFileName(file), file, StaticPool.selectedComputer == null ? Environment.MachineName :
+                                                                                                                     StaticPool.selectedComputer.Name, time);
                 }
             }
         }

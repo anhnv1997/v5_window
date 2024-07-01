@@ -37,6 +37,7 @@ namespace iParkingv5.Objects
 
         public static CustomerGroupCollection customerGroupCollection = new CustomerGroupCollection();
         public static Mdb mdb;
+        public static Mdb mdbEx;
         public static ServerConfig serverConfig = new ServerConfig();
         #endregion End App Datas
 
@@ -47,7 +48,7 @@ namespace iParkingv5.Objects
         public static string templateCode = "5/00023";
         public static string invoiceTypeCode = "5";
         public static string symbolCode = "C24HAY";
-        public static int TaxRate = 10;
+        public static float TaxRate = 10;
         #endregion End EInvoice
 
         //--Function

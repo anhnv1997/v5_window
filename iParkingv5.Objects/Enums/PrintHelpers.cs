@@ -10,6 +10,7 @@ namespace iParkingv5.Objects.Enums
         {
             BaseTemplate,
             XuanCuong,
+            OfficeHaus
         }
     }
 }

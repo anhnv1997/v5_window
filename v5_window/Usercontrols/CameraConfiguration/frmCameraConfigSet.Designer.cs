@@ -47,18 +47,17 @@ namespace iParkingv5_window.Usercontrols.CameraConfiguration
             panelCameraView.Location = new Point(0, 0);
             panelCameraView.Margin = new Padding(3, 2, 3, 2);
             panelCameraView.Name = "panelCameraView";
-            panelCameraView.Size = new Size(817, 346);
+            panelCameraView.Size = new Size(987, 468);
             panelCameraView.TabIndex = 0;
             // 
             // pic
             // 
             pic.BackColor = SystemColors.GradientInactiveCaption;
             pic.BorderStyle = BorderStyle.FixedSingle;
-            pic.Dock = DockStyle.Fill;
             pic.Location = new Point(0, 0);
             pic.Margin = new Padding(3, 2, 3, 2);
             pic.Name = "pic";
-            pic.Size = new Size(817, 346);
+            pic.Size = new Size(987, 468);
             pic.SizeMode = PictureBoxSizeMode.Zoom;
             pic.TabIndex = 0;
             pic.TabStop = false;
@@ -71,7 +70,7 @@ namespace iParkingv5_window.Usercontrols.CameraConfiguration
             btnOk1.AutoSize = true;
             btnOk1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnOk1.ForeColor = Color.Black;
-            btnOk1.Location = new Point(602, -2);
+            btnOk1.Location = new Point(816, 11);
             btnOk1.Margin = new Padding(3, 2, 3, 2);
             btnOk1.Name = "btnOk1";
             btnOk1.Size = new Size(83, 30);
@@ -84,7 +83,7 @@ namespace iParkingv5_window.Usercontrols.CameraConfiguration
             btnCancel1.AutoSize = true;
             btnCancel1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnCancel1.ForeColor = Color.Black;
-            btnCancel1.Location = new Point(711, -2);
+            btnCancel1.Location = new Point(905, 11);
             btnCancel1.Margin = new Padding(3, 2, 3, 2);
             btnCancel1.Name = "btnCancel1";
             btnCancel1.Size = new Size(57, 30);
@@ -96,17 +95,17 @@ namespace iParkingv5_window.Usercontrols.CameraConfiguration
             panelActions.Controls.Add(btnCancel1);
             panelActions.Controls.Add(btnOk1);
             panelActions.Dock = DockStyle.Bottom;
-            panelActions.Location = new Point(0, 346);
+            panelActions.Location = new Point(0, 468);
             panelActions.Margin = new Padding(3, 2, 3, 2);
             panelActions.Name = "panelActions";
-            panelActions.Size = new Size(817, 52);
+            panelActions.Size = new Size(987, 52);
             panelActions.TabIndex = 1;
             // 
             // frmCameraConfigSet
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(817, 398);
+            ClientSize = new Size(987, 520);
             Controls.Add(panelCameraView);
             Controls.Add(panelActions);
             Margin = new Padding(3, 2, 3, 2);

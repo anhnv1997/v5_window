@@ -15,13 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\Kztek.Tool\Kztek.Tool.csproj" />
     <ProjectReference Include="..\iParkingv5.ApiManager\iParkingv5.ApiManager.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Kztek.Tool">
-      <HintPath>..\packages\Kztek.Tool.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

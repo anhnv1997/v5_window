@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\..\BaseLib\Kztek.Cameras\Kztek.Cameras.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="AForge.Imaging">
       <HintPath>..\packages\Camera_LPR\AForge.Imaging.dll</HintPath>
     </Reference>
@@ -17,9 +21,6 @@
     </Reference>
     <Reference Include="AForge.VideoEx">
       <HintPath>..\packages\Camera_LPR\AForge.VideoEx.dll</HintPath>
-    </Reference>
-    <Reference Include="Kztek.Cameras">
-      <HintPath>..\packages\Camera_LPR\Kztek.Cameras.dll</HintPath>
     </Reference>
     <Reference Include="RtspClientSharp">
       <HintPath>..\packages\Camera_LPR\RtspClientSharp.dll</HintPath>

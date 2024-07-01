@@ -17,6 +17,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\Kztek.Tool\Kztek.Tool.csproj" />
 		<ProjectReference Include="..\IPaking.Ultility\IPaking.Ultility.csproj" />
 		<ProjectReference Include="..\iPakrkingv5.Controls\iPakrkingv5.Controls.csproj" />
 		<ProjectReference Include="..\iParking.ConfigurationManager\iParking.ConfigurationManager.csproj" />
@@ -41,9 +42,6 @@
 	  </Reference>
 	  <Reference Include="Kztek.RtspPlayer">
 	    <HintPath>..\packages\Kztek.RtspPlayer.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Kztek.Tool">
-	    <HintPath>..\packages\Kztek.Tool.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 

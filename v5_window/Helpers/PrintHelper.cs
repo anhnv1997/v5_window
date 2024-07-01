@@ -127,6 +127,46 @@ namespace iParkingv5_window.Helpers
             baseContent = baseContent.Replace("$ReceiveBillCode", receiveBillCode);
             return baseContent;
         }
+
+        public static string GetPhieuThuContent(string baseContent, string cardName, string cardGroupName, Image img,
+                                      DateTime dateTimeIn, DateTime dateTimeOut,
+                                      string plate = "", string moneyStr = "",
+                                      long moneyInt = 0, string receiveBillCode = "")
+        {
+            baseContent = baseContent.Replace("$companyTaxCode", StaticPool.TaxCode);
+
+            baseContent = baseContent.Replace("$day", DateTime.Now.Day.ToString("00"));
+            baseContent = baseContent.Replace("$month", DateTime.Now.Month.ToString("00"));
+            baseContent = baseContent.Replace("$year", DateTime.Now.Year.ToString("0000"));
+
+            baseContent = baseContent.Replace("$timeIn", dateTimeIn.ToString("dd/MM/yyyy HH:mm:ss"));
+            baseContent = baseContent.Replace("$timeOut", dateTimeOut.ToString("dd/MM/yyyy HH:mm:ss"));
+            baseContent = baseContent.Replace("$plate", plate);
+            baseContent = baseContent.Replace("$cardName", cardName);
+            baseContent = baseContent.Replace("$cardGroupName", cardGroupName);
+            if (img != null)
+            {
+                try
+                {
+                    using (MemoryStream m = new MemoryStream())
+                    {
+                        img.Save(m, img.RawFormat);
+                        byte[] imageBytes = m.ToArray();
+
+                        // Convert byte[] to Base64 String
+                        string base64String = Convert.ToBase64String(imageBytes);
+                        baseContent = baseContent.Replace("$image_data", base64String);
+                    }
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            baseContent = baseContent.Replace("$money", moneyStr);
+            return baseContent;
+        }
+
         public static void PrintPdf(string pdfContent)
         {
             byte[] bytes = Convert.FromBase64String(pdfContent);

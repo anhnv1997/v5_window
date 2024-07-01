@@ -52,6 +52,8 @@ namespace iParkingv5_window.Forms.SystemForms
         }
         private async void FrmLoading_Load(object? sender, EventArgs e)
         {
+            var systemConfig = await AppData.ApiServer.GetSystemConfigAsync();
+
             foreach (KeyValuePair<string, Func<Task<bool>>> actions in loadingWorks)
             {
                 try

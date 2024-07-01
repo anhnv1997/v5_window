@@ -29,6 +29,17 @@ namespace iParkingv5_window.Usercontrols
             this.SizeChanged += UcCameraView_SizeChanged;
         }
 
+      public  void changeHeight(int newHeight)
+        {
+            this.Invoke(new Action(() =>
+            {
+                this.SizeChanged -= UcCameraView_SizeChanged;
+                this.Height = newHeight;
+                this.Refresh();
+                this.Width = newHeight * 4 / 3;
+                this.SizeChanged += UcCameraView_SizeChanged;
+            }));
+        }
         private void UcCameraView_SizeChanged(object? sender, EventArgs e)
         {
             this.Height = this.Width * 9 / 16 + lblCameraName.Height;
@@ -73,7 +84,7 @@ namespace iParkingv5_window.Usercontrols
             lblCameraName.Text = camera.Name;
 
 
-            if (camera != null && camera.videoSourcePlayer!= null)
+            if (camera != null && camera.videoSourcePlayer != null)
             {
                 iCameraSourcePlayer iCameraSourcePlayer = camera.videoSourcePlayer;
                 var control = (Control)iCameraSourcePlayer;

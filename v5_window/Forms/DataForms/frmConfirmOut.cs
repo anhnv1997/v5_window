@@ -5,6 +5,7 @@ using iParkingv5.Objects.Enums;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
 using Kztek.Tool.TextFormatingTools;
+using static iParkingv5.Objects.Enums.VehicleType;
 
 namespace iParkingv5_window.Forms.DataForms
 {
@@ -70,7 +71,12 @@ namespace iParkingv5_window.Forms.DataForms
 
         private void BtnOk_Click(object? sender, EventArgs e)
         {
-            updatePlate = dgvEventInData.Rows[4].Cells[1].Value.ToString();
+            updatePlate = dgvEventInData.Rows[4].Cells[1].Value.ToString().ToUpper().Replace("-","").Replace(".","");
+            if (string.IsNullOrEmpty(updatePlate))
+            {
+                MessageBox.Show("Biển số ra không được phép để trống", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             this.DialogResult = DialogResult.OK;
         }
 
@@ -80,14 +86,9 @@ namespace iParkingv5_window.Forms.DataForms
         }
         #endregion End Forms
         public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
-        private string v1;
-        private string v2;
-        private string v3;
-        private string v4;
+
         private List<string>? eventInFileKeys;
         private DateTime dateTime;
-        private bool v5;
-        private long v6;
 
         public async void ShowInfo(string detectedPlate, string laneIdIn, string datetimeIn, string plateIn, string identityIdIn)
         {
@@ -100,16 +101,16 @@ namespace iParkingv5_window.Forms.DataForms
                 //Identity? identityIn = await KzParkingApiHelper.GetIdentityById(identityIdIn);
                 Identity? identityIn = (await  AppData.ApiServer.GetIdentityByIdAsync(identityIdIn)).Item1;
                 IdentityGroup? identityGroupIn = null;
-                VehicleType? vehicleTypeIn = null;
+                VehicleBaseType  vehicleTypeIn = VehicleBaseType.Car;
                 if (identityIn != null)
                 {
                     //identityGroupIn = await KzParkingApiHelper.GetIdentityGroupByIdAsync(identityIn.IdentityGroupId.ToString());
                     identityGroupIn = (await  AppData.ApiServer.GetIdentityGroupByIdAsync(identityIn.IdentityGroupId.ToString())).Item1;
-                    if (identityGroupIn != null)
-                    {
-                        //vehicleTypeIn = await KzParkingApiHelper.GetVehicleTypeById(identityGroupIn.VehicleTypeId.ToString());
-                        vehicleTypeIn = (await  AppData.ApiServer.GetVehicleTypeByIdAsync(identityGroupIn.VehicleType.Id.ToString())).Item1;
-                    }
+                    //if (identityGroupIn != null)
+                    //{
+                    //    //vehicleTypeIn = await KzParkingApiHelper.GetVehicleTypeById(identityGroupIn.VehicleTypeId.ToString());
+                    //    //vehicleTypeIn = (await  AppData.ApiServer.GetVehicleTypeByIdAsync(identityGroupIn.VehicleType.Id.ToString())).Item1;
+                    //}
                 }
 
                 dgvEventInData?.Invoke(new Action(() =>
@@ -128,7 +129,7 @@ namespace iParkingv5_window.Forms.DataForms
                     }
                     if (vehicleTypeIn != null)
                     {
-                        dgvEventInData.Rows.Add("Loại phương tiện", VehicleType.GetDisplayStr(vehicleTypeIn.Type));
+                        dgvEventInData.Rows.Add("Loại phương tiện", VehicleType.GetDisplayStr(vehicleTypeIn));
                     }
 
                     //if (this.charge > 0)

@@ -62,14 +62,14 @@ namespace iParkingv5_window
         #endregion: End Styling
 
         #region:Excel_Export
-        public static void CreatReportFile(DataGridView dgvCard, string tittle)
+        public static void CreatReportFile(DataGridView dgvCard, string tittle, List<string> reserverData )
         {
             var sl = new SLDocument();
             //Create
             CreateTableHeader(sl, dgvCard, tittle);
             if (dgvCard.Rows.Count > 0)
             {
-                SetCardTableContent(sl, dgvCard);
+                SetCardTableContent(sl, dgvCard, reserverData);
             }
             //Save
             SaveReportFile(sl, tittle);
@@ -150,7 +150,7 @@ namespace iParkingv5_window
             sl.SetCellValue(startCell, tittle);
             sl.SetCellStyle(startCell, CreateHeader1Style(sl));
         }
-        public static void SetCardTableContent(SLDocument sl, DataGridView dgvCard)
+        public static void SetCardTableContent(SLDocument sl, DataGridView dgvCard, List<string> additionalDatas)
         {
             var currentExcellCollumRow = 3;
             const char startChar = 'A';
@@ -194,6 +194,16 @@ namespace iParkingv5_window
             var lastCellName = ((char)(currentChar - 1)).ToString() + currentExcellCollumRow + "";
 
             sl.SetCellStyle("A" + 3, lastCellName, CreateAllBorderStyle(sl));
+            currentExcellCollumRow++;
+
+            for (int i = 0; i < additionalDatas.Count; i++)
+            {
+                currentChar = startChar;
+                currentExcellCollumRow++;
+                var cellName = currentChar.ToString() + currentExcellCollumRow;
+
+                sl.SetCellValue(cellName, additionalDatas[i] == null ? "" : additionalDatas[i]);
+            }
         }
         public static void SaveReportFile(SLDocument sl, string fileName)
         {

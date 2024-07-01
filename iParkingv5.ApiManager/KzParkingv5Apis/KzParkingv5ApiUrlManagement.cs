@@ -66,7 +66,7 @@
                 case EmParkingv5ObjectType.AbnormalEvent:
                     return "Abnormal-Event";
                 case EmParkingv5ObjectType.PaymentTransaction:
-                    return "payment-transaction";
+                    return "order/cash";
                 default:
                     return objectType.ToString();
             }

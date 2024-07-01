@@ -117,16 +117,10 @@ namespace iParkingv5_window.Forms.DataForms
             }
             lblSoftwareName.Text = this.Text + " - " + Assembly.GetExecutingAssembly().GetName().Version!.ToString();
             lblSoftwareName.Width = lblSoftwareName.PreferredSize.Width;
-            this.FormClosed += FrmMain_FormClosed;
+            this.FormClosing += frmMain_FormClosing;
         }
         public static bool isNeedToRestart = true;
-        private void FrmMain_FormClosed(object? sender, FormClosedEventArgs e)
-        {
-            //if (isNeedToRestart)
-            //{
-            //    Application.Restart();
-            //}
-        }
+
 
         private void FrmMain_Shown(object? sender, EventArgs e)
         {
@@ -139,6 +133,11 @@ namespace iParkingv5_window.Forms.DataForms
         {
             try
             {
+                this.Invoke(new Action(() =>
+                {
+                    lblUserNaem.Text = StaticPool.user_name;
+                    lblUserNaem.Width = lblUserNaem.PreferredSize.Width;
+                }));
                 var screenBound = Screen.FromControl(this).WorkingArea;
                 this.Size = new Size(screenBound.Width, screenBound.Height);
                 //this.Size = new Size(1366, 768);
@@ -155,7 +154,21 @@ namespace iParkingv5_window.Forms.DataForms
                 lblServerName.Width = lblServerName.PreferredWidth;
                 lblCompanyName.Width = lblCompanyName.PreferredWidth;
                 lblTime.Width = lblTime.PreferredWidth;
-                var identities = await  AppData.ApiServer.GetIdentitiesAsync("");
+                if (((EmPrintTemplate)StaticPool.appOption.PrintTemplate) != EmPrintTemplate.XuanCuong)
+                    tsmiScaleReport.Visible = StaticPool.appOption.IsIntergratedScaleStation;
+                //Task.Run(new Action(async () =>
+                //{
+                //    while (true)
+                //    {
+                //        Controller_CardEvent(null, new CardEventArgs()
+                //        {
+                //            PreferCard = "the6",
+                //            DeviceId = "e9bc8a38-9440-4d5a-8033-90cfd7e61ae2",
+                //            ReaderIndex = 1,
+                //        });
+                //        await Task.Delay(1000);
+                //    }
+                //}));
             }
             catch (Exception ex)
             {
@@ -181,7 +194,7 @@ namespace iParkingv5_window.Forms.DataForms
             }
             if (((EmPrintTemplate)StaticPool.appOption.PrintTemplate) != EmPrintTemplate.XuanCuong)
             {
-                báoCáoCânToolStripMenuItem.Visible = false;
+                tsmiScaleReport.Visible = false;
             }
         }
         private void LoadThirdPartyConfig()
@@ -235,8 +248,6 @@ namespace iParkingv5_window.Forms.DataForms
                 Application.Exit();
                 Environment.Exit(0);
             }
-            //((Form)this.Owner).Close();
-
         }
         #endregion
 

@@ -22,5 +22,7 @@ namespace iParkingv5.Objects.Configs
         public int RetakePhotoTimes { get; set; } = 5;
         public string ScaleDevice { get; set; } = "";
         public string CheckForUpdatePath { get; set; } = "";
+        public bool IsAllowEditPlateOut { get; set; } = false;
+        public bool IsIntergratedScaleStation { get; set; } = false;
     }
 }

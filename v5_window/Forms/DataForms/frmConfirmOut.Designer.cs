@@ -45,6 +45,7 @@ namespace iParkingv5_window.Forms.DataForms
             tableLayoutPanel1 = new TableLayoutPanel();
             picOverview = new Usercontrols.MovablePictureBox();
             picVehicle = new Usercontrols.MovablePictureBox();
+            lblGuide = new Label();
             panelAction.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEventInData).BeginInit();
             panel1.SuspendLayout();
@@ -67,6 +68,7 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             // panelAction
             // 
+            panelAction.Controls.Add(lblGuide);
             panelAction.Controls.Add(btnCancel1);
             panelAction.Controls.Add(btnOk);
             panelAction.Dock = DockStyle.Bottom;
@@ -196,6 +198,18 @@ namespace iParkingv5_window.Forms.DataForms
             picVehicle.TabIndex = 0;
             picVehicle.TabStop = false;
             // 
+            // lblGuide
+            // 
+            lblGuide.Dock = DockStyle.Left;
+            lblGuide.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblGuide.ForeColor = Color.FromArgb(255, 128, 0);
+            lblGuide.Location = new Point(0, 0);
+            lblGuide.Name = "lblGuide";
+            lblGuide.Size = new Size(624, 62);
+            lblGuide.TabIndex = 4;
+            lblGuide.Text = "Vui lòng kiểm tra và nhập biển số phương tiện  vào ô biển số ra";
+            lblGuide.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // frmConfirmOut
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -238,5 +252,6 @@ namespace iParkingv5_window.Forms.DataForms
         private Usercontrols.MovablePictureBox picVehicle;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
+        private Label lblGuide;
     }
 }

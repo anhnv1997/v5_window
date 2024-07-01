@@ -80,7 +80,7 @@ namespace iParkingv5_window.Usercontrols
 
             return isValidControllerIdAndReader;
         }
-        public static void DisplayLed(string plate, DateTime datetimeIn, Identity? identity, IdentityGroup? identityGroup, string message, string laneId)
+        public static void DisplayLed(string plate, DateTime datetimeIn, Identity? identity, IdentityGroup? identityGroup, string message, string laneId, string fee)
         {
             foreach (Lane item in StaticPool.lanes)
             {
@@ -109,7 +109,7 @@ namespace iParkingv5_window.Usercontrols
                         parkingData.DatetimeIn = datetimeIn;
                         parkingData.DatetimeOut = null;
                         parkingData.EventStatus = message;
-                        parkingData.Money = "0";
+                        parkingData.Money = fee;
                         led.Connect(item);
                         led.SendToLED(parkingData, ledConfig);
                     }
@@ -230,7 +230,7 @@ namespace iParkingv5_window.Usercontrols
         public static void GetPlate(string laneId, out Image? vehicleImd, out string plate, out Image? lprImage, ucCameraView? ucCameraView, List<Kztek.Cameras.Camera> camDuPhongs, bool isCar)
         {
             Rectangle? config = null;
-            if (File.Exists(PathManagement.laneCameraConfigPath(laneId, ucCameraView?._Camera.ID)))
+           if (File.Exists(PathManagement.laneCameraConfigPath(laneId, ucCameraView?._Camera.ID)))
             {
                 CameraDetectRegion? cameraDetectRegion = NewtonSoftHelper<CameraDetectRegion>.DeserializeObjectFromPath(PathManagement.laneCameraConfigPath(laneId, ucCameraView._Camera.ID));
                 if (cameraDetectRegion != null)
@@ -243,7 +243,7 @@ namespace iParkingv5_window.Usercontrols
                         Height = cameraDetectRegion.Height
                     };
                 }
-            }
+            } 
             vehicleImd = ucCameraView?.GetFullCurrentImage();
             plate = StaticPool.LprDetect.GetPlateNumber(vehicleImd, isCar, config, out lprImage);
             if (string.IsNullOrEmpty(plate))

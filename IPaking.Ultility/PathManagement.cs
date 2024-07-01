@@ -14,13 +14,13 @@
         public static string thirtPartyConfigPath => baseBath + "/configs/app/thirtParty.txt";
         public static string appDisplayConfigPath(string laneID) => baseBath + $"/configs/app/{laneID}/displayConfig.txt";
         public static string appLaneDirectionConfigPath(string laneId) => baseBath + $"/configs/app/{laneId}/displayDirection.txt";
-
         public static string databaseConfigPath => baseBath + "/configs/app/database.xml";
         public static string appActiveLaneConfigPath() => baseBath + $"/configs/app/activeLane.txt";
         public static string appPrintTemplateConfigPath(string printTemplateName) => baseBath + $"/configs/app/print/{printTemplateName}.html";
         public static string appPrintTemplateWarehousePath(string printTemplateName) => baseBath + $"/configs/app/print/{printTemplateName}Warehouse.html";
         public static string appPrintScaleTemplateConfigPath(string printTemplateName) => baseBath + $"/configs/app/print/{printTemplateName}Scale.html";
         public static string appPrintScaleInvoiceOfflineTemplateConfigPath(string printTemplateName) => baseBath + $"/configs/app/print/{printTemplateName}ScaleInvoiceOffline.html";
+        public static string appPrintPhieuThu(string printTemplateName) => baseBath + $"/configs/app/print/{printTemplateName}_phieuthu.html";
         #endregion END APP CONFIG PATH
 
         #region LANE CONFIG PATH
@@ -30,5 +30,12 @@
         public static string laneCameraConfigPath(string laneId, string cameraId) => baseBath + $"/configs/{laneId}/camera/{cameraId}.txt";
         public static string sharedPreferencesPath() => baseBath + "/configs/app/sharedPreferences.txt";
         #endregion END LANE CONFIG PATH
+
+        #region V3 CONFIG
+        public static string ledDisplayConfigTypePath => baseBath + $"/configs/led/ledDisplayConfigTypePath.txt";
+        public static string ledListPath => baseBath + $"/configs/led/data.txt";
+        public static string colorConfigPath => baseBath + $"/configs/led/colorConfig.txt";
+
+        #endregion
     }
 }

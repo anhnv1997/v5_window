@@ -31,6 +31,7 @@ namespace iParkingv5_window.Forms.ReportForms
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
@@ -41,24 +42,6 @@ namespace iParkingv5_window.Forms.ReportForms
             lblKeyword = new Label();
             txtKeyword = new TextBox();
             dgvData = new DataGridView();
-            Column1 = new DataGridViewTextBoxColumn();
-            Column2 = new DataGridViewTextBoxColumn();
-            Column7 = new DataGridViewTextBoxColumn();
-            Column15 = new DataGridViewTextBoxColumn();
-            Column16 = new DataGridViewTextBoxColumn();
-            Column8 = new DataGridViewTextBoxColumn();
-            Column5 = new DataGridViewTextBoxColumn();
-            Column6 = new DataGridViewTextBoxColumn();
-            Column9 = new DataGridViewTextBoxColumn();
-            Column13 = new DataGridViewTextBoxColumn();
-            Column14 = new DataGridViewTextBoxColumn();
-            Column4 = new DataGridViewTextBoxColumn();
-            Column10 = new DataGridViewTextBoxColumn();
-            Column12 = new DataGridViewTextBoxColumn();
-            Column11 = new DataGridViewTextBoxColumn();
-            Column3 = new DataGridViewButtonColumn();
-            Column17 = new DataGridViewTextBoxColumn();
-            Column18 = new DataGridViewTextBoxColumn();
             dtpEndTime = new DateTimePicker();
             dtpStartTime = new DateTimePicker();
             lblEndTime = new Label();
@@ -68,6 +51,9 @@ namespace iParkingv5_window.Forms.ReportForms
             btnSearch = new BtnSearch();
             btnExportExcel = new BtnExcel();
             panelData = new Panel();
+            lblTQ = new Label();
+            lblVN = new Label();
+            pictureBox1 = new PictureBox();
             lblUser = new Label();
             lblTitle = new Label();
             cbLane = new ComboBox();
@@ -81,14 +67,37 @@ namespace iParkingv5_window.Forms.ReportForms
             lblVehicleType = new Label();
             lblIdentityType = new Label();
             ucPages1 = new ucPages();
-            Column19 = new DataGridViewTextBoxColumn();
-            Column20 = new DataGridViewTextBoxColumn();
-            Column21 = new DataGridViewTextBoxColumn();
+            toolTip1 = new ToolTip(components);
+            id = new DataGridViewTextBoxColumn();
+            Column1 = new DataGridViewTextBoxColumn();
+            Column2 = new DataGridViewTextBoxColumn();
+            plate = new DataGridViewTextBoxColumn();
+            vehicle_reagion_type = new DataGridViewTextBoxColumn();
+            timeIn = new DataGridViewTextBoxColumn();
+            warehouse = new DataGridViewTextBoxColumn();
+            warehouse_code = new DataGridViewTextBoxColumn();
+            NoteBSX = new DataGridViewTextBoxColumn();
+            note_3rd_1 = new DataGridViewTextBoxColumn();
+            note_3rd_2 = new DataGridViewTextBoxColumn();
+            Column10 = new DataGridViewTextBoxColumn();
+            Column6 = new DataGridViewTextBoxColumn();
+            Column4 = new DataGridViewTextBoxColumn();
+            identityName = new DataGridViewTextBoxColumn();
+            Column16 = new DataGridViewTextBoxColumn();
+            Column12 = new DataGridViewTextBoxColumn();
+            Column11 = new DataGridViewTextBoxColumn();
+            note_3rd_3 = new DataGridViewTextBoxColumn();
+            Column5 = new DataGridViewTextBoxColumn();
+            FileIds = new DataGridViewTextBoxColumn();
+            Column13 = new DataGridViewTextBoxColumn();
+            Column14 = new DataGridViewTextBoxColumn();
+            Column3 = new DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)picOverviewImageIn).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picVehicleImageIn).BeginInit();
             tablePic.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvData).BeginInit();
             panelData.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // picOverviewImageIn
@@ -99,7 +108,7 @@ namespace iParkingv5_window.Forms.ReportForms
             picOverviewImageIn.Location = new Point(0, 0);
             picOverviewImageIn.Margin = new Padding(0);
             picOverviewImageIn.Name = "picOverviewImageIn";
-            picOverviewImageIn.Size = new Size(215, 195);
+            picOverviewImageIn.Size = new Size(276, 273);
             picOverviewImageIn.SizeMode = PictureBoxSizeMode.StretchImage;
             picOverviewImageIn.TabIndex = 30;
             picOverviewImageIn.TabStop = false;
@@ -109,10 +118,10 @@ namespace iParkingv5_window.Forms.ReportForms
             picVehicleImageIn.BackColor = Color.WhiteSmoke;
             picVehicleImageIn.BorderStyle = BorderStyle.FixedSingle;
             picVehicleImageIn.Dock = DockStyle.Fill;
-            picVehicleImageIn.Location = new Point(0, 195);
+            picVehicleImageIn.Location = new Point(0, 273);
             picVehicleImageIn.Margin = new Padding(0);
             picVehicleImageIn.Name = "picVehicleImageIn";
-            picVehicleImageIn.Size = new Size(215, 196);
+            picVehicleImageIn.Size = new Size(276, 274);
             picVehicleImageIn.SizeMode = PictureBoxSizeMode.StretchImage;
             picVehicleImageIn.TabIndex = 29;
             picVehicleImageIn.TabStop = false;
@@ -124,20 +133,21 @@ namespace iParkingv5_window.Forms.ReportForms
             tablePic.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tablePic.Controls.Add(picOverviewImageIn, 0, 0);
             tablePic.Controls.Add(picVehicleImageIn, 0, 1);
-            tablePic.Location = new Point(1093, 68);
+            tablePic.Location = new Point(1405, 95);
             tablePic.Margin = new Padding(0);
             tablePic.Name = "tablePic";
             tablePic.RowCount = 2;
             tablePic.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tablePic.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tablePic.Size = new Size(215, 391);
+            tablePic.Size = new Size(276, 547);
             tablePic.TabIndex = 42;
             // 
             // lblKeyword
             // 
             lblKeyword.AutoSize = true;
             lblKeyword.BackColor = Color.Transparent;
-            lblKeyword.Location = new Point(12, 41);
+            lblKeyword.Location = new Point(15, 57);
+            lblKeyword.Margin = new Padding(4, 0, 4, 0);
             lblKeyword.Name = "lblKeyword";
             lblKeyword.Size = new Size(65, 21);
             lblKeyword.TabIndex = 41;
@@ -145,10 +155,11 @@ namespace iParkingv5_window.Forms.ReportForms
             // 
             // txtKeyword
             // 
-            txtKeyword.Location = new Point(111, 33);
-            txtKeyword.Margin = new Padding(3, 2, 3, 2);
+            txtKeyword.Location = new Point(143, 46);
+            txtKeyword.Margin = new Padding(4, 3, 4, 3);
             txtKeyword.Name = "txtKeyword";
-            txtKeyword.Size = new Size(460, 29);
+            txtKeyword.PlaceholderText = "Biển số, tên định danh, mã định danh";
+            txtKeyword.Size = new Size(766, 29);
             txtKeyword.TabIndex = 1;
             // 
             // dgvData
@@ -171,7 +182,7 @@ namespace iParkingv5_window.Forms.ReportForms
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvData.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column7, Column15, Column16, Column8, Column5, Column6, Column9, Column13, Column14, Column4, Column10, Column12, Column11, Column3, Column17, Column18, Column19, Column20, Column21 });
+            dgvData.Columns.AddRange(new DataGridViewColumn[] { id, Column1, Column2, plate, vehicle_reagion_type, timeIn, warehouse, warehouse_code, NoteBSX, note_3rd_1, note_3rd_2, Column10, Column6, Column4, identityName, Column16, Column12, Column11, note_3rd_3, Column5, FileIds, Column13, Column14, Column3 });
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = SystemColors.Window;
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 12F);
@@ -181,173 +192,43 @@ namespace iParkingv5_window.Forms.ReportForms
             dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             dgvData.DefaultCellStyle = dataGridViewCellStyle3;
-            dgvData.Location = new Point(7, 171);
-            dgvData.Margin = new Padding(3, 2, 3, 2);
+            dgvData.Location = new Point(9, 239);
+            dgvData.Margin = new Padding(4, 3, 4, 3);
             dgvData.Name = "dgvData";
             dgvData.ReadOnly = true;
             dgvData.RowHeadersVisible = false;
             dgvData.RowTemplate.Height = 29;
             dgvData.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvData.Size = new Size(1078, 287);
+            dgvData.Size = new Size(1386, 402);
             dgvData.TabIndex = 39;
-            // 
-            // Column1
-            // 
-            Column1.HeaderText = "STT";
-            Column1.Name = "Column1";
-            Column1.ReadOnly = true;
-            Column1.Width = 66;
-            // 
-            // Column2
-            // 
-            Column2.HeaderText = "Tên Định Danh";
-            Column2.Name = "Column2";
-            Column2.ReadOnly = true;
-            Column2.Visible = false;
-            Column2.Width = 142;
-            // 
-            // Column7
-            // 
-            Column7.HeaderText = "Biển Số Xe";
-            Column7.Name = "Column7";
-            Column7.ReadOnly = true;
-            Column7.Width = 114;
-            // 
-            // Column15
-            // 
-            Column15.HeaderText = "Tên Thẻ";
-            Column15.Name = "Column15";
-            Column15.ReadOnly = true;
-            Column15.Width = 93;
-            // 
-            // Column16
-            // 
-            Column16.HeaderText = "Mã Thẻ";
-            Column16.Name = "Column16";
-            Column16.ReadOnly = true;
-            Column16.Width = 92;
-            // 
-            // Column8
-            // 
-            Column8.HeaderText = "Giờ Vào";
-            Column8.Name = "Column8";
-            Column8.ReadOnly = true;
-            Column8.Width = 96;
-            // 
-            // Column5
-            // 
-            Column5.HeaderText = "Làn Vào";
-            Column5.Name = "Column5";
-            Column5.ReadOnly = true;
-            Column5.Visible = false;
-            Column5.Width = 96;
-            // 
-            // Column6
-            // 
-            Column6.HeaderText = "Người Dùng";
-            Column6.Name = "Column6";
-            Column6.ReadOnly = true;
-            Column6.Width = 127;
-            // 
-            // Column9
-            // 
-            Column9.HeaderText = "physicalFileIds";
-            Column9.Name = "Column9";
-            Column9.ReadOnly = true;
-            Column9.Visible = false;
-            Column9.Width = 141;
-            // 
-            // Column13
-            // 
-            Column13.HeaderText = "customerID";
-            Column13.Name = "Column13";
-            Column13.ReadOnly = true;
-            Column13.Visible = false;
-            Column13.Width = 121;
-            // 
-            // Column14
-            // 
-            Column14.HeaderText = "registerVehicleId";
-            Column14.Name = "Column14";
-            Column14.ReadOnly = true;
-            Column14.Visible = false;
-            Column14.Width = 156;
-            // 
-            // Column4
-            // 
-            Column4.HeaderText = "Làn vào";
-            Column4.Name = "Column4";
-            Column4.ReadOnly = true;
-            Column4.Width = 95;
-            // 
-            // Column10
-            // 
-            Column10.HeaderText = "Nhóm";
-            Column10.Name = "Column10";
-            Column10.ReadOnly = true;
-            Column10.Width = 85;
-            // 
-            // Column12
-            // 
-            Column12.HeaderText = "Biển số đăng ký";
-            Column12.Name = "Column12";
-            Column12.ReadOnly = true;
-            Column12.Width = 150;
-            // 
-            // Column11
-            // 
-            Column11.HeaderText = "Khách hàng";
-            Column11.Name = "Column11";
-            Column11.ReadOnly = true;
-            Column11.Width = 122;
-            // 
-            // Column3
-            // 
-            Column3.HeaderText = "Xem Thêm";
-            Column3.Name = "Column3";
-            Column3.ReadOnly = true;
-            Column3.Visible = false;
-            Column3.Width = 96;
-            // 
-            // Column17
-            // 
-            Column17.HeaderText = "Phân loại";
-            Column17.Name = "Column17";
-            Column17.ReadOnly = true;
-            Column17.Width = 105;
-            // 
-            // Column18
-            // 
-            Column18.HeaderText = "Số phiếu xuất";
-            Column18.Name = "Column18";
-            Column18.ReadOnly = true;
-            Column18.Width = 135;
+            dgvData.CellMouseClick += dgvData_CellMouseClick;
             // 
             // dtpEndTime
             // 
             dtpEndTime.CustomFormat = "HH:mm:ss dd/MM/yyyy";
             dtpEndTime.Format = DateTimePickerFormat.Custom;
-            dtpEndTime.Location = new Point(458, 70);
-            dtpEndTime.Margin = new Padding(3, 2, 3, 2);
+            dtpEndTime.Location = new Point(589, 98);
+            dtpEndTime.Margin = new Padding(4, 3, 4, 3);
             dtpEndTime.Name = "dtpEndTime";
-            dtpEndTime.Size = new Size(250, 29);
+            dtpEndTime.Size = new Size(320, 29);
             dtpEndTime.TabIndex = 3;
             // 
             // dtpStartTime
             // 
             dtpStartTime.CustomFormat = "HH:mm:ss dd/MM/yyyy";
             dtpStartTime.Format = DateTimePickerFormat.Custom;
-            dtpStartTime.Location = new Point(110, 77);
-            dtpStartTime.Margin = new Padding(3, 2, 3, 2);
+            dtpStartTime.Location = new Point(141, 108);
+            dtpStartTime.Margin = new Padding(4, 3, 4, 3);
             dtpStartTime.Name = "dtpStartTime";
-            dtpStartTime.Size = new Size(250, 29);
+            dtpStartTime.Size = new Size(320, 29);
             dtpStartTime.TabIndex = 2;
             // 
             // lblEndTime
             // 
             lblEndTime.AutoSize = true;
             lblEndTime.BackColor = Color.Transparent;
-            lblEndTime.Location = new Point(366, 76);
+            lblEndTime.Location = new Point(471, 106);
+            lblEndTime.Margin = new Padding(4, 0, 4, 0);
             lblEndTime.Name = "lblEndTime";
             lblEndTime.Size = new Size(74, 21);
             lblEndTime.TabIndex = 32;
@@ -357,7 +238,8 @@ namespace iParkingv5_window.Forms.ReportForms
             // 
             lblStartTime.AutoSize = true;
             lblStartTime.BackColor = Color.Transparent;
-            lblStartTime.Location = new Point(13, 83);
+            lblStartTime.Location = new Point(17, 116);
+            lblStartTime.Margin = new Padding(4, 0, 4, 0);
             lblStartTime.Name = "lblStartTime";
             lblStartTime.Size = new Size(62, 21);
             lblStartTime.TabIndex = 33;
@@ -369,7 +251,8 @@ namespace iParkingv5_window.Forms.ReportForms
             lblTotalEvents.BackColor = Color.Transparent;
             lblTotalEvents.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             lblTotalEvents.ForeColor = Color.FromArgb(253, 149, 40);
-            lblTotalEvents.Location = new Point(804, 143);
+            lblTotalEvents.Location = new Point(1034, 200);
+            lblTotalEvents.Margin = new Padding(4, 0, 4, 0);
             lblTotalEvents.Name = "lblTotalEvents";
             lblTotalEvents.Size = new Size(153, 25);
             lblTotalEvents.TabIndex = 58;
@@ -382,10 +265,10 @@ namespace iParkingv5_window.Forms.ReportForms
             btnCancel.AutoSize = true;
             btnCancel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnCancel.ForeColor = Color.Black;
-            btnCancel.Location = new Point(1241, 506);
-            btnCancel.Margin = new Padding(3, 2, 3, 2);
+            btnCancel.Location = new Point(1596, 708);
+            btnCancel.Margin = new Padding(4, 3, 4, 3);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(57, 30);
+            btnCancel.Size = new Size(73, 42);
             btnCancel.TabIndex = 59;
             btnCancel.Text = "Đóng";
             // 
@@ -394,10 +277,10 @@ namespace iParkingv5_window.Forms.ReportForms
             btnSearch.AutoSize = true;
             btnSearch.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnSearch.ForeColor = Color.Black;
-            btnSearch.Location = new Point(714, 142);
-            btnSearch.Margin = new Padding(3, 2, 3, 2);
+            btnSearch.Location = new Point(918, 199);
+            btnSearch.Margin = new Padding(4, 3, 4, 3);
             btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(84, 30);
+            btnSearch.Size = new Size(108, 42);
             btnSearch.TabIndex = 60;
             btnSearch.Text = "Tìm kiếm";
             // 
@@ -406,15 +289,18 @@ namespace iParkingv5_window.Forms.ReportForms
             btnExportExcel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnExportExcel.AutoSize = true;
             btnExportExcel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            btnExportExcel.Location = new Point(1158, 506);
-            btnExportExcel.Margin = new Padding(3, 2, 3, 2);
+            btnExportExcel.Location = new Point(1489, 708);
+            btnExportExcel.Margin = new Padding(4, 3, 4, 3);
             btnExportExcel.Name = "btnExportExcel";
-            btnExportExcel.Size = new Size(80, 30);
+            btnExportExcel.Size = new Size(103, 42);
             btnExportExcel.TabIndex = 61;
             btnExportExcel.Text = "lblExcel1";
             // 
             // panelData
             // 
+            panelData.Controls.Add(lblTQ);
+            panelData.Controls.Add(lblVN);
+            panelData.Controls.Add(pictureBox1);
             panelData.Controls.Add(lblUser);
             panelData.Controls.Add(lblTitle);
             panelData.Controls.Add(cbLane);
@@ -443,15 +329,56 @@ namespace iParkingv5_window.Forms.ReportForms
             panelData.Dock = DockStyle.Fill;
             panelData.Font = new Font("Segoe UI", 12F);
             panelData.Location = new Point(0, 0);
-            panelData.Margin = new Padding(3, 2, 3, 2);
+            panelData.Margin = new Padding(4, 3, 4, 3);
             panelData.Name = "panelData";
-            panelData.Size = new Size(1308, 543);
+            panelData.Size = new Size(1682, 760);
             panelData.TabIndex = 62;
+            // 
+            // lblTQ
+            // 
+            lblTQ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            lblTQ.AutoSize = true;
+            lblTQ.BackColor = Color.Transparent;
+            lblTQ.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            lblTQ.ForeColor = Color.Red;
+            lblTQ.Location = new Point(12, 724);
+            lblTQ.Margin = new Padding(4, 0, 4, 0);
+            lblTQ.Name = "lblTQ";
+            lblTQ.Size = new Size(52, 32);
+            lblTQ.TabIndex = 68;
+            lblTQ.Text = "TQ:";
+            // 
+            // lblVN
+            // 
+            lblVN.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            lblVN.AutoSize = true;
+            lblVN.BackColor = Color.Transparent;
+            lblVN.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            lblVN.ForeColor = Color.Red;
+            lblVN.Location = new Point(9, 683);
+            lblVN.Margin = new Padding(4, 0, 4, 0);
+            lblVN.Name = "lblVN";
+            lblVN.Size = new Size(56, 32);
+            lblVN.TabIndex = 69;
+            lblVN.Text = "VN:";
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pictureBox1.Image = Properties.Resources.noti_question_64;
+            pictureBox1.Location = new Point(1640, 12);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(29, 29);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 67;
+            pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "\r\nBấm chuột phải vào bản ghi để mở tính năng bổ sung\r\n");
             // 
             // lblUser
             // 
             lblUser.AutoSize = true;
-            lblUser.Location = new Point(12, 140);
+            lblUser.Location = new Point(15, 196);
+            lblUser.Margin = new Padding(4, 0, 4, 0);
             lblUser.Name = "lblUser";
             lblUser.Size = new Size(94, 21);
             lblUser.TabIndex = 66;
@@ -460,7 +387,8 @@ namespace iParkingv5_window.Forms.ReportForms
             // lblTitle
             // 
             lblTitle.AutoSize = true;
-            lblTitle.Location = new Point(10, 7);
+            lblTitle.Location = new Point(13, 10);
+            lblTitle.Margin = new Padding(4, 0, 4, 0);
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(39, 21);
             lblTitle.TabIndex = 65;
@@ -470,40 +398,40 @@ namespace iParkingv5_window.Forms.ReportForms
             // 
             cbLane.DropDownStyle = ComboBoxStyle.DropDownList;
             cbLane.FormattingEnabled = true;
-            cbLane.Location = new Point(458, 140);
-            cbLane.Margin = new Padding(3, 2, 3, 2);
+            cbLane.Location = new Point(589, 196);
+            cbLane.Margin = new Padding(4, 3, 4, 3);
             cbLane.Name = "cbLane";
-            cbLane.Size = new Size(250, 29);
+            cbLane.Size = new Size(320, 29);
             cbLane.TabIndex = 7;
             // 
             // cbIdentityGroupType
             // 
             cbIdentityGroupType.DropDownStyle = ComboBoxStyle.DropDownList;
             cbIdentityGroupType.FormattingEnabled = true;
-            cbIdentityGroupType.Location = new Point(458, 106);
-            cbIdentityGroupType.Margin = new Padding(3, 2, 3, 2);
+            cbIdentityGroupType.Location = new Point(589, 148);
+            cbIdentityGroupType.Margin = new Padding(4, 3, 4, 3);
             cbIdentityGroupType.Name = "cbIdentityGroupType";
-            cbIdentityGroupType.Size = new Size(250, 29);
+            cbIdentityGroupType.Size = new Size(320, 29);
             cbIdentityGroupType.TabIndex = 5;
             // 
             // cbUser
             // 
             cbUser.DropDownStyle = ComboBoxStyle.DropDownList;
             cbUser.FormattingEnabled = true;
-            cbUser.Location = new Point(110, 143);
-            cbUser.Margin = new Padding(3, 2, 3, 2);
+            cbUser.Location = new Point(141, 200);
+            cbUser.Margin = new Padding(4, 3, 4, 3);
             cbUser.Name = "cbUser";
-            cbUser.Size = new Size(250, 29);
+            cbUser.Size = new Size(320, 29);
             cbUser.TabIndex = 6;
             // 
             // cbVehicleType
             // 
             cbVehicleType.DropDownStyle = ComboBoxStyle.DropDownList;
             cbVehicleType.FormattingEnabled = true;
-            cbVehicleType.Location = new Point(110, 110);
-            cbVehicleType.Margin = new Padding(3, 2, 3, 2);
+            cbVehicleType.Location = new Point(141, 154);
+            cbVehicleType.Margin = new Padding(4, 3, 4, 3);
             cbVehicleType.Name = "cbVehicleType";
-            cbVehicleType.Size = new Size(250, 29);
+            cbVehicleType.Size = new Size(320, 29);
             cbVehicleType.TabIndex = 4;
             // 
             // ucEventInInfo1
@@ -543,7 +471,8 @@ namespace iParkingv5_window.Forms.ReportForms
             // 
             lblLane.AutoSize = true;
             lblLane.BackColor = Color.Transparent;
-            lblLane.Location = new Point(368, 146);
+            lblLane.Location = new Point(473, 204);
+            lblLane.Margin = new Padding(4, 0, 4, 0);
             lblLane.Name = "lblLane";
             lblLane.Size = new Size(35, 21);
             lblLane.TabIndex = 33;
@@ -553,7 +482,8 @@ namespace iParkingv5_window.Forms.ReportForms
             // 
             lblVehicleType.AutoSize = true;
             lblVehicleType.BackColor = Color.Transparent;
-            lblVehicleType.Location = new Point(13, 109);
+            lblVehicleType.Location = new Point(17, 153);
+            lblVehicleType.Margin = new Padding(4, 0, 4, 0);
             lblVehicleType.Name = "lblVehicleType";
             lblVehicleType.Size = new Size(58, 21);
             lblVehicleType.TabIndex = 33;
@@ -563,7 +493,8 @@ namespace iParkingv5_window.Forms.ReportForms
             // 
             lblIdentityType.AutoSize = true;
             lblIdentityType.BackColor = Color.Transparent;
-            lblIdentityType.Location = new Point(366, 113);
+            lblIdentityType.Location = new Point(471, 158);
+            lblIdentityType.Margin = new Padding(4, 0, 4, 0);
             lblIdentityType.Name = "lblIdentityType";
             lblIdentityType.Size = new Size(80, 21);
             lblIdentityType.TabIndex = 33;
@@ -581,35 +512,194 @@ namespace iParkingv5_window.Forms.ReportForms
             ucPages1.TabIndex = 43;
             ucPages1.Visible = false;
             // 
-            // Column19
+            // toolTip1
             // 
-            Column19.HeaderText = "Ghi chú BSX";
-            Column19.Name = "Column19";
-            Column19.ReadOnly = true;
-            Column19.Width = 125;
+            toolTip1.IsBalloon = true;
             // 
-            // Column20
+            // id
             // 
-            Column20.HeaderText = "Ghi chú";
-            Column20.Name = "Column20";
-            Column20.ReadOnly = true;
-            Column20.Width = 94;
+            id.HeaderText = "id";
+            id.Name = "id";
+            id.ReadOnly = true;
+            id.Visible = false;
+            id.Width = 35;
             // 
-            // Column21
+            // Column1
             // 
-            Column21.HeaderText = "Ghi chú DVHT";
-            Column21.Name = "Column21";
-            Column21.ReadOnly = true;
-            Column21.Width = 138;
+            Column1.HeaderText = "STT";
+            Column1.Name = "Column1";
+            Column1.ReadOnly = true;
+            Column1.Width = 66;
+            // 
+            // Column2
+            // 
+            Column2.HeaderText = "Tên Định Danh";
+            Column2.Name = "Column2";
+            Column2.ReadOnly = true;
+            Column2.Visible = false;
+            Column2.Width = 142;
+            // 
+            // plate
+            // 
+            plate.HeaderText = "Biển Số Xe";
+            plate.Name = "plate";
+            plate.ReadOnly = true;
+            plate.Width = 114;
+            // 
+            // vehicle_reagion_type
+            // 
+            vehicle_reagion_type.HeaderText = "Xe VN/TQ";
+            vehicle_reagion_type.Name = "vehicle_reagion_type";
+            vehicle_reagion_type.ReadOnly = true;
+            vehicle_reagion_type.Width = 110;
+            // 
+            // timeIn
+            // 
+            timeIn.HeaderText = "Giờ Vào";
+            timeIn.Name = "timeIn";
+            timeIn.ReadOnly = true;
+            timeIn.Width = 96;
+            // 
+            // warehouse
+            // 
+            warehouse.HeaderText = "Phân loại";
+            warehouse.Name = "warehouse";
+            warehouse.ReadOnly = true;
+            warehouse.Width = 105;
+            // 
+            // warehouse_code
+            // 
+            warehouse_code.HeaderText = "Số phiếu xuất";
+            warehouse_code.Name = "warehouse_code";
+            warehouse_code.ReadOnly = true;
+            warehouse_code.Width = 135;
+            // 
+            // NoteBSX
+            // 
+            NoteBSX.HeaderText = "Ghi chú BSX";
+            NoteBSX.Name = "NoteBSX";
+            NoteBSX.ReadOnly = true;
+            NoteBSX.Width = 125;
+            // 
+            // note_3rd_1
+            // 
+            note_3rd_1.HeaderText = "Lý do chặn kích xe";
+            note_3rd_1.Name = "note_3rd_1";
+            note_3rd_1.ReadOnly = true;
+            note_3rd_1.Width = 166;
+            // 
+            // note_3rd_2
+            // 
+            note_3rd_2.HeaderText = "Ghi chú DVHT";
+            note_3rd_2.Name = "note_3rd_2";
+            note_3rd_2.ReadOnly = true;
+            note_3rd_2.Width = 138;
+            // 
+            // Column10
+            // 
+            Column10.HeaderText = "Nhóm";
+            Column10.Name = "Column10";
+            Column10.ReadOnly = true;
+            Column10.Width = 85;
+            // 
+            // Column6
+            // 
+            Column6.HeaderText = "Người Dùng";
+            Column6.Name = "Column6";
+            Column6.ReadOnly = true;
+            Column6.Width = 127;
+            // 
+            // Column4
+            // 
+            Column4.HeaderText = "Làn vào";
+            Column4.Name = "Column4";
+            Column4.ReadOnly = true;
+            Column4.Width = 95;
+            // 
+            // identityName
+            // 
+            identityName.HeaderText = "Tên Thẻ";
+            identityName.Name = "identityName";
+            identityName.ReadOnly = true;
+            identityName.Width = 93;
+            // 
+            // Column16
+            // 
+            Column16.HeaderText = "Mã Thẻ";
+            Column16.Name = "Column16";
+            Column16.ReadOnly = true;
+            Column16.Width = 92;
+            // 
+            // Column12
+            // 
+            Column12.HeaderText = "Biển số đăng ký";
+            Column12.Name = "Column12";
+            Column12.ReadOnly = true;
+            Column12.Width = 150;
+            // 
+            // Column11
+            // 
+            Column11.HeaderText = "Khách hàng";
+            Column11.Name = "Column11";
+            Column11.ReadOnly = true;
+            Column11.Width = 122;
+            // 
+            // note_3rd_3
+            // 
+            note_3rd_3.HeaderText = "Người cho phép ra";
+            note_3rd_3.Name = "note_3rd_3";
+            note_3rd_3.ReadOnly = true;
+            note_3rd_3.Width = 171;
+            // 
+            // Column5
+            // 
+            Column5.HeaderText = "Làn Vào Id";
+            Column5.Name = "Column5";
+            Column5.ReadOnly = true;
+            Column5.Visible = false;
+            Column5.Width = 113;
+            // 
+            // FileIds
+            // 
+            FileIds.HeaderText = "physicalFileIds";
+            FileIds.Name = "FileIds";
+            FileIds.ReadOnly = true;
+            FileIds.Visible = false;
+            FileIds.Width = 141;
+            // 
+            // Column13
+            // 
+            Column13.HeaderText = "customerID";
+            Column13.Name = "Column13";
+            Column13.ReadOnly = true;
+            Column13.Visible = false;
+            Column13.Width = 121;
+            // 
+            // Column14
+            // 
+            Column14.HeaderText = "registerVehicleId";
+            Column14.Name = "Column14";
+            Column14.ReadOnly = true;
+            Column14.Visible = false;
+            Column14.Width = 156;
+            // 
+            // Column3
+            // 
+            Column3.HeaderText = "Xem Thêm";
+            Column3.Name = "Column3";
+            Column3.ReadOnly = true;
+            Column3.Visible = false;
+            Column3.Width = 96;
             // 
             // frmReportIn
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1308, 543);
+            ClientSize = new Size(1682, 760);
             Controls.Add(panelData);
+            Font = new Font("Segoe UI", 12F);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(3, 2, 3, 2);
+            Margin = new Padding(4, 3, 4, 3);
             Name = "frmReportIn";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Xe đang trong bãi";
@@ -620,6 +710,7 @@ namespace iParkingv5_window.Forms.ReportForms
             ((System.ComponentModel.ISupportInitialize)dgvData).EndInit();
             panelData.ResumeLayout(false);
             panelData.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -652,26 +743,34 @@ namespace iParkingv5_window.Forms.ReportForms
         private Label lblUser;
         private ComboBox cbUser;
         private ucPages ucPages1;
+        private PictureBox pictureBox1;
+        private ToolTip toolTip1;
+        private DataGridViewTextBoxColumn Column9;
+        private Label lblTQ;
+        private Label lblVN;
+        private DataGridViewTextBoxColumn id;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
-        private DataGridViewTextBoxColumn Column7;
-        private DataGridViewTextBoxColumn Column15;
-        private DataGridViewTextBoxColumn Column16;
-        private DataGridViewTextBoxColumn Column8;
-        private DataGridViewTextBoxColumn Column5;
-        private DataGridViewTextBoxColumn Column6;
-        private DataGridViewTextBoxColumn Column9;
-        private DataGridViewTextBoxColumn Column13;
-        private DataGridViewTextBoxColumn Column14;
-        private DataGridViewTextBoxColumn Column4;
+        private DataGridViewTextBoxColumn plate;
+        private DataGridViewTextBoxColumn vehicle_reagion_type;
+        private DataGridViewTextBoxColumn timeIn;
+        private DataGridViewTextBoxColumn warehouse;
+        private DataGridViewTextBoxColumn warehouse_code;
+        private DataGridViewTextBoxColumn NoteBSX;
+        private DataGridViewTextBoxColumn note_3rd_1;
+        private DataGridViewTextBoxColumn note_3rd_2;
         private DataGridViewTextBoxColumn Column10;
+        private DataGridViewTextBoxColumn Column6;
+        private DataGridViewTextBoxColumn Column4;
+        private DataGridViewTextBoxColumn identityName;
+        private DataGridViewTextBoxColumn Column16;
         private DataGridViewTextBoxColumn Column12;
         private DataGridViewTextBoxColumn Column11;
+        private DataGridViewTextBoxColumn note_3rd_3;
+        private DataGridViewTextBoxColumn Column5;
+        private DataGridViewTextBoxColumn FileIds;
+        private DataGridViewTextBoxColumn Column13;
+        private DataGridViewTextBoxColumn Column14;
         private DataGridViewButtonColumn Column3;
-        private DataGridViewTextBoxColumn Column17;
-        private DataGridViewTextBoxColumn Column18;
-        private DataGridViewTextBoxColumn Column19;
-        private DataGridViewTextBoxColumn Column20;
-        private DataGridViewTextBoxColumn Column21;
     }
 }

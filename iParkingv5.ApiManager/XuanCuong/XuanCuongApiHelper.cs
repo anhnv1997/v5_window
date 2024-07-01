@@ -18,7 +18,7 @@ namespace iParkingv5.ApiManager.XuanCuong
             public bool isSuccess { get; set; }
             public string Message { get; set; }
         }
-        public static async Task<bool> SendParkingInfo(string eventid, string direction, string plate, DateTime time, List<string> imagePaths)
+        public static async Task<bool> SendParkingInfo(string eventid, string direction, string plate, DateTime time, List<string> imagePaths, string eventInId)
         {
             if (string.IsNullOrEmpty(url))
             {
@@ -38,6 +38,10 @@ namespace iParkingv5.ApiManager.XuanCuong
                 {"time", time.ToString("yyyy-MM-dd HH:mm:ss") },
                 {"image", string.Join(";",imagePaths) },
             };
+            if (!string.IsNullOrEmpty(eventInId))
+            {
+                parameters.Add("idInEvent", eventInId);
+            }
 
             var response = await BaseApiHelper.GeneralJsonAPIAsync(url, null, headers, parameters, timeOut, RestSharp.Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))

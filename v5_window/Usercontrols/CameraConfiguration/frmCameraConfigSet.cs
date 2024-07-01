@@ -34,7 +34,9 @@ namespace iParkingv5_window.Usercontrols.CameraConfiguration
             if (img != null)
             {
                 pic.Image = img;
-                pic.Size = img.Size;
+                pic.Location = new Point(0, 0);
+                pic.Height = this.DisplayRectangle.Height - panelActions.Height;
+                pic.Width = (int)(((float)img.Size.Width /(img.Size.Height)) * pic.Height);
             }
             this.config = GetSaveDisplayConfig(config);
             pic.Invalidate();

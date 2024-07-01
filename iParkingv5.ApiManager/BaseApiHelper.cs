@@ -179,7 +179,16 @@ namespace iParkingv6.ApiManager
                 {
                 GetToken:
                     {
-                        var _client = new RestClient("http://14.160.26.45:3000/connect/token");
+                        string loginUrl = KzParkingv5ApiHelper.server.Replace("5000", "3000");
+                        if (loginUrl[loginUrl.Length - 1] == '/')
+                        {
+                            loginUrl += "connect/token";
+                        }
+                        else
+                        {
+                            loginUrl += "/connect/token";
+                        }
+                        var _client = new RestClient(loginUrl);
                         var _request = new RestRequest
                         {
                             Method = Method.Post,
@@ -208,7 +217,7 @@ namespace iParkingv6.ApiManager
                             return await GeneralJsonAPIAsync(apiUrl, data, headerValues, requiredParams, timeOut, method);
                         }
                     }
-                    
+
                 }
                 if (!response.IsSuccessful)
                 {

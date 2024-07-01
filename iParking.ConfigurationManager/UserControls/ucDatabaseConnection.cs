@@ -35,9 +35,11 @@ namespace iParking.ConfigurationManager.UserControls
                 cbAuthenMode.SelectedIndex = cbAuthenMode.FindStringExact(this.sqlConfig.SQLAuthentication);
                 txtUsername.Text = this.sqlConfig.SQLUserName;
                 txtPassword.Text = CryptorEngine.Decrypt(this.sqlConfig.SQLPassword, true);
-
+                chbIsUseDatabase.Checked = this.sqlConfig.isUseDatabase;
                 cbDatabase.Items.Add(this.sqlConfig.SQLDatabase);
                 cbDatabase.SelectedIndex = 0;
+                cbDatabaseEX.Items.Add(this.sqlConfig.SQLDatabaseEx??"");
+                cbDatabaseEX.SelectedIndex = 0;
             }
             btnCheckConnection.Click += BtnCheckConnection_Click;
         }
@@ -45,6 +47,7 @@ namespace iParking.ConfigurationManager.UserControls
         private async void BtnCheckConnection_Click(object? sender, EventArgs e)
         {
             string oldaDatabaseName = cbDatabase.Text;
+            string oldaDatabaseNameEx = cbDatabaseEX.Text;
             connection = new SqlConnection(GetConnectStr(txtServerName.Text, "master", cbAuthenMode.Text, txtUsername.Text, txtPassword.Text));
             try
             {
@@ -58,8 +61,10 @@ namespace iParking.ConfigurationManager.UserControls
                 {
                     string databaseName = dataReader["name"].ToString();
                     cbDatabase.Items.Add(databaseName);
+                    cbDatabaseEX.Items.Add(databaseName);
                 }
                 cbDatabase.SelectedIndex = cbDatabase.FindStringExact(oldaDatabaseName);
+                cbDatabaseEX.SelectedIndex = cbDatabaseEX.FindStringExact(oldaDatabaseNameEx);
                 MessageBox.Show("Kết nối thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -80,6 +85,7 @@ namespace iParking.ConfigurationManager.UserControls
             string login = txtUsername.Text;
             string password = txtPassword.Text;
             string databaseName = cbDatabase.Text;
+            string databaseNameEx = cbDatabaseEX.Text;
             string authenticationMode = cbAuthenMode.Text;
             bool isUseDatabase = chbIsUseDatabase.Checked;
             if (isUseDatabase)
@@ -102,10 +108,10 @@ namespace iParking.ConfigurationManager.UserControls
                     return null;
                 }
 
-                SQLConn sqlconn = new SQLConn("", serverName, databaseName, login, CryptorEngine.Encrypt(password, true), authenticationMode, true);
+                SQLConn sqlconn = new SQLConn("", serverName, databaseName, login, CryptorEngine.Encrypt(password, true), authenticationMode, true, databaseNameEx);
                 return sqlconn;
             }
-            return new SQLConn("", serverName, databaseName, login, CryptorEngine.Encrypt(password, true), authenticationMode, false);
+            return new SQLConn("", serverName, databaseName, login, CryptorEngine.Encrypt(password, true), authenticationMode, false, databaseNameEx);
         }
         #endregion
 

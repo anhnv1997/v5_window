@@ -8,21 +8,18 @@ namespace iPakrkingv5.Controls.Controls.Buttons
         public BtnDelete() : base()
         {
             this.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            //this.BorderStyle = BorderStyle.Fixed3D;
         }
 
         private void BtnCancel_MouseLeave(object? sender, EventArgs e)
         {
             this.Cursor = Cursors.Default;
             this.ForeColor = Color.Black;
-            //this.BorderStyle = BorderStyle.Fixed3D;
             this.Image = Properties.Resources.NO_0_0_0_32px;
         }
         private void BtnCancel_MouseEnter(object? sender, EventArgs e)
         {
             this.Cursor = Cursors.Hand;
             this.ForeColor = Color.Red;
-            //this.BorderStyle = BorderStyle.FixedSingle;
             this.Image = Properties.Resources.NO_255_255_255_32px;
         }
 

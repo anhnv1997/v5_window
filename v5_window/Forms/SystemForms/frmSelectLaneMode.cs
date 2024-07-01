@@ -19,7 +19,15 @@ namespace iParkingv5_window.Forms.SystemForms
         {
             InitializeComponent();
             this.Load += FrmSelectLaneMode_Load;
+            this.FormClosing += FrmSelectLaneMode_FormClosing;
         }
+
+        private void FrmSelectLaneMode_FormClosing(object? sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+            Environment.Exit(0);
+        }
+
         private void FrmSelectLaneMode_Load(object? sender, EventArgs e)
         {
             btnOk = new BtnOk();
@@ -100,6 +108,8 @@ namespace iParkingv5_window.Forms.SystemForms
 
         private void BtnOk_Click(object? sender, EventArgs e)
         {
+            this.FormClosing -= FrmSelectLaneMode_FormClosing;
+
             timer1.Enabled = false;
             lblStatus.Visible = false;
 

@@ -1,9 +1,9 @@
 ﻿using iParkingv5.Objects;
 using iParkingv5.Objects.ScaleObjects;
 using iParkingv6.ApiManager;
+using OpenCvSharp;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -63,7 +63,7 @@ namespace iParkingv5.ApiManager.KzScaleApis
                                                          List<string> imageKeys, string updateTrafficId = "")
         {
             string apiUrl = server + KzScaleUrlManagement.CreateWeighingAction();
-
+            //weight = new Random().Next(10000, 50000);
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
@@ -79,7 +79,7 @@ namespace iParkingv5.ApiManager.KzScaleApis
                 { "user_action", StaticPool.userId },
                 { "user_code",StaticPool.user_name },
                 { "list_image", string.Join(";", imageKeys.ToArray()) },
-                { "update_traffic_id", updateTrafficId},
+                //{ "update_traffic_id", updateTrafficId},
             };
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
@@ -127,6 +127,7 @@ namespace iParkingv5.ApiManager.KzScaleApis
             }
             return null;
         }
+
         public static async Task<List<WeighingDetail>> GetWeighingActionDetails(DateTime startTime, DateTime endTime, string plateNumber = "",
                                         string user_code = "", string weighingFormId = "", int is_weighing_bill = 0)
         {
@@ -296,6 +297,7 @@ namespace iParkingv5.ApiManager.KzScaleApis
             }
             return string.Empty;
         }
+
         #endregion End EInvoice
 
         #region Privaet Function

@@ -12,7 +12,7 @@ namespace TESTCAM
         private void button1_Click(object sender, EventArgs e)
         {
             Kztek.Cameras.Camera cameras = new Kztek.Cameras.Camera();
-            cameras.CameraType = Kztek.Cameras.CameraType.Test;
+            cameras.CameraType = Kztek.Cameras.CameraType.Vivantek;
             Kztek.Cameras.Camera cam_du_phong = new Kztek.Cameras.Camera();
             cam_du_phong.VideoSource = textBox1.Text;
             cam_du_phong.HttpPort =int.Parse(textBox7.Text);

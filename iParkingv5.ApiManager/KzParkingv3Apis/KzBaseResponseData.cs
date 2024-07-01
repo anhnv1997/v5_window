@@ -1,13 +1,4 @@
-﻿using iParkingv6.ApiManager.KzParkingv3Apis.Responses;
-using Kztek.Tools;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
-using static Kztek.Tools.LogHelper;
-
-namespace iParkingv6.ApiManager.KzParkingv3Apis
+﻿namespace iParkingv6.ApiManager.KzParkingv3Apis
 {
     public class KzBaseResponseData<T> where T : class
     {

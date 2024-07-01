@@ -91,9 +91,6 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\D
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.Controller.exe
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParking.ConfigurationManager.exe
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5_window.exe
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\LogFormat\log.html
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\LogFormat\log_item.html
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\LogFormat\style.css
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5_window.dll.config
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5_window.deps.json
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5_window.runtimeconfig.json
@@ -108,7 +105,6 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\D
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\OpenCvSharp.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\RabbitMQ.Client.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\RestSharp.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\RestSharp.Authenticators.Digest.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\RtspClientSharp.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\SpreadsheetLight.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\System.CodeDom.dll
@@ -171,7 +167,6 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\D
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\DarknetYolo.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Cameras.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.RtspPlayer.pdb
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Tool.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\IPaking.Ultility.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iPakrkingv5.Controls.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParking.ConfigurationManager.pdb
@@ -181,7 +176,6 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\D
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.LedDisplay.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.Lpr.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.Objects.pdb
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\DahuaLib.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Scale_net6.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\AForge.Imaging.xml
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\AForge.Video.DirectShowEx.pdb
@@ -401,3 +395,16 @@ F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iPark
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.FeeTest.exe
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.FeeTest.dll
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.FeeTest.pdb
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.FeeTest.deps.json
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.FeeTest.runtimeconfig.json
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.FeeTest.exe
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.FeeTest.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.FeeTest.pdb
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\LogFormat\log.html
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\LogFormat\log_item.html
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\LogFormat\style.css
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\RestSharp.Authenticators.Digest.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Tool.pdb
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.frmEditNote.resources
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.frmEditPlate.resources
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.frmSelectWarehouseType.resources

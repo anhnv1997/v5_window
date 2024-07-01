@@ -1,4 +1,5 @@
 ﻿using iParkingv5_window.Forms.DataForms;
+using Kztek.Tools;
 
 namespace iParkingv5_window.Usercontrols
 {
@@ -96,6 +97,7 @@ namespace iParkingv5_window.Usercontrols
             {
                 return;
             }
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Xem sk " + this.eventId);
             //if (this.isEventIn)
             {
                 var frm = new frmEventInDetail(this.eventId, plateNumber, vehicleGroupId, IdentityGroupId, datetimeIn, picDirs,

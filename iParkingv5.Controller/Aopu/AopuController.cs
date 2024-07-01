@@ -377,7 +377,8 @@ namespace iParkingv5.Controller.Aopu
             {
                 int a = (int)(Convert.ToInt64(cardNumberInt, 10) / 65536);
                 int b = (int)(Convert.ToInt64(cardNumberInt, 10) - a * 65536);
-                e.PreferCard = a.ToString("00000") + ":" + b.ToString("00000");
+                //e.PreferCard = a.ToString("00000") + ":" + b.ToString("00000");
+                e.PreferCard =cardNumberHex;
             }
             e.ReaderIndex = Regex.IsMatch(readerIndex, @"^\d+$") ? Convert.ToInt32(readerIndex) : -1;
             OnCardEvent(e);
@@ -391,11 +392,11 @@ namespace iParkingv5.Controller.Aopu
         }
         public bool OpenDoor1()
         {
-            return TcpipObj.OpenDoorLong(0);
+            return TcpipObj.Opendoor(0);
         }
         public bool OpenDoor2()
         {
-            return TcpipObj.OpenDoorLong(1);
+            return TcpipObj.Opendoor(1);
         }
 
         public Task<bool> AddFinger(List<string> fingerDatas)

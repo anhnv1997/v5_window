@@ -1,17 +1,11 @@
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\iParkingv5.Controller.exe
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\LogFormat\log.html
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\LogFormat\log_item.html
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\LogFormat\style.css
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\iParkingv5.Controller.deps.json
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\iParkingv5.Controller.runtimeconfig.json
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\iParkingv5.Controller.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\iParkingv5.Controller.pdb
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\Microsoft.Win32.SystemEvents.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\Newtonsoft.Json.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\OpenCvSharp.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\RestSharp.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\RestSharp.Authenticators.Digest.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\System.Configuration.ConfigurationManager.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\System.Data.OleDb.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\System.Data.SqlClient.dll
@@ -19,8 +13,6 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\System.Drawing.Common.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\System.IO.Ports.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\System.Security.Cryptography.ProtectedData.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\System.Text.Encodings.Web.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\System.Text.Json.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\runtimes\linux-arm\native\libSystem.IO.Ports.Native.so
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\runtimes\linux-arm64\native\libSystem.IO.Ports.Native.so
@@ -36,7 +28,6 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Diagnostics.PerformanceCounter.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\runtimes\unix\lib\net6.0\System.IO.Ports.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.IO.Ports.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\Aopu_Controller.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\DahuaLib.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\Ingressus.dll
@@ -46,8 +37,6 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\Kztek.Tool.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\NXT.Net6.LPR_AI.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\DarknetYolo.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\DahuaLib.pdb
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\Kztek.Tool.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\iParkingv5.Objects.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\iParkingv5.Lpr.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\obj\x64\Debug\net6.0-windows\iParkingv5.Controller.csproj.AssemblyReference.cache
@@ -134,3 +123,13 @@ F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-w
 F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Controller\obj\x64\Debug\net6.0-windows\iParkingv5.Controller.csproj.CopyComplete
 F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Controller\obj\x64\Debug\net6.0-windows\iParkingv5.Controller.genruntimeconfig.cache
 F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Controller\obj\x64\Debug\net6.0-windows\ref\iParkingv5.Controller.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\LogFormat\log.html
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\LogFormat\log_item.html
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\LogFormat\style.css
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\RestSharp.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\RestSharp.Authenticators.Digest.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\System.Text.Encodings.Web.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\System.Text.Json.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\Kztek.Tool.pdb

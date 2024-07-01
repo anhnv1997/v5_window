@@ -202,5 +202,10 @@ namespace IParkingv5.RegisterCard
 
         }
         #endregion End Private Function
+
+        private void btnStart_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

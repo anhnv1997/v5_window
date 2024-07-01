@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace iParkingv5.ApiManager.KzParkingv5Apis
+﻿namespace iParkingv5.ApiManager.KzParkingv5Apis
 {
     internal class KzParkingv5BaseResponse
     {

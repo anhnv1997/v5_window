@@ -2,7 +2,7 @@
 {
     partial class ucCameraView
     {
-    
+
 
         #region Component Designer generated code
 
@@ -22,33 +22,36 @@
             // 
             lblCameraName.BackColor = Color.MidnightBlue;
             lblCameraName.Dock = DockStyle.Top;
-            lblCameraName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
+            lblCameraName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             lblCameraName.ForeColor = SystemColors.ButtonHighlight;
             lblCameraName.Location = new Point(0, 0);
             lblCameraName.Name = "lblCameraName";
-            lblCameraName.Size = new Size(597, 33);
+            lblCameraName.Size = new Size(522, 25);
             lblCameraName.TabIndex = 0;
             lblCameraName.Text = "label1";
             lblCameraName.TextAlign = ContentAlignment.MiddleLeft;
+            lblCameraName.Visible = false;
             // 
             // panelCameraView
             // 
             panelCameraView.BorderStyle = BorderStyle.FixedSingle;
             panelCameraView.Dock = DockStyle.Fill;
-            panelCameraView.Location = new Point(0, 33);
+            panelCameraView.Location = new Point(0, 25);
+            panelCameraView.Margin = new Padding(3, 2, 3, 2);
             panelCameraView.Name = "panelCameraView";
-            panelCameraView.Size = new Size(597, 330);
+            panelCameraView.Size = new Size(522, 247);
             panelCameraView.TabIndex = 1;
             // 
             // ucCameraView
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BorderStyle = BorderStyle.FixedSingle;
             Controls.Add(panelCameraView);
             Controls.Add(lblCameraName);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "ucCameraView";
-            Size = new Size(597, 363);
+            Size = new Size(522, 272);
             ResumeLayout(false);
         }
 

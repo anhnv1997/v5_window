@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Printing;
-using System.Text;
+﻿using System.Collections.Generic;
 using static iParkingv5.ApiManager.KzParkingv5Apis.Filter;
 
 namespace iParkingv5.ApiManager.KzParkingv5Apis
@@ -103,8 +100,15 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             {
                 { mainOperation.ToString(), filterModels }
             };
-
-            return Newtonsoft.Json.JsonConvert.SerializeObject(filterData);
+            var temp = new
+            {
+                pageIndex = pageIndex,
+                pageSize = pageSize,
+                filter = Newtonsoft.Json.JsonConvert.SerializeObject(filterData),
+                sorts = "",
+                fields = new List<object>()
+            };
+            return Newtonsoft.Json.JsonConvert.SerializeObject(temp);
         }
         public static string CreateFilter(FilterModel filterModel, EmMainOperation mainOperation = EmMainOperation.and,
                                           int _pageIndex = 0, int _pageSize = 100)
@@ -133,7 +137,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 { mainOperation.ToString(), new List<FilterModel>(){ new FilterModel(queryKey,pageSearchType, searchValue,operation) } }
             };
 
-            string _filter =  Newtonsoft.Json.JsonConvert.SerializeObject(filterData);
+            string _filter = Newtonsoft.Json.JsonConvert.SerializeObject(filterData);
             var temp = new
             {
                 pageIndex = _pageIndex,

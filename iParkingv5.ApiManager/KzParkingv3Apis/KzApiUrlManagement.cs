@@ -1,7 +1,4 @@
 ﻿using iParkingv5.Objects.Invoices;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace iParkingv6.ApiManager.KzParkingv3Apis
 {

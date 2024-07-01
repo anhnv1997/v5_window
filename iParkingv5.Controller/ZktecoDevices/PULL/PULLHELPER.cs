@@ -376,7 +376,6 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
         public int GetDeviceParam(IntPtr userID, ref byte buffer, int buffersize, string itemvalues)
         {
             return PULLSDK.GetDeviceParam(userID, ref buffer, buffersize, itemvalues);
-
         }
 
         public int PullLastError()

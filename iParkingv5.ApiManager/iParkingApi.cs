@@ -20,6 +20,9 @@ namespace iParkingv5.ApiManager
         Task<string> GetFeeCalculate(string dateTimeIn, string dateTimeOut, string identityGroupID);
         Task GetUserInfor();
         Task<Tuple<List<User>, string>> GetAllUsers();
+        #region System Config
+        Task<SystemConfig> GetSystemConfigAsync();
+        #endregion
 
         #region Computer
         Task<Tuple<List<Computer>, string>> GetComputersAsync();
@@ -92,9 +95,9 @@ namespace iParkingv5.ApiManager
         #endregion End Customer Group
 
         #region Event In
-        Task<bool> UpdateEventInPlateAsync(string eventId, string newPlate);
+        Task<bool> UpdateEventInPlateAsync(string eventId, string newPlate, string oldPlate);
         Task<AddEventInResponse> PostCheckInAsync(
-            string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, 
+            string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys,
             bool isForce = false, RegisteredVehicle? registeredVehicle = null, string note = "");
         Task<DataTable> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
                                     string identityGroupId, string vehicleTypeId, string laneId, string user,
@@ -102,7 +105,9 @@ namespace iParkingv5.ApiManager
         #endregion End Event In
 
         #region Event Out
-        Task<bool> UpdateEventOutPlate(string eventId, string newPlate);
+        Task<string> GetLastEventOutIdentityGroupIdByPlateNumber(string plateNumber);
+
+        Task<bool> UpdateEventOutPlate(string eventId, string newPlate, string oldPlate);
         Task<DataTable> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000);
         Task<AddEventOutResponse> PostCheckOutAsync(string _laneId, string _plateNumber, Identity? identitiy, List<string> imageKeys, bool isForce);
         Task<bool> CommitOutAsync(AddEventOutResponse eventOut);
@@ -118,9 +123,11 @@ namespace iParkingv5.ApiManager
         #endregion End Alarm
 
         #region EInvoice
-        Task<InvoiceDto> CreateEinvoice(long price, string plateNumber, DateTime datetimeIn, DateTime datetimeOut, string eventOutId);
-        Task<InvoiceData> GetInvoiceData(string orderId, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL);
-        Task<List<InvoiceDataSearch>> GetMultipleInvoiceData(List<string> orderIds, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL);
+        Task<InvoiceResponse> CreateEinvoice(long price, string plateNumber, DateTime datetimeIn, DateTime datetimeOut, string eventOutId, bool isSendNow = true, string cardGroupName = "");
+        Task<FileInfor> GetInvoiceData(string orderId, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL);
+        Task<List<InvoiceResponse>> GetMultipleInvoiceData(DateTime startTime, DateTime endTime, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL);
+        Task<List<InvoiceResponse>> getPendingEInvoice(DateTime startTime, DateTime endTime);
+        Task<bool> sendPendingEInvoice(string orderId);
         #endregion End Einvoice
 
         #region Sumary
