@@ -16,6 +16,7 @@ using static Kztek.Tools.LogHelper;
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
+using static iParkingv5.ApiManager.KzParkingv5Apis.Filter;
 
 namespace v6_window
 {
@@ -25,7 +26,7 @@ namespace v6_window
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        static  void Main()
+        static void Main()
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
@@ -185,7 +186,7 @@ namespace v6_window
                     if (realCurrentFiles.Contains(fileName))
                     {
                         string currentFilePath = currentVersionFiles.Where(e => e.Contains(fileName)).FirstOrDefault() ?? "";
-                         string updateFilePath = updatefiles[i];
+                        string updateFilePath = updatefiles[i];
 
                         string? currentFilePathVersion = null;
                         string? updateFilePathVersion = null;

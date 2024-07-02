@@ -25,6 +25,13 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             this.QueryValue = queryValue;
             this.Operation = operation.ToString().Replace("_", "");
         }
+        public FilterModel(string queryKey, EmPageSearchType queryType, string queryValue, EmOperation operation)
+        {
+            this.QueryKey = queryKey;
+            this.QueryType = queryType.ToString();
+            this.QueryValue = queryValue;
+            this.Operation = operation.ToString().Replace("_", "");
+        }
     }
 
     public class Filter
@@ -91,6 +98,32 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             public const string ERROR_VALIDATION_NOT_ACTIVE = "ERROR.ENTITY.VALIDATION.FIELD_NOT_ACTIVE";
 
             public const string ERROR_VALIDATION_INVALID = "ERROR.ENTITY.VALIDATION.FIELD_INVALID";
+        }
+
+        public static Dictionary<string, List<FilterModel>> CreateFilterItem(List<FilterModel> filterModels, EmMainOperation mainOperation = EmMainOperation.and)
+        {
+            var filterData = new Dictionary<string, List<FilterModel>>
+            {
+                { mainOperation.ToString(), filterModels }
+            };
+            return filterData;
+        }
+
+        public static string CreateFilter(List<Dictionary<string, List<FilterModel>>> filterItems, EmMainOperation mainOperation = EmMainOperation.and, int pageIndex = 0, int pageSize = 100)
+        {
+            var filterData = new Dictionary<string, List<Dictionary<string, List<FilterModel>>>>
+            {
+                { mainOperation.ToString(), filterItems }
+            };
+            var temp = new
+            {
+                pageIndex = pageIndex,
+                pageSize = pageSize,
+                filter = Newtonsoft.Json.JsonConvert.SerializeObject(filterData),
+                sorts = "",
+                fields = new List<object>()
+            };
+            return Newtonsoft.Json.JsonConvert.SerializeObject(temp);
         }
 
         public static string CreateFilter(List<FilterModel> filterModels, EmMainOperation mainOperation = EmMainOperation.and,

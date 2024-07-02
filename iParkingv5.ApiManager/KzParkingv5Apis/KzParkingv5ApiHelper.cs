@@ -737,41 +737,31 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                                     int pageIndex = 1, int pageSize = 100)
         {
             StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.GetBySqlCmd;
-            string cmd = string.Empty;
-            cmd += "SELECT * FROM index_event_in ";
-            cmd += $"WHERE status != 'Exited' AND (createdutc Between '{startTime.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.000Z}' AND '{endTime.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.000Z}') ";
-            if (!string.IsNullOrEmpty(laneId))
-            {
-                cmd += $@"AND laneid = '{laneId.ToUpper()}' ";
-            }
-            if (!string.IsNullOrEmpty(identityGroupId))
-            {
-                cmd += $@"AND identitygroupid = '{identityGroupId.ToUpper()}' ";
-            }
-            if (!string.IsNullOrEmpty(vehicleTypeId))
-            {
-                cmd += $@"AND vehicletypeid = '{vehicleTypeId.ToUpper()}' ";
-            }
-            if (!string.IsNullOrEmpty(user))
-            {
-                cmd += $@"AND createdby = '{user}' ";
-            }
-            if (!string.IsNullOrEmpty(keyword))
-            {
-                cmd += $@"AND (identityname like '%{keyword}%' OR platenumber like '%{keyword}%' OR identitycode like '%{keyword}%')";
-            }
-            cmd += " ORDER BY createdutc desc";
-            //Gửi API
+            string apiUrl = server + "event-in/search";
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
                 { "Authorization","Bearer " + token  }
             };
-            var data = new
-            {
-                query = cmd
-            };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
+
+
+            var filter1 = Filter.CreateFilterItem(new List<FilterModel>()
+                        {
+                            new FilterModel("createdUtc", EmPageSearchType.DATETIME, DateTime.Now.ToUniversalTime().ToString("2023-MM-ddTHH:mm:ss:0000"), EmOperation._gte),
+                            new FilterModel("createdUtc", EmPageSearchType.DATETIME, DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"),  EmOperation._lte),
+                            new FilterModel("lane.id", EmPageSearchType.TEXT, laneId.ToUpper(),  EmOperation._contains),
+                            new FilterModel("identityGroup.id", EmPageSearchType.TEXT, identityGroupId.ToUpper(),  EmOperation._contains),
+                            new FilterModel("identityGroup.vehicleType ", EmPageSearchType.TEXT, vehicleTypeId.ToUpper(),  EmOperation._contains),
+                            new FilterModel("createdBy", EmPageSearchType.TEXT, user,  EmOperation._contains),
+                        }, EmMainOperation.and);
+            var filter2 = Filter.CreateFilterItem(new List<FilterModel>()
+                            {
+                                new FilterModel("plateNumber", "TEXT", keyword, "contains"),
+                                new FilterModel("identity.code", "TEXT", keyword, "contains"),
+                                new FilterModel("identity.name", "TEXT", keyword, "contains"),
+                            }, EmMainOperation.or);
+            var filter = Filter.CreateFilter(new List<Dictionary<string, List<FilterModel>>>() { filter1, filter2 });
+
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, RestSharp.Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
                 // Deserialize JSON to JObject
@@ -907,43 +897,30 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         public async Task<DataTable> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000)
         {
             StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.GetBySqlCmd;
-            string cmd = string.Empty;
-            cmd += "SELECT * FROM index_event_out ";
-            cmd += $"WHERE (createdutc Between '{startTime.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.000Z}' AND '{endTime.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.000Z}') ";
-            if (!string.IsNullOrEmpty(laneId))
-            {
-                cmd += $@"AND (laneid = '{laneId.ToUpper()}' or eventinlaneid = '{laneId.ToUpper()}')  ";
-            }
-            if (!string.IsNullOrEmpty(identityGroupId))
-            {
-                cmd += $@"AND identitygroupid = '{identityGroupId.ToUpper()}' ";
-            }
-            if (!string.IsNullOrEmpty(vehicleTypeId))
-            {
-                cmd += $@"AND vehicletypeid = '{vehicleTypeId.ToUpper()}' ";
-            }
-            if (!string.IsNullOrEmpty(user))
-            {
-                cmd += $@"AND (eventincreatedby = '{user}' or createdby = '{user}' ) ";
-            }
-            if (!string.IsNullOrEmpty(keyword))
-            {
-                cmd += $@"AND ((identityname like '%{keyword}%' OR platenumber like '%{keyword}%' OR identitycode like '%{keyword}%') OR
-                               (eventinidentityname like '%{keyword}%' OR platenumber like '%{keyword}%' OR eventinidentitycode like '%{keyword}%'))";
-            }
-            cmd += "ORDER BY createdutc desc";
-            //Gửi API
+            string apiUrl = server + "event-out/search";
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
                 { "Authorization","Bearer " + token  }
             };
-            var data = new
-            {
-                query = cmd,
-                fetch_size = pageSize,
-            };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
+
+
+            var filter1 = Filter.CreateFilterItem(new List<FilterModel>()
+                        {
+                            new FilterModel("createdUtc", EmPageSearchType.DATETIME, DateTime.Now.ToUniversalTime().ToString("2023-MM-ddTHH:mm:ss:0000"), EmOperation._gte),
+                            new FilterModel("createdUtc", EmPageSearchType.DATETIME, DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"),  EmOperation._lte),
+                            new FilterModel("lane.id", EmPageSearchType.TEXT, laneId.ToUpper(),  EmOperation._contains),
+                            new FilterModel("identityGroup.id", EmPageSearchType.TEXT, identityGroupId.ToUpper(),  EmOperation._contains),
+                            new FilterModel("identityGroup.vehicleType ", EmPageSearchType.TEXT, vehicleTypeId.ToUpper(),  EmOperation._contains),
+                            new FilterModel("createdBy", EmPageSearchType.TEXT, user,  EmOperation._contains),
+                        }, EmMainOperation.and);
+            var filter2 = Filter.CreateFilterItem(new List<FilterModel>()
+                            {
+                                new FilterModel("plateNumber", "TEXT", keyword, "contains"),
+                                new FilterModel("identity.code", "TEXT", keyword, "contains"),
+                                new FilterModel("identity.name", "TEXT", keyword, "contains"),
+                            }, EmMainOperation.or);
+            var filter = Filter.CreateFilter(new List<Dictionary<string, List<FilterModel>>>() { filter1, filter2 });
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, RestSharp.Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
                 // Deserialize JSON to JObject
@@ -1746,6 +1723,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         /// <returns></returns>
         public async Task<SumaryCountEvent> SummaryEventAsync()
         {
+            return new SumaryCountEvent();
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.GetBySqlCmd;
             DateTime startTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
