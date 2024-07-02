@@ -52,6 +52,7 @@ namespace iParkingv5_window.Usercontrols
                                           string identityGroupId, DateTime datetimeIn, List<string> picDirs,
                                           string customerId, string registerVehicleId, string laneId, string identityId, bool isEventIn)
         {
+            return;
             try
             {
                 this.isEventIn = isEventIn;

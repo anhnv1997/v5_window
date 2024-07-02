@@ -24,10 +24,7 @@
             tableCamera = new TableLayoutPanel();
             label1 = new Label();
             tablePic = new TableLayoutPanel();
-            picOther2 = new MovablePictureBox();
             picVehicleImage = new MovablePictureBox();
-            panel2 = new Panel();
-            picOther1 = new MovablePictureBox();
             panel3 = new Panel();
             picOverviewImage = new MovablePictureBox();
             splitterCamera = new Splitter();
@@ -108,10 +105,7 @@
             splitContainerMain.SuspendLayout();
             tableCamera.SuspendLayout();
             tablePic.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picOther2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picVehicleImage).BeginInit();
-            panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picOther1).BeginInit();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picOverviewImage).BeginInit();
             panelAllCameras.SuspendLayout();
@@ -240,12 +234,9 @@
             // tablePic
             // 
             tablePic.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
-            tablePic.ColumnCount = 2;
+            tablePic.ColumnCount = 1;
             tablePic.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tablePic.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tablePic.Controls.Add(picOther2, 1, 1);
             tablePic.Controls.Add(picVehicleImage, 0, 1);
-            tablePic.Controls.Add(panel2, 1, 0);
             tablePic.Controls.Add(panel3, 0, 0);
             tablePic.Dock = DockStyle.Fill;
             tablePic.Location = new Point(2, 39);
@@ -257,21 +248,6 @@
             tablePic.Size = new Size(546, 355);
             tablePic.TabIndex = 3;
             // 
-            // picOther2
-            // 
-            picOther2.BackColor = Color.WhiteSmoke;
-            picOther2.Dock = DockStyle.Fill;
-            picOther2.ErrorImage = null;
-            picOther2.Image = (Image)resources.GetObject("picOther2.Image");
-            picOther2.Location = new Point(273, 178);
-            picOther2.Margin = new Padding(0);
-            picOther2.Name = "picOther2";
-            picOther2.Size = new Size(272, 176);
-            picOther2.SizeMode = PictureBoxSizeMode.StretchImage;
-            picOther2.TabIndex = 5;
-            picOther2.TabStop = false;
-            picOther2.LoadCompleted += Pic_LoadCompleted;
-            // 
             // picVehicleImage
             // 
             picVehicleImage.BackColor = Color.WhiteSmoke;
@@ -281,37 +257,11 @@
             picVehicleImage.Location = new Point(1, 178);
             picVehicleImage.Margin = new Padding(0);
             picVehicleImage.Name = "picVehicleImage";
-            picVehicleImage.Size = new Size(271, 176);
+            picVehicleImage.Size = new Size(544, 176);
             picVehicleImage.SizeMode = PictureBoxSizeMode.StretchImage;
             picVehicleImage.TabIndex = 5;
             picVehicleImage.TabStop = false;
             picVehicleImage.LoadCompleted += Pic_LoadCompleted;
-            // 
-            // panel2
-            // 
-            panel2.BackColor = SystemColors.Control;
-            panel2.Controls.Add(picOther1);
-            panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(273, 1);
-            panel2.Margin = new Padding(0);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(272, 176);
-            panel2.TabIndex = 0;
-            // 
-            // picOther1
-            // 
-            picOther1.BackColor = Color.WhiteSmoke;
-            picOther1.Dock = DockStyle.Fill;
-            picOther1.ErrorImage = null;
-            picOther1.Image = (Image)resources.GetObject("picOther1.Image");
-            picOther1.Location = new Point(0, 0);
-            picOther1.Margin = new Padding(0);
-            picOther1.Name = "picOther1";
-            picOther1.Size = new Size(272, 176);
-            picOther1.SizeMode = PictureBoxSizeMode.StretchImage;
-            picOther1.TabIndex = 5;
-            picOther1.TabStop = false;
-            picOther1.LoadCompleted += Pic_LoadCompleted;
             // 
             // panel3
             // 
@@ -321,7 +271,7 @@
             panel3.Location = new Point(1, 1);
             panel3.Margin = new Padding(0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(271, 176);
+            panel3.Size = new Size(544, 176);
             panel3.TabIndex = 1;
             // 
             // picOverviewImage
@@ -333,7 +283,7 @@
             picOverviewImage.Location = new Point(0, 0);
             picOverviewImage.Margin = new Padding(0);
             picOverviewImage.Name = "picOverviewImage";
-            picOverviewImage.Size = new Size(271, 176);
+            picOverviewImage.Size = new Size(544, 176);
             picOverviewImage.SizeMode = PictureBoxSizeMode.StretchImage;
             picOverviewImage.TabIndex = 5;
             picOverviewImage.TabStop = false;
@@ -1200,10 +1150,7 @@
             splitContainerMain.ResumeLayout(false);
             tableCamera.ResumeLayout(false);
             tablePic.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)picOther2).EndInit();
             ((System.ComponentModel.ISupportInitialize)picVehicleImage).EndInit();
-            panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)picOther1).EndInit();
             panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picOverviewImage).EndInit();
             panelAllCameras.ResumeLayout(false);
@@ -1259,7 +1206,6 @@
         private DataGridView dgvEventContent;
         private iPakrkingv5.Controls.Controls.Labels.lblResult lblResult;
         private MovablePictureBox picLprImage;
-        private Panel panel2;
         private MovablePictureBox picOverviewImage;
         private Panel panel3;
         private MovablePictureBox picVehicleImage;
@@ -1304,8 +1250,6 @@
         private Panel panelNote;
         private TableLayoutPanel tableLayoutPanelNote;
         private GroupBox groupBox1;
-        private MovablePictureBox picOther2;
-        private MovablePictureBox picOther1;
         private Panel panel9;
         private Label label14;
         private Label label13;

@@ -634,7 +634,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return false;
         }
-        public async Task<AddEventInResponse> PostCheckInAsync(
+        public async Task<EventInData> PostCheckInAsync(
             string _laneId, string _plateNumber, Identity? identity, Dictionary<emParkingImageType, List<byte>> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null, string _note = "")
         {
             if (identity == null)
@@ -647,21 +647,19 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
         }
 
-
-
-        public async Task<AddEventInResponse> PostCheckInByIdentityAsync(string _laneId, string _plateNumber, Identity? identity,
+        public async Task<EventInData> PostCheckInByIdentityAsync(string _laneId, string _plateNumber, Identity? identity,
                                                                          Dictionary<emParkingImageType, List<byte>> imageDatas, bool isForce = false,
                                                                          RegisteredVehicle? registeredVehicle = null, string _note = "")
         {
             StandardlizeServerName();
 
-            var options = new RestClientOptions(server)
+            var options = new RestClientOptions("http://192.168.21.145:5000")
             {
                 MaxTimeout = 10000,
             };
             var client = new RestClient(options);
             var request = new RestRequest("/event-in", Method.Post);
-            request.AddHeader("Authorization", "Bearer" + token);
+            request.AddHeader("Authorization", "Bearer " + token);
             request.AlwaysMultipartFormData = true;
             request.AddParameter("laneId", _laneId);
             request.AddParameter("identityCode", identity.Code);
@@ -672,8 +670,11 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             int i = 0;
             foreach (KeyValuePair<emParkingImageType, List<byte>> kvp in imageDatas)
             {
-                request.AddFile($"images[{i}].File", kvp.Value.ToArray(), "x.jpg");
-                request.AddParameter($"images[{i}].Type", (int)kvp.Key);
+                if (kvp.Value.Count > 0)
+                {
+                    request.AddFile($"images[{i}].File", kvp.Value.ToArray(), "x.jpg");
+                    request.AddParameter($"images[{i}].Type", (int)kvp.Key);
+                }
                 i++;
             }
             RestResponse response = await client.ExecuteAsync(request);
@@ -681,7 +682,11 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             {
                 try
                 {
-                    AddEventInResponse addEventInResponse = NewtonSoftHelper<AddEventInResponse>.GetBaseResponse(response.Content);
+                    EventInData addEventInResponse = NewtonSoftHelper<EventInData>.GetBaseResponse(response.Content);
+                    //if (string.IsNullOrEmpty(addEventInResponse.Id))
+                    //{
+                    //    return null;
+                    //}
                     return addEventInResponse;
                 }
                 catch (Exception)
@@ -690,7 +695,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return null;
         }
-        public async Task<AddEventInResponse> PostCheckInByPlateAsync(string _laneId, string _plateNumber, Identity? identity,
+        public async Task<EventInData> PostCheckInByPlateAsync(string _laneId, string _plateNumber, Identity? identity,
                                                                       Dictionary<emParkingImageType, List<byte>> imageDatas, bool isForce = false,
                                                                       RegisteredVehicle? registeredVehicle = null,
                                                                       string _note = "")
@@ -703,7 +708,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             };
             var client = new RestClient(options);
             var request = new RestRequest("/event-in", Method.Post);
-            request.AddHeader("Authorization", "Bearer" + token);
+            request.AddHeader("Authorization", "Bearer " + token);
             request.AlwaysMultipartFormData = true;
             request.AddParameter("laneId", _laneId);
             request.AddParameter("identityCode", _plateNumber);
@@ -723,7 +728,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             {
                 try
                 {
-                    AddEventInResponse addEventInResponse = NewtonSoftHelper<AddEventInResponse>.GetBaseResponse(response.Content);
+                    EventInData addEventInResponse = NewtonSoftHelper<EventInData>.GetBaseResponse(response.Content);
                     return addEventInResponse;
                 }
                 catch (Exception)
@@ -732,7 +737,51 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return null;
         }
-        public async Task<DataTable> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
+        public class ImageData
+        {
+            public string Url { get; set; }
+            public emParkingImageType type { get; set; }
+        }
+        public class EventInData
+        {
+            public string Id { get; set; }
+            public string PlateNumber { get; set; }
+            public string createdBy { get; set; }
+            public string createdUtc { get; set; }
+            public Lane Lane { get; set; }
+            public Identity Identity { get; set; }
+            public Identity IdentityGroup { get; set; }
+            public bool OpenBarrier { get; set; }
+            public List<ErrorDescription> fields { get; set; } = null;
+            public bool IsSuccess { get; set; } = true;
+            public string message { get; set; } = string.Empty;
+            public string errorCode { get; set; } = string.Empty;
+            public string detailCode { get; set; } = string.Empty;
+            public List<ImageData> images { get; set; }
+            public DateTime? DatetimeIn
+            {
+                get
+                {
+                    try
+                    {
+                        if (createdUtc.Contains("T"))
+                        {
+                            return DateTime.ParseExact(createdUtc.Substring(0, "yyyy-MM-ddTHH:mm:ss".Length), "yyyy-MM-ddTHH:mm:ss", null).AddHours(7);
+                        }
+                        else
+                        {
+                            return DateTime.Parse(createdUtc).AddHours(7);
+                        }
+                    }
+                    catch
+                    {
+                        return null;
+                    }
+                }
+            }
+
+        }
+        public async Task<List<EventInData>> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
                                     string identityGroupId, string vehicleTypeId, string laneId, string user,
                                     int pageIndex = 1, int pageSize = 100)
         {
@@ -744,15 +793,26 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             };
 
 
-            var filter1 = Filter.CreateFilterItem(new List<FilterModel>()
+            List<FilterModel> filterModels = new List<FilterModel>()
                         {
-                            new FilterModel("createdUtc", EmPageSearchType.DATETIME, DateTime.Now.ToUniversalTime().ToString("2023-MM-ddTHH:mm:ss:0000"), EmOperation._gte),
-                            new FilterModel("createdUtc", EmPageSearchType.DATETIME, DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"),  EmOperation._lte),
-                            new FilterModel("lane.id", EmPageSearchType.TEXT, laneId.ToUpper(),  EmOperation._contains),
-                            new FilterModel("identityGroup.id", EmPageSearchType.TEXT, identityGroupId.ToUpper(),  EmOperation._contains),
-                            new FilterModel("identityGroup.vehicleType ", EmPageSearchType.TEXT, vehicleTypeId.ToUpper(),  EmOperation._contains),
+                            new FilterModel("createdUtc", EmPageSearchType.DATETIME, startTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), EmOperation._gte),
+                            new FilterModel("createdUtc", EmPageSearchType.DATETIME, endTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"),  EmOperation._lte),
                             new FilterModel("createdBy", EmPageSearchType.TEXT, user,  EmOperation._contains),
-                        }, EmMainOperation.and);
+                            new FilterModel("status", EmPageSearchType.TEXT, "parking",  EmOperation._eq),
+                        };
+            if (!string.IsNullOrEmpty(laneId))
+            {
+                filterModels.Add(new FilterModel("lane.id", EmPageSearchType.GUID, laneId, EmOperation._in));
+            }
+            if (!string.IsNullOrEmpty(identityGroupId))
+            {
+                filterModels.Add(new FilterModel("identityGroupId.id", EmPageSearchType.GUID, identityGroupId, EmOperation._in));
+            }
+            if (!string.IsNullOrEmpty(vehicleTypeId))
+            {
+                filterModels.Add(new FilterModel("identityGroup.vehicleType", EmPageSearchType.TEXT, vehicleTypeId.ToUpper(), EmOperation._eq));
+            }
+            var filter1 = Filter.CreateFilterItem(filterModels, EmMainOperation.and);
             var filter2 = Filter.CreateFilterItem(new List<FilterModel>()
                             {
                                 new FilterModel("plateNumber", "TEXT", keyword, "contains"),
@@ -762,57 +822,65 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             var filter = Filter.CreateFilter(new List<Dictionary<string, List<FilterModel>>>() { filter1, filter2 });
 
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, RestSharp.Method.Post);
+
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                // Deserialize JSON to JObject
-                JObject jsonObject = JObject.Parse(response.Item1);
-
-                // Extract columns and rows from JSON
-                JArray columns = (JArray)jsonObject["columns"];
-                JArray rows = (JArray)jsonObject["rows"];
-
-                // Create a new DataTable
-                DataTable dataTable = new DataTable();
-                if (columns != null)
-                {
-                    foreach (JObject column in columns)
-                    {
-                        string columnName = (string)column["name"];
-                        string columnType = (string)column["type"];
-
-                        Type type;
-
-                        switch (columnType)
-                        {
-                            case "text":
-                                type = typeof(string);
-                                break;
-                            case "long":
-                                type = typeof(long);
-                                break;
-                            case "datetime":
-                                type = typeof(DateTime);
-                                break;
-                            default:
-                                type = typeof(string);
-                                break;
-                        }
-
-                        dataTable.Columns.Add(columnName, type);
-                    }
-                    if (rows != null)
-                    {
-                        foreach (JArray row in rows)
-                        {
-                            object[] rowData = row.ToObject<object[]>();
-                            dataTable.Rows.Add(rowData);
-                        }
-
-                    }
-                }
-                return dataTable;
+                var eventData = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventInData>>>.GetBaseResponse(response.Item1)?.data ?? new List<EventInData>();
+                return eventData;
             }
-            return null;
+            return new List<EventInData>();
+
+            //if (!string.IsNullOrEmpty(response.Item1))
+            //{
+            //    // Deserialize JSON to JObject
+            //    JObject jsonObject = JObject.Parse(response.Item1);
+
+            //    // Extract columns and rows from JSON
+            //    JArray columns = (JArray)jsonObject["columns"];
+            //    JArray rows = (JArray)jsonObject["rows"];
+
+            //    // Create a new DataTable
+            //    DataTable dataTable = new DataTable();
+            //    if (columns != null)
+            //    {
+            //        foreach (JObject column in columns)
+            //        {
+            //            string columnName = (string)column["name"];
+            //            string columnType = (string)column["type"];
+
+            //            Type type;
+
+            //            switch (columnType)
+            //            {
+            //                case "text":
+            //                    type = typeof(string);
+            //                    break;
+            //                case "long":
+            //                    type = typeof(long);
+            //                    break;
+            //                case "datetime":
+            //                    type = typeof(DateTime);
+            //                    break;
+            //                default:
+            //                    type = typeof(string);
+            //                    break;
+            //            }
+
+            //            dataTable.Columns.Add(columnName, type);
+            //        }
+            //        if (rows != null)
+            //        {
+            //            foreach (JArray row in rows)
+            //            {
+            //                object[] rowData = row.ToObject<object[]>();
+            //                dataTable.Rows.Add(rowData);
+            //            }
+
+            //        }
+            //    }
+            //    return dataTable;
+            //}
+            //return null;
         }
         #endregion End Event In
 
@@ -893,8 +961,107 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return null;
         }
+        public class EventOutData
+        {
+            public string Id { get; set; }
+            public string PlateNumber { get; set; }
+            public string createdBy { get; set; }
+            public string createdUtc { get; set; }
+            public Lane Lane { get; set; }
+            public Identity Identity { get; set; }
+            public Identity IdentityGroup { get; set; }
+            public bool OpenBarrier { get; set; }
+            public List<ErrorDescription> fields { get; set; } = null;
+            public bool IsSuccess { get; set; } = true;
+            public string message { get; set; } = string.Empty;
+            public string errorCode { get; set; } = string.Empty;
+            public string detailCode { get; set; } = string.Empty;
+            public List<ImageData> images { get; set; }
+            public EventInData eventIn { get; set; }
+            public DateTime? DatetimeOut
+            {
+                get
+                {
+                    try
+                    {
+                        if (createdUtc.Contains("T"))
+                        {
+                            return DateTime.ParseExact(createdUtc.Substring(0, "yyyy-MM-ddTHH:mm:ss".Length), "yyyy-MM-ddTHH:mm:ss", null).AddHours(7);
+                        }
+                        else
+                        {
+                            return DateTime.Parse(createdUtc).AddHours(7);
+                        }
+                    }
+                    catch
+                    {
+                        return null;
+                    }
+                }
+            }
+            public int charge { get; set; }
+        }
+        public class AddEventOutResponse
+        {
+            public string invoiceId { get; set; }
+            public bool OpenBarrier { get; set; }
+            public string Id { get; set; }
+            public Identity Identity { get; set; }
+            public IdentityGroup IdentityGroup { get; set; }
+            public string PlateNumber { get; set; }
+            public List<string> fileKeys { get; set; }
+            public bool Force { get; set; }
+            public bool approve { get; set; }
 
-        public async Task<DataTable> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000)
+            public EventInData eventIn { get; set; }
+
+            public string lastPaymentUtc { get; set; }
+            public ChargeDetail chargeDetail { get; set; }
+            public long discount { get; set; }
+            public long paid { get; set; }
+            public bool free { get; set; }
+
+            public string createdUtc { get; set; }
+
+            public RegisteredVehicle? RegisteredVehicle { get; set; }
+            public Customer? Customer { get; set; }
+            public CustomerGroup? CustomerGroup { get; set; }
+
+            public DateTime? DatetimeOut
+            {
+                get
+                {
+                    try
+                    {
+                        if (string.IsNullOrEmpty(createdUtc))
+                        {
+                            return null;
+                        }
+                        if (createdUtc.Contains("T"))
+                        {
+                            return DateTime.ParseExact(createdUtc.Substring(0, "yyyy-MM-ddTHH:mm:ss".Length), "yyyy-MM-ddTHH:mm:ss", null).AddHours(7);
+                        }
+                        else
+                        {
+                            return DateTime.Parse(createdUtc).AddHours(7);
+                        }
+                    }
+                    catch
+                    {
+                        return null;
+                    }
+                }
+            }
+
+            public bool IsSuccess { get; set; } = true;
+            public string message { get; set; } = string.Empty;
+            public string errorCode { get; set; } = string.Empty;
+            public string detailCode { get; set; } = string.Empty;
+            public List<ErrorDescription> fields { get; set; } = new List<ErrorDescription>();
+            public Dictionary<string, EventInData> payload { get; set; }
+        }
+
+        public async Task<List<EventOutData>> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000)
         {
             StandardlizeServerName();
             string apiUrl = server + "event-out/search";
@@ -904,74 +1071,39 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             };
 
 
-            var filter1 = Filter.CreateFilterItem(new List<FilterModel>()
+            List<FilterModel> filterModels = new List<FilterModel>()
                         {
-                            new FilterModel("createdUtc", EmPageSearchType.DATETIME, DateTime.Now.ToUniversalTime().ToString("2023-MM-ddTHH:mm:ss:0000"), EmOperation._gte),
-                            new FilterModel("createdUtc", EmPageSearchType.DATETIME, DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"),  EmOperation._lte),
-                            new FilterModel("lane.id", EmPageSearchType.TEXT, laneId.ToUpper(),  EmOperation._contains),
-                            new FilterModel("identityGroup.id", EmPageSearchType.TEXT, identityGroupId.ToUpper(),  EmOperation._contains),
-                            new FilterModel("identityGroup.vehicleType ", EmPageSearchType.TEXT, vehicleTypeId.ToUpper(),  EmOperation._contains),
+                            new FilterModel("createdUtc", EmPageSearchType.DATETIME, startTime.ToUniversalTime().ToString("2023-MM-ddTHH:mm:ss:0000"), EmOperation._gte),
+                            new FilterModel("createdUtc", EmPageSearchType.DATETIME, endTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"),  EmOperation._lte),
                             new FilterModel("createdBy", EmPageSearchType.TEXT, user,  EmOperation._contains),
-                        }, EmMainOperation.and);
+                        };
+            if (!string.IsNullOrEmpty(laneId))
+            {
+                filterModels.Add(new FilterModel("lane.id", EmPageSearchType.GUID, laneId, EmOperation._in));
+            }
+            if (!string.IsNullOrEmpty(identityGroupId))
+            {
+                filterModels.Add(new FilterModel("identityGroupId.id", EmPageSearchType.GUID, identityGroupId, EmOperation._in));
+            }
+            if (!string.IsNullOrEmpty(vehicleTypeId))
+            {
+                filterModels.Add(new FilterModel("identityGroup.vehicleType", EmPageSearchType.TEXT, vehicleTypeId.ToUpper(), EmOperation._eq));
+            }
+            var filter1 = Filter.CreateFilterItem(filterModels, EmMainOperation.and);
             var filter2 = Filter.CreateFilterItem(new List<FilterModel>()
-                            {
-                                new FilterModel("plateNumber", "TEXT", keyword, "contains"),
-                                new FilterModel("identity.code", "TEXT", keyword, "contains"),
-                                new FilterModel("identity.name", "TEXT", keyword, "contains"),
-                            }, EmMainOperation.or);
+                        {
+                            new FilterModel("plateNumber", "TEXT", keyword, "contains"),
+                            new FilterModel("identity.code", "TEXT", keyword, "contains"),
+                            new FilterModel("identity.name", "TEXT", keyword, "contains"),
+                        }, EmMainOperation.or);
             var filter = Filter.CreateFilter(new List<Dictionary<string, List<FilterModel>>>() { filter1, filter2 });
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, RestSharp.Method.Post);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                // Deserialize JSON to JObject
-                JObject jsonObject = JObject.Parse(response.Item1);
-
-                // Extract columns and rows from JSON
-                JArray columns = (JArray)jsonObject["columns"];
-                JArray rows = (JArray)jsonObject["rows"];
-
-                // Create a new DataTable
-                DataTable dataTable = new DataTable();
-                if (columns != null)
-                {
-                    foreach (JObject column in columns)
-                    {
-                        string columnName = (string)column["name"];
-                        string columnType = (string)column["type"];
-
-                        Type type;
-
-                        switch (columnType)
-                        {
-                            case "text":
-                                type = typeof(string);
-                                break;
-                            case "long":
-                                type = typeof(long);
-                                break;
-                            case "datetime":
-                                type = typeof(DateTime);
-                                break;
-                            default:
-                                type = typeof(string);
-                                break;
-                        }
-
-                        dataTable.Columns.Add(columnName, type);
-                    }
-                    if (rows != null)
-                    {
-                        foreach (JArray row in rows)
-                        {
-                            object[] rowData = row.ToObject<object[]>();
-                            dataTable.Rows.Add(rowData);
-                        }
-
-                    }
-                }
-                return dataTable;
+                var eventData = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventOutData>>>.GetBaseResponse(response.Item1)?.data ?? new List<EventOutData>();
+                return eventData;
             }
-            return null;
+            return new List<EventOutData>();
         }
 
         public async Task<AddEventOutResponse> PostCheckOutAsync(string _laneId, string _plateNumber, Identity? identitiy,
@@ -998,8 +1130,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 MaxTimeout = 10000,
             };
             var client = new RestClient(options);
-            var request = new RestRequest("/event-iout", Method.Post);
-            request.AddHeader("Authorization", "Bearer" + token);
+            var request = new RestRequest("/event-out", Method.Post);
+            request.AddHeader("Authorization", "Bearer " + token);
             request.AlwaysMultipartFormData = true;
             request.AddParameter("laneId", _laneId);
             request.AddParameter("identityCode", identity.Code);
@@ -1010,8 +1142,11 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             int i = 0;
             foreach (KeyValuePair<emParkingImageType, List<byte>> kvp in imageDatas)
             {
-                request.AddFile($"images[{i}].File", kvp.Value.ToArray(), "x.jpg");
-                request.AddParameter($"images[{i}].Type", (int)kvp.Key);
+                if (kvp.Value.Count > 0)
+                {
+                    request.AddFile($"images[{i}].File", kvp.Value.ToArray(), "x.jpg");
+                    request.AddParameter($"images[{i}].Type", (int)kvp.Key);
+                }
                 i++;
             }
             RestResponse response = await client.ExecuteAsync(request);
@@ -1039,7 +1174,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             };
             var client = new RestClient(options);
             var request = new RestRequest("/event-iout", Method.Post);
-            request.AddHeader("Authorization", "Bearer" + token);
+            request.AddHeader("Authorization", "Bearer " + token);
             request.AlwaysMultipartFormData = true;
             request.AddParameter("laneId", _laneId);
             request.AddParameter("identityCode", _plateNumber);
@@ -1170,13 +1305,13 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             {
                 targetId = eventOut.Id,
                 targetType = TargetType.EventOut,
-                amount = eventOut.charge.Amount,
+                amount = eventOut.chargeDetail.Amount,
 
                 details = new List<PaymentDetail>()
                 {
-                    new PaymentDetail(){purpose = Purpose.ParkingDay, quantity = eventOut.charge.Day, amount = eventOut.charge.DayAmount, price = eventOut.charge.DayPrice },
-                    new PaymentDetail(){purpose = Purpose.ParkingNight, quantity = eventOut.charge.Night, amount = eventOut.charge.NightAmount, price = eventOut.charge.NightPrice },
-                    new PaymentDetail(){purpose = Purpose.ParkingNormalCharge, quantity = 1, amount =eventOut.charge.FullDayAmount, price =eventOut.charge.FullDayPrice },
+                    new PaymentDetail(){purpose = Purpose.ParkingDay, quantity = eventOut.chargeDetail.Day, amount = eventOut.chargeDetail.DayAmount, price = eventOut.chargeDetail.DayPrice },
+                    new PaymentDetail(){purpose = Purpose.ParkingNight, quantity = eventOut.chargeDetail.Night, amount = eventOut.chargeDetail.NightAmount, price = eventOut.chargeDetail.NightPrice },
+                    new PaymentDetail(){purpose = Purpose.ParkingNormalCharge, quantity = 1, amount =eventOut.chargeDetail.FullDayAmount, price =eventOut.chargeDetail.FullDayPrice },
                 },
             };
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);

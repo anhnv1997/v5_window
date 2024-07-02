@@ -37,7 +37,6 @@ namespace iParkingv5_window.Forms.ReportForms
         List<InvoiceResponse> InvoiceDatas = new List<InvoiceResponse>();
         List<InvoiceResponse> pendingDatas = new List<InvoiceResponse>();
         #endregion End Properties
-
         #region Forms
         public frmReportInOut()
         {
@@ -206,74 +205,72 @@ namespace iParkingv5_window.Forms.ReportForms
                 //}
 
                 totalPages = 1;
-                totalEvents = eventOutReportNew.Rows.Count;
-                eventOutData = new List<EventOutReport>();
+                totalEvents = eventOutReportNew.Count;
+                //List<string> ids = new List<string>();
+                //foreach (DataRow item in eventOutReportNew.Rows)
+                //{
+                //    string transactionCode = eventOutReportNew.Columns.Contains("transactioncode") ? item["transactioncode"].ToString() ?? "" : "";
+                //    transactionCode = transactionCode.Contains("0-0") ? "" : transactionCode;
+                //    int transactionType = 0;
+                //    try
+                //    {
+                //        transactionType = eventOutReportNew.Columns.Contains("transactiontype") ? int.Parse(item["transactiontype"].ToString() ?? "0") : 0;
+                //    }
+                //    catch (Exception)
+                //    {
+                //    }
+                //    EventOutReport ev = new EventOutReport()
+                //    {
+                //        id = eventOutReportNew.Columns.Contains("id") ? item["id"].ToString() : "",
+                //        eventinid = eventOutReportNew.Columns.Contains("eventinid") ? item["eventinid"].ToString() : "",
 
-                List<string> ids = new List<string>();
-                foreach (DataRow item in eventOutReportNew.Rows)
-                {
-                    string transactionCode = eventOutReportNew.Columns.Contains("transactioncode") ? item["transactioncode"].ToString() ?? "" : "";
-                    transactionCode = transactionCode.Contains("0-0") ? "" : transactionCode;
-                    int transactionType = 0;
-                    try
-                    {
-                        transactionType = eventOutReportNew.Columns.Contains("transactiontype") ? int.Parse(item["transactiontype"].ToString() ?? "0") : 0;
-                    }
-                    catch (Exception)
-                    {
-                    }
-                    EventOutReport ev = new EventOutReport()
-                    {
-                        id = eventOutReportNew.Columns.Contains("id") ? item["id"].ToString() : "",
-                        eventinid = eventOutReportNew.Columns.Contains("eventinid") ? item["eventinid"].ToString() : "",
+                //        eventInCreatedUtc = eventOutReportNew.Columns.Contains("eventincreatedutc") ? item["eventincreatedutc"].ToString() : "",
+                //        createdUtc = eventOutReportNew.Columns.Contains("createdutc") ? item["createdutc"].ToString() : "",
 
-                        eventInCreatedUtc = eventOutReportNew.Columns.Contains("eventincreatedutc") ? item["eventincreatedutc"].ToString() : "",
-                        createdUtc = eventOutReportNew.Columns.Contains("createdutc") ? item["createdutc"].ToString() : "",
+                //        IdentityName = eventOutReportNew.Columns.Contains("identityname") ? item["identityname"].ToString() : "",
+                //        IdentityGroupId = eventOutReportNew.Columns.Contains("identitygroupid") ? item["identitygroupid"].ToString() : "",
 
-                        IdentityName = eventOutReportNew.Columns.Contains("identityname") ? item["identityname"].ToString() : "",
-                        IdentityGroupId = eventOutReportNew.Columns.Contains("identitygroupid") ? item["identitygroupid"].ToString() : "",
+                //        eventInPlateNumber = eventOutReportNew.Columns.Contains("eventinplatenumber") ? item["eventinplatenumber"].ToString() : "",
+                //        plateNumber = eventOutReportNew.Columns.Contains("platenumber") ? item["platenumber"].ToString() : "",
 
-                        eventInPlateNumber = eventOutReportNew.Columns.Contains("eventinplatenumber") ? item["eventinplatenumber"].ToString() : "",
-                        plateNumber = eventOutReportNew.Columns.Contains("platenumber") ? item["platenumber"].ToString() : "",
+                //        eventInLaneId = eventOutReportNew.Columns.Contains("eventinlaneid") ? item["eventinlaneid"].ToString() : "",
+                //        laneId = eventOutReportNew.Columns.Contains("laneid") ? item["laneid"].ToString() : "",
 
-                        eventInLaneId = eventOutReportNew.Columns.Contains("eventinlaneid") ? item["eventinlaneid"].ToString() : "",
-                        laneId = eventOutReportNew.Columns.Contains("laneid") ? item["laneid"].ToString() : "",
+                //        TransactionType = transactionType,// eventOutReportNew.Columns.Contains("transactiontype") ? int.Parse(item["transactiontype"].ToString() ?? "0") : 0,
+                //        TransactionCode = transactionCode,
 
-                        TransactionType = transactionType,// eventOutReportNew.Columns.Contains("transactiontype") ? int.Parse(item["transactiontype"].ToString() ?? "0") : 0,
-                        TransactionCode = transactionCode,
+                //        charge = eventOutReportNew.Columns.Contains("charge") ? int.Parse(item["charge"].ToString() ?? "0") : 0,
 
-                        charge = eventOutReportNew.Columns.Contains("charge") ? int.Parse(item["charge"].ToString() ?? "0") : 0,
+                //        eventInCreatedBy = eventOutReportNew.Columns.Contains("eventincreatedby") ? item["eventincreatedby"].ToString() : "",
+                //        createdBy = eventOutReportNew.Columns.Contains("createdby") ? item["createdby"].ToString() : "",
 
-                        eventInCreatedBy = eventOutReportNew.Columns.Contains("eventincreatedby") ? item["eventincreatedby"].ToString() : "",
-                        createdBy = eventOutReportNew.Columns.Contains("createdby") ? item["createdby"].ToString() : "",
+                //        eventInFileKeys = eventOutReportNew.Columns.Contains("eventinfilekeys") ? item["eventinfilekeys"].ToString()!.Split(",") : new string[] { },
+                //        fileKeys = eventOutReportNew.Columns.Contains("filekeys") ? item["filekeys"].ToString()!.Split(",") : new string[] { },
 
-                        eventInFileKeys = eventOutReportNew.Columns.Contains("eventinfilekeys") ? item["eventinfilekeys"].ToString()!.Split(",") : new string[] { },
-                        fileKeys = eventOutReportNew.Columns.Contains("filekeys") ? item["filekeys"].ToString()!.Split(",") : new string[] { },
+                //        InvoiceNo = "",
+                //        InvoiceTemplate = "",
+                //        note = eventOutReportNew.Columns.Contains("note") ? item["note"].ToString() : "",
+                //        thirdpartynote = eventOutReportNew.Columns.Contains("thirdpartynote") ? item["thirdpartynote"].ToString() : "",
+                //    };
+                //    eventOutData.Add(ev);
+                //    if (ev.charge > 0)
+                //    {
+                //        ids.Add(ev.id.ToLower());
+                //    }
+                //}
+                //if (ids.Count > 0)
+                //{
+                //    InvoiceDatas = await AppData.ApiServer.GetMultipleInvoiceData(startTime, endTime) ?? new List<InvoiceResponse>();
+                //}
+                //else
+                //{
+                //    InvoiceDatas = new List<InvoiceResponse>();
+                //}
 
-                        InvoiceNo = "",
-                        InvoiceTemplate = "",
-                        note = eventOutReportNew.Columns.Contains("note") ? item["note"].ToString() : "",
-                        thirdpartynote = eventOutReportNew.Columns.Contains("thirdpartynote") ? item["thirdpartynote"].ToString() : "",
-                    };
-                    eventOutData.Add(ev);
-                    if (ev.charge > 0)
-                    {
-                        ids.Add(ev.id.ToLower());
-                    }
-                }
-                if (ids.Count > 0)
-                {
-                    InvoiceDatas = await AppData.ApiServer.GetMultipleInvoiceData(startTime, endTime) ?? new List<InvoiceResponse>();
-                }
-                else
-                {
-                    InvoiceDatas = new List<InvoiceResponse>();
-                }
-
-                pendingDatas = await AppData.ApiServer.getPendingEInvoice(startTime, endTime);
+                //pendingDatas = await AppData.ApiServer.getPendingEInvoice(startTime, endTime);
 
                 DisplayNavigation();
-                await DisplayEventOutData(eventOutData);
+                await DisplayEventOutData(eventOutReportNew);
                 DisableFastLoading();
                 eventOutData.Clear();
             }
@@ -715,7 +712,7 @@ namespace iParkingv5_window.Forms.ReportForms
             }
             FrmReportInOut_SizeChanged(null, null);
         }
-        private async Task DisplayEventOutData(List<EventOutReport> eventOutData)
+        private async Task DisplayEventOutData(List<EventOutData> eventOutData)
         {
             long total = 0;
             List<DataGridViewRow> rows = new List<DataGridViewRow>();
@@ -733,11 +730,11 @@ namespace iParkingv5_window.Forms.ReportForms
             foreach (var item in eventOutData)
             {
                 List<string?> physicalFileIdsIn = new List<string?>();
-                if (item.eventInFileKeys != null)
+                if (item.images != null)
                 {
-                    foreach (var eventInImageKey in item.eventInFileKeys)
+                    foreach (var eventInImageKey in item.images)
                     {
-                        physicalFileIdsIn.Add(eventInImageKey);
+                        physicalFileIdsIn.Add(eventInImageKey.Url);
                     }
                 }
                 DataGridViewRow row = new DataGridViewRow();
@@ -746,46 +743,42 @@ namespace iParkingv5_window.Forms.ReportForms
                     row.CreateCells(dgvData);
                 }));
                 int i = 0;
-                row.Cells[i++].Value = item.id;   //0
-                row.Cells[i++].Value = item.eventinid;   //0
+                row.Cells[i++].Value = item.Id;   //0
+                row.Cells[i++].Value = item.eventIn.Id;   //0
                 row.Cells[i++].Value = (rows.Count + 1).ToString();   //1
 
-                row.Cells[i++].Value = item.eventInPlateNumber;                   //7
-                row.Cells[i++].Value = item.plateNumber;                          //8
-                string countryCode = item.plateNumber.Length > 0 ?
-                                                            (int.TryParse(item.plateNumber[0].ToString(), out int x) ? "VN" : "TQ") :
+                row.Cells[i++].Value = item.eventIn.PlateNumber;                   //7
+                row.Cells[i++].Value = item.PlateNumber;                          //8
+                string countryCode = item.PlateNumber.Length > 0 ?
+                                                            (int.TryParse(item.PlateNumber[0].ToString(), out int x) ? "VN" : "TQ") :
                                                             "VN";
                 row.Cells[i++].Value = countryCode;           //2
-                row.Cells[i++].Value = DateTime.Parse(item.eventInCreatedUtc).AddHours(7); //2
-                row.Cells[i++].Value = DateTime.Parse(item.createdUtc).AddHours(7); //3
-                row.Cells[i++].Value = item.ParkingTime(); //4
-                row.Cells[i++].Value = GetIdentityGroupName(item.IdentityGroupId);//6
+                row.Cells[i++].Value = item.eventIn.DatetimeIn.Value.AddHours(7); //2
+                row.Cells[i++].Value = item.DatetimeOut.Value.AddHours(7); //3
+                row.Cells[i++].Value = item.DatetimeOut.Value.AddHours(7) - item.eventIn.DatetimeIn.Value.AddHours(7); //4
+                row.Cells[i++].Value = GetIdentityGroupName(item.IdentityGroup.Id);//6
 
-                row.Cells[i++].Value = TransactionType.GetTransactionTypeStr(item.TransactionType); //9
-                row.Cells[i++].Value = item.TransactionCode;              //10
-
-                count_by_countries[countryCode][TransactionType.GetTransactionTypeStr(item.TransactionType)] =
-                    count_by_countries[countryCode][TransactionType.GetTransactionTypeStr(item.TransactionType)] + 1;
+                row.Cells[i++].Value = ""; //9
+                row.Cells[i++].Value = "";              //10
 
                 string moneyStr = TextFormatingTool.GetMoneyFormat(item.charge.ToString());
                 row.Cells[i++].Value = moneyStr.Substring(0, moneyStr.Length - 1);              //11
 
-                row.Cells[i++].Value = item.IdentityName;       //5
+                row.Cells[i++].Value = item.Identity.Name;       //5
 
-                row.Cells[i++].Value = item.eventInCreatedBy;//12
+                row.Cells[i++].Value = item.eventIn.createdBy;//12
                 row.Cells[i++].Value = item.createdBy;       //13
 
-                var invoiceData = InvoiceDatas.Where(e => e.targetId.Equals(item.id, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-                row.Cells[i++].Value = invoiceData == null ? "" : StaticPool.templateCode;
-                row.Cells[i++].Value = invoiceData == null ? "" : (invoiceData?.code ?? "").Replace(StaticPool.symbolCode, "");  //13
+                row.Cells[i++].Value = "";
+                row.Cells[i++].Value = "";// invoiceData == null ? "" : (invoiceData?.code ?? "").Replace(StaticPool.symbolCode, "");  //13
 
-                row.Cells[i++].Value = GetLaneName(item.eventInLaneId);//17
-                row.Cells[i++].Value = GetLaneName(item.laneId);       //16
+                row.Cells[i++].Value = GetLaneName(item.eventIn.Lane.id);//17
+                row.Cells[i++].Value = GetLaneName(item.Lane.id);       //16
 
 
-                row.Cells[i++].Value = item.note;              //
+                row.Cells[i++].Value = "";              //
 
-                if (string.IsNullOrEmpty(item.thirdpartynote))
+                if (string.IsNullOrEmpty(""))
                 {
                     row.Cells[i++].Value = "";              //
                     row.Cells[i++].Value = "";             //
@@ -795,7 +788,7 @@ namespace iParkingv5_window.Forms.ReportForms
                 {
                     try
                     {
-                        string[] noteArray = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(item.thirdpartynote)!.ToArray();// note.Split(";");
+                        string[] noteArray = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>("")!.ToArray();// note.Split(";");
                         row.Cells[i++].Value = noteArray.Length > 0 ? noteArray[0] : "";
                         row.Cells[i++].Value = noteArray.Length > 1 ? noteArray[1] : "";
                         row.Cells[i++].Value = noteArray.Length > 2 ? noteArray[2] : "";
@@ -806,9 +799,18 @@ namespace iParkingv5_window.Forms.ReportForms
                 }
 
                 row.Cells[i++].Value = physicalFileIdsIn == null ? "" : string.Join(";", physicalFileIdsIn);//14
-                row.Cells[i++].Value = item.fileKeys == null ? "" : string.Join(";", item.fileKeys);        //15
-                row.Cells[i++].Value = pendingDatas.Where(e => e.targetId.ToLower() == item.id.ToLower()).FirstOrDefault()?.id ?? "";        //16
-                row.Cells[i++].Value = invoiceData?.id ?? "";        //16
+                List<string> url = new List<string>();
+                if (item.images != null)
+                {
+                    foreach (ImageData imageData in item.images)
+                    {
+                        url.Add(imageData.Url);
+                    }
+                }
+
+                row.Cells[i++].Value = string.Join(";", url);// it
+                row.Cells[i++].Value = "";        //16
+                row.Cells[i++].Value = "";        //16
 
                 rows.Add(row);
                 total += item.charge;
@@ -838,16 +840,33 @@ namespace iParkingv5_window.Forms.ReportForms
 
         private async Task ShowImage(string fileKey, PictureBox pic)
         {
-            if (!string.IsNullOrEmpty(fileKey))
+            try
             {
-                string displayPath = await MinioHelper.GetImage(fileKey);
-                if (!string.IsNullOrEmpty(displayPath))
+                if (string.IsNullOrEmpty(fileKey))
                 {
-                    pic.LoadAsync(displayPath);
-                    return;
+                    pic.Image = defaultImg;
+                }
+                else
+                {
+                    pic.LoadAsync(fileKey);
                 }
             }
-            pic.Image = defaultImg;
+            catch (Exception)
+            {
+                pic.Image = defaultImg;
+            }
+
+
+            //if (!string.IsNullOrEmpty(fileKey))
+            //{
+            //    string displayPath = await MinioHelper.GetImage(fileKey);
+            //    if (!string.IsNullOrEmpty(displayPath))
+            //    {
+            //        pic.LoadAsync(displayPath);
+            //        return;
+            //    }
+            //}
+            //pic.Image = defaultImg;
         }
         private async Task LoadVehicleTypeData()
         {
@@ -862,16 +881,16 @@ namespace iParkingv5_window.Forms.ReportForms
 
 
             //var vehicleTypes = await KzParkingApiHelper.GetAllVehicleTypes() ?? new List<VehicleType>();
-            var vehicleTypes = (await AppData.ApiServer.GetVehicleTypesAsync()).Item1 ?? new List<VehicleType>();
-            vehicleTypes = vehicleTypes.OrderBy(x => x.Name).ThenBy(x => x.Name.Length).ToList();
+            //var vehicleTypes = (await AppData.ApiServer.GetVehicleTypesAsync()).Item1 ?? new List<VehicleType>();
+            //vehicleTypes = vehicleTypes.OrderBy(x => x.Name).ThenBy(x => x.Name.Length).ToList();
             cbVehicleType.Invoke(new Action(() =>
             {
-                foreach (var item in vehicleTypes)
+                foreach (VehicleType.VehicleBaseType item in Enum.GetValues(typeof(VehicleType.VehicleBaseType)))
                 {
                     ListItem vehicleTypeItem = new ListItem()
                     {
-                        Name = item.Name,
-                        Value = item.Id.ToString()
+                        Name = VehicleType.GetDisplayStr(item),
+                        Value = ((int)item).ToString()
                     };
                     cbVehicleType.Items.Add(vehicleTypeItem);
                 }

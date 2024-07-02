@@ -5,6 +5,7 @@ using iParkingv5.Objects.Enums;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
 using Kztek.Tool.TextFormatingTools;
+using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5ApiHelper;
 using static iParkingv5.Objects.Enums.VehicleType;
 
 namespace iParkingv5_window.Forms.DataForms
@@ -16,13 +17,13 @@ namespace iParkingv5_window.Forms.DataForms
         private string detectedPlate;
         private string identityIdIn;
         private string laneId;
-        private List<string> fileKeys;
+        private List<ImageData> imageDatas;
         private string datetimeIn;
         private long charge = 0;
         public string updatePlate;
         #region Forms
         public frmConfirmOut(string detectedPlate, string errorMessage, string plateIn, string identityIdIn,
-                            string laneId, List<string> fileKeys, DateTime? datetimeIn, bool isDisplayQuestion = true, long charge = 0)
+                            string laneId, List<ImageData> fileKeys, DateTime? datetimeIn, bool isDisplayQuestion = true, long charge = 0)
         {
             InitializeComponent();
             this.Text = "Xác nhận xe ra khỏi bãi";
@@ -40,7 +41,7 @@ namespace iParkingv5_window.Forms.DataForms
             this.plateIn = plateIn;
             this.identityIdIn = identityIdIn;
             this.laneId = laneId;
-            this.fileKeys = fileKeys;
+            this.imageDatas = fileKeys;
             this.datetimeIn = datetimeIn?.ToString() ?? "";
             this.charge = charge;
             this.updatePlate = detectedPlate;
@@ -140,17 +141,15 @@ namespace iParkingv5_window.Forms.DataForms
                     dgvEventInData.Rows[dgvEventInData.RowCount - 1].DefaultCellStyle.ForeColor = Color.Red;
 
                 }));
-                if (this.fileKeys?.Count >= 2)
+                if (this.imageDatas?.Count >= 2)
                 {
-                    string displayOverviewInPath = await MinioHelper.GetImage(this.fileKeys[0]);
-                    string vehicleInPath = await MinioHelper.GetImage(this.fileKeys[1]);
-                    Task task1 = ShowImage(this.fileKeys[0], picOverview);
-                    Task task2 = ShowImage(this.fileKeys[1], picVehicle);
+                    Task task1 = ShowImage(this.imageDatas[0]?.Url??"", picOverview);
+                    Task task2 = ShowImage(this.imageDatas[1]?.Url??"", picVehicle);
                     await Task.WhenAll(task1, task2);
                 }
-                else if (this.fileKeys?.Count > 0)
+                else if (this.imageDatas?.Count > 0)
                 {
-                    await ShowImage(this.fileKeys[0], picOverview);
+                    await ShowImage(this.imageDatas[0]?.Url??"", picOverview);
                     this.Invoke(() =>
                     {
                         picOverview.Image = defaultImg;
@@ -174,16 +173,34 @@ namespace iParkingv5_window.Forms.DataForms
         }
         private async Task ShowImage(string fileKey, PictureBox pic)
         {
-            if (!string.IsNullOrEmpty(fileKey))
+            try
             {
-                string displayPath = await MinioHelper.GetImage(fileKey);
-                if (!string.IsNullOrEmpty(displayPath))
+                if (string.IsNullOrEmpty(fileKey))
                 {
-                    pic.LoadAsync(displayPath);
-                    return;
+                    pic.Image = defaultImg;
+                }
+                else
+                {
+                    pic.LoadAsync(fileKey);
                 }
             }
-            pic.Image = defaultImg;
+            catch (Exception)
+            {
+                pic.Image = defaultImg;
+            }
+
+
+            //if (!string.IsNullOrEmpty(fileKey))
+            //{
+            //    string displayPath = await MinioHelper.GetImage(fileKey);
+            //    if (!string.IsNullOrEmpty(displayPath))
+            //    {
+            //        pic.LoadAsync(displayPath);
+            //        return;
+            //    }
+            //}
+            //pic.Image = defaultImg;
         }
+
     }
 }

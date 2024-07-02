@@ -30,20 +30,20 @@ namespace iParkingv5.Objects.Enums
             /// </summary>
             MotorBike = 2,
 
-            /// <summary>
-            /// Xe máy điện
-            /// </summary>
-            ElectricalMotorBike = 3,
+            ///// <summary>
+            ///// Xe máy điện
+            ///// </summary>
+            //ElectricalMotorBike = 3,
 
-            /// <summary>
-            /// Xe đạp
-            /// </summary>
-            Bicyle = 4,
+            ///// <summary>
+            ///// Xe đạp
+            ///// </summary>
+            //Bicyle = 4,
 
-            /// <summary>
-            /// Xe máy điện
-            /// </summary>
-            ElectricalBike = 5,
+            ///// <summary>
+            ///// Xe máy điện
+            ///// </summary>
+            //ElectricalBike = 5,
         }
         public static string GetDisplayStr(VehicleBaseType type)
         {
@@ -57,12 +57,12 @@ namespace iParkingv5.Objects.Enums
                     return "Xe ô tô điện";
                 case VehicleBaseType.MotorBike:
                     return "Xe máy";
-                case VehicleBaseType.ElectricalMotorBike:
-                    return "Xe máy điện";
-                case VehicleBaseType.Bicyle:
-                    return "Xe đạp";
-                case VehicleBaseType.ElectricalBike:
-                    return "Xe máy điện";
+                //case VehicleBaseType.ElectricalMotorBike:
+                //    return "Xe máy điện";
+                //case VehicleBaseType.Bicyle:
+                //    return "Xe đạp";
+                //case VehicleBaseType.ElectricalBike:
+                //    return "Xe máy điện";
                 default:
                     return string.Empty;
             }
