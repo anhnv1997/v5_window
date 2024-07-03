@@ -36,6 +36,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
 
     public class Filter
     {
+        public const int PAGE_SIZE = 50;
         public enum EmMainOperation
         {
             and,
@@ -109,15 +110,16 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             return filterData;
         }
 
-        public static string CreateFilter(List<Dictionary<string, List<FilterModel>>> filterItems, EmMainOperation mainOperation = EmMainOperation.and, int pageIndex = 0, int pageSize = 10000)
+        public static string CreateFilter(List<Dictionary<string, List<FilterModel>>> filterItems, EmMainOperation mainOperation = EmMainOperation.and, int pageIndex = 0, int pageSize = PAGE_SIZE)
         {
             var filterData = new Dictionary<string, List<Dictionary<string, List<FilterModel>>>>
             {
                 { mainOperation.ToString(), filterItems }
             };
+            pageIndex = pageIndex > 1 ? pageIndex - 1 : 0;
             var temp = new
             {
-                pageIndex = pageIndex,
+                pageIndex = pageIndex ,
                 pageSize = pageSize,
                 filter = Newtonsoft.Json.JsonConvert.SerializeObject(filterData),
                 //sorts = "",
@@ -127,12 +129,13 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         }
 
         public static string CreateFilter(List<FilterModel> filterModels, EmMainOperation mainOperation = EmMainOperation.and,
-                                          int pageIndex = 0, int pageSize = 10000)
+                                          int pageIndex = 0, int pageSize = PAGE_SIZE)
         {
             var filterData = new Dictionary<string, List<FilterModel>>
             {
                 { mainOperation.ToString(), filterModels }
             };
+            pageIndex = pageIndex > 1 ? pageIndex - 1 : 0;
             var temp = new
             {
                 pageIndex = pageIndex,
@@ -144,12 +147,13 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             return Newtonsoft.Json.JsonConvert.SerializeObject(temp);
         }
         public static string CreateFilter(FilterModel filterModel, EmMainOperation mainOperation = EmMainOperation.and,
-                                          int _pageIndex = 0, int _pageSize = 10000)
+                                          int _pageIndex = 0, int _pageSize = PAGE_SIZE)
         {
             var filterData = new Dictionary<string, List<FilterModel>>
             {
                 { mainOperation.ToString(), new List<FilterModel>(){ filterModel } }
             };
+            _pageIndex = _pageIndex > 1 ? _pageIndex - 1 : 0;
             var temp = new
             {
                 pageIndex = _pageIndex,
@@ -163,7 +167,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         public static string CreateFilter(EmPageSearchKey queryKey, EmPageSearchType pageSearchType,
                                           EmOperation operation, string searchValue,
                                           EmMainOperation mainOperation = EmMainOperation.and,
-                                          int _pageIndex = 0, int _pageSize = 10000)
+                                          int _pageIndex = 0, int _pageSize = PAGE_SIZE)
         {
             var filterData = new Dictionary<string, List<FilterModel>>
             {
@@ -173,7 +177,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             string _filter = Newtonsoft.Json.JsonConvert.SerializeObject(filterData);
             var temp = new
             {
-                pageIndex = _pageIndex,
+                pageIndex = _pageIndex - 1,
                 pageSize = _pageSize,
                 filter = _filter,
                 //sorts = "",

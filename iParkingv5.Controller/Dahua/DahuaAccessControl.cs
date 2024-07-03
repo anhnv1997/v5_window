@@ -275,7 +275,14 @@ namespace iParkingv5.Controller.Dahua
                 }
                 else
                 {
-                    string maInt = Convert.ToInt64(cardNumberHEX, 16).ToString();
+
+                    string temp = cardNumberHEX.Substring(6, 2) + cardNumberHEX.Substring(4, 2) + cardNumberHEX.Substring(2, 2) + cardNumberHEX.Substring(0, 2);
+
+                    string maInt = Convert.ToInt64(temp, 16).ToString();
+                    while (maInt.Length<10)
+                    {
+                        maInt = "0" + maInt;
+                    }
                     e.PreferCard = maInt;
                     e.AllCardFormats.Add(maInt);
                 }

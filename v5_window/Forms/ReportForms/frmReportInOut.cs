@@ -179,14 +179,8 @@ namespace iParkingv5_window.Forms.ReportForms
                 string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
                 string user = string.IsNullOrEmpty(((ListItem)cbUser.SelectedItem)?.Value) ? "" : cbUser.Text;
 
-                var eventOutReportNew = await AppData.ApiServer.GetEventOuts(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user);
-
-                if (eventOutReportNew == null)
-                {
-                    DisableFastLoading();
-                    ucNotify1.Show(ucNotify.EmNotiType.Error, "Không tải được thông tin xe trong bãi. Vui lòng thử lại!");
-                    return;
-                }
+                var report = await AppData.ApiServer.GetEventOuts(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user, 1, Filter.PAGE_SIZE);
+                var eventOutData = report.data;
                 //try
                 //{
                 //    long? money = await KzParkingApiHelper.GetSummary(startTime, endTime);
@@ -204,8 +198,8 @@ namespace iParkingv5_window.Forms.ReportForms
                 //{
                 //}
 
-                totalPages = 1;
-                totalEvents = eventOutReportNew.Count;
+                totalPages = report.TotalPage;
+                totalEvents = report.TotalCount;
                 //List<string> ids = new List<string>();
                 //foreach (DataRow item in eventOutReportNew.Rows)
                 //{
@@ -270,7 +264,7 @@ namespace iParkingv5_window.Forms.ReportForms
                 //pendingDatas = await AppData.ApiServer.getPendingEInvoice(startTime, endTime);
 
                 DisplayNavigation();
-                await DisplayEventOutData(eventOutReportNew);
+                await DisplayEventOutData(eventOutData);
                 DisableFastLoading();
                 eventOutData.Clear();
             }
@@ -517,6 +511,32 @@ namespace iParkingv5_window.Forms.ReportForms
         }
         private void UcPages1_OnpageSelect(int pageIndex)
         {
+            this.Invoke(new Action(async () =>
+            {
+                picOverviewImageIn.Image = defaultImg;
+                picVehicleImageIn.Image = defaultImg;
+
+                EnableFastLoading();
+
+                string keyword = txtKeyword.Text;
+                DateTime startTime = dtpStartTime.Value;
+                DateTime endTime = dtpEndTime.Value;
+                string vehicleTypeId = ((ListItem)cbVehicleType.SelectedItem)?.Value ?? "";
+                string identityGroupId = ((ListItem)cbIdentityGroup.SelectedItem)?.Value ?? "";
+                string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
+                string user = string.IsNullOrEmpty(((ListItem)cbUser.SelectedItem)?.Value) ? "" : cbUser.Text;
+
+                var report = await AppData.ApiServer.GetEventOuts(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user, 1, Filter.PAGE_SIZE);
+                var eventOutData = report.data;
+
+                totalPages = report.TotalPage;
+                totalEvents = report.TotalCount;
+
+                await DisplayEventOutData(eventOutData);
+                DisableFastLoading();
+                eventOutData.Clear();
+            }));
+
         }
         private void UcNotify1_OnSelectResultEvent(DialogResult result)
         {
@@ -730,9 +750,9 @@ namespace iParkingv5_window.Forms.ReportForms
             foreach (var item in eventOutData)
             {
                 List<string?> physicalFileIdsIn = new List<string?>();
-                if (item.images != null)
+                if (item.eventIn.images != null)
                 {
-                    foreach (var eventInImageKey in item.images)
+                    foreach (var eventInImageKey in item.eventIn.images)
                     {
                         physicalFileIdsIn.Add(eventInImageKey.Url);
                     }
@@ -754,8 +774,8 @@ namespace iParkingv5_window.Forms.ReportForms
                                                             "VN";
                 row.Cells[i++].Value = countryCode;           //2
                 row.Cells[i++].Value = item.eventIn.DatetimeIn.Value.AddHours(7); //2
-                row.Cells[i++].Value = item.DatetimeOut.Value.AddHours(7); //3
-                row.Cells[i++].Value = item.DatetimeOut.Value.AddHours(7) - item.eventIn.DatetimeIn.Value.AddHours(7); //4
+                row.Cells[i++].Value = item.DatetimeOut.Value; //3
+                row.Cells[i++].Value = item.DatetimeOut.Value - item.eventIn.DatetimeIn.Value; //4
                 row.Cells[i++].Value = GetIdentityGroupName(item.IdentityGroup.Id);//6
 
                 row.Cells[i++].Value = ""; //9

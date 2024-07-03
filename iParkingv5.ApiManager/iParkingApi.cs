@@ -105,7 +105,7 @@ namespace iParkingv5.ApiManager
         Task<EventInData> PostCheckInAsync(
             string _laneId, string _plateNumber, Identity? identity, Dictionary<emParkingImageType, List<byte>> images,
             bool isForce = false, RegisteredVehicle? registeredVehicle = null, string note = "");
-        Task<List<EventInData>> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
+        Task<Report<EventInData>> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
                                     string identityGroupId, string vehicleTypeId, string laneId, string user,
                                     int pageIndex = 1, int pageSize = 100);
         #endregion End Event In
@@ -114,7 +114,7 @@ namespace iParkingv5.ApiManager
         Task<string> GetLastEventOutIdentityGroupIdByPlateNumber(string plateNumber);
 
         Task<bool> UpdateEventOutPlate(string eventId, string newPlate, string oldPlate);
-        Task<List<EventOutData>> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000);
+        Task<Report<EventOutData>> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000);
         Task<AddEventOutResponse> PostCheckOutAsync(string _laneId, string _plateNumber, Identity? identitiy, Dictionary<emParkingImageType, List<byte>> images, bool isForce);
         Task<bool> CommitOutAsync(AddEventOutResponse eventOut);
         Task<bool> CancelCheckOut(string eventOutId);

@@ -343,7 +343,7 @@ namespace iParkingv5.Controller.Aopu
                 DeviceName = controller.Name,
                 AllCardFormats = new List<string>(),
             };
-            string cardNumberHex = Convert.ToInt32(cardNumberInt).ToString("X8");
+            string cardNumberHex = Convert.ToInt64(cardNumberInt).ToString("X8");
             e.AllCardFormats.Add(cardNumberHex);
             e.AllCardFormats.Add(cardNumberInt);
 
