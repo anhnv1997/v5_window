@@ -570,7 +570,7 @@ namespace iParkingv5_window.Usercontrols
                     {
                         if (lastCardGroup.Item1 != null)
                         {
-                            string notifyMessage = $"Chú ý: \r\nNhóm thẻ đang sử dụng: {identityGroup.Name}\r\nNhóm thẻ sử dụng gần nhất: {lastCardGroup.Item1.Name}\r\nBạn có xác nhận sử dụng thẻ cho phương tiện?";
+                            string notifyMessage = $"Chú ý phương tiện {ce.PlateNumber}: \r\nNhóm thẻ đang sử dụng: {identityGroup.Name}\r\nNhóm thẻ sử dụng gần nhất: {lastCardGroup.Item1.Name}\r\nBạn có xác nhận sử dụng thẻ cho phương tiện?";
                             bool isConfirm = MessageBox.Show(notifyMessage, "Thông báo",
                                                              MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button2) == DialogResult.Yes;
                             if (!isConfirm)

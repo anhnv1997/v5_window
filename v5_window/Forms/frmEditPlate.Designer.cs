@@ -34,6 +34,8 @@
             label2 = new Label();
             label1 = new Label();
             txtNewPlate = new TextBox();
+            txtNote = new RichTextBox();
+            label3 = new Label();
             SuspendLayout();
             // 
             // lblCurrentPlate
@@ -48,23 +50,22 @@
             // button2
             // 
             button2.DialogResult = DialogResult.Cancel;
-            button2.Location = new Point(392, 136);
+            button2.Location = new Point(392, 251);
             button2.Margin = new Padding(4);
             button2.Name = "button2";
             button2.Size = new Size(113, 51);
-            button2.TabIndex = 2;
+            button2.TabIndex = 3;
             button2.Text = "Đóng";
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
             // button1
             // 
-            button1.DialogResult = DialogResult.OK;
-            button1.Location = new Point(266, 136);
+            button1.Location = new Point(266, 251);
             button1.Margin = new Padding(4);
             button1.Name = "button1";
             button1.Size = new Size(118, 51);
-            button1.TabIndex = 1;
+            button1.TabIndex = 2;
             button1.Text = "Xác nhận";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
@@ -96,15 +97,35 @@
             txtNewPlate.Size = new Size(358, 29);
             txtNewPlate.TabIndex = 0;
             // 
+            // txtNote
+            // 
+            txtNote.Location = new Point(147, 76);
+            txtNote.Name = "txtNote";
+            txtNote.Size = new Size(358, 168);
+            txtNote.TabIndex = 1;
+            txtNote.Text = "";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(13, 79);
+            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(63, 21);
+            label3.TabIndex = 4;
+            label3.Text = "Ghi chú";
+            // 
             // frmEditPlate
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(514, 199);
+            ClientSize = new Size(514, 315);
+            Controls.Add(txtNote);
             Controls.Add(txtNewPlate);
             Controls.Add(lblCurrentPlate);
             Controls.Add(button2);
             Controls.Add(button1);
+            Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
             Font = new Font("Segoe UI", 12F);
@@ -129,5 +150,7 @@
         private Label label2;
         private Label label1;
         private TextBox txtNewPlate;
+        private RichTextBox txtNote;
+        private Label label3;
     }
 }

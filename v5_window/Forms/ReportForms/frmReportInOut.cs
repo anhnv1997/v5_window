@@ -756,8 +756,8 @@ namespace iParkingv5_window.Forms.ReportForms
                                                             (int.TryParse(item.plateNumber[0].ToString(), out int x) ? "VN" : "TQ") :
                                                             "VN";
                 row.Cells[i++].Value = countryCode;           //2
-                row.Cells[i++].Value = DateTime.Parse(item.eventInCreatedUtc).AddHours(7); //2
-                row.Cells[i++].Value = DateTime.Parse(item.createdUtc).AddHours(7); //3
+                row.Cells[i++].Value = DateTime.Parse(item.eventInCreatedUtc).AddHours(7).ToString("dd/MM/yyyy HH:mm:ss"); //2
+                row.Cells[i++].Value = DateTime.Parse(item.createdUtc).AddHours(7).ToString("dd/MM/yyyy HH:mm:ss"); //3
                 row.Cells[i++].Value = item.ParkingTime(); //4
                 row.Cells[i++].Value = GetIdentityGroupName(item.IdentityGroupId);//6
 
@@ -1042,10 +1042,11 @@ namespace iParkingv5_window.Forms.ReportForms
                             break;
                         case "UpdatePlateIn":
                             {
-                                var frmUpdatePlate = new frmEditPlate(currentPlateIn, eventInId, true);
+                                var frmUpdatePlate = new frmEditPlate(currentPlateIn, eventInId, true, currentNote);
                                 if (frmUpdatePlate.ShowDialog() == DialogResult.OK)
                                 {
                                     dgvData.Rows[e.RowIndex].Cells["PlateIn"].Value = frmUpdatePlate.UpdatePlate;
+                                    dgvData.Rows[e.RowIndex].Cells["NoteBSX"].Value = frmUpdatePlate.UpdateNote;
                                     frmUpdatePlate.Dispose();
                                 }
                             }
@@ -1053,10 +1054,11 @@ namespace iParkingv5_window.Forms.ReportForms
                             break;
                         case "UpdatePlateOut":
                             {
-                                var frmUpdatePlate = new frmEditPlate(currentPlateOut, eventOutId, false);
+                                var frmUpdatePlate = new frmEditPlate(currentPlateOut, eventOutId, false, currentNote);
                                 if (frmUpdatePlate.ShowDialog() == DialogResult.OK)
                                 {
                                     dgvData.Rows[e.RowIndex].Cells["PlateOut"].Value = frmUpdatePlate.UpdatePlate;
+                                    dgvData.Rows[e.RowIndex].Cells["NoteBSX"].Value = frmUpdatePlate.UpdateNote;
                                     frmUpdatePlate.Dispose();
                                 }
                             }

@@ -353,7 +353,7 @@ namespace iParkingv5_window.Forms.ReportForms
                             break;
                         case "UpdatePlateIn":
                             {
-                                var frmUpdatePlate = new frmEditPlate(currentPlateIn, id, true);
+                                var frmUpdatePlate = new frmEditPlate(currentPlateIn, id, true, currentNote);
                                 if (frmUpdatePlate.ShowDialog() == DialogResult.OK)
                                 {
                                     if (((EmPrintTemplate)StaticPool.appOption.PrintTemplate) == EmPrintTemplate.XuanCuong)
@@ -361,6 +361,7 @@ namespace iParkingv5_window.Forms.ReportForms
                                         await XuanCuongApiHelper.SendParkingInfo(id, "in", frmUpdatePlate.UpdatePlate, DateTime.ParseExact(timeIn,"dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture), FileIds.Split(";").ToList(),"");
                                     }
                                     dgvData.Rows[e.RowIndex].Cells["plate"].Value = frmUpdatePlate.UpdatePlate;
+                                    dgvData.Rows[e.RowIndex].Cells["NoteBSX"].Value = frmUpdatePlate.UpdateNote;
                                     frmUpdatePlate.Dispose();
                                 }
                             }

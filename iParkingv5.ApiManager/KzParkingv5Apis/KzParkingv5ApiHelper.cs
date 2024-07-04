@@ -765,7 +765,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             if (!string.IsNullOrEmpty(keyword))
             {
-                cmd += $@"AND (identityname like '%{keyword}%' OR platenumber like '%{keyword}%' OR identitycode like '%{keyword}%')";
+                cmd += $@"AND (identityname like '%{keyword.ToUpper()}%' OR platenumber like '%{keyword.ToUpper()}%' OR identitycode like '%{keyword.ToUpper()}%' OR
+                               identityname like '%{keyword.ToLower()}%' OR platenumber like '%{keyword.ToLower()}%' OR identitycode like '%{keyword.ToLower()}%' 
+                         )";
             }
             cmd += " ORDER BY createdutc desc";
             //Gửi API
@@ -935,8 +937,11 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             if (!string.IsNullOrEmpty(keyword))
             {
-                cmd += $@"AND ((identityname like '%{keyword}%' OR platenumber like '%{keyword}%' OR identitycode like '%{keyword}%') OR
-                               (eventinidentityname like '%{keyword}%' OR platenumber like '%{keyword}%' OR eventinidentitycode like '%{keyword}%'))";
+                cmd += $@"AND ((identityname like '%{keyword.ToUpper()}%' OR platenumber like '%{keyword.ToUpper()}%' OR identitycode like '%{keyword.ToUpper()}%' OR 
+                                identityname like '%{keyword.ToLower()}%' OR platenumber like '%{keyword.ToLower()}%' OR identitycode like '%{keyword.ToLower()}%') OR
+                               (eventinidentityname like '%{keyword.ToUpper()}%' OR platenumber like '%{keyword.ToUpper()}%' OR eventinidentitycode like '%{keyword.ToUpper()}%' OR
+                                eventinidentityname like '%{keyword.ToLower()}%' OR platenumber like '%{keyword.ToLower()}%' OR eventinidentitycode like '%{keyword.ToLower()}%'
+                                ))";
             }
             cmd += "ORDER BY createdutc desc";
             //Gửi API
