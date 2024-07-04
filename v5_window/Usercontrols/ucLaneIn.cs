@@ -1244,7 +1244,6 @@ namespace iParkingv5_window.Usercontrols
             switch (vehicleBaseType)
             {
                 case VehicleBaseType.Car:
-                case VehicleBaseType.ElectricalCar:
                     BaseLane.GetPlate(this.lane.id, out vehicleImg, out plate, out lprImage, ucCarLpr, camBienSoOTODuPhongs, true);
                     break;
                 default:
@@ -2204,7 +2203,7 @@ namespace iParkingv5_window.Usercontrols
                 case VehicleBaseType.Car:
                     vehicleImage = ucCarLpr?.GetFullCurrentImage();
                     break;
-                case VehicleBaseType.ElectricalCar:
+                case VehicleBaseType.Bike:
                 case VehicleBaseType.MotorBike:
                     //case VehicleBaseType.ElectricalMotorBike:
                     //case VehicleBaseType.Bicyle:

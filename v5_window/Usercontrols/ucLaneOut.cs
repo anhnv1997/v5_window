@@ -815,15 +815,13 @@ namespace iParkingv5_window.Usercontrols
                         overviewImg = ucOverView?.GetFullCurrentImage();
                         break;
                     case CameraPurposeType.EmCameraPurposeType.CarLPR:
-                        if (vehicleBaseType == VehicleBaseType.Car ||
-                            vehicleBaseType == VehicleBaseType.ElectricalCar)
+                        if (vehicleBaseType == VehicleBaseType.Car)
                         {
                             vehicleImg = ucCarLpr?.GetFullCurrentImage();
                         }
                         break;
                     case CameraPurposeType.EmCameraPurposeType.MotorLPR:
-                        if (vehicleBaseType != VehicleBaseType.Car &&
-                            vehicleBaseType != VehicleBaseType.ElectricalCar)
+                        if (vehicleBaseType != VehicleBaseType.Car)
                         {
                             vehicleImg = ucMotoLpr?.GetFullCurrentImage();
                         }
@@ -905,7 +903,7 @@ namespace iParkingv5_window.Usercontrols
                 frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, errorMessage, eventIn.PlateNumber ?? "",
                                                                 eventIn.Identity?.Id ?? "", this.lane.id,
                                                                 eventIn.images ?? new List<ImageData>(), eventIn.DatetimeIn ?? DateTime.Now,
-                                                                true, 0);
+                                                                true, eventIn.Charge);
                 if (frmConfirmOut.ShowDialog() == DialogResult.OK)
                 {
                     if (plateNumber.ToUpper() != frmConfirmOut.updatePlate.ToUpper())
@@ -1273,7 +1271,7 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
 
-            DisplayEventOutInfo(eventOut?.eventIn?.DatetimeIn, eventTime, detectedPlate, identity, identityGroup, vehicleType, eventOut?.RegisteredVehicle, (long)(eventOut?.chargeDetail?.Amount ?? 0), eventOut?.Customer, weighingDetail, "","");
+            DisplayEventOutInfo(eventOut?.eventIn?.DatetimeIn, eventTime, detectedPlate, identity, identityGroup, vehicleType, eventOut?.RegisteredVehicle, (long)(eventOut?.chargeDetail?.Amount ?? 0), eventOut?.Customer, weighingDetail, "", "");
             ShowEventInData(eventOut);
             BaseLane.DisplayLed(detectedPlate, eventTime, identity, identityGroup, "Hẹn gặp lại", this.lane.id, eventOut.chargeDetail.Amount.ToString());
             //await BaseLane.SaveEventImage(overviewImg, vehicleImg, lprImage, imageKey, false, new List<Image>());
@@ -2300,7 +2298,6 @@ namespace iParkingv5_window.Usercontrols
             switch (vehicleBaseType)
             {
                 case VehicleBaseType.Car:
-                case VehicleBaseType.ElectricalCar:
                     BaseLane.GetPlate(this.lane.id, out vehicleImg, out plate, out lprImage, ucCarLpr, camBienSoOTODuPhongs, true);
                     break;
                 default:

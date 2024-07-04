@@ -64,7 +64,7 @@ namespace iParkingv5.LprDetecter.LprDetecters
 
             ReturnResult:
                 {
-                    //plateNumber = "30A12345";
+                    plateNumber = "30A12345";
                     onLprDetectCompleteEvent?.Invoke(this, new Events.Events.LprDetectEventArgs()
                     {
                         LprImage = lprImage,

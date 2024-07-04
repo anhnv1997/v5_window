@@ -21,14 +21,14 @@ namespace iParkingv5.Objects.Enums
             Car = 0,
 
             /// <summary>
-            /// Ô tô điện
-            /// </summary>
-            ElectricalCar = 1,
-
-            /// <summary>
             /// xe máy
             /// </summary>
-            MotorBike = 2,
+            MotorBike = 1,
+
+            /// <summary>
+            /// Ô tô điện
+            /// </summary>
+            Bike = 2
 
             ///// <summary>
             ///// Xe máy điện
@@ -53,8 +53,8 @@ namespace iParkingv5.Objects.Enums
                     return "Không đinh nghĩa";
                 case VehicleBaseType.Car:
                     return "Xe ô tô";
-                case VehicleBaseType.ElectricalCar:
-                    return "Xe ô tô điện";
+                case VehicleBaseType.Bike:
+                    return "Xe đạp";
                 case VehicleBaseType.MotorBike:
                     return "Xe máy";
                 //case VehicleBaseType.ElectricalMotorBike:

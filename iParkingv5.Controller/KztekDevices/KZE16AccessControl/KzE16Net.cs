@@ -135,7 +135,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE16AccessControl
                     //AccessCardDenie: Char(2) + GetEvent?/Style=Card/UserID=Null/LenCard=4/Card=7C19F640/Reader=01/DateTime=YYYYMMDDhhmmss/CardState=U/AccessState=1/Door=00/StateMSG=00 + char(3)
                     //InputEvent     : Char(2) + GetEvent?/Style=input/Input=INPUT1/DateTime=YYYYMMDDhhmmss + char(3)
                     //NoEvent        : Char(2) + GetEvent?/NotEvent + char(3)
-                    //response = "GetCardEvent?/UserID=NULL/LenCard=3/Card=BDE223/Reader=02/DateTime=20240511062908";
+                    response = "GetCardEvent?/UserID=NULL/LenCard=3/Card=BDE223/Reader=02/DateTime=20240511062908";
                     if (response != "" && (response.Contains("GetCardEvent?/")) && !response.Contains("NotEvent"))
                     {
                         string[] data = response.Split('/');
@@ -219,7 +219,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE16AccessControl
                         e.AllCardFormats.Add(maSauFormat1);
                         e.AllCardFormats.Add(maSauFormat2);
                         e.PreferCard = maSauFormat3;
-                        //e.PreferCard = "the1";
+                        e.PreferCard = "test10";
                     }
                     else
                     {

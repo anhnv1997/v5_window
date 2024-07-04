@@ -653,7 +653,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         {
             StandardlizeServerName();
 
-            var options = new RestClientOptions("http://192.168.21.145:5000")
+            var options = new RestClientOptions(server)
             {
                 MaxTimeout = 10000,
             };
@@ -677,7 +677,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 }
                 i++;
             }
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Api, mo_ta_them: request.Parameters);
             RestResponse response = await client.ExecuteAsync(request);
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Api, mo_ta_them: response.Content, obj: response.StatusCode);
             if (!string.IsNullOrEmpty(response.Content))
             {
                 try
@@ -723,7 +725,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 request.AddParameter($"images[{i}].Type", (int)kvp.Key);
                 i++;
             }
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Api, mo_ta_them: request.Parameters);
             RestResponse response = await client.ExecuteAsync(request);
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Api, mo_ta_them: response.Content, obj: response.StatusCode);
             if (!string.IsNullOrEmpty(response.Content))
             {
                 try
@@ -758,6 +762,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             public string message { get; set; } = string.Empty;
             public string errorCode { get; set; } = string.Empty;
             public string detailCode { get; set; } = string.Empty;
+            public int Charge { get; set; }
             public List<ImageData> images { get; set; }
             public DateTime? DatetimeIn
             {
@@ -1150,7 +1155,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 }
                 i++;
             }
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Api, mo_ta_them: request.Parameters);
             RestResponse response = await client.ExecuteAsync(request);
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Api, mo_ta_them: response.Content, obj: response.StatusCode);
             if (!string.IsNullOrEmpty(response.Content))
             {
                 try
@@ -1190,7 +1197,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 request.AddParameter($"images[{i}].Type", (int)kvp.Key);
                 i++;
             }
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Api, mo_ta_them: request.Parameters);
             RestResponse response = await client.ExecuteAsync(request);
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Api, mo_ta_them: response.Content, obj: response.StatusCode);
             if (!string.IsNullOrEmpty(response.Content))
             {
                 try
