@@ -725,7 +725,7 @@ namespace iParkingv5_window.Usercontrols
             else if ((DateTime.Now - lastEvent.DatetimeOut)?.TotalSeconds >= StaticPool.appOption.AllowBarrieDelayOpenTime)
             {
                 var imageDatas = SaveAllCameraImage();
-                await AppData.ApiServer.CreateAlarmAsync(lastEvent.Identity?.Id, this.lane.id, lastEvent.PlateNumber, AbnormalCode.OpenBarrierByButton,
+                await AppData.ApiServer.CreateAlarmAsync(lastEvent.Identity?.Code, this.lane.id, lastEvent.PlateNumber, AbnormalCode.OpenBarrierByButton,
                                                           imageDatas, false,
                                                           lastEvent?.IdentityGroup?.Id.ToString() ?? "", "", "", "");
             }
@@ -903,7 +903,7 @@ namespace iParkingv5_window.Usercontrols
                 frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, errorMessage, eventIn.PlateNumber ?? "",
                                                                 eventIn.Identity?.Id ?? "", this.lane.id,
                                                                 eventIn.images ?? new List<ImageData>(), eventIn.DatetimeIn ?? DateTime.Now,
-                                                                true, eventIn.Charge);
+                                                                true, eventIn?.Charge ?? 0);
                 if (frmConfirmOut.ShowDialog() == DialogResult.OK)
                 {
                     if (plateNumber.ToUpper() != frmConfirmOut.updatePlate.ToUpper())
@@ -1279,7 +1279,7 @@ namespace iParkingv5_window.Usercontrols
             UnregisterTurnVehicle(identity, registeredVehicle, identityGroup);
             if (isAlarm)
             {
-                await AppData.ApiServer.CreateAlarmAsync(identity.Id, this.lane.id, detectedPlate, AbnormalCode.InvalidPlateNumber,
+                await AppData.ApiServer.CreateAlarmAsync(identity.Code, this.lane.id, detectedPlate, AbnormalCode.InvalidPlateNumber,
                                                           imageDatas, false, identityGroup?.Id.ToString(), eventOut?.Customer?.Id, eventOut?.RegisteredVehicle?.Id, "Cảnh báo biển số");
             }
             this.Invoke(new Action(() =>
@@ -1346,7 +1346,7 @@ namespace iParkingv5_window.Usercontrols
             else if ((DateTime.Now - lastEvent.DatetimeOut)?.TotalSeconds >= StaticPool.appOption.AllowBarrieDelayOpenTime)
             {
                 var imageDatas = SaveAllCameraImage();
-                await AppData.ApiServer.CreateAlarmAsync(lastEvent.Identity?.Id, this.lane.id, lastEvent.PlateNumber, AbnormalCode.OpenBarrierByKeyboard,
+                await AppData.ApiServer.CreateAlarmAsync(lastEvent.Identity?.Code, this.lane.id, lastEvent.PlateNumber, AbnormalCode.OpenBarrierByKeyboard,
                                                           imageDatas, false,
                                                           lastEvent?.IdentityGroup?.Id.ToString() ?? "", "", "", "");
             }
@@ -1681,7 +1681,7 @@ namespace iParkingv5_window.Usercontrols
             {
                 var imageDatas = SaveAllCameraImage();
 
-                await AppData.ApiServer.CreateAlarmAsync(lastEvent.Identity?.Id, this.lane.id, lastEvent.PlateNumber, AbnormalCode.OpenBarrierByKeyboard,
+                await AppData.ApiServer.CreateAlarmAsync(lastEvent.Identity?.Code, this.lane.id, lastEvent.PlateNumber, AbnormalCode.OpenBarrierByKeyboard,
                                                           imageDatas, false,
                                                           lastEvent?.IdentityGroup?.Id.ToString() ?? "", "", "", "");
             }
@@ -1724,7 +1724,7 @@ namespace iParkingv5_window.Usercontrols
                         {
                             var imageDatas = SaveAllCameraImage();
 
-                            await AppData.ApiServer.CreateAlarmAsync(lastEvent.Identity?.Id, this.lane.id, lastEvent.PlateNumber, AbnormalCode.ManualEvent,
+                            await AppData.ApiServer.CreateAlarmAsync(lastEvent.Identity?.Code, this.lane.id, lastEvent.PlateNumber, AbnormalCode.ManualEvent,
                                                                       imageDatas, false,
                                                                       lastEvent?.IdentityGroup?.Id.ToString() ?? "", "", "", "");
                         }

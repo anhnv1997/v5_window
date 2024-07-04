@@ -122,7 +122,7 @@ namespace iParkingv5.ApiManager
         #endregion End Event Out
 
         #region Alarm
-        Task<bool> CreateAlarmAsync(string identityId, string laneId, string plate, AbnormalCode abnormalCode,
+        Task<bool> CreateAlarmAsync(string identityCode, string laneId, string plate, AbnormalCode abnormalCode,
                                     Dictionary<emParkingImageType, List<byte>> imageDatas, bool isLaneIn, string _identityGroupId, string customerId,
                                     string registerVehicleId, string description);
         Task<DataTable> GetAlarmReport(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, int pageIndex = 1, int pageSize = 10000);

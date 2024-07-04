@@ -23,7 +23,6 @@ using static iParkingv5.ApiManager.KzParkingv5Apis.Filter;
 using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5ApiHelper;
 using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper;
 using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper.TransactionType;
-using static OpenCvSharp.ML.DTrees;
 
 namespace iParkingv5.ApiManager.KzParkingv5Apis
 {
@@ -762,7 +761,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             public string message { get; set; } = string.Empty;
             public string errorCode { get; set; } = string.Empty;
             public string detailCode { get; set; } = string.Empty;
-            public int Charge { get; set; }
+            public int Charge { get; set; } = 0;
             public List<ImageData> images { get; set; }
             public DateTime? DatetimeIn
             {
@@ -1335,12 +1334,55 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         #endregion End Event Out
 
         #region Alarm
-        public async Task<bool> CreateAlarmAsync(string identityId, string laneId, string plate, AbnormalCode abnormalCode,
+        public async Task<bool> CreateAlarmAsync(string identityCode, string laneId, string plate, AbnormalCode abnormalCode,
                                                 Dictionary<emParkingImageType, List<byte>> imageDatas, bool isLaneIn,
                                                 string _identityGroupId, string customerId,
                                                 string registerVehicleId, string description)
         {
             StandardlizeServerName();
+
+
+            var options = new RestClientOptions(server)
+            {
+                MaxTimeout = 10000,
+            };
+            var client = new RestClient(options);
+            var request = new RestRequest("/abnormal-event", Method.Post);
+            request.AddHeader("Authorization", "Bearer " + token);
+            request.AlwaysMultipartFormData = true;
+            request.AddParameter("laneId", laneId);
+            request.AddParameter("identityCode", identityCode);
+            request.AddParameter("identityType", 0);
+            request.AddParameter("Code", abnormalCode);
+            request.AddParameter("PlateNumber", plate);
+            request.AddParameter("Description", description);
+
+            int i = 0;
+            foreach (KeyValuePair<emParkingImageType, List<byte>> kvp in imageDatas)
+            {
+                if (kvp.Value.Count > 0)
+                {
+                    request.AddFile($"images[{i}].File", kvp.Value.ToArray(), "x.jpg");
+                    request.AddParameter($"images[{i}].Type", (int)kvp.Key);
+                }
+                i++;
+            }
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Api, mo_ta_them: request.Parameters);
+            RestResponse response = await client.ExecuteAsync(request);
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Api, mo_ta_them: response.Content, obj: response.StatusCode);
+            if (!string.IsNullOrEmpty(response.Content))
+            {
+                try
+                {
+                    AbnormalEvent kzBaseResponse = NewtonSoftHelper<AbnormalEvent>.GetBaseResponse(response.Content);
+                    return kzBaseResponse != null;
+                }
+                catch (Exception)
+                {
+                }
+            }
+            return false;
+
             //string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.AbnormalEvent);
             //Dictionary<string, string> headers = new Dictionary<string, string>()
             //        {
@@ -1351,7 +1393,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             //    LaneId = laneId,
             //    identity = new
             //    {
-            //        id = identityId,
+            //        id = identityCode,
             //        identityGroupId = _identityGroupId,
             //    },
             //    PlateNumber = plate,
@@ -1370,7 +1412,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             //    AbnormalEvent kzBaseResponse = NewtonSoftHelper<AbnormalEvent>.GetBaseResponse(response.Item1);
             //    return kzBaseResponse != null;
             //}
-            return false;
+            //return false;
         }
         public async Task<DataTable> GetAlarmReport(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, int pageIndex = 1, int pageSize = 10000)
         {
@@ -1975,7 +2017,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
 
         public async Task<WarehouseService> CreateWarehouseService(string eventInId, string eventOutId, string plate, EmTransactionType type, bool isPrint = false)
         {
-
+            return null;
             StandardlizeServerName();
             string apiUrl = server + "warehouse/transaction";
             Dictionary<string, string> headers = new Dictionary<string, string>()

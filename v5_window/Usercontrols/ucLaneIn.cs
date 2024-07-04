@@ -381,7 +381,7 @@ namespace iParkingv5_window.Usercontrols
             {
                 var imageData = SaveAllCameraImage();
 
-                await AppData.ApiServer.CreateAlarmAsync(lastEvent.Identity?.Id, this.lane.id, lastEvent.PlateNumber, AbnormalCode.OpenBarrierByButton,
+                await AppData.ApiServer.CreateAlarmAsync(lastEvent.Identity?.Code, this.lane.id, lastEvent.PlateNumber, AbnormalCode.OpenBarrierByButton,
                                                           imageData, true,
                                                           lastEvent?.IdentityGroupId, lastEvent?.customer?.Id,
                                                           lastEvent?.RegisteredVehicle?.Id, "");
@@ -791,7 +791,7 @@ namespace iParkingv5_window.Usercontrols
             else if ((DateTime.Now - lastEvent.DatetimeIn)?.TotalSeconds >= StaticPool.appOption.AllowBarrieDelayOpenTime)
             {
                 var imageData = SaveAllCameraImage();
-                await AppData.ApiServer.CreateAlarmAsync(lastEvent.Identity?.Id, this.lane.id, lastEvent.PlateNumber, AbnormalCode.OpenBarrierByKeyboard,
+                await AppData.ApiServer.CreateAlarmAsync(lastEvent.Identity?.Code, this.lane.id, lastEvent.PlateNumber, AbnormalCode.OpenBarrierByKeyboard,
                                                      imageData, true,
                                                      lastEvent?.IdentityGroupId, lastEvent?.customer?.Id,
                                                      lastEvent?.RegisteredVehicle?.Id, "");
@@ -1815,7 +1815,7 @@ namespace iParkingv5_window.Usercontrols
 
             if (isAlarm)
             {
-                await AppData.ApiServer.CreateAlarmAsync(identity?.Id, this.lane.id, detectPlate, AbnormalCode.InvalidPlateNumber,
+                await AppData.ApiServer.CreateAlarmAsync(identity?.Code, this.lane.id, detectPlate, AbnormalCode.InvalidPlateNumber,
                                                          imageDatas, true, identityGroup?.Id.ToString(), "", "", "Cảnh báo biển số");
             }
 
@@ -2304,7 +2304,7 @@ namespace iParkingv5_window.Usercontrols
                     //                                     imageKey, true,
                     //                                     identity?.IdentityGroupId, lastEvent?.customer?.Id,
                     //                                     lastEvent?.RegisteredVehicle?.Id, "");
-                    await AppData.ApiServer.CreateAlarmAsync(identity.Id, this.lane.id, lastEvent.PlateNumber, AbnormalCode.ManualEvent,
+                    await AppData.ApiServer.CreateAlarmAsync(identity.Code, this.lane.id, lastEvent.PlateNumber, AbnormalCode.ManualEvent,
                                                        imageDatas, true,
                                                        identity?.IdentityGroupId, lastEvent?.customer?.Id,
                                                        lastEvent?.RegisteredVehicle?.Id, "");
