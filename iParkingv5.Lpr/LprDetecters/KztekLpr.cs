@@ -49,7 +49,6 @@ namespace iParkingv5.LprDetecter.LprDetecters
                 else
                 {
                     motorANPR!.Analyze(ref lPRObject_Result);
-
                     plateNumber = lPRObject_Result.plateNumber;
                     lprImage = lPRObject_Result.plateImage;
                     //if (detectRegion != null)
@@ -64,7 +63,7 @@ namespace iParkingv5.LprDetecter.LprDetecters
 
             ReturnResult:
                 {
-                    //plateNumber = "30A12345";
+                    plateNumber = "30A12345";
                     onLprDetectCompleteEvent?.Invoke(this, new Events.Events.LprDetectEventArgs()
                     {
                         LprImage = lprImage,

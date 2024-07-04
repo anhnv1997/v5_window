@@ -49,6 +49,9 @@
     <Compile Update="Forms\frmTest.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\ReportForms\frmConfirmCardGroup.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\SystemForms\frmLoading.cs">
       <SubType>Form</SubType>
     </Compile>
