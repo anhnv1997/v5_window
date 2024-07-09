@@ -63,14 +63,14 @@ namespace v5_IScale.Forms
             lblVehicleType = new Label();
             lblIdentityType = new Label();
             Column1 = new DataGridViewTextBoxColumn();
-            Column2 = new DataGridViewTextBoxColumn();
-            Column7 = new DataGridViewTextBoxColumn();
+            id = new DataGridViewTextBoxColumn();
+            plate_number = new DataGridViewTextBoxColumn();
             Column15 = new DataGridViewTextBoxColumn();
             Column16 = new DataGridViewTextBoxColumn();
             Column8 = new DataGridViewTextBoxColumn();
             Column5 = new DataGridViewTextBoxColumn();
             Column6 = new DataGridViewTextBoxColumn();
-            Column9 = new DataGridViewTextBoxColumn();
+            file_keys = new DataGridViewTextBoxColumn();
             Column13 = new DataGridViewTextBoxColumn();
             Column14 = new DataGridViewTextBoxColumn();
             Column4 = new DataGridViewTextBoxColumn();
@@ -165,7 +165,7 @@ namespace v5_IScale.Forms
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvData.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column7, Column15, Column16, Column8, Column5, Column6, Column9, Column13, Column14, Column4, Column10, Column12, Column11, Column3 });
+            dgvData.Columns.AddRange(new DataGridViewColumn[] { Column1, id, plate_number, Column15, Column16, Column8, Column5, Column6, file_keys, Column13, Column14, Column4, Column10, Column12, Column11, Column3 });
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = SystemColors.Window;
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 11.25F);
@@ -372,7 +372,7 @@ namespace v5_IScale.Forms
             ucEventInInfo1.Location = new Point(534, 42);
             ucEventInInfo1.Margin = new Padding(3, 2, 3, 2);
             ucEventInInfo1.Name = "ucEventInInfo1";
-            ucEventInInfo1.Size = new Size(432, 470);
+            ucEventInInfo1.Size = new Size(432, 374);
             ucEventInInfo1.TabIndex = 64;
             // 
             // ucNotify1
@@ -436,20 +436,20 @@ namespace v5_IScale.Forms
             Column1.ReadOnly = true;
             Column1.Width = 68;
             // 
-            // Column2
+            // id
             // 
-            Column2.HeaderText = "Tên Định Danh";
-            Column2.Name = "Column2";
-            Column2.ReadOnly = true;
-            Column2.Visible = false;
-            Column2.Width = 154;
+            id.HeaderText = "Eventid";
+            id.Name = "id";
+            id.ReadOnly = true;
+            id.Visible = false;
+            id.Width = 99;
             // 
-            // Column7
+            // plate_number
             // 
-            Column7.HeaderText = "Biển Số Xe";
-            Column7.Name = "Column7";
-            Column7.ReadOnly = true;
-            Column7.Width = 121;
+            plate_number.HeaderText = "Biển Số Xe";
+            plate_number.Name = "plate_number";
+            plate_number.ReadOnly = true;
+            plate_number.Width = 121;
             // 
             // Column15
             // 
@@ -486,13 +486,13 @@ namespace v5_IScale.Forms
             Column6.Visible = false;
             Column6.Width = 136;
             // 
-            // Column9
+            // file_keys
             // 
-            Column9.HeaderText = "physicalFileIds";
-            Column9.Name = "Column9";
-            Column9.ReadOnly = true;
-            Column9.Visible = false;
-            Column9.Width = 153;
+            file_keys.HeaderText = "physicalFileIds";
+            file_keys.Name = "file_keys";
+            file_keys.ReadOnly = true;
+            file_keys.Visible = false;
+            file_keys.Width = 153;
             // 
             // Column13
             // 
@@ -594,14 +594,14 @@ namespace v5_IScale.Forms
         private Label lblLane;
         private Label lblTitle;
         private DataGridViewTextBoxColumn Column1;
-        private DataGridViewTextBoxColumn Column2;
-        private DataGridViewTextBoxColumn Column7;
+        private DataGridViewTextBoxColumn id;
+        private DataGridViewTextBoxColumn plate_number;
         private DataGridViewTextBoxColumn Column15;
         private DataGridViewTextBoxColumn Column16;
         private DataGridViewTextBoxColumn Column8;
         private DataGridViewTextBoxColumn Column5;
         private DataGridViewTextBoxColumn Column6;
-        private DataGridViewTextBoxColumn Column9;
+        private DataGridViewTextBoxColumn file_keys;
         private DataGridViewTextBoxColumn Column13;
         private DataGridViewTextBoxColumn Column14;
         private DataGridViewTextBoxColumn Column4;

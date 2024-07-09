@@ -62,7 +62,7 @@ namespace iParkingv5_window
         #endregion: End Styling
 
         #region:Excel_Export
-        public static void CreatReportFile(DataGridView dgvCard, string tittle, List<string> reserverData )
+        public static void CreatReportFile(DataGridView dgvCard, string tittle, List<string> reserverData)
         {
             var sl = new SLDocument();
             //Create

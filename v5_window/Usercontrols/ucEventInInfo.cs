@@ -104,7 +104,7 @@ namespace iParkingv5_window.Usercontrols
                 if (identityGroup != null)
                 {
                     //vehicleType = await KzParkingApiHelper.GetVehicleTypeById(identityGroup.VehicleTypeId.ToString());
-                    vehicleType = identityGroup.VehicleType.Type;
+                    vehicleType = identityGroup.VehicleType;
                     //(await  AppData.ApiServer.GetVehicleTypeByIdAsync(identityGroup.VehicleType.Id.ToString())).Item1;
                 }
             }

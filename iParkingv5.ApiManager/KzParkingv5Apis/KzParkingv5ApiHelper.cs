@@ -3,42 +3,33 @@ using iParkingv5.Objects.Datas;
 using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.EventDatas;
 using iParkingv5.Objects.Invoices;
+using iParkingv5.Objects.Reporting;
+using iParkingv5.Objects.system;
+using iParkingv5.Objects.warehouse;
 using iParkingv6.ApiManager;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
 using Kztek.Tool;
 using Kztek.Tools;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing.Printing;
 using System.Threading;
 using System.Threading.Tasks;
 using static iParkingv5.ApiManager.KzParkingv5Apis.Filter;
-using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5ApiHelper;
+using static iParkingv5.Objects.warehouse.TransactionType;
 using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper;
-using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper.TransactionType;
-using static OpenCvSharp.ML.DTrees;
+using PaymentTransaction = iParkingv5.Objects.Datas.PaymentTransaction;
 
 namespace iParkingv5.ApiManager.KzParkingv5Apis
 {
     public class KzParkingv5ApiHelper : iParkingApi
     {
         #region SubClass
-        public class BaseEventReport<T> where T : class
-        {
-            public List<T> rows { get; set; }
-        }
-        public class CommitData
-        {
-            public string op { get; set; }
-            public string path { get; set; }
-            public object value { get; set; }
-        }
+        
         #endregion End SubClass
 
         #region Properties
@@ -193,7 +184,6 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             {
                 try
                 {
-
                     var data = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(response.Item1);
                     return Tuple.Create<T, string>(data, response.Item2);
                 }
@@ -234,16 +224,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
 
         #region System Config
 
-        public class CompanyInfo
-        {
-            public string id { get; set; }
-            public string companyName { get; set; }
-            public string companyAddress { get; set; }
-            public string companyTelephone { get; set; }
-            public string companyTax { get; set; }
-            public DateTime createdUtc { get; set; }
-            public DateTime updatedUtc { get; set; }
-        }
+   
 
         public async Task<SystemConfig> GetSystemConfigAsync()
         {
@@ -616,13 +597,15 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
              {
                  { "Authorization","Bearer " + token  }
              };
-            var commitData = new List<CommitData>();
-            commitData.Add(new CommitData()
+            var commitData = new List<CommitData>
             {
-                op = "replace",
-                path = "plateNumber",
-                value = newPlate
-            });
+                new CommitData()
+                {
+                    op = "replace",
+                    path = "plateNumber",
+                    value = newPlate
+                }
+            };
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, commitData, headers, null, timeOut, RestSharp.Method.Patch);
             if (!string.IsNullOrEmpty(response.Item1))
             {
@@ -738,97 +721,42 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return null;
         }
-        public async Task<DataTable> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
-                                    string identityGroupId, string vehicleTypeId, string laneId, string user,
-                                    int pageIndex = 1, int pageSize = 100)
+
+      
+        public async Task<List<EventInReport>> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
+                                   string identityGroupId, string vehicleTypeId, string laneId, string user,
+                                   int pageIndex = 1, int pageSize = 100)
         {
             StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.GetBySqlCmd;
-            string cmd = string.Empty;
-            cmd += "SELECT * FROM index_event_in ";
-            cmd += $"WHERE status != 'Exited' AND (createdutc Between '{startTime.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.000Z}' AND '{endTime.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.000Z}') ";
-            if (!string.IsNullOrEmpty(laneId))
-            {
-                cmd += $@"AND laneid = '{laneId.ToUpper()}' ";
-            }
-            if (!string.IsNullOrEmpty(identityGroupId))
-            {
-                cmd += $@"AND identitygroupid = '{identityGroupId.ToUpper()}' ";
-            }
-            if (!string.IsNullOrEmpty(vehicleTypeId))
-            {
-                cmd += $@"AND vehicletypeid = '{vehicleTypeId.ToUpper()}' ";
-            }
-            if (!string.IsNullOrEmpty(user))
-            {
-                cmd += $@"AND createdby = '{user}' ";
-            }
-            if (!string.IsNullOrEmpty(keyword))
-            {
-                cmd += $@"AND (identityname like '%{keyword.ToUpper()}%' OR platenumber like '%{keyword.ToUpper()}%' OR identitycode like '%{keyword.ToUpper()}%' OR
-                               identityname like '%{keyword.ToLower()}%' OR platenumber like '%{keyword.ToLower()}%' OR identitycode like '%{keyword.ToLower()}%' 
-                         )";
-            }
-            cmd += " ORDER BY createdutc desc";
-            //Gửi API
+            string apiUrl = server + "reporting/parking/event-in";
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
                 { "Authorization","Bearer " + token  }
             };
-            var data = new
+
+
+            var searchData = new SearchEventIn()
             {
-                query = cmd
+                keyword = keyword,
+                FromUTC = startTime.ToUniversalTime(),
+                ToUTC = endTime.ToUniversalTime(),
+                identityGroupIds = string.IsNullOrEmpty(identityGroupId) ? new List<string>() : new List<string> { identityGroupId },
+                laneIds = string.IsNullOrEmpty(laneId) ? new List<string>() : new List<string> { laneId },
+                upns = string.IsNullOrEmpty(user) ? new List<string>() : new List<string> { user },
+                pageIndex = 0,
+                pageSize = 10000,
+                paging = true
             };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
+
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, searchData, headers, null, timeOut, RestSharp.Method.Post);
+
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                // Deserialize JSON to JObject
-                JObject jsonObject = JObject.Parse(response.Item1);
-
-                // Extract columns and rows from JSON
-                JArray columns = (JArray)jsonObject["columns"];
-                JArray rows = (JArray)jsonObject["rows"];
-
-                // Create a new DataTable
-                DataTable dataTable = new DataTable();
-                if (columns != null)
+                var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventInReport>>>.GetBaseResponse(response.Item1);
+                if (baseResponse != null)
                 {
-                    foreach (JObject column in columns)
-                    {
-                        string columnName = (string)column["name"];
-                        string columnType = (string)column["type"];
-
-                        Type type;
-
-                        switch (columnType)
-                        {
-                            case "text":
-                                type = typeof(string);
-                                break;
-                            case "long":
-                                type = typeof(long);
-                                break;
-                            case "datetime":
-                                type = typeof(DateTime);
-                                break;
-                            default:
-                                type = typeof(string);
-                                break;
-                        }
-
-                        dataTable.Columns.Add(columnName, type);
-                    }
-                    if (rows != null)
-                    {
-                        foreach (JArray row in rows)
-                        {
-                            object[] rowData = row.ToObject<object[]>();
-                            dataTable.Rows.Add(rowData);
-                        }
-
-                    }
+                    return baseResponse.data;
                 }
-                return dataTable;
             }
             return null;
         }
@@ -1025,6 +953,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/identity";
+            //string apiUrl = "http://192.168.21.17:3006/pk/" + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/identity";
             //Gửi API
             //apiUrl = "http://192.168.21.13:3004/pk/event-out/identity";
             Dictionary<string, string> headers = new Dictionary<string, string>()
@@ -1035,13 +964,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             var data = new
             {
                 laneId = _laneId,
-                //identity = new
-                //{
-                //id = identity.Id,
                 identityCode = identity.Code,
-                //identityGroupId = identity.IdentityGroupId,
                 identityType = 0,
-                //},
                 plateNumber = _plateNumber,
                 force = isForce,
                 fileKeys = new List<string>()
@@ -1191,22 +1115,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         }
 
 
-        public class PaymentTransaction
-        {
-            public string targetId { get; set; }
-            public TargetType targetType { get; set; } = TargetType.EventOut;
-            public long amount { get; set; }
-            public List<PaymentDetail> details { get; set; }
-        }
-        public enum PaymentTransactionMethod
-        {
-            CashAtBooth,
-            CashAtKiosk,
-        }
-        public enum PaymentTransactionPurpose
-        {
-            ParkingCharge,
-        }
+       
         public async Task<PaymentTransaction> CreatePaymentTransaction(AddEventOutResponse eventOut)
         {
             StandardlizeServerName();
@@ -1365,221 +1274,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         }
         #endregion End Alarm
 
-        #region EInvoice
+        #region EInvoice 
 
-        //public class InvoiceDto
-        //{
-        //    public string id { get; set; }
-        //    public string orderId { get; set; }
-        //    public object requestId { get; set; }
-        //    public int serviceProvider { get; set; }
-        //    public Creator creator { get; set; }
-        //    public string signedFileData { get; set; }
-        //    public Company company { get; set; }
-        //    public Paymentitem[] paymentItems { get; set; }
-        //    public DateTime createdAt { get; set; }
-        //    public object modifiedAt { get; set; }
-        //    public Lookupinformation lookupInformation { get; set; }
-        //    public object note { get; set; }
-        //    public Taxdetails taxDetails { get; set; }
-        //    public Invoiceconfiguration invoiceConfiguration { get; set; }
-        //}
-
-        //public class Creator
-        //{
-        //    public string id { get; set; }
-        //    public string name { get; set; }
-        //    public object code { get; set; }
-        //    public object phone { get; set; }
-        //    public object email { get; set; }
-        //    public object description { get; set; }
-        //}
-
-        //public class Company
-        //{
-        //    public string name { get; set; }
-        //    public object code { get; set; }
-        //    public string taxCode { get; set; }
-        //    public object description { get; set; }
-        //    public object phoneNumber { get; set; }
-        //    public object email { get; set; }
-        //}
-
-        //public class Lookupinformation
-        //{
-        //    public object mappingId { get; set; }
-        //    public string invoiceNumber { get; set; }
-        //    public string reservationCode { get; set; }
-        //}
-
-        //public class Taxdetails
-        //{
-        //    public int totalWithTax { get; set; }
-        //    public int taxAmount { get; set; }
-        //    public int taxRate { get; set; }
-        //}
-
-        //public class Invoiceconfiguration
-        //{
-        //    public string templateCode { get; set; }
-        //    public string invoiceTypeCode { get; set; }
-        //    public string symbolCode { get; set; }
-        //}
-
-        //public class Paymentitem
-        //{
-        //    public string name { get; set; }
-        //    public string code { get; set; }
-        //    public object description { get; set; }
-        //    public string unitName { get; set; }
-        //    public object category { get; set; }
-        //    public int quantity { get; set; }
-        //    public int unitPrice { get; set; }
-        //    public int taxRate { get; set; }
-        //    public int total { get; set; }
-        //}
-
-
-
-        public enum Provider
-        {
-            ThaiSon,
-            Misa,
-            Viettel
-        }
-        public enum TargetType
-        {
-            EventIn,
-            EventOut,
-            Vehicle
-        }
-
-        //public async Task<InvoiceDto> CreateEinvoice(long price, string plateNumber, DateTime datetimeIn, DateTime datetimeOut, string eventOutId, bool isSendNow = true, string cardGroupName = "")
-        //{
-        //    //string url = $"http://14.160.26.45:26868/einvoice?provider=VIETTEL";
-        //    string apiUrl = "";
-        //    StandardlizeServerName();
-        //    if (isSendNow)
-        //    {
-        //        apiUrl = server + "e-invoice?provider=VIETTEL";
-        //    }
-        //    else
-        //    {
-        //        apiUrl = server + "e-invoice-pending?provider=VIETTEL";
-        //    }
-        //    //apiUrl = apiUrl.Replace(":5000", ":26868");
-        //    //Gửi API
-        //    Dictionary<string, string> headers = new Dictionary<string, string>()
-        //    {
-        //        { "Authorization","Bearer " + token  }
-        //    };
-        //    TimeSpan parkingTime = datetimeOut - datetimeIn;
-        //    var data = new
-        //    {
-        //        Id = eventOutId,
-        //        Company = new
-        //        {
-        //            Name = StaticPool.CompanyName,
-        //            taxCode = StaticPool.TaxCode,
-        //        },
-        //        Creator = new
-        //        {
-        //            Id = StaticPool.userId,
-        //            Name = StaticPool.user_name,
-        //        },
-        //        paymentItems = new List<object>()
-        //        {
-        //            new
-        //            {
-        //                name = string.IsNullOrEmpty( cardGroupName) ? "Hàng hóa" : cardGroupName,
-        //                code = "HH1",
-        //                unitName = "Cái",
-        //                quantity = 1,
-        //                unitPrice = price,
-        //                taxRate = StaticPool.TaxRate,
-        //            }
-        //        },
-        //        additionalData = new List<object>()
-        //        {
-        //            new
-        //            {
-        //                tag =  "licensePlate",
-        //                name = "Biển kiểm soát",
-        //                value =  plateNumber,
-        //                type=  "text"
-        //            },
-        //            new
-        //            {
-        //                tag =  "checkIn",
-        //                name = "Giờ vào",
-        //                value =  datetimeIn.ToString("dd/MM/yyyy HH:mm:ss"),
-        //                type=  "text"
-        //            },
-        //            new
-        //            {
-        //                tag =  "checkOut",
-        //                name = "Giờ ra",
-        //                value =  datetimeOut.ToString("dd/MM/yyyy HH:mm:ss"),
-        //                type=  "text"
-        //            },
-        //            new
-        //            {
-        //                tag =  "parkingTime",
-        //                name = "Thời gian lưu bãi",
-        //                value = (int)parkingTime.TotalHours + " giờ " + ((int)parkingTime.TotalMinutes - 60 * (int)parkingTime.TotalHours) + " phút",
-        //                type=  "text"
-        //            },
-        //        },
-        //        invoiceConfiguration = new
-        //        {
-        //            templateCode = StaticPool.templateCode,
-        //            invoiceTypeCode = StaticPool.invoiceTypeCode,
-        //            symbolCode = StaticPool.symbolCode,
-        //        },
-        //        taxRate = StaticPool.TaxRate,
-        //        createdAt = DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:sss.fffZ"),
-        //        MappingId = eventOutId,
-        //    };
-        //    var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, Method.Post);
-        //    if (!string.IsNullOrEmpty(response.Item1))
-        //    {
-        //        try
-        //        {
-        //            return Newtonsoft.Json.JsonConvert.DeserializeObject<InvoiceDto>(response.Item1);
-        //        }
-        //        catch (Exception)
-        //        {
-        //            return null;
-
-        //        }
-        //    }
-        //    return null;
-        //}
-
-
-        public class InvoiceResponse
-        {
-            public string id { get; set; }
-            public string targetId { get; set; }
-            public int targetType { get; set; }
-            public string code { get; set; }
-            public string reservationCode { get; set; }
-            public int provider { get; set; }
-            public float amount { get; set; }
-            public float taxRate { get; set; }
-            public float amountAfterTax { get; set; }
-            public bool success { get; set; }
-            public bool send { get; set; }
-            public int retryAttempt { get; set; }
-            public string createdBy { get; set; }
-            public string createdUtc { get; set; }
-        }
-
-        public class FileInfor
-        {
-            public string fileName { get; set; }
-            public string fileToBytes { get; set; }
-        }
+    
         public async Task<InvoiceResponse> CreateEinvoice(long _price, string plateNumber, DateTime datetimeIn, DateTime datetimeOut, string eventOutId, bool isSendNow = true, string cardGroupName = "")
         {
             //string url = $"http://14.160.26.45:26868/einvoice?provider=VIETTEL";
@@ -1595,51 +1292,10 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             TimeSpan parkingTime = datetimeOut - datetimeIn;
             var data = new
             {
-                //targetType = (int)TargetType.EventOut,
                 targetId = eventOutId,
                 send = isSendNow ? 1 : 0,
-                provider = (int)Provider.Viettel,
-                //items = new List<object>()
-                //{
-                //    new
-                //    {
-                //        name = string.IsNullOrEmpty( cardGroupName) ? "Hàng hóa" : cardGroupName,
-                //        code = "HH1",
-                //        quantity = 1,
-                //        price = _price,
-                //    }
-                //},
-                //extraInformation = new List<object>()
-                //{
-                //    new
-                //    {
-                //        tag =  "licensePlate",
-                //        name = "Biển kiểm soát",
-                //        value =  plateNumber,
-                //        type=  "text"
-                //    },
-                //    new
-                //    {
-                //        tag =  "checkIn",
-                //        name = "Giờ vào",
-                //        value =  datetimeIn.ToString("dd/MM/yyyy HH:mm:ss"),
-                //        type=  "text"
-                //    },
-                //    new
-                //    {
-                //        tag =  "checkOut",
-                //        name = "Giờ ra",
-                //        value =  datetimeOut.ToString("dd/MM/yyyy HH:mm:ss"),
-                //        type=  "text"
-                //    },
-                //    new
-                //    {
-                //        tag =  "parkingTime",
-                //        name = "Thời gian lưu bãi",
-                //        value = (int)parkingTime.TotalHours + " giờ " + ((int)parkingTime.TotalMinutes - 60 * (int)parkingTime.TotalHours) + " phút",
-                //        type=  "text"
-                //    },
-                //},
+                provider = (int)EmInvoiceProvider.Viettel,
+                TargetType = TargetType.EventOut,
             };
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
@@ -1658,7 +1314,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         }
 
 
-        public async Task<FileInfor> GetInvoiceData(string orderId, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL)
+        public async Task<InvoiceFileInfor> GetInvoiceData(string orderId, EmInvoiceProvider provider = EmInvoiceProvider.Viettel)
         {
             // string url = $"http://14.160.26.45:26868/einvoice?provider=65";
             StandardlizeServerName();
@@ -1678,12 +1334,12 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, Method.Get);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                return NewtonSoftHelper<FileInfor>.GetBaseResponse(response.Item1);
+                return NewtonSoftHelper<InvoiceFileInfor>.GetBaseResponse(response.Item1);
             }
             return null;
         }
 
-        public async Task<List<InvoiceResponse>> GetMultipleInvoiceData(DateTime startTime, DateTime endTime, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL)
+        public async Task<List<InvoiceResponse>> GetMultipleInvoiceData(DateTime startTime, DateTime endTime, EmInvoiceProvider provider = EmInvoiceProvider.Viettel)
         {
             //string url = $"http://14.160.26.45:26868/invoice/many";
             StandardlizeServerName();
@@ -1747,7 +1403,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             {
                 targetId = eventId,
                 send = 1,
-                provider = (int)Provider.Viettel,
+                provider = (int)EmInvoiceProvider.Viettel,
             };
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
@@ -1856,31 +1512,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         #endregion End SUMARY
 
         #region WAREHOUSE
-        public class WarehouseService
-        {
-            public string Id { get; set; }
-            public string Code { get; set; }
-            public string EventInId { get; set; }
-            public string EventOutId { get; set; }
-            public string PlateNumber { get; set; }
-            public string Description { get; set; }
-            public string codeCharacterSequence { get; set; }
-            public string codeNumberSequence { get; set; }
-            public string paperworkSequence { get; set; }
-            public int Type { get; set; }
-            public bool PrintPaper { get; set; }
-        }
-
-        public class WarehouseServiceInput
-        {
-            public int type { get; set; }
-            public string plateNumber { get; set; }
-            public string eventInId { get; set; }
-            public Guid eventOutId { get; set; }
-            public string description { get; set; }
-            public bool PrintPaper { get; set; }
-        }
-
+    
         public async Task<WarehouseService> CreateWarehouseService(string eventInId, string eventOutId, string plate, EmTransactionType type, bool isPrint = false)
         {
 

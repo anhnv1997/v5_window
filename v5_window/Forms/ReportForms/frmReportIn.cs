@@ -8,6 +8,7 @@ using iParkingv5.Objects;
 using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.Datas;
 using iParkingv5.Objects.Enums;
+using iParkingv5.Objects.warehouse;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv5_window.Usercontrols.BuildControls;
 using iParkingv6.Objects.Datas;
@@ -171,8 +172,8 @@ namespace iParkingv5_window.Forms.ReportForms
                 string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
                 string user = string.IsNullOrEmpty(((ListItem)cbUser.SelectedItem)?.Value) ? "" : cbUser.Text;
                 //Tuple<List<EventInReport>, int, int> eventInData = await KzParkingApiHelper.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId);
-                DataTable eventInData = await AppData.ApiServer.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user);
-                if (eventInData == null)
+                List<EventInReport> eventInReports = await AppData.ApiServer.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user);
+                if (eventInReports == null)
                 {
                     panelData.BackColor = Color.White;
                     ucLoading1.HideLoading();
@@ -181,43 +182,43 @@ namespace iParkingv5_window.Forms.ReportForms
                 }
 
                 totalPages = 1;
-                totalEvents = eventInData.Rows.Count;
-                List<EventInReport> eventInReports = new List<EventInReport>();
-                foreach (DataRow row in eventInData.Rows)
-                {
-                    string transactionCode = eventInData.Columns.Contains("transactioncode") ? row["transactioncode"].ToString() ?? "" : "";
-                    transactionCode = transactionCode.Contains("0-0") ? "" : transactionCode;
+                totalEvents = eventInReports.Count;
+                //List<EventInReport> eventInReports = new List<EventInReport>();
+                //foreach (DataRow row in eventInData.Rows)
+                //{
+                //    string transactionCode = eventInData.Columns.Contains("transactioncode") ? row["transactioncode"].ToString() ?? "" : "";
+                //    transactionCode = transactionCode.Contains("0-0") ? "" : transactionCode;
 
-                    int transactionType = 0;
-                    try
-                    {
-                        transactionType = eventInData.Columns.Contains("transactiontype") ? int.Parse(row["transactiontype"].ToString() ?? "0") : 0;
-                    }
-                    catch (Exception)
-                    {
-                    }
-                    EventInReport ev = new EventInReport()
-                    {
-                        id = row["id"].ToString(),
-                        identityId = row["identityid"].ToString(),
-                        plateNumber = row["platenumber"].ToString(),
-                        createdUtc = row["createdutc"].ToString(),
-                        laneId = row["laneId"].ToString(),
-                        createdBy = eventInData.Columns.Contains("createdby") ? row["createdby"].ToString() : "",
-                        fileKeys = row["filekeys"].ToString()?.Split(","),
-                        CustomerId = eventInData.Columns.Contains("customerid") ? row["customerid"].ToString() : "",
-                        RegisteredVehicleId = eventInData.Columns.Contains("vehicleid") ? row["vehicleid"].ToString() : "",
-                        IdentityGroupId = row["identitygroupid"].ToString(),
-                        identityCode = eventInData.Columns.Contains("identityCode") ? row["identityCode"].ToString() : "",
-                        identityName = eventInData.Columns.Contains("identityName") ? row["identityName"].ToString() : "",
-                        TransactionType = transactionType,//eventInData.Columns.Contains("transactiontype") ? int.Parse(row["transactiontype"].ToString() ?? "0") : 0,
-                        TransactionCode = transactionCode,
-                        note = eventInData.Columns.Contains("note") ? row["note"].ToString() : "",
-                        thirdpartynote = eventInData.Columns.Contains("thirdpartynote") ? row["thirdpartynote"].ToString() : "",
-                    };
-                    eventInReports.Add(ev);
-                }
-                eventInData.Rows.Clear();
+                //    int transactionType = 0;
+                //    try
+                //    {
+                //        transactionType = eventInData.Columns.Contains("transactiontype") ? int.Parse(row["transactiontype"].ToString() ?? "0") : 0;
+                //    }
+                //    catch (Exception)
+                //    {
+                //    }
+                //    EventInReport ev = new EventInReport()
+                //    {
+                //        id = row["id"].ToString(),
+                //        identityId = row["identityid"].ToString(),
+                //        plateNumber = row["platenumber"].ToString(),
+                //        createdUtc = row["createdutc"].ToString(),
+                //        laneId = row["laneId"].ToString(),
+                //        createdBy = eventInData.Columns.Contains("createdby") ? row["createdby"].ToString() : "",
+                //        fileKeys = row["filekeys"].ToString()?.Split(","),
+                //        CustomerId = eventInData.Columns.Contains("customerid") ? row["customerid"].ToString() : "",
+                //        RegisteredVehicleId = eventInData.Columns.Contains("vehicleid") ? row["vehicleid"].ToString() : "",
+                //        IdentityGroupId = row["identitygroupid"].ToString(),
+                //        identityCode = eventInData.Columns.Contains("identityCode") ? row["identityCode"].ToString() : "",
+                //        identityName = eventInData.Columns.Contains("identityName") ? row["identityName"].ToString() : "",
+                //        TransactionType = transactionType,
+                //        TransactionCode = transactionCode,
+                //        note = eventInData.Columns.Contains("note") ? row["note"].ToString() : "",
+                //        thirdpartynote = eventInData.Columns.Contains("thirdpartynote") ? row["thirdpartynote"].ToString() : "",
+                //    };
+                //    eventInReports.Add(ev);
+                //}
+                //eventInData.Rows.Clear();
                 panelData.SuspendLayout();
                 EnableFastLoading();
                 DisplayNavigation();
@@ -358,7 +359,7 @@ namespace iParkingv5_window.Forms.ReportForms
                                 {
                                     if (((EmPrintTemplate)StaticPool.appOption.PrintTemplate) == EmPrintTemplate.XuanCuong)
                                     {
-                                        await XuanCuongApiHelper.SendParkingInfo(id, "in", frmUpdatePlate.UpdatePlate, DateTime.ParseExact(timeIn,"dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture), FileIds.Split(";").ToList(),"");
+                                        await XuanCuongApiHelper.SendParkingInfo(id, "in", frmUpdatePlate.UpdatePlate, DateTime.ParseExact(timeIn, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture), FileIds.Split(";").ToList(), "");
                                     }
                                     dgvData.Rows[e.RowIndex].Cells["plate"].Value = frmUpdatePlate.UpdatePlate;
                                     dgvData.Rows[e.RowIndex].Cells["NoteBSX"].Value = frmUpdatePlate.UpdateNote;
@@ -407,8 +408,8 @@ namespace iParkingv5_window.Forms.ReportForms
             {
                 return;
             }
-            this.selectedIdentityId = dgvData.Rows[e.RowIndex].Cells[1].Value?.ToString() ?? "";
-            this.selectedPlateNumber = dgvData.Rows[e.RowIndex].Cells[2].Value?.ToString() ?? "";
+            this.selectedIdentityId = dgvData.Rows[e.RowIndex].Cells["identity_id"].Value?.ToString() ?? "";
+            this.selectedPlateNumber = dgvData.Rows[e.RowIndex].Cells["plate"].Value?.ToString() ?? "";
 
             this.DialogResult = DialogResult.OK;
         }
@@ -917,7 +918,7 @@ namespace iParkingv5_window.Forms.ReportForms
             return customer == null ? "" : customer.Name + " / " + customer.PhoneNumber;
         }
         #endregion End Private Function
-        private string GetPrintWarehoseContent(KzParkingv5ApiHelper.WarehouseService warehouseService, string cardName, string plateNumber, DateTime timeIn)
+        private string GetPrintWarehoseContent(WarehouseService warehouseService, string cardName, string plateNumber, DateTime timeIn)
         {
             string printTemplatePath = PathManagement.appPrintTemplateWarehousePath(((EmPrintTemplate)StaticPool.appOption.PrintTemplate).ToString());
             if (File.Exists(printTemplatePath))

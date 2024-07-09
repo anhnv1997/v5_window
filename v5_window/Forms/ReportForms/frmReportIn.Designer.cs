@@ -70,7 +70,7 @@ namespace iParkingv5_window.Forms.ReportForms
             toolTip1 = new ToolTip(components);
             id = new DataGridViewTextBoxColumn();
             Column1 = new DataGridViewTextBoxColumn();
-            Column2 = new DataGridViewTextBoxColumn();
+            identity_id = new DataGridViewTextBoxColumn();
             plate = new DataGridViewTextBoxColumn();
             vehicle_reagion_type = new DataGridViewTextBoxColumn();
             timeIn = new DataGridViewTextBoxColumn();
@@ -182,7 +182,7 @@ namespace iParkingv5_window.Forms.ReportForms
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvData.Columns.AddRange(new DataGridViewColumn[] { id, Column1, Column2, plate, vehicle_reagion_type, timeIn, warehouse, warehouse_code, NoteBSX, note_3rd_1, note_3rd_2, Column10, Column6, Column4, identityName, Column16, Column12, Column11, note_3rd_3, Column5, FileIds, Column13, Column14, Column3 });
+            dgvData.Columns.AddRange(new DataGridViewColumn[] { id, Column1, identity_id, plate, vehicle_reagion_type, timeIn, warehouse, warehouse_code, NoteBSX, note_3rd_1, note_3rd_2, Column10, Column6, Column4, identityName, Column16, Column12, Column11, note_3rd_3, Column5, FileIds, Column13, Column14, Column3 });
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = SystemColors.Window;
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 12F);
@@ -531,13 +531,13 @@ namespace iParkingv5_window.Forms.ReportForms
             Column1.ReadOnly = true;
             Column1.Width = 66;
             // 
-            // Column2
+            // identity_id
             // 
-            Column2.HeaderText = "Tên Định Danh";
-            Column2.Name = "Column2";
-            Column2.ReadOnly = true;
-            Column2.Visible = false;
-            Column2.Width = 142;
+            identity_id.HeaderText = "Tên Định Danh";
+            identity_id.Name = "identity_id";
+            identity_id.ReadOnly = true;
+            identity_id.Visible = false;
+            identity_id.Width = 142;
             // 
             // plate
             // 
@@ -750,7 +750,7 @@ namespace iParkingv5_window.Forms.ReportForms
         private Label lblVN;
         private DataGridViewTextBoxColumn id;
         private DataGridViewTextBoxColumn Column1;
-        private DataGridViewTextBoxColumn Column2;
+        private DataGridViewTextBoxColumn identity_id;
         private DataGridViewTextBoxColumn plate;
         private DataGridViewTextBoxColumn vehicle_reagion_type;
         private DataGridViewTextBoxColumn timeIn;

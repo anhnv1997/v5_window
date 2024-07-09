@@ -6,6 +6,8 @@ using iParkingv5.Objects;
 using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.Datas;
 using iParkingv5.Objects.Enums;
+using iParkingv5.Objects.Invoices;
+using iParkingv5.Objects.warehouse;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv5_window.Helpers;
 using iParkingv5_window.Usercontrols.BuildControls;
@@ -13,6 +15,7 @@ using iParkingv6.Objects.Datas;
 using Kztek.Tool.TextFormatingTools;
 using Kztek.Tools;
 using System.Data;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5ApiHelper;
 using static iParkingv5.Objects.Enums.PrintHelpers;
@@ -355,7 +358,8 @@ namespace iParkingv5_window.Forms.ReportForms
                     string plate = dgvData.CurrentRow.Cells["PlateOut"].Value.ToString() ?? "";
                     string chargeStr = dgvData.CurrentRow.Cells["Charge"].Value.ToString() ?? "";
                     string printContent = PrintHelper.GetParkingPrintContent(File.ReadAllText(printTemplatePath),
-                                                          DateTime.Parse(timeIn), DateTime.Parse(timeOut),
+                                                        DateTime.ParseExact(timeIn, "dd/MM/yyyy HH:mm:ss", CultureInfo.CurrentCulture),
+                                                       DateTime.ParseExact(timeOut, "dd/MM/yyyy HH:mm:ss", CultureInfo.CurrentCulture),
                                                           plate, TextFormatingTool.GetMoneyFormat(chargeStr.Replace(".", "").Trim()),
                                                           int.Parse(chargeStr.Replace(".", "").Trim()));
                     var wbPrint = new WebBrowser();
@@ -405,7 +409,7 @@ namespace iParkingv5_window.Forms.ReportForms
 
                 string printContent = PrintHelper.GetPhieuThuContent(File.ReadAllText(printTemplatePath),
                                                      IdentityCode, IdentityGroup, picVehicleImageOut.Image,
-                                                     DateTime.Parse(timeIn), DateTime.Parse(timeOut),
+                                                     DateTime.ParseExact(timeIn, "dd/MM/yyyy HH:mm:ss", CultureInfo.CurrentCulture), DateTime.ParseExact(timeOut, "dd/MM/yyyy HH:mm:ss", CultureInfo.CurrentCulture),
                                                      plate, TextFormatingTool.ConvertToMoneyFormat<int>(chargeInt), chargeInt);
                 var wbPrint = new WebBrowser();
                 wbPrint.DocumentCompleted += WbPrint_DocumentCompleted;
@@ -1114,6 +1118,11 @@ namespace iParkingv5_window.Forms.ReportForms
         }
 
         private void btnPrintInternet_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnPrintOffline_Click_1(object sender, EventArgs e)
         {
 
         }

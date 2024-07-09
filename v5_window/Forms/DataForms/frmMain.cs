@@ -121,7 +121,6 @@ namespace iParkingv5_window.Forms.DataForms
         }
         public static bool isNeedToRestart = true;
 
-
         private void FrmMain_Shown(object? sender, EventArgs e)
         {
             //foreach (var item in lanes)
@@ -290,6 +289,11 @@ namespace iParkingv5_window.Forms.DataForms
         {
             //(sender as ToolStripMenuItem)!.Image = Properties.Resources.NO_0_0_0_32px;
             (sender as ToolStripMenuItem)!.ForeColor = Color.Black;
+        }
+
+        private void tsmiScaleDetailReport_Click(object sender, EventArgs e)
+        {
+            new frmReportScaleDetail().ShowDialog();
         }
         #endregion
 
@@ -834,5 +838,6 @@ namespace iParkingv5_window.Forms.DataForms
                 Log(EmLogType.ERROR, EmObjectLogType.System, hanh_dong: "frmMain", noi_dung_hanh_dong: "Clear log", obj: ex);
             }
         }
+
     }
 }

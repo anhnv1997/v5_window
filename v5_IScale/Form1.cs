@@ -4,13 +4,13 @@ using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.ApiManager.KzScaleApis;
 using iParkingv5.Controller;
 using iParkingv5.Objects;
+using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.Events;
 using iParkingv5.Objects.ScaleObjects;
 using iParkingv5_window.Usercontrols;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
-using IPGS.Object.Databases;
 using Kztek.Scale_net6.Interfaces;
 using Kztek.Scale_net6.Objects;
 using Kztek.Tool;
@@ -192,7 +192,7 @@ namespace v5_IScale
                 return;
             }
             RefreshData();
-            lblMoney.Text = TextFormatingTool.GetMoneyFormat(result.weighing_action_detail[^1].Price.ToString());
+            lblMoney.Text = TextFormatingTool.GetMoneyFormat(result.weighingType.Price.ToString());
             await SaveEventImage(this.ucOverView.GetFullCurrentImage(), this.ucCarLpr.GetFullCurrentImage(), imageKey);
         }
 
@@ -215,13 +215,13 @@ namespace v5_IScale
         private async void btnPrintInternetInvoice_Click(object sender, EventArgs e)
         {
             var weighingActionDetails = await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(this.selectedParkingEventId);
-            string orderId = await KzScaleApiHelper.CreateInvoice(weighingActionDetails[^1].Id, StaticPool.userId, StaticPool.user_name);
-            if (string.IsNullOrEmpty(orderId))
+           var response = await KzScaleApiHelper.CreateInvoice(weighingActionDetails[^1].Id, true);
+            if (string.IsNullOrEmpty(response.id))
             {
                 MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            var invoiceData = await  AppData.ApiServer.GetInvoiceData(orderId);
+            var invoiceData = await AppData.ApiServer.GetInvoiceData(response.id);
             if (invoiceData == null)
             {
                 MessageBox.Show("Chưa có thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -229,7 +229,7 @@ namespace v5_IScale
             }
             try
             {
-                string pdfContent = invoiceData.signedFileData;
+                string pdfContent = invoiceData.fileToBytes;
                 byte[] bytes = Convert.FromBase64String(pdfContent);
                 if (!Directory.Exists(@"C:\print"))
                 {
@@ -598,14 +598,14 @@ namespace v5_IScale
                     lblLoadingStatus.Refresh();
                 }));
 
-                var eventInData = await  AppData.ApiServer.GetEventIns(e.PreferCard, DateTime.MinValue, DateTime.Now, "", "", "","");
+                var eventInData = await AppData.ApiServer.GetEventIns(e.PreferCard, DateTime.MinValue, DateTime.Now, "", "", "", "");
                 if (eventInData != null)
                 {
-                    if (eventInData.Rows.Count > 0)
+                    if (eventInData.Count > 0)
                     {
-                        string selectedPlateNumber = eventInData.Rows[0]["platenumber"].ToString() ?? "";
-                        this.selectedParkingEventId = eventInData.Rows[0]["id"].ToString() ?? "";
-                        string[] physicalFileIds = eventInData.Rows[0]["filekeys"].ToString()?.Split(",") ?? new string[] { };
+                        string selectedPlateNumber = eventInData[0].plateNumber.ToString() ?? "";
+                        this.selectedParkingEventId = eventInData[0].id.ToString() ?? "";
+                        string[] physicalFileIds = eventInData[0].fileKeys.Split(",") ?? new string[] { };
                         this.Invoke(new Action(() =>
                         {
                             txtPlateNumber.Text = selectedPlateNumber;
@@ -720,11 +720,11 @@ namespace v5_IScale
                     picSecondScale.Image = defaultImg;
                 }));
             }
-            var weighingActionDetailsOrder = weighingActionDetails.OrderBy(x => x.Order_by).ToList();
+            var weighingActionDetailsOrder = weighingActionDetails.OrderBy(x => x.createdUtc).ToList();
             if (weighingActionDetailsOrder.Count > 0)
             {
-                this.weighing_action_id = weighingActionDetailsOrder[0].Weighing_action_id;
-                string weighing_form_id = weighingActionDetailsOrder[0].Weighting_form_id;
+                this.weighing_action_id = weighingActionDetailsOrder[0].Id;
+                string weighing_form_id = weighingActionDetailsOrder[0].WeighingTypeId;
 
                 foreach (var item in cbGoodsType.Items)
                 {
@@ -744,11 +744,11 @@ namespace v5_IScale
                     lblSecondScale.Text = weighingActionDetails.Count > 1 ? weighingActionDetails[1].Weight.ToString() : "0";
                     lblGoodsScale.Text = Math.Abs(int.Parse(lblFirstScale.Text) - int.Parse(lblSecondScale.Text)).ToString();
                 }));
-                await ShowImage(weighingActionDetails[0].list_image.Split(";")[1], picFirstScale);
-                if (weighingActionDetails.Count > 1)
-                {
-                    await ShowImage(weighingActionDetails[0].list_image.Split(";")[1], picSecondScale);
-                }
+                //await ShowImage(weighingActionDetails[0].list_image.Split(";")[1], picFirstScale);
+                //if (weighingActionDetails.Count > 1)
+                //{
+                //    await ShowImage(weighingActionDetails[0].list_image.Split(";")[1], picSecondScale);
+                //}
             }
             else
             {
@@ -771,15 +771,17 @@ namespace v5_IScale
             await Task.WhenAll(task1, task2);
         }
 
-        private string GetPrintContent(List<WeighingActionDetail> weighingActionDetails)
+        private string GetPrintContent(List<WeighingAction> weighingActionDetails)
         {
             string printContent = string.Empty;
+            int i = 1;
             if (weighingActionDetails.Count <= 2)
             {
                 foreach (var item in weighingActionDetails)
                 {
-                    string scaleItem = GetPrintContentItem(item, item.Order_by);
+                    string scaleItem = GetPrintContentItem(item, i);
                     printContent += scaleItem;
+                    i++;
                 }
                 if (weighingActionDetails.Count <= 1)
                 {
@@ -795,8 +797,9 @@ namespace v5_IScale
             {
                 foreach (var item in weighingActionDetails)
                 {
-                    string scaleItem = GetPrintContentItem(item, item.Order_by);
+                    string scaleItem = GetPrintContentItem(item, i);
                     printContent += scaleItem;
+                    i++;
                 }
             }
 
@@ -815,7 +818,7 @@ namespace v5_IScale
                 return string.Empty;
             }
         }
-        private string GetPrintContentItem(WeighingActionDetail? weighingActionDetail, int index)
+        private string GetPrintContentItem(WeighingAction? weighingActionDetail, int index)
         {
             if (weighingActionDetail == null)
             {
@@ -837,11 +840,11 @@ namespace v5_IScale
                 return $@"<tr>
                     <td>
                         <span>
-                            <center>Lần cân {weighingActionDetail.Order_by}</center>
+                            <center>Lần cân {index}</center>
                         </span>
                     </td>
                     <td>
-                        <center><span>{weighingActionDetail.CreatedAtTime:dd/MM/yyyy HH:mm:ss}</span></center>
+                        <center><span>{weighingActionDetail.createdUtcTime:dd/MM/yyyy HH:mm:ss}</span></center>
                     </td>
                     <td>
                         <center><span><b>{weighingActionDetail.Weight.ToString("#,0")}</b></span></center>
@@ -876,10 +879,11 @@ namespace v5_IScale
                 MessageBox.Show(ex.Message);
             }
         }
+
         private async void RefreshData()
         {
             AppData.WeighingDetailCollection = new WeighingDetailCollection();
-            List<WeighingDetail> weighingHistory = null;
+            List<WeighingAction> weighingHistory = null;
             DateTime startTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
             DateTime endTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
             weighingHistory = await KzScaleApiHelper.GetWeighingActionDetails(startTime, endTime);
@@ -896,57 +900,65 @@ namespace v5_IScale
         {
             dgvData.SelectionChanged -= dgvData_SelectionChanged;
             dgvData.Rows.Clear();
-            foreach (WeighingDetail item in AppData.WeighingDetailCollection)
+
+            Dictionary<string, List<WeighingAction>> reports = new Dictionary<string, List<WeighingAction>>();
+
+            foreach (WeighingAction item in AppData.WeighingDetailCollection)
             {
+                string eventId = item.eventInId;
+                if (reports.ContainsKey(eventId))
+                {
+                    reports[eventId].Add(item);
+                }
+                else
+                {
+                    reports.Add(eventId, new List<WeighingAction> { item });
+                }
+            }
+
+            foreach (KeyValuePair<string, List<WeighingAction>> item in reports)
+            {
+                var orderData = item.Value.OrderBy(e => e.createdUtcTime).ToList();
                 string firstScaleTime = "";
                 string secondScaleTime = "";
                 string largerThan2TimesScale = "";
-                string plateNumber = "";
+                string plateNumber = item.Value[0].plateNumber;
                 string firstWeightScale = "";
                 string secondWeightScale = "";
                 string goodType = "";
                 string firstWeightPrice = "";
                 string secondWeightPrice = "";
-                if (item.weighing_action_detail == null)
-                {
-                    continue;
-                }
-                plateNumber = item.plate_number;
-                if (item.weighing_action_detail.Count > 0)
-                {
-                    firstScaleTime = item.weighing_action_detail[0].CreatedAtTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
-                    firstWeightScale = item.weighing_action_detail[0].Weight.ToString("#,0");
-                    goodType = AppData.WeighingFormCollection.GetObjectById(item.weighing_action_detail[0].Weighting_form_id ?? "")?.Name ?? "";
-                    firstWeightPrice = TextFormatingTool.GetMoneyFormat(item.weighing_action_detail[0].Price.ToString());
-                }
-                if (item.weighing_action_detail.Count > 1)
-                {
-                    secondScaleTime = item.weighing_action_detail[1].CreatedAtTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
-                    secondWeightScale = item.weighing_action_detail[1].Weight.ToString("#,0");
-                    secondWeightPrice = TextFormatingTool.GetMoneyFormat(item.weighing_action_detail[1].Price.ToString());
-                }
-                if (item.weighing_action_detail.Count > 2)
-                {
-                    for (int i = 2; i < item.weighing_action_detail.Count; i++)
-                    {
-                        string tempTime = item.weighing_action_detail[i].CreatedAtTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
-                        string tempWeight = item.weighing_action_detail[i].Weight.ToString("#,0");
-                        string temp_price = TextFormatingTool.GetMoneyFormat(item.weighing_action_detail[i].Price.ToString());
 
-                        largerThan2TimesScale += "Lần " + item.weighing_action_detail[i].Order_by + " : " + tempTime + " - " + tempWeight + " - " + temp_price + "\r\n";
+                if (orderData.Count > 0)
+                {
+                    firstScaleTime = orderData[0].createdUtcTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
+                    firstWeightScale = orderData[0].Weight.ToString("#,0");
+                    goodType = orderData[0].weighingType.Name;
+                    firstWeightPrice = TextFormatingTool.GetMoneyFormat(orderData[0].Charge.ToString());
+                }
+                if (orderData.Count > 1)
+                {
+                    secondScaleTime = orderData[1].createdUtcTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
+                    secondWeightScale = orderData[1].Weight.ToString("#,0");
+                    secondWeightPrice = TextFormatingTool.GetMoneyFormat(orderData[1].Charge.ToString());
+                }
+                if (orderData.Count > 2)
+                {
+                    for (int i = 2; i < orderData.Count; i++)
+                    {
+                        string tempTime = orderData[i].createdUtcTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
+                        string tempWeight = orderData[i].Weight.ToString("#,0");
+                        largerThan2TimesScale += "Lần " + (i + 1) + " : " + tempTime + " - " + tempWeight + "\r\n";
                     }
                 }
                 largerThan2TimesScale = largerThan2TimesScale.TrimEnd();
-                string userAction = item.weighing_action_detail.Count > 0 ? item.weighing_action_detail[0].User_code : "";
-                string vehicleImage = item.weighing_action_detail.Count > 0 ? item.weighing_action_detail[0].list_image.Split(";")[0] : "";
-                string firstScaleImage = item.weighing_action_detail.Count > 0 ? item.weighing_action_detail[0].list_image : "";
-                string secondScaleImage = item.weighing_action_detail.Count > 1 ? item.weighing_action_detail[1].list_image : "";
-                dgvData.Rows.Add(item.Traffic_id, dgvData.Rows.Count + 1, firstScaleTime, secondScaleTime,
+                string userAction = orderData.Count > 0 ? orderData[0].createdBy : "";
+                string vehicleImage = "";
+                string firstScaleImage = orderData.Count > 0 ? string.Join(";", orderData[0].FileKeys) : "";
+                string secondScaleImage = orderData.Count > 1 ? string.Join(";", orderData[1].FileKeys) : "";
+                dgvData.Rows.Add(item.Key, dgvData.Rows.Count + 1, firstScaleTime, secondScaleTime,
                                  plateNumber, firstWeightScale, firstWeightPrice, secondWeightScale, secondWeightPrice, largerThan2TimesScale, goodType,
                                  userAction, vehicleImage, firstScaleImage, secondScaleImage);
-                //dgvData.Rows.Add(dgvData.Rows.Count + 1, firstScaleTime, secondScaleTime,
-                //                plateNumber, firstWeightScale,firstWeightPrice, secondWeightScale, secondWeightPrice, largerThan2TimesScale, goodType,
-                //                StaticPool.user_name);
 
             }
             dgvData.SelectionChanged += dgvData_SelectionChanged;

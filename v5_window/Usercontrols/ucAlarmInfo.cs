@@ -79,21 +79,22 @@ namespace iParkingv5_window.Usercontrols
             //Identity? identity = await KzParkingApiHelper.GetIdentityById(identityId);
             Identity? identity = (await AppData.ApiServer.GetIdentityByIdAsync(identityId)).Item1;
             IdentityGroup? identityGroup = null;
-            VehicleType? vehicleType = null;// = VehicleBaseType.Car;
+            VehicleBaseType vehicleType = VehicleBaseType.Car;
             if (identity != null)
             {
                 //identityGroup = await KzParkingApiHelper.GetIdentityGroupByIdAsync(identity.IdentityGroupId.ToString());
                 identityGroup = (await AppData.ApiServer.GetIdentityGroupByIdAsync(identity.IdentityGroupId.ToString())).Item1;
                 if (identityGroup != null)
                 {
+                    vehicleType = identityGroup.VehicleType;
                     //vehicleType = await KzParkingApiHelper.GetVehicleTypeById(identityGroup.VehicleTypeId.ToString());
-                    vehicleType = (await AppData.ApiServer.GetVehicleTypeByIdAsync(identityGroup.VehicleType.Id.ToString())).Item1;
+                    //vehicleType = (await AppData.ApiServer.GetVehicleTypeByIdAsync(identityGroup.VehicleType.Id.ToString())).Item1;
                 }
             }
             lblLaneName.Text = lane == null ? "_" : lane.name;
             lblTimeIn.Text = datetimeIn;
             lblPlateNumber.Text = plateNumber;
-            lblVehilceType.Text = vehicleType == null ? "_" : VehicleType.GetDisplayStr(vehicleType.Type);
+            lblVehilceType.Text = VehicleType.GetDisplayStr(vehicleType);
             lblIdentityName.Text = identity == null ? "_" : identity.Name;
             lblIdentityCode.Text = identity == null ? "_" : identity.Code;
             lblIdentityGroup.Text = identityGroup == null ? "_" : identityGroup.Name;

@@ -443,7 +443,7 @@ namespace v5_IScale.Forms.ReportForms
             // label8
             // 
             label8.AutoSize = true;
-            label8.BackColor = Color.Transparent;
+            label8.BackColor = SystemColors.ControlLightLight;
             label8.Dock = DockStyle.Top;
             label8.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             label8.ForeColor = Color.FromArgb(0, 0, 192);
@@ -456,6 +456,7 @@ namespace v5_IScale.Forms.ReportForms
             // 
             // picSecondWeight
             // 
+            picSecondWeight.BackColor = SystemColors.ControlLightLight;
             picSecondWeight.Dock = DockStyle.Fill;
             picSecondWeight.Location = new Point(0, 0);
             picSecondWeight.Margin = new Padding(0);
@@ -480,7 +481,7 @@ namespace v5_IScale.Forms.ReportForms
             // label7
             // 
             label7.AutoSize = true;
-            label7.BackColor = Color.Transparent;
+            label7.BackColor = SystemColors.ControlLightLight;
             label7.Dock = DockStyle.Top;
             label7.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             label7.ForeColor = Color.FromArgb(0, 0, 192);
@@ -493,6 +494,7 @@ namespace v5_IScale.Forms.ReportForms
             // 
             // picFirstWeight
             // 
+            picFirstWeight.BackColor = SystemColors.ControlLightLight;
             picFirstWeight.Dock = DockStyle.Fill;
             picFirstWeight.Location = new Point(0, 0);
             picFirstWeight.Margin = new Padding(0);
@@ -517,7 +519,7 @@ namespace v5_IScale.Forms.ReportForms
             // label6
             // 
             label6.AutoSize = true;
-            label6.BackColor = Color.Transparent;
+            label6.BackColor = SystemColors.ControlLightLight;
             label6.Dock = DockStyle.Top;
             label6.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             label6.ForeColor = Color.FromArgb(0, 0, 192);
@@ -530,6 +532,7 @@ namespace v5_IScale.Forms.ReportForms
             // 
             // picVehicleImage
             // 
+            picVehicleImage.BackColor = SystemColors.ControlLightLight;
             picVehicleImage.Dock = DockStyle.Fill;
             picVehicleImage.Location = new Point(0, 0);
             picVehicleImage.Margin = new Padding(0);

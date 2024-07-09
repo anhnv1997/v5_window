@@ -135,7 +135,8 @@ namespace iParkingv5.Controller.KztekDevices.KZE16AccessControl
                     //AccessCardDenie: Char(2) + GetEvent?/Style=Card/UserID=Null/LenCard=4/Card=7C19F640/Reader=01/DateTime=YYYYMMDDhhmmss/CardState=U/AccessState=1/Door=00/StateMSG=00 + char(3)
                     //InputEvent     : Char(2) + GetEvent?/Style=input/Input=INPUT1/DateTime=YYYYMMDDhhmmss + char(3)
                     //NoEvent        : Char(2) + GetEvent?/NotEvent + char(3)
-                    //response = "GetCardEvent?/UserID=NULL/LenCard=3/Card=BDE223/Reader=02/DateTime=20240511062908";
+                    
+                    response = "GetCardEvent?/UserID=NULL/LenCard=3/Card=BDE223/Reader=02/DateTime=20240511062908";
                     if (response != "" && (response.Contains("GetCardEvent?/")) && !response.Contains("NotEvent"))
                     {
                         string[] data = response.Split('/');
@@ -190,7 +191,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE16AccessControl
                     AllCardFormats = new List<string>(),
                 };
                 string cardNumberHEX = map.ContainsKey("card") ? map["card"] : "";
-                //string cardNumberHEX = "BDE223";
+
                 if (!string.IsNullOrEmpty(cardNumberHEX))
                 {
                     e.AllCardFormats.Add(cardNumberHEX);
@@ -219,7 +220,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE16AccessControl
                         e.AllCardFormats.Add(maSauFormat1);
                         e.AllCardFormats.Add(maSauFormat2);
                         e.PreferCard = maSauFormat3;
-                        e.PreferCard = "the1";
+                        //e.PreferCard = "test44";
                     }
                     else
                     {
@@ -229,7 +230,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE16AccessControl
                         int a = (int)(Convert.ToInt64(maInt, 10) / 65536);
                         int b = (int)(Convert.ToInt64(maInt, 10) - a * 65536);
                         e.PreferCard = a.ToString("00000") + ":" + b.ToString("00000");
-                        //e.PreferCard = maInt;
+                        e.PreferCard = maInt;
                         e.AllCardFormats.Add(maInt);
                     }
                 }

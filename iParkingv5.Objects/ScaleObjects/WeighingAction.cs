@@ -9,27 +9,28 @@ namespace iParkingv5.Objects.ScaleObjects
     public class WeighingAction
     {
         public string Id { get; set; } = string.Empty;
-        public int Code { get; set; } = 0;
-        public string Traffic_id { get; set; } = string.Empty;
-        public string plate_number { get; set; } = string.Empty;
-        public string Created_at { get; set; } = "";
-        public DateTime? CreatedAtTime
+        public string WeighingTypeId { get; set; }
+        public string eventInId { get; set; } = string.Empty;
+        public string plateNumber { get; set; } = string.Empty;
+        public string createdUtc { get; set; } = "";
+        public int Weight { get; set; }
+        public DateTime? createdUtcTime
         {
             get
             {
                 try
                 {
-                    if (string.IsNullOrEmpty(Created_at))
+                    if (string.IsNullOrEmpty(createdUtc))
                     {
                         return null;
                     }
-                    if (Created_at.Contains("T"))
+                    if (createdUtc.Contains("T"))
                     {
-                        return DateTime.ParseExact(Created_at.Substring(0, "yyyy-MM-ddTHH:mm:ss".Length), "yyyy-MM-ddTHH:mm:ss", null).AddHours(7);
+                        return DateTime.ParseExact(createdUtc.Substring(0, "yyyy-MM-ddTHH:mm:ss".Length), "yyyy-MM-ddTHH:mm:ss", null).AddHours(7);
                     }
                     else
                     {
-                        return DateTime.Parse(Created_at).AddHours(7);
+                        return DateTime.Parse(createdUtc).AddHours(7);
                     }
                 }
                 catch
@@ -38,5 +39,9 @@ namespace iParkingv5.Objects.ScaleObjects
                 }
             }
         }
+        public WeighingType weighingType { get; set; }
+        public List<string> FileKeys { get; set; }
+        public float Charge { get; set; }
+        public string createdBy { get; set; }
     }
 }

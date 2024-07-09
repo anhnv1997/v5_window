@@ -1,11 +1,24 @@
-﻿using iParkingv5.Objects;
+﻿using iParkingv5.ApiManager.KzParkingv5Apis;
+using iParkingv5.Objects;
+using iParkingv5.Objects.Datas;
+using iParkingv5.Objects.Enums;
+using iParkingv5.Objects.EventDatas;
+using iParkingv5.Objects.Invoices;
 using iParkingv5.Objects.ScaleObjects;
 using iParkingv6.ApiManager;
+using iParkingv6.Objects.Datas;
+using Kztek.Tool;
+using Newtonsoft.Json;
 using OpenCvSharp;
+using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using static iParkingv5.ApiManager.KzParkingv5Apis.Filter;
+using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5ApiHelper;
 
 namespace iParkingv5.ApiManager.KzScaleApis
 {
@@ -35,7 +48,7 @@ namespace iParkingv5.ApiManager.KzScaleApis
         public static CancellationTokenSource cts;
 
         #region WeighingForms
-        public static async Task<List<WeighingForm>> GetWeighingForms()
+        public static async Task<List<WeighingType>> GetWeighingForms()
         {
             StandardlizeServerName();
             string apiUrl = server + KzScaleUrlManagement.GetAllWeighingFormRoute();
@@ -46,48 +59,46 @@ namespace iParkingv5.ApiManager.KzScaleApis
                 { "Authorization","Bearer " + token  }
             };
 
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, RestSharp.Method.Get);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, new { }, headers, null, timeOut, RestSharp.Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                KzScaleBaseResponse<List<WeighingForm>> data = Newtonsoft.Json.JsonConvert.DeserializeObject<KzScaleBaseResponse<List<WeighingForm>>>(response.Item1);
-                return data?.result ?? new List<WeighingForm>();
+                KzParkingv5BaseResponse<List<WeighingType>> data = Newtonsoft.Json.JsonConvert.DeserializeObject<KzParkingv5BaseResponse<List<WeighingType>>>(response.Item1);
+                return data?.data ?? new List<WeighingType>();
             }
             return null;
         }
         #endregion End WeighingForms
 
         #region Weighing Action
-        public static async Task<WeighingDetail> CreateScaleEvent(string plateNumber, string parkingEventId,
+        public static async Task<WeighingAction> CreateScaleEvent(string plateNumber, string parkingEventId,
                                                          long weight, string weightFormId,
                                                          string user_action, string user_code,
                                                          List<string> imageKeys, string updateTrafficId = "")
         {
             string apiUrl = server + KzScaleUrlManagement.CreateWeighingAction();
-            //weight = new Random().Next(10000, 50000);
+            weight = new Random().Next(10000, 50000);
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
                 { "Authorization","Bearer " + token  }
             };
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>()
+            var obj = new
             {
-                { "plate_number",plateNumber },
-                { "traffic_id",parkingEventId },
-                { "weighting_form_id",weightFormId },
-                { "weight", weight.ToString() },
-                { "user_action", StaticPool.userId },
-                { "user_code",StaticPool.user_name },
-                { "list_image", string.Join(";", imageKeys.ToArray()) },
+                plate_number = plateNumber,
+                eventInId = parkingEventId,
+                weighingTypeId = weightFormId,
+                weight = weight.ToString(),
+                fileKeys = imageKeys,
                 //{ "update_traffic_id", updateTrafficId},
             };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Post);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, obj, headers, null, timeOut, RestSharp.Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
                 try
                 {
-                    KzScaleBaseResponse<WeighingDetail> data = Newtonsoft.Json.JsonConvert.DeserializeObject<KzScaleBaseResponse<WeighingDetail>>(response.Item1);
-                    return data?.result ?? new WeighingDetail();
+                    var data = Newtonsoft.Json.JsonConvert.DeserializeObject<WeighingAction>(response.Item1);
+                    return data;
                 }
                 catch (Exception)
                 {
@@ -97,9 +108,9 @@ namespace iParkingv5.ApiManager.KzScaleApis
             return null;
         }
 
-        public static async Task<WeighingAction> UpdatePlate(string trafficId, string newPlate)
+        public static async Task<bool> UpdatePlate(string eventInId, string newPlate)
         {
-            string apiUrl = server + KzScaleUrlManagement.UpdatePlate();
+            string apiUrl = server + KzScaleUrlManagement.UpdatePlate(eventInId);
 
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
@@ -107,33 +118,38 @@ namespace iParkingv5.ApiManager.KzScaleApis
                 { "Authorization","Bearer " + token  }
             };
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>()
+            var data = new List<object>
             {
-                { "plate_number",newPlate },
-                { "traffic_id",trafficId },
+                new
+                {
+                    op = "replace",
+                    path = "plateNumber",
+                    value = newPlate
+                }
             };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Post);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Patch);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                try
-                {
-                    KzScaleBaseResponse<WeighingAction> data = Newtonsoft.Json.JsonConvert.DeserializeObject<KzScaleBaseResponse<WeighingAction>>(response.Item1);
-                    return data?.result ?? new WeighingAction();
-                }
-                catch (Exception)
-                {
-                    return null;
-                }
+                return true;
+                //try
+                //{
+                //    KzScaleBaseResponse<WeighingAction> response = Newtonsoft.Json.JsonConvert.DeserializeObject<KzScaleBaseResponse<WeighingAction>>(response.Item1);
+                //    return data?.result ?? new WeighingAction();
+                //}
+                //catch (Exception)
+                //{
+                //    return null;
+                //}
             }
-            return null;
+            return false;
         }
 
-        public static async Task<List<WeighingDetail>> GetWeighingActionDetails(DateTime startTime, DateTime endTime, string plateNumber = "",
-                                        string user_code = "", string weighingFormId = "", int is_weighing_bill = 0)
+        public static async Task<List<WeighingAction>> GetWeighingActionDetails(DateTime startTime, DateTime endTime, string plateNumber = "",
+                                        string user_code = "", string weighingFormId = "", int is_weighing_bill = 0, string id = "", string eventInId = "")
         {
             if (string.IsNullOrEmpty(server))
             {
-                return new List<WeighingDetail>();
+                return new List<WeighingAction>();
             }
             StandardlizeServerName();
             string apiUrl = server + KzScaleUrlManagement.GetAllWeighingHistory();
@@ -143,25 +159,57 @@ namespace iParkingv5.ApiManager.KzScaleApis
             {
                 { "Authorization","Bearer " + token  }
             };
-            Dictionary<string, string> parameters = new Dictionary<string, string>()
+
+
+            List<FilterModel> filterModels = new List<FilterModel>()
+                        {
+                            new FilterModel("createdUtc", EmPageSearchType.DATETIME, startTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), EmOperation._gte),
+                            new FilterModel("createdUtc", EmPageSearchType.DATETIME, endTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"),  EmOperation._lte),
+                            new FilterModel("createdBy", EmPageSearchType.TEXT, user_code,  EmOperation._contains),
+                        };
+            if (!string.IsNullOrEmpty(weighingFormId))
             {
-                { "start_date",startTime.ToString("yyyy-MM-dd HH:mm:ss") },
-                { "end_date", endTime.ToString("yyyy-MM-dd HH:mm:ss") },
-                { "plate_number", plateNumber},
-                { "user_code", user_code },
-                { "weighting_form_id", weighingFormId },
-                { "is_weighing_bill", is_weighing_bill.ToString() },
-            };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Get);
+                filterModels.Add(new FilterModel("weighingType.id", EmPageSearchType.GUID, weighingFormId, EmOperation._in));
+            }
+            if (!string.IsNullOrEmpty(id))
+            {
+                filterModels.Add(new FilterModel("id", EmPageSearchType.GUID, id, EmOperation._in));
+            }
+            if (!string.IsNullOrEmpty(eventInId))
+            {
+                filterModels.Add(new FilterModel("eventInId", EmPageSearchType.GUID, eventInId, EmOperation._in));
+            }
+            var filter1 = Filter.CreateFilterItem(filterModels, EmMainOperation.and);
+            var filter2 = Filter.CreateFilterItem(new List<FilterModel>()
+                            {
+                                new FilterModel("plateNumber", "TEXT", plateNumber, "contains"),
+                            }, EmMainOperation.or);
+            var filter = Filter.CreateFilter(new List<Dictionary<string, List<FilterModel>>>() { filter1, filter2 },
+            pageIndex: 1,
+            pageSize: 10000);
+
+            //var filter = Filter.CreateFilter(new List<FilterModel>()
+            //{
+            //    new FilterModel("createdUtc", "DATETIME", startTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), "gte"),
+            //    new FilterModel("createdUtc", "DATETIME", endTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), "lte"),
+            //});
+            //Dictionary<string, string> parameters = new Dictionary<string, string>()
+            //{
+            //    { "start_date",startTime.ToString("yyyy-MM-dd HH:mm:ss") },
+            //    { "end_date", endTime.ToString("yyyy-MM-dd HH:mm:ss") },
+            //    { "plate_number", plateNumber},
+            //    { "user_code", user_code },
+            //    { "weighting_form_id", weighingFormId },
+            //    { "is_weighing_bill", is_weighing_bill.ToString() },
+            //};
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, RestSharp.Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                KzScaleBaseResponse<List<WeighingDetail>> data =
-                    Newtonsoft.Json.JsonConvert.DeserializeObject<KzScaleBaseResponse<List<WeighingDetail>>>(response.Item1);
-                return data?.result ?? new List<WeighingDetail>();
+                return NewtonSoftHelper<KzParkingv5BaseResponse<List<WeighingAction>>>.GetBaseResponse(response.Item1)?.data ?? new List<WeighingAction>();
             }
-            return new List<WeighingDetail>();
+            return new List<WeighingAction>();
         }
-        public static async Task<WeighingActionDetail> UpdateWeighingActionDetailById(string weighingActionDetailId, string weighingFormId)
+        public static async Task<WeighingAction> UpdateWeighingActionDetailById(string weighingActionDetailId, string weighingTypeId)
         {
             if (string.IsNullOrEmpty(server))
             {
@@ -175,17 +223,29 @@ namespace iParkingv5.ApiManager.KzScaleApis
             {
                 { "Authorization","Bearer " + token  }
             };
-            Dictionary<string, string> parameters = new Dictionary<string, string>()
+            //Dictionary<string, string> parameters = new Dictionary<string, string>()
+            //{
+            //    { "weighting_form_id", weighingFormId },
+            //    { "weighing_action_detail_id", weighingActionDetailId },
+            //};
+            var data = new List<object>
             {
-                { "weighting_form_id", weighingFormId },
-                { "weighing_action_detail_id", weighingActionDetailId },
+                new
+                {
+                    op = "replace",
+                    path = "weighingType",
+                    value = weighingTypeId
+                }
             };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Post);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Patch);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                KzScaleBaseResponse<WeighingActionDetail> data =
-                    Newtonsoft.Json.JsonConvert.DeserializeObject<KzScaleBaseResponse<WeighingActionDetail>>(response.Item1);
-                return data?.result;
+                var searchData = await GetWeighingActionDetails(DateTime.MinValue, DateTime.MaxValue, id: weighingActionDetailId);
+                if (searchData.Count == 0)
+                {
+                    return null;
+                }
+                return searchData[0];
             }
             return null;
         }
@@ -206,6 +266,12 @@ namespace iParkingv5.ApiManager.KzScaleApis
             {
                 { "Authorization","Bearer " + token  }
             };
+            DateTime queryTime = DateTime.Now;
+            Dictionary<string, string> parameters = new Dictionary<string, string>()
+            {
+                { "fromDateTime",new DateTime().ToUniversalTime().ToString("yyyy-MM-ddT00:00:00:0000") },
+                { "toDateTime",new DateTime().ToUniversalTime().ToString("yyyy-MM-ddT23:59:59:0000") }
+            };
 
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, RestSharp.Method.Get);
             if (!string.IsNullOrEmpty(response.Item1))
@@ -224,7 +290,7 @@ namespace iParkingv5.ApiManager.KzScaleApis
             }
             return new CountInDayDetail();
         }
-        public static async Task<List<WeighingActionDetail>> GetWeighingActionDetailsByTrafficId(string parkingEventId)
+        public static async Task<List<WeighingAction>> GetWeighingActionDetailsByTrafficId(string parkingEventId)
         {
             StandardlizeServerName();
             string apiUrl = server + KzScaleUrlManagement.GetAllWeighingHistory();
@@ -239,34 +305,16 @@ namespace iParkingv5.ApiManager.KzScaleApis
                 { "traffic_id",parkingEventId  }
             };
 
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Get);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                KzScaleBaseResponse<List<WeighingDetail>> data =
-                   Newtonsoft.Json.JsonConvert.DeserializeObject<KzScaleBaseResponse<List<WeighingDetail>>>(response.Item1);
-                if (data == null)
-                {
-                    return new List<WeighingActionDetail>();
-                }
-                if (data.result == null)
-                {
-                    return new List<WeighingActionDetail>();
-                }
-                if (data.result.Count == 0)
-                {
-                    return new List<WeighingActionDetail>();
-                }
-                return data?.result[0].weighing_action_detail;
-            }
-            return new List<WeighingActionDetail>();
+            var searchData = await GetWeighingActionDetails(DateTime.MinValue, DateTime.MaxValue, eventInId: parkingEventId) ?? new List<WeighingAction>();
+            return searchData.OrderBy(e => e.createdUtcTime).ToList();
         }
         #endregion End Weighing Detai;
 
         #region EInvoice
-        public static async Task<string> CreateInvoice(string weighingActionDetailId, string userId, string userFullname)
+        public static async Task<InvoiceResponse> CreateInvoice(string weighingActionDetailId, bool isSentNow)
         {
             StandardlizeServerName();
-            string apiUrl = server + KzScaleUrlManagement.CreateInvoice();
+            string apiUrl = server + "invoice";
 
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
@@ -275,27 +323,27 @@ namespace iParkingv5.ApiManager.KzScaleApis
             };
             var data = new
             {
-                WeighingActionDetailID = weighingActionDetailId,
-                Creator = new
-                {
-                    Id = userId,
-                    Name = userFullname,
-                }
+                //WeighingActionDetailID = weighingActionDetailId,
+                targetId = weighingActionDetailId,
+                send = isSentNow ? 1 : 0,
+                provider = (int)EmInvoiceProvider.Viettel,
+                TargetType = TargetType.Weghing,
             };
 
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                KzScaleBaseResponse<WeighingBill> result =
-                 Newtonsoft.Json.JsonConvert.DeserializeObject<KzScaleBaseResponse<WeighingBill>>(response.Item1);
-                if (result == null)
+                try
                 {
-                    return "";
+                    return JsonConvert.DeserializeObject<InvoiceResponse>(response.Item1);
                 }
+                catch (Exception)
+                {
+                    return null;
 
-                return result?.result?.Id ?? "";
+                }
             }
-            return string.Empty;
+            return null;
         }
 
         #endregion End EInvoice

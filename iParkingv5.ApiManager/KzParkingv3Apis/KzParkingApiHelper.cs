@@ -14,15 +14,13 @@ using iParkingv5.Objects;
 using RestSharp;
 using iParkingv5.Objects.Invoices;
 using iParkingv5.ApiManager;
-using iParkingv5.ApiManager.KzParkingv5Apis;
 using System.Data;
-using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5ApiHelper;
-using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper.TransactionType;
-using Newtonsoft.Json.Linq;
+using iParkingv5.Objects.warehouse;
+using static iParkingv5.Objects.warehouse.TransactionType;
 
 namespace iParkingv6.ApiManager.KzParkingv3Apis
 {
-    public class KzParkingApiHelper : iParkingApi
+    public class KzParkingApiHelper
     {
         public static string server = "http://14.160.26.45:13000";
         public static string username = "admin";
@@ -1137,7 +1135,7 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             }
             return false;
         }
-        public async Task<KzParkingv5ApiHelper.PaymentTransaction> CreatePaymentTransaction(AddEventOutResponse eventOut)
+        public async Task<iParkingv5.Objects.Datas.PaymentTransaction> CreatePaymentTransaction(AddEventOutResponse eventOut)
         {
             return null;
         }
@@ -1172,7 +1170,7 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             public int discount { get; set; }
             public string createdUtc { get; set; }
             public string createdBy { get; set; }
-            public string[]? fileKeys { get; set; }
+            public string fileKeys { get; set; }
             [JsonIgnore]
             public DateTime? DatetimeIn
             {
@@ -1199,12 +1197,27 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             public string CustomerId { get; set; }
             public string RegisteredVehicleId { get; set; }
             public string CheckOutValidationStatus { get; set; }
-            public int TransactionType { get; set; }
-            public string TransactionCode { get; set; }
 
             public string note { get; set; }
             public string thirdpartynote { get; set; }
+
+            public int TransactionType { get; set; }
+            public string TransactionCode { get; set; }
+            public WarehouseTransaction WarehouseTransaction { get; set; }
         }
+
+        public class WarehouseTransaction
+        {
+            public TransactionType Type { get; set; }
+            public string Code { get; set; }
+        }
+
+        public class WarehouseWeighing
+        {
+            public int FirstWeight { get; set; }
+            public int LastWeight { get; set; }
+        }
+
         public class EventOutReport
         {
             //Thông tin sự kiện ra
@@ -1303,30 +1316,7 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             public string thirdpartynote { get; set; }
         }
 
-        public class TransactionType
-        {
-            public enum EmTransactionType
-            {
-                InBound,
-                OutBound,
-                Overweight,
-                Other
-            }
-            public static string GetTransactionTypeStr(int transactionType)
-            {
-                switch (transactionType)
-                {
-                    case (int)EmTransactionType.InBound:
-                        return "Nhập";
-                    case (int)EmTransactionType.OutBound:
-                        return "Xuất";
-                    case (int)EmTransactionType.Overweight:
-                        return "Sang tải";
-                    default:
-                        return "khác";
-                }
-            }
-        }
+      
         #endregion
 
         #region ABNORMAL
@@ -1749,11 +1739,11 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         {
             return null;
         }
-        public async Task<FileInfor> GetInvoiceData(string orderId, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL)
+        public async Task<InvoiceFileInfor> GetInvoiceData(string orderId, EmInvoiceProvider provider = EmInvoiceProvider.Viettel)
         {
             return null;
         }
-        public async Task<List<InvoiceResponse>> GetMultipleInvoiceData(DateTime startTime, DateTime endTime, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL)
+        public async Task<List<InvoiceResponse>> GetMultipleInvoiceData(DateTime startTime, DateTime endTime, EmInvoiceProvider provider = EmInvoiceProvider.Viettel)
         {
             return null;
         }

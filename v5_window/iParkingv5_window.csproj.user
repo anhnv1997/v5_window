@@ -136,6 +136,9 @@
     <Compile Update="Usercontrols\ucEventOutInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="Usercontrols\ucLaneIn.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Usercontrols\ucLastEventInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -143,9 +146,6 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Usercontrols\ucViewGrid.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Usercontrols\ucLaneIn.cs">
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>

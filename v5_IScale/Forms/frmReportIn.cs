@@ -4,12 +4,12 @@ using iPakrkingv5.Controls.Controls.Buttons;
 using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.ApiManager.KzScaleApis;
 using iParkingv5.Objects;
+using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.Datas;
 using iParkingv5.Objects.Enums;
 using iParkingv5_window;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
-using IPGS.Object.Databases;
 using System.Data;
 using System.Runtime.InteropServices;
 using v5_IScale;
@@ -162,19 +162,36 @@ namespace v5_IScale.Forms
             List<EventInReport> eventInReports = new List<EventInReport>();
             foreach (DataRow row in eventInData.Rows)
             {
+
+                string transactionCode = eventInData.Columns.Contains("transactioncode") ? row["transactioncode"].ToString() ?? "" : "";
+                transactionCode = transactionCode.Contains("0-0") ? "" : transactionCode;
+
+                int transactionType = 0;
+                try
+                {
+                    transactionType = eventInData.Columns.Contains("transactiontype") ? int.Parse(row["transactiontype"].ToString() ?? "0") : 0;
+                }
+                catch (Exception)
+                {
+                }
                 EventInReport ev = new EventInReport()
                 {
+                    id = row["id"].ToString(),
                     identityId = row["identityid"].ToString(),
                     plateNumber = row["platenumber"].ToString(),
                     createdUtc = row["createdutc"].ToString(),
                     laneId = row["laneId"].ToString(),
-                    createdBy = "",
+                    createdBy = eventInData.Columns.Contains("createdby") ? row["createdby"].ToString() : "",
                     fileKeys = row["filekeys"].ToString()?.Split(","),
                     CustomerId = eventInData.Columns.Contains("customerid") ? row["customerid"].ToString() : "",
                     RegisteredVehicleId = eventInData.Columns.Contains("vehicleid") ? row["vehicleid"].ToString() : "",
                     IdentityGroupId = row["identitygroupid"].ToString(),
                     identityCode = eventInData.Columns.Contains("identityCode") ? row["identityCode"].ToString() : "",
                     identityName = eventInData.Columns.Contains("identityName") ? row["identityName"].ToString() : "",
+                    TransactionType = transactionType,//eventInData.Columns.Contains("transactiontype") ? int.Parse(row["transactiontype"].ToString() ?? "0") : 0,
+                    TransactionCode = transactionCode,
+                    note = eventInData.Columns.Contains("note") ? row["note"].ToString() : "",
+                    thirdpartynote = eventInData.Columns.Contains("thirdpartynote") ? row["thirdpartynote"].ToString() : "",
                 };
                 eventInReports.Add(ev);
             }
@@ -243,9 +260,9 @@ namespace v5_IScale.Forms
             {
                 return;
             }
-            this.selectedEventId = dgvData.Rows[e.RowIndex].Cells[1].Value?.ToString() ?? "";
-            this.selectedPlateNumber = dgvData.Rows[e.RowIndex].Cells[2].Value?.ToString() ?? "";
-            fileKeys = dgvData.Rows[e.RowIndex].Cells[dgvData.Rows.Count - 8].Value?.ToString().Split(",")??new string[] { };
+            this.selectedEventId = dgvData.Rows[e.RowIndex].Cells["id"].Value?.ToString() ?? "";
+            this.selectedPlateNumber = dgvData.Rows[e.RowIndex].Cells["plate_number"].Value?.ToString() ?? "";
+            fileKeys = dgvData.Rows[e.RowIndex].Cells["file_keys"].Value?.ToString().Split(";")??new string[] { };
             this.DialogResult = DialogResult.OK;
         }
 
@@ -311,7 +328,7 @@ namespace v5_IScale.Forms
 
         private void btnExportExcel_Click(object? sender, EventArgs e)
         {
-            ExcelTools.CreatReportFile(dgvData, "Báo cáo Xe Đang Trong Bãi");
+            ExcelTools.CreatReportFile(dgvData, "Báo cáo Xe Đang Trong Bãi", new List<string>());
         }
         private void btnCancel_Click(object? sender, EventArgs e)
         {

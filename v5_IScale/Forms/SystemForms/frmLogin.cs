@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Text;
 using v5_IScale.Usercontrols;
 using static Kztek.Tools.LogHelper;
+using iParkingv5.ApiManager.KzScaleApis;
 namespace v5_IScale.Forms.SystemForms
 {
     public partial class frmLogin : Form
@@ -57,7 +58,7 @@ namespace v5_IScale.Forms.SystemForms
             {
                 Authority = KzParkingv5ApiHelper.server.Replace(":5000", ":3000"),//"http://192.168.21.13:3000",// 
                 ClientId = clientId,
-                Scope = "openid role-data user-data parking-data offline_access device-data electronic-invoice-data",
+                Scope = "openid role-data user-data parking-data offline_access device-data invoice-data project-data payment-data tenant-data warehouse-data",
                 RedirectUri = "http://localhost/winforms.client",
                 Browser = new WinFormsWebView(webView21, this),
                 Policy = new Policy
@@ -69,7 +70,6 @@ namespace v5_IScale.Forms.SystemForms
                     },
                 },
             };
-
             _oidcClient = new OidcClient(options);
 
             Login();
@@ -109,6 +109,7 @@ namespace v5_IScale.Forms.SystemForms
                 this.Hide();
                 //KzParkingApiHelper.token = loginResult.TokenResponse.AccessToken;
                 KzParkingv5ApiHelper.token = loginResult.TokenResponse.AccessToken;
+                KzScaleApiHelper.token = loginResult.TokenResponse.AccessToken;
                 await AppData.ApiServer.GetUserInfor();
                 frmLoading frm = new()
                 {

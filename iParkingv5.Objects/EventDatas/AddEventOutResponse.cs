@@ -21,12 +21,7 @@ namespace iParkingv5.Objects.EventDatas
         ParkingDay,
         ParkingNormalCharge
     }
-    public enum TargetType
-    {
-        EventIn,
-        EventOut,
-        Vehicle
-    }
+    
    public class ChargeDetail
     {
         public int Day { get; set; }

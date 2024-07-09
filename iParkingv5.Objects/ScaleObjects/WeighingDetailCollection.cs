@@ -11,18 +11,18 @@ namespace iParkingv5.Objects.ScaleObjects
 
         #endregion
         //GET
-        public WeighingDetail this[int index] => (WeighingDetail)Convert.ChangeType(InnerList[index], typeof(WeighingDetail))!;
+        public WeighingAction this[int index] => (WeighingAction)Convert.ChangeType(InnerList[index], typeof(WeighingAction))!;
 
-        public WeighingDetail? GetObjectById(string trafficId)
+        public WeighingAction? GetObjectById(string trafficId)
         {
             lock (lockObj)
             {
-                return InnerList.OfType<WeighingDetail>().FirstOrDefault(generalObject => generalObject.Traffic_id == trafficId);
+                return InnerList.OfType<WeighingAction>().FirstOrDefault(generalObject => generalObject.eventInId == trafficId);
             }
         }
 
         // Add
-        public void Add(WeighingDetail data)
+        public void Add(WeighingAction data)
         {
             lock (lockObj)
             {
@@ -31,7 +31,7 @@ namespace iParkingv5.Objects.ScaleObjects
         }
 
         // Remove
-        public void Remove(WeighingDetail data)
+        public void Remove(WeighingAction data)
         {
             lock (lockObj)
             {
@@ -43,7 +43,7 @@ namespace iParkingv5.Objects.ScaleObjects
         {
             lock (lockObj)
             {
-                WeighingDetail? foundObject = InnerList.OfType<WeighingDetail>().FirstOrDefault(generalObject => generalObject.Traffic_id == trafficId);
+                WeighingAction? foundObject = InnerList.OfType<WeighingAction>().FirstOrDefault(generalObject => generalObject.eventInId == trafficId);
                 if (foundObject != null)
                 {
                     InnerList.Remove(foundObject);

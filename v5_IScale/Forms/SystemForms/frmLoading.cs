@@ -410,7 +410,7 @@ namespace v5_IScale.Forms.SystemForms
             this.isWaiting = true;
             timer1.Enabled = true;
             AppData.WeighingDetailCollection = new WeighingDetailCollection();
-            List<WeighingDetail> weighingHistory = null;
+            List<WeighingAction> weighingHistory = null;
         GetWeighingInDayHistory:
             {
                 DateTime startTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);

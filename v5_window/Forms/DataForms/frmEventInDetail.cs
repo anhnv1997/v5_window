@@ -66,7 +66,7 @@ namespace iParkingv5_window.Forms.DataForms
             var registerVehicle = (await AppData.ApiServer.GetRegistedVehilceByIdAsync(this.registerVehicleId)).Item1;
 
             //VehicleType vehicleType = await KzParkingApiHelper.GetVehicleTypeById(identityGroup?.VehicleTypeId.ToString());
-            VehicleType.VehicleBaseType vehicleType = identityGroup.VehicleType.Type;
+            VehicleType.VehicleBaseType vehicleType = identityGroup.VehicleType;
                 //(await AppData.ApiServer.GetVehicleTypeByIdAsync(identityGroup?.VehicleType.Id.ToString())).Item1;
 
             txtPlate.Text = this.PlateNumber;

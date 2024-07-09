@@ -18,7 +18,7 @@ namespace iParkingv5.Objects.Datas
         public string Name { get; set; }
         public string Code { get; set; }
         public IdentityGroupType Type { get; set; }
-        public VehicleType VehicleType { get; set; }
+        public VehicleType.VehicleBaseType VehicleType { get; set; }
         public int PlateNumberValidation { get; set; }
         public static string GetIdentityGroupName(List<IdentityGroup> identityGroups, string identityGroupId)
         {

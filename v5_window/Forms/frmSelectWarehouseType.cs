@@ -1,4 +1,5 @@
 ﻿using iParkingv5.Objects.EventDatas;
+using iParkingv5.Objects.warehouse;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,7 +31,7 @@ namespace iParkingv5_window.Forms
             if (e.KeyCode == Keys.Enter)
             {
                 bool isUpdateSuccess = await AppData.ApiServer.CreateWarehouseService(this.eventId, "", this.plate,
-                    (iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper.TransactionType.EmTransactionType)(cbWarehouseService.SelectedIndex), false) != null;
+                    (TransactionType.EmTransactionType)(cbWarehouseService.SelectedIndex), false) != null;
                 if (isUpdateSuccess)
                 {
                     MessageBox.Show("Cập nhật loại dịch vụ thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -52,7 +53,7 @@ namespace iParkingv5_window.Forms
         private async void button1_Click(object sender, EventArgs e)
         {
             bool isUpdateSuccess = await AppData.ApiServer.CreateWarehouseService(this.eventId, "", this.plate,
-                    (iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper.TransactionType.EmTransactionType)(cbWarehouseService.SelectedIndex), false) != null;
+                    (TransactionType.EmTransactionType)(cbWarehouseService.SelectedIndex), false) != null;
             if (isUpdateSuccess)
             {
                 MessageBox.Show("Cập nhật loại dịch vụ thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);

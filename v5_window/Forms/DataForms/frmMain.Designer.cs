@@ -63,6 +63,7 @@
             timerUpdateControllerConnection = new System.Windows.Forms.Timer(components);
             timerRestartSockerServer = new System.Windows.Forms.Timer(components);
             timerClearLog = new System.Windows.Forms.Timer(components);
+            tsmiScaleDetailReport = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             panelMain.SuspendLayout();
             panelAppStatus.SuspendLayout();
@@ -176,7 +177,7 @@
             // 
             // tsmiScaleReport
             // 
-            tsmiScaleReport.DropDownItems.AddRange(new ToolStripItem[] { btnScaleReport });
+            tsmiScaleReport.DropDownItems.AddRange(new ToolStripItem[] { btnScaleReport, tsmiScaleDetailReport });
             tsmiScaleReport.Name = "tsmiScaleReport";
             tsmiScaleReport.Size = new Size(104, 25);
             tsmiScaleReport.Text = "Báo cáo cân";
@@ -389,6 +390,13 @@
             timerClearLog.Interval = 60000;
             timerClearLog.Tick += timerClearLog_Tick;
             // 
+            // tsmiScaleDetailReport
+            // 
+            tsmiScaleDetailReport.Name = "tsmiScaleDetailReport";
+            tsmiScaleDetailReport.Size = new Size(202, 26);
+            tsmiScaleDetailReport.Text = "Báo cáo chi tiết";
+            tsmiScaleDetailReport.Click += tsmiScaleDetailReport_Click;
+            // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -450,5 +458,6 @@
         private System.Windows.Forms.Timer timerRestartSockerServer;
         private System.Windows.Forms.Timer timerClearLog;
         private Label lblUserNaem;
+        private ToolStripMenuItem tsmiScaleDetailReport;
     }
 }

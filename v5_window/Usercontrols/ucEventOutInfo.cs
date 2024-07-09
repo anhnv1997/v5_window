@@ -119,7 +119,7 @@ namespace iParkingv5_window.Usercontrols
                     if (identityGroupIn != null)
                     {
                         //vehicleTypeIn = await KzParkingApiHelper.GetVehicleTypeById(identityGroupIn.VehicleTypeId.ToString());
-                        vehicleTypeIn = identityGroupIn.VehicleType.Type;
+                        vehicleTypeIn = identityGroupIn.VehicleType;
                         //(await  AppData.ApiServer.GetVehicleTypeByIdAsync(identityGroupIn.VehicleType.Id.ToString())).Item1;
                     }
                 }
@@ -144,7 +144,7 @@ namespace iParkingv5_window.Usercontrols
                     if (identityGroupOut != null)
                     {
                         //vehicleTypeOut = await KzParkingApiHelper.GetVehicleTypeById(identityGroupOut.VehicleTypeId.ToString());
-                        vehicleTypeOut = identityGroupOut.VehicleType.Type;
+                        vehicleTypeOut = identityGroupOut.VehicleType;
                     }
                 }
                 lblLaneNameOut.Text = laneOut == null ? "_" : laneOut.name;

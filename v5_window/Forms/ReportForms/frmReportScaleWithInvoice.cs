@@ -1,4 +1,5 @@
-﻿using IPaking.Ultility;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using IPaking.Ultility;
 using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.ApiManager.KzScaleApis;
 using iParkingv5.Objects;
@@ -144,19 +145,19 @@ namespace v5_IScale.Forms.ReportForms
                 MessageBox.Show("Không có thông tin hóa đơn", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            string orderId = await KzScaleApiHelper.CreateInvoice(weighingActionDetails[cbPrintMode.SelectedIndex].Id, StaticPool.userId, StaticPool.user_name);
-            if (string.IsNullOrEmpty(orderId))
+            var invoiceData = await KzScaleApiHelper.CreateInvoice(weighingActionDetails[cbPrintMode.SelectedIndex].Id, true);
+            if (string.IsNullOrEmpty(invoiceData.id))
             {
                 MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            var invoiceData = await AppData.ApiServer.GetInvoiceData(orderId);
-            if (string.IsNullOrEmpty(invoiceData.fileName))
+            var invoiceFile = await AppData.ApiServer.GetInvoiceData(invoiceData.id);
+            if (string.IsNullOrEmpty(invoiceFile.fileToBytes))
             {
                 MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            string pdfContent = invoiceData.fileToBytes;
+            string pdfContent = invoiceFile.fileToBytes;
             PrintHelper.PrintPdf(pdfContent);
         }
         private void btnExcel_Click(object sender, EventArgs e)
@@ -206,7 +207,7 @@ namespace v5_IScale.Forms.ReportForms
         #endregion End Controls In Form
 
         #region Private Function
-        private async Task<List<WeighingDetail>> GetReportData()
+        private async Task<List<WeighingAction>> GetReportData()
         {
             DateTime startTime = dtpStartTime.Value;
             DateTime endTime = dtpEndTime.Value;
@@ -215,54 +216,106 @@ namespace v5_IScale.Forms.ReportForms
             string goodsTypeId = ((ListItem)cbGoodsType.SelectedItem)?.Name ?? "";
             return await KzScaleApiHelper.GetWeighingActionDetails(startTime, endTime, plateNumber, userCode, goodsTypeId);
         }
-        private void DisplayInGridview(List<WeighingDetail> data)
+        private void DisplayInGridview(List<WeighingAction> data)
         {
             this.Invoke(new Action(() =>
             {
                 dgvData.Rows.Clear();
-                foreach (WeighingDetail item in data)
+
+                Dictionary<string, List<WeighingAction>> reports = new Dictionary<string, List<WeighingAction>>();
+
+                foreach (WeighingAction item in data)
                 {
+                    string eventId = item.eventInId;
+                    if (reports.ContainsKey(eventId))
+                    {
+                        reports[eventId].Add(item);
+                    }
+                    else
+                    {
+                        reports.Add(eventId, new List<WeighingAction> { item });
+                    }
+                }
+
+                foreach (KeyValuePair<string, List<WeighingAction>> item in reports)
+                {
+                    var orderData = item.Value.OrderBy(e => e.createdUtcTime).ToList();
                     string firstScaleTime = "";
                     string secondScaleTime = "";
                     string largerThan2TimesScale = "";
-                    string plateNumber = "";
+                    string plateNumber = item.Value[0].plateNumber;
                     string firstWeightScale = "";
                     string secondWeightScale = "";
                     string goodType = "";
-                    if (item.weighing_action_detail == null)
+                    if (orderData.Count > 0)
                     {
-                        continue;
+                        firstScaleTime = orderData[0].createdUtcTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
+                        firstWeightScale = orderData[0].Weight.ToString("#,0");
+                        goodType = orderData[0].weighingType.Name;
                     }
-                    plateNumber = item.plate_number;
-                    if (item.weighing_action_detail.Count > 0)
+                    if (orderData.Count > 1)
                     {
-                        firstScaleTime = item.weighing_action_detail[0].CreatedAtTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
-                        firstWeightScale = item.weighing_action_detail[0].Weight.ToString("#,0");
-                        goodType = StaticPool.WeighingFormCollection.GetObjectById(item.weighing_action_detail[0].Weighting_form_id ?? "")?.Name ?? "";
+                        secondScaleTime = orderData[1].createdUtcTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
+                        secondWeightScale = orderData[1].Weight.ToString("#,0");
                     }
-                    if (item.weighing_action_detail.Count > 1)
+                    if (orderData.Count > 2)
                     {
-                        secondScaleTime = item.weighing_action_detail[1].CreatedAtTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
-                        secondWeightScale = item.weighing_action_detail[1].Weight.ToString("#,0");
-                    }
-                    if (item.weighing_action_detail.Count > 2)
-                    {
-                        for (int i = 1; i < item.weighing_action_detail.Count; i++)
+                        for (int i = 2; i < orderData.Count; i++)
                         {
-                            string tempTime = item.weighing_action_detail[i].CreatedAtTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
-                            string tempWeight = item.weighing_action_detail[i].Weight.ToString("#,0");
-                            largerThan2TimesScale += "Lần " + item.weighing_action_detail[i].Order_by + " : " + tempTime + " - " + tempWeight + "\r\n";
+                            string tempTime = orderData[i].createdUtcTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
+                            string tempWeight = orderData[i].Weight.ToString("#,0");
+                            largerThan2TimesScale += "Lần " + (i + 1) + " : " + tempTime + " - " + tempWeight + "\r\n";
                         }
                     }
                     largerThan2TimesScale = largerThan2TimesScale.TrimEnd();
-                    string userAction = item.weighing_action_detail.Count > 0 ? item.weighing_action_detail[0].User_code : "";
+                    string userAction = orderData.Count > 0 ? orderData[0].createdBy : "";
                     string vehicleImage = "";
-                    string firstScaleImage = item.weighing_action_detail.Count > 0 ? item.weighing_action_detail[0].list_image : "";
-                    string secondScaleImage = item.weighing_action_detail.Count > 1 ? item.weighing_action_detail[1].list_image : "";
-                    dgvData.Rows.Add(item.Traffic_id, dgvData.Rows.Count + 1, firstScaleTime, secondScaleTime,
+                    string firstScaleImage = orderData.Count > 0 ? string.Join(";", orderData[0].FileKeys) : "";
+                    string secondScaleImage = orderData.Count > 1 ? string.Join(";", orderData[1].FileKeys) : "";
+                    dgvData.Rows.Add(item.Key, dgvData.Rows.Count + 1, firstScaleTime, secondScaleTime,
                                      plateNumber, firstWeightScale, secondWeightScale, largerThan2TimesScale, goodType,
                                      userAction, vehicleImage, firstScaleImage, secondScaleImage);
                 }
+
+                //foreach (WeighingAction item in data)
+                //{
+                //    string firstScaleTime = "";
+                //    string secondScaleTime = "";
+                //    string largerThan2TimesScale = "";
+                //    string plateNumber = "";
+                //    string firstWeightScale = "";
+                //    string secondWeightScale = "";
+                //    string goodType = "";
+                //    plateNumber = item.plateNumber;
+                //    if (item.weighing_action_detail.Count > 0)
+                //    {
+                //        firstScaleTime = item.weighing_action_detail[0].CreatedAtTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
+                //        firstWeightScale = item.weighing_action_detail[0].Weight.ToString("#,0");
+                //        goodType = StaticPool.WeighingFormCollection.GetObjectById(item.weighing_action_detail[0].Weighting_form_id ?? "")?.Name ?? "";
+                //    }
+                //    if (item.weighing_action_detail.Count > 1)
+                //    {
+                //        secondScaleTime = item.weighing_action_detail[1].CreatedAtTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
+                //        secondWeightScale = item.weighing_action_detail[1].Weight.ToString("#,0");
+                //    }
+                //    if (item.weighing_action_detail.Count > 2)
+                //    {
+                //        for (int i = 1; i < item.weighing_action_detail.Count; i++)
+                //        {
+                //            string tempTime = item.weighing_action_detail[i].CreatedAtTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
+                //            string tempWeight = item.weighing_action_detail[i].Weight.ToString("#,0");
+                //            largerThan2TimesScale += "Lần " + item.weighing_action_detail[i].Order_by + " : " + tempTime + " - " + tempWeight + "\r\n";
+                //        }
+                //    }
+                //    largerThan2TimesScale = largerThan2TimesScale.TrimEnd();
+                //    string userAction = item.weighing_action_detail.Count > 0 ? item.weighing_action_detail[0].User_code : "";
+                //    string vehicleImage = "";
+                //    string firstScaleImage = item.weighing_action_detail.Count > 0 ? item.weighing_action_detail[0].list_image : "";
+                //    string secondScaleImage = item.weighing_action_detail.Count > 1 ? item.weighing_action_detail[1].list_image : "";
+                //    dgvData.Rows.Add(item.eventInId, dgvData.Rows.Count + 1, firstScaleTime, secondScaleTime,
+                //                     plateNumber, firstWeightScale, secondWeightScale, largerThan2TimesScale, goodType,
+                //                     userAction, vehicleImage, firstScaleImage, secondScaleImage);
+                //}
             }));
         }
         #endregion End Private Function
@@ -296,15 +349,17 @@ namespace v5_IScale.Forms.ReportForms
             cbGoodsType.SelectedIndex = cbGoodsType.Items.Count > 0 ? 0 : -1;
             cbPrintMode.SelectedIndex = 0;
         }
-        private string GetPrintContent(List<WeighingActionDetail> weighingActionDetails)
+        private string GetPrintContent(List<WeighingAction> weighingActionDetails)
         {
             string printContent = string.Empty;
             if (weighingActionDetails.Count <= 2)
             {
+                int i = 1;
                 foreach (var item in weighingActionDetails)
                 {
-                    string scaleItem = GetPrintContentItem(item, item.Order_by);
+                    string scaleItem = GetPrintContentItem(item, i);
                     printContent += scaleItem;
+                    i++;
                 }
                 if (weighingActionDetails.Count <= 1)
                 {
@@ -318,10 +373,12 @@ namespace v5_IScale.Forms.ReportForms
             }
             else
             {
+                int i = 1;
                 foreach (var item in weighingActionDetails)
                 {
-                    string scaleItem = GetPrintContentItem(item, item.Order_by);
+                    string scaleItem = GetPrintContentItem(item, i);
                     printContent += scaleItem;
+                    i++;
                 }
             }
 
@@ -342,7 +399,7 @@ namespace v5_IScale.Forms.ReportForms
                 return string.Empty;
             }
         }
-        private string GetPrintContentItem(WeighingActionDetail? weighingActionDetail, int index)
+        private string GetPrintContentItem(WeighingAction? weighingActionDetail, int index)
         {
             if (weighingActionDetail == null)
             {
@@ -364,11 +421,11 @@ namespace v5_IScale.Forms.ReportForms
                 return $@"<tr>
                     <td>
                         <span>
-                            <center>Lần cân {weighingActionDetail.Order_by}</center>
+                            <center>Lần cân {index}</center>
                         </span>
                     </td>
                     <td>
-                        <center><span>{weighingActionDetail.CreatedAtTime:dd/MM/yyyy HH:mm:ss}</span></center>
+                        <center><span>{weighingActionDetail.createdUtcTime:dd/MM/yyyy HH:mm:ss}</span></center>
                     </td>
                     <td>
                         <center><span><b>{weighingActionDetail.Weight.ToString("#,0")}</b></span></center>

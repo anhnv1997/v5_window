@@ -15,7 +15,7 @@ namespace iParkingv5_window.Helpers
     public static class PrintHelper
     {
         #region PUBLIC FUNCTION
-        public static string GetPrintScaleInvoiceOfflineContent(WeighingActionDetail weighingActionDetail, string plateNumber, string companyTaxCode = "", string address = "",
+        public static string GetPrintScaleInvoiceOfflineContent(WeighingAction weighingActionDetail, string plateNumber, string companyTaxCode = "", string address = "",
                                                                string companyName = "", string kyHieuHoaDon = "")
         {
             string printTemplatePath = PathManagement.appPrintScaleInvoiceOfflineTemplateConfigPath(((EmPrintTemplate)StaticPool.appOption.PrintTemplate).ToString());
@@ -34,9 +34,9 @@ namespace iParkingv5_window.Helpers
                 baseContent = baseContent.Replace("$excecute_time", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
                 baseContent = baseContent.Replace("$plateNumber", plateNumber);
 
-                baseContent = baseContent.Replace("$money_int", TextFormatingTool.GetMoneyFormat(weighingActionDetail.Price.ToString()));
+                baseContent = baseContent.Replace("$money_int", TextFormatingTool.GetMoneyFormat(weighingActionDetail.weighingType.Price.ToString()));
 
-                baseContent = baseContent.Replace("$money_str", SayMoney.MISASaysMoney.MISASayMoney(weighingActionDetail.Price));
+                baseContent = baseContent.Replace("$money_str", SayMoney.MISASaysMoney.MISASayMoney(weighingActionDetail.weighingType.Price));
 
                 return baseContent;
             }
@@ -46,15 +46,17 @@ namespace iParkingv5_window.Helpers
                 return string.Empty;
             }
         }
-        public static string GetScalePrintContent(List<WeighingActionDetail> weighingActionDetails, string plateNumber, string weighingType)
+        public static string GetScalePrintContent(List<WeighingAction> weighingActionDetails, string plateNumber, string weighingType)
         {
             string printContent = string.Empty;
             if (weighingActionDetails.Count <= 2)
             {
+                int i = 1;
                 foreach (var item in weighingActionDetails)
                 {
-                    string scaleItem = GetPrintContentItem(item, item.Order_by);
+                    string scaleItem = GetPrintContentItem(item, i);
                     printContent += scaleItem;
+                    i++;
                 }
                 if (weighingActionDetails.Count <= 1)
                 {
@@ -68,10 +70,12 @@ namespace iParkingv5_window.Helpers
             }
             else
             {
+                int i = 1;
                 foreach (var item in weighingActionDetails)
                 {
-                    string scaleItem = GetPrintContentItem(item, item.Order_by);
+                    string scaleItem = GetPrintContentItem(item, i);
                     printContent += scaleItem;
+                    i++;
                 }
             }
 
@@ -200,7 +204,7 @@ namespace iParkingv5_window.Helpers
         #endregion END PUBLIC FUNCTION
 
         #region PRIVATE FUNCTION
-        private static string GetPrintContentItem(WeighingActionDetail? weighingActionDetail, int index)
+        private static string GetPrintContentItem(WeighingAction? weighingActionDetail, int index)
         {
             if (weighingActionDetail == null)
             {
@@ -222,11 +226,11 @@ namespace iParkingv5_window.Helpers
                 return $@"<tr>
                     <td>
                         <span>
-                            <center>Lần cân {weighingActionDetail.Order_by}</center>
+                            <center>Lần cân {index}</center>
                         </span>
                     </td>
                     <td>
-                        <center><span>{weighingActionDetail.CreatedAtTime:dd/MM/yyyy HH:mm:ss}</span></center>
+                        <center><span>{weighingActionDetail.createdUtcTime:dd/MM/yyyy HH:mm:ss}</span></center>
                     </td>
                     <td>
                         <center><span><b>{weighingActionDetail.Weight.ToString("#,0")}</b></span></center>

@@ -7,13 +7,13 @@ namespace iParkingv5.ApiManager.KzScaleApis
     public static class KzScaleUrlManagement
     {
 
-        public static string GetCountInDayRoute() => "report_count";
-        public static string GetAllWeighingFormRoute() => "list_weighing_form";
+        public static string GetCountInDayRoute() => "weighing/count";
+        public static string GetAllWeighingFormRoute() => "weighing-type/search";
 
-        public static string CreateWeighingAction() => "save_weighing_action";
-        public static string GetAllWeighingHistory() => "list_weighing_action";
-        public static string UpdatePlate() => "update_plate_number_by_traffic_id";
-        public static string updateWeighingActionDetailById(string id) => "update_weighting_form_id_in_weighing_action_detail";
+        public static string CreateWeighingAction() => "weighing";
+        public static string GetAllWeighingHistory() => "weighing/search";
+        public static string UpdatePlate(string id) => $"weighing/{id}";
+        public static string updateWeighingActionDetailById(string id) => $"weighing/{id}";
 
         public static string GetWeighingActionDetailsByTrafficIdRoute(string trafficId) => "";
         public static string CreateInvoice() => "create_invoice";

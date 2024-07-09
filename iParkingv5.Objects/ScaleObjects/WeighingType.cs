@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace iParkingv5.Objects.ScaleObjects
 {
-    public class WeighingForm
+    public class WeighingType
     {
         public string Id { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public long Price { get; set; } = 0;
     }
+
+
 }

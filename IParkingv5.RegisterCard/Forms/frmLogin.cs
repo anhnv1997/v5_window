@@ -1,6 +1,7 @@
 ﻿using IdentityModel.OidcClient;
 using IPaking.Ultility;
 using iParkingv5.ApiManager.KzParkingv5Apis;
+using iParkingv5.ApiManager.KzScaleApis;
 using iParkingv5.Objects;
 using IParkingv5.RegisterCard.Forms;
 using iParkingv6.ApiManager.KzParkingv3Apis;
@@ -238,6 +239,7 @@ namespace IParkingv5.RegisterCard
                 {
                     lblStatus.Text = "Đăng nhập thành công";
                     KzParkingv5ApiHelper.token = refreshToken.AccessToken;
+                    KzScaleApiHelper.token = refreshToken.AccessToken;
                     NewtonSoftHelper<string>.SaveConfig(refreshToken.RefreshToken, PathManagement.tokenPath);
                     this.refreshToken = refreshToken.RefreshToken;
                     KzParkingv5ApiHelper.refresh_token = refreshToken.RefreshToken;
