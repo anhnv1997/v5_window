@@ -2,7 +2,6 @@
 using iParkingv5.Controller;
 using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.Events;
-using iParkingv6.Objects.Datas;
 using Kztek.Tool.NetworkTools;
 using Kztek.Tools;
 using System.Globalization;
@@ -11,6 +10,7 @@ using System.Text;
 using TcpipIntface.Code.Client;
 using static iParkingv5.Objects.Enums.CommunicationTypes;
 using static TcpipIntface.Code.Client.AcsTcpClass;
+using iParkingv5.Objects.Datas.Devices;
 
 namespace iParkingv5.Controller.Aopu
 {

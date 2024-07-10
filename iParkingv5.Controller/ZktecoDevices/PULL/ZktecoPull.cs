@@ -1,7 +1,6 @@
 ﻿using iParkingv5.Controller.KztekDevices;
 using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.Events;
-using iParkingv6.Objects.Datas;
 using Kztek.Tool.NetworkTools;
 using Kztek.Tool.SocketHelpers;
 using System;
@@ -16,6 +15,7 @@ using static iParkingv5.Objects.Enums.CommunicationTypes;
 using System.Threading;
 using Kztek.Tools;
 using System.Text.RegularExpressions;
+using iParkingv5.Objects.Datas.Devices;
 
 namespace iParkingv5.Controller.ZktecoDevices.PULL
 {

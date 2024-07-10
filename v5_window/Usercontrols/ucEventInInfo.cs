@@ -1,9 +1,10 @@
-﻿using iParkingv5.ApiManager.KzParkingv5Apis;
+﻿using IPaking.Ultility;
+using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.Objects;
-using iParkingv5.Objects.Datas;
+using iParkingv5.Objects.Datas.Devices;
+using iParkingv5.Objects.Datas.parking;
 using iParkingv5.Objects.Enums;
 using iParkingv6.ApiManager.KzParkingv3Apis;
-using iParkingv6.Objects.Datas;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -122,7 +123,7 @@ namespace iParkingv5_window.Usercontrols
             lblIdentityGroup.Text = identityGroup == null ? "_" : identityGroup.Name;
             lblPhoneNumber.Text = customer == null ? "_" : customer.PhoneNumber;
             lblCustomer.Text = customer == null ? "_" : customer.Name;
-            lblExpireTime.Text = registerVehicle == null ? "_" : registerVehicle.ExpireTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "_";
+            lblExpireTime.Text = registerVehicle == null ? "_" : registerVehicle.ExpireTime?.ToString(UltilityManagement.fullDayFormat) ?? "_";
 
             lblLaneName.Location = new Point(this.DisplayRectangle.Width - lblLaneName.Width - StaticPool.baseSize * 2, lblLaneNameTitle.Location.Y);
             lblTimeIn.Location = new Point(this.DisplayRectangle.Width - lblTimeIn.Width - StaticPool.baseSize * 2, lblTimeInTitle.Location.Y);

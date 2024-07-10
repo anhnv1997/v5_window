@@ -66,40 +66,13 @@ namespace v5_IScale.Forms.ReportForms
             {
                 var data = await GetReportData();
                 DisplayInGridview(data);
+                dgvData_CellClick(null, null);
             }
             catch (Exception ex)
             {
                 LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
             }
         }
-        private async void btnPrintScaleTicket_Click(object sender, EventArgs e)
-        {
-            if (dgvData.Rows.Count == 0)
-            {
-                MessageBox.Show("Không có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            if (dgvData.CurrentRow == null)
-            {
-                MessageBox.Show("Hãy chọn sự kiện cần in phiếu cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            string parkingEventId = dgvData.CurrentRow.Cells[0].Value.ToString() ?? "";
-
-            var frm = new frmSelectPrintCount();
-
-            if (frm.ShowDialog() == DialogResult.OK)
-            {
-                this.printCount = frm.PrintCount;
-
-                var wbPrint = new WebBrowser();
-                wbPrint.DocumentCompleted += WbPrint_DocumentCompleted;
-                wbPrint.DocumentText = GetPrintContent(await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(parkingEventId));
-            }
-        }
-
         private async void btnPrintEInvoice_Click(object sender, EventArgs e)
         {
             if (dgvData.Rows.Count == 0)
@@ -115,17 +88,13 @@ namespace v5_IScale.Forms.ReportForms
             }
 
             string parkingEventId = dgvData.CurrentRow.Cells[0].Value.ToString() ?? "";
-            string plateNumber = dgvData.CurrentRow.Cells[4].Value.ToString() ?? "";
+            string plateNumber = dgvData.CurrentRow.Cells[3].Value.ToString() ?? "";
+            string index = dgvData.CurrentRow.Cells["index"].Value.ToString() ?? "";
             var weighingActionDetails = await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(parkingEventId);
-            if (weighingActionDetails.Count < (cbPrintMode.SelectedIndex + 1))
-            {
-                MessageBox.Show("Không có thông tin hóa đơn", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
             this.printCount = 1;
             var wbPrint = new WebBrowser();
             wbPrint.DocumentCompleted += WbPrint_DocumentCompleted;
-            wbPrint.DocumentText = PrintHelper.GetPrintScaleInvoiceOfflineContent(weighingActionDetails[cbPrintMode.SelectedIndex], plateNumber);
+            wbPrint.DocumentText = PrintHelper.GetPrintScaleInvoiceOfflineContent(weighingActionDetails[int.Parse(index) - 1], plateNumber);
         }
         private async void btnPrintInternetEInvoice_Click(object sender, EventArgs e)
         {
@@ -144,15 +113,11 @@ namespace v5_IScale.Forms.ReportForms
 
             string parkingEventId = dgvData.CurrentRow.Cells[0].Value.ToString() ?? "";
             string plateNumber = dgvData.CurrentRow.Cells[4].Value.ToString() ?? "";
-
+            string index = dgvData.CurrentRow.Cells["index"].Value.ToString() ?? "";
 
             var weighingActionDetails = await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(parkingEventId);
-            if (weighingActionDetails.Count < (cbPrintMode.SelectedIndex + 1))
-            {
-                MessageBox.Show("Không có thông tin hóa đơn", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            var invoiceData = await KzScaleApiHelper.CreateInvoice(weighingActionDetails[cbPrintMode.SelectedIndex].Id, true);
+
+            var invoiceData = await KzScaleApiHelper.CreateInvoice(weighingActionDetails[int.Parse(index) - 1].Id, true);
             if (string.IsNullOrEmpty(invoiceData.id))
             {
                 MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -175,6 +140,10 @@ namespace v5_IScale.Forms.ReportForms
         {
             try
             {
+                if (dgvData.CurrentRow == null)
+                {
+                    return;
+                }
                 string trafficId = "";
                 string vehicleImage = "";
                 string firstScaleImage = dgvData.CurrentRow.Cells["firstScaleImage"].Value.ToString() ?? "";
@@ -249,7 +218,7 @@ namespace v5_IScale.Forms.ReportForms
                     var orderData = item.Value.OrderBy(e => e.createdUtcTime).ToList();
                     for (int i = 0; i < orderData.Count; i++)
                     {
-                        string scaleTime = orderData[i].createdUtcTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
+                        string scaleTime = orderData[i].createdUtcTime?.ToString(UltilityManagement.fullDayFormat) ?? "";
                         string plateNumber = orderData[i].plateNumber;
                         var weight = orderData[i].Weight.ToString("#,0");
                         string goodType = orderData[i].weighingType.Name;
@@ -257,7 +226,7 @@ namespace v5_IScale.Forms.ReportForms
                         string vehicleImage = "";
 
                         string invoiceNo = "";
-                        string templateCode = StaticPool.templateCode;
+                        string templateCode = StaticPool.scaleSymbolCode;
                         string charge = TextFormatingTool.GetMoneyFormat(orderData[i].Charge.ToString());
                         string firstScaleImage = orderData.Count > 0 ? string.Join(";", orderData[i].FileKeys) : "";
                         dgvData.Rows.Add(item.Key, dgvData.Rows.Count + 1, scaleTime, plateNumber, weight, i + 1, charge, goodType,
@@ -335,7 +304,6 @@ namespace v5_IScale.Forms.ReportForms
 
             cbGoodsType.DisplayMember = "Value";
             cbGoodsType.SelectedIndex = cbGoodsType.Items.Count > 0 ? 0 : -1;
-            cbPrintMode.SelectedIndex = 0;
         }
         private string GetPrintContent(List<WeighingAction> weighingActionDetails)
         {
@@ -413,7 +381,7 @@ namespace v5_IScale.Forms.ReportForms
                         </span>
                     </td>
                     <td>
-                        <center><span>{weighingActionDetail.createdUtcTime:dd/MM/yyyy HH:mm:ss}</span></center>
+                        <center><span>{weighingActionDetail.createdUtcTime.Value.ToString(UltilityManagement.fullDayFormat)}</span></center>
                     </td>
                     <td>
                         <center><span><b>{weighingActionDetail.Weight.ToString("#,0")}</b></span></center>

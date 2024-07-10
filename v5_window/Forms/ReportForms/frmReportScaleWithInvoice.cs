@@ -59,6 +59,7 @@ namespace v5_IScale.Forms.ReportForms
             {
                 var data = await GetReportData();
                 DisplayInGridview(data);
+                dgvData_CellClick(null, null);
             }
             catch (Exception ex)
             {
@@ -138,7 +139,6 @@ namespace v5_IScale.Forms.ReportForms
             string parkingEventId = dgvData.CurrentRow.Cells[0].Value.ToString() ?? "";
             string plateNumber = dgvData.CurrentRow.Cells[4].Value.ToString() ?? "";
 
-
             var weighingActionDetails = await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(parkingEventId);
             if (weighingActionDetails.Count < (cbPrintMode.SelectedIndex + 1))
             {
@@ -168,6 +168,10 @@ namespace v5_IScale.Forms.ReportForms
         {
             try
             {
+                if (dgvData.CurrentRow == null)
+                {
+                    return;
+                }
                 string trafficId = "";
                 string vehicleImage = "";
                 string firstScaleImage = dgvData.CurrentRow.Cells[dgvData.ColumnCount - 2].Value.ToString() ?? "";
@@ -249,20 +253,20 @@ namespace v5_IScale.Forms.ReportForms
                     string goodType = "";
                     if (orderData.Count > 0)
                     {
-                        firstScaleTime = orderData[0].createdUtcTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
+                        firstScaleTime = orderData[0].createdUtcTime?.ToString(UltilityManagement.fullDayFormat) ?? "";
                         firstWeightScale = orderData[0].Weight.ToString("#,0");
                         goodType = orderData[0].weighingType.Name;
                     }
                     if (orderData.Count > 1)
                     {
-                        secondScaleTime = orderData[1].createdUtcTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
+                        secondScaleTime = orderData[1].createdUtcTime?.ToString(UltilityManagement.fullDayFormat) ?? "";
                         secondWeightScale = orderData[1].Weight.ToString("#,0");
                     }
                     if (orderData.Count > 2)
                     {
                         for (int i = 2; i < orderData.Count; i++)
                         {
-                            string tempTime = orderData[i].createdUtcTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
+                            string tempTime = orderData[i].createdUtcTime?.ToString(UltilityManagement.fullDayFormat) ?? "";
                             string tempWeight = orderData[i].Weight.ToString("#,0");
                             largerThan2TimesScale += "Lần " + (i + 1) + " : " + tempTime + " - " + tempWeight + "\r\n";
                         }
@@ -425,7 +429,7 @@ namespace v5_IScale.Forms.ReportForms
                         </span>
                     </td>
                     <td>
-                        <center><span>{weighingActionDetail.createdUtcTime:dd/MM/yyyy HH:mm:ss}</span></center>
+                        <center><span>{weighingActionDetail.createdUtcTime.Value.ToString(UltilityManagement.fullDayFormat)}</span></center>
                     </td>
                     <td>
                         <center><span><b>{weighingActionDetail.Weight.ToString("#,0")}</b></span></center>

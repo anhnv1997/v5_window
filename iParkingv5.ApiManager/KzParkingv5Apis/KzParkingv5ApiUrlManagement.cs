@@ -20,7 +20,9 @@
             RegisteredVehicle,
             VehicleType,
             AbnormalEvent,
-            PaymentTransaction
+            PaymentTransaction, 
+            Invoice, 
+            ResendInvoice
         }
 
         #region GET

@@ -1,8 +1,8 @@
 ﻿using IPaking.Ultility;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
+using iParkingv5.Objects.Datas.Devices;
 using iParkingv5_window.Usercontrols.ShortcutConfiguration;
-using iParkingv6.Objects.Datas;
 using Kztek.Tool;
 
 namespace iParkingv5_window.Usercontrols

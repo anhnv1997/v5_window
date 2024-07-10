@@ -1,8 +1,8 @@
 ﻿using IPaking.Ultility;
 using iPakrkingv5.Controls.Controls.Buttons;
 using iParkingv5.Objects;
+using iParkingv5.Objects.Datas.Devices;
 using iParkingv5_window.Forms.DataForms;
-using iParkingv6.Objects.Datas;
 using Kztek.Tool;
 
 namespace iParkingv5_window.Forms.SystemForms

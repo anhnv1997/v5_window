@@ -1,6 +1,5 @@
 ﻿using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.Events;
-using iParkingv6.Objects.Datas;
 using Kztek.Tool.NetworkTools;
 using Kztek.Tool.SocketHelpers;
 using Kztek.Tools;
@@ -13,6 +12,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using static iParkingv5.Objects.Enums.CommunicationTypes;
+using iParkingv5.Objects.Datas.Devices;
 
 namespace iParkingv5.Controller.KztekDevices
 {

@@ -5,18 +5,20 @@ using iParkingv5.ApiManager.KzScaleApis;
 using iParkingv5.Controller;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Databases;
+using iParkingv5.Objects.Datas.Devices;
 using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.Events;
 using iParkingv5.Objects.ScaleObjects;
+using iParkingv5_window.Helpers;
 using iParkingv5_window.Usercontrols;
 using iParkingv6.ApiManager.KzParkingv3Apis;
-using iParkingv6.Objects.Datas;
 using Kztek.Scale_net6.Interfaces;
 using Kztek.Scale_net6.Objects;
 using Kztek.Tool;
 using Kztek.Tool.TextFormatingTools;
 using Kztek.Tools;
 using Microsoft.VisualBasic.ApplicationServices;
+using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Forms;
@@ -24,7 +26,7 @@ using v5_IScale.Forms;
 using v5_IScale.Forms.ReportForms;
 using static iParkingv5.Controller.ControllerFactory;
 using static iParkingv5.Objects.Enums.PrintHelpers;
-using Camera = iParkingv6.Objects.Datas.Camera;
+using Camera = iParkingv5.Objects.Datas.Devices.Camera;
 
 namespace v5_IScale
 {
@@ -51,6 +53,7 @@ namespace v5_IScale
         private string weighing_action_id = string.Empty;
 
         private int printCount = 1;
+        private WeighingAction? WeighingActionDetail = null;
         #endregion End Properties
 
         #region Form
@@ -182,22 +185,101 @@ namespace v5_IScale
                                     imageKey + "_OVERVIEWSCALE.jpeg",
                                     imageKey + "_VEHICLESCALE.jpeg",};
 
-            var result = await KzScaleApiHelper.CreateScaleEvent(txtPlateNumber.Text, this.selectedParkingEventId,
+            this.WeighingActionDetail = await KzScaleApiHelper.CreateScaleEvent(txtPlateNumber.Text, this.selectedParkingEventId,
                                                                  weight, weightFormId,
                                                                  StaticPool.user_name, StaticPool.userId,
                                                                  imageKeys);
-            if (result == null)
+            if (this.WeighingActionDetail == null)
             {
                 MessageBox.Show("Lưu thông tin cân không thành công, vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            RefreshData();
-            lblMoney.Text = TextFormatingTool.GetMoneyFormat(result.weighingType.Price.ToString());
+            await RefreshData();
+            lblMoney.Text = TextFormatingTool.GetMoneyFormat(this.WeighingActionDetail.Charge.ToString());
             await SaveEventImage(this.ucOverView.GetFullCurrentImage(), this.ucCarLpr.GetFullCurrentImage(), imageKey);
         }
 
-        private async void btnPrint_Click(object sender, EventArgs e)
+        //private async void BtnPrintScale_Click(object sender, EventArgs e)
+        //{
+        //    var frm = new frmSelectPrintCount();
+        //    if (frm.ShowDialog() == DialogResult.OK)
+        //    {
+        //        this.printCount = frm.PrintCount;
+
+        //        var wbPrint = new WebBrowser();
+        //        wbPrint.DocumentCompleted += WbPrint_DocumentCompleted;
+        //        wbPrint.DocumentText = GetPrintContent(await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(this.selectedParkingEventId));
+        //    }
+        //}
+        //private void btnPrintScaleOffline_Click(object sender, EventArgs e)
+        //{
+
+        //}
+        //private async void btnPrintScaleOnline_Click(object sender, EventArgs e)
+        //{
+        //    var weighingActionDetails = await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(this.selectedParkingEventId);
+        //    var response = await KzScaleApiHelper.CreateInvoice(weighingActionDetails[^1].Id, true);
+        //    if (string.IsNullOrEmpty(response.id))
+        //    {
+        //        MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //        return;
+        //    }
+        //    var invoiceData = await AppData.ApiServer.GetInvoiceData(response.id);
+        //    if (invoiceData == null)
+        //    {
+        //        MessageBox.Show("Chưa có thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //        return;
+        //    }
+        //    try
+        //    {
+        //        string pdfContent = invoiceData.fileToBytes;
+        //        byte[] bytes = Convert.FromBase64String(pdfContent);
+        //        if (!Directory.Exists(@"C:\print"))
+        //        {
+        //            Directory.CreateDirectory(@"C:\print");
+        //        }
+        //        string fileName = (@"C:\print\file" + DateTime.Now.ToString("yyyy_mm_dd_HH_mm_ss") + ".pdf");
+
+        //        System.IO.FileStream stream =
+        //            new FileStream(fileName, FileMode.CreateNew);
+        //        System.IO.BinaryWriter writer =
+        //            new BinaryWriter(stream);
+        //        writer.Write(bytes, 0, bytes.Length);
+        //        writer.Close();
+        //        Process p = new Process
+        //        {
+        //            StartInfo = new ProcessStartInfo()
+        //            {
+        //                CreateNoWindow = true,
+        //                Verb = "print",
+        //                UseShellExecute = true,
+        //                FileName = fileName //put the correct path here
+        //            }
+        //        };
+        //        p.Start();
+        //        p.WaitForExit();
+        //        //p.Dispose();
+        //        File.Delete(fileName);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //    }
+        //}
+
+        private async void BtnPrintScale_Click(object sender, EventArgs e)
         {
+            if (this.WeighingActionDetail == null)
+            {
+                MessageBox.Show("Chưa có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            bool isContinue = await CheckWeighingType();
+            if (!isContinue)
+            {
+                return;
+            }
+
             var frm = new frmSelectPrintCount();
             if (frm.ShowDialog() == DialogResult.OK)
             {
@@ -208,69 +290,120 @@ namespace v5_IScale
                 wbPrint.DocumentText = GetPrintContent(await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(this.selectedParkingEventId));
             }
         }
-        private void btnInvoice_Click(object sender, EventArgs e)
+        private async void btnPrintScaleOffline_Click(object sender, EventArgs e)
         {
-
-        }
-        private async void btnPrintInternetInvoice_Click(object sender, EventArgs e)
-        {
-            var weighingActionDetails = await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(this.selectedParkingEventId);
-           var response = await KzScaleApiHelper.CreateInvoice(weighingActionDetails[^1].Id, true);
-            if (string.IsNullOrEmpty(response.id))
+            //Ra lệnh gửi hóa đơn điện tử
+            if (this.WeighingActionDetail == null)
             {
-                MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Chưa có thông tin cân xe", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            var invoiceData = await AppData.ApiServer.GetInvoiceData(response.id);
-            if (invoiceData == null)
+            bool isContinue = await CheckWeighingType();
+            if (!isContinue)
+            {
+                return;
+            }
+
+            this.printCount = 1;
+            var wbPrint = new WebBrowser();
+            wbPrint.DocumentCompleted += WbPrint_DocumentCompleted;
+            wbPrint.DocumentText = GetPrintScaleInvoiceOfflineContent(this.WeighingActionDetail, this.selectedPlateNumber);
+        }
+        private async void btnPrintScaleOnline_Click(object sender, EventArgs e)
+        {
+            //Ra lệnh gửi hóa đơn điện tử
+            if (this.WeighingActionDetail == null)
+            {
+                MessageBox.Show("Chưa có thông tin cân xe", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            bool isContinue = await CheckWeighingType();
+            if (!isContinue)
+            {
+                return;
+            }
+
+            if (this.WeighingActionDetail.weighingType.Price == 0)
+            {
+                MessageBox.Show("Phương tiện không phát sinh phí cân xe.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            //In hóa đơn internet
+            if (string.IsNullOrEmpty(this.WeighingActionDetail.InvoiceId))
+            {
+                var invoiceData = await KzScaleApiHelper.CreateInvoice(this.WeighingActionDetail.Id, true);
+                if (string.IsNullOrEmpty(invoiceData.id))
+                {
+                    MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                this.WeighingActionDetail.InvoiceId = invoiceData.id;
+            }
+
+            var invoiceFile = await AppData.ApiServer.GetInvoiceData(this.WeighingActionDetail.InvoiceId);
+            if (invoiceFile == null)
             {
                 MessageBox.Show("Chưa có thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
             try
             {
-                string pdfContent = invoiceData.fileToBytes;
-                byte[] bytes = Convert.FromBase64String(pdfContent);
-                if (!Directory.Exists(@"C:\print"))
+                string pdfContent = invoiceFile.fileToBytes;
+                if (!string.IsNullOrEmpty(pdfContent))
                 {
-                    Directory.CreateDirectory(@"C:\print");
+                    PrintHelper.PrintPdf(pdfContent);
                 }
-                string fileName = (@"C:\print\file" + DateTime.Now.ToString("yyyy_mm_dd_HH_mm_ss") + ".pdf");
-
-                System.IO.FileStream stream =
-                    new FileStream(fileName, FileMode.CreateNew);
-                System.IO.BinaryWriter writer =
-                    new BinaryWriter(stream);
-                writer.Write(bytes, 0, bytes.Length);
-                writer.Close();
-                Process p = new Process
+                else
                 {
-                    StartInfo = new ProcessStartInfo()
-                    {
-                        CreateNoWindow = true,
-                        Verb = "print",
-                        UseShellExecute = true,
-                        FileName = fileName //put the correct path here
-                    }
-                };
-                p.Start();
-                p.WaitForExit();
-                //p.Dispose();
-                File.Delete(fileName);
+                    MessageBox.Show("Chưa có thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
             }
             catch (Exception ex)
             {
             }
         }
-
-        private void xeCóGửiHóaĐơnToolStripMenuItem_Click(object sender, EventArgs e)
+        private async Task<bool> CheckWeighingType()
         {
-            new frmReportScaleWithInvoice().ShowDialog();
+            if (cbGoodsType.Items.Count > 0)
+            {
+                string weighingTypeId = ((ListItem)cbGoodsType.SelectedItem).Name;
+                if (this.WeighingActionDetail.WeighingTypeId != weighingTypeId)
+                {
+                    bool isConfirm = MessageBox.Show($"Bạn có xác nhận đổi từ loại cân ${this.WeighingActionDetail.weighingType.Name} sang {cbGoodsType.Text} không", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
+                    if (!isConfirm)
+                    {
+                        return false;
+                    }
+                    var response = await KzScaleApiHelper.UpdateWeighingActionDetailById(this.WeighingActionDetail.Id, weighingTypeId);
+                    if (response == null)
+                    {
+                        MessageBox.Show("Gặp lỗi khi cập nhật thông tin lên hệ thống, vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return false;
+                    }
+                    else
+                    {
+                        this.WeighingActionDetail = response;
+                        this.Invoke(new Action(() =>
+                        {
+                            lblMoney.Text = TextFormatingTool.GetMoneyFormat(this.WeighingActionDetail.weighingType.Price.ToString());
+                        }));
+                    }
+                }
+            }
+            return true;
         }
 
-        private void xeKhôngGửiHóaĐơnToolStripMenuItem_Click(object sender, EventArgs e)
+        private void tsmiScaleReport_Click(object sender, EventArgs e)
         {
-            new frmReportScaleWithoutInvoice().ShowDialog();
+            new v5_IScale.Forms.ReportForms.frmReportScaleWithInvoice().ShowDialog();
+        }
+
+        private void tsmiScaleDetailReport_Click(object sender, EventArgs e)
+        {
+            new frmReportScaleDetail().ShowDialog();
         }
         #endregion End Controls In Form
 
@@ -530,6 +663,7 @@ namespace v5_IScale
                 lblGoodsScale.Text = goodScale.ToString();
                 lblMoney.Text = "_";
             }
+
             this.selectedParkingEventId = dgvData.CurrentRow.Cells[0].Value.ToString();
         }
         private void Pic_LoadCompleted(object? sender, System.ComponentModel.AsyncCompletedEventArgs e)
@@ -605,7 +739,7 @@ namespace v5_IScale
                     {
                         string selectedPlateNumber = eventInData[0].plateNumber.ToString() ?? "";
                         this.selectedParkingEventId = eventInData[0].id.ToString() ?? "";
-                        string[] physicalFileIds = eventInData[0].fileKeys.Split(",") ?? new string[] { };
+                        string[] physicalFileIds = eventInData[0].fileKeys.ToArray() ?? new string[] { };
                         this.Invoke(new Action(() =>
                         {
                             txtPlateNumber.Text = selectedPlateNumber;
@@ -880,7 +1014,7 @@ namespace v5_IScale
             }
         }
 
-        private async void RefreshData()
+        private async Task RefreshData()
         {
             AppData.WeighingDetailCollection = new WeighingDetailCollection();
             List<WeighingAction> weighingHistory = null;
@@ -893,10 +1027,10 @@ namespace v5_IScale
             }
             this.Invoke(new Action(() =>
             {
-                DisplayInGridview();
+                DisplayInGridview(false);
             }));
         }
-        private void DisplayInGridview()
+        private async Task DisplayInGridview(bool isUpdateMoney = true)
         {
             dgvData.SelectionChanged -= dgvData_SelectionChanged;
             dgvData.Rows.Clear();
@@ -965,7 +1099,66 @@ namespace v5_IScale
             if (dgvData.RowCount > 0)
             {
                 dgvData.CurrentCell = dgvData.CurrentRow.Cells[1];
-                dgvData_SelectionChanged(null, EventArgs.Empty);
+                if (isUpdateMoney)
+                {
+                    dgvData_SelectionChanged(null, EventArgs.Empty);
+                }
+                else
+                {
+                    string trafficId = "";
+                    string vehicleImage = "";
+                    string firstScaleImage = dgvData.CurrentRow.Cells[dgvData.ColumnCount - 2].Value.ToString() ?? "";
+                    string secondScaleImage = dgvData.CurrentRow.Cells[dgvData.ColumnCount - 1].Value.ToString() ?? "";
+                    if (!string.IsNullOrEmpty(firstScaleImage))
+                    {
+                        string[] firstScaleImages = firstScaleImage.Split(";");
+                        if (firstScaleImages.Length > 1)
+                        {
+                            string firstWeightPath = await MinioHelper.GetImage(firstScaleImages[1]);
+                            this.Invoke(new Action(() =>
+                            {
+                                picFirstScale.LoadAsync(firstWeightPath);
+                            }));
+                            string vehicleImagePath = await MinioHelper.GetImage(firstScaleImages[0]);
+                            this.Invoke(new Action(() =>
+                            {
+                                picVehicleImageIn.LoadAsync(vehicleImagePath);
+                            }));
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(secondScaleImage))
+                    {
+                        string[] secondScaleImages = secondScaleImage.Split(";");
+                        if (secondScaleImages.Length > 1)
+                        {
+                            string tempPath = await MinioHelper.GetImage(secondScaleImages[1]);
+                            this.Invoke(new Action(() =>
+                            {
+                                picSecondScale.LoadAsync(tempPath);
+                            }));
+                        }
+                    }
+
+                    int firstScale = int.Parse(dgvData.CurrentRow.Cells[5].Value.ToString()?.Replace(",", "") ?? "0");
+                    string secondScaleStr = dgvData.CurrentRow.Cells[7].Value.ToString()?.Replace(",", "") ?? "";
+                    if (string.IsNullOrEmpty(secondScaleStr))
+                    {
+                        lblFirstScale.Text = firstScale.ToString();
+                        lblSecondScale.Text = "_";
+                        lblGoodsScale.Text = "_";
+                    }
+                    else
+                    {
+                        int secondScale = int.Parse(secondScaleStr);
+                        int goodScale = Math.Abs(firstScale - secondScale);
+
+                        lblFirstScale.Text = firstScale.ToString();
+                        lblSecondScale.Text = secondScale.ToString();
+                        lblGoodsScale.Text = goodScale.ToString();
+                    }
+
+                    this.selectedParkingEventId = dgvData.CurrentRow.Cells[0].Value.ToString();
+                }
             }
         }
         private void ClearView()
@@ -980,6 +1173,37 @@ namespace v5_IScale
                 picVehicleImageIn.Image = defaultImg;
                 picSecondScale.Image = defaultImg;
             }));
+        }
+
+        private string GetPrintScaleInvoiceOfflineContent(WeighingAction weighingActionDetail, string plateNumber)
+        {
+            string printTemplatePath = PathManagement.appPrintScaleInvoiceOfflineTemplateConfigPath(((EmPrintTemplate)StaticPool.appOption.PrintTemplate).ToString());
+            if (File.Exists(printTemplatePath))
+            {
+                string baseContent = File.ReadAllText(printTemplatePath);
+                baseContent = baseContent.Replace("$companyTaxCode", StaticPool.TaxCode);
+                baseContent = baseContent.Replace("$companyAddress", StaticPool.CompanyAddress);
+                baseContent = baseContent.Replace("$companyName", StaticPool.CompanyName);
+                baseContent = baseContent.Replace("$templateCode", StaticPool.scaleSymbolCode);
+
+                baseContent = baseContent.Replace("$day", DateTime.Now.Day.ToString("00"));
+                baseContent = baseContent.Replace("$month", DateTime.Now.Month.ToString("00"));
+                baseContent = baseContent.Replace("$year", DateTime.Now.Year.ToString("0000"));
+
+                baseContent = baseContent.Replace("$excecute_time", DateTime.Now.ToString(UltilityManagement.fullDayFormat));
+                baseContent = baseContent.Replace("$plateNumber", plateNumber);
+
+                baseContent = baseContent.Replace("$money_int", TextFormatingTool.GetMoneyFormat(weighingActionDetail.weighingType.Price.ToString()));
+
+                baseContent = baseContent.Replace("$money_str", TextFormatingTool.GetMoneyFormat(weighingActionDetail.Charge.ToString()));
+
+                return baseContent;
+            }
+            else
+            {
+                MessageBox.Show("Không tìm thấy mẫu in", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return string.Empty;
+            }
         }
         #endregion End Private Function
     }

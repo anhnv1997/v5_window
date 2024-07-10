@@ -1,4 +1,6 @@
-﻿namespace v5_IScale.Forms.ReportForms
+﻿using iPakrkingv5.Controls.Usercontrols;
+
+namespace v5_IScale.Forms.ReportForms
 {
     partial class frmReportScaleWithInvoice
     {
@@ -371,6 +373,7 @@
             // 
             btnExcel.AutoSize = true;
             btnExcel.Font = new Font("Segoe UI", 14F);
+            btnExcel.Image = (Image)resources.GetObject("btnExcel.Image");
             btnExcel.Location = new Point(274, 206);
             btnExcel.Margin = new Padding(4, 3, 4, 3);
             btnExcel.Name = "btnExcel";
@@ -385,6 +388,7 @@
             // 
             btnSearch.AutoSize = true;
             btnSearch.Font = new Font("Segoe UI", 14F);
+            btnSearch.Image = (Image)resources.GetObject("btnSearch.Image");
             btnSearch.Location = new Point(117, 206);
             btnSearch.Margin = new Padding(4, 3, 4, 3);
             btnSearch.Name = "btnSearch";
@@ -439,7 +443,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.BackColor = Color.Transparent;
+            label8.BackColor = SystemColors.ControlLightLight;
             label8.Dock = DockStyle.Top;
             label8.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             label8.ForeColor = Color.FromArgb(0, 0, 192);
@@ -452,6 +456,7 @@
             // 
             // picSecondWeight
             // 
+            picSecondWeight.BackColor = SystemColors.ControlLightLight;
             picSecondWeight.Dock = DockStyle.Fill;
             picSecondWeight.Location = new Point(0, 0);
             picSecondWeight.Margin = new Padding(0);
@@ -476,7 +481,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.BackColor = Color.Transparent;
+            label7.BackColor = SystemColors.ControlLightLight;
             label7.Dock = DockStyle.Top;
             label7.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             label7.ForeColor = Color.FromArgb(0, 0, 192);
@@ -489,6 +494,7 @@
             // 
             // picFirstWeight
             // 
+            picFirstWeight.BackColor = SystemColors.ControlLightLight;
             picFirstWeight.Dock = DockStyle.Fill;
             picFirstWeight.Location = new Point(0, 0);
             picFirstWeight.Margin = new Padding(0);
@@ -513,7 +519,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.BackColor = Color.Transparent;
+            label6.BackColor = SystemColors.ControlLightLight;
             label6.Dock = DockStyle.Top;
             label6.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             label6.ForeColor = Color.FromArgb(0, 0, 192);
@@ -526,6 +532,7 @@
             // 
             // picVehicleImage
             // 
+            picVehicleImage.BackColor = SystemColors.ControlLightLight;
             picVehicleImage.Dock = DockStyle.Fill;
             picVehicleImage.Location = new Point(0, 0);
             picVehicleImage.Margin = new Padding(0);
@@ -567,6 +574,7 @@
             // 
             btnPrintInternetEInvoice.AutoSize = true;
             btnPrintInternetEInvoice.Font = new Font("Segoe UI", 14F);
+            btnPrintInternetEInvoice.Image = (Image)resources.GetObject("btnPrintInternetEInvoice.Image");
             btnPrintInternetEInvoice.Location = new Point(539, 24);
             btnPrintInternetEInvoice.Name = "btnPrintInternetEInvoice";
             btnPrintInternetEInvoice.Size = new Size(229, 41);
@@ -581,6 +589,7 @@
             // 
             btnPrintScaleTicket.AutoSize = true;
             btnPrintScaleTicket.Font = new Font("Segoe UI", 14F);
+            btnPrintScaleTicket.Image = (Image)resources.GetObject("btnPrintScaleTicket.Image");
             btnPrintScaleTicket.Location = new Point(226, 24);
             btnPrintScaleTicket.Name = "btnPrintScaleTicket";
             btnPrintScaleTicket.Size = new Size(162, 41);
@@ -595,6 +604,7 @@
             // 
             btnPrintEInvoice.AutoSize = true;
             btnPrintEInvoice.Font = new Font("Segoe UI", 14F);
+            btnPrintEInvoice.Image = (Image)resources.GetObject("btnPrintEInvoice.Image");
             btnPrintEInvoice.Location = new Point(394, 24);
             btnPrintEInvoice.Name = "btnPrintEInvoice";
             btnPrintEInvoice.Size = new Size(139, 41);

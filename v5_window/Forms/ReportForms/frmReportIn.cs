@@ -6,12 +6,13 @@ using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.ApiManager.XuanCuong;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Databases;
-using iParkingv5.Objects.Datas;
+using iParkingv5.Objects.Datas.Devices;
+using iParkingv5.Objects.Datas.parking;
 using iParkingv5.Objects.Enums;
+using iParkingv5.Objects.Reporting;
 using iParkingv5.Objects.warehouse;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv5_window.Usercontrols.BuildControls;
-using iParkingv6.Objects.Datas;
 using Kztek.Tools;
 using System.Data;
 using System.Data.SqlTypes;
@@ -70,7 +71,7 @@ namespace iParkingv5_window.Forms.ReportForms
         {
             registerVehicles = (await AppData.ApiServer.GetRegisterVehiclesAsync("")).Item1;
             customers = (await AppData.ApiServer.GetCustomersAsync())?.Item1 ?? new List<Customer>();
-            users = (await AppData.ApiServer.GetAllUsers())?.Item1 ?? new List<User>();
+            users = (await AppData.ApiServer.GetAllUsersAsync())?.Item1 ?? new List<User>();
 
             if (StaticPool.appOption.PrintTemplate != (int)EmPrintTemplate.XuanCuong)
             {
@@ -359,7 +360,8 @@ namespace iParkingv5_window.Forms.ReportForms
                                 {
                                     if (((EmPrintTemplate)StaticPool.appOption.PrintTemplate) == EmPrintTemplate.XuanCuong)
                                     {
-                                        await XuanCuongApiHelper.SendParkingInfo(id, "in", frmUpdatePlate.UpdatePlate, DateTime.ParseExact(timeIn, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture), FileIds.Split(";").ToList(), "");
+                                        await XuanCuongApiHelper.SendParkingInfo(id, "in", frmUpdatePlate.UpdatePlate,
+                                            DateTime.ParseExact(timeIn, UltilityManagement.fullDayFormat, CultureInfo.InvariantCulture), FileIds.Split(";").ToList(), "");
                                     }
                                     dgvData.Rows[e.RowIndex].Cells["plate"].Value = frmUpdatePlate.UpdatePlate;
                                     dgvData.Rows[e.RowIndex].Cells["NoteBSX"].Value = frmUpdatePlate.UpdateNote;
@@ -374,7 +376,6 @@ namespace iParkingv5_window.Forms.ReportForms
                                 {
                                     dgvData.Rows[e.RowIndex].Cells["warehouse"].Value = frmUpdatePlate.newType;
                                     frmUpdatePlate.Dispose();
-                                    await Task.Delay(1000);
                                     btnSearch_Click(null, null);
                                 }
                             }
@@ -670,9 +671,9 @@ namespace iParkingv5_window.Forms.ReportForms
                 count_by_countries[countryCode][TransactionType.GetTransactionTypeStr(item.TransactionType)] =
                     count_by_countries[countryCode][TransactionType.GetTransactionTypeStr(item.TransactionType)] + 1;
 
-                row.Cells[i++].Value = item.DatetimeIn?.ToString("dd/MM/yyyy HH:mm:ss"); //5
+                row.Cells[i++].Value = item.DatetimeIn?.ToString(UltilityManagement.fullDayFormat); //5
                 row.Cells[i++].Value = TransactionType.GetTransactionTypeStr(item.TransactionType); //8
-                row.Cells[i++].Value = item.TransactionCode;              //9
+                row.Cells[i++].Value = item.TransactionCode.Contains("-0-0") ? "" : item.TransactionCode;              //9
                 row.Cells[i++].Value = item.note;              //
 
                 if (string.IsNullOrEmpty(item.thirdpartynote))
@@ -722,7 +723,7 @@ namespace iParkingv5_window.Forms.ReportForms
                 }
 
                 row.Cells[i++].Value = item.laneId;                //6
-                row.Cells[i++].Value = item.fileKeys?.Length > 0 ? string.Join(";", item.fileKeys) : "";//8
+                row.Cells[i++].Value = item.fileKeys.Count > 0 ? string.Join(";", item.fileKeys.ToArray()) : "";//8
                 row.Cells[i++].Value = item.CustomerId;//9
                 row.Cells[i++].Value = item.RegisteredVehicleId;//10
                 row.Cells[i++].Value = "Xem Thêm";//15
@@ -836,7 +837,7 @@ namespace iParkingv5_window.Forms.ReportForms
             }));
 
             //lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
-            lanes = (await AppData.ApiServer.GetLanesAsync()).Item1 ?? new List<iParkingv6.Objects.Datas.Lane>();
+            lanes = (await AppData.ApiServer.GetLanesAsync()).Item1 ?? new List<Lane>();
             lanes = lanes.OrderBy(x => x.name).ThenBy(x => x.name.Length).ToList();
             cbLane.Invoke(new Action(() =>
             {
@@ -864,7 +865,7 @@ namespace iParkingv5_window.Forms.ReportForms
             }));
 
             //lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
-            users = (await AppData.ApiServer.GetAllUsers()).Item1 ?? new List<User>();
+            users = (await AppData.ApiServer.GetAllUsersAsync()).Item1 ?? new List<User>();
             users = users.OrderBy(x => x.upn).ThenBy(x => x.upn.Length).ToList();
             cbUser.Invoke(new Action(() =>
             {
@@ -926,7 +927,7 @@ namespace iParkingv5_window.Forms.ReportForms
                 string baseContent = File.ReadAllText(printTemplatePath);
                 baseContent = baseContent.Replace("$card_name", cardName);
                 baseContent = baseContent.Replace("$plate_number", plateNumber);
-                baseContent = baseContent.Replace("$timeIn", timeIn.ToString("HH:mm:ss - dd/MM/yyyy"));
+                baseContent = baseContent.Replace("$timeIn", timeIn.ToString(UltilityManagement.fullDayFormat));
                 baseContent = baseContent.Replace("$warehouseNumber", (int.Parse(warehouseService.paperworkSequence)).ToString("00"));
                 baseContent = baseContent.Replace("$code", warehouseService.codeCharacterSequence + "-" + warehouseService.codeNumberSequence);
                 return baseContent;

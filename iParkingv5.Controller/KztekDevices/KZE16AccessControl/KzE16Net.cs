@@ -1,7 +1,7 @@
 ﻿using iParkingv5.Controller.KztekDevices.KZE02NETController;
+using iParkingv5.Objects.Datas.Devices;
 using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.Events;
-using iParkingv6.Objects.Datas;
 using Kztek.Tool.SocketHelpers;
 using System;
 using System.Collections.Generic;

@@ -1,31 +1,24 @@
-﻿using IPaking.Ultility;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using IPaking.Ultility;
 using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.ApiManager.KzScaleApis;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Databases;
+using iParkingv5.Objects.EventDatas;
 using iParkingv5.Objects.ScaleObjects;
 using iParkingv5_window;
+using iParkingv5_window.Forms.DataForms;
 using iParkingv5_window.Helpers;
-using iParkingv6.ApiManager.KzParkingv3Apis;
-using Kztek.Tool.TextFormatingTools;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using Kztek.Tools;
 using static iParkingv5.Objects.Enums.PrintHelpers;
 
 namespace v5_IScale.Forms.ReportForms
 {
-
     public partial class frmReportScaleWithInvoice : Form
     {
         #region Properties
         private int printCount = 0;
+        public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
         #endregion End Properties
 
         #region Forms
@@ -66,10 +59,11 @@ namespace v5_IScale.Forms.ReportForms
             {
                 var data = await GetReportData();
                 DisplayInGridview(data);
+                dgvData_CellClick(null, null);
             }
             catch (Exception ex)
             {
-                //LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
+                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
             }
         }
         private async void btnPrintScaleTicket_Click(object sender, EventArgs e)
@@ -152,21 +146,22 @@ namespace v5_IScale.Forms.ReportForms
                 MessageBox.Show("Không có thông tin hóa đơn", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            string orderId = await KzScaleApiHelper.CreateInvoice(weighingActionDetails[cbPrintMode.SelectedIndex].Id, StaticPool.userId, StaticPool.user_name);
-            if (string.IsNullOrEmpty(orderId))
+            var invoiceData = await KzScaleApiHelper.CreateInvoice(weighingActionDetails[cbPrintMode.SelectedIndex].Id, true);
+            if (string.IsNullOrEmpty(invoiceData.id))
             {
                 MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            var invoiceData = await AppData.ApiServer.GetInvoiceData(orderId);
-            if (string.IsNullOrEmpty(invoiceData.fileName))
+            var invoiceFile = await AppData.ApiServer.GetInvoiceData(invoiceData.id);
+            if (string.IsNullOrEmpty(invoiceFile.fileToBytes))
             {
                 MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            string pdfContent = invoiceData.fileToBytes;
+            string pdfContent = invoiceFile.fileToBytes;
             PrintHelper.PrintPdf(pdfContent);
         }
+
         private void btnExcel_Click(object sender, EventArgs e)
         {
             ExcelTools.CreatReportFile(dgvData, "Báo cáo sự kiện cân", new List<string>());
@@ -175,6 +170,10 @@ namespace v5_IScale.Forms.ReportForms
         {
             try
             {
+                if (dgvData.CurrentRow == null)
+                {
+                    return;
+                }
                 string trafficId = "";
                 string vehicleImage = "";
                 string firstScaleImage = dgvData.CurrentRow.Cells[dgvData.ColumnCount - 2].Value.ToString() ?? "";
@@ -256,20 +255,20 @@ namespace v5_IScale.Forms.ReportForms
                     string goodType = "";
                     if (orderData.Count > 0)
                     {
-                        firstScaleTime = orderData[0].createdUtcTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
+                        firstScaleTime = orderData[0].createdUtcTime?.ToString(UltilityManagement.fullDayFormat) ?? "";
                         firstWeightScale = orderData[0].Weight.ToString("#,0");
                         goodType = orderData[0].weighingType.Name;
                     }
                     if (orderData.Count > 1)
                     {
-                        secondScaleTime = orderData[1].createdUtcTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
+                        secondScaleTime = orderData[1].createdUtcTime?.ToString(UltilityManagement.fullDayFormat) ?? "";
                         secondWeightScale = orderData[1].Weight.ToString("#,0");
                     }
                     if (orderData.Count > 2)
                     {
                         for (int i = 2; i < orderData.Count; i++)
                         {
-                            string tempTime = orderData[i].createdUtcTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
+                            string tempTime = orderData[i].createdUtcTime?.ToString(UltilityManagement.fullDayFormat) ?? "";
                             string tempWeight = orderData[i].Weight.ToString("#,0");
                             largerThan2TimesScale += "Lần " + (i + 1) + " : " + tempTime + " - " + tempWeight + "\r\n";
                         }
@@ -432,7 +431,7 @@ namespace v5_IScale.Forms.ReportForms
                         </span>
                     </td>
                     <td>
-                        <center><span>{weighingActionDetail.createdUtcTime:dd/MM/yyyy HH:mm:ss}</span></center>
+                        <center><span>{weighingActionDetail.createdUtcTime.Value.ToString(UltilityManagement.fullDayFormat)}</span></center>
                     </td>
                     <td>
                         <center><span><b>{weighingActionDetail.Weight.ToString("#,0")}</b></span></center>
@@ -472,7 +471,7 @@ namespace v5_IScale.Forms.ReportForms
             PictureBox pictureBox = (sender as PictureBox)!;
             if (e.Error != null)
             {
-                //pictureBox.Image = defaultImg;
+                pictureBox.Image = defaultImg;
             }
         }
 

@@ -133,7 +133,7 @@ namespace v6_window
                 MinioHelper.AccessKey = StaticPool.serverConfig.MinioServerUsername;
                 MinioHelper.SecretKey = StaticPool.serverConfig.MinioServerPassword;
                 KzParkingApiHelper.server = StaticPool.serverConfig.ParkingServerUrl;
-                KzParkingv5ApiHelper.server = StaticPool.serverConfig.ParkingServerUrl;
+                KzParkingv5BaseApi.server = StaticPool.serverConfig.ParkingServerUrl;
             }
             catch (Exception ex)
             {

@@ -4,7 +4,7 @@ using iParkingv5.Controller.Ingress;
 using iParkingv5.Controller.KztekDevices.KZE02NETControllerv2;
 using iParkingv5.Controller.KztekDevices.KZE16AccessControl;
 using iParkingv5.Controller.ZktecoDevices.PULL;
-using iParkingv6.Objects.Datas;
+using iParkingv5.Objects.Datas.Devices;
 using System;
 using System.Collections.Generic;
 using System.Linq;

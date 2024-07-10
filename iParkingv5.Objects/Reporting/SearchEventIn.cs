@@ -6,6 +6,11 @@ using System.Text;
 
 namespace iParkingv5.Objects.Reporting
 {
+    public enum EmParkingStatus
+    {
+        Parking = 0,
+        Exited = 1,
+    }
     public class SearchEventIn
     {
         public string keyword { get; set; }
@@ -19,5 +24,6 @@ namespace iParkingv5.Objects.Reporting
         public bool paging { get; set; } = false;
         public PlateNumberType PlateNumberType { get; set; }
         public List<TransactionType> transactionTypes { get; set; } = new List<TransactionType>();
+        public EmParkingStatus Status { get; set; } = EmParkingStatus.Parking;
     }
 }

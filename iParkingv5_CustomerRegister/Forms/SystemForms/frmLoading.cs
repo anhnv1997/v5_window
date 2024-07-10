@@ -1,7 +1,7 @@
 ﻿using iParkingv5.LprDetecter.LprDetecters;
 using iParkingv5.Objects;
+using iParkingv5.Objects.Datas.Devices;
 using iParkingv6.ApiManager.KzParkingv3Apis;
-using iParkingv6.Objects.Datas;
 
 namespace iParkingv5_CustomerRegister.Forms.SystemForms
 {

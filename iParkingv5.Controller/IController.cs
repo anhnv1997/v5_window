@@ -1,5 +1,5 @@
-﻿using iParkingv5.Objects.Events;
-using iParkingv6.Objects.Datas;
+﻿using iParkingv5.Objects.Datas.Devices;
+using iParkingv5.Objects.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;

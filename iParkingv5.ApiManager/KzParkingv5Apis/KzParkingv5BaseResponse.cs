@@ -1,9 +1,5 @@
 ﻿namespace iParkingv5.ApiManager.KzParkingv5Apis
 {
-    internal class KzParkingv5BaseResponse
-    {
-    }
-
     public class KzParkingv5BaseResponse<T> where T : class
     {
         public bool isSuccess { get; set; } = true;

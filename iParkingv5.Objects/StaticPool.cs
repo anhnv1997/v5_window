@@ -2,9 +2,10 @@
 using iParkingv5.LprDetecter.LprDetecters;
 using iParkingv5.Objects.Configs;
 using iParkingv5.Objects.Databases;
-using iParkingv5.Objects.Datas;
+using iParkingv5.Objects.Datas.Devices;
+using iParkingv5.Objects.Datas.parking;
+using iParkingv5.Objects.Datas.system;
 using iParkingv5.Objects.ScaleObjects;
-using iParkingv6.Objects.Datas;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -14,12 +15,12 @@ namespace iParkingv5.Objects
     {
         public static int baseSize = 12;
         public static WeighingDetailCollection WeighingDetailCollection = new WeighingDetailCollection();
-        public static WeighingFormCollection WeighingFormCollection = new WeighingFormCollection();
+        public static WeighingTypeCollection WeighingFormCollection = new WeighingTypeCollection();
         public static SharedPreferences sharedPreferences = new SharedPreferences();
         #region APP - Datas
         public static Computer selectedComputer = null;
         public static Gate gate = null;
-        public static SystemConfig systemConfig = null;
+        public static ParkingSystemConfig systemConfig = null;
         public static List<Camera> cameras = new List<Camera>();
         public static List<Lane> lanes = new List<Lane>();
         public static List<Led> leds = new List<Led>();
@@ -49,6 +50,12 @@ namespace iParkingv5.Objects
         public static string invoiceTypeCode = "5";
         public static string symbolCode = "C24HAY";
         public static float TaxRate = 10;
+
+        public static string scaleTemplateCode = "5/00023";
+        public static string scaleInvoiceTypeCode = "5";
+        public static string scaleSymbolCode = "C24HAY";
+        public static float scaleTaxRate = 10;
+
         #endregion End EInvoice
 
         //--Function

@@ -4,12 +4,12 @@ using iPakrkingv5.Controls.Controls.Buttons;
 using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Databases;
-using iParkingv5.Objects.Datas;
+using iParkingv5.Objects.Datas.Devices;
+using iParkingv5.Objects.Datas.parking;
 using iParkingv5.Objects.EventDatas;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv5_window.Usercontrols.BuildControls;
 using iParkingv6.ApiManager.KzParkingv3Apis;
-using iParkingv6.Objects.Datas;
 using System.Data;
 using System.Runtime.InteropServices;
 using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper;
@@ -504,7 +504,7 @@ namespace iParkingv5_window.Forms.ReportForms
                 row.Cells[i++].Value = (rows.Count + 1).ToString();//0
                 row.Cells[i++].Value = item.IdentityId;            //1
                 row.Cells[i++].Value = item.PlateNumber;           //2
-                row.Cells[i++].Value = item.AlarmTime?.ToString("dd/MM/yyyy HH:mm:ss"); //3
+                row.Cells[i++].Value = item.AlarmTime?.ToString(UltilityManagement.fullDayFormat); //3
                 row.Cells[i++].Value = item.GetAbnormalStr();//("dd/MM/yyyy HH:mm:ss"); //4
                 row.Cells[i++].Value = item.LaneId;                //5
                 row.Cells[i++].Value = item.CreatedBy;             //6
@@ -584,7 +584,7 @@ namespace iParkingv5_window.Forms.ReportForms
             }));
 
             //lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
-            lanes = (await  AppData.ApiServer.GetLanesAsync()).Item1 ?? new List<iParkingv6.Objects.Datas.Lane>();
+            lanes = (await  AppData.ApiServer.GetLanesAsync()).Item1 ?? new List<Lane>();
             cbLane.Invoke(new Action(() =>
             {
                 foreach (var item in lanes)

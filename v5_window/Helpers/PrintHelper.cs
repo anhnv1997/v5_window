@@ -15,8 +15,7 @@ namespace iParkingv5_window.Helpers
     public static class PrintHelper
     {
         #region PUBLIC FUNCTION
-        public static string GetPrintScaleInvoiceOfflineContent(WeighingAction weighingActionDetail, string plateNumber, string companyTaxCode = "", string address = "",
-                                                               string companyName = "", string kyHieuHoaDon = "")
+        public static string GetPrintScaleInvoiceOfflineContent(WeighingAction weighingActionDetail, string plateNumber)
         {
             string printTemplatePath = PathManagement.appPrintScaleInvoiceOfflineTemplateConfigPath(((EmPrintTemplate)StaticPool.appOption.PrintTemplate).ToString());
             if (File.Exists(printTemplatePath))
@@ -25,13 +24,13 @@ namespace iParkingv5_window.Helpers
                 baseContent = baseContent.Replace("$companyTaxCode", StaticPool.TaxCode);
                 baseContent = baseContent.Replace("$companyAddress", StaticPool.CompanyAddress);
                 baseContent = baseContent.Replace("$companyName", StaticPool.CompanyName);
-                baseContent = baseContent.Replace("$templateCode", StaticPool.TaxCode);
+                baseContent = baseContent.Replace("$templateCode", StaticPool.scaleSymbolCode);
 
                 baseContent = baseContent.Replace("$day", DateTime.Now.Day.ToString("00"));
                 baseContent = baseContent.Replace("$month", DateTime.Now.Month.ToString("00"));
                 baseContent = baseContent.Replace("$year", DateTime.Now.Year.ToString("0000"));
 
-                baseContent = baseContent.Replace("$excecute_time", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+                baseContent = baseContent.Replace("$excecute_time", DateTime.Now.ToString(UltilityManagement.fullDayFormat));
                 baseContent = baseContent.Replace("$plateNumber", plateNumber);
 
                 baseContent = baseContent.Replace("$money_int", TextFormatingTool.GetMoneyFormat(weighingActionDetail.weighingType.Price.ToString()));
@@ -107,8 +106,8 @@ namespace iParkingv5_window.Helpers
             baseContent = baseContent.Replace("$month", DateTime.Now.Month.ToString("00"));
             baseContent = baseContent.Replace("$year", DateTime.Now.Year.ToString("0000"));
 
-            baseContent = baseContent.Replace("$datetimeIn", dateTimeIn.ToString("dd/MM/yyyy HH:mm:ss"));
-            baseContent = baseContent.Replace("$datetimeOut", dateTimeOut.ToString("dd/MM/yyyy HH:mm:ss"));
+            baseContent = baseContent.Replace("$datetimeIn", dateTimeIn.ToString(UltilityManagement.fullDayFormat));
+            baseContent = baseContent.Replace("$datetimeOut", dateTimeOut.ToString(UltilityManagement.fullDayFormat));
             var ParkingTime = dateTimeOut - dateTimeIn;
             string formattedTime = "";
             if (ParkingTime.TotalDays > 1)
@@ -143,8 +142,8 @@ namespace iParkingv5_window.Helpers
             baseContent = baseContent.Replace("$month", DateTime.Now.Month.ToString("00"));
             baseContent = baseContent.Replace("$year", DateTime.Now.Year.ToString("0000"));
 
-            baseContent = baseContent.Replace("$timeIn", dateTimeIn.ToString("dd/MM/yyyy HH:mm:ss"));
-            baseContent = baseContent.Replace("$timeOut", dateTimeOut.ToString("dd/MM/yyyy HH:mm:ss"));
+            baseContent = baseContent.Replace("$timeIn", dateTimeIn.ToString(UltilityManagement.fullDayFormat));
+            baseContent = baseContent.Replace("$timeOut", dateTimeOut.ToString(UltilityManagement.fullDayFormat));
             baseContent = baseContent.Replace("$plate", plate);
             baseContent = baseContent.Replace("$cardName", cardName);
             baseContent = baseContent.Replace("$cardGroupName", cardGroupName);
@@ -230,7 +229,7 @@ namespace iParkingv5_window.Helpers
                         </span>
                     </td>
                     <td>
-                        <center><span>{weighingActionDetail.createdUtcTime:dd/MM/yyyy HH:mm:ss}</span></center>
+                        <center><span>{weighingActionDetail.createdUtcTime.Value.ToString(UltilityManagement.fullDayFormat)}</span></center>
                     </td>
                     <td>
                         <center><span><b>{weighingActionDetail.Weight.ToString("#,0")}</b></span></center>

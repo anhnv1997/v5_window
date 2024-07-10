@@ -179,7 +179,7 @@ namespace iParkingv6.ApiManager
                 {
                 GetToken:
                     {
-                        string loginUrl = KzParkingv5ApiHelper.server.Replace("5000", "3000");
+                        string loginUrl = KzParkingv5BaseApi.server.Replace("5000", "3000");
                         if (loginUrl[loginUrl.Length - 1] == '/')
                         {
                             loginUrl += "connect/token";
@@ -195,7 +195,7 @@ namespace iParkingv6.ApiManager
                             Timeout = timeOut,
                         };
                         _request.AddHeader("content-type", "application/x-www-form-urlencoded");
-                        _request.AddParameter("application/x-www-form-urlencoded", $"grant_type=refresh_token&refresh_token={KzParkingv5ApiHelper.refresh_token}&client_id={KzParkingv5ApiHelper.client_id}", ParameterType.RequestBody);
+                        _request.AddParameter("application/x-www-form-urlencoded", $"grant_type=refresh_token&refresh_token={KzParkingv5BaseApi.refresh_token}&client_id={KzParkingv5BaseApi.client_id}", ParameterType.RequestBody);
                         var _response = _client.Execute(_request);
                         var LoginResult = Newtonsoft.Json.JsonConvert.DeserializeObject<LoginResult>(_response.Content);
                         if (string.IsNullOrEmpty(LoginResult.access_token))
@@ -204,15 +204,15 @@ namespace iParkingv6.ApiManager
                         }
                         else
                         {
-                            KzParkingv5ApiHelper.token = LoginResult.access_token;
-                            KzParkingv5ApiHelper.refresh_token = LoginResult.refresh_token;
-                            if (KzParkingv5ApiHelper.refresh_token != LoginResult.refresh_token)
+                            KzParkingv5BaseApi.token = LoginResult.access_token;
+                            KzParkingv5BaseApi.refresh_token = LoginResult.refresh_token;
+                            if (KzParkingv5BaseApi.refresh_token != LoginResult.refresh_token)
                             {
 
                             }
                             if (headerValues.ContainsKey("Authorization"))
                             {
-                                headerValues["Authorization"] = "Bearer " + KzParkingv5ApiHelper.token;
+                                headerValues["Authorization"] = "Bearer " + KzParkingv5BaseApi.token;
                             }
                             return await GeneralJsonAPIAsync(apiUrl, data, headerValues, requiredParams, timeOut, method);
                         }

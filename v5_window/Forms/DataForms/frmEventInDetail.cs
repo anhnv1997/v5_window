@@ -1,5 +1,7 @@
-﻿using iParkingv5.ApiManager.KzParkingv5Apis;
+﻿using IPaking.Ultility;
+using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.ApiManager.KzScaleApis;
+using iParkingv5.Objects;
 using iParkingv5.Objects.Enums;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using System;
@@ -67,18 +69,18 @@ namespace iParkingv5_window.Forms.DataForms
 
             //VehicleType vehicleType = await KzParkingApiHelper.GetVehicleTypeById(identityGroup?.VehicleTypeId.ToString());
             VehicleType.VehicleBaseType vehicleType = identityGroup.VehicleType;
-                //(await AppData.ApiServer.GetVehicleTypeByIdAsync(identityGroup?.VehicleType.Id.ToString())).Item1;
+            //(await AppData.ApiServer.GetVehicleTypeByIdAsync(identityGroup?.VehicleType.Id.ToString())).Item1;
 
             txtPlate.Text = this.PlateNumber;
             lblLaneName.Text = lane?.name;
-            lblTimeIn.Text = this.datetimeIn.ToString("dd/MM/yyyy HH:mm:ss");
+            lblTimeIn.Text = this.datetimeIn.ToString(UltilityManagement.fullDayFormat);
             lblVehilceType.Text = VehicleType.GetDisplayStr(vehicleType);
             lblIdentityName.Text = identity == null ? "" : identity.Name;
             lblIdentityCode.Text = identity == null ? "" : identity.Code;
             lblIdentityGroup.Text = identityGroup == null ? "" : identityGroup.Name;
             lblCustomer.Text = customer == null ? "" : customer.Name;
             lblPhoneNumber.Text = customer == null ? "" : customer.PhoneNumber;
-            lblExpireTime.Text = registerVehicle == null ? "" : registerVehicle.ExpireTime?.ToString("dd/MM/yyyy HH:mm:ss");
+            lblExpireTime.Text = registerVehicle == null ? "" : registerVehicle.ExpireTime?.ToString(UltilityManagement.fullDayFormat);
 
             try
             {
@@ -126,7 +128,10 @@ namespace iParkingv5_window.Forms.DataForms
                 bool isUpdateSuccess = await AppData.ApiServer.UpdateEventInPlateAsync(this.EventId, txtPlate.Text, this.PlateNumber);
                 if (isUpdateSuccess)
                 {
-                    KzScaleApiHelper.UpdatePlate(this.EventId, txtPlate.Text);
+                    if (frmMain.isScale)
+                    {
+                        KzScaleApiHelper.UpdatePlate(this.EventId, txtPlate.Text);
+                    }
                     MessageBox.Show("Cập nhật thông tin thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.updatePlate = txtPlate.Text;
                     this.DialogResult = DialogResult.OK;
@@ -143,7 +148,10 @@ namespace iParkingv5_window.Forms.DataForms
                 bool isUpdateSuccess = await AppData.ApiServer.UpdateEventOutPlate(this.EventId, txtPlate.Text, this.PlateNumber);
                 if (isUpdateSuccess)
                 {
-                    KzScaleApiHelper.UpdatePlate(this.EventId, txtPlate.Text);
+                    if (frmMain.isScale)
+                    {
+                        KzScaleApiHelper.UpdatePlate(this.EventId, txtPlate.Text);
+                    }
                     MessageBox.Show("Cập nhật thông tin thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.updatePlate = txtPlate.Text;
                     this.DialogResult = DialogResult.OK;

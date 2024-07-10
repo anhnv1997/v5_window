@@ -4,11 +4,11 @@ using iPakrkingv5.Controls.Usercontrols.BuildControls;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Enums;
 using iParkingv6.ApiManager.KzParkingv3Apis;
-using iParkingv6.Objects.Datas;
 using System.Runtime.InteropServices;
 using iPakrkingv5.Controls;
 using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5_window;
+using iParkingv5.Objects.Datas.parking;
 
 namespace iParkingv5_CustomerRegister.Forms
 {
@@ -142,7 +142,7 @@ namespace iParkingv5_CustomerRegister.Forms
                                                 customerName,
                                                 customerCode,
                                                 customerGroupName,
-                                                registerVehicles[i].ExpireTime?.ToString("dd/MM/yyyy HH:mm:ss"),
+                                                registerVehicles[i].ExpireTime?.ToString(UltilityManagement.fullDayFormat),
                                                 vehicleId,
                                                 vehicleTypeId,
                                                 customerID,
@@ -260,7 +260,7 @@ namespace iParkingv5_CustomerRegister.Forms
             string expireTimeStr = dgvData.CurrentRow.Cells[7]?.Value?.ToString() ?? string.Empty;
             try
             {
-                this.ExpireTime = DateTime.ParseExact(expireTimeStr, "dd/MM/yyyy HH:mm:ss", null).AddHours(7);
+                this.ExpireTime = DateTime.ParseExact(expireTimeStr, UltilityManagement.fullDayFormat, null).AddHours(7);
 
             }
             catch (Exception)

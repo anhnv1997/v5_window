@@ -1,7 +1,6 @@
 ﻿using iParkingv5.Controller.KztekDevices;
 using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.Events;
-using iParkingv6.Objects.Datas;
 using Kztek.Tool.NetworkTools;
 using Kztek.Tool.SocketHelpers;
 using System;
@@ -18,6 +17,7 @@ using Kztek.Tool.MathematicTools;
 using System.Text.RegularExpressions;
 using System.Threading;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using iParkingv5.Objects.Datas.Devices;
 
 namespace iParkingv5.Controller.SC200Devices
 {

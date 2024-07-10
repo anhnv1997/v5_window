@@ -1,6 +1,6 @@
-﻿using iParkingv5_window.Usercontrols;
+﻿using iParkingv5.Objects.Datas.Devices;
+using iParkingv5_window.Usercontrols;
 using iParkingv5_window.Usercontrols.LaneConfiguration;
-using iParkingv6.Objects.Datas;
 
 namespace iParkingv5_window.Forms.DataForms
 {

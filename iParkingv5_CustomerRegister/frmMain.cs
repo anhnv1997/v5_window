@@ -1,12 +1,12 @@
 ﻿using iParkingv5.Controller;
 using iParkingv5.Objects;
+using iParkingv5.Objects.Datas.Devices;
 using iParkingv5.Objects.Events;
 using iParkingv5_CustomerRegister.Databases;
 using iParkingv5_CustomerRegister.Forms;
 using iParkingv5_CustomerRegister.Forms.DataForms;
 using iParkingv5_CustomerRegister.Forms.SystemForms;
 using iParkingv6.ApiManager.KzParkingv3Apis;
-using iParkingv6.Objects.Datas;
 using RabbitMQ.Client;
 using System.Text;
 using static iParkingv5.Controller.ControllerFactory;

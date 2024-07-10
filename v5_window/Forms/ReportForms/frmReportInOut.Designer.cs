@@ -46,34 +46,6 @@ namespace iParkingv5_window.Forms.ReportForms
             lblKeyword = new Label();
             txtKeyword = new TextBox();
             dgvData = new DataGridView();
-            id = new DataGridViewTextBoxColumn();
-            eventinid = new DataGridViewTextBoxColumn();
-            Column1 = new DataGridViewTextBoxColumn();
-            PlateIn = new DataGridViewTextBoxColumn();
-            PlateOut = new DataGridViewTextBoxColumn();
-            vehicle_reagion_type = new DataGridViewTextBoxColumn();
-            TimeIn = new DataGridViewTextBoxColumn();
-            TimeOut = new DataGridViewTextBoxColumn();
-            ParkingTime = new DataGridViewTextBoxColumn();
-            IdentityGroup = new DataGridViewTextBoxColumn();
-            WarehouseType = new DataGridViewTextBoxColumn();
-            WarehouseCode = new DataGridViewTextBoxColumn();
-            Charge = new DataGridViewTextBoxColumn();
-            IdentityCode = new DataGridViewTextBoxColumn();
-            UserIn = new DataGridViewTextBoxColumn();
-            UserOut = new DataGridViewTextBoxColumn();
-            InvoiceTemplate = new DataGridViewTextBoxColumn();
-            InvoiceNo = new DataGridViewTextBoxColumn();
-            LaneIn = new DataGridViewTextBoxColumn();
-            LaneOut = new DataGridViewTextBoxColumn();
-            NoteBSX = new DataGridViewTextBoxColumn();
-            note_3rd_1 = new DataGridViewTextBoxColumn();
-            note_3rd_2 = new DataGridViewTextBoxColumn();
-            note_3rd_3 = new DataGridViewTextBoxColumn();
-            Column9 = new DataGridViewTextBoxColumn();
-            Column14 = new DataGridViewTextBoxColumn();
-            pending_invoice_id = new DataGridViewTextBoxColumn();
-            invoice_id = new DataGridViewTextBoxColumn();
             lblEndTime = new Label();
             tableLayoutPanel2 = new TableLayoutPanel();
             picOverviewImageOut = new MovablePictureBox();
@@ -103,6 +75,34 @@ namespace iParkingv5_window.Forms.ReportForms
             ucLoading1 = new Usercontrols.BuildControls.ucLoading();
             tablePic = new TableLayoutPanel();
             toolTip1 = new ToolTip(components);
+            id = new DataGridViewTextBoxColumn();
+            eventinid = new DataGridViewTextBoxColumn();
+            Column1 = new DataGridViewTextBoxColumn();
+            PlateIn = new DataGridViewTextBoxColumn();
+            PlateOut = new DataGridViewTextBoxColumn();
+            vehicle_reagion_type = new DataGridViewTextBoxColumn();
+            TimeIn = new DataGridViewTextBoxColumn();
+            TimeOut = new DataGridViewTextBoxColumn();
+            ParkingTime = new DataGridViewTextBoxColumn();
+            IdentityGroup = new DataGridViewTextBoxColumn();
+            WarehouseType = new DataGridViewTextBoxColumn();
+            WarehouseCode = new DataGridViewTextBoxColumn();
+            Charge = new DataGridViewTextBoxColumn();
+            IdentityCode = new DataGridViewTextBoxColumn();
+            UserIn = new DataGridViewTextBoxColumn();
+            UserOut = new DataGridViewTextBoxColumn();
+            InvoiceTemplate = new DataGridViewTextBoxColumn();
+            InvoiceNo = new DataGridViewTextBoxColumn();
+            LaneIn = new DataGridViewTextBoxColumn();
+            LaneOut = new DataGridViewTextBoxColumn();
+            NoteBSX = new DataGridViewTextBoxColumn();
+            note_3rd_1 = new DataGridViewTextBoxColumn();
+            note_3rd_2 = new DataGridViewTextBoxColumn();
+            note_3rd_3 = new DataGridViewTextBoxColumn();
+            Column9 = new DataGridViewTextBoxColumn();
+            Column14 = new DataGridViewTextBoxColumn();
+            pending_invoice_id = new DataGridViewTextBoxColumn();
+            invoice_id = new DataGridViewTextBoxColumn();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picOverviewImageIn).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picVehicleImageIn).BeginInit();
@@ -256,209 +256,6 @@ namespace iParkingv5_window.Forms.ReportForms
             dgvData.TabIndex = 50;
             dgvData.CellMouseClick += dgvData_CellMouseClick;
             dgvData.MouseClick += dgvData_MouseClick;
-            // 
-            // id
-            // 
-            id.HeaderText = "id";
-            id.Name = "id";
-            id.ReadOnly = true;
-            id.Visible = false;
-            id.Width = 35;
-            // 
-            // eventinid
-            // 
-            eventinid.HeaderText = "eventInId";
-            eventinid.Name = "eventinid";
-            eventinid.ReadOnly = true;
-            eventinid.Visible = false;
-            eventinid.Width = 86;
-            // 
-            // Column1
-            // 
-            Column1.HeaderText = "STT";
-            Column1.Name = "Column1";
-            Column1.ReadOnly = true;
-            Column1.Width = 68;
-            // 
-            // PlateIn
-            // 
-            PlateIn.HeaderText = "Biển Số Vào";
-            PlateIn.Name = "PlateIn";
-            PlateIn.ReadOnly = true;
-            PlateIn.Width = 131;
-            // 
-            // PlateOut
-            // 
-            PlateOut.HeaderText = "Biển Số Ra";
-            PlateOut.Name = "PlateOut";
-            PlateOut.ReadOnly = true;
-            PlateOut.Width = 121;
-            // 
-            // vehicle_reagion_type
-            // 
-            vehicle_reagion_type.HeaderText = "Xe VN/TQ";
-            vehicle_reagion_type.Name = "vehicle_reagion_type";
-            vehicle_reagion_type.ReadOnly = true;
-            vehicle_reagion_type.Width = 115;
-            // 
-            // TimeIn
-            // 
-            TimeIn.HeaderText = "Giờ Vào";
-            TimeIn.Name = "TimeIn";
-            TimeIn.ReadOnly = true;
-            // 
-            // TimeOut
-            // 
-            TimeOut.HeaderText = "Giờ Ra";
-            TimeOut.Name = "TimeOut";
-            TimeOut.ReadOnly = true;
-            TimeOut.Width = 90;
-            // 
-            // ParkingTime
-            // 
-            ParkingTime.HeaderText = "Thời Gian Lưu Bãi";
-            ParkingTime.Name = "ParkingTime";
-            ParkingTime.ReadOnly = true;
-            ParkingTime.Width = 175;
-            // 
-            // IdentityGroup
-            // 
-            IdentityGroup.HeaderText = "Loại";
-            IdentityGroup.Name = "IdentityGroup";
-            IdentityGroup.ReadOnly = true;
-            IdentityGroup.Width = 73;
-            // 
-            // WarehouseType
-            // 
-            WarehouseType.HeaderText = "Phân Loại";
-            WarehouseType.Name = "WarehouseType";
-            WarehouseType.ReadOnly = true;
-            WarehouseType.Width = 116;
-            // 
-            // WarehouseCode
-            // 
-            WarehouseCode.HeaderText = "Số phiếu xuất";
-            WarehouseCode.Name = "WarehouseCode";
-            WarehouseCode.ReadOnly = true;
-            WarehouseCode.Width = 146;
-            // 
-            // Charge
-            // 
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
-            Charge.DefaultCellStyle = dataGridViewCellStyle3;
-            Charge.HeaderText = "Phí";
-            Charge.Name = "Charge";
-            Charge.ReadOnly = true;
-            Charge.Width = 66;
-            // 
-            // IdentityCode
-            // 
-            IdentityCode.HeaderText = "Vé Xe";
-            IdentityCode.Name = "IdentityCode";
-            IdentityCode.ReadOnly = true;
-            IdentityCode.Width = 83;
-            // 
-            // UserIn
-            // 
-            UserIn.HeaderText = "Người Dùng Vào";
-            UserIn.Name = "UserIn";
-            UserIn.ReadOnly = true;
-            UserIn.Width = 169;
-            // 
-            // UserOut
-            // 
-            UserOut.HeaderText = "Người Dùng Ra";
-            UserOut.Name = "UserOut";
-            UserOut.ReadOnly = true;
-            UserOut.Width = 159;
-            // 
-            // InvoiceTemplate
-            // 
-            InvoiceTemplate.HeaderText = "Mẫu hóa đơn";
-            InvoiceTemplate.Name = "InvoiceTemplate";
-            InvoiceTemplate.ReadOnly = true;
-            InvoiceTemplate.Width = 142;
-            // 
-            // InvoiceNo
-            // 
-            InvoiceNo.HeaderText = "Số hóa đơn";
-            InvoiceNo.Name = "InvoiceNo";
-            InvoiceNo.ReadOnly = true;
-            InvoiceNo.Width = 127;
-            // 
-            // LaneIn
-            // 
-            LaneIn.HeaderText = "Làn Vào";
-            LaneIn.Name = "LaneIn";
-            LaneIn.ReadOnly = true;
-            LaneIn.Width = 101;
-            // 
-            // LaneOut
-            // 
-            LaneOut.HeaderText = "Làn Ra";
-            LaneOut.Name = "LaneOut";
-            LaneOut.ReadOnly = true;
-            LaneOut.Width = 91;
-            // 
-            // NoteBSX
-            // 
-            NoteBSX.HeaderText = "Ghi chú BSX";
-            NoteBSX.Name = "NoteBSX";
-            NoteBSX.ReadOnly = true;
-            NoteBSX.Width = 132;
-            // 
-            // note_3rd_1
-            // 
-            note_3rd_1.HeaderText = "Ghi chú chặn kích xe";
-            note_3rd_1.Name = "note_3rd_1";
-            note_3rd_1.ReadOnly = true;
-            note_3rd_1.Width = 198;
-            // 
-            // note_3rd_2
-            // 
-            note_3rd_2.HeaderText = "Ghi chú DVHT";
-            note_3rd_2.Name = "note_3rd_2";
-            note_3rd_2.ReadOnly = true;
-            note_3rd_2.Width = 147;
-            // 
-            // note_3rd_3
-            // 
-            note_3rd_3.HeaderText = "Người cho phép ra";
-            note_3rd_3.Name = "note_3rd_3";
-            note_3rd_3.ReadOnly = true;
-            note_3rd_3.Width = 184;
-            // 
-            // Column9
-            // 
-            Column9.HeaderText = "physicalFileIdIns";
-            Column9.Name = "Column9";
-            Column9.ReadOnly = true;
-            Column9.Visible = false;
-            Column9.Width = 154;
-            // 
-            // Column14
-            // 
-            Column14.HeaderText = "physicalIdOuts";
-            Column14.Name = "Column14";
-            Column14.ReadOnly = true;
-            Column14.Visible = false;
-            Column14.Width = 143;
-            // 
-            // pending_invoice_id
-            // 
-            pending_invoice_id.HeaderText = "pendingId";
-            pending_invoice_id.Name = "pending_invoice_id";
-            pending_invoice_id.ReadOnly = true;
-            pending_invoice_id.Visible = false;
-            pending_invoice_id.Width = 111;
-            // 
-            // invoice_id
-            // 
-            invoice_id.HeaderText = "invoiceId";
-            invoice_id.Name = "invoice_id";
-            invoice_id.ReadOnly = true;
-            invoice_id.Visible = false;
-            invoice_id.Width = 103;
             // 
             // lblEndTime
             // 
@@ -841,6 +638,209 @@ namespace iParkingv5_window.Forms.ReportForms
             // toolTip1
             // 
             toolTip1.IsBalloon = true;
+            // 
+            // id
+            // 
+            id.HeaderText = "id";
+            id.Name = "id";
+            id.ReadOnly = true;
+            id.Visible = false;
+            id.Width = 37;
+            // 
+            // eventinid
+            // 
+            eventinid.HeaderText = "eventInId";
+            eventinid.Name = "eventinid";
+            eventinid.ReadOnly = true;
+            eventinid.Visible = false;
+            eventinid.Width = 95;
+            // 
+            // Column1
+            // 
+            Column1.HeaderText = "STT";
+            Column1.Name = "Column1";
+            Column1.ReadOnly = true;
+            Column1.Width = 68;
+            // 
+            // PlateIn
+            // 
+            PlateIn.HeaderText = "Biển Số Vào";
+            PlateIn.Name = "PlateIn";
+            PlateIn.ReadOnly = true;
+            PlateIn.Width = 131;
+            // 
+            // PlateOut
+            // 
+            PlateOut.HeaderText = "Biển Số Ra";
+            PlateOut.Name = "PlateOut";
+            PlateOut.ReadOnly = true;
+            PlateOut.Width = 121;
+            // 
+            // vehicle_reagion_type
+            // 
+            vehicle_reagion_type.HeaderText = "Xe VN/TQ";
+            vehicle_reagion_type.Name = "vehicle_reagion_type";
+            vehicle_reagion_type.ReadOnly = true;
+            vehicle_reagion_type.Width = 115;
+            // 
+            // TimeIn
+            // 
+            TimeIn.HeaderText = "Giờ Vào";
+            TimeIn.Name = "TimeIn";
+            TimeIn.ReadOnly = true;
+            // 
+            // TimeOut
+            // 
+            TimeOut.HeaderText = "Giờ Ra";
+            TimeOut.Name = "TimeOut";
+            TimeOut.ReadOnly = true;
+            TimeOut.Width = 90;
+            // 
+            // ParkingTime
+            // 
+            ParkingTime.HeaderText = "Thời Gian Lưu Bãi";
+            ParkingTime.Name = "ParkingTime";
+            ParkingTime.ReadOnly = true;
+            ParkingTime.Width = 175;
+            // 
+            // IdentityGroup
+            // 
+            IdentityGroup.HeaderText = "Loại";
+            IdentityGroup.Name = "IdentityGroup";
+            IdentityGroup.ReadOnly = true;
+            IdentityGroup.Width = 73;
+            // 
+            // WarehouseType
+            // 
+            WarehouseType.HeaderText = "Phân Loại";
+            WarehouseType.Name = "WarehouseType";
+            WarehouseType.ReadOnly = true;
+            WarehouseType.Width = 116;
+            // 
+            // WarehouseCode
+            // 
+            WarehouseCode.HeaderText = "Số phiếu xuất";
+            WarehouseCode.Name = "WarehouseCode";
+            WarehouseCode.ReadOnly = true;
+            WarehouseCode.Width = 146;
+            // 
+            // Charge
+            // 
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
+            Charge.DefaultCellStyle = dataGridViewCellStyle3;
+            Charge.HeaderText = "Phí";
+            Charge.Name = "Charge";
+            Charge.ReadOnly = true;
+            Charge.Width = 66;
+            // 
+            // IdentityCode
+            // 
+            IdentityCode.HeaderText = "Vé Xe";
+            IdentityCode.Name = "IdentityCode";
+            IdentityCode.ReadOnly = true;
+            IdentityCode.Width = 83;
+            // 
+            // UserIn
+            // 
+            UserIn.HeaderText = "Người Dùng Vào";
+            UserIn.Name = "UserIn";
+            UserIn.ReadOnly = true;
+            UserIn.Width = 169;
+            // 
+            // UserOut
+            // 
+            UserOut.HeaderText = "Người Dùng Ra";
+            UserOut.Name = "UserOut";
+            UserOut.ReadOnly = true;
+            UserOut.Width = 159;
+            // 
+            // InvoiceTemplate
+            // 
+            InvoiceTemplate.HeaderText = "Mẫu hóa đơn";
+            InvoiceTemplate.Name = "InvoiceTemplate";
+            InvoiceTemplate.ReadOnly = true;
+            InvoiceTemplate.Width = 142;
+            // 
+            // InvoiceNo
+            // 
+            InvoiceNo.HeaderText = "Số hóa đơn";
+            InvoiceNo.Name = "InvoiceNo";
+            InvoiceNo.ReadOnly = true;
+            InvoiceNo.Width = 127;
+            // 
+            // LaneIn
+            // 
+            LaneIn.HeaderText = "Làn Vào";
+            LaneIn.Name = "LaneIn";
+            LaneIn.ReadOnly = true;
+            LaneIn.Width = 101;
+            // 
+            // LaneOut
+            // 
+            LaneOut.HeaderText = "Làn Ra";
+            LaneOut.Name = "LaneOut";
+            LaneOut.ReadOnly = true;
+            LaneOut.Width = 91;
+            // 
+            // NoteBSX
+            // 
+            NoteBSX.HeaderText = "Ghi chú BSX";
+            NoteBSX.Name = "NoteBSX";
+            NoteBSX.ReadOnly = true;
+            NoteBSX.Width = 132;
+            // 
+            // note_3rd_1
+            // 
+            note_3rd_1.HeaderText = "Ghi chú chặn kích xe";
+            note_3rd_1.Name = "note_3rd_1";
+            note_3rd_1.ReadOnly = true;
+            note_3rd_1.Width = 198;
+            // 
+            // note_3rd_2
+            // 
+            note_3rd_2.HeaderText = "Ghi chú DVHT";
+            note_3rd_2.Name = "note_3rd_2";
+            note_3rd_2.ReadOnly = true;
+            note_3rd_2.Width = 147;
+            // 
+            // note_3rd_3
+            // 
+            note_3rd_3.HeaderText = "Người cho phép ra";
+            note_3rd_3.Name = "note_3rd_3";
+            note_3rd_3.ReadOnly = true;
+            note_3rd_3.Width = 184;
+            // 
+            // Column9
+            // 
+            Column9.HeaderText = "physicalFileIdIns";
+            Column9.Name = "Column9";
+            Column9.ReadOnly = true;
+            Column9.Visible = false;
+            Column9.Width = 168;
+            // 
+            // Column14
+            // 
+            Column14.HeaderText = "physicalIdOuts";
+            Column14.Name = "Column14";
+            Column14.ReadOnly = true;
+            Column14.Visible = false;
+            Column14.Width = 154;
+            // 
+            // pending_invoice_id
+            // 
+            pending_invoice_id.HeaderText = "pendingId";
+            pending_invoice_id.Name = "pending_invoice_id";
+            pending_invoice_id.ReadOnly = true;
+            pending_invoice_id.Visible = false;
+            pending_invoice_id.Width = 120;
+            // 
+            // invoice_id
+            // 
+            invoice_id.HeaderText = "invoiceId";
+            invoice_id.Name = "invoice_id";
+            invoice_id.ReadOnly = true;
+            invoice_id.Visible = false;
+            invoice_id.Width = 112;
             // 
             // frmReportInOut
             // 

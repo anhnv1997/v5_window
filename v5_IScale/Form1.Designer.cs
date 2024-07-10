@@ -106,8 +106,8 @@
             hệThốngToolStripMenuItem = new ToolStripMenuItem();
             thoátToolStripMenuItem = new ToolStripMenuItem();
             báoCáoToolStripMenuItem = new ToolStripMenuItem();
-            xeCóGửiHóaĐơnToolStripMenuItem = new ToolStripMenuItem();
-            xeKhôngGửiHóaĐơnToolStripMenuItem = new ToolStripMenuItem();
+            tsmiScaleReport = new ToolStripMenuItem();
+            tsmiScaleDetailReport = new ToolStripMenuItem();
             panelAppStatus = new Panel();
             lblLoadingStatus = new Label();
             lblAppVersion = new Label();
@@ -627,7 +627,7 @@
             btnPrint.TextAlign = ContentAlignment.MiddleRight;
             btnPrint.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnPrint.UseVisualStyleBackColor = true;
-            btnPrint.Click += btnPrint_Click;
+            btnPrint.Click += BtnPrintScale_Click;
             // 
             // tableLayoutPanel4
             // 
@@ -656,7 +656,7 @@
             btnInvoice.TabIndex = 0;
             btnInvoice.Text = "In hóa đơn";
             btnInvoice.UseVisualStyleBackColor = true;
-            btnInvoice.Click += btnInvoice_Click;
+            btnInvoice.Click += btnPrintScaleOffline_Click;
             // 
             // btnPrintInternetInvoice
             // 
@@ -669,7 +669,7 @@
             btnPrintInternetInvoice.TabIndex = 0;
             btnPrintInternetInvoice.Text = "In hóa đơn (Internet)";
             btnPrintInternetInvoice.UseVisualStyleBackColor = true;
-            btnPrintInternetInvoice.Click += btnPrintInternetInvoice_Click;
+            btnPrintInternetInvoice.Click += btnPrintScaleOnline_Click;
             // 
             // panel3
             // 
@@ -912,25 +912,24 @@
             // 
             // báoCáoToolStripMenuItem
             // 
-            báoCáoToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { xeCóGửiHóaĐơnToolStripMenuItem, xeKhôngGửiHóaĐơnToolStripMenuItem });
+            báoCáoToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { tsmiScaleReport, tsmiScaleDetailReport });
             báoCáoToolStripMenuItem.Name = "báoCáoToolStripMenuItem";
             báoCáoToolStripMenuItem.Size = new Size(76, 25);
             báoCáoToolStripMenuItem.Text = "Báo cáo";
             // 
-            // xeCóGửiHóaĐơnToolStripMenuItem
+            // tsmiScaleReport
             // 
-            xeCóGửiHóaĐơnToolStripMenuItem.Name = "xeCóGửiHóaĐơnToolStripMenuItem";
-            xeCóGửiHóaĐơnToolStripMenuItem.Size = new Size(233, 26);
-            xeCóGửiHóaĐơnToolStripMenuItem.Text = "Báo cáo sự kiện cân";
-            xeCóGửiHóaĐơnToolStripMenuItem.Click += xeCóGửiHóaĐơnToolStripMenuItem_Click;
+            tsmiScaleReport.Name = "tsmiScaleReport";
+            tsmiScaleReport.Size = new Size(202, 26);
+            tsmiScaleReport.Text = "Báo cáo tổng hợp";
+            tsmiScaleReport.Click += tsmiScaleReport_Click;
             // 
-            // xeKhôngGửiHóaĐơnToolStripMenuItem
+            // tsmiScaleDetailReport
             // 
-            xeKhôngGửiHóaĐơnToolStripMenuItem.Name = "xeKhôngGửiHóaĐơnToolStripMenuItem";
-            xeKhôngGửiHóaĐơnToolStripMenuItem.Size = new Size(233, 26);
-            xeKhôngGửiHóaĐơnToolStripMenuItem.Text = "Xe không gửi hóa đơn";
-            xeKhôngGửiHóaĐơnToolStripMenuItem.Visible = false;
-            xeKhôngGửiHóaĐơnToolStripMenuItem.Click += xeKhôngGửiHóaĐơnToolStripMenuItem_Click;
+            tsmiScaleDetailReport.Name = "tsmiScaleDetailReport";
+            tsmiScaleDetailReport.Size = new Size(202, 26);
+            tsmiScaleDetailReport.Text = "Báo cáo chi tiết";
+            tsmiScaleDetailReport.Click += tsmiScaleDetailReport_Click;
             // 
             // panelAppStatus
             // 
@@ -1096,8 +1095,8 @@
         private System.Windows.Forms.Timer timerUpdateControllerConnection;
         private Label label9;
         private Label lblMoney;
-        private ToolStripMenuItem xeCóGửiHóaĐơnToolStripMenuItem;
-        private ToolStripMenuItem xeKhôngGửiHóaĐơnToolStripMenuItem;
+        private ToolStripMenuItem tsmiScaleReport;
+        private ToolStripMenuItem tsmiScaleDetailReport;
         private DataGridViewTextBoxColumn Column13;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;

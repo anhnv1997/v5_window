@@ -1,9 +1,10 @@
 ﻿using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.LprDetecter.LprDetecters;
 using iParkingv5.Objects;
+using iParkingv5.Objects.Datas.Devices;
+using iParkingv5.Objects.Datas.parking;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv6.ApiManager.KzParkingv3Apis;
-using iParkingv6.Objects.Datas;
 using Kztek.Tool.NetworkTools;
 using Kztek.Tools;
 using Minio;
@@ -298,7 +299,7 @@ namespace iParkingv5_window.Forms.SystemForms
 
         private async Task<bool> LoadCustomerGroup()
         {
-            StaticPool.customerGroupCollection = new iParkingv5.Objects.Datas.CustomerGroupCollection();
+            StaticPool.customerGroupCollection = new CustomerGroupCollection();
 
             //var customerGroups = await KzParkingApiHelper.GetAllCustomerGroups();
             var customerGroups = (await AppData.ApiServer.GetCustomerGroupsAsync()).Item1;

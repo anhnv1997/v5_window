@@ -1,5 +1,4 @@
-﻿using iParkingv6.Objects.Datas;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Kztek.Tool.NetworkTools;
 using System.Net.NetworkInformation;
+using iParkingv5.Objects.Datas.Devices;
 
 namespace v5MonitorApp.Forms.DataForms
 {

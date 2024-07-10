@@ -1,6 +1,6 @@
 ﻿using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.Objects;
-using iParkingv5.Objects.Datas;
+using iParkingv5.Objects.Datas.payments;
 using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.EventDatas;
 using iParkingv5.Objects.Invoices;

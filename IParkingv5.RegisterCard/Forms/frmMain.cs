@@ -1,8 +1,8 @@
 ﻿using iParkingv5.Controller;
 using iParkingv5.Objects.Databases;
-using iParkingv5.Objects.Datas;
+using iParkingv5.Objects.Datas.Devices;
+using iParkingv5.Objects.Datas.parking;
 using iParkingv6.ApiManager.KzParkingv3Apis;
-using iParkingv6.Objects.Datas;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

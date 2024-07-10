@@ -127,7 +127,7 @@ namespace v5_IScale
                 MinioHelper.AccessKey = StaticPool.serverConfig.MinioServerUsername;
                 MinioHelper.SecretKey = StaticPool.serverConfig.MinioServerPassword;
                 KzParkingApiHelper.server = StaticPool.serverConfig.ParkingServerUrl;
-                KzParkingv5ApiHelper.server = StaticPool.serverConfig.ParkingServerUrl;
+                KzParkingv5BaseApi.server = StaticPool.serverConfig.ParkingServerUrl;
 
                 StaticPool.sharedPreferences = NewtonSoftHelper<SharedPreferences>.DeserializeObjectFromPath(PathManagement.sharedPreferencesPath()) ?? new SharedPreferences();
             }

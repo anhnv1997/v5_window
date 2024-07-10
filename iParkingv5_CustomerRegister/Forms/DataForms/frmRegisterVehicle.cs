@@ -1,7 +1,7 @@
 ﻿using IPaking.Ultility;
 using iPakrkingv5.Controls;
 using iPakrkingv5.Controls.Usercontrols.BuildControls;
-using iParkingv5.Objects.Datas;
+using iParkingv5.Objects.Datas.parking;
 using iParkingv5_window;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;

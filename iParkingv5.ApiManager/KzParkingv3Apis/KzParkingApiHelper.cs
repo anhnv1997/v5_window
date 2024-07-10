@@ -1,7 +1,6 @@
 ﻿using iParkingv5.Objects.Datas;
 using iParkingv5.Objects.EventDatas;
 using iParkingv6.ApiManager.KzParkingv3Apis.Responses;
-using iParkingv6.Objects.Datas;
 using Kztek.Tools;
 using System;
 using System.Collections.Generic;
@@ -17,11 +16,21 @@ using iParkingv5.ApiManager;
 using System.Data;
 using iParkingv5.Objects.warehouse;
 using static iParkingv5.Objects.warehouse.TransactionType;
+using iParkingv5.Objects.Reporting;
+using iParkingv5.Objects.Datas.Devices;
+using iParkingv5.Objects.Datas.parking;
+using iParkingv5.Objects.Datas.system;
 
 namespace iParkingv6.ApiManager.KzParkingv3Apis
 {
     public class KzParkingApiHelper
     {
+        public class BaseReport<T> where T : class
+        {
+            public Paging paging { get; set; }
+            public MetaData metaData { get; set; }
+            public List<T> data { get; set; }
+        }
         public static string server = "http://14.160.26.45:13000";
         public static string username = "admin";
         public static string password = "123456";
@@ -708,26 +717,7 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         #endregion
 
         #region SUMARY
-        public class SumaryData
-        {
-            public int revenue { get; set; }
-            public int totalCustomer { get; set; }
-        }
-        public class SumaryCountEvent
-        {
-            /// <summary>
-            /// Số lượng xe đang trong bãi
-            /// </summary>
-            public int countAllEventIn { get; set; } = 0;
-            /// <summary>
-            /// Tổng số xe ra khỏi bãi trong ngày
-            /// </summary>
-            public int totalEventOut { get; set; } = 0;
-            /// <summary>
-            /// Tổng số xe vào bãi trong ngày
-            /// </summary>
-            public int totalVehicleIn { get; set; } = 0;
-        }
+
         public async Task<SumaryCountEvent> SummaryEventAsync()
         {
             StandardlizeServerName();
@@ -773,13 +763,13 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
                 { "Authorization","Bearer " + token  }
             };
 
-            var data = new List<UpdateData>()
+            var data = new List<CommitData>()
             {
-                new UpdateData()
+                new CommitData()
                 {
-                    Value = plate,
-                    Op = "replace",
-                    Path = "/plateNumber"
+                    value = plate,
+                    op = "replace",
+                    path = "/plateNumber"
                 }
             };
 
@@ -961,14 +951,6 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             //}
             return null;
         }
-
-        public class UpdateData
-        {
-            public string Value { get; set; }
-            public string Op { get; set; }
-            public string Path { get; set; }
-        }
-
         #endregion
 
         #region -- EVENT OUT
@@ -988,13 +970,13 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
                 { "Authorization","Bearer " + token  }
             };
 
-            var data = new List<UpdateData>()
+            var data = new List<CommitData>()
             {
-                new UpdateData()
+                new CommitData()
                 {
-                    Value = plate,
-                    Op = "replace",
-                    Path = "/plateNumber"
+                    value = plate,
+                    op = "replace",
+                    path = "/plateNumber"
                 }
             };
 
@@ -1135,192 +1117,18 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             }
             return false;
         }
-        public async Task<iParkingv5.Objects.Datas.PaymentTransaction> CreatePaymentTransaction(AddEventOutResponse eventOut)
+        public async Task<iParkingv5.Objects.Datas.payments.PaymentTransaction> CreatePaymentTransaction(AddEventOutResponse eventOut)
         {
             return null;
         }
 
 
-        public class BaseReport<T> where T : class
-        {
-            public Paging paging { get; set; }
-            public MetaData metaData { get; set; }
-            public List<T> data { get; set; }
-        }
-        public class Paging
-        {
-            public int pageIndex { get; set; }
-            public int pageSize { get; set; }
-            public int totalItem { get; set; }
-            public int totalPage { get; set; }
-        }
-        public class EventInReport
-        {
-            public string id { get; set; }
-            public string identityId { get; set; }
-            public string identityCode { get; set; }
-            public string identityName { get; set; }
 
-            public string laneId { get; set; }
-            public string plateNumber { get; set; }
-            public int status { get; set; }
-            public object lastPaymentUtc { get; set; }
-            public int charge { get; set; }
-            public int paid { get; set; }
-            public int discount { get; set; }
-            public string createdUtc { get; set; }
-            public string createdBy { get; set; }
-            public string fileKeys { get; set; }
-            [JsonIgnore]
-            public DateTime? DatetimeIn
-            {
-                get
-                {
-                    try
-                    {
-                        if (createdUtc.Contains("T"))
-                        {
-                            return DateTime.ParseExact(createdUtc.Substring(0, "yyyy-MM-ddTHH:mm:ss".Length), "yyyy-MM-ddTHH:mm:ss", null).AddHours(7);
-                        }
-                        else
-                        {
-                            return DateTime.Parse(createdUtc).AddHours(7);
-                        }
-                    }
-                    catch
-                    {
-                        return null;
-                    }
-                }
-            }
-            public string IdentityGroupId { get; set; }
-            public string CustomerId { get; set; }
-            public string RegisteredVehicleId { get; set; }
-            public string CheckOutValidationStatus { get; set; }
-
-            public string note { get; set; }
-            public string thirdpartynote { get; set; }
-
-            public int TransactionType { get; set; }
-            public string TransactionCode { get; set; }
-            public WarehouseTransaction WarehouseTransaction { get; set; }
-        }
-
-        public class WarehouseTransaction
-        {
-            public TransactionType Type { get; set; }
-            public string Code { get; set; }
-        }
-
-        public class WarehouseWeighing
-        {
-            public int FirstWeight { get; set; }
-            public int LastWeight { get; set; }
-        }
-
-        public class EventOutReport
-        {
-            //Thông tin sự kiện ra
-            public string id { get; set; }
-            public string eventinid { get; set; }
-            public string identityId { get; set; }
-            public string[] fileKeys { get; set; }
-            public string lastPaymentUtc { get; set; }
-            public int discount { get; set; }
-            public int paid { get; set; }
-            public bool free { get; set; }
-            public string CustomerId { get; set; }
-            public string RegisteredVehicleId { get; set; }
-
-            //Thông tin sự kiện vào
-            public string eventInIdentityId { get; set; }
-            public string[] eventInFileKeys { get; set; }
-
-            public string eventInCreatedUtc { get; set; }
-            public string createdUtc { get; set; }
-            public string ParkingTime()
-            {
-                TimeSpan ParkingTime = (TimeSpan)(DateTime.Parse(createdUtc) - DateTime.Parse(eventInCreatedUtc))!;
-                string formattedTime = "";
-                if (ParkingTime.TotalDays > 1)
-                {
-                    formattedTime = string.Format("{0} ngày {1} giờ {2} phút", ParkingTime.Days, ParkingTime.Hours, ParkingTime.Minutes);
-                }
-                else
-                {
-                    formattedTime = string.Format("{0} giờ {1} phút", ParkingTime.Hours, ParkingTime.Minutes);
-                }
-                return formattedTime;
-            }
-            [JsonIgnore]
-            public DateTime? DatetimeOut
-            {
-                get
-                {
-                    try
-                    {
-                        if (createdUtc.Contains("T"))
-                        {
-                            return DateTime.ParseExact(createdUtc.Substring(0, "yyyy-MM-ddTHH:mm:ss".Length), "yyyy-MM-ddTHH:mm:ss", null).AddHours(7);
-                        }
-                        else
-                        {
-                            return DateTime.Parse(createdUtc).AddHours(7);
-                        }
-                    }
-                    catch
-                    {
-                        return null;
-                    }
-                }
-            }
-
-            [JsonIgnore]
-            public DateTime? DatetimeIn
-            {
-                get
-                {
-                    try
-                    {
-                        if (eventInCreatedUtc.Contains("T"))
-                        {
-                            return DateTime.ParseExact(eventInCreatedUtc.Substring(0, "yyyy-MM-ddTHH:mm:ss".Length), "yyyy-MM-ddTHH:mm:ss", null).AddHours(7);
-                        }
-                        else
-                        {
-                            return DateTime.Parse(eventInCreatedUtc).AddHours(7);
-                        }
-                    }
-                    catch
-                    {
-                        return null;
-                    }
-                }
-            }
-            public string IdentityName { get; set; }
-            public string IdentityGroupId { get; set; }
-            public string eventInPlateNumber { get; set; }
-            public string plateNumber { get; set; }
-            public int TransactionType { get; set; }
-            public string TransactionCode { get; set; }
-            public int charge { get; set; }
-            public string eventInCreatedBy { get; set; }
-            public string createdBy { get; set; }
-            public string eventInLaneId { get; set; }
-            public string laneId { get; set; }
-
-            public string InvoiceTemplate { get; set; }
-            public string InvoiceNo { get; set; }
-
-            public string note { get; set; }
-            public string thirdpartynote { get; set; }
-        }
-
-      
+    
         #endregion
 
         #region ABNORMAL
-        public async Task<bool> CreateAlarmAsync(string identityId, string laneId, string plate, AbnormalCode abnormalCode,
+        public async Task<bool> CreateAlarmAsync(string identityId, string laneId, string plate, EmAbnormalCode abnormalCode,
                                                         string imageKey, bool isLaneIn, string identityGroupId, string customerId,
                                                         string registerVehicleId, string description)
         {
@@ -1783,7 +1591,7 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             throw new NotImplementedException();
         }
 
-        public Task<SystemConfig> GetSystemConfigAsync()
+        public Task<ParkingSystemConfig> GetSystemConfigAsync()
         {
             throw new NotImplementedException();
         }

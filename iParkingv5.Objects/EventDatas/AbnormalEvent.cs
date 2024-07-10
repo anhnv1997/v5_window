@@ -1,5 +1,5 @@
-﻿using iParkingv5.Objects.Datas;
-using iParkingv6.Objects.Datas;
+﻿using iParkingv5.Objects.Datas.Devices;
+using iParkingv5.Objects.Datas.parking;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace iParkingv5.Objects.EventDatas
         public string LaneId { get; set; }
         public string CreatedBy { get; set; }
         public string PlateNumber { get; set; }
-        public AbnormalCode AbnormalCode { get; set; }
+        public EmAbnormalCode AbnormalCode { get; set; }
         public string Description { get; set; }
         public bool Deleted { get; set; }
         public string CreatedUtc { get; set; }
@@ -55,22 +55,22 @@ namespace iParkingv5.Objects.EventDatas
         {
             switch (this.AbnormalCode)
             {
-                case AbnormalCode.IdentityNotExist:
+                case EmAbnormalCode.IdentityNotExist:
                     return "Mã đinh danh không tồn tại";
-                case AbnormalCode.InvalidPlateNumber:
+                case EmAbnormalCode.InvalidPlateNumber:
                     return "Biển số không hợp lệ";
-                case AbnormalCode.InvalidLane:
+                case EmAbnormalCode.InvalidLane:
                     return "Làn không hợp lệ";
-                case AbnormalCode.OpenBarrierByKeyboard:
+                case EmAbnormalCode.OpenBarrierByKeyboard:
                     return "Mở barrie bằng phím tắt";
-                case AbnormalCode.OpenBarrierByButton:
+                case EmAbnormalCode.OpenBarrierByButton:
                     return "Mở barrie bằng nút cứng";
-                case AbnormalCode.ManualEvent:
+                case EmAbnormalCode.ManualEvent:
                     return "Ghi vé thủ công";
-                case AbnormalCode.InvalidUser:
+                case EmAbnormalCode.InvalidUser:
                     return "Người dùng không tồn tại";
                 default:
-                    return AbnormalCode.InvalidUser.ToString();
+                    return EmAbnormalCode.InvalidUser.ToString();
             }
         }
 

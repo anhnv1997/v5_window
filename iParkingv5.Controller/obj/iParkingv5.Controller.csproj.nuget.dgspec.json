@@ -5,7 +5,7 @@
   },
   "projects": {
     "E:\\2.Workspace\\2.Projects\\2023\\3.Lotte_TayHo\\1.source\\iPGS_2023_NET6\\Kztek.Tool\\Kztek.Tool.csproj": {
-      "version": "1.0.0.1",
+      "version": "1.0.0.2",
       "restore": {
         "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\3.Lotte_TayHo\\1.source\\iPGS_2023_NET6\\Kztek.Tool\\Kztek.Tool.csproj",
         "projectName": "Kztek.Tool",
@@ -254,7 +254,7 @@
       }
     },
     "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj": {
-      "version": "1.0.0.5",
+      "version": "1.0.0.6",
       "restore": {
         "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj",
         "projectName": "iParkingv5.Objects",

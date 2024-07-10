@@ -101,7 +101,7 @@ namespace IParkingv5.RegisterCard
                 this.Hide();
                 //KzParkingApiHelper.token = loginResult.TokenResponse.AccessToken;
                 KzParkingv5ApiHelper.token = loginResult.TokenResponse.AccessToken;
-                await AppData.ApiServer.GetUserInfor();
+                await AppData.ApiServer.GetUserInforAsync();
                 frmMain frm = new()
                 {
                     Owner = this
@@ -245,7 +245,7 @@ namespace IParkingv5.RegisterCard
                     KzParkingv5ApiHelper.refresh_token = refreshToken.RefreshToken;
                     timerRefreshToken.Enabled = true;
                     this.Hide();
-                    await AppData.ApiServer.GetUserInfor();
+                    await AppData.ApiServer.GetUserInforAsync();
                     frmMain frm = new()
                     {
                         Owner = this

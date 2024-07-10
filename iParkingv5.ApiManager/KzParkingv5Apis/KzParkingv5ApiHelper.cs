@@ -1,14 +1,16 @@
 ﻿using iParkingv5.Objects;
 using iParkingv5.Objects.Datas;
+using iParkingv5.Objects.Datas.Devices;
+using iParkingv5.Objects.Datas.parking;
+using iParkingv5.Objects.Datas.payments;
+using iParkingv5.Objects.Datas.system;
 using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.EventDatas;
 using iParkingv5.Objects.Invoices;
 using iParkingv5.Objects.Reporting;
-using iParkingv5.Objects.system;
 using iParkingv5.Objects.warehouse;
 using iParkingv6.ApiManager;
 using iParkingv6.ApiManager.KzParkingv3Apis;
-using iParkingv6.Objects.Datas;
 using Kztek.Tool;
 using Kztek.Tools;
 using Newtonsoft.Json;
@@ -17,219 +19,28 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Threading;
 using System.Threading.Tasks;
 using static iParkingv5.ApiManager.KzParkingv5Apis.Filter;
 using static iParkingv5.Objects.warehouse.TransactionType;
-using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper;
-using PaymentTransaction = iParkingv5.Objects.Datas.PaymentTransaction;
+using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5BaseApi;
+using PaymentTransaction = iParkingv5.Objects.Datas.payments.PaymentTransaction;
+using iParkingv5.ApiManager.KzParkingv5Apis;
 
 namespace iParkingv5.ApiManager.KzParkingv5Apis
 {
     public class KzParkingv5ApiHelper : iParkingApi
     {
-        #region SubClass
-        
-        #endregion End SubClass
-
-        #region Properties
-        public static string server = "http://14.160.26.45:5000";
-        public static string username = "admin";
-        public static string password = "123456";
-        public static int timeOut = 10000;
-        public static string refresh_token = "";
-        public static string client_id = "";
-        public static int expireTime = 1000;
-        public static string token = string.Empty;
-        public static CancellationTokenSource cts;
-        #endregion End Properties
-
-        #region Base
-        #region GET
-        /// <summary>
-        /// Lấy tất cả dữ liệu lưu trong database 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="objectType"></param>
-        /// <returns></returns>
-        public static async Task<Tuple<List<T>, string>> GetAllObjectAsync<T>(
-            KzParkingv5ApiUrlManagement.EmParkingv5ObjectType objectType) where T : class
-        {
-            StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.SearchObjectDataRoute(objectType);
-
-            var filter = Filter.CreateFilter(new FilterModel());
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-            {
-                { "Authorization","Bearer " + token  }
-            };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null,
-                                                                   timeOut, RestSharp.Method.Post);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                KzParkingv5BaseResponse<List<T>> kzBaseResponse =
-                    NewtonSoftHelper<KzParkingv5BaseResponse<List<T>>>.GetBaseResponse(response.Item1);
-                if (kzBaseResponse == null)
-                {
-                    return Tuple.Create<List<T>, string>(null, "Error Convert Json Data" + response.Item1);
-                }
-                if (kzBaseResponse.data == null)
-                {
-                    return Tuple.Create<List<T>, string>(null, kzBaseResponse.detailCode);
-                }
-                return Tuple.Create<List<T>, string>(kzBaseResponse.data, kzBaseResponse.detailCode);
-            }
-            return Tuple.Create<List<T>, string>(null, "Empty Data");
-        }
-
-        /// <summary>
-        /// Lấy bản ghi có điều kiện = điều kiện tìm kiếm
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="objectType"></param>
-        /// <param name="emPageSearchType"></param>
-        /// <param name="emPageSearchKey"></param>
-        /// <param name="searchValue"></param>
-        /// <returns></returns>
-        public static async Task<Tuple<T, string>> GetTop1ObjectAsync<T>(
-            KzParkingv5ApiUrlManagement.EmParkingv5ObjectType objectType,
-            EmPageSearchType emPageSearchType, EmPageSearchKey emPageSearchKey, string searchValue) where T : class
-        {
-            StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.SearchObjectDataRoute(objectType);
-
-            var filter = Filter.CreateFilter(new FilterModel(emPageSearchKey, emPageSearchType, searchValue, EmOperation._eq));
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-            {
-                { "Authorization","Bearer " + token  }
-            };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null,
-                                                                   timeOut, RestSharp.Method.Post);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                KzParkingv5BaseResponse<List<T>> kzBaseResponse =
-                    NewtonSoftHelper<KzParkingv5BaseResponse<List<T>>>.GetBaseResponse(response.Item1);
-                if (kzBaseResponse == null)
-                {
-                    return Tuple.Create<T, string>(null, "Error Convert Json Data" + response.Item1);
-                }
-                if (kzBaseResponse.data == null)
-                {
-                    return Tuple.Create<T, string>(null, kzBaseResponse.detailCode);
-                }
-                return Tuple.Create<T, string>(kzBaseResponse.data.Count > 0 ? kzBaseResponse.data[0] : null, kzBaseResponse.detailCode);
-            }
-            return Tuple.Create<T, string>(null, "Empty Data");
-        }
-
-        /// <summary>
-        /// Lấy bản ghi có điều kiện = điều kiện tìm kiếm
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="objectType"></param>
-        /// <param name="emPageSearchType"></param>
-        /// <param name="emPageSearchKey"></param>
-        /// <param name="searchValue"></param>
-        /// <returns></returns>
-        public static async Task<Tuple<List<T>, string>> GetObjectByConditionAsync<T>(
-            KzParkingv5ApiUrlManagement.EmParkingv5ObjectType objectType,
-            EmPageSearchType emPageSearchType, EmPageSearchKey emPageSearchKey, string searchValue, EmOperation operation) where T : class
-        {
-            StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.SearchObjectDataRoute(objectType);
-
-            var filter = Filter.CreateFilter(new FilterModel(emPageSearchKey, emPageSearchType, searchValue, operation));
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-            {
-                { "Authorization","Bearer " + token  }
-            };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null,
-                                                                   timeOut, Method.Post);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                KzParkingv5BaseResponse<List<T>> kzBaseResponse =
-                    NewtonSoftHelper<KzParkingv5BaseResponse<List<T>>>.GetBaseResponse(response.Item1);
-                if (kzBaseResponse == null)
-                {
-                    return Tuple.Create<List<T>, string>(null, "Error Convert Json Data" + response.Item1);
-                }
-                if (kzBaseResponse.data == null)
-                {
-                    return Tuple.Create<List<T>, string>(null, kzBaseResponse.detailCode);
-                }
-                return Tuple.Create<List<T>, string>(kzBaseResponse.data, kzBaseResponse.detailCode);
-            }
-            return Tuple.Create<List<T>, string>(null, "Empty Data");
-        }
-
-        /// <summary>
-        /// Lấy bản ghi có điều kiện = điều kiện tìm kiếm
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public static async Task<Tuple<T, string>> GetObjectDetailByIdAsync<T>(
-            KzParkingv5ApiUrlManagement.EmParkingv5ObjectType objectType, string id) where T : class
-        {
-            StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.GetObjectDataDetailRoute(objectType, id);
-
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-            {
-                { "Authorization","Bearer " + token  }
-            };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null,
-                                                                   timeOut, Method.Get);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                try
-                {
-                    var data = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(response.Item1);
-                    return Tuple.Create<T, string>(data, response.Item2);
-                }
-                catch (Exception e)
-                {
-                    return null;
-                }
-            }
-            return Tuple.Create<T, string>(null, "Empty Data");
-        }
-        #endregion END GET
-
-        #region ADD
-        public static async Task<Tuple<T, string>> CreateObjectAsync<T>(
-                                    KzParkingv5ApiUrlManagement.EmParkingv5ObjectType objectType,
-                                    T obj) where T : class
-        {
-            StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(objectType);
-
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-            {
-                { "Authorization","Bearer " + token  }
-            };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, obj, headers, null,
-                                                                  timeOut, Method.Post);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                var data = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(response.Item1);
-                return Tuple.Create<T, string>(data, response.Item2);
-            }
-            return Tuple.Create<T, string>(null, "Empty Data");
-        }
-
-        #endregion End ADD
-
-        #endregion End Base
+        const string getCompanyInfoRoute = "project/BF195768-4C7F-4F59-A50F-F41AD693BBC0";
+        string getInvoiceConfigRoute => "tenant/" + "00f43ef8-f67b-446a-870a-c219b59c0c4e".ToUpper();
+        string getScaleConfigRoute => "project/" + "4b9acc2f-8758-4bfa-ad08-5b7d47bf67d1".ToUpper();
+        public static string UTCFormat = "yyyy-MM-ddTHH:mm:ss:0000";
 
         #region System Config
-
-   
-
-        public async Task<SystemConfig> GetSystemConfigAsync()
+        //--GET--
+        public async Task<ParkingSystemConfig> GetSystemConfigAsync()
         {
             StandardlizeServerName();
-            string apiUrl = server + "project/BF195768-4C7F-4F59-A50F-F41AD693BBC0";
+            string apiUrl = server + getCompanyInfoRoute;
 
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
@@ -238,12 +49,16 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null,
                                                                   timeOut, Method.Get);
 
-            apiUrl = server + "tenant/" + "00f43ef8-f67b-446a-870a-c219b59c0c4e".ToUpper();
+            apiUrl = server + getInvoiceConfigRoute;
             var response2 = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null,
                                                                timeOut, Method.Get);
+
+            apiUrl = server + getScaleConfigRoute;
+            var response3 = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null,
+                                                                timeOut, Method.Get);
             if (!string.IsNullOrEmpty(response2.Item1))
             {
-                var companyInfo = Newtonsoft.Json.JsonConvert.DeserializeObject<CompanyInfo>(response2.Item1);
+                CompanyInfo companyInfo = JsonConvert.DeserializeObject<CompanyInfo>(response2.Item1);
                 if (companyInfo != null)
                 {
                     StaticPool.TaxCode = companyInfo.companyTax;
@@ -251,23 +66,35 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                     StaticPool.CompanyAddress = companyInfo.companyAddress;
                 }
             }
+            if (!string.IsNullOrEmpty(response3.Item1))
+            {
+                WeighingSystemConfig weighingSystemConfig = JsonConvert.DeserializeObject<WeighingSystemConfig>(response3.Item1);
+                if (weighingSystemConfig != null)
+                {
+                    StaticPool.scaleInvoiceTypeCode = weighingSystemConfig.invoiceTypeCode;
+                    StaticPool.scaleSymbolCode = weighingSystemConfig.invoiceSymbolCode;
+                    StaticPool.scaleTemplateCode = weighingSystemConfig.invoiceTemplateCode;
+                    StaticPool.scaleTaxRate = weighingSystemConfig.taxRate;
+                }
+            }
 
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                var data = Newtonsoft.Json.JsonConvert.DeserializeObject<SystemConfig>(response.Item1);
-                if (data != null)
+                var parkingSystemConfig = JsonConvert.DeserializeObject<ParkingSystemConfig>(response.Item1);
+                if (parkingSystemConfig != null)
                 {
-                    StaticPool.templateCode = data.InvoiceTemplateCode;
-                    StaticPool.invoiceTypeCode = data.InvoiceTypeCode;
-                    StaticPool.symbolCode = data.InvoiceSymbolCode;
-                    StaticPool.TaxRate = data.taxRate;
+                    StaticPool.templateCode = parkingSystemConfig.InvoiceTemplateCode;
+                    StaticPool.invoiceTypeCode = parkingSystemConfig.InvoiceTypeCode;
+                    StaticPool.symbolCode = parkingSystemConfig.InvoiceSymbolCode;
+                    StaticPool.TaxRate = parkingSystemConfig.taxRate;
                     LogHelper.Log(LogHelper.EmLogType.INFOR,
                         LogHelper.EmObjectLogType.System,
                         noi_dung_hanh_dong: $@"Tải hóa đơn điện tử {StaticPool.CompanyName} - {StaticPool.CompanyAddress} - 
                                                                    {StaticPool.TaxCode} - {StaticPool.templateCode} - 
                                                                    {StaticPool.symbolCode} - {StaticPool.TaxRate}");
                 }
-                return data;
+
+                return parkingSystemConfig;
             }
             else
             {
@@ -275,11 +102,11 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
 
         }
+        #endregion END System Config
 
-        #endregion
-
-        #region USER
-        public async Task GetUserInfor()
+        #region USER --OK
+        //--GET--
+        public async Task GetUserInforAsync()
         {
             StandardlizeServerName();
             string apiUrl = server + "user/info";
@@ -304,131 +131,111 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 }
             }
         }
-        public async Task<string> GetFeeCalculate(string dateTimeIn, string dateTimeOut, string identityGroupID)
+        public async Task<Tuple<List<User>, string>> GetAllUsersAsync()
         {
-            StandardlizeServerName();
-            string apiUrl = $"{server}charge/calculate";
-
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-            {
-                { "Authorization","Bearer " + token  }
-            };
-            var data = new
-            {
-                dateTimeIn = dateTimeIn,
-                dateTimeOut = dateTimeOut,
-                identityGroupId = identityGroupID,
-            };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null,
-                                                                  timeOut, Method.Post);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                try
-                {
-                    return response.Item1.ToString();
-                }
-                catch (Exception)
-                {
-                    return "";
-                }
-            }
-            return "";
+            return await KzParkingv5BaseApi.GetAllObjectAsync<User>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.User);
         }
+        #endregion End USER
 
-        public async Task<Tuple<List<User>, string>> GetAllUsers()
-        {
-            return await GetAllObjectAsync<User>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.User);
-        }
-        #endregion
+        #region DEVICE -- OK
 
         #region Computer --OK
+        //--GET--
         public async Task<Tuple<List<Computer>, string>> GetComputersAsync()
         {
-            return await GetAllObjectAsync<Computer>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Computer);
+            return await KzParkingv5BaseApi.GetAllObjectAsync<Computer>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Computer);
         }
         public async Task<Tuple<Computer, string>> GetComputerByIPAsync(string ip)
         {
-            return await GetTop1ObjectAsync<Computer>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Computer,
-                                                      EmPageSearchType.TEXT, EmPageSearchKey.IpAddress, ip);
+            return await KzParkingv5BaseApi.GetTop1ObjectAsync<Computer>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Computer,
+                                                                         EmPageSearchType.TEXT, EmPageSearchKey.IpAddress, ip);
         }
         #endregion End Computer
 
         #region Gate --OK
+        //--GET--
         public async Task<Tuple<List<Gate>, string>> GetGatesAsync()
         {
-            return await GetAllObjectAsync<Gate>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Gate);
+            return await KzParkingv5BaseApi.GetAllObjectAsync<Gate>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Gate);
         }
         public async Task<Tuple<Gate, string>> GetGateByIdAsync(string gateId)
         {
-            return await GetObjectDetailByIdAsync<Gate>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Gate, gateId);
+            return await KzParkingv5BaseApi.GetObjectDetailByIdAsync<Gate>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Gate, gateId);
         }
         #endregion End Gate
 
-        #region Camera
+        #region CAMERA
+        //--GET--
         public async Task<Tuple<List<Camera>, string>> GetCamerasAsync()
         {
-            return await GetAllObjectAsync<Camera>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Camera);
+            return await KzParkingv5BaseApi.GetAllObjectAsync<Camera>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Camera);
         }
         public async Task<Tuple<List<Camera>, string>> GetCameraByComputerIdAsync(string computerId)
         {
-            return await GetObjectByConditionAsync<Camera>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Camera,
+            return await KzParkingv5BaseApi.GetObjectByConditionAsync<Camera>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Camera,
                                                            EmPageSearchType.GUID, EmPageSearchKey.ComputerId, computerId, EmOperation._eq);
         }
-        #endregion End Camera
+        #endregion END CAMERA
 
-        #region Lane
+        #region LANE
+        //--GET--
         public async Task<Tuple<List<Lane>, string>> GetLanesAsync()
         {
-            return await GetAllObjectAsync<Lane>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Lane);
+            return await KzParkingv5BaseApi.GetAllObjectAsync<Lane>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Lane);
         }
         public async Task<Tuple<List<Lane>, string>> GetLaneByComputerIdAsync(string computerId)
         {
-            return await GetObjectByConditionAsync<Lane>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Lane,
+            return await KzParkingv5BaseApi.GetObjectByConditionAsync<Lane>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Lane,
                                                         EmPageSearchType.GUID, EmPageSearchKey.ComputerId, computerId, EmOperation._eq);
 
         }
         public async Task<Tuple<Lane, string>> GetLaneByIdAsync(string laneId)
         {
-            return await GetObjectDetailByIdAsync<Lane>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Lane, laneId);
+            return await KzParkingv5BaseApi.GetObjectDetailByIdAsync<Lane>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Lane, laneId);
         }
-        #endregion End Lane
+        #endregion END LANE
 
-        #region Parking Led
+        #region PARKING LED
+        //--GET--
         public async Task<Tuple<List<Led>, string>> GetLedsAsync()
         {
-            return await GetAllObjectAsync<Led>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Led);
+            return await KzParkingv5BaseApi.GetAllObjectAsync<Led>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Led);
         }
         public async Task<Tuple<List<Led>, string>> GetLedByComputerIdAsync(string computerId)
         {
-            return await GetObjectByConditionAsync<Led>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Led,
+            return await KzParkingv5BaseApi.GetObjectByConditionAsync<Led>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Led,
                                                         EmPageSearchType.GUID, EmPageSearchKey.ComputerId, computerId, EmOperation._eq);
         }
         #endregion End Parking Led
 
-        #region Control Unit
+        #region CONTROL UNIT
         public async Task<Tuple<List<Bdk>, string>> GetControlUnitsAsync()
         {
-            return await GetAllObjectAsync<Bdk>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.ControlUnit);
+            return await KzParkingv5BaseApi.GetAllObjectAsync<Bdk>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.ControlUnit);
         }
         public async Task<Tuple<List<Bdk>, string>> GetControlUnitByComputerIdAsync(string computerId)
         {
-            return await GetObjectByConditionAsync<Bdk>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.ControlUnit,
+            return await KzParkingv5BaseApi.GetObjectByConditionAsync<Bdk>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.ControlUnit,
                                                         EmPageSearchType.GUID, EmPageSearchKey.ComputerId, computerId, EmOperation._eq);
         }
-        #endregion End Control Unit
+        #endregion END CONTROL UNIT
+
+        #endregion END DEVICE
+
+        #region PARKING DATA
 
         #region Vehicle Type
         public async Task<Tuple<VehicleType, string>> GetVehicleTypeByIdAsync(string vehicleTypeId)
         {
-            return await GetObjectDetailByIdAsync<VehicleType>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.VehicleType, vehicleTypeId);
+            return await KzParkingv5BaseApi.GetObjectDetailByIdAsync<VehicleType>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.VehicleType, vehicleTypeId);
         }
         public async Task<Tuple<List<VehicleType>, string>> GetVehicleTypesAsync()
         {
-            return await GetAllObjectAsync<VehicleType>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.VehicleType);
+            return await KzParkingv5BaseApi.GetAllObjectAsync<VehicleType>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.VehicleType);
         }
         public async Task<Tuple<List<VehicleType>, string>> GetVehicleTypesAsync(string keyword)
         {
-            return await GetObjectByConditionAsync<VehicleType>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.VehicleType,
+            return await KzParkingv5BaseApi.GetObjectByConditionAsync<VehicleType>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.VehicleType,
                                                         EmPageSearchType.TEXT, EmPageSearchKey.name, keyword, EmOperation._contains);
 
         }
@@ -437,22 +244,22 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         #region Identity
         public async Task<Tuple<Identity, string>> GetIdentityByIdAsync(string id)
         {
-            return await GetObjectDetailByIdAsync<Identity>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Identity, id);
+            return await KzParkingv5BaseApi.GetObjectDetailByIdAsync<Identity>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Identity, id);
         }
         public async Task<Tuple<List<Identity>, string>> GetIdentitiesAsync(string keyword)
         {
-            return await GetObjectByConditionAsync<Identity>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Identity,
+            return await KzParkingv5BaseApi.GetObjectByConditionAsync<Identity>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Identity,
                                                         EmPageSearchType.TEXT, EmPageSearchKey.name, keyword, EmOperation._contains);
 
         }
         public async Task<Tuple<Identity, string>> GetIdentityByCodeAsync(string code)
         {
-            return await GetTop1ObjectAsync<Identity>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Identity, EmPageSearchType.TEXT,
+            return await KzParkingv5BaseApi.GetTop1ObjectAsync<Identity>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Identity, EmPageSearchType.TEXT,
                                                       EmPageSearchKey.code, code);
         }
         public async Task<Tuple<Identity, string>> CreateIdentityAsync(Identity identity)
         {
-            return await CreateObjectAsync<Identity>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Identity,
+            return await KzParkingv5BaseApi.CreateObjectAsync<Identity>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Identity,
                                                               identity);
         }
         #endregion End Identity
@@ -460,33 +267,33 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         #region Identity Group
         public async Task<Tuple<IdentityGroup, string>> GetIdentityGroupByIdAsync(string id)
         {
-            return await GetObjectDetailByIdAsync<IdentityGroup>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.IdentityGroup, id);
+            return await KzParkingv5BaseApi.GetObjectDetailByIdAsync<IdentityGroup>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.IdentityGroup, id);
         }
         public async Task<Tuple<List<IdentityGroup>, string>> GetIdentityGroupsAsync()
         {
-            return await GetAllObjectAsync<IdentityGroup>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.IdentityGroup);
+            return await KzParkingv5BaseApi.GetAllObjectAsync<IdentityGroup>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.IdentityGroup);
         }
         #endregion End Identity Group
 
         #region Register Vehicle
         public async Task<Tuple<RegisteredVehicle, string>> GetRegistedVehilceByPlateAsync(string plateNumber)
         {
-            return await GetTop1ObjectAsync<RegisteredVehicle>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.RegisteredVehicle, EmPageSearchType.TEXT,
+            return await KzParkingv5BaseApi.GetTop1ObjectAsync<RegisteredVehicle>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.RegisteredVehicle, EmPageSearchType.TEXT,
                                                       EmPageSearchKey.plateNumber, plateNumber);
         }
         public async Task<Tuple<RegisteredVehicle, string>> GetRegistedVehilceByIdAsync(string id)
         {
-            return await GetObjectDetailByIdAsync<RegisteredVehicle>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.RegisteredVehicle, id);
+            return await KzParkingv5BaseApi.GetObjectDetailByIdAsync<RegisteredVehicle>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.RegisteredVehicle, id);
         }
         public async Task<Tuple<List<RegisteredVehicle>, string>> GetRegisterVehiclesAsync(string keyword)
         {
-            return await GetObjectByConditionAsync<RegisteredVehicle>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.RegisteredVehicle,
+            return await KzParkingv5BaseApi.GetObjectByConditionAsync<RegisteredVehicle>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.RegisteredVehicle,
                                                             EmPageSearchType.TEXT, EmPageSearchKey.name, keyword, EmOperation._contains);
 
         }
         public async Task<Tuple<RegisteredVehicle, string>> CreateRegisteredVehicle(RegisteredVehicle registeredVehicle)
         {
-            return await CreateObjectAsync<RegisteredVehicle>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.RegisteredVehicle,
+            return await KzParkingv5BaseApi.CreateObjectAsync<RegisteredVehicle>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.RegisteredVehicle,
                                                               registeredVehicle);
         }
         public async Task<bool> UpdateRegisteredVehicleAsyncById(RegisteredVehicle registeredVehicle)
@@ -516,20 +323,19 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         #region Customer
         public async Task<Tuple<Customer, string>> CreateCustomer(Customer customer)
         {
-            return await CreateObjectAsync<Customer>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Customer,
-                                                             customer);
+            return await KzParkingv5BaseApi.CreateObjectAsync<Customer>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Customer, customer);
         }
         public async Task<Tuple<Customer, string>> GetCustomerByIdAsync(string id)
         {
-            return await GetObjectDetailByIdAsync<Customer>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Customer, id);
+            return await KzParkingv5BaseApi.GetObjectDetailByIdAsync<Customer>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Customer, id);
         }
         public async Task<Tuple<List<Customer>, string>> GetCustomersAsync()
         {
-            return await GetAllObjectAsync<Customer>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Customer);
+            return await KzParkingv5BaseApi.GetAllObjectAsync<Customer>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Customer);
         }
         public async Task<Tuple<List<Customer>, string>> GetCustomersAsync(string keyword)
         {
-            return await GetObjectByConditionAsync<Customer>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Customer,
+            return await KzParkingv5BaseApi.GetObjectByConditionAsync<Customer>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Customer,
                                                             EmPageSearchType.TEXT, EmPageSearchKey.name, keyword, EmOperation._contains);
 
         }
@@ -583,11 +389,16 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         #region Customer Group
         public async Task<Tuple<List<CustomerGroup>, string>> GetCustomerGroupsAsync()
         {
-            return await GetAllObjectAsync<CustomerGroup>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.CustomerGroup);
+            return await KzParkingv5BaseApi.GetAllObjectAsync<CustomerGroup>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.CustomerGroup);
         }
         #endregion End Customer Group
 
-        #region Event In
+        #endregion END PARKING DATA
+
+        #region PARKING PROCESS
+
+        #region EVENT IN
+        //--UPDATE--
         public async Task<bool> UpdateEventInPlateAsync(string eventId, string newPlate, string oldPlate)
         {
             StandardlizeServerName();
@@ -616,6 +427,34 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return false;
         }
+        public static async Task<bool> UpdateBSXNote(string newNote, string eventId, bool isEventIn)
+        {
+            StandardlizeServerName();
+            string apiUrl = isEventIn ?
+                server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/" + eventId :
+                server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/" + eventId
+                ;
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+             {
+                 { "Authorization","Bearer " + token  }
+             };
+            var commitData = new List<CommitData>();
+            commitData.Add(new CommitData()
+            {
+                op = "replace",
+                path = "baseNote",
+                value = newNote
+            });
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, commitData, headers, null, timeOut, Method.Patch);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        //--ADD--
         public async Task<AddEventInResponse> PostCheckInAsync(
             string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null, string _note = "")
         {
@@ -628,26 +467,21 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 return await PostCheckInByIdentityAsync(_laneId, _plateNumber, identity, imageKeys, isForce, registeredVehicle, _note);
             }
         }
-        public async Task<AddEventInResponse> PostCheckInByIdentityAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null, string _note = "")
+        private async Task<AddEventInResponse> PostCheckInByIdentityAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null, string _note = "")
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/identity";
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
-                {
+            {
                 { "Authorization","Bearer " + token  }
-                };
+            };
 
             var data = new
             {
                 laneId = _laneId,
-                //identity = new
-                //{
-                //id = identity.Id,
                 identityCode = identity.Code,
-                //identityGroupId = identity.IdentityGroupId,
                 identityType = 0,
-                //},
                 plateNumber = _plateNumber,
                 force = isForce,
                 fileKeys = new List<string>(),
@@ -673,7 +507,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return null;
         }
-        public async Task<AddEventInResponse> PostCheckInByPlateAsync(string _laneId, string _plateNumber, Identity? identity,
+        private async Task<AddEventInResponse> PostCheckInByPlateAsync(string _laneId, string _plateNumber, Identity? identity,
                                                                       List<string> imageKeys, bool isForce = false,
                                                                       RegisteredVehicle? registeredVehicle = null,
                                                                       string _note = "")
@@ -683,20 +517,14 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
 
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
-                {
+            {
                 { "Authorization","Bearer " + token  }
-                };
+            };
 
             var data = new
             {
                 laneId = _laneId,
                 plateNumber = _plateNumber,
-                //vehicle = new
-                //{
-                //    id = registeredVehicle.Id,
-                //    _plateNumber = registeredVehicle.PlateNumber,
-                //    customerId = registeredVehicle.CustomerId,
-                //},
                 force = isForce,
                 fileKeys = new List<string>(),
                 note = _note
@@ -721,221 +549,10 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return null;
         }
+        #endregion END EVENT IN
 
-      
-        public async Task<List<EventInReport>> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
-                                   string identityGroupId, string vehicleTypeId, string laneId, string user,
-                                   int pageIndex = 1, int pageSize = 100)
-        {
-            StandardlizeServerName();
-            string apiUrl = server + "reporting/parking/event-in";
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-            {
-                { "Authorization","Bearer " + token  }
-            };
-
-
-            var searchData = new SearchEventIn()
-            {
-                keyword = keyword,
-                FromUTC = startTime.ToUniversalTime(),
-                ToUTC = endTime.ToUniversalTime(),
-                identityGroupIds = string.IsNullOrEmpty(identityGroupId) ? new List<string>() : new List<string> { identityGroupId },
-                laneIds = string.IsNullOrEmpty(laneId) ? new List<string>() : new List<string> { laneId },
-                upns = string.IsNullOrEmpty(user) ? new List<string>() : new List<string> { user },
-                pageIndex = 0,
-                pageSize = 10000,
-                paging = true
-            };
-
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, searchData, headers, null, timeOut, RestSharp.Method.Post);
-
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventInReport>>>.GetBaseResponse(response.Item1);
-                if (baseResponse != null)
-                {
-                    return baseResponse.data;
-                }
-            }
-            return null;
-        }
-        #endregion End Event In
-
-        #region Event Out
-        public async Task<string> GetLastEventOutIdentityGroupIdByPlateNumber(string plateNumber)
-        {
-            StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.GetBySqlCmd;
-            string cmd = string.Empty;
-            cmd += $"SELECT * FROM index_event_out WHERE platenumber = '{plateNumber}' ORDER BY createdutc desc";
-
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-            {
-                { "Authorization","Bearer " + token  }
-            };
-            var data = new
-            {
-                query = cmd,
-                fetch_size = 1,
-            };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                // Deserialize JSON to JObject
-                JObject jsonObject = JObject.Parse(response.Item1);
-
-                // Extract columns and rows from JSON
-                JArray columns = (JArray)jsonObject["columns"];
-                JArray rows = (JArray)jsonObject["rows"];
-
-                // Create a new DataTable
-                DataTable dataTable = new DataTable();
-                if (columns != null)
-                {
-                    foreach (JObject column in columns)
-                    {
-                        string columnName = (string)column["name"];
-                        string columnType = (string)column["type"];
-
-                        Type type;
-
-                        switch (columnType)
-                        {
-                            case "text":
-                                type = typeof(string);
-                                break;
-                            case "long":
-                                type = typeof(long);
-                                break;
-                            case "datetime":
-                                type = typeof(DateTime);
-                                break;
-                            default:
-                                type = typeof(string);
-                                break;
-                        }
-
-                        dataTable.Columns.Add(columnName, type);
-                    }
-                    if (rows != null)
-                    {
-                        foreach (JArray row in rows)
-                        {
-                            object[] rowData = row.ToObject<object[]>();
-                            dataTable.Rows.Add(rowData);
-                        }
-
-                    }
-                }
-                if (dataTable.Rows.Count > 0)
-                {
-                    return dataTable.Rows[0]["identitygroupid"].ToString();
-                }
-                else
-                {
-                    return string.Empty;
-                }
-            }
-            return null;
-        }
-
-        public async Task<DataTable> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000)
-        {
-            StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.GetBySqlCmd;
-            string cmd = string.Empty;
-            cmd += "SELECT * FROM index_event_out ";
-            cmd += $"WHERE (createdutc Between '{startTime.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.000Z}' AND '{endTime.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.000Z}') ";
-            if (!string.IsNullOrEmpty(laneId))
-            {
-                cmd += $@"AND (laneid = '{laneId.ToUpper()}' or eventinlaneid = '{laneId.ToUpper()}')  ";
-            }
-            if (!string.IsNullOrEmpty(identityGroupId))
-            {
-                cmd += $@"AND identitygroupid = '{identityGroupId.ToUpper()}' ";
-            }
-            if (!string.IsNullOrEmpty(vehicleTypeId))
-            {
-                cmd += $@"AND vehicletypeid = '{vehicleTypeId.ToUpper()}' ";
-            }
-            if (!string.IsNullOrEmpty(user))
-            {
-                cmd += $@"AND (eventincreatedby = '{user}' or createdby = '{user}' ) ";
-            }
-            if (!string.IsNullOrEmpty(keyword))
-            {
-                cmd += $@"AND ((identityname like '%{keyword.ToUpper()}%' OR platenumber like '%{keyword.ToUpper()}%' OR identitycode like '%{keyword.ToUpper()}%' OR 
-                                identityname like '%{keyword.ToLower()}%' OR platenumber like '%{keyword.ToLower()}%' OR identitycode like '%{keyword.ToLower()}%') OR
-                               (eventinidentityname like '%{keyword.ToUpper()}%' OR platenumber like '%{keyword.ToUpper()}%' OR eventinidentitycode like '%{keyword.ToUpper()}%' OR
-                                eventinidentityname like '%{keyword.ToLower()}%' OR platenumber like '%{keyword.ToLower()}%' OR eventinidentitycode like '%{keyword.ToLower()}%'
-                                ))";
-            }
-            cmd += "ORDER BY createdutc desc";
-            //Gửi API
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-            {
-                { "Authorization","Bearer " + token  }
-            };
-            var data = new
-            {
-                query = cmd,
-                fetch_size = pageSize,
-            };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                // Deserialize JSON to JObject
-                JObject jsonObject = JObject.Parse(response.Item1);
-
-                // Extract columns and rows from JSON
-                JArray columns = (JArray)jsonObject["columns"];
-                JArray rows = (JArray)jsonObject["rows"];
-
-                // Create a new DataTable
-                DataTable dataTable = new DataTable();
-                if (columns != null)
-                {
-                    foreach (JObject column in columns)
-                    {
-                        string columnName = (string)column["name"];
-                        string columnType = (string)column["type"];
-
-                        Type type;
-
-                        switch (columnType)
-                        {
-                            case "text":
-                                type = typeof(string);
-                                break;
-                            case "long":
-                                type = typeof(long);
-                                break;
-                            case "datetime":
-                                type = typeof(DateTime);
-                                break;
-                            default:
-                                type = typeof(string);
-                                break;
-                        }
-
-                        dataTable.Columns.Add(columnName, type);
-                    }
-                    if (rows != null)
-                    {
-                        foreach (JArray row in rows)
-                        {
-                            object[] rowData = row.ToObject<object[]>();
-                            dataTable.Rows.Add(rowData);
-                        }
-
-                    }
-                }
-                return dataTable;
-            }
-            return null;
-        }
-
+        #region EVENT OUT
+        //--ADD--
         public async Task<AddEventOutResponse> PostCheckOutAsync(string _laneId, string _plateNumber, Identity? identitiy, List<string> imageKeys, bool isForce)
         {
             StandardlizeServerName();
@@ -949,7 +566,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 return await PostCheckOutByIdentityAsync(_laneId, _plateNumber, identitiy, imageKeys, isForce);
             }
         }
-        public async Task<AddEventOutResponse> PostCheckOutByIdentityAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false)
+        private async Task<AddEventOutResponse> PostCheckOutByIdentityAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false)
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/identity";
@@ -994,7 +611,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return null;
         }
-        public async Task<AddEventOutResponse> PostCheckOutByPlateAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null)
+        private async Task<AddEventOutResponse> PostCheckOutByPlateAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null)
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/vehicle";
@@ -1042,6 +659,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             return null;
         }
 
+        //--UPDATE--
         public async Task<bool> UpdateEventOutPlate(string eventId, string newPlate, string oldPlate)
         {
             StandardlizeServerName();
@@ -1092,6 +710,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return false;
         }
+
+        //--DELETE--
         public async Task<bool> CancelCheckOut(string eventOutId)
         {
             StandardlizeServerName();
@@ -1113,9 +733,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return false;
         }
+        #endregion End EVENT OUT
 
-
-       
+        #region PAYMENT
         public async Task<PaymentTransaction> CreatePaymentTransaction(AddEventOutResponse eventOut)
         {
             StandardlizeServerName();
@@ -1145,10 +765,11 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return null;
         }
-        #endregion End Event Out
+        #endregion END PAYMENT
 
         #region Alarm
-        public async Task<bool> CreateAlarmAsync(string identityId, string laneId, string plate, AbnormalCode abnormalCode,
+        //--ADD--
+        public async Task<bool> CreateAlarmAsync(string identityId, string laneId, string plate, EmAbnormalCode abnormalCode,
                                                         string imageKey, bool isLaneIn, string _identityGroupId, string customerId,
                                                         string registerVehicleId, string description)
         {
@@ -1184,6 +805,506 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return false;
         }
+        #endregion End Alarm
+
+        #region WAREHOUSE
+        public async Task<WarehouseService> CreateWarehouseService(string eventInId, string eventOutId, string plate, EmTransactionType type, bool isPrint = false)
+        {
+
+            StandardlizeServerName();
+            string apiUrl = server + "warehouse/transaction";
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            WarehouseServiceInput warehouseService = new WarehouseServiceInput()
+            {
+                type = (int)type,
+                plateNumber = plate,
+                eventInId = eventInId,
+                eventOutId = Guid.Empty,
+                PrintPaper = isPrint,
+            };
+
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, warehouseService, headers, null, timeOut, RestSharp.Method.Post);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                try
+                {
+                    WarehouseService result = NewtonSoftHelper<WarehouseService>.GetBaseResponse(response.Item1);
+                    return result;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+            return null;
+        }
+        #endregion END WAREHOUSE
+
+        #region EInvoice 
+        //--ADD
+        public async Task<InvoiceResponse> CreateEinvoice(long _price, string plateNumber, DateTime datetimeIn, DateTime datetimeOut, string eventOutId, bool isSendNow = true, string cardGroupName = "")
+        {
+            string apiUrl = "";
+            StandardlizeServerName();
+            apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Invoice);
+
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            TimeSpan parkingTime = datetimeOut - datetimeIn;
+            var data = new
+            {
+                targetId = eventOutId,
+                send = isSendNow ? 1 : 0,
+                provider = (int)EmInvoiceProvider.Viettel,
+                TargetType = TargetType.EventOut,
+            };
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, Method.Post);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                try
+                {
+                    return JsonConvert.DeserializeObject<InvoiceResponse>(response.Item1);
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+            return null;
+        }
+        public async Task<bool> sendPendingEInvoice(string invoiceID)
+        {
+            StandardlizeServerName();
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Invoice) + "/" + invoiceID + "/resend";
+            //var data = new
+            //{
+            //    targetId = invoiceID,
+            //    send = 1,
+            //    provider = (int)EmInvoiceProvider.Viettel,
+            //};
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, Method.Post);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                var pendingData = NewtonSoftHelper<InvoiceResponse>.GetBaseResponse(response.Item1);
+                return pendingData != null && !string.IsNullOrEmpty(pendingData.id);
+            }
+            return false;
+        }
+
+        //--GET
+        public async Task<InvoiceFileInfor> GetInvoiceData(string orderId, EmInvoiceProvider provider = EmInvoiceProvider.Viettel)
+        {
+            // string url = $"http://14.160.26.45:26868/einvoice?provider=65";
+            StandardlizeServerName();
+            string apiUrl = server + $"invoice/{orderId}/representation";
+
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            Dictionary<string, string> parameters = new Dictionary<string, string>()
+            {
+                { "provider","2"  },
+                { "filetType","1"  }
+            };
+
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, Method.Get);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                return NewtonSoftHelper<InvoiceFileInfor>.GetBaseResponse(response.Item1);
+            }
+            return null;
+        }
+        public async Task<List<InvoiceResponse>> GetMultipleInvoiceData(DateTime startTime, DateTime endTime, EmInvoiceProvider provider = EmInvoiceProvider.Viettel)
+        {
+            //string url = $"http://14.160.26.45:26868/invoice/many";
+            StandardlizeServerName();
+            string apiUrl = server + KzParkingv5ApiUrlManagement.SearchObjectDataRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Invoice);
+
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            var filter = Filter.CreateFilter(new List<FilterModel>()
+            {
+                new FilterModel("sent", "BOOLEAN", "true", "eq"),
+                new FilterModel("createdUtc", "DATETIME", startTime.ToUniversalTime().ToString(UTCFormat), "gte"),
+                new FilterModel("createdUtc", "DATETIME", endTime.ToUniversalTime().ToString(UTCFormat), "lte"),
+            }, EmMainOperation.and, 0, 10000);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, Method.Post);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+
+                return NewtonSoftHelper<KzParkingv5BaseResponse<List<InvoiceResponse>>>.GetBaseResponse(response.Item1)?.data ?? new List<InvoiceResponse>();
+            }
+            return null;
+        }
+        public async Task<List<InvoiceResponse>> getPendingEInvoice(DateTime startTime, DateTime endTime)
+        {
+            //string url = $"http://14.160.26.45:26868/sent-invoice/many";
+            StandardlizeServerName();
+            string apiUrl = server + "invoice/search";
+
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            var filter = Filter.CreateFilter(new List<FilterModel>()
+            {
+                new FilterModel("sent", "BOOLEAN", "false", "eq"),
+                new FilterModel("createdUtc", "DATETIME", startTime.ToUniversalTime().ToString(UTCFormat), "gte"),
+                new FilterModel("createdUtc", "DATETIME", endTime.ToUniversalTime().ToString(UTCFormat), "lte"),
+            }, EmMainOperation.and, 0, 10000);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, Method.Post);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                var pendingData = NewtonSoftHelper<KzParkingv5BaseResponse<List<InvoiceResponse>>>.GetBaseResponse(response.Item1)?.data ?? new List<InvoiceResponse>();
+                return pendingData;
+            }
+            return new List<InvoiceResponse>();
+        }
+        #endregion End Einvoice
+
+        #region FEE PREVIEW
+        public async Task<string> GetFeeCalculate(string dateTimeIn, string dateTimeOut, string identityGroupID)
+        {
+            StandardlizeServerName();
+            string apiUrl = $"{server}charge/calculate";
+
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            var data = new
+            {
+                dateTimeIn = dateTimeIn,
+                dateTimeOut = dateTimeOut,
+                identityGroupId = identityGroupID,
+            };
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null,
+                                                                  timeOut, Method.Post);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                try
+                {
+                    return response.Item1.ToString();
+                }
+                catch (Exception)
+                {
+                    return "";
+                }
+            }
+            return "";
+        }
+        #endregion END FEE PREVIEW
+        #endregion END PARKING PROCESS
+
+        #region REPORTING
+
+        #region SUMARY
+        /// <summary>
+        /// Gửi api lấy thông tin số lượng xe đang trong bãi, số lượng xe vào bãi trong ngày, số lượng xe ra khỏi bãi trong ngày
+        /// </summary>
+        /// <returns></returns>
+        public async Task<SumaryCountEvent> SummaryEventAsync()
+        {
+            DateTime startTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+            DateTime endTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
+           
+            int vehicleInPark = await GetVehicleInParkCount();
+            int vehicleGotInIn = await GetVehicleGotInInDay(startTime,endTime);
+            int vehicleGotOutInDay = await GetVehicleGotOutCountInDay(startTime, endTime);
+
+            return new SumaryCountEvent()
+            {
+                countAllEventIn = vehicleInPark,
+                totalEventOut = vehicleGotOutInDay,
+                totalVehicleIn = vehicleGotInIn,
+            };
+        }
+
+        public async Task<int> GetVehicleInParkCount()
+        {
+            StandardlizeServerName();
+            string apiUrl = server + "reporting/parking/event-in";
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+
+
+            var searchData = new SearchEventIn()
+            {
+                FromUTC = new DateTime(2023, 1, 1, 0, 0, 0).ToUniversalTime(),
+                ToUTC = new DateTime(2099, 1, 1, 0, 0, 0).ToUniversalTime(),
+            };
+            var data = new
+            {
+                filter = searchData,
+                pageIndex = 0,
+                pageSize = 10000,
+                paging = false
+            };
+
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
+
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventInReport>>>.GetBaseResponse(response.Item1);
+                if (baseResponse != null)
+                {
+                    return baseResponse.data.Count;
+                }
+            }
+            return 0;
+        }
+        public async Task<int> GetVehicleGotInInDay(DateTime startTime, DateTime endTime)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + "reporting/parking/event-in";
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+
+
+            var searchData = new
+            {
+                FromUTC =  startTime.ToUniversalTime(),
+                ToUTC =  endTime.ToUniversalTime(),
+            };
+            var data = new
+            {
+                filter = searchData,
+                pageIndex = 0,
+                pageSize = 10000,
+                paging = false
+            };
+
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
+
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventInReport>>>.GetBaseResponse(response.Item1);
+                if (baseResponse != null)
+                {
+                    return baseResponse.data.Count;
+                }
+            }
+            return 0;
+        }
+        public async Task<int> GetVehicleGotOutCountInDay(DateTime startTime, DateTime endTime)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + "reporting/parking/event-out";
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+
+
+            var searchData = new SearchEventIn()
+            {
+                FromUTC = startTime.ToUniversalTime(),
+                ToUTC = endTime.ToUniversalTime(),
+            };
+            var data = new
+            {
+                filter = searchData,
+                pageIndex = 0,
+                pageSize = 10000,
+                paging = false
+            };
+
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
+
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventInReport>>>.GetBaseResponse(response.Item1);
+                if (baseResponse != null)
+                {
+                    return baseResponse.data.Count;
+                }
+            }
+            return 0;
+        }
+
+        private async Task<int> GetRecordCountByCmd(string apiUrl, Dictionary<string, string> headers, object data)
+        {
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                // Deserialize JSON to JObject
+                JObject jsonObject = JObject.Parse(response.Item1);
+
+                // Extract columns and rows from JSON
+                JArray columns = (JArray)jsonObject["columns"];
+                JArray rows = (JArray)jsonObject["rows"];
+
+                if (rows != null)
+                {
+                    if (rows.Count > 0)
+                    {
+                        try
+                        {
+                            string temp = rows[0].ToString();
+                            object[] rowData = rows[0].ToObject<object[]>();
+                            return int.Parse(rowData[0].ToString());
+                        }
+                        catch (Exception)
+                        {
+                            return 0;
+                        }
+                    }
+                    return 0;
+                }
+            }
+            return 0;
+        }
+        #endregion End SUMARY
+
+        #region EVENT IN
+
+        public async Task<List<EventInReport>> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
+                                   string identityGroupId, string vehicleTypeId, string laneId, string user,
+                                   int pageIndex = 1, int pageSize = 100)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + "reporting/parking/event-in";
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+
+
+            var searchData = new SearchEventIn()
+            {
+                keyword = keyword,
+                FromUTC = startTime.ToUniversalTime(),
+                ToUTC = endTime.ToUniversalTime(),
+                identityGroupIds = string.IsNullOrEmpty(identityGroupId) ? new List<string>() : new List<string> { identityGroupId },
+                laneIds = string.IsNullOrEmpty(laneId) ? new List<string>() : new List<string> { laneId },
+                upns = string.IsNullOrEmpty(user) ? new List<string>() : new List<string> { user },
+                Status = EmParkingStatus.Parking,
+            };
+            var data = new
+            {
+                filter = searchData,
+                pageIndex = 0,
+                pageSize = 10000,
+                paging = true
+            };
+
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
+
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventInReport>>>.GetBaseResponse(response.Item1);
+                if (baseResponse != null)
+                {
+                    return baseResponse.data;
+                }
+            }
+            return null;
+        }
+        #endregion END EVENT IN
+
+        #region EVENT OUT
+        public async Task<List<EventOutReport>> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + "reporting/parking/event-out";
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+
+
+            var searchData = new SearchEventIn()
+            {
+                keyword = keyword,
+                FromUTC = startTime.ToUniversalTime(),
+                ToUTC = endTime.ToUniversalTime(),
+                identityGroupIds = string.IsNullOrEmpty(identityGroupId) ? new List<string>() : new List<string> { identityGroupId },
+                laneIds = string.IsNullOrEmpty(laneId) ? new List<string>() : new List<string> { laneId },
+                upns = string.IsNullOrEmpty(user) ? new List<string>() : new List<string> { user },
+            };
+            var data = new
+            {
+                filter = searchData,
+                pageIndex = 0,
+                pageSize = 1,
+                paging = false
+            };
+
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
+
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventOutReport>>>.GetBaseResponse(response.Item1);
+                if (baseResponse != null)
+                {
+                    return baseResponse.data;
+                }
+            }
+            return null;
+        }
+        public async Task<string> GetLastEventOutIdentityGroupIdByPlateNumber(string plateNumber)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + "reporting/parking/event-out";
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+
+
+            var searchData = new SearchEventIn()
+            {
+                keyword = plateNumber,
+                FromUTC = new DateTime(2023, 1, 1, 0, 0, 0).ToUniversalTime(),
+                ToUTC = new DateTime(2099, 1, 1, 0, 0, 0).ToUniversalTime(),
+            };
+            var data = new
+            {
+                filter = searchData,
+                pageIndex = 0,
+                pageSize = 1,
+                paging = true,
+            };
+
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
+
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventOutReport>>>.GetBaseResponse(response.Item1);
+                if (baseResponse != null)
+                {
+                    if (baseResponse.data.Count == 0)
+                    {
+                        return string.Empty;
+                    }
+                    return baseResponse.data[0].IdentityGroupId;
+                }
+            }
+            return string.Empty;
+        }
+        #endregion END EVENT OUT
+
+        #region ALARM
         public async Task<DataTable> GetAlarmReport(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, int pageIndex = 1, int pageSize = 10000)
         {
             StandardlizeServerName();
@@ -1272,151 +1393,11 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return null;
         }
-        #endregion End Alarm
+        #endregion END ALARM
 
-        #region EInvoice 
+        #endregion END REPORTING
 
-    
-        public async Task<InvoiceResponse> CreateEinvoice(long _price, string plateNumber, DateTime datetimeIn, DateTime datetimeOut, string eventOutId, bool isSendNow = true, string cardGroupName = "")
-        {
-            //string url = $"http://14.160.26.45:26868/einvoice?provider=VIETTEL";
-            string apiUrl = "";
-            StandardlizeServerName();
-            apiUrl = server + "invoice";
-
-            //Gửi API
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-            {
-                { "Authorization","Bearer " + token  }
-            };
-            TimeSpan parkingTime = datetimeOut - datetimeIn;
-            var data = new
-            {
-                targetId = eventOutId,
-                send = isSendNow ? 1 : 0,
-                provider = (int)EmInvoiceProvider.Viettel,
-                TargetType = TargetType.EventOut,
-            };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, Method.Post);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                try
-                {
-                    return JsonConvert.DeserializeObject<InvoiceResponse>(response.Item1);
-                }
-                catch (Exception)
-                {
-                    return null;
-
-                }
-            }
-            return null;
-        }
-
-
-        public async Task<InvoiceFileInfor> GetInvoiceData(string orderId, EmInvoiceProvider provider = EmInvoiceProvider.Viettel)
-        {
-            // string url = $"http://14.160.26.45:26868/einvoice?provider=65";
-            StandardlizeServerName();
-            string apiUrl = server + $"invoice/{orderId}/representation";
-
-            //Gửi API
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-            {
-                { "Authorization","Bearer " + token  }
-            };
-            Dictionary<string, string> parameters = new Dictionary<string, string>()
-            {
-                { "provider","2"  },
-                { "filetType","1"  }
-            };
-
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, Method.Get);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                return NewtonSoftHelper<InvoiceFileInfor>.GetBaseResponse(response.Item1);
-            }
-            return null;
-        }
-
-        public async Task<List<InvoiceResponse>> GetMultipleInvoiceData(DateTime startTime, DateTime endTime, EmInvoiceProvider provider = EmInvoiceProvider.Viettel)
-        {
-            //string url = $"http://14.160.26.45:26868/invoice/many";
-            StandardlizeServerName();
-            string apiUrl = server + "invoice/search";
-
-            //Gửi API
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-            {
-                { "Authorization","Bearer " + token  }
-            };
-            var filter = Filter.CreateFilter(new List<FilterModel>()
-            {
-                new FilterModel("sent", "BOOLEAN", "true", "eq"),
-                new FilterModel("createdUtc", "DATETIME", startTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), "gte"),
-                new FilterModel("createdUtc", "DATETIME", endTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), "lte"),
-            }, EmMainOperation.and, 0, 10000);
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, Method.Post);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-
-                return NewtonSoftHelper<KzParkingv5BaseResponse<List<InvoiceResponse>>>.GetBaseResponse(response.Item1)?.data ?? new List<InvoiceResponse>();
-            }
-            return null;
-        }
-
-        public async Task<List<InvoiceResponse>> getPendingEInvoice(DateTime startTime, DateTime endTime)
-        {
-            //string url = $"http://14.160.26.45:26868/sent-invoice/many";
-            StandardlizeServerName();
-            string apiUrl = server + "invoice/search";
-
-            //Gửi API
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-            {
-                { "Authorization","Bearer " + token  }
-            };
-            var filter = Filter.CreateFilter(new List<FilterModel>()
-            {
-                new FilterModel("sent", "BOOLEAN", "false", "eq"),
-                //new FilterModel("success", "BOOLEAN", "false", "neq"),
-                new FilterModel("createdUtc", "DATETIME", startTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), "gte"),
-                new FilterModel("createdUtc", "DATETIME", endTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), "lte"),
-            }, EmMainOperation.and, 0, 10000);
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, Method.Post);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                var pendingData = NewtonSoftHelper<KzParkingv5BaseResponse<List<InvoiceResponse>>>.GetBaseResponse(response.Item1)?.data ?? new List<InvoiceResponse>();
-                return pendingData;
-            }
-            return new List<InvoiceResponse>();
-        }
-        public async Task<bool> sendPendingEInvoice(string eventId)
-        {
-            StandardlizeServerName();
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-            {
-                { "Authorization","Bearer " + token  }
-            };
-            string apiUrl = server + $"invoice";
-            var data = new
-            {
-                targetId = eventId,
-                send = 1,
-                provider = (int)EmInvoiceProvider.Viettel,
-            };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, Method.Post);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                var pendingData = NewtonSoftHelper<InvoiceResponse>.GetBaseResponse(response.Item1);
-                return pendingData != null && !string.IsNullOrEmpty(pendingData.id);
-            }
-            return false;
-        }
-
-        #endregion End Einvoice
-
-        #region Private Function
+        #region PRIVATE FUNCTION
         private static void StandardlizeServerName()
         {
             if (server[^1] != '/' && server[^1] != '\\')
@@ -1424,202 +1405,53 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 server += "/";
             }
         }
-        #endregion End Private Function
-
-        #region SUMARY
-        /// <summary>
-        /// Gửi api lấy thông tin số lượng xe đang trong bãi, số lượng xe vào bãi trong ngày, số lượng xe ra khỏi bãi trong ngày
-        /// </summary>
-        /// <returns></returns>
-        public async Task<SumaryCountEvent> SummaryEventAsync()
-        {
-            StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.GetBySqlCmd;
-            DateTime startTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
-            DateTime endTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
-            //Gửi API
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-            {
-                { "Authorization","Bearer " + token  }
-            };
-            string vehicleInParkCmd = string.Empty;
-            vehicleInParkCmd += "SELECT Count(id) FROM index_event_in ";
-            vehicleInParkCmd += $"WHERE (status != 'Exited' and status is not null) ";
-            var data = new
-            {
-                query = vehicleInParkCmd
-            };
-            int vehicleInPark = await GetRecordCountByCmd(apiUrl, headers, data);
-
-            string vehicleGotInInDayCmd = string.Empty;
-            vehicleGotInInDayCmd += "SELECT Count(id) FROM index_event_in ";
-            vehicleGotInInDayCmd += $"WHERE (createdutc Between '{startTime.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.000Z}' AND '{endTime.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.000Z}') ";
-            data = new
-            {
-                query = vehicleGotInInDayCmd
-            };
-            int vehicleGotInIn = await GetRecordCountByCmd(apiUrl, headers, data);
-
-            string vehicleGotOutInDayCmdc = string.Empty;
-            vehicleGotOutInDayCmdc += "SELECT Count(id) FROM index_event_out ";
-            vehicleGotOutInDayCmdc += $"WHERE (createdutc Between '{startTime.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.000Z}' AND '{endTime.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.000Z}') ";
-            data = new
-            {
-                query = vehicleGotOutInDayCmdc
-            };
-            int vehicleGotOutInDay = await GetRecordCountByCmd(apiUrl, headers, data);
-
-            return new SumaryCountEvent()
-            {
-                countAllEventIn = vehicleInPark,
-                totalEventOut = vehicleGotOutInDay,
-                totalVehicleIn = vehicleGotInIn,
-            };
-        }
-
-        private async Task<int> GetRecordCountByCmd(string apiUrl, Dictionary<string, string> headers, object data)
-        {
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                // Deserialize JSON to JObject
-                JObject jsonObject = JObject.Parse(response.Item1);
-
-                // Extract columns and rows from JSON
-                JArray columns = (JArray)jsonObject["columns"];
-                JArray rows = (JArray)jsonObject["rows"];
-
-                if (rows != null)
-                {
-                    if (rows.Count > 0)
-                    {
-                        try
-                        {
-                            string temp = rows[0].ToString();
-                            object[] rowData = rows[0].ToObject<object[]>();
-                            return int.Parse(rowData[0].ToString());
-                        }
-                        catch (Exception)
-                        {
-                            return 0;
-                        }
-                    }
-                    return 0;
-                }
-            }
-            return 0;
-        }
-        #endregion End SUMARY
-
-        #region WAREHOUSE
-    
-        public async Task<WarehouseService> CreateWarehouseService(string eventInId, string eventOutId, string plate, EmTransactionType type, bool isPrint = false)
-        {
-
-            StandardlizeServerName();
-            string apiUrl = server + "warehouse/transaction";
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-                    {
-                        { "Authorization","Bearer " + token  }
-                    };
-            WarehouseServiceInput warehouseService = new WarehouseServiceInput()
-            {
-                type = (int)type,
-                plateNumber = plate,
-                eventInId = eventInId,
-                eventOutId = Guid.Empty,
-                PrintPaper = isPrint,
-            };
-
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, warehouseService, headers, null, timeOut, RestSharp.Method.Post);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                try
-                {
-                    WarehouseService result = NewtonSoftHelper<WarehouseService>.GetBaseResponse(response.Item1);
-                    return result;
-                }
-                catch (Exception)
-                {
-                    return null;
-                }
-            }
-            return null;
-        }
-
-        public static async Task<bool> UpdateNoteIn(string eventId, string note1, string note2, string note3)
-        {
-            StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/" + eventId;
-            //Gửi API
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-             {
-                 { "Authorization","Bearer " + token  }
-             };
-            var commitData = new List<CommitData>();
-            commitData.Add(new CommitData()
-            {
-                op = "replace",
-                path = "note",
-                value = new List<string>() { note1, note2, note3 }
-            });
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, commitData, headers, null, timeOut, Method.Patch);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                return true;
-            }
-            return false;
-        }
-        public static async Task<bool> UpdateNoteOut(string eventId, string note1, string note2, string note3)
-        {
-            StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/" + eventId;
-            //Gửi API
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-             {
-                 { "Authorization","Bearer " + token  }
-             };
-            var commitData = new List<CommitData>();
-            commitData.Add(new CommitData()
-            {
-                op = "replace",
-                path = "note",
-                value = new List<string>() { note1, note2, note3 }
-            });
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, commitData, headers, null, timeOut, Method.Patch);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public static async Task<bool> UpdateBSXNote(string newNote, string eventId, bool isEventIn)
-        {
-            StandardlizeServerName();
-            string apiUrl = isEventIn ?
-                server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/" + eventId :
-                server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/" + eventId
-                ;
-            //Gửi API
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-             {
-                 { "Authorization","Bearer " + token  }
-             };
-            var commitData = new List<CommitData>();
-            commitData.Add(new CommitData()
-            {
-                op = "replace",
-                path = "baseNote",
-                value = newNote
-            });
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, commitData, headers, null, timeOut, Method.Patch);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                return true;
-            }
-            return false;
-        }
-        #endregion
+        #endregion END PRIVATE FUNCTION
     }
 }
+
+//public static async Task<bool> UpdateNoteIn(string eventId, string note1, string note2, string note3)
+//{
+//    StandardlizeServerName();
+//    string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/" + eventId;
+//    //Gửi API
+//    Dictionary<string, string> headers = new Dictionary<string, string>()
+//             {
+//                 { "Authorization","Bearer " + token  }
+//             };
+//    var commitData = new List<CommitData>();
+//    commitData.Add(new CommitData()
+//    {
+//        op = "replace",
+//        path = "note",
+//        value = new List<string>() { note1, note2, note3 }
+//    });
+//    var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, commitData, headers, null, timeOut, Method.Patch);
+//    if (!string.IsNullOrEmpty(response.Item1))
+//    {
+//        return true;
+//    }
+//    return false;
+//}
+//public static async Task<bool> UpdateNoteOut(string eventId, string note1, string note2, string note3)
+//{
+//    StandardlizeServerName();
+//    string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/" + eventId;
+//    //Gửi API
+//    Dictionary<string, string> headers = new Dictionary<string, string>()
+//             {
+//                 { "Authorization","Bearer " + token  }
+//             };
+//    var commitData = new List<CommitData>();
+//    commitData.Add(new CommitData()
+//    {
+//        op = "replace",
+//        path = "note",
+//        value = new List<string>() { note1, note2, note3 }
+//    });
+//    var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, commitData, headers, null, timeOut, Method.Patch);
+//    if (!string.IsNullOrEmpty(response.Item1))
+//    {
+//        return true;
+//    }
+//    return false;
+//}

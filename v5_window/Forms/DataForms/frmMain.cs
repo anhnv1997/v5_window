@@ -1,4 +1,5 @@
-﻿using IPaking.Ultility;
+﻿using DocumentFormat.OpenXml.VariantTypes;
+using IPaking.Ultility;
 using iPakrkingv5.Controls;
 using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.ApiManager.KzScaleApis;
@@ -6,12 +7,12 @@ using iParkingv5.ApiManager.XuanCuong;
 using iParkingv5.Controller;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
+using iParkingv5.Objects.Datas.Devices;
 using iParkingv5.Objects.Events;
 using iParkingv5_window.Forms.DataForms.Registers;
 using iParkingv5_window.Forms.ReportForms;
 using iParkingv5_window.Forms.SystemForms;
 using iParkingv5_window.Usercontrols;
-using iParkingv6.Objects.Datas;
 using Kztek.Scale_net6.Interfaces;
 using Kztek.Scale_net6.Objects;
 using Kztek.Tool;
@@ -34,7 +35,7 @@ namespace iParkingv5_window.Forms.DataForms
     {
         public static ControlSizeChangedEventArgs? splitContainerMainLocation;
         public static EmLanguage language = EmLanguage.Vietnamese;
-        private bool isScale = false;
+        public static bool isScale = false;
         #region Properties
         public static List<IController> controllers = new List<IController>();
         private static List<iLane> lanes = new List<iLane>();
@@ -62,16 +63,19 @@ namespace iParkingv5_window.Forms.DataForms
                     (keyData & Keys.KeyCode) == Keys.F12;
             if (isEnableDevelopeMode)
             {
-                panelDevelopeMode.Visible = true;
-                splitterDevelopeMode.Visible = true;
-                splitterDevelopeMode.BringToFront();
+                miCheck.Visible = true;
+                //panelDevelopeMode.Visible = true;
+                //splitterDevelopeMode.Visible = true;
+                //splitterDevelopeMode.BringToFront();
                 return true;
             }
             else if (isDisEnableDevelopeMode)
             {
-                panelDevelopeMode.Visible = false;
-                splitterDevelopeMode.Visible = false;
-                splitterDevelopeMode.BringToFront();
+                miCheck.Visible = false;
+
+                //panelDevelopeMode.Visible = false;
+                //splitterDevelopeMode.Visible = false;
+                //splitterDevelopeMode.BringToFront();
                 return true;
             }
             else if (isRevertRestartMode)
@@ -174,13 +178,12 @@ namespace iParkingv5_window.Forms.DataForms
                 LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
             }
         }
-
         private void LoadScaleConfig()
         {
             if (File.Exists(PathManagement.scaleConfigPath))
             {
                 var scaleConfig = NewtonSoftHelper<ScaleConfig>.DeserializeObjectFromPath(PathManagement.scaleConfigPath) ?? ScaleConfig.CreateDefaultConfig();
-                this.isScale = scaleConfig.IsUseScaleDevice;
+                isScale = scaleConfig.IsUseScaleDevice;
                 KzScaleApiHelper.server = scaleConfig.ScaleServer;
                 scaleController = ScaleFactory.CreateScaleController(scaleConfig);
                 scaleController.Connect(scaleConfig.Comport, scaleConfig.Baudrate);
@@ -426,8 +429,8 @@ namespace iParkingv5_window.Forms.DataForms
                 lblLoadingStatus.Text = "Khởi tạo làn: " + lane.name;
                 lblLoadingStatus.Refresh();
                 LaneDisplayConfig? laneDisplayConfig = GetLaneDisplayConfigByLaneId(lane);
-                iLane iLane = LaneFactory.CreateLane(lane, laneDisplayConfig, isDisplayLastEvent, this.isScale);
-                iLane.OnChangeLaneEvent += ILane_OnChangeLaneEvent;
+                iLane iLane = LaneFactory.CreateLane(lane, laneDisplayConfig, isDisplayLastEvent, isScale);
+                iLane.OnChangeLaneEvent += ILane_OnChangeLaneEvent; 
                 lanes.Add(iLane);
                 ucViewGrid1.UpdateSelectLocation(iLane as Control);
                 ((Control)iLane).Dock = DockStyle.Fill;
@@ -710,7 +713,7 @@ namespace iParkingv5_window.Forms.DataForms
                     lblLoadingStatus.Refresh();
                     LoadAppDisplayConfig();
                     LaneDisplayConfig? laneDisplayConfig = GetLaneDisplayConfigByLaneId(updateLane);
-                    iLane iLane = LaneFactory.CreateLane(updateLane, laneDisplayConfig, isDisplayLastEvent, this.isScale);
+                    iLane iLane = LaneFactory.CreateLane(updateLane, laneDisplayConfig, isDisplayLastEvent, isScale);
                     iLane.OnChangeLaneEvent += ILane_OnChangeLaneEvent;
                     for (int i = 0; i < lanes.Count; i++)
                     {
@@ -839,5 +842,23 @@ namespace iParkingv5_window.Forms.DataForms
             }
         }
 
+        private void tsmiCheck_Click(object sender, EventArgs e)
+        {
+            var frm = new frmSelectCard("");
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                foreach (iLane iLane in lanes)
+                {
+                    var ce = new CardEventArgs()
+                    {
+                        PreferCard = frm.SelectIdentity,
+                        DeviceId = iLane.lane.controlUnits[0].controlUnitId,
+                        ReaderIndex = 1,
+                    };
+                    iLane.OnNewEvent(ce);
+                }
+            }
+
+        }
     }
 }

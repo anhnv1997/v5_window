@@ -52,6 +52,12 @@
 		<Compile Update="Forms\MovablePictureBox.cs">
 			<SubType>Component</SubType>
 		</Compile>
+		<Compile Update="Forms\ReportForms\frmReportScaleDetail.cs">
+		  <SubType>Form</SubType>
+		</Compile>
+		<Compile Update="Forms\ReportForms\frmReportScaleWithInvoice.cs">
+		  <SubType>Form</SubType>
+		</Compile>
 		<Compile Update="Forms\SystemForms\frmLoading.cs">
 			<SubType>Form</SubType>
 		</Compile>

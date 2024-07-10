@@ -10,5 +10,4 @@ namespace iParkingv5.Objects.Invoices
         Misa,
         Viettel
     }
-
 }

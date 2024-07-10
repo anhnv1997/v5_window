@@ -43,5 +43,6 @@ namespace iParkingv5.Objects.ScaleObjects
         public List<string> FileKeys { get; set; }
         public float Charge { get; set; }
         public string createdBy { get; set; }
+        public string InvoiceId { get; set; }
     }
 }

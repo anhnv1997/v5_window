@@ -5,11 +5,12 @@ using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.ApiManager.KzScaleApis;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Databases;
-using iParkingv5.Objects.Datas;
+using iParkingv5.Objects.Datas.Devices;
+using iParkingv5.Objects.Datas.parking;
 using iParkingv5.Objects.Enums;
+using iParkingv5.Objects.Reporting;
 using iParkingv5_window;
 using iParkingv6.ApiManager.KzParkingv3Apis;
-using iParkingv6.Objects.Datas;
 using System.Data;
 using System.Runtime.InteropServices;
 using v5_IScale;
@@ -148,8 +149,8 @@ namespace v5_IScale.Forms
             string identityGroupId = ((ListItem)cbIdentityGroupType.SelectedItem)?.Value ?? "";
             string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
             //Tuple<List<EventInReport>, int, int> eventInData = await KzParkingApiHelper.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId);
-            DataTable eventInData = await  AppData.ApiServer.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId,"");
-            if (eventInData == null)
+            List<EventInReport> eventInReports = await  AppData.ApiServer.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId,"");
+            if (eventInReports == null)
             {
                 panelData.BackColor = Color.White;
                 ucLoading1.HideLoading();
@@ -158,44 +159,8 @@ namespace v5_IScale.Forms
             }
 
             totalPages = 1;
-            totalEvents = eventInData.Rows.Count;
-            List<EventInReport> eventInReports = new List<EventInReport>();
-            foreach (DataRow row in eventInData.Rows)
-            {
-
-                string transactionCode = eventInData.Columns.Contains("transactioncode") ? row["transactioncode"].ToString() ?? "" : "";
-                transactionCode = transactionCode.Contains("0-0") ? "" : transactionCode;
-
-                int transactionType = 0;
-                try
-                {
-                    transactionType = eventInData.Columns.Contains("transactiontype") ? int.Parse(row["transactiontype"].ToString() ?? "0") : 0;
-                }
-                catch (Exception)
-                {
-                }
-                EventInReport ev = new EventInReport()
-                {
-                    id = row["id"].ToString(),
-                    identityId = row["identityid"].ToString(),
-                    plateNumber = row["platenumber"].ToString(),
-                    createdUtc = row["createdutc"].ToString(),
-                    laneId = row["laneId"].ToString(),
-                    createdBy = eventInData.Columns.Contains("createdby") ? row["createdby"].ToString() : "",
-                    fileKeys = row["filekeys"].ToString()?.Split(","),
-                    CustomerId = eventInData.Columns.Contains("customerid") ? row["customerid"].ToString() : "",
-                    RegisteredVehicleId = eventInData.Columns.Contains("vehicleid") ? row["vehicleid"].ToString() : "",
-                    IdentityGroupId = row["identitygroupid"].ToString(),
-                    identityCode = eventInData.Columns.Contains("identityCode") ? row["identityCode"].ToString() : "",
-                    identityName = eventInData.Columns.Contains("identityName") ? row["identityName"].ToString() : "",
-                    TransactionType = transactionType,//eventInData.Columns.Contains("transactiontype") ? int.Parse(row["transactiontype"].ToString() ?? "0") : 0,
-                    TransactionCode = transactionCode,
-                    note = eventInData.Columns.Contains("note") ? row["note"].ToString() : "",
-                    thirdpartynote = eventInData.Columns.Contains("thirdpartynote") ? row["thirdpartynote"].ToString() : "",
-                };
-                eventInReports.Add(ev);
-            }
-            eventInData.Rows.Clear();
+            totalEvents = eventInReports.Count;
+       
             panelData.SuspendLayout();
             EnableFastLoading();
             DisplayNavigation();
@@ -475,7 +440,7 @@ namespace v5_IScale.Forms
                 row.Cells[i++].Value = item.DatetimeIn?.ToString("dd/MM/yyyy HH:mm:ss"); //5
                 row.Cells[i++].Value = item.laneId;                //6
                 row.Cells[i++].Value = item.createdBy;             //7
-                row.Cells[i++].Value = item.fileKeys?.Length > 0 ? string.Join(";", item.fileKeys) : "";//8
+                row.Cells[i++].Value = item.fileKeys.Count > 0 ? string.Join(";", item.fileKeys.ToArray()) : "";//8
                 row.Cells[i++].Value = item.CustomerId;//9
                 row.Cells[i++].Value = item.RegisteredVehicleId;//10
                 row.Cells[i++].Value = GetLaneName(item.laneId);//11
@@ -575,7 +540,7 @@ namespace v5_IScale.Forms
             }));
 
             //lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
-            lanes = (await  AppData.ApiServer.GetLanesAsync()).Item1 ?? new List<iParkingv6.Objects.Datas.Lane>();
+            lanes = (await  AppData.ApiServer.GetLanesAsync()).Item1 ?? new List<Lane>();
             cbLane.Invoke(new Action(() =>
             {
                 foreach (var item in lanes)

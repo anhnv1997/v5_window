@@ -13,7 +13,7 @@ namespace v5_IScale
     public static class AppData
     {
         public static WeighingDetailCollection WeighingDetailCollection = new WeighingDetailCollection();
-        public static WeighingFormCollection WeighingFormCollection = new WeighingFormCollection();
+        public static WeighingTypeCollection WeighingFormCollection = new WeighingTypeCollection();
         public static ScaleConfig ScaleConfig = new ScaleConfig();
         public static iParkingApi ApiServer= new KzParkingv5ApiHelper();
     }

@@ -45,6 +45,9 @@
             btnRegisterList = new ToolStripMenuItem();
             tsmiScaleReport = new ToolStripMenuItem();
             btnScaleReport = new ToolStripMenuItem();
+            tsmiScaleDetailReport = new ToolStripMenuItem();
+            miCheck = new ToolStripMenuItem();
+            tsmiCheck = new ToolStripMenuItem();
             panelMain = new Panel();
             ucViewGrid1 = new Usercontrols.ucViewGrid();
             panelAppStatus = new Panel();
@@ -63,7 +66,6 @@
             timerUpdateControllerConnection = new System.Windows.Forms.Timer(components);
             timerRestartSockerServer = new System.Windows.Forms.Timer(components);
             timerClearLog = new System.Windows.Forms.Timer(components);
-            tsmiScaleDetailReport = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             panelMain.SuspendLayout();
             panelAppStatus.SuspendLayout();
@@ -74,7 +76,7 @@
             // menuStrip1
             // 
             menuStrip1.Font = new Font("Segoe UI", 12F);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { miSystem, miReport, đăngKýToolStripMenuItem, tsmiScaleReport });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { miSystem, miReport, đăngKýToolStripMenuItem, tsmiScaleReport, miCheck });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(5, 2, 0, 2);
@@ -188,6 +190,28 @@
             btnScaleReport.Size = new Size(202, 26);
             btnScaleReport.Text = "Báo cáo tổng hợp";
             btnScaleReport.Click += btnScaleReport_Click;
+            // 
+            // tsmiScaleDetailReport
+            // 
+            tsmiScaleDetailReport.Name = "tsmiScaleDetailReport";
+            tsmiScaleDetailReport.Size = new Size(202, 26);
+            tsmiScaleDetailReport.Text = "Báo cáo chi tiết";
+            tsmiScaleDetailReport.Click += tsmiScaleDetailReport_Click;
+            // 
+            // miCheck
+            // 
+            miCheck.DropDownItems.AddRange(new ToolStripItem[] { tsmiCheck });
+            miCheck.Name = "miCheck";
+            miCheck.Size = new Size(64, 25);
+            miCheck.Text = "Check";
+            miCheck.Visible = false;
+            // 
+            // tsmiCheck
+            // 
+            tsmiCheck.Name = "tsmiCheck";
+            tsmiCheck.Size = new Size(180, 26);
+            tsmiCheck.Text = "check";
+            tsmiCheck.Click += tsmiCheck_Click;
             // 
             // panelMain
             // 
@@ -390,13 +414,6 @@
             timerClearLog.Interval = 60000;
             timerClearLog.Tick += timerClearLog_Tick;
             // 
-            // tsmiScaleDetailReport
-            // 
-            tsmiScaleDetailReport.Name = "tsmiScaleDetailReport";
-            tsmiScaleDetailReport.Size = new Size(202, 26);
-            tsmiScaleDetailReport.Text = "Báo cáo chi tiết";
-            tsmiScaleDetailReport.Click += tsmiScaleDetailReport_Click;
-            // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -459,5 +476,7 @@
         private System.Windows.Forms.Timer timerClearLog;
         private Label lblUserNaem;
         private ToolStripMenuItem tsmiScaleDetailReport;
+        private ToolStripMenuItem miCheck;
+        private ToolStripMenuItem tsmiCheck;
     }
 }
