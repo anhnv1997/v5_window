@@ -531,7 +531,7 @@
           "bin/placeholder/iParkingv5.Objects.dll": {}
         }
       },
-      "Kztek.Tool/1.0.0.1": {
+      "Kztek.Tool/1.0.0.2": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
@@ -1471,7 +1471,7 @@
       "path": "../iParkingv5.Objects/iParkingv5.Objects.csproj",
       "msbuildProject": "../iParkingv5.Objects/iParkingv5.Objects.csproj"
     },
-    "Kztek.Tool/1.0.0.1": {
+    "Kztek.Tool/1.0.0.2": {
       "type": "project",
       "path": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/Kztek.Tool/Kztek.Tool.csproj",
       "msbuildProject": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/Kztek.Tool/Kztek.Tool.csproj"
@@ -1479,7 +1479,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0-windows7.0": [
-      "Kztek.Tool >= 1.0.0.1",
+      "Kztek.Tool >= 1.0.0.2",
       "System.IO.Ports >= 8.0.0",
       "iParkingv5.Objects >= 1.0.0.6"
     ]

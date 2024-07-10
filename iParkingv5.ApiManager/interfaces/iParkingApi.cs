@@ -1,0 +1,122 @@
+﻿using iParkingv5.ApiManager.KzParkingv5Apis;
+using iParkingv5.Objects.Datas;
+using iParkingv5.Objects.Datas.Device_service;
+using iParkingv5.Objects.Datas.invoice_service;
+using iParkingv5.Objects.Datas.parking_service;
+using iParkingv5.Objects.Datas.reporting_service;
+using iParkingv5.Objects.Datas.system_service;
+using iParkingv5.Objects.Datas.user_service;
+using iParkingv5.Objects.Enums;
+using iParkingv5.Objects.EventDatas;
+using iParkingv6.Objects.Datas;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Text;
+using System.Threading.Tasks;
+using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5ApiHelper;
+using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper;
+using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper.TransactionType;
+
+namespace iParkingv5.ApiManager.interfaces
+{
+    public interface iParkingApi : iDeviceService
+    {
+        Task<string> GetFeeCalculate(string dateTimeIn, string dateTimeOut, string identityGroupID);
+        Task GetUserInfor();
+        Task<Tuple<List<User>, string>> GetAllUsers();
+        #region System Config
+        Task<SystemConfig> GetSystemConfigAsync();
+        #endregion
+
+
+        #region Vehicle Type
+        Task<Tuple<VehicleType, string>> GetVehicleTypeByIdAsync(string vehicleTypeId);
+        Task<Tuple<List<VehicleType>, string>> GetVehicleTypesAsync();
+        Task<Tuple<List<VehicleType>, string>> GetVehicleTypesAsync(string keyword);
+        #endregion End Vehicle Type
+
+        #region Identity
+        Task<Tuple<Identity, string>> GetIdentityByIdAsync(string id);
+        Task<Tuple<List<Identity>, string>> GetIdentitiesAsync(string keyword);
+        Task<Tuple<Identity, string>> GetIdentityByCodeAsync(string code);
+        Task<Tuple<Identity, string>> CreateIdentityAsync(Identity identity);
+        #endregion End Identity
+
+        #region Identity Group
+        Task<Tuple<IdentityGroup, string>> GetIdentityGroupByIdAsync(string id);
+        Task<Tuple<List<IdentityGroup>, string>> GetIdentityGroupsAsync();
+        #endregion End Identity Group
+
+        #region Register Vehicle
+        Task<Tuple<RegisteredVehicle, string>> GetRegistedVehilceByPlateAsync(string plateNumber);
+        Task<Tuple<RegisteredVehicle, string>> GetRegistedVehilceByIdAsync(string id);
+        Task<Tuple<List<RegisteredVehicle>, string>> GetRegisterVehiclesAsync(string keyword);
+        Task<Tuple<RegisteredVehicle, string>> CreateRegisteredVehicle(RegisteredVehicle registeredVehicle);
+        Task<bool> UpdateRegisteredVehicleAsyncById(RegisteredVehicle registeredVehicle);
+        #endregion End Register Vehicle
+
+        #region Customer
+        Task<Tuple<Customer, string>> CreateCustomer(Customer customer);
+        Task<Tuple<Customer, string>> GetCustomerByIdAsync(string id);
+        Task<Tuple<List<Customer>, string>> GetCustomersAsync();
+        Task<Tuple<List<Customer>, string>> GetCustomersAsync(string keyword);
+        Task<bool> UpdateCustomer(Customer customer);
+        Task<Tuple<bool, string>> DeleteCustomerById(string customerId);
+        #endregion End Customer
+
+        #region Customer Group
+        Task<Tuple<List<CustomerGroup>, string>> GetCustomerGroupsAsync();
+        #endregion End Customer Group
+
+        #region Event In
+        public enum emParkingImageType
+        {
+            Overview,
+            Vehicle,
+            Plate,
+        }
+        Task<bool> UpdateEventInPlateAsync(string eventId, string newPlate, string oldPlate);
+        Task<EventInData> PostCheckInAsync(
+            string _laneId, string _plateNumber, Identity identity, Dictionary<emParkingImageType, List<byte>> images,
+            bool isForce = false, RegisteredVehicle registeredVehicle = null, string note = "");
+        Task<Report<EventInData>> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
+                                    string identityGroupId, string vehicleTypeId, string laneId, string user,
+                                    int pageIndex = 1, int pageSize = 100);
+        #endregion End Event In
+
+        #region Event Out
+        Task<string> GetLastEventOutIdentityGroupIdByPlateNumber(string plateNumber);
+
+        Task<bool> UpdateEventOutPlate(string eventId, string newPlate, string oldPlate);
+        Task<Report<EventOutData>> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000);
+        Task<AddEventOutResponse> PostCheckOutAsync(string _laneId, string _plateNumber, Identity identitiy, Dictionary<emParkingImageType, List<byte>> images, bool isForce);
+        Task<bool> CommitOutAsync(AddEventOutResponse eventOut);
+        Task<bool> CancelCheckOut(string eventOutId);
+        Task<KzParkingv5ApiHelper.PaymentTransaction> CreatePaymentTransaction(AddEventOutResponse eventOut);
+        #endregion End Event Out
+
+        #region Alarm
+        Task<bool> CreateAlarmAsync(string identityCode, string laneId, string plate, AbnormalCode abnormalCode,
+                                    Dictionary<emParkingImageType, List<byte>> imageDatas, bool isLaneIn, string _identityGroupId, string customerId,
+                                    string registerVehicleId, string description);
+        Task<DataTable> GetAlarmReport(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, int pageIndex = 1, int pageSize = 10000);
+        #endregion End Alarm
+
+        #region EInvoice
+        Task<InvoiceResponse> CreateEinvoice(long price, string plateNumber, DateTime datetimeIn, DateTime datetimeOut, string eventOutId, bool isSendNow = true, string cardGroupName = "");
+        Task<FileInfor> GetInvoiceData(string orderId, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL);
+        Task<List<InvoiceResponse>> GetMultipleInvoiceData(DateTime startTime, DateTime endTime, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL);
+        Task<List<InvoiceResponse>> getPendingEInvoice(DateTime startTime, DateTime endTime);
+        Task<bool> sendPendingEInvoice(string orderId);
+        #endregion End Einvoice
+
+        #region Sumary
+        Task<SumaryCountEvent> SummaryEventAsync();
+        #endregion End Sumary
+
+        #region Warehouse
+        Task<WarehouseService> CreateWarehouseService(string eventInId, string eventOutId, string plate, EmTransactionType type, bool isPrint = false);
+        #endregion End warehouse
+    }
+}

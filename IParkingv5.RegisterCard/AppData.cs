@@ -1,4 +1,4 @@
-﻿using iParkingv5.ApiManager;
+﻿using iParkingv5.ApiManager.interfaces;
 using iParkingv5.ApiManager.KzParkingv5Apis;
 using System;
 using System.Collections.Generic;

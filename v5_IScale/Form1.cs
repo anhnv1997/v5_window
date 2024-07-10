@@ -4,6 +4,8 @@ using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.ApiManager.KzScaleApis;
 using iParkingv5.Controller;
 using iParkingv5.Objects;
+using iParkingv5.Objects.Datas.Device_service;
+using iParkingv5.Objects.Datas.warehouse_service;
 using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.Events;
 using iParkingv5.Objects.ScaleObjects;

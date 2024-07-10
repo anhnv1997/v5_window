@@ -1,6 +1,6 @@
 ﻿using iParkingv5.LedDisplay.Enums;
 using iParkingv5.Objects.Datas;
-using iParkingv6.Objects.Datas;
+using iParkingv5.Objects.Datas.Device_service;
 using Kztek.Tool.SocketHelpers;
 using Kztek.Tool.TextFormatingTools;
 using Kztek.Tools;

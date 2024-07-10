@@ -1,6 +1,6 @@
 ﻿using IPaking.Ultility;
 using iParkingv5.Objects;
-using iParkingv5.Objects.ScaleObjects;
+using iParkingv5.Objects.Datas.warehouse_service;
 using Kztek.Tool.TextFormatingTools;
 using System;
 using System.Collections.Generic;

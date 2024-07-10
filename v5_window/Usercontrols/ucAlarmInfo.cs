@@ -1,9 +1,9 @@
 ﻿using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.Objects;
-using iParkingv5.Objects.Datas;
+using iParkingv5.Objects.Datas.Device_service;
+using iParkingv5.Objects.Datas.parking_service;
 using iParkingv5.Objects.Enums;
 using iParkingv6.ApiManager.KzParkingv3Apis;
-using iParkingv6.Objects.Datas;
 using static iParkingv5.Objects.Enums.VehicleType;
 
 namespace iParkingv5_window.Usercontrols

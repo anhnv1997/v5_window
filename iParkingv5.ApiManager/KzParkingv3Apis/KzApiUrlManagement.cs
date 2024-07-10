@@ -1,4 +1,4 @@
-﻿using iParkingv5.Objects.Invoices;
+﻿using iParkingv5.Objects.Datas.invoice_service;
 
 namespace iParkingv6.ApiManager.KzParkingv3Apis
 {

@@ -5,10 +5,11 @@ using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.ApiManager.KzScaleApis;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Datas;
+using iParkingv5.Objects.Datas.Device_service;
+using iParkingv5.Objects.Datas.parking_service;
 using iParkingv5.Objects.Enums;
 using iParkingv5_window;
 using iParkingv6.ApiManager.KzParkingv3Apis;
-using iParkingv6.Objects.Datas;
 using IPGS.Object.Databases;
 using System.Data;
 using System.Runtime.InteropServices;
@@ -558,7 +559,7 @@ namespace v5_IScale.Forms
             }));
 
             //lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
-            lanes = (await  AppData.ApiServer.GetLanesAsync()).Item1 ?? new List<iParkingv6.Objects.Datas.Lane>();
+            lanes = (await  AppData.ApiServer.GetLanesAsync()).Item1 ?? new List<Lane>();
             cbLane.Invoke(new Action(() =>
             {
                 foreach (var item in lanes)

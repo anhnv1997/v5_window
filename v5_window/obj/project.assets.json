@@ -862,7 +862,7 @@
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
           "IdentityModel": "7.0.0",
-          "Kztek.Tool": "1.0.0.1",
+          "Kztek.Tool": "1.0.0.2",
           "Newtonsoft.Json": "13.0.3",
           "RestSharp": "110.2.0",
           "iParkingv5.Objects": "1.0.0.6"
@@ -878,7 +878,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "Kztek.Tool": "1.0.0.1",
+          "Kztek.Tool": "1.0.0.2",
           "System.IO.Ports": "8.0.0",
           "iParkingv5.Objects": "1.0.0.6"
         },
@@ -898,7 +898,7 @@
         "dependencies": {
           "IdentityModel": "7.0.0",
           "IdentityModel.OidcClient": "6.0.0",
-          "Kztek.Tool": "1.0.0.1",
+          "Kztek.Tool": "1.0.0.2",
           "Microsoft.Web.WebView2": "1.0.2420.47",
           "iParkingv5.ApiManager": "1.0.1.8"
         },
@@ -916,7 +916,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
-          "Kztek.Tool": "1.0.0.1",
+          "Kztek.Tool": "1.0.0.2",
           "iParkingv5.Lpr": "1.0.0.1",
           "iParkingv5.Objects": "1.0.0.6"
         },
@@ -1003,7 +1003,7 @@
           "bin/placeholder/Kztek.Scale_net6.dll": {}
         }
       },
-      "Kztek.Tool/1.0.0.1": {
+      "Kztek.Tool/1.0.0.2": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
@@ -2551,7 +2551,7 @@
       "path": "../Kztek.Scale/Net6/Kztek.Scale/Kztek.Scale_net6.csproj",
       "msbuildProject": "../Kztek.Scale/Net6/Kztek.Scale/Kztek.Scale_net6.csproj"
     },
-    "Kztek.Tool/1.0.0.1": {
+    "Kztek.Tool/1.0.0.2": {
       "type": "project",
       "path": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/Kztek.Tool/Kztek.Tool.csproj",
       "msbuildProject": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/Kztek.Tool/Kztek.Tool.csproj"
@@ -2565,7 +2565,7 @@
       "Kztek.Cameras >= 1.0.0.2",
       "Kztek.RtspPlayer >= 1.0.0.2",
       "Kztek.Scale_net6 >= 1.0.0.10",
-      "Kztek.Tool >= 1.0.0.1",
+      "Kztek.Tool >= 1.0.0.2",
       "Microsoft.Web.WebView2 >= 1.0.2420.47",
       "Minio >= 5.0.0",
       "RabbitMQ.Client >= 6.8.1",

@@ -1,4 +1,5 @@
-﻿using iParkingv5_window.Usercontrols;
+﻿using iParkingv5.Objects.Datas.Device_service;
+using iParkingv5_window.Usercontrols;
 using iParkingv5_window.Usercontrols.LaneConfiguration;
 using iParkingv6.Objects.Datas;
 

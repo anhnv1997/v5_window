@@ -1,6 +1,6 @@
 ﻿using iParkingv5.Objects.Configs;
+using iParkingv5.Objects.Datas.Device_service;
 using iParkingv5_window.Usercontrols.ShortcutConfiguration;
-using iParkingv6.Objects.Datas;
 
 namespace iParkingv5_window.Usercontrols
 {

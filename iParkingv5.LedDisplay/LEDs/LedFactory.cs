@@ -1,6 +1,6 @@
 ﻿using iParkingv5.LedDisplay.Enums;
 using iParkingv5.LedDisplay.LEDs.KztekLeds;
-using iParkingv6.Objects.Datas;
+using iParkingv5.Objects.Datas.Device_service;
 using System;
 using System.Collections.Generic;
 using System.Text;

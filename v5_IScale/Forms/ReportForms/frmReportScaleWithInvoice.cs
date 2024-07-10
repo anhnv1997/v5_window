@@ -3,7 +3,7 @@ using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.ApiManager.KzScaleApis;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Databases;
-using iParkingv5.Objects.ScaleObjects;
+using iParkingv5.Objects.Datas.warehouse_service;
 using iParkingv5_window;
 using iParkingv5_window.Helpers;
 using iParkingv6.ApiManager.KzParkingv3Apis;

@@ -6,6 +6,7 @@ using iParkingv5.ApiManager.XuanCuong;
 using iParkingv5.Controller;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
+using iParkingv5.Objects.Datas.Device_service;
 using iParkingv5.Objects.Events;
 using iParkingv5_window.Forms.DataForms.Registers;
 using iParkingv5_window.Forms.ReportForms;

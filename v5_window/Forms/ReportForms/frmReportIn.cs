@@ -7,10 +7,12 @@ using iParkingv5.ApiManager.XuanCuong;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.Datas;
+using iParkingv5.Objects.Datas.Device_service;
+using iParkingv5.Objects.Datas.parking_service;
+using iParkingv5.Objects.Datas.user_service;
 using iParkingv5.Objects.Enums;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv5_window.Usercontrols.BuildControls;
-using iParkingv6.Objects.Datas;
 using Kztek.Tools;
 using System.Data;
 using System.Data.SqlTypes;
@@ -794,7 +796,7 @@ namespace iParkingv5_window.Forms.ReportForms
             }));
 
             //lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
-            lanes = (await AppData.ApiServer.GetLanesAsync()).Item1 ?? new List<iParkingv6.Objects.Datas.Lane>();
+            lanes = (await AppData.ApiServer.GetLanesAsync()).Item1 ?? new List<Lane>();
             lanes = lanes.OrderBy(x => x.name).ThenBy(x => x.name.Length).ToList();
             cbLane.Invoke(new Action(() =>
             {

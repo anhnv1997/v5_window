@@ -1,6 +1,6 @@
-﻿using iParkingv5.ApiManager;
+﻿using iParkingv5.ApiManager.interfaces;
 using iParkingv5.ApiManager.KzParkingv5Apis;
-using iParkingv5.Objects.ScaleObjects;
+using iParkingv5.Objects.Datas.warehouse_service;
 using Kztek.Scale_net6.Objects;
 using System;
 using System.Collections.Generic;

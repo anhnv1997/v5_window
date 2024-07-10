@@ -12,13 +12,18 @@ using iParkingv5.Objects.Enums;
 using Newtonsoft.Json;
 using iParkingv5.Objects;
 using RestSharp;
-using iParkingv5.Objects.Invoices;
 using iParkingv5.ApiManager;
 using iParkingv5.ApiManager.KzParkingv5Apis;
 using System.Data;
 using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5ApiHelper;
 using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper.TransactionType;
 using Newtonsoft.Json.Linq;
+using iParkingv5.Objects.Datas.Device_service;
+using iParkingv5.Objects.Datas.parking_service;
+using iParkingv5.Objects.Datas.system_service;
+using iParkingv5.Objects.Datas.user_service;
+using iParkingv5.Objects.Datas.invoice_service;
+using iParkingv5.Objects.Datas.reporting_service;
 
 namespace iParkingv6.ApiManager.KzParkingv3Apis
 {
@@ -714,21 +719,6 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         {
             public int revenue { get; set; }
             public int totalCustomer { get; set; }
-        }
-        public class SumaryCountEvent
-        {
-            /// <summary>
-            /// Số lượng xe đang trong bãi
-            /// </summary>
-            public int countAllEventIn { get; set; } = 0;
-            /// <summary>
-            /// Tổng số xe ra khỏi bãi trong ngày
-            /// </summary>
-            public int totalEventOut { get; set; } = 0;
-            /// <summary>
-            /// Tổng số xe vào bãi trong ngày
-            /// </summary>
-            public int totalVehicleIn { get; set; } = 0;
         }
         public async Task<SumaryCountEvent> SummaryEventAsync()
         {

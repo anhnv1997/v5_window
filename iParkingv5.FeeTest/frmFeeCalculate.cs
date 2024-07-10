@@ -1,7 +1,5 @@
 ﻿using IdentityModel.OidcClient;
 using iParkingv5.ApiManager.KzParkingv5Apis;
-using iParkingv5.ApiManager;
-using iParkingv5.Objects.Datas;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +12,8 @@ using System.Windows.Forms;
 using iParkingv5.Objects.Databases;
 using iParkingv5.Objects;
 using System.Globalization;
+using iParkingv5.Objects.Datas.parking_service;
+using iParkingv5.ApiManager.interfaces;
 
 namespace iParkingv5.FeeTest
 {

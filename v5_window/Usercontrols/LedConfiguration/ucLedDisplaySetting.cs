@@ -2,8 +2,8 @@
 using iParkingv5.Controller.KztekDevices;
 using iParkingv5.LedDisplay.LEDs;
 using iParkingv5.LedDisplay.LEDs.KztekLeds;
+using iParkingv5.Objects.Datas.Device_service;
 using iParkingv5_window.Usercontrols;
-using iParkingv6.Objects.Datas;
 using Kztek.Tool;
 using Kztek.Tools;
 using System.Windows.Forms;
