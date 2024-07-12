@@ -85,7 +85,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 { "Authorization","Bearer " + token  }
             };
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null,
-                                                                   timeOut, RestSharp.Method.Post);
+                                                                   timeOut, Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
                 KzParkingv5BaseResponse<List<T>> kzBaseResponse =
@@ -153,7 +153,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             KzParkingv5ApiUrlManagement.EmParkingv5ObjectType objectType, string id) where T : class
         {
             server = server.StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.GetObjectDataDetailRoute(objectType, id);
+            string apiUrl = server + KzParkingv5ApiUrlManagement.GetObjectDataDetailRoute(objectType, id.ToUpper());
 
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {

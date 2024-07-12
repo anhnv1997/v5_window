@@ -1,22 +1,15 @@
-﻿using IdentityModel.OidcClient;
-using IPaking.Ultility;
+﻿using IPaking.Ultility;
 using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.Lpr.Objects;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
-using iParkingv5_window;
-using iParkingv5_window.Forms;
-using iParkingv5_window.Forms.SystemForms;
-using iParkingv6.ApiManager.KzParkingv3Apis;
 using Kztek.Tool;
 using Kztek.Tools;
-using KztekKeyRegister;
 using System.Diagnostics;
-using static Kztek.Tools.LogHelper;
-using System.Net.Sockets;
-using System.Net;
-using System.Text;
-using static iParkingv5.ApiManager.KzParkingv5Apis.Filter;
+using iParkingv5.Auth;
+using MinioHelper = iParkingv5_window.MinioHelper;
+using iParkingv5.FeeTest;
+using iParkingv5_window.Forms.SystemForms;
 
 namespace v6_window
 {
@@ -86,10 +79,13 @@ namespace v6_window
                         //    }
                         //}
                         //DahuaAccessControl.Init();
+
+                        bool? y = null;
+                        bool x = y ??= true;
                         LoadSystemConfig();
                         CheckForUpdate();
                         LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Mở giao diện đăng nhập hệ thống");
-                        Application.Run(new frmLogin());
+                        Application.Run(new frmLogin(AppData.ApiServer, KzParkingv5BaseApi.server, OpenLoadingPage));
                     }
                     else
                     {
@@ -119,6 +115,12 @@ namespace v6_window
             }
         }
 
+        static void OpenLoadingPage()
+        {
+            frmLoading frm = new();
+            frm.Show();
+        }
+
         private static void LoadSystemConfig()
         {
             try
@@ -133,8 +135,7 @@ namespace v6_window
                 MinioHelper.EndPoint = StaticPool.serverConfig.MinioServerUrl;
                 MinioHelper.AccessKey = StaticPool.serverConfig.MinioServerUsername;
                 MinioHelper.SecretKey = StaticPool.serverConfig.MinioServerPassword;
-                KzParkingApiHelper.server = StaticPool.serverConfig.ParkingServerUrl;
-                KzParkingv5ApiHelper.server = StaticPool.serverConfig.ParkingServerUrl;
+                KzParkingv5BaseApi.server = StaticPool.serverConfig.ParkingServerUrl;
             }
             catch (Exception ex)
             {

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             groupBox2 = new GroupBox();
+            chbIsIntergratedScaleStation = new CheckBox();
             numRetakePhotoDelayTime = new NumericUpDown();
             numRetakePhotoTurn = new NumericUpDown();
             label12 = new Label();
@@ -48,7 +49,6 @@
             label5 = new Label();
             label1 = new Label();
             label2 = new Label();
-            chbIsIntergratedScaleStation = new CheckBox();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoDelayTime).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoTurn).BeginInit();
@@ -87,6 +87,16 @@
             groupBox2.TabIndex = 5;
             groupBox2.TabStop = false;
             groupBox2.Text = "Tùy chọn";
+            // 
+            // chbIsIntergratedScaleStation
+            // 
+            chbIsIntergratedScaleStation.AutoSize = true;
+            chbIsIntergratedScaleStation.Location = new Point(191, 251);
+            chbIsIntergratedScaleStation.Name = "chbIsIntergratedScaleStation";
+            chbIsIntergratedScaleStation.Size = new Size(145, 19);
+            chbIsIntergratedScaleStation.TabIndex = 9;
+            chbIsIntergratedScaleStation.Text = "Tích hợp hệ thống cân";
+            chbIsIntergratedScaleStation.UseVisualStyleBackColor = true;
             // 
             // numRetakePhotoDelayTime
             // 
@@ -267,16 +277,6 @@
             label2.TabIndex = 2;
             label2.Text = "Thời gian cho phép mở barrie";
             // 
-            // chbIsIntergratedScaleStation
-            // 
-            chbIsIntergratedScaleStation.AutoSize = true;
-            chbIsIntergratedScaleStation.Location = new Point(191, 251);
-            chbIsIntergratedScaleStation.Name = "chbIsIntergratedScaleStation";
-            chbIsIntergratedScaleStation.Size = new Size(145, 19);
-            chbIsIntergratedScaleStation.TabIndex = 9;
-            chbIsIntergratedScaleStation.Text = "Tích hợp hệ thống cân";
-            chbIsIntergratedScaleStation.UseVisualStyleBackColor = true;
-            // 
             // ucAppOptions
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -284,7 +284,7 @@
             Controls.Add(groupBox2);
             Margin = new Padding(3, 2, 3, 2);
             Name = "ucAppOptions";
-            Size = new Size(571, 296);
+            Size = new Size(571, 358);
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoDelayTime).EndInit();

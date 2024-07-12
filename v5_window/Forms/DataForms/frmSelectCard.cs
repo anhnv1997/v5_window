@@ -1,10 +1,8 @@
 ﻿using iPakrkingv5.Controls;
 using iPakrkingv5.Controls.Controls.Buttons;
-using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Datas.parking_service;
 using iParkingv5_window.Usercontrols.BuildControls;
-using iParkingv6.ApiManager.KzParkingv3Apis;
 using System.Runtime.InteropServices;
 
 namespace iParkingv5_window.Forms.DataForms
@@ -109,7 +107,7 @@ namespace iParkingv5_window.Forms.DataForms
             if (!string.IsNullOrEmpty(txtIdentity.Text))
             {
                 //var identityResponse = await KzParkingApiHelper.GetIdentityByCodeAsync(txtIdentity.Text);
-                var identityResponse = await AppData.ApiServer.GetIdentityByCodeAsync(txtIdentity.Text);
+                var identityResponse = await AppData.ApiServer.parkingDataService.GetIdentityByCodeAsync(txtIdentity.Text);
                 Identity? identity = identityResponse.Item1;
                 if (identity == null)
                 {
@@ -124,7 +122,7 @@ namespace iParkingv5_window.Forms.DataForms
             }
             else
             {
-                List<Identity> identities = (await AppData.ApiServer.GetIdentitiesAsync("")).Item1;
+                List<Identity> identities = (await AppData.ApiServer.parkingDataService.GetIdentitiesAsync("")).Item1;
                 if (identities != null)
                 {
                     for (int i = 0; i < identities.Count; i++)

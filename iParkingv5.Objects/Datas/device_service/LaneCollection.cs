@@ -41,7 +41,7 @@ namespace iParkingv5.Objects.Datas.Device_service
 
         public string[] GetLanesId()
         {
-            return InnerList.Cast<Lane>().Select(x => x.id).ToArray();
+            return InnerList.Cast<Lane>().Select(x => x.Id).ToArray();
         }
     }
 }

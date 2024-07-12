@@ -35,26 +35,8 @@ namespace iParkingv5_window.Usercontrols
             splitterCamera = new Splitter();
             lblResult = new lblResult();
             panelLastEvent = new Panel();
-            panel18 = new Panel();
-            panelNote = new Panel();
-            tableLayoutPanelNote = new TableLayoutPanel();
-            panelNote1 = new Panel();
-            lblNote1 = new Label();
-            panelNote2 = new Panel();
-            lblNote2 = new Label();
             panel19 = new Panel();
             panelTop3Event = new Panel();
-            panelShortcutGuide = new Panel();
-            label13 = new Label();
-            label10 = new Label();
-            label12 = new Label();
-            label9 = new Label();
-            label15 = new Label();
-            label14 = new Label();
-            label11 = new Label();
-            label6 = new Label();
-            label8 = new Label();
-            label7 = new Label();
             label3 = new Label();
             ucEventCount1 = new ucEventCount();
             dgvEventContent = new DataGridView();
@@ -94,18 +76,6 @@ namespace iParkingv5_window.Usercontrols
             toolTip3 = new ToolTip(components);
             splitterEventInfoWithCamera = new Splitter();
             panelEventData = new Panel();
-            panelGoodsType = new Panel();
-            lblScaleFee = new Label();
-            label17 = new Label();
-            panelScaleAction = new Panel();
-            btnPrintScaleOnline = new Button();
-            btnPrintScaleOffline = new Button();
-            button1 = new Button();
-            panel12 = new Panel();
-            label21 = new Label();
-            lblScaleInfo = new Label();
-            label16 = new Label();
-            cbGoodsType = new ComboBox();
             panel17 = new Panel();
             btnPrintEInvoiceTicket = new Button();
             btnPrintTicket = new Button();
@@ -126,13 +96,7 @@ namespace iParkingv5_window.Usercontrols
             panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picOverviewImageIn).BeginInit();
             panelLastEvent.SuspendLayout();
-            panel18.SuspendLayout();
-            panelNote.SuspendLayout();
-            tableLayoutPanelNote.SuspendLayout();
-            panelNote1.SuspendLayout();
-            panelNote2.SuspendLayout();
             panel19.SuspendLayout();
-            panelShortcutGuide.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEventContent).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitContainerEventContent).BeginInit();
             splitContainerEventContent.Panel1.SuspendLayout();
@@ -156,9 +120,6 @@ namespace iParkingv5_window.Usercontrols
             ((System.ComponentModel.ISupportInitialize)picSetting).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panelEventData.SuspendLayout();
-            panelGoodsType.SuspendLayout();
-            panelScaleAction.SuspendLayout();
-            panel12.SuspendLayout();
             panel17.SuspendLayout();
             SuspendLayout();
             // 
@@ -403,7 +364,6 @@ namespace iParkingv5_window.Usercontrols
             // 
             panelLastEvent.BackColor = SystemColors.ButtonHighlight;
             panelLastEvent.BorderStyle = BorderStyle.FixedSingle;
-            panelLastEvent.Controls.Add(panel18);
             panelLastEvent.Controls.Add(panel19);
             panelLastEvent.Dock = DockStyle.Fill;
             panelLastEvent.Location = new Point(356, 0);
@@ -412,97 +372,15 @@ namespace iParkingv5_window.Usercontrols
             panelLastEvent.Size = new Size(536, 223);
             panelLastEvent.TabIndex = 8;
             // 
-            // panel18
-            // 
-            panel18.BorderStyle = BorderStyle.FixedSingle;
-            panel18.Controls.Add(panelNote);
-            panel18.Dock = DockStyle.Fill;
-            panel18.Location = new Point(423, 0);
-            panel18.Name = "panel18";
-            panel18.Size = new Size(111, 221);
-            panel18.TabIndex = 10;
-            // 
-            // panelNote
-            // 
-            panelNote.Controls.Add(tableLayoutPanelNote);
-            panelNote.Dock = DockStyle.Fill;
-            panelNote.Location = new Point(0, 0);
-            panelNote.Margin = new Padding(0);
-            panelNote.Name = "panelNote";
-            panelNote.Size = new Size(109, 219);
-            panelNote.TabIndex = 2;
-            // 
-            // tableLayoutPanelNote
-            // 
-            tableLayoutPanelNote.BackColor = Color.FromArgb(255, 128, 0);
-            tableLayoutPanelNote.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
-            tableLayoutPanelNote.ColumnCount = 1;
-            tableLayoutPanelNote.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanelNote.Controls.Add(panelNote1, 0, 0);
-            tableLayoutPanelNote.Controls.Add(panelNote2, 0, 1);
-            tableLayoutPanelNote.Dock = DockStyle.Fill;
-            tableLayoutPanelNote.Font = new Font("Segoe UI", 12F);
-            tableLayoutPanelNote.Location = new Point(0, 0);
-            tableLayoutPanelNote.Margin = new Padding(0);
-            tableLayoutPanelNote.Name = "tableLayoutPanelNote";
-            tableLayoutPanelNote.RowCount = 2;
-            tableLayoutPanelNote.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanelNote.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanelNote.Size = new Size(109, 219);
-            tableLayoutPanelNote.TabIndex = 2;
-            // 
-            // panelNote1
-            // 
-            panelNote1.Controls.Add(lblNote1);
-            panelNote1.Dock = DockStyle.Fill;
-            panelNote1.Location = new Point(1, 1);
-            panelNote1.Margin = new Padding(0);
-            panelNote1.Name = "panelNote1";
-            panelNote1.Size = new Size(107, 108);
-            panelNote1.TabIndex = 0;
-            // 
-            // lblNote1
-            // 
-            lblNote1.Dock = DockStyle.Fill;
-            lblNote1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblNote1.Location = new Point(0, 0);
-            lblNote1.Margin = new Padding(4, 0, 4, 0);
-            lblNote1.Name = "lblNote1";
-            lblNote1.Size = new Size(107, 108);
-            lblNote1.TabIndex = 0;
-            lblNote1.Text = "GHI CHÚ CHẶN KÍCH XE";
-            // 
-            // panelNote2
-            // 
-            panelNote2.Controls.Add(lblNote2);
-            panelNote2.Dock = DockStyle.Fill;
-            panelNote2.Location = new Point(1, 110);
-            panelNote2.Margin = new Padding(0);
-            panelNote2.Name = "panelNote2";
-            panelNote2.Size = new Size(107, 108);
-            panelNote2.TabIndex = 0;
-            // 
-            // lblNote2
-            // 
-            lblNote2.Dock = DockStyle.Fill;
-            lblNote2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblNote2.Location = new Point(0, 0);
-            lblNote2.Margin = new Padding(4, 0, 4, 0);
-            lblNote2.Name = "lblNote2";
-            lblNote2.Size = new Size(107, 108);
-            lblNote2.TabIndex = 0;
-            lblNote2.Text = "GHI CHÚ DỊCH VỤ HẠ TẦNG";
-            // 
             // panel19
             // 
             panel19.Controls.Add(panelTop3Event);
-            panel19.Controls.Add(panelShortcutGuide);
             panel19.Controls.Add(label3);
-            panel19.Dock = DockStyle.Left;
+            panel19.Dock = DockStyle.Fill;
             panel19.Location = new Point(0, 0);
             panel19.MinimumSize = new Size(423, 0);
             panel19.Name = "panel19";
-            panel19.Size = new Size(423, 221);
+            panel19.Size = new Size(534, 221);
             panel19.TabIndex = 11;
             // 
             // panelTop3Event
@@ -512,142 +390,8 @@ namespace iParkingv5_window.Usercontrols
             panelTop3Event.Location = new Point(0, 35);
             panelTop3Event.Margin = new Padding(0);
             panelTop3Event.Name = "panelTop3Event";
-            panelTop3Event.Size = new Size(423, 106);
+            panelTop3Event.Size = new Size(534, 186);
             panelTop3Event.TabIndex = 8;
-            // 
-            // panelShortcutGuide
-            // 
-            panelShortcutGuide.Controls.Add(label13);
-            panelShortcutGuide.Controls.Add(label10);
-            panelShortcutGuide.Controls.Add(label12);
-            panelShortcutGuide.Controls.Add(label9);
-            panelShortcutGuide.Controls.Add(label15);
-            panelShortcutGuide.Controls.Add(label14);
-            panelShortcutGuide.Controls.Add(label11);
-            panelShortcutGuide.Controls.Add(label6);
-            panelShortcutGuide.Controls.Add(label8);
-            panelShortcutGuide.Controls.Add(label7);
-            panelShortcutGuide.Dock = DockStyle.Bottom;
-            panelShortcutGuide.Location = new Point(0, 141);
-            panelShortcutGuide.Margin = new Padding(4);
-            panelShortcutGuide.Name = "panelShortcutGuide";
-            panelShortcutGuide.Size = new Size(423, 80);
-            panelShortcutGuide.TabIndex = 9;
-            // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            label13.Location = new Point(79, 53);
-            label13.Margin = new Padding(4, 0, 4, 0);
-            label13.Name = "label13";
-            label13.Size = new Size(192, 25);
-            label13.TabIndex = 5;
-            label13.Text = "In hóa đơn (Internet)";
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            label10.Location = new Point(79, 28);
-            label10.Margin = new Padding(4, 0, 4, 0);
-            label10.Name = "label10";
-            label10.Size = new Size(110, 25);
-            label10.TabIndex = 5;
-            label10.Text = "Sửa biển số";
-            // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            label12.ForeColor = Color.Navy;
-            label12.Location = new Point(3, 53);
-            label12.Margin = new Padding(4, 0, 4, 0);
-            label12.Name = "label12";
-            label12.Size = new Size(41, 25);
-            label12.TabIndex = 6;
-            label12.Text = "F7 :";
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            label9.ForeColor = Color.Navy;
-            label9.Location = new Point(3, 28);
-            label9.Margin = new Padding(4, 0, 4, 0);
-            label9.Name = "label9";
-            label9.Size = new Size(67, 25);
-            label9.TabIndex = 6;
-            label9.Text = "Enter :";
-            // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            label15.Location = new Point(240, 28);
-            label15.Margin = new Padding(4, 0, 4, 0);
-            label15.Name = "label15";
-            label15.Size = new Size(116, 25);
-            label15.TabIndex = 7;
-            label15.Text = "In phiếu thu";
-            // 
-            // label14
-            // 
-            label14.AutoSize = true;
-            label14.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            label14.ForeColor = Color.Navy;
-            label14.Location = new Point(200, 28);
-            label14.Margin = new Padding(4, 0, 4, 0);
-            label14.Name = "label14";
-            label14.Size = new Size(46, 25);
-            label14.TabIndex = 8;
-            label14.Text = "F6 : ";
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            label11.Location = new Point(241, 3);
-            label11.Margin = new Padding(4, 0, 4, 0);
-            label11.Name = "label11";
-            label11.Size = new Size(104, 25);
-            label11.TabIndex = 7;
-            label11.Text = "In hóa đơn";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            label6.ForeColor = Color.Navy;
-            label6.Location = new Point(200, 3);
-            label6.Margin = new Padding(4, 0, 4, 0);
-            label6.Name = "label6";
-            label6.Size = new Size(46, 25);
-            label6.TabIndex = 8;
-            label6.Text = "F8 : ";
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            label8.Location = new Point(79, 3);
-            label8.Margin = new Padding(4, 0, 4, 0);
-            label8.Name = "label8";
-            label8.Size = new Size(96, 25);
-            label8.TabIndex = 7;
-            label8.Text = "Mở Barrie";
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            label7.ForeColor = Color.Navy;
-            label7.Location = new Point(3, 3);
-            label7.Margin = new Padding(4, 0, 4, 0);
-            label7.Name = "label7";
-            label7.Size = new Size(77, 25);
-            label7.TabIndex = 8;
-            label7.Text = "Space : ";
             // 
             // label3
             // 
@@ -658,7 +402,7 @@ namespace iParkingv5_window.Usercontrols
             label3.Location = new Point(0, 0);
             label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
-            label3.Size = new Size(423, 35);
+            label3.Size = new Size(534, 35);
             label3.TabIndex = 7;
             label3.Text = "Các lượt xe ra gần đây";
             label3.TextAlign = ContentAlignment.MiddleLeft;
@@ -695,7 +439,7 @@ namespace iParkingv5_window.Usercontrols
             dgvEventContent.ReadOnly = true;
             dgvEventContent.RowHeadersVisible = false;
             dgvEventContent.RowTemplate.Height = 29;
-            dgvEventContent.Size = new Size(472, 195);
+            dgvEventContent.Size = new Size(472, 389);
             dgvEventContent.TabIndex = 1;
             // 
             // Column1
@@ -722,7 +466,7 @@ namespace iParkingv5_window.Usercontrols
             // 
             splitContainerEventContent.BorderStyle = BorderStyle.FixedSingle;
             splitContainerEventContent.Dock = DockStyle.Fill;
-            splitContainerEventContent.Location = new Point(0, 194);
+            splitContainerEventContent.Location = new Point(0, 0);
             splitContainerEventContent.Margin = new Padding(0);
             splitContainerEventContent.Name = "splitContainerEventContent";
             splitContainerEventContent.Orientation = Orientation.Horizontal;
@@ -735,7 +479,7 @@ namespace iParkingv5_window.Usercontrols
             // 
             splitContainerEventContent.Panel2.AutoScroll = true;
             splitContainerEventContent.Panel2.Controls.Add(panelEventInfo);
-            splitContainerEventContent.Size = new Size(474, 494);
+            splitContainerEventContent.Size = new Size(474, 688);
             splitContainerEventContent.SplitterDistance = 294;
             splitContainerEventContent.SplitterWidth = 3;
             splitContainerEventContent.TabIndex = 0;
@@ -935,7 +679,7 @@ namespace iParkingv5_window.Usercontrols
             panelEventInfo.Dock = DockStyle.Fill;
             panelEventInfo.Location = new Point(0, 0);
             panelEventInfo.Name = "panelEventInfo";
-            panelEventInfo.Size = new Size(472, 195);
+            panelEventInfo.Size = new Size(472, 389);
             panelEventInfo.TabIndex = 0;
             // 
             // panel4
@@ -1107,7 +851,6 @@ namespace iParkingv5_window.Usercontrols
             // panelEventData
             // 
             panelEventData.Controls.Add(splitContainerEventContent);
-            panelEventData.Controls.Add(panelGoodsType);
             panelEventData.Controls.Add(panel17);
             panelEventData.Dock = DockStyle.Right;
             panelEventData.Location = new Point(892, 22);
@@ -1115,174 +858,6 @@ namespace iParkingv5_window.Usercontrols
             panelEventData.Name = "panelEventData";
             panelEventData.Size = new Size(474, 746);
             panelEventData.TabIndex = 7;
-            // 
-            // panelGoodsType
-            // 
-            panelGoodsType.Controls.Add(lblScaleFee);
-            panelGoodsType.Controls.Add(label17);
-            panelGoodsType.Controls.Add(panelScaleAction);
-            panelGoodsType.Controls.Add(panel12);
-            panelGoodsType.Controls.Add(label16);
-            panelGoodsType.Controls.Add(cbGoodsType);
-            panelGoodsType.Dock = DockStyle.Top;
-            panelGoodsType.Location = new Point(0, 0);
-            panelGoodsType.Margin = new Padding(0);
-            panelGoodsType.Name = "panelGoodsType";
-            panelGoodsType.Size = new Size(474, 194);
-            panelGoodsType.TabIndex = 4;
-            // 
-            // lblScaleFee
-            // 
-            lblScaleFee.Dock = DockStyle.Fill;
-            lblScaleFee.Font = new Font("Segoe UI", 24.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblScaleFee.ForeColor = Color.Red;
-            lblScaleFee.Location = new Point(122, 87);
-            lblScaleFee.Margin = new Padding(4, 0, 4, 0);
-            lblScaleFee.Name = "lblScaleFee";
-            lblScaleFee.Size = new Size(352, 49);
-            lblScaleFee.TabIndex = 5;
-            lblScaleFee.Text = "10.000";
-            lblScaleFee.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // label17
-            // 
-            label17.Dock = DockStyle.Left;
-            label17.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            label17.ForeColor = Color.Navy;
-            label17.Location = new Point(0, 87);
-            label17.Margin = new Padding(4, 0, 4, 0);
-            label17.Name = "label17";
-            label17.Size = new Size(122, 49);
-            label17.TabIndex = 3;
-            label17.Text = "PHÍ CÂN";
-            label17.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // panelScaleAction
-            // 
-            panelScaleAction.Controls.Add(btnPrintScaleOnline);
-            panelScaleAction.Controls.Add(btnPrintScaleOffline);
-            panelScaleAction.Controls.Add(button1);
-            panelScaleAction.Dock = DockStyle.Bottom;
-            panelScaleAction.Font = new Font("Segoe UI", 12F);
-            panelScaleAction.Location = new Point(0, 136);
-            panelScaleAction.Margin = new Padding(4, 3, 4, 3);
-            panelScaleAction.Name = "panelScaleAction";
-            panelScaleAction.Size = new Size(474, 58);
-            panelScaleAction.TabIndex = 1;
-            // 
-            // btnPrintScaleOnline
-            // 
-            btnPrintScaleOnline.AutoSize = true;
-            btnPrintScaleOnline.BackColor = Color.FromArgb(224, 224, 224);
-            btnPrintScaleOnline.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            btnPrintScaleOnline.Location = new Point(272, 4);
-            btnPrintScaleOnline.Margin = new Padding(3, 2, 3, 2);
-            btnPrintScaleOnline.Name = "btnPrintScaleOnline";
-            btnPrintScaleOnline.Size = new Size(163, 52);
-            btnPrintScaleOnline.TabIndex = 3;
-            btnPrintScaleOnline.Text = "In hóa đơn \r\nInternet";
-            btnPrintScaleOnline.TextImageRelation = TextImageRelation.ImageAboveText;
-            btnPrintScaleOnline.UseVisualStyleBackColor = false;
-            btnPrintScaleOnline.Click += btnPrintScaleOnline_Click;
-            // 
-            // btnPrintScaleOffline
-            // 
-            btnPrintScaleOffline.AutoSize = true;
-            btnPrintScaleOffline.BackColor = Color.FromArgb(224, 224, 224);
-            btnPrintScaleOffline.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            btnPrintScaleOffline.Location = new Point(135, 4);
-            btnPrintScaleOffline.Margin = new Padding(3, 2, 3, 2);
-            btnPrintScaleOffline.Name = "btnPrintScaleOffline";
-            btnPrintScaleOffline.Size = new Size(131, 52);
-            btnPrintScaleOffline.TabIndex = 4;
-            btnPrintScaleOffline.Text = "In hóa đơn";
-            btnPrintScaleOffline.TextImageRelation = TextImageRelation.ImageAboveText;
-            btnPrintScaleOffline.UseVisualStyleBackColor = false;
-            btnPrintScaleOffline.Click += btnPrintScaleOffline_Click;
-            // 
-            // button1
-            // 
-            button1.BackColor = Color.FromArgb(224, 224, 224);
-            button1.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            button1.ImageAlign = ContentAlignment.BottomCenter;
-            button1.Location = new Point(4, 4);
-            button1.Margin = new Padding(3, 2, 3, 2);
-            button1.Name = "button1";
-            button1.Size = new Size(123, 52);
-            button1.TabIndex = 2;
-            button1.Text = "In phiếu cân";
-            button1.TextImageRelation = TextImageRelation.ImageAboveText;
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += btnPrintScale_Click;
-            // 
-            // panel12
-            // 
-            panel12.BackColor = Color.DimGray;
-            panel12.Controls.Add(label21);
-            panel12.Controls.Add(lblScaleInfo);
-            panel12.Dock = DockStyle.Top;
-            panel12.Font = new Font("Segoe UI", 12F);
-            panel12.Location = new Point(0, 42);
-            panel12.Margin = new Padding(4);
-            panel12.Name = "panel12";
-            panel12.Size = new Size(474, 45);
-            panel12.TabIndex = 4;
-            // 
-            // label21
-            // 
-            label21.AutoSize = true;
-            label21.BackColor = SystemColors.ActiveCaptionText;
-            label21.Dock = DockStyle.Left;
-            label21.Font = new Font("Digital-7", 20.25F, FontStyle.Bold);
-            label21.ForeColor = Color.Red;
-            label21.Location = new Point(0, 0);
-            label21.Margin = new Padding(4, 0, 4, 0);
-            label21.Name = "label21";
-            label21.Size = new Size(38, 28);
-            label21.TabIndex = 0;
-            label21.Text = "KG";
-            // 
-            // lblScaleInfo
-            // 
-            lblScaleInfo.BackColor = SystemColors.ActiveCaptionText;
-            lblScaleInfo.Dock = DockStyle.Fill;
-            lblScaleInfo.Font = new Font("Digital-7", 30F, FontStyle.Bold);
-            lblScaleInfo.ForeColor = Color.Red;
-            lblScaleInfo.Location = new Point(0, 0);
-            lblScaleInfo.Margin = new Padding(4, 0, 4, 0);
-            lblScaleInfo.Name = "lblScaleInfo";
-            lblScaleInfo.Padding = new Padding(4);
-            lblScaleInfo.Size = new Size(474, 45);
-            lblScaleInfo.TabIndex = 1;
-            lblScaleInfo.Text = "00000";
-            lblScaleInfo.TextAlign = ContentAlignment.BottomRight;
-            // 
-            // label16
-            // 
-            label16.Dock = DockStyle.Top;
-            label16.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            label16.ForeColor = Color.Navy;
-            label16.Location = new Point(0, 38);
-            label16.Margin = new Padding(4, 0, 4, 0);
-            label16.Name = "label16";
-            label16.Size = new Size(474, 4);
-            label16.TabIndex = 3;
-            label16.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // cbGoodsType
-            // 
-            cbGoodsType.BackColor = Color.Silver;
-            cbGoodsType.Dock = DockStyle.Top;
-            cbGoodsType.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbGoodsType.FlatStyle = FlatStyle.Popup;
-            cbGoodsType.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            cbGoodsType.ForeColor = Color.FromArgb(192, 0, 0);
-            cbGoodsType.FormattingEnabled = true;
-            cbGoodsType.Location = new Point(0, 0);
-            cbGoodsType.Margin = new Padding(4, 3, 4, 3);
-            cbGoodsType.Name = "cbGoodsType";
-            cbGoodsType.Size = new Size(474, 38);
-            cbGoodsType.TabIndex = 2;
             // 
             // panel17
             // 
@@ -1370,14 +945,7 @@ namespace iParkingv5_window.Usercontrols
             panel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picOverviewImageIn).EndInit();
             panelLastEvent.ResumeLayout(false);
-            panel18.ResumeLayout(false);
-            panelNote.ResumeLayout(false);
-            tableLayoutPanelNote.ResumeLayout(false);
-            panelNote1.ResumeLayout(false);
-            panelNote2.ResumeLayout(false);
             panel19.ResumeLayout(false);
-            panelShortcutGuide.ResumeLayout(false);
-            panelShortcutGuide.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEventContent).EndInit();
             splitContainerEventContent.Panel1.ResumeLayout(false);
             splitContainerEventContent.Panel2.ResumeLayout(false);
@@ -1405,11 +973,6 @@ namespace iParkingv5_window.Usercontrols
             ((System.ComponentModel.ISupportInitialize)picSetting).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             panelEventData.ResumeLayout(false);
-            panelGoodsType.ResumeLayout(false);
-            panelScaleAction.ResumeLayout(false);
-            panelScaleAction.PerformLayout();
-            panel12.ResumeLayout(false);
-            panel12.PerformLayout();
             panel17.ResumeLayout(false);
             panel17.PerformLayout();
             ResumeLayout(false);
@@ -1459,40 +1022,16 @@ namespace iParkingv5_window.Usercontrols
         private Panel panelTop3Event;
         private Label label3;
         private Panel panelEventData;
-        private Panel panelScaleAction;
         private Button btnOpenBarrie;
         private Button btnPrintTicket;
-        private Button button1;
-        private Panel panelGoodsType;
-        private ComboBox cbGoodsType;
         private TableLayoutPanel tableLayoutPanel2;
         private Panel panel14;
         private Panel panel15;
         private MovablePictureBox picLprImageIn;
-        private Panel panelNote;
         private ToolTip toolTipPrint;
-        private Panel panelShortcutGuide;
-        private Label label13;
-        private Label label10;
-        private Label label12;
-        private Label label9;
-        private Label label11;
-        private Label label6;
-        private Label label8;
-        private Label label7;
-        private Label label15;
-        private Label label14;
-        private TableLayoutPanel tableLayoutPanelNote;
-        private Label lblNote1;
-        private Label lblNote2;
         private TextBox txtPlate;
-        private Label label17;
         private Label label19;
         private Label label18;
-        private Panel panel12;
-        private Label lblScaleFee;
-        private Label label21;
-        private Label lblScaleInfo;
         private TableLayoutPanel tableLayoutPanel3;
         private Panel panel13;
         private Panel panel16;
@@ -1500,14 +1039,8 @@ namespace iParkingv5_window.Usercontrols
         private Label label23;
         private TextBox lblPlateIn;
         private Panel panel17;
-        private Button btnPrintScaleOnline;
-        private Button btnPrintScaleOffline;
         private Button btnPrintEInvoiceTicket;
-        private Label label16;
         private Panel panel19;
-        private Panel panel18;
-        private Panel panelNote1;
-        private Panel panelNote2;
         private Label label4;
         private Panel panelLpr;
         private Panel panelEventInfo;

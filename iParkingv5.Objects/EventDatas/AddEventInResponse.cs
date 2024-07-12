@@ -66,6 +66,14 @@ namespace iParkingv5.Objects.EventDatas
                     return "Biển số vào ra không khớp".ToUpper();
                 }
             }
+            if (name.ToUpper() == "IdentityGroup".ToUpper())
+            {
+                if (errorCode == "ERROR.ENTITY.VALIDATION.FIELD_NOT_ACTIVE")
+                {
+                    return "Nhóm định danh chưa được kích hoạt".ToUpper();
+                }
+            }
+
             if (name.ToUpper() == "vehicle".ToUpper())
             {
                 if (errorCode == "ERROR.ENTITY.VALIDATION.FIELD_NOT_FOUND")
@@ -95,7 +103,7 @@ namespace iParkingv5.Objects.EventDatas
                     return "Xe chưa được phép ra".ToUpper();
                 }
             }
-            return base.ToString();
+            return name + " - " + errorCode;
         }
     }
 }

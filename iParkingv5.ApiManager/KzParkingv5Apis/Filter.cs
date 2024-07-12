@@ -119,7 +119,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             pageIndex = pageIndex > 1 ? pageIndex - 1 : 0;
             var temp = new
             {
-                pageIndex = pageIndex ,
+                pageIndex = pageIndex,
                 pageSize = pageSize,
                 filter = Newtonsoft.Json.JsonConvert.SerializeObject(filterData),
                 //sorts = "",
@@ -127,6 +127,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             };
             return Newtonsoft.Json.JsonConvert.SerializeObject(temp);
         }
+
 
         public static string CreateFilter(List<FilterModel> filterModels, EmMainOperation mainOperation = EmMainOperation.and,
                                           int pageIndex = 0, int pageSize = PAGE_SIZE)
@@ -140,12 +141,13 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             {
                 pageIndex = pageIndex,
                 pageSize = pageSize,
-                filter = Newtonsoft.Json.JsonConvert.SerializeObject(filterData),
+                filter = filterData.Count == 0 ? null : Newtonsoft.Json.JsonConvert.SerializeObject(filterData),
                 //sorts = "",
                 fields = new List<object>()
             };
             return Newtonsoft.Json.JsonConvert.SerializeObject(temp);
         }
+
         public static string CreateFilter(FilterModel filterModel, EmMainOperation mainOperation = EmMainOperation.and,
                                           int _pageIndex = 0, int _pageSize = PAGE_SIZE)
         {
@@ -158,7 +160,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             {
                 pageIndex = _pageIndex,
                 pageSize = _pageSize,
-                filter = string.IsNullOrEmpty(filterModel.QueryKey) ? "" : Newtonsoft.Json.JsonConvert.SerializeObject(filterData),
+                filter = string.IsNullOrEmpty(filterModel.QueryKey) ? null : Newtonsoft.Json.JsonConvert.SerializeObject(filterData),
                 //sorts = "",
                 fields = new List<object>()
             };
@@ -180,11 +182,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 pageIndex = _pageIndex - 1,
                 pageSize = _pageSize,
                 filter = _filter,
-                //sorts = "",
                 fields = new List<object>()
             };
             return Newtonsoft.Json.JsonConvert.SerializeObject(temp);
         }
-
     }
 }

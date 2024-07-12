@@ -1,7 +1,6 @@
 ﻿using iParkingv5.Controller;
 using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.Datas.parking_service;
-using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
 using System;
 using System.Collections.Generic;
@@ -101,7 +100,7 @@ namespace IParkingv5.RegisterCard
                 cbIdentityType.Items.Add(item);
             }
             //Load IdentityGroups
-            IdentityGroups = (await AppData.ApiServer.GetIdentityGroupsAsync())?.Item1 ?? new List<IdentityGroup>();
+            IdentityGroups = (await AppData.ApiServer.parkingDataService.GetIdentityGroupsAsync())?.Item1 ?? new List<IdentityGroup>();
             foreach (var item in IdentityGroups)
             {
                 ListItem li = new ListItem();
@@ -110,7 +109,7 @@ namespace IParkingv5.RegisterCard
                 cbIdentityGroup.Items.Add(li);
             }
             //Load Controllers
-            Bdks = (await AppData.ApiServer.GetControlUnitsAsync()).Item1 ?? new List<Bdk>();
+            Bdks = (await AppData.ApiServer.deviceService.GetControlUnitsAsync()).Item1 ?? new List<Bdk>();
             foreach (var item in Bdks)
             {
                 ListItem li = new ListItem();
@@ -152,7 +151,7 @@ namespace IParkingv5.RegisterCard
                 }
             }));
             string code = e.PreferCard;
-            Identity? identity = (await AppData.ApiServer.GetIdentityByCodeAsync(code)).Item1;
+            Identity? identity = (await AppData.ApiServer.parkingDataService.GetIdentityByCodeAsync(code)).Item1;
             if (identity == null)
             {
                 int currentIndex = (int)numericUpDown1.Value + 1;
@@ -173,7 +172,7 @@ namespace IParkingv5.RegisterCard
                     Type = type,
                 };
 
-                identity = (await AppData.ApiServer.CreateIdentityAsync(identity))?.Item1 ?? null;
+                identity = (await AppData.ApiServer.parkingDataService.CreateIdentityAsync(identity))?.Item1 ?? null;
                 if (identity != null)
                 {
                     this.Invoke(new Action(() =>

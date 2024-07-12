@@ -7,7 +7,6 @@ using iParkingv5.Objects.Databases;
 using iParkingv5.Lpr.Objects;
 using iParkingv5.Objects.Configs;
 using iParkingv5.Objects;
-using iParkingv6.ApiManager.KzParkingv3Apis;
 using Kztek.Tool;
 using iParkingv5.Objects.Datas.parking_service;
 using iParkingv5.ApiManager.interfaces;
@@ -34,7 +33,7 @@ namespace iParkingv5.FeeTest
             string clientId = "910ae83b-5205-4c35-bf45-8926ff620386";
             options = new OidcClientOptions
             {
-                Authority = KzParkingv5ApiHelper.server.Replace(":5000", ":3000"),//"http://192.168.21.13:3000",// 
+                Authority = KzParkingv5BaseApi.server.Replace(":5000", ":3000"),//"http://192.168.21.13:3000",// 
                 ClientId = clientId,
                 Scope = "openid role-data user-data parking-data offline_access device-data electronic-invoice-data",
                 RedirectUri = "http://localhost/winforms.client",
@@ -74,7 +73,7 @@ namespace iParkingv5.FeeTest
             else
             {
                 token = loginResult.TokenResponse.AccessToken;
-                KzParkingv5ApiHelper.token = loginResult.TokenResponse.AccessToken;
+                KzParkingv5BaseApi.token = loginResult.TokenResponse.AccessToken;
                 
                 frmFeeCalculate frm = new()
                 {
@@ -96,7 +95,7 @@ namespace iParkingv5.FeeTest
                     Application.Exit();
                     return;
                 }
-                KzParkingv5ApiHelper.server = StaticPool.serverConfig.ParkingServerUrl;
+                KzParkingv5BaseApi.server = StaticPool.serverConfig.ParkingServerUrl;
             }
             catch (Exception ex)
             {

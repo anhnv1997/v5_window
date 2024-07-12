@@ -1,11 +1,9 @@
-﻿using iParkingv5.ApiManager.KzParkingv5Apis;
-using iParkingv5.Objects;
+﻿using iParkingv5.Objects;
 using iParkingv5.Objects.Datas.Device_service;
 using iParkingv5.Objects.Datas.parking_service;
 using iParkingv5.Objects.Enums;
-using iParkingv6.ApiManager.KzParkingv3Apis;
+using iParkingv5.Objects.EventDatas;
 using Kztek.Tool.TextFormatingTools;
-using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5ApiHelper;
 using static iParkingv5.Objects.Enums.VehicleType;
 
 namespace iParkingv5_window.Forms.DataForms
@@ -73,11 +71,6 @@ namespace iParkingv5_window.Forms.DataForms
         private void BtnOk_Click(object? sender, EventArgs e)
         {
             updatePlate = dgvEventInData.Rows[4].Cells[1].Value.ToString().ToUpper().Replace("-", "").Replace(".", "");
-            if (string.IsNullOrEmpty(updatePlate))
-            {
-                MessageBox.Show("Biển số ra không được phép để trống", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
             this.DialogResult = DialogResult.OK;
         }
 
@@ -98,15 +91,15 @@ namespace iParkingv5_window.Forms.DataForms
                 this.SuspendLayout();
                 this.updatePlate = detectedPlate;
                 //Lane? laneIn = await KzParkingApiHelper.GetLaneByIdAsync(laneIdIn);
-                Lane? laneIn = (await AppData.ApiServer.GetLaneByIdAsync(laneIdIn)).Item1;
+                Lane? laneIn = (await AppData.ApiServer.deviceService.GetLaneByIdAsync(laneIdIn)).Item1;
                 //Identity? identityIn = await KzParkingApiHelper.GetIdentityById(identityIdIn);
-                Identity? identityIn = (await AppData.ApiServer.GetIdentityByIdAsync(identityIdIn)).Item1;
+                Identity? identityIn = (await AppData.ApiServer.parkingDataService.GetIdentityByIdAsync(identityIdIn)).Item1;
                 IdentityGroup? identityGroupIn = null;
                 VehicleBaseType vehicleTypeIn = VehicleBaseType.Car;
                 if (identityIn != null)
                 {
                     //identityGroupIn = await KzParkingApiHelper.GetIdentityGroupByIdAsync(identityIn.IdentityGroupId.ToString());
-                    identityGroupIn = (await AppData.ApiServer.GetIdentityGroupByIdAsync(identityIn.IdentityGroupId.ToString())).Item1;
+                    identityGroupIn = (await AppData.ApiServer.parkingDataService.GetIdentityGroupByIdAsync(identityIn.IdentityGroupId.ToString())).Item1;
                     vehicleTypeIn = identityGroupIn.VehicleType;
                     //if (identityGroupIn != null)
                     //{

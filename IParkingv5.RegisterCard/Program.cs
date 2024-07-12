@@ -1,8 +1,8 @@
 ﻿using IPaking.Ultility;
 using iParkingv5.ApiManager.KzParkingv5Apis;
+using iParkingv5.Auth;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
-using iParkingv6.ApiManager.KzParkingv3Apis;
 using Kztek.Tool;
 using Kztek.Tools;
 using System.Diagnostics;
@@ -24,7 +24,7 @@ namespace IParkingv5.RegisterCard
             {
                 const string appName = "IP_DA_V3_WD";
                 PathManagement.baseBath = LogHelper.SaveLogFolder = Application.StartupPath;
-                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Kh?i ch?y ?ng d?ng");
+                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Khởi chạy ứng dụng");
                 string appCode = "IP_DA_V3_WD";
                 using (Mutex mutex = new Mutex(true, appName, out bool ownmutex))
                 {
@@ -77,7 +77,8 @@ namespace IParkingv5.RegisterCard
                         //DahuaAccessControl.Init();
                         LoadSystemConfig();
                         LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Mở giao diện đăng nhập hệ thống");
-                        Application.Run(new frmLogin());
+                        Application.Run(new frmLogin(AppData.ApiServer, KzParkingv5BaseApi.server, OpenMainPage));
+
                     }
                     else
                     {
@@ -107,6 +108,11 @@ namespace IParkingv5.RegisterCard
 
             }
         }
+        static void OpenMainPage()
+        {
+            frmMain frm = new();
+            frm.Show();
+        }
         private static void LoadSystemConfig()
         {
             try
@@ -118,8 +124,7 @@ namespace IParkingv5.RegisterCard
                     Application.Exit();
                     return;
                 }
-                KzParkingApiHelper.server = StaticPool.serverConfig.ParkingServerUrl;
-                KzParkingv5ApiHelper.server = StaticPool.serverConfig.ParkingServerUrl;
+                KzParkingv5BaseApi.server = StaticPool.serverConfig.ParkingServerUrl;
             }
             catch (Exception ex)
             {

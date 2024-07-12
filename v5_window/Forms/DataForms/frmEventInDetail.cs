@@ -1,17 +1,5 @@
-﻿using iParkingv5.ApiManager.KzParkingv5Apis;
-using iParkingv5.ApiManager.KzScaleApis;
+﻿using iParkingv5.ApiManager.KzScaleApis;
 using iParkingv5.Objects.Enums;
-using iParkingv6.ApiManager.KzParkingv3Apis;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static iParkingv5.Objects.Enums.VehicleType;
 
 namespace iParkingv5_window.Forms.DataForms
 {
@@ -52,22 +40,13 @@ namespace iParkingv5_window.Forms.DataForms
 
         private async void FrmEventInDetail_Load(object? sender, EventArgs e)
         {
-            //var lane = await KzParkingApiHelper.GetLaneByIdAsync(laneId);
-            var lane = (await AppData.ApiServer.GetLaneByIdAsync(laneId)).Item1;
-            //var identity = await KzParkingApiHelper.GetIdentityById(this.identityId);
-            var identity = (await AppData.ApiServer.GetIdentityByIdAsync(this.identityId)).Item1;
+            var lane = (await AppData.ApiServer.deviceService.GetLaneByIdAsync(laneId)).Item1;
+            var identity = (await AppData.ApiServer.parkingDataService.GetIdentityByIdAsync(this.identityId)).Item1;
 
-            var identityGroup = (await AppData.ApiServer.GetIdentityGroupByIdAsync(this.cardGroupId)).Item1;
-
-            //var customer = await KzParkingApiHelper.GetCustomerById(this.customerId);
-            var customer = (await AppData.ApiServer.GetCustomerByIdAsync(this.customerId)).Item1;
-
-            //var registerVehicle = await KzParkingApiHelper.GetRegisteredVehicleById(this.registerVehicleId);
-            var registerVehicle = (await AppData.ApiServer.GetRegistedVehilceByIdAsync(this.registerVehicleId)).Item1;
-
-            //VehicleType vehicleType = await KzParkingApiHelper.GetVehicleTypeById(identityGroup?.VehicleTypeId.ToString());
+            var identityGroup = (await AppData.ApiServer.parkingDataService.GetIdentityGroupByIdAsync(this.cardGroupId)).Item1;
+            var customer = (await AppData.ApiServer.parkingDataService.GetCustomerByIdAsync(this.customerId)).Item1;
+            var registerVehicle = (await AppData.ApiServer.parkingDataService.GetRegistedVehilceByIdAsync(this.registerVehicleId)).Item1;
             VehicleType.VehicleBaseType vehicleType = identityGroup.VehicleType;
-                //(await AppData.ApiServer.GetVehicleTypeByIdAsync(identityGroup?.VehicleType.Id.ToString())).Item1;
 
             txtPlate.Text = this.PlateNumber;
             lblLaneName.Text = lane?.name;
@@ -122,11 +101,9 @@ namespace iParkingv5_window.Forms.DataForms
         {
             if (this.isEventIn)
             {
-                //bool isUpdateSuccess = await KzParkingApiHelper.UpdateEventInPlate(this.EventId, txtPlate.Text);
-                bool isUpdateSuccess = await AppData.ApiServer.UpdateEventInPlateAsync(this.EventId, txtPlate.Text, this.PlateNumber);
+                bool isUpdateSuccess = await AppData.ApiServer.parkingProcessService.UpdateEventInPlateAsync(this.EventId, txtPlate.Text, this.PlateNumber);
                 if (isUpdateSuccess)
                 {
-                    KzScaleApiHelper.UpdatePlate(this.EventId, txtPlate.Text);
                     MessageBox.Show("Cập nhật thông tin thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.updatePlate = txtPlate.Text;
                     this.DialogResult = DialogResult.OK;
@@ -139,11 +116,9 @@ namespace iParkingv5_window.Forms.DataForms
             }
             else
             {
-                //bool isUpdateSuccess = await KzParkingApiHelper.UpdateEventOutPlate(this.EventId, txtPlate.Text);
-                bool isUpdateSuccess = await AppData.ApiServer.UpdateEventOutPlate(this.EventId, txtPlate.Text, this.PlateNumber);
+                bool isUpdateSuccess = await AppData.ApiServer.parkingProcessService.UpdateEventOutPlate(this.EventId, txtPlate.Text, this.PlateNumber);
                 if (isUpdateSuccess)
                 {
-                    KzScaleApiHelper.UpdatePlate(this.EventId, txtPlate.Text);
                     MessageBox.Show("Cập nhật thông tin thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.updatePlate = txtPlate.Text;
                     this.DialogResult = DialogResult.OK;

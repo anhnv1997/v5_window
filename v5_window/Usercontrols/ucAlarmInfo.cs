@@ -3,7 +3,6 @@ using iParkingv5.Objects;
 using iParkingv5.Objects.Datas.Device_service;
 using iParkingv5.Objects.Datas.parking_service;
 using iParkingv5.Objects.Enums;
-using iParkingv6.ApiManager.KzParkingv3Apis;
 using static iParkingv5.Objects.Enums.VehicleType;
 
 namespace iParkingv5_window.Usercontrols
@@ -75,15 +74,15 @@ namespace iParkingv5_window.Usercontrols
             this.Location = position;
             this.BackColor = Color.FromArgb(255, 224, 192);
             //Lane? lane = await KzParkingApiHelper.GetLaneByIdAsync(laneId);
-            Lane? lane = (await AppData.ApiServer.GetLaneByIdAsync(laneId)).Item1;
+            Lane? lane = (await AppData.ApiServer.deviceService.GetLaneByIdAsync(laneId)).Item1;
             //Identity? identity = await KzParkingApiHelper.GetIdentityById(identityId);
-            Identity? identity = (await AppData.ApiServer.GetIdentityByIdAsync(identityId)).Item1;
+            Identity? identity = (await AppData.ApiServer.parkingDataService.GetIdentityByIdAsync(identityId)).Item1;
             IdentityGroup? identityGroup = null;
             VehicleBaseType vehicleType = VehicleBaseType.Car;
             if (identity != null)
             {
                 //identityGroup = await KzParkingApiHelper.GetIdentityGroupByIdAsync(identity.IdentityGroupId.ToString());
-                identityGroup = (await AppData.ApiServer.GetIdentityGroupByIdAsync(identity.IdentityGroupId.ToString())).Item1;
+                identityGroup = (await AppData.ApiServer.parkingDataService.GetIdentityGroupByIdAsync(identity.IdentityGroupId.ToString())).Item1;
                 if (identityGroup != null)
                 {
                     //vehicleType = await KzParkingApiHelper.GetVehicleTypeById(identityGroup.VehicleTypeId.ToString());

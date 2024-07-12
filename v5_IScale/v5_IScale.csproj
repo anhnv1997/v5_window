@@ -22,6 +22,7 @@
 		<ProjectReference Include="..\iPakrkingv5.Controls\iPakrkingv5.Controls.csproj" />
 		<ProjectReference Include="..\iParking.ConfigurationManager\iParking.ConfigurationManager.csproj" />
 		<ProjectReference Include="..\iParkingv5.ApiManager\iParkingv5.ApiManager.csproj" />
+		<ProjectReference Include="..\iParkingv5.Auth\iParkingv5.Auth.csproj" />
 		<ProjectReference Include="..\iParkingv5.Controller\iParkingv5.Controller.csproj" />
 		<ProjectReference Include="..\iParkingv5.LedDisplay\iParkingv5.LedDisplay.csproj" />
 		<ProjectReference Include="..\iParkingv5.Lpr\iParkingv5.Lpr.csproj" />
@@ -55,7 +56,6 @@
 		<Compile Update="Forms\SystemForms\frmLoading.cs">
 			<SubType>Form</SubType>
 		</Compile>
-		<Compile Update="Forms\SystemForms\frmLogin.cs" />
 		<Compile Update="Forms\ucEventInInfo.cs">
 			<SubType>UserControl</SubType>
 		</Compile>

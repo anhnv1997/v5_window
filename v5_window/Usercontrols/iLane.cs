@@ -11,9 +11,6 @@ namespace iParkingv5_window.Usercontrols
 {
     public interface iLane
     {
-        bool isScale { get; set; }
-        int ScaleValue { get; set; }
-
         event OnControlSizeChanged onControlSizeChangeEvent;
         event OnChangeLaneEvent OnChangeLaneEvent;
         Lane lane { get; set; }

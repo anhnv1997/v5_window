@@ -54,7 +54,7 @@ namespace iParkingv5_window.Forms.SystemForms
             for (int i = 0; i < StaticPool.lanes.Count; i++)
             {
                 CheckBox chb = new CheckBox();
-                chb.Name = StaticPool.lanes[i].id;
+                chb.Name = StaticPool.lanes[i].Id;
                 chb.Text = StaticPool.lanes[i].name;
                 panelActiveLanes.Controls.Add(chb);
                 chb.Location = new Point(0, (chb.Height + TextManagement.ROOT_SIZE) * i);
@@ -133,7 +133,7 @@ namespace iParkingv5_window.Forms.SystemForms
             }
             foreach (var lane in StaticPool.lanes)
             {
-                if (activeLaneIds.Contains(lane.id))
+                if (activeLaneIds.Contains(lane.Id))
                 {
                     lanes.Add(lane);
                 }

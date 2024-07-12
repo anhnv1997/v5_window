@@ -13,9 +13,6 @@
     <Compile Update="Forms\DataForms\frmSelectVehicle.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\DataForms\Registers\frmCustomerRegister.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Forms\DataForms\frmSetShortCutKey.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -31,28 +28,13 @@
     <Compile Update="Forms\DataForms\frmTestLedDisplay.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\DataForms\Registers\frmRegisteredList.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\DataForms\Registers\frmWalkerRegister.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Forms\frmEditNote.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\frmEditPlate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\frmSelectWarehouseType.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\frmTest.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Forms\SystemForms\frmLoading.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\SystemForms\frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\SystemForms\frmSelectLaneMode.cs">
@@ -66,6 +48,12 @@
     </Compile>
     <Compile Update="Usercontrols\CameraConfiguration\frmCameraConfigSet.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Usercontrols\ControllerConfiguration\ucControllerReaderCardFormat.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Usercontrols\ControllerConfiguration\ucControllerCardFormat.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Usercontrols\LaneConfiguration\ucLaneDirectionConfig.cs">
       <SubType>UserControl</SubType>
@@ -113,6 +101,9 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Usercontrols\ucAlarmInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Usercontrols\ucBaseLane.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Usercontrols\ucCameraView.cs">

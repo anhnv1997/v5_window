@@ -11,14 +11,14 @@ namespace iParkingv5_window.Usercontrols
 {
     public static class LaneFactory
     {
-        public static iLane CreateLane(Lane lane, LaneDisplayConfig? laneDisplayConfig, bool isDisplayLastEvent, bool isScale)
+        public static iLane CreateLane(Lane lane, LaneDisplayConfig? laneDisplayConfig)
         {
             switch ((EmLaneDirection)(lane.type + 1))
             {
                 case EmLaneDirection.IN:
-                    return new ucLaneIn(lane, laneDisplayConfig, isDisplayLastEvent, isScale);
+                    return new ucLaneIn(lane, laneDisplayConfig);
                 case EmLaneDirection.OUT:
-                    return new ucLaneOut(lane, laneDisplayConfig, isDisplayLastEvent, isScale);
+                    return new ucLaneOut(lane, laneDisplayConfig);
                 default:
                     throw new Exception("Thông tin làn không hợp lệ, hãy kiểm tra lại thông tin thiết lập!");
             }

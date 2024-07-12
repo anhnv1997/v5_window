@@ -4,7 +4,6 @@ using iParkingv5.Lpr.Objects;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
 using iParkingv5_window;
-using iParkingv6.ApiManager.KzParkingv3Apis;
 using Kztek.Tool;
 using Kztek.Tools;
 using System.Diagnostics;
@@ -82,7 +81,8 @@ namespace v5_IScale
                         LoadSystemConfig();
                         CheckForUpdate();
                         LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Mở giao diện đăng nhập hệ thống");
-                        Application.Run(new frmLogin());
+                        Application.Run(new frmLogin(AppData.ApiServer, KzParkingv5BaseApi.server, OpenLoadingPage));
+
                     }
                     else
                     {
@@ -126,8 +126,7 @@ namespace v5_IScale
                 MinioHelper.EndPoint = StaticPool.serverConfig.MinioServerUrl;
                 MinioHelper.AccessKey = StaticPool.serverConfig.MinioServerUsername;
                 MinioHelper.SecretKey = StaticPool.serverConfig.MinioServerPassword;
-                KzParkingApiHelper.server = StaticPool.serverConfig.ParkingServerUrl;
-                KzParkingv5ApiHelper.server = StaticPool.serverConfig.ParkingServerUrl;
+                KzParkingv5BaseApi.server = StaticPool.serverConfig.ParkingServerUrl;
 
                 StaticPool.sharedPreferences = NewtonSoftHelper<SharedPreferences>.DeserializeObjectFromPath(PathManagement.sharedPreferencesPath()) ?? new SharedPreferences();
             }
@@ -250,6 +249,10 @@ namespace v5_IScale
                 MessageBox.Show(ex.Message);
             }
         }
-
+        static void OpenLoadingPage()
+        {
+            frmLoading frm = new();
+            frm.Show();
+        }
     }
 }

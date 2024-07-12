@@ -38,7 +38,7 @@ namespace iParkingv5_window.Forms.DataForms
                 this.Controls.Add(radioButton);
                 radioButton.Location = new Point(lblTitle.Location.X,
                                                 lblTitle.Location.Y + lblTitle.Height + 10 * (index + 1) + radioButton.Height * index);
-                if (index ==0)
+                if (index == 0)
                 {
                     radioButton.Checked = true;
                 }

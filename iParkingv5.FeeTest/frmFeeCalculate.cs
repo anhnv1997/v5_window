@@ -67,7 +67,7 @@ namespace iParkingv5.FeeTest
         }
         private async void LoadCT()
         {
-            IdentityGroups = (await ApiServer.GetIdentityGroupsAsync())?.Item1 ?? new List<IdentityGroup>();
+            IdentityGroups = (await ApiServer.parkingDataService.GetIdentityGroupsAsync())?.Item1 ?? new List<IdentityGroup>();
             var listItems = new List<ListItem>();
             foreach (var item in IdentityGroups)
             {
@@ -121,7 +121,7 @@ namespace iParkingv5.FeeTest
                     return;
                 }
 
-                string feeMoney = await ApiServer.GetFeeCalculate(dateTimeInUTC, dateTimeOutUTC, cbbIdentityGroup.SelectedValue.ToString());
+                string feeMoney = await ApiServer.parkingProcessService.GetFeeCalculate(dateTimeInUTC, dateTimeOutUTC, cbbIdentityGroup.SelectedValue.ToString());
                 NumberFormatInfo num = new CultureInfo("de-DE", false).NumberFormat;
                 if(feeMoney != "")
                 {

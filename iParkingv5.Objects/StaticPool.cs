@@ -5,14 +5,15 @@ using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.Datas.Device_service;
 using iParkingv5.Objects.Datas.parking_service;
 using iParkingv5.Objects.Datas.system_service;
-using iParkingv5.Objects.Datas.warehouse_service;
+using iParkingv5.Objects.Datas.weighing_service;
 using iParkingv6.Objects.Datas;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace iParkingv5.Objects
 {
-    public class StaticPool
+    public static class StaticPool
     {
         public static int baseSize = 12;
         public static WeighingDetailCollection WeighingDetailCollection = new WeighingDetailCollection();
@@ -61,5 +62,7 @@ namespace iParkingv5.Objects
             string updateFilePathVersion = updateFileVersionInfo.FileVersion;
             return updateFilePathVersion;
         }
+
+        
     }
 }

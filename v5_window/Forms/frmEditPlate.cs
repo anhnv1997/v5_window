@@ -31,8 +31,8 @@ namespace iParkingv5_window.Forms
                 txtNewPlate.Text = txtNewPlate.Text.ToUpper();
 
                 bool isUpdateSuccess = isEventIn?
-                            await AppData.ApiServer.UpdateEventInPlateAsync(this.eventId, txtNewPlate.Text, lblCurrentPlate.Text):
-                            await AppData.ApiServer.UpdateEventOutPlate(this.eventId, txtNewPlate.Text, lblCurrentPlate.Text) 
+                            await AppData.ApiServer.parkingProcessService.UpdateEventInPlateAsync(this.eventId, txtNewPlate.Text, lblCurrentPlate.Text):
+                            await AppData.ApiServer.parkingProcessService.UpdateEventOutPlate(this.eventId, txtNewPlate.Text, lblCurrentPlate.Text) 
                             ;
                 if (isUpdateSuccess)
                 {
@@ -56,8 +56,8 @@ namespace iParkingv5_window.Forms
         {
             txtNewPlate.Text = txtNewPlate.Text.ToUpper();
             bool isUpdateSuccess = isEventIn ?
-                            await AppData.ApiServer.UpdateEventInPlateAsync(this.eventId, txtNewPlate.Text.ToUpper(), lblCurrentPlate.Text) :
-                            await AppData.ApiServer.UpdateEventOutPlate(this.eventId, txtNewPlate.Text.ToUpper(), lblCurrentPlate.Text)
+                            await AppData.ApiServer.parkingProcessService.UpdateEventInPlateAsync(this.eventId, txtNewPlate.Text.ToUpper(), lblCurrentPlate.Text) :
+                            await AppData.ApiServer.parkingProcessService.UpdateEventOutPlate(this.eventId, txtNewPlate.Text.ToUpper(), lblCurrentPlate.Text)
                             ;
             if (isUpdateSuccess)
             {

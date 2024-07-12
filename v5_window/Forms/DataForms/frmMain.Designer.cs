@@ -38,13 +38,6 @@
             tsmiReportIn = new ToolStripMenuItem();
             tsmiReportInOut = new ToolStripMenuItem();
             tsmiAlarmReport = new ToolStripMenuItem();
-            đăngKýToolStripMenuItem = new ToolStripMenuItem();
-            btnRegisterCar = new ToolStripMenuItem();
-            btnRegisterMotor = new ToolStripMenuItem();
-            btnRegisterWalker = new ToolStripMenuItem();
-            btnRegisterList = new ToolStripMenuItem();
-            tsmiScaleReport = new ToolStripMenuItem();
-            btnScaleReport = new ToolStripMenuItem();
             panelMain = new Panel();
             ucViewGrid1 = new Usercontrols.ucViewGrid();
             panelAppStatus = new Panel();
@@ -73,7 +66,7 @@
             // menuStrip1
             // 
             menuStrip1.Font = new Font("Segoe UI", 12F);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { miSystem, miReport, đăngKýToolStripMenuItem, tsmiScaleReport });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { miSystem, miReport });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(5, 2, 0, 2);
@@ -135,58 +128,6 @@
             tsmiAlarmReport.Text = "Sự kiện cảnh báo";
             tsmiAlarmReport.Visible = false;
             tsmiAlarmReport.Click += tsmiAlarmReport_Click;
-            // 
-            // đăngKýToolStripMenuItem
-            // 
-            đăngKýToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { btnRegisterCar, btnRegisterMotor, btnRegisterWalker, btnRegisterList });
-            đăngKýToolStripMenuItem.Name = "đăngKýToolStripMenuItem";
-            đăngKýToolStripMenuItem.Size = new Size(79, 25);
-            đăngKýToolStripMenuItem.Text = "Đăng ký";
-            đăngKýToolStripMenuItem.Visible = false;
-            // 
-            // btnRegisterCar
-            // 
-            btnRegisterCar.Image = (Image)resources.GetObject("btnRegisterCar.Image");
-            btnRegisterCar.Name = "btnRegisterCar";
-            btnRegisterCar.Size = new Size(211, 26);
-            btnRegisterCar.Text = "Ô tô";
-            // 
-            // btnRegisterMotor
-            // 
-            btnRegisterMotor.Image = (Image)resources.GetObject("btnRegisterMotor.Image");
-            btnRegisterMotor.Name = "btnRegisterMotor";
-            btnRegisterMotor.Size = new Size(211, 26);
-            btnRegisterMotor.Text = "Xe máy";
-            // 
-            // btnRegisterWalker
-            // 
-            btnRegisterWalker.Image = (Image)resources.GetObject("btnRegisterWalker.Image");
-            btnRegisterWalker.Name = "btnRegisterWalker";
-            btnRegisterWalker.Size = new Size(211, 26);
-            btnRegisterWalker.Text = "Người đi bộ";
-            btnRegisterWalker.Visible = false;
-            // 
-            // btnRegisterList
-            // 
-            btnRegisterList.Image = (Image)resources.GetObject("btnRegisterList.Image");
-            btnRegisterList.Name = "btnRegisterList";
-            btnRegisterList.Size = new Size(211, 26);
-            btnRegisterList.Text = "Danh sách đăng ký";
-            btnRegisterList.Visible = false;
-            // 
-            // tsmiScaleReport
-            // 
-            tsmiScaleReport.DropDownItems.AddRange(new ToolStripItem[] { btnScaleReport });
-            tsmiScaleReport.Name = "tsmiScaleReport";
-            tsmiScaleReport.Size = new Size(104, 25);
-            tsmiScaleReport.Text = "Báo cáo cân";
-            // 
-            // btnScaleReport
-            // 
-            btnScaleReport.Name = "btnScaleReport";
-            btnScaleReport.Size = new Size(202, 26);
-            btnScaleReport.Text = "Báo cáo tổng hợp";
-            btnScaleReport.Click += btnScaleReport_Click;
             // 
             // panelMain
             // 
@@ -439,14 +380,7 @@
         private ToolStripMenuItem tsmiAlarmReport;
         private System.Windows.Forms.Timer timerUpdateControllerConnection;
         private ToolStripMenuItem tsmiActiveLanesConfig;
-        private ToolStripMenuItem đăngKýToolStripMenuItem;
-        private ToolStripMenuItem btnRegisterCar;
-        private ToolStripMenuItem btnRegisterMotor;
-        private ToolStripMenuItem btnRegisterWalker;
-        private ToolStripMenuItem btnRegisterList;
         private Label lblScale;
-        private ToolStripMenuItem tsmiScaleReport;
-        private ToolStripMenuItem btnScaleReport;
         private System.Windows.Forms.Timer timerRestartSockerServer;
         private System.Windows.Forms.Timer timerClearLog;
         private Label lblUserNaem;

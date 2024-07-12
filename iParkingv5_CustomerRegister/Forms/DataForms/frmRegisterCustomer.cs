@@ -1,11 +1,12 @@
 ﻿
 using DahuaLib.DahuaFuntion;
 using IPaking.Ultility;
+using iParkingv5.FeeTest;
 using iParkingv5.Objects.Datas.parking_service;
 using iParkingv5_CustomerRegister.Databases;
 using iParkingv5_CustomerRegister.Forms;
 using iParkingv5_CustomerRegister.UserControls;
-using iParkingv6.ApiManager.KzParkingv3Apis;
+using iParkingv5_window;
 
 namespace iParkingv5_CustomerRegister
 {
@@ -41,7 +42,7 @@ namespace iParkingv5_CustomerRegister
             txtCustomerCode.Width = btnSearchCustomer.Location.X + btnSearchCustomer.Width - txtCustomerCode.Location.X;
             lblCustomerCode.Location = new Point(lblCustomerName.Location.X, txtCustomerCode.Location.Y + (txtCustomerCode.Height - lblCustomerCode.Height) / 2);
 
-            
+
             txtCustomerName.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             btnSearchCustomer.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             txtCustomerCode.Anchor = AnchorStyles.Top | AnchorStyles.Left;
@@ -116,7 +117,7 @@ namespace iParkingv5_CustomerRegister
             }
         }
 
-       
+
         private void BtnConfirm_MouseLeave(object? sender, EventArgs e)
         {
             this.Cursor = Cursors.Default;
@@ -156,8 +157,8 @@ namespace iParkingv5_CustomerRegister
                 Name = customerName,
                 Code = customerCode
             };
-            var createCustomerResponse = await KzParkingApiHelper.CreateCustomer(customer);
-            if (!createCustomerResponse.Item1)
+            var createCustomerResponse = await AppData.ApiServer.parkingDataService.CreateCustomer(customer);
+            if (createCustomerResponse.Item1 == null)
             {
                 MessageBox.Show(createCustomerResponse.Item2, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 btnAdd.Enabled = true;

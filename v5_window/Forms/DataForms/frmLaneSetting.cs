@@ -1,5 +1,6 @@
 ﻿using iParkingv5.Objects.Datas.Device_service;
 using iParkingv5_window.Usercontrols;
+using iParkingv5_window.Usercontrols.ControllerConfiguration;
 using iParkingv5_window.Usercontrols.LaneConfiguration;
 using iParkingv6.Objects.Datas;
 
@@ -11,19 +12,19 @@ namespace iParkingv5_window.Forms.DataForms
         #region Properties
         private List<Led> leds = new List<Led>();
         private List<Camera> cameras = new List<Camera>();
-        private List<ControllerInLane> bdks = new List<ControllerInLane>();
+        private List<ControllerInLane> controllerInLanes = new List<ControllerInLane>();
         private string laneId = string.Empty;
         private bool isLaneIn = false;
         #endregion End Properties
 
         #region Forms
-        public frmLaneSetting(string laneId, List<Led> leds, List<Camera> cameras, List<ControllerInLane> bdks, bool isLaneIn)
+        public frmLaneSetting(string laneId, List<Led> leds, List<Camera> cameras, List<ControllerInLane> controllerInLanes, bool isLaneIn)
         {
             InitializeComponent();
             this.leds = leds;
             this.cameras = cameras;
             this.laneId = laneId;
-            this.bdks = bdks;
+            this.controllerInLanes = controllerInLanes;
             this.isLaneIn = isLaneIn;
             this.Load += FrmLaneSetting_Load;
         }
@@ -38,13 +39,17 @@ namespace iParkingv5_window.Forms.DataForms
             tabCameraConfig.Controls.Add(ucCameraConfig);
             ucCameraConfig.Dock = DockStyle.Fill;
 
-            ucShortcutConfig ucLaneShortcutConfig = new ucShortcutConfig(this.laneId, this.bdks, this.isLaneIn);
+            ucShortcutConfig ucLaneShortcutConfig = new ucShortcutConfig(this.laneId, this.controllerInLanes, this.isLaneIn);
             tabShortcut.Controls.Add(ucLaneShortcutConfig);
             ucLaneShortcutConfig.Dock = DockStyle.Fill;
 
             ucLaneDirectionConfig ucLaneDirectionConfig = new ucLaneDirectionConfig(this.laneId);
             tabDisplayConfig.Controls.Add(ucLaneDirectionConfig);
             ucLaneDirectionConfig.Dock = DockStyle.Fill;
+
+            ucControllerCardFormat ucControllerCardFormat = new ucControllerCardFormat(this.controllerInLanes, this.laneId);
+            tabController.Controls.Add(ucControllerCardFormat);
+            ucControllerCardFormat.Dock = DockStyle.Fill;
         }
         #endregion End Forms
     }

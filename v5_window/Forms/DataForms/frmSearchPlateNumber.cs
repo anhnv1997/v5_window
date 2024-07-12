@@ -3,7 +3,6 @@ using iPakrkingv5.Controls.Controls.Buttons;
 using iPakrkingv5.Controls.Usercontrols.BuildControls;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Enums;
-using iParkingv6.ApiManager.KzParkingv3Apis;
 using System.Runtime.InteropServices;
 using iPakrkingv5.Controls;
 using iParkingv5.ApiManager.KzParkingv5Apis;
@@ -119,11 +118,11 @@ namespace iParkingv5_CustomerRegister.Forms
             dgvData.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
 
             //var registerVehicles = await KzParkingApiHelper.GetRegisteredVehicles(txtKeyword.Text);
-            var registerVehicles = (await  AppData.ApiServer.GetRegisterVehiclesAsync(txtKeyword.Text)).Item1;
+            var registerVehicles = (await AppData.ApiServer.parkingDataService.GetRegisterVehiclesAsync(txtKeyword.Text)).Item1;
             //var customers = await KzParkingApiHelper.GetAllCustomers();
-            var customers = (await  AppData.ApiServer.GetCustomersAsync()).Item1;
+            var customers = (await AppData.ApiServer.parkingDataService.GetCustomersAsync()).Item1;
             //var vehicleTypes = await KzParkingApiHelper.GetAllVehicleTypes();
-            var vehicleTypes = (await  AppData.ApiServer.GetVehicleTypesAsync()).Item1;
+            var vehicleTypes = (await AppData.ApiServer.parkingDataService.GetVehicleTypesAsync()).Item1;
             if (registerVehicles != null)
             {
                 if (registerVehicles != null)
@@ -131,14 +130,14 @@ namespace iParkingv5_CustomerRegister.Forms
                     for (int i = 0; i < registerVehicles.Count; i++)
                     {
                         string vehicleId = registerVehicles[i].Id;
-                        string vehicleTypeId = registerVehicles[i].VehicleTypeId.ToString();
+                        string vehicleTypeId = registerVehicles[i].vehicleType.ToString();
                         string customerID = registerVehicles[i].CustomerId;
 
                         Customer.GetCustomerName(customers, customerID, out string customerName, out string customerCode,
                                                                               out string customerGroupId, out string customerGroupName);
                         dgvData.Rows.Add(i + 1, registerVehicles[i].Name,
                                                 registerVehicles[i].PlateNumber,
-                                                VehicleType.GetVehicleTypeName(vehicleTypes, registerVehicles[i].VehicleTypeId),
+                                                VehicleType.GetDisplayStr(registerVehicles[i].vehicleType),
                                                 customerName,
                                                 customerCode,
                                                 customerGroupName,

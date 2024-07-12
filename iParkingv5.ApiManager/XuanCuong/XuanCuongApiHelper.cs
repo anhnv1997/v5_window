@@ -1,9 +1,7 @@
 ﻿using iParkingv6.ApiManager;
-using iParkingv6.ApiManager.KzParkingv3Apis;
 using Kztek.Tool;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace iParkingv5.ApiManager.XuanCuong

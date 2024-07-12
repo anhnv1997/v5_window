@@ -1,14 +1,11 @@
 ﻿using IPaking.Ultility;
-using iParkingv5.ApiManager.KzParkingv5Apis;
-using iParkingv5.ApiManager.KzScaleApis;
 using iParkingv5.Controller;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
-using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.Datas;
 using iParkingv5.Objects.Datas.Device_service;
 using iParkingv5.Objects.Datas.parking_service;
-using iParkingv5.Objects.Datas.warehouse_service;
+using iParkingv5.Objects.Datas.weighing_service;
 using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.EventDatas;
 using iParkingv5.Objects.Events;
@@ -17,95 +14,38 @@ using iParkingv5_window.Forms.DataForms;
 using iParkingv5_window.Helpers;
 using iParkingv6.Objects.Datas;
 using Kztek.Tool;
-using Kztek.Tool.TextFormatingTools;
 using Kztek.Tools;
+using KztekObject.Cards;
 using System.Data;
-using v5_IScale.Forms;
-using static iParkingv5.ApiManager.interfaces.iParkingApi;
-using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5ApiHelper;
+using System.Globalization;
+using System.Text.RegularExpressions;
 using static iParkingv5.Objects.Configs.LaneDirectionConfig;
-using static iParkingv5.Objects.Enums.LaneDisplayMode;
+using static iParkingv5.Objects.Enums.ParkingImageType;
 using static iParkingv5.Objects.Enums.PrintHelpers;
 using static iParkingv5.Objects.Enums.VehicleType;
 
 namespace iParkingv5_window.Usercontrols
 {
-    public partial class ucLaneIn : UserControl, iLane, IDisposable
+    public partial class ucLaneIn : ucBaseLane, iLane, IDisposable
     {
-        public bool isScale { get; set; }
-        private int scaleValue;
-        public int ScaleValue
-        {
-            get => scaleValue;
-            set
-            {
-                scaleValue = value;
-                try
-                {
-                    lblScaleInfo.Invoke(new Action(() =>
-                    {
-                        lblScaleInfo.Text = scaleValue.ToString();
-                    }));
-                }
-                catch (Exception)
-                {
-
-                }
-            }
-        }
-
         #region PROPERTIES
-        public event OnControlSizeChanged? onControlSizeChangeEvent;
-
-        #region -- Data
-        public Lane lane { get; set; }
-        private Dictionary<CameraPurposeType.EmCameraPurposeType, List<Camera>> cameras = new Dictionary<CameraPurposeType.EmCameraPurposeType, List<Camera>>();
-        private List<Kztek.Cameras.Camera> camBienSoXeMayDuPhongs = new List<Kztek.Cameras.Camera>();
-        private List<Kztek.Cameras.Camera> camBienSoOTODuPhongs = new List<Kztek.Cameras.Camera>();
-        private List<Kztek.Cameras.Camera> OtherCams = new List<Kztek.Cameras.Camera>();
-        #endregion
-
-        #region -- Controls In Lane
-        ucCameraView? ucOverView = null;
-        ucCameraView? ucMotoLpr = null;
-        ucCameraView? ucCarLpr = null;
-        private bool isShowOtherCam = false;
-        #endregion
-
         #region Config
         private LaneInShortcutConfig? laneInShortcutConfig = null;
-        private List<ControllerShortcutConfig>? controllerShortcutConfigs = null;
-        private LaneDisplayConfig? laneDisplayConfig = null;
         #endregion
 
         #region -- Event Properties
-        EventIn? lastEvent = null;
-
-        private readonly SemaphoreSlim semaphoreSlimOnNewEvent = new SemaphoreSlim(1, 1);
-        private readonly SemaphoreSlim semaphoreSlimOnKeyPress = new SemaphoreSlim(1, 1);
-        public List<CardEventArgs> lastCardEventDatas { get; set; } = new List<CardEventArgs>();
-        public List<InputEventArgs> lastInputEventDatas { get; set; } = new List<InputEventArgs>();
-        public event OnChangeLaneEvent? OnChangeLaneEvent;
-
+        EventInData? lastEvent = null;
         private bool isInRegisterMode = false;
-
         public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
-        List<ucLastEventInfo> ucLastEventInfos = new List<ucLastEventInfo>();
-        private WeighingActionDetail? WeighingActionDetail = null;
         #endregion
 
-        private int printCount = 0;
-        private bool IsAllowDesignRealtime = false;
-
-        LaneDirectionConfig laneDirection = new LaneDirectionConfig();
         #endregion END PROPERTIES
 
         #region FORMS
-        public ucLaneIn(Lane lane, LaneDisplayConfig? laneDisplayConfig, bool isDisplayLastEvent, bool isScale)
+        public ucLaneIn(Lane lane, LaneDisplayConfig? laneDisplayConfig)
         {
             InitializeComponent();
 
-            this.isScale = isScale;
             lblLaneName.Text = lane.name;
             lblLaneName.BackColor = Color.DarkGreen;
 
@@ -114,25 +54,25 @@ namespace iParkingv5_window.Usercontrols
 
             this.DoubleBuffered = true;
 
-            laneDirection = NewtonSoftHelper<LaneDirectionConfig>.DeserializeObjectFromPath(
-                                                        PathManagement.appLaneDirectionConfigPath(this.lane.id)) ?? LaneDirectionConfig.CreateDefault();
-            panelDisplayLastEVent.Visible = laneDirection.IsDisplayLastEvent;
+            laneDirection = NewtonSoftHelper<LaneDirectionConfig>.DeserializeObjectFromPath(PathManagement.appLaneDirectionConfigPath(this.lane.Id)) ??
+                            LaneDirectionConfig.CreateDefault();
+
+            panelDisplayLastEvent.Visible = laneDirection.IsDisplayLastEvent;
             splitContainerMain.Panel2Collapsed = laneDirection.IsDisplayLastEvent ? false : true;
-            panelLastEvent.Visible = isDisplayLastEvent;
-            panelScaleAction.Visible = isScale;
-            lblScaleFee.Text = TextFormatingTool.GetMoneyFormat("0");
+            panelLastEvent.Visible = laneDirection.IsDisplayLastEvent;
+
             this.Load += UcLaneIn_Load;
         }
-        
+
         private async void UcLaneIn_Load(object? sender, EventArgs e)
         {
             GetShortcutConfig();
-            LoadCamera();
+            LoadCamera(panelCameras);
+
             await CreateUI();
             RegisterUIEvent();
 
             this.ActiveControl = lblLaneName;
-            panelOversizeCam.Size = panelCameras.Size;
 
             SetDisplayDirection();
             DisplayUIConfig();
@@ -159,473 +99,11 @@ namespace iParkingv5_window.Usercontrols
         #endregion END FORMS
 
         #region EVENT
-        public async Task ExcecuteInputEvent(InputEventArgs ie)
-        {
-            foreach (ControllerInLane controllerInLane in lane.controlUnits)
-            {
-                if (controllerInLane.controlUnitId.ToLower() != ie.DeviceId.ToLower())
-                {
-                    //Danh sách đăng ký có không có cấu hình của thiết bị ==> Bỏ qua
-                    continue;
-                }
-                if (!controllerInLane.inputs.Contains(ie.InputIndex))
-                {
-                    //Danh sách đăng ký có không có input của sự kiện ==> Bỏ qua
-                    continue;
-                }
-
-                switch (ie.InputType)
-                {
-                    case InputTupe.EmInputType.Loop:
-                        if (StaticPool.appOption.LoopDelay > 0)
-                        {
-                            await Task.Delay(StaticPool.appOption.LoopDelay);
-                            lblResult.UpdateResultMessage($"Nhận sự kiên Loop {ie.InputIndex}, chờ {StaticPool.appOption.LoopDelay} ms ", Color.DarkBlue);
-                        }
-                        await ExcecuteLoopEvent(ie);
-                        break;
-                    case InputTupe.EmInputType.Exit:
-                        await ExcecuteExitEvent(ie);
-                        break;
-                    case InputTupe.EmInputType.Alarm:
-                        break;
-                    case InputTupe.EmInputType.CardbeTaken:
-                        break;
-                    default:
-                        break;
-                }
-                return;
-            }
-        }
-
-        /// <summary>
-        /// Sự kiện xảy ra khi xe đi qua vòng từ
-        /// </summary>
-        /// <param name="ie"></param>
-        /// <returns></returns>
-        public async Task ExcecuteLoopEvent(InputEventArgs ie)
-        {
-            EventInData? eventIn = null;
-            string errorMessage = string.Empty;
-
-            //Danh sách biến sử dụng
-            Image? vehicleImg = null;
-            Image? overviewImage = null;
-            List<Image?> optionalImages = new();
-            string imageKey = string.Empty;
-            VehicleType? vehicleType = null;
-            Customer? customer = null;
-            lblResult.UpdateResultMessage("Đang kiểm trang thông tin sự kiện loop..." + ie.InputIndex, Color.DarkBlue);
-            overviewImage = ucOverView?.GetFullCurrentImage();
-            string plate = "";
-            Image? lprImage = null;
-            int retry = 0;
-            RegisteredVehicle? registeredVehicle = null;
-            bool isAlarm = false;
-        LprDetecter:
-            {
-                if (ucCarLpr != null)
-                {
-                    BaseLane.GetPlate(this.lane.id, out Image? carImage, out plate, out lprImage, ucCarLpr, camBienSoOTODuPhongs, true);
-                    if (string.IsNullOrEmpty(plate))
-                    {
-                        BaseLane.GetPlate(this.lane.id, out Image? motorImage, out plate, out lprImage, ucMotoLpr, camBienSoXeMayDuPhongs, false);
-                        vehicleImg = string.IsNullOrEmpty(plate) ? carImage : motorImage;
-                    }
-                    else
-                    {
-                        vehicleImg = carImage;
-                    }
-                }
-                else
-                {
-                    BaseLane.GetPlate(this.lane.id, out vehicleImg, out plate, out lprImage, ucMotoLpr, camBienSoXeMayDuPhongs, false);
-                }
-                //registeredVehicle = await KzParkingApiHelper.GetRegisteredVehicle(plate);
-                registeredVehicle = (await AppData.ApiServer.GetRegistedVehilceByPlateAsync(plate)).Item1;
-                if (string.IsNullOrEmpty(plate) || registeredVehicle == null)
-                {
-                    if (retry < StaticPool.appOption.RetakePhotoTimes)
-                    {
-                        retry++;
-                        await Task.Delay(StaticPool.appOption.RetakePhotoDelay);
-                        goto LprDetecter;
-                    }
-                }
-                else
-                {
-                    plate = registeredVehicle.PlateNumber;
-                }
-            }
-
-            //Hiển thị thông tin hình ảnh phương tiện
-            BaseLane.ShowImage(picVehicleImage, vehicleImg);
-            BaseLane.ShowImage(picOverviewImage, overviewImage);
-
-            //Không đọc được biển số hoặc biển số đọc được không hợp lệ, hiểm thị hình ảnh toàn cảnh và kết thúc sự kiện
-            if (string.IsNullOrEmpty(plate) || plate.Length < 5)
-            {
-                lblResult.UpdateResultMessage("Không đọc được thông tin biển số xe", Color.DarkRed);
-                return;
-            }
-            //Đọc thông tin định danh từ thông tin biển số nhận được
-            else
-            {
-                ClearView();
-                imageKey = BaseLane.GetBaseImageKey(this.lane.name, "", plate, ie.EventTime);
-                lblResult.UpdateResultMessage("Đang check in..." + plate, Color.DarkBlue);
-                BaseLane.ShowImage(picLprImage, lprImage);
-                txtPlate.Invoke(new Action(() =>
-                {
-                    txtPlate.Text = plate;
-                }));
-
-                //Đọc thông tin loại phương tiện
-                if (registeredVehicle == null)
-                {
-                    lblResult.UpdateResultMessage("Phương tiện chưa được đăng ký trong hệ thống", Color.DarkRed);
-                    return;
-                }
-
-                string vehicleTypeId = registeredVehicle.VehicleTypeId;
-                string customerId = registeredVehicle.CustomerId;
-
-                vehicleType = (await AppData.ApiServer.GetVehicleTypeByIdAsync(vehicleTypeId.ToString())).Item1;
-                if (!string.IsNullOrEmpty(customerId))
-                {
-                    customer = (await AppData.ApiServer.GetCustomerByIdAsync(customerId)).Item1;
-                }
-                Dictionary<emParkingImageType, List<byte>> imageDatas = new Dictionary<emParkingImageType, List<byte>>
-                {
-                    { emParkingImageType.Overview, overviewImage.ImageToByteArray() },
-                    { emParkingImageType.Vehicle, vehicleImg.ImageToByteArray() },
-                    { emParkingImageType.Plate, lprImage.ImageToByteArray() }
-                };
-
-            CheckInNormal:
-                {
-                    eventIn = await AppData.ApiServer.PostCheckInAsync(lane.id, plate, null, imageDatas, false, null, txtNote.Text);
-                    if (eventIn == null)
-                    {
-                        goto LOI_HE_THONG;
-                    }
-                    if (eventIn.OpenBarrier)
-                    {
-                        ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
-                                                              where _controllerInLane.controlUnitId == ie.DeviceId
-                                                              select _controllerInLane).FirstOrDefault();
-                        await BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
-                    }
-                    goto SU_KIEN_HOP_LE;
-                }
-
-            CheckInWithForce:
-                {
-                    eventIn = await AppData.ApiServer.PostCheckInAsync(lane.id, plate, null, imageDatas, true, null, txtNote.Text);
-                    if (eventIn == null)
-                    {
-                        goto LOI_HE_THONG;
-                    }
-                    else
-                    {
-                        //eventIn = responseWithForce.data;
-                        if (eventIn.OpenBarrier)
-                        {
-                            ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
-                                                                  where _controllerInLane.controlUnitId == ie.DeviceId
-                                                                  select _controllerInLane).FirstOrDefault();
-                            await BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
-                        }
-                        goto SU_KIEN_HOP_LE;
-                    }
-                }
-            LOI_HE_THONG:
-                {
-                    ExcecuteSystemErrorCheckIn();
-                    return;
-                }
-            SU_KIEN_LOI:
-                {
-                    ExcecuteUnvalidEvent(null, null, vehicleType.Type, plate, ie.EventTime, errorMessage, null, "");
-                    return;
-                }
-            SU_KIEN_HOP_LE:
-                {
-                    //if (eventIn.registeredVehicle != null)
-                    //{
-                    //    plate = eventIn.registeredVehicle.PlateNumber;
-                    //}
-                    await ExcecuteValidEvent(null, null, vehicleType.Type, plate, ie.EventTime, overviewImage,
-                                            vehicleImg, lprImage, eventIn, isAlarm, imageDatas, optionalImages);
-                    return;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Sự kiện xảy ra khi người dùng bấm nút EXIT (nút cứng) để ra lệnh mở barrie
-        /// </summary>
-        /// <param name="ie"></param>
-        /// <returns></returns>
-        public async Task ExcecuteExitEvent(InputEventArgs ie)
-        {
-            lblResult.UpdateResultMessage("Đang kiểm trang thông tin sự kiện exit..." + ie.InputIndex, Color.DarkBlue);
-            //--Chưa có sự kiện vào hoặc thời gian từ lúc có sự kiện đến khi bấm mở barrie quá 5s thì lưu sự kiện cảnh báo
-            if (lastEvent == null)
-            {
-                var imageData = SaveAllCameraImage();
-                await AppData.ApiServer.CreateAlarmAsync("", this.lane.id, "", AbnormalCode.OpenBarrierByButton, imageData, true, "", "", "", "");
-                return;
-            }
-
-            //Đã có sự kiện trước đó kiểm tra xem có trong thời gian cho phép mở ko
-            if ((DateTime.Now - lastEvent.DatetimeIn)?.TotalSeconds >= StaticPool.appOption.AllowBarrieDelayOpenTime)
-            {
-                var imageData = SaveAllCameraImage();
-
-                await AppData.ApiServer.CreateAlarmAsync(lastEvent.Identity?.Code, this.lane.id, lastEvent.PlateNumber, AbnormalCode.OpenBarrierByButton,
-                                                          imageData, true,
-                                                          lastEvent?.IdentityGroupId, lastEvent?.customer?.Id,
-                                                          lastEvent?.RegisteredVehicle?.Id, "");
-            }
-        }
-
-        /// <summary>
-        /// Sự kiện xảy ra khi người dùng quẹt thẻ trên đầu đọc, hoặc đầu đọc xa phát hiện thẻ
-        /// </summary>
-        /// <param name="ce"></param>
-        /// <returns></returns>
-        public async Task ExcecuteCardEvent(CardEventArgs ce)
-        {
-            if (!this.CheckNewCardEvent(this.lane, ce, out ControllerInLane? controllerInLane, out int thoiGianCho))
-            {
-                if (thoiGianCho > 0)
-                {
-                    lblResult.UpdateResultMessage($"Đang trong thời gian chờ, vui lòng quẹt lại sau {thoiGianCho}s", Color.DarkBlue);
-                }
-                return;
-            }
-
-            ClearView();
-            //Danh sách biến sử dụng
-            Image? overviewImg = null;
-            Image? vehicleImg = null;
-
-            lblResult.UpdateResultMessage("Đang kiểm tra thông tin sự kiện quẹt thẻ..." + ce.PreferCard, Color.DarkBlue);
-
-            #region Kiểm tra thông tin định danh
-            var identityResponse = await IsValidIdentity(ce.PreferCard);
-            if (!identityResponse.Item1)
-            {
-                return;
-            }
-            Identity? identity = identityResponse.Item2!;
-            identity = (await AppData.ApiServer.GetIdentityByIdAsync(identity.Id)).Item1;
-            if (identity == null)
-            {
-                lblResult.UpdateResultMessage("Không đọc được thông tin định danh, vui lòng thử lại", Color.DarkRed);
-                return;
-            }
-            #endregion End kiểm tra thông tin định danh
-
-            #region Kiểm tra thông tin nhóm định danh
-            lblResult.UpdateResultMessage("Đọc thông tin nhóm định danh...", Color.DarkBlue);
-            IdentityGroup identityGroup = (await AppData.ApiServer.GetIdentityGroupByIdAsync(identity.IdentityGroupId.ToString()))?.Item1;
-            if (identityGroup == null || identityGroup.Id == Guid.Empty)
-            {
-                lblResult.UpdateResultMessage("Không đọc được thông tin nhóm định danh, vui lòng thử lại",
-                                              Color.DarkRed);
-                return;
-            }
-            #endregion End kiểm tra thông tin nhóm định danh
-
-            #region Kiểm tra thông tin loại phương tiện
-            lblResult.UpdateResultMessage("Đọc thông tin loại phương tiện...", Color.DarkBlue);
-            VehicleBaseType vehicleBaseType = identityGroup.VehicleType;
-            if (vehicleBaseType == VehicleBaseType.Unknown)
-            {
-                lblResult.UpdateResultMessage("Thông tin loại phương tiện không hợp lệ, vui lòng sử dụng thẻ khác", Color.DarkRed);
-                return;
-            }
-
-            List<Image> optionalImages;
-            #endregion End kiểm tra thông tin loại phương tiện
-
-            Image? lprImage = GetPlate(ce, ref overviewImg, ref vehicleImg, vehicleBaseType, out optionalImages);
-
-            //Đọc thông tin loại phương tiện
-            lblResult.UpdateResultMessage("Đang check in..." + ce.PreferCard, Color.DarkBlue);
-            var imageData = new Dictionary<emParkingImageType, List<byte>>();
-
-            try
-            {
-                imageData.Add(emParkingImageType.Overview, overviewImg.ImageToByteArray());
-            }
-            catch (Exception e)
-            {
-            }
-            try
-            {
-                imageData.Add(emParkingImageType.Vehicle, vehicleImg.ImageToByteArray());
-            }
-            catch (Exception e)
-            {
-            }
-            try
-            {
-                imageData.Add(emParkingImageType.Plate, lprImage.ImageToByteArray());
-            }
-            catch (Exception e)
-            {
-            }
-            // Kiểm tra quẹt sai loại thẻ so với lần cuối cùng
-            if (!string.IsNullOrEmpty(ce.PlateNumber))
-            {
-                // Lấy thông tin sự kiện cuối cùng đã ra có biển số  = biển số nhận diện
-                string lastIdentityId = await AppData.ApiServer.GetLastEventOutIdentityGroupIdByPlateNumber(ce.PlateNumber) ?? "";
-                // Kiểm tra thông tin nhóm thẻ của sự kiện cuối cùng == nhóm thẻ hiện tại
-                bool isDifferenceIdentityGroup = lastIdentityId.ToLower() != identityGroup.Id.ToString().ToLower();
-                if (isDifferenceIdentityGroup)
-                {
-                    var lastCardGroup = await AppData.ApiServer.GetIdentityGroupByIdAsync(lastIdentityId);
-                    if (lastCardGroup != null)
-                    {
-                        if (lastCardGroup.Item1 != null)
-                        {
-                            string notifyMessage = $"Chú ý: \r\nNhóm thẻ đang sử dụng: {identityGroup.Name}\r\nNhóm thẻ sử dụng gần nhất: {lastCardGroup.Item1.Name}\r\nBạn có xác nhận sử dụng thẻ cho phương tiện?";
-                            bool isConfirm = MessageBox.Show(notifyMessage, "Thông báo",
-                                                             MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button2) == DialogResult.Yes;
-                            if (!isConfirm)
-                            {
-                                return;
-                            }
-                        }
-
-                    }
-                }
-            }
-
-            bool isMonthCard = identityGroup.Type == IdentityGroupType.Monthly;
-            if (isMonthCard)
-            {
-                await ExcecuteMonthCardEventIn(identity, identityGroup, vehicleBaseType, ce.PlateNumber, imageData,
-                                               ce, controllerInLane,
-                                               overviewImg, vehicleImg, lprImage, optionalImages);
-            }
-            else
-            {
-                await ExcecuteNonMonthCardEventIn(identity, identityGroup, vehicleBaseType, ce.PlateNumber, imageData,
-                                                  ce, controllerInLane,
-                                                  overviewImg, vehicleImg, lprImage, optionalImages);
-            }
-
-        }
-
-        private void FocusOnTitle()
-        {
-            this.Invoke(new Action(() =>
-            {
-                this.ActiveControl = lblLaneName;
-                lblLaneName.Focus();
-            }));
-        }
         public async void OnKeyPress(Keys keys)
         {
             await semaphoreSlimOnKeyPress.WaitAsync();
             try
             {
-                if (StaticPool.appOption.PrintTemplate == (int)EmPrintTemplate.XuanCuong)
-                {
-                    if (keys == Keys.F1)
-                    {
-                        //for (int i = 0; i < 17; i++)
-                        //{
-                        //    await OnNewEvent(new CardEventArgs()
-                        //    {
-                        //        PreferCard = "the" +i.ToString(),
-                        //        DeviceId = "e9bc8a38-9440-4d5a-8033-90cfd7e61ae2",
-                        //        ReaderIndex = 1
-                        //    });
-                        //}
-
-                        if (this.lastEvent != null)
-                        {
-                            bool isConfirm = MessageBox.Show("Bạn có xác nhận đổi sang loại xe nhập?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
-                            if (!isConfirm)
-                            {
-                                return;
-                            }
-                            await AppData.ApiServer.CreateWarehouseService(lastEvent.Id, "", txtPlate.Text, iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper.TransactionType.EmTransactionType.InBound, false);
-                        }
-                    }
-                    if (keys == Keys.F2)
-                    {
-                        if (this.lastEvent != null)
-                        {
-                            bool isConfirm = MessageBox.Show("Bạn có xác nhận đổi sang loại xe xuất?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
-                            if (!isConfirm)
-                            {
-                                return;
-                            }
-                            await AppData.ApiServer.CreateWarehouseService(lastEvent.Id, "", txtPlate.Text, iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper.TransactionType.EmTransactionType.OutBound, false);
-                        }
-                    }
-                    if (keys == Keys.F3)
-                    {
-                        if (this.lastEvent != null)
-                        {
-                            bool isConfirm = MessageBox.Show("Bạn có xác nhận đổi sang loại xe sang tải?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
-                            if (!isConfirm)
-                            {
-                                return;
-                            }
-                            await AppData.ApiServer.CreateWarehouseService(lastEvent.Id, "", txtPlate.Text, iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper.TransactionType.EmTransactionType.Overweight, false);
-                        }
-                    }
-                    if (keys == Keys.F4)
-                    {
-                        if (this.lastEvent != null)
-                        {
-                            bool isConfirm = MessageBox.Show("Bạn có xác nhận đổi sang loại xe khác?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
-                            if (!isConfirm)
-                            {
-                                return;
-                            }
-                            await AppData.ApiServer.CreateWarehouseService(lastEvent.Id, "", txtPlate.Text, iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper.TransactionType.EmTransactionType.Other, false);
-                        }
-                    }
-                    if (keys == Keys.F8)
-                    {
-                        if (this.lastEvent != null)
-                        {
-                            bool isConfirmPrint = MessageBox.Show("Bạn có muốn in phiếu xuất?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
-                            //bool isConfirmPrint = true;
-                            if (isConfirmPrint)
-                            {
-                                var warehouse = await AppData.ApiServer.CreateWarehouseService(lastEvent.Id, "", txtPlate.Text,
-                                    iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper.TransactionType.EmTransactionType.OutBound, true);
-                                this.printCount = 1;
-                                var wbPrint = new WebBrowser();
-                                wbPrint.DocumentCompleted += WbPrint_DocumentCompleted;
-                                wbPrint.DocumentText = GetPrintWarehoseContent(warehouse, lastEvent.Identity.Name, lastEvent.PlateNumber, lastEvent.DatetimeIn.Value);
-                            }
-                        }
-                    }
-                    if (keys == Keys.F12)
-                    {
-                        this.Invoke(new Action(() =>
-                        {
-                            this.SuspendLayout();
-                            panelOversizeCam.Visible = !isShowOtherCam;
-                            this.isShowOtherCam = !isShowOtherCam;
-                            panelCameras.Visible = !panelOversizeCam.Visible;
-                            this.ResumeLayout();
-                        }));
-                    }
-                }
-
-
-
                 if (keys == Keys.F9)
                 {
                     this.IsAllowDesignRealtime = !this.IsAllowDesignRealtime;
@@ -634,29 +112,24 @@ namespace iParkingv5_window.Usercontrols
                         this.AllowDesignRealtime(this.IsAllowDesignRealtime);
                     }));
                 }
-                if (keys == Keys.Enter)
+                if (keys == Keys.Enter && this.lastEvent != null && txtNote.Focused)
                 {
-                    if (this.lastEvent != null)
+                    bool isUpdateNote = MessageBox.Show("Bạn có muốn cập nhật ghi chú?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
+                    if (isUpdateNote)
                     {
-                        if (txtNote.Focused)
+                        bool isUpdateSuccess = await AppData.ApiServer.parkingProcessService.UpdateBSXNote(txtNote.Text, lastEvent.Id, true);
+                        if (isUpdateSuccess)
                         {
-                            bool isUpdateNote = MessageBox.Show("Bạn có muốn cập nhật ghi chú BSX?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
-                            if (isUpdateNote)
-                            {
-                                bool isUpdateSuccess = await KzParkingv5ApiHelper.UpdateBSXNote(txtNote.Text, lastEvent.Id, true);
-                                if (isUpdateSuccess)
-                                {
-                                    lblResult.UpdateResultMessage("Ra Lệnh Cập Nhật Ghi Chú Biển Số Thành Công", Color.DarkBlue);
-                                }
-                                else
-                                {
-                                    lblResult.UpdateResultMessage("Cập Nhật Lỗi, Vui Lòng Thử Lại", Color.DarkRed);
-                                }
-                            }
-                            FocusOnTitle();
+                            lblResult.UpdateResultMessage("Ra Lệnh Cập Nhật Ghi Chú Biển Số Thành Công", Color.DarkBlue);
+                        }
+                        else
+                        {
+                            lblResult.UpdateResultMessage("Cập Nhật Lỗi, Vui Lòng Thử Lại", Color.DarkRed);
                         }
                     }
+                    FocusOnTitle();
                 }
+
                 if (laneInShortcutConfig != null)
                 {
                     if ((int)keys == laneInShortcutConfig.ConfirmPlateKey)
@@ -672,8 +145,7 @@ namespace iParkingv5_window.Usercontrols
                                     txtPlate.Text = txtPlate.Text.ToUpper().Replace("-", "").Replace(".", "");
                                     newPlate = txtPlate.Text;
                                 }));
-                                //bool isUpdateSuccess = await KzParkingApiHelper.UpdateEventInPlate(lastEvent.Id, newPlate);
-                                bool isUpdateSuccess = await AppData.ApiServer.UpdateEventInPlateAsync(lastEvent.Id, newPlate.ToUpper(), lastEvent.PlateNumber);
+                                bool isUpdateSuccess = await AppData.ApiServer.parkingProcessService.UpdateEventInPlateAsync(lastEvent.Id, newPlate.ToUpper(), lastEvent.PlateNumber);
                                 if (isUpdateSuccess)
                                 {
                                     lblResult.UpdateResultMessage("Ra Lệnh Cập Nhật Biển Số Thành Công", Color.DarkBlue);
@@ -682,14 +154,6 @@ namespace iParkingv5_window.Usercontrols
                                         ucTop1Event.plateNumber = newPlate.ToUpper();
                                     }
                                     lastEvent.PlateNumber = newPlate.ToUpper();
-                                    //if (((EmPrintTemplate)StaticPool.appOption.PrintTemplate) == EmPrintTemplate.XuanCuong)
-                                    //{
-                                    //    await XuanCuongApiHelper.SendParkingInfo(lastEvent.Id, "in", newPlate, lastTime, lastImageKeys, "");
-                                    //}
-                                    //if (isScale)
-                                    //{
-                                    //    await KzScaleApiHelper.UpdatePlate(lastEvent.Id, newPlate.ToUpper());
-                                    //}
                                     FocusOnTitle();
                                 }
                                 else
@@ -708,10 +172,10 @@ namespace iParkingv5_window.Usercontrols
                             this.Invoke(new Action(() =>
                             {
                                 var config = SaveUIConfig();
-                                NewtonSoftHelper<LaneDisplayConfig>.SaveConfig(config, PathManagement.appDisplayConfigPath(this.lane.id));
+                                NewtonSoftHelper<LaneDisplayConfig>.SaveConfig(config, PathManagement.appDisplayConfigPath(this.lane.Id));
                             }));
                             lblResult.UpdateResultMessage("Ra Lệnh Đảo Làn", Color.DarkBlue);
-                            OnChangeLaneEvent?.Invoke(this);
+                            OnChangeLaneEventInvoke(this);
                             return;
                         }
                         else
@@ -780,6 +244,282 @@ namespace iParkingv5_window.Usercontrols
         }
 
         /// <summary>
+        /// Sự kiện xảy ra khi xe đi qua vòng từ
+        /// </summary>
+        /// <param name="ie"></param>
+        /// <returns></returns>
+        public override async Task ExcecuteLoopEvent(InputEventArgs ie)
+        {
+            EventInData? eventIn = null;
+            string errorMessage = string.Empty;
+
+            //Danh sách biến sử dụng
+            Image? vehicleImg = null;
+            Image? overviewImage = null;
+            List<Image?> optionalImages = new();
+            VehicleBaseType vehicleType = VehicleBaseType.Car;
+            Customer? customer = null;
+            lblResult.UpdateResultMessage("Đang kiểm trang thông tin sự kiện loop..." + ie.InputIndex, Color.DarkBlue);
+            overviewImage = ucOverView?.GetFullCurrentImage();
+            string plate = "";
+            Image? lprImage = null;
+            int retry = 0;
+            RegisteredVehicle? registeredVehicle = null;
+            bool isAlarm = false;
+
+        LprDetecter:
+            {
+                if (ucCarLpr != null)
+                {
+                    BaseLane.GetPlate(this.lane.Id, out Image? carImage, out plate, out lprImage, ucCarLpr, camBienSoOTODuPhongs, true);
+                    if (string.IsNullOrEmpty(plate))
+                    {
+                        BaseLane.GetPlate(this.lane.Id, out Image? motorImage, out plate, out lprImage, ucMotoLpr, camBienSoXeMayDuPhongs, false);
+                        vehicleImg = string.IsNullOrEmpty(plate) ? carImage : motorImage;
+                    }
+                    else
+                    {
+                        vehicleImg = carImage;
+                    }
+                }
+                else
+                {
+                    BaseLane.GetPlate(this.lane.Id, out vehicleImg, out plate, out lprImage, ucMotoLpr, camBienSoXeMayDuPhongs, false);
+                }
+                registeredVehicle = (await AppData.ApiServer.parkingDataService.GetRegistedVehilceByPlateAsync(plate)).Item1;
+                if (string.IsNullOrEmpty(plate) || registeredVehicle == null)
+                {
+                    if (retry < StaticPool.appOption.RetakePhotoTimes)
+                    {
+                        retry++;
+                        await Task.Delay(StaticPool.appOption.RetakePhotoDelay);
+                        goto LprDetecter;
+                    }
+                }
+                else
+                {
+                    plate = registeredVehicle.PlateNumber;
+                }
+            }
+
+            //Hiển thị thông tin hình ảnh phương tiện
+            BaseLane.ShowImage(picVehicleImage, vehicleImg);
+            BaseLane.ShowImage(picOverviewImage, overviewImage);
+
+            //Không đọc được biển số hoặc biển số đọc được không hợp lệ, hiểm thị hình ảnh toàn cảnh và kết thúc sự kiện
+            if (string.IsNullOrEmpty(plate) || plate.Length < 5)
+            {
+                lblResult.UpdateResultMessage("Không đọc được thông tin biển số xe", Color.DarkRed);
+                return;
+            }
+            //Đọc thông tin định danh từ thông tin biển số nhận được
+
+            ClearView();
+            lblResult.UpdateResultMessage("Đang check in..." + plate, Color.DarkBlue);
+            DisplayDetectedPlate(plate, lprImage);
+
+            //Đọc thông tin loại phương tiện
+            if (registeredVehicle == null)
+            {
+                lblResult.UpdateResultMessage("Phương tiện chưa được đăng ký trong hệ thống", Color.DarkRed);
+                return;
+            }
+
+            string customerId = registeredVehicle.CustomerId;
+
+            vehicleType = registeredVehicle.vehicleType;
+            if (!string.IsNullOrEmpty(customerId))
+            {
+                customer = (await AppData.ApiServer.parkingDataService.GetCustomerByIdAsync(customerId))?.Item1;
+            }
+
+            Dictionary<EmParkingImageType, List<byte>> imageDatas = new Dictionary<EmParkingImageType, List<byte>>
+                {
+                    { EmParkingImageType.Overview, overviewImage.ImageToByteArray() },
+                    { EmParkingImageType.Vehicle, vehicleImg.ImageToByteArray() },
+                    { EmParkingImageType.Plate, lprImage.ImageToByteArray() }
+                };
+
+            eventIn = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plate, null, imageDatas, false, null, txtNote.Text);
+            if (eventIn == null)
+            {
+                goto LOI_HE_THONG;
+            }
+
+            if (!eventIn.IsSuccess)
+            {
+                if (eventIn.fields == null)
+                {
+                    goto LOI_HE_THONG;
+                }
+                errorMessage = eventIn.fields.Count > 0 ? (eventIn.fields[0].ToString() ?? "") : eventIn.detailCode;
+                if (errorMessage != "Biển số không hợp lệ".ToUpper())
+                {
+                    goto SU_KIEN_LOI;
+                }
+            }
+
+            if (eventIn.OpenBarrier)
+            {
+                ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
+                                                      where _controllerInLane.controlUnitId == ie.DeviceId
+                                                      select _controllerInLane).FirstOrDefault();
+                await BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
+            }
+            goto SU_KIEN_HOP_LE;
+
+        CheckInWithForce:
+            {
+                eventIn = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plate, null, imageDatas, true, null, txtNote.Text);
+                if (eventIn == null)
+                {
+                    goto LOI_HE_THONG;
+                }
+                else
+                {
+                    //eventIn = responseWithForce.data;
+                    if (eventIn.OpenBarrier)
+                    {
+                        ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
+                                                              where _controllerInLane.controlUnitId == ie.DeviceId
+                                                              select _controllerInLane).FirstOrDefault();
+                        await BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
+                    }
+                    goto SU_KIEN_HOP_LE;
+                }
+            }
+        LOI_HE_THONG:
+            {
+                ExcecuteSystemErrorCheckIn();
+                return;
+            }
+        SU_KIEN_LOI:
+            {
+                ExcecuteUnvalidEvent(null, null, vehicleType, plate, ie.EventTime, errorMessage, customer, registeredVehicle.PlateNumber);
+                return;
+            }
+        SU_KIEN_HOP_LE:
+            {
+                await ExcecuteValidEvent(null, null, vehicleType, plate, ie.EventTime, overviewImage,
+                                        vehicleImg, lprImage, eventIn, isAlarm, imageDatas);
+                return;
+            }
+        }
+
+        /// <summary>
+        /// Sự kiện xảy ra khi người dùng bấm nút EXIT (nút cứng) để ra lệnh mở barrie
+        /// </summary>
+        /// <param name="ie"></param>
+        /// <returns></returns>
+        public override async Task ExcecuteExitEvent(InputEventArgs ie)
+        {
+            lblResult.UpdateResultMessage("Đang kiểm trang thông tin sự kiện exit..." + ie.InputIndex, Color.DarkBlue);
+            //--Chưa có sự kiện vào hoặc thời gian từ lúc có sự kiện đến khi bấm mở barrie quá 5s thì lưu sự kiện cảnh báo
+            if (lastEvent == null)
+            {
+                var imageData = SaveAllCameraImage();
+                await AppData.ApiServer.parkingProcessService.CreateAlarmAsync("", this.lane.Id, "", AbnormalCode.OpenBarrierByButton, imageData, true, "", "", "", "");
+                return;
+            }
+
+            //Đã có sự kiện trước đó kiểm tra xem có trong thời gian cho phép mở ko
+            if ((DateTime.Now - lastEvent.DatetimeIn)?.TotalSeconds >= StaticPool.appOption.AllowBarrieDelayOpenTime)
+            {
+                var imageData = SaveAllCameraImage();
+
+                await AppData.ApiServer.parkingProcessService.CreateAlarmAsync(lastEvent.Identity?.Code, this.lane.Id, lastEvent.PlateNumber, AbnormalCode.OpenBarrierByButton,
+                                                          imageData, true,
+                                                          lastEvent?.IdentityGroup.Id, "", "", "");
+            }
+        }
+
+        /// <summary>
+        /// Sự kiện xảy ra khi người dùng quẹt thẻ trên đầu đọc, hoặc đầu đọc xa phát hiện thẻ
+        /// </summary>
+        /// <param name="ce"></param>
+        /// <returns></returns>
+        public async Task ExcecuteCardEvent(CardEventArgs ce)
+        {
+            if (!this.CheckNewCardEvent(this.lane, ce, out ControllerInLane? controllerInLane, out int thoiGianCho))
+            {
+                if (thoiGianCho > 0)
+                {
+                    lblResult.UpdateResultMessage($"Đang trong thời gian chờ, vui lòng quẹt lại sau {thoiGianCho}s", Color.DarkBlue);
+                }
+                return;
+            }
+
+            ClearView();
+            //Danh sách biến sử dụng
+            Image? overviewImg = null;
+            Image? vehicleImg = null;
+
+            lblResult.UpdateResultMessage("Đang kiểm tra thông tin sự kiện quẹt thẻ..." + ce.PreferCard, Color.DarkBlue);
+
+            #region Kiểm tra thông tin định danh
+            var identityResponse = await IsValidIdentity(ce.PreferCard);
+            if (!identityResponse.Item1)
+            {
+                return;
+            }
+            Identity? identity = identityResponse.Item2!;
+
+            //Cần gọi GET by ID để lấy thông tin phương tiện đăng ký
+            identity = (await AppData.ApiServer.parkingDataService.GetIdentityByIdAsync(identity.Id)).Item1;
+            if (identity == null)
+            {
+                lblResult.UpdateResultMessage("Không đọc được thông tin định danh, vui lòng thử lại", Color.DarkRed);
+                return;
+            }
+            #endregion End kiểm tra thông tin định danh
+
+            #region Kiểm tra thông tin nhóm định danh
+            IdentityGroup? identityGroup = (await AppData.ApiServer.parkingDataService.GetIdentityGroupByIdAsync(identity.IdentityGroupId.ToString()))?.Item1;
+            if (identityGroup == null || identityGroup.Id == Guid.Empty)
+            {
+                lblResult.UpdateResultMessage("Không đọc được thông tin nhóm định danh, vui lòng thử lại", Color.DarkRed);
+                return;
+            }
+            #endregion End kiểm tra thông tin nhóm định danh
+
+            #region Kiểm tra thông tin loại phương tiện
+            lblResult.UpdateResultMessage("Đọc thông tin loại phương tiện...", Color.DarkBlue);
+            VehicleBaseType vehicleBaseType = identityGroup.VehicleType;
+            if (vehicleBaseType == VehicleBaseType.Unknown)
+            {
+                lblResult.UpdateResultMessage("Thông tin loại phương tiện không hợp lệ, vui lòng sử dụng thẻ khác", Color.DarkRed);
+                return;
+            }
+
+            #endregion End kiểm tra thông tin loại phương tiện
+
+            Image? lprImage = GetPlate(ce, ref overviewImg, ref vehicleImg, vehicleBaseType, lblResult, txtPlate, picOverviewImage, picVehicleImage, picLprImage);
+
+            //Đọc thông tin loại phương tiện
+            lblResult.UpdateResultMessage("Đang check in..." + ce.PreferCard, Color.DarkBlue);
+            var imageData = new Dictionary<EmParkingImageType, List<byte>>
+            {
+                { EmParkingImageType.Overview, overviewImg.ImageToByteArray() },
+                { EmParkingImageType.Vehicle, vehicleImg.ImageToByteArray() },
+                { EmParkingImageType.Plate, lprImage.ImageToByteArray() }
+            };
+
+            bool isMonthCard = identityGroup.Type == IdentityGroupType.Monthly;
+            if (isMonthCard)
+            {
+                await ExcecuteMonthCardEventIn(identity, identityGroup, vehicleBaseType, ce.PlateNumber, imageData,
+                                               ce, controllerInLane,
+                                               overviewImg, vehicleImg, lprImage);
+            }
+            else
+            {
+                await ExcecuteNonMonthCardEventIn(identity, identityGroup, vehicleBaseType, ce.PlateNumber, imageData,
+                                                  ce, controllerInLane,
+                                                  overviewImg, vehicleImg, lprImage);
+            }
+        }
+
+        /// <summary>
         /// Sự kiện xảy ra khi người dùng sử dụng phím tắt để ra lệnh mở barrie
         /// </summary>
         private async Task ProcessButtonEvent()
@@ -788,192 +528,19 @@ namespace iParkingv5_window.Usercontrols
             if (lastEvent == null)
             {
                 var imageData = SaveAllCameraImage();
-                await AppData.ApiServer.CreateAlarmAsync("", this.lane.id, "", AbnormalCode.OpenBarrierByKeyboard, imageData, true, "", "", "", "");
+                await AppData.ApiServer.parkingProcessService.CreateAlarmAsync("", this.lane.Id, "", AbnormalCode.OpenBarrierByKeyboard, imageData, true, "", "", "", "");
             }
             else if ((DateTime.Now - lastEvent.DatetimeIn)?.TotalSeconds >= StaticPool.appOption.AllowBarrieDelayOpenTime)
             {
                 var imageData = SaveAllCameraImage();
-                await AppData.ApiServer.CreateAlarmAsync(lastEvent.Identity?.Code, this.lane.id, lastEvent.PlateNumber, AbnormalCode.OpenBarrierByKeyboard,
+                await AppData.ApiServer.parkingProcessService.CreateAlarmAsync(lastEvent.Identity?.Code, this.lane.Id, lastEvent.PlateNumber, AbnormalCode.OpenBarrierByKeyboard,
                                                      imageData, true,
-                                                     lastEvent?.IdentityGroupId, lastEvent?.customer?.Id,
-                                                     lastEvent?.RegisteredVehicle?.Id, "");
+                                                     lastEvent?.IdentityGroup?.Id ?? "", "", "", "");
             }
         }
         #endregion End EVENT
 
         #region Private Function
-        private void LoadCamera()
-        {
-            if (lane.cameras == null)
-            {
-                return;
-            }
-            foreach (CameraInLane cameraInLane in lane.cameras)
-            {
-                foreach (Camera cam in StaticPool.cameras)
-                {
-                    if (cam.Id?.ToLower() == cameraInLane.cameraId)
-                    {
-                        if (cameras.ContainsKey((CameraPurposeType.EmCameraPurposeType)(cameraInLane.cameraPurpose + 1)))
-                        {
-                            cameras[(CameraPurposeType.EmCameraPurposeType)(cameraInLane.cameraPurpose + 1)].Add(cam);
-                        }
-                        else
-                        {
-                            cameras.Add((CameraPurposeType.EmCameraPurposeType)(cameraInLane.cameraPurpose + 1), new List<Camera>() { cam });
-                        }
-                    }
-                }
-            }
-
-            Kztek.Cameras.Camera? mainOverviewCamera = GetCameraConfig(CameraPurposeType.EmCameraPurposeType.MainOverView, cameras);
-            if (mainOverviewCamera != null)
-            {
-                mainOverviewCamera.Name += "-OVERVIEW";
-                ucOverView = new ucCameraView();
-                ucOverView.StartViewer(mainOverviewCamera, CameraErrorFunc);
-                if (panelCameras.Controls.Count > 0)
-                {
-                    Control lastControl = panelCameras.Controls[panelCameras.Controls.Count - 1];
-                    Point location = new Point(lastControl.Location.X, lastControl.Location.Y + lastControl.Height + 10);
-                    panelCameras.Controls.Add(ucOverView);
-                    ucOverView.Location = location;
-                }
-                else
-                {
-                    panelCameras.Controls.Add(ucOverView);
-                    ucOverView.Location = new Point(0);
-                }
-            }
-
-            Kztek.Cameras.Camera? motorLprCamera = GetCameraConfig(CameraPurposeType.EmCameraPurposeType.MotorLPR, cameras);
-            if (motorLprCamera != null)
-            {
-                motorLprCamera.Name += "-MOTOLPR";
-                ucMotoLpr = new ucCameraView();
-                ucMotoLpr.StartViewer(motorLprCamera, CameraErrorFunc);
-                if (panelCameras.Controls.Count > 0)
-                {
-                    Control lastControl = panelCameras.Controls[panelCameras.Controls.Count - 1];
-                    Point location = new Point(lastControl.Location.X, lastControl.Location.Y + lastControl.Height + 10);
-                    panelCameras.Controls.Add(ucMotoLpr);
-                    ucMotoLpr.Location = location;
-                }
-                else
-                {
-                    panelCameras.Controls.Add(ucMotoLpr);
-                    ucMotoLpr.Location = new Point(0);
-                }
-            }
-
-
-            Kztek.Cameras.Camera? carLprCamera = GetCameraConfig(CameraPurposeType.EmCameraPurposeType.CarLPR, cameras);
-            if (carLprCamera != null)
-            {
-                carLprCamera.Name += "-CARLPR";
-                ucCarLpr = new ucCameraView();
-                ucCarLpr.StartViewer(carLprCamera, CameraErrorFunc);
-                if (panelCameras.Controls.Count > 0)
-                {
-                    Control lastControl = panelCameras.Controls[panelCameras.Controls.Count - 1];
-                    Point location = new Point(lastControl.Location.X, lastControl.Location.Y + lastControl.Height + 10);
-                    panelCameras.Controls.Add(ucCarLpr);
-                    ucCarLpr.Location = location;
-                }
-                else
-                {
-                    panelCameras.Controls.Add(ucCarLpr);
-                    ucCarLpr.Location = new Point(0);
-                }
-            }
-
-            foreach (var item in this.cameras)
-            {
-                var key = CameraPurposeType.EmCameraPurposeType.SubOverView;
-                if (item.Key == CameraPurposeType.EmCameraPurposeType.SubOverView)
-                {
-                    for (int i = 0; i < item.Value.Count; i++)
-                    {
-                        Kztek.Cameras.Camera otherCam = new Kztek.Cameras.Camera();
-                        otherCam.ID = cameras[key][i].Id;
-                        otherCam.Name = cameras[key][i].Name;
-                        otherCam.VideoSource = cameras[key][i].IpAddress;
-                        otherCam.HttpPort = int.Parse(cameras[key][i].HttpPort);
-                        otherCam.Login = cameras[key][i].Username;
-                        otherCam.Password = cameras[key][i].Password;
-                        otherCam.Chanel = cameras[key][i].Channel;
-                        string _camType = cameras[key][i].GetCameraType() == "HIK" ? "HIKVISION" : cameras[key][i].GetCameraType();
-                        otherCam.CameraType = Kztek.Cameras.CameraTypes.GetType(_camType);
-                        otherCam.StreamType = Kztek.Cameras.StreamTypes.GetType("H264");
-                        otherCam.Resolution = string.IsNullOrEmpty(cameras[key][0].Resolution) ? "1280x720" : cameras[key][i].Resolution;
-                        otherCam.Start();
-                        this.OtherCams.Add(otherCam);
-                        var ucCam = new ucCameraView();
-                        ucCam.StartViewer(otherCam, CameraErrorFunc);
-                        Control lastControl = panelOversizeCam.Controls[panelOversizeCam.Controls.Count - 1];
-                        Point location = new Point(lastControl.Location.X, lastControl.Location.Y + lastControl.Height + 10);
-                        panelOversizeCam.Controls.Add(ucCam);
-                        ucCam.Location = location;
-                    }
-                }
-            }
-        }
-        private Kztek.Cameras.Camera? GetCameraConfig(CameraPurposeType.EmCameraPurposeType key, Dictionary<CameraPurposeType.EmCameraPurposeType, List<Camera>> cameras)
-        {
-            if (cameras.ContainsKey(key))
-            {
-                if (cameras[key].Count > 1)
-                {
-                    for (int i = 1; i < cameras[key].Count; i++)
-                    {
-                        Kztek.Cameras.Camera cam_du_phong = new Kztek.Cameras.Camera();
-                        cam_du_phong.ID = cameras[key][i].Id;
-                        cam_du_phong.Name = cameras[key][i].Name;
-                        cam_du_phong.VideoSource = cameras[key][i].IpAddress;
-                        cam_du_phong.HttpPort = int.Parse(cameras[key][i].HttpPort);
-                        cam_du_phong.Login = cameras[key][i].Username;
-                        cam_du_phong.Password = cameras[key][i].Password;
-                        cam_du_phong.Chanel = cameras[key][i].Channel;
-                        string _camType = cameras[key][i].GetCameraType() == "HIK" ? "HIKVISION" : cameras[key][i].GetCameraType();
-                        cam_du_phong.CameraType = Kztek.Cameras.CameraTypes.GetType(_camType);
-                        cam_du_phong.StreamType = Kztek.Cameras.StreamTypes.GetType("H264");
-                        cam_du_phong.Resolution = string.IsNullOrEmpty(cameras[key][0].Resolution) ? "1280x720" : cameras[key][i].Resolution;
-                        switch (key)
-                        {
-                            case CameraPurposeType.EmCameraPurposeType.CarLPR:
-                                camBienSoOTODuPhongs.Add(cam_du_phong);
-                                break;
-                            case CameraPurposeType.EmCameraPurposeType.MotorLPR:
-                                camBienSoXeMayDuPhongs.Add(cam_du_phong);
-                                break;
-                            default:
-                                break;
-                        }
-                        cam_du_phong.Start();
-                    }
-                }
-                Kztek.Cameras.Camera cam = new Kztek.Cameras.Camera();
-                cam.ID = cameras[key][0].Id;
-                cam.Name = cameras[key][0].Name;
-                cam.VideoSource = cameras[key][0].IpAddress;
-                cam.HttpPort = int.Parse(cameras[key][0].HttpPort);
-                cam.Login = cameras[key][0].Username;
-                cam.Password = cameras[key][0].Password;
-                cam.Chanel = cameras[key][0].Channel;
-                string camType = cameras[key][0].GetCameraType() == "HIK" ? "HIKVISION2" : cameras[key][0].GetCameraType();
-                cam.CameraType = Kztek.Cameras.CameraTypes.GetType(camType);
-                cam.StreamType = Kztek.Cameras.StreamTypes.GetType("H264");
-                cam.Resolution = string.IsNullOrEmpty(cameras[key][0].Resolution) ? "1280x720" : cameras[key][0].Resolution;
-                return cam;
-            }
-            return null;
-        }
-        private void CameraErrorFunc(object sender, string errorString)
-        {
-            LogHelper.Log(logType: LogHelper.EmLogType.ERROR,
-                           doi_tuong_tac_dong: LogHelper.EmObjectLogType.Camera,
-                           mo_ta_them: errorString);
-        }
 
         private async Task CreateUI()
         {
@@ -1077,7 +644,7 @@ namespace iParkingv5_window.Usercontrols
             ucLastEventInfos.Add(ucTop1Event);
             ucLastEventInfos.Add(ucTop2Event);
             ucLastEventInfos.Add(ucTop3Event);
-            var top3Event = (await AppData.ApiServer.GetEventIns("", startTime, endTime, "", "", this.lane.id, "", 1, 3)).data;
+            var top3Event = (await AppData.ApiServer.reportingService.GetEventIns("", startTime, endTime, "", "", this.lane.Id, "", 1, 3)).data;
             if (top3Event != null)
             {
                 for (int i = 0; i < top3Event.Count; i++)
@@ -1095,7 +662,7 @@ namespace iParkingv5_window.Usercontrols
                     List<string> picDirs = new List<string>();
                     string customerId = "";// top3Event.Rows[i]["customerid"].ToString() ?? "";
                     string registerVehicleId = "";// top3Event.Rows[i]["vehicleid"].ToString() ?? "";
-                    string laneId = top3Event[i].Lane.id;
+                    string laneId = top3Event[i].Lane.Id;
                     string identityId = top3Event[i].Identity.Id;
                     ucLastEventInfos[i].UpdateEventInfo(id, plateNumber, vehicleGroupId, cardGroupId, dateTimeIn, picDirs,
                                                         customerId, registerVehicleId, laneId, identityId, true);
@@ -1103,74 +670,10 @@ namespace iParkingv5_window.Usercontrols
             }
 
             splitContainerMain.BringToFront();
-
-            if (this.isScale)
-            {
-                await LoadGoodsType();
-                cbGoodsType.Refresh();
-            }
-            else
-            {
-                panelGoodsType.Visible = false;
-            }
-            if (((EmPrintTemplate)StaticPool.appOption.PrintTemplate) == EmPrintTemplate.XuanCuong)
-            {
-                if (File.Exists(PathManagement.appServicesConfigPath))
-                {
-                    //string[] serviceSupport = File.ReadAllText(PathManagement.appServicesConfigPath).Split(";");
-                    //foreach (var item in serviceSupport)
-                    //{
-                    //    cbNote.Items.Add(item);
-                    //}
-                    //if (cbNote.Items.Count > 0)
-                    //{
-                    //    cbNote.SelectedIndex = 0;
-                    //    cbNote.Refresh();
-                    //}
-                    //else
-                    //{
-                    //    for (int i = 0; i < tableLayoutPanelNote.ColumnCount; i++)
-                    //    {
-                    //        Control Control = tableLayoutPanelNote.GetControlFromPosition(i, tableLayoutPanelNote.RowCount - 1);
-                    //        tableLayoutPanelNote.Controls.Remove(Control);
-                    //    }
-                    //    tableLayoutPanelNote.RowStyles.RemoveAt(tableLayoutPanelNote.RowCount - 1);
-                    //}
-                }
-                else
-                {
-                    for (int i = 0; i < tableLayoutPanelNote.ColumnCount; i++)
-                    {
-                        Control Control = tableLayoutPanelNote.GetControlFromPosition(i, tableLayoutPanelNote.RowCount - 1);
-                        tableLayoutPanelNote.Controls.Remove(Control);
-                    }
-                    tableLayoutPanelNote.RowStyles.RemoveAt(tableLayoutPanelNote.RowCount - 1);
-                }
-            }
-            else
-            {
-                //try
-                //{
-
-                //}
-                //catch (Exception)
-                //{
-
-                //    throw;
-                //}
-                //for (int i = 0; i < tablePic.RowCount; i++)
-                //{
-                //    Control Control = tablePic.GetControlFromPosition(tablePic.ColumnCount - 1, i);
-                //    tablePic.Controls.Remove(Control);
-                //}
-                //tablePic.ColumnStyles.RemoveAt(tablePic.ColumnCount - 1);
-                //panelNote.Visible = false;
-            }
         }
         private void RegisterUIEvent()
         {
             panelCameras.SizeChanged += PanelCameras_SizeChanged;
-            panelOversizeCam.SizeChanged += PanelOversizeCam_SizeChanged;
             splitContainerEventContent.SizeChanged += SplitContainerEventContent_SizeChanged;
             splitContainerMain.MouseDoubleClick += SplitContainerEventContent_MouseDoubleClick;
             toolTip1.OwnerDraw = true;
@@ -1195,94 +698,11 @@ namespace iParkingv5_window.Usercontrols
             picWriteIn.MouseLeave += PicSetting_MouseLeave;
         }
 
-        private void PanelOversizeCam_SizeChanged(object? sender, EventArgs e)
-        {
-            panelCameras.Size = panelOversizeCam.Size;
-            foreach (Control item in panelOversizeCam.Controls)
-            {
-                //if (this.isTopToBottom)
-                //{
-                //    item.Width = (panelCameras.Height - 50) * 16 / 9;
-                //}
-                //else
-                {
-                    item.Width = panelOversizeCam.Width - panelOversizeCam.Margin.Left - panelOversizeCam.Margin.Right - panelOversizeCam.Padding.Left - panelOversizeCam.Padding.Right
-                                                    - item.Margin.Left - item.Margin.Right - item.Padding.Left - item.Padding.Right;
-                }
-            }
-            for (int i = 0; i < panelOversizeCam.Controls.Count; i++)
-            {
-                if (i == 0)
-                {
-                    panelOversizeCam.Controls[i].Location = new Point(0);
-                }
-                else
-                {
-                    Control lastControl = panelOversizeCam.Controls[i - 1];
-                    //if (this.isTopToBottom)
-                    //{
-                    //    Point location = new Point(lastControl.Location.X + lastControl.Width + 10, lastControl.Location.Y);
-                    //    panelCameras.Controls[i].Location = location;
-                    //}
-                    //else
-                    {
-                        Point location = new Point(lastControl.Location.X, lastControl.Location.Y + lastControl.Height + 10);
-                        panelOversizeCam.Controls[i].Location = location;
-                    }
-                }
-            }
-        }
-
-        private Image? GetPlate(CardEventArgs ce, ref Image? overviewImg, ref Image? vehicleImg, VehicleBaseType vehicleBaseType, out List<Image> optionalImages)
-        {
-            optionalImages = new List<Image>();
-            Image? lprImage = null;
-
-            lblResult.UpdateResultMessage("Lấy hình ảnh sự kiện...", Color.DarkBlue);
-            overviewImg = ucOverView?.GetFullCurrentImage();
-
-            lblResult.UpdateResultMessage("Đọc biển số...", Color.DarkBlue);
-            string plate = string.Empty;
-            switch (vehicleBaseType)
-            {
-                case VehicleBaseType.Car:
-                    BaseLane.GetPlate(this.lane.id, out vehicleImg, out plate, out lprImage, ucCarLpr, camBienSoOTODuPhongs, true);
-                    break;
-                default:
-                    BaseLane.GetPlate(this.lane.id, out vehicleImg, out plate, out lprImage, ucMotoLpr, camBienSoXeMayDuPhongs, false);
-                    break;
-            }
-
-            ce.PlateNumber = plate;
-            lblResult.UpdateResultMessage("Hiển thị hình ảnh sự kiện...", Color.DarkBlue);
-            BaseLane.ShowImage(picOverviewImage, overviewImg);
-            BaseLane.ShowImage(picVehicleImage, vehicleImg);
-            BaseLane.ShowImage(picLprImage, lprImage);
-
-            txtPlate.Invoke(new Action(() =>
-            {
-                txtPlate.Text = ce.PlateNumber;
-                txtPlate.Refresh();
-            }));
-            foreach (var item in this.OtherCams)
-            {
-                optionalImages.Add(item.GetCurrentVideoFrame());
-            }
-            //if (optionalImages.Count == 1)
-            //{
-            //    BaseLane.ShowImage(picOther1, optionalImages[0]);
-            //}
-            //else if (optionalImages.Count > 1)
-            //{
-            //    BaseLane.ShowImage(picOther1, optionalImages[0]);
-            //    BaseLane.ShowImage(picOther2, optionalImages[1]);
-            //}
-            return lprImage;
-        }
-        private void DisplayEventInfo(DateTime eventTime, string plateNumber, Identity? identity, IdentityGroup? identityGroup, VehicleBaseType? vehicle, Customer? customer, RegisteredVehicle? registeredVehicle, WeighingDetail? weighingDetail = null)
+        private void DisplayEventInfo(DateTime eventTime, string plateNumber, Identity? identity, IdentityGroup? identityGroup, VehicleBaseType? vehicle,
+                                      Customer? customer, RegisteredVehicle? registeredVehicle, WeighingDetail? weighingDetail = null)
         {
             laneDirection = NewtonSoftHelper<LaneDirectionConfig>.DeserializeObjectFromPath(
-                                                      PathManagement.appLaneDirectionConfigPath(this.lane.id)) ?? LaneDirectionConfig.CreateDefault();
+                                                      PathManagement.appLaneDirectionConfigPath(this.lane.Id)) ?? LaneDirectionConfig.CreateDefault();
             dgvEventContent?.Invoke(new Action(() =>
             {
                 dgvEventContent.Columns[0].Visible = laneDirection.IsDisplayTitle;
@@ -1306,29 +726,13 @@ namespace iParkingv5_window.Usercontrols
                 {
                     dgvEventContent.Rows.Add("Nhóm", identityGroup.Name);
                 }
-                if (weighingDetail != null)
-                {
-
-                    //dgvEventContent.Rows.Add("Cân nặng", this.ScaleValue.ToString("#,0"));
-                    if (weighingDetail.weighing_action_detail != null)
-                    {
-                        lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(weighingDetail.weighing_action_detail[^1].Price.ToString());
-                        //dgvEventContent.Rows.Add("Phí cân", TextFormatingTool.GetMoneyFormat(weighingDetail.weighing_action_detail[^1].Price.ToString()));
-                        //dgvEventContent.Rows[dgvEventContent.RowCount - 1].DefaultCellStyle.Font = new Font(dgvEventContent.DefaultCellStyle.Font.Name, dgvEventContent.DefaultCellStyle.Font.Size * 3);
-                        //dgvEventContent.Rows[dgvEventContent.RowCount - 1].DefaultCellStyle.ForeColor = Color.Red;
-                    }
-                    else
-                    {
-                        //LOG
-                    }
-                }
                 dgvEventContent.BringToFront();
             }));
         }
 
-        private Dictionary<emParkingImageType, List<byte>> SaveAllCameraImage()
+        private Dictionary<EmParkingImageType, List<byte>> SaveAllCameraImage()
         {
-            var imageData = new Dictionary<emParkingImageType, List<byte>>();
+            var imageData = new Dictionary<EmParkingImageType, List<byte>>();
             //--Lưu hình ảnh sự kiện
             //Danh sách biến sử dụng
             Image? overviewImg = null;
@@ -1340,17 +744,17 @@ namespace iParkingv5_window.Usercontrols
                 {
                     case CameraPurposeType.EmCameraPurposeType.MainOverView:
                         overviewImg = ucOverView?.GetFullCurrentImage();
-                        imageData.Add(emParkingImageType.Overview, overviewImg.ImageToByteArray());
+                        imageData.Add(EmParkingImageType.Overview, overviewImg.ImageToByteArray());
                         break;
                     case CameraPurposeType.EmCameraPurposeType.CarLPR:
                         carVehicleImage = ucCarLpr?.GetFullCurrentImage();
-                        if (!imageData.ContainsKey(emParkingImageType.Vehicle))
-                            imageData.Add(emParkingImageType.Vehicle, carVehicleImage.ImageToByteArray());
+                        if (!imageData.ContainsKey(EmParkingImageType.Vehicle))
+                            imageData.Add(EmParkingImageType.Vehicle, carVehicleImage.ImageToByteArray());
                         break;
                     case CameraPurposeType.EmCameraPurposeType.MotorLPR:
                         motorVehicleImage = ucMotoLpr?.GetFullCurrentImage();
-                        if (!imageData.ContainsKey(emParkingImageType.Vehicle))
-                            imageData.Add(emParkingImageType.Vehicle, motorVehicleImage.ImageToByteArray());
+                        if (!imageData.ContainsKey(EmParkingImageType.Vehicle))
+                            imageData.Add(EmParkingImageType.Vehicle, motorVehicleImage.ImageToByteArray());
                         break;
                     default:
                         break;
@@ -1380,160 +784,7 @@ namespace iParkingv5_window.Usercontrols
 
                 lblResult.UpdateResultMessage("", Color.DarkBlue);
                 lblResult.Refresh();
-
-                this.WeighingActionDetail = null;
-
-                lblScaleFee.Text = TextFormatingTool.GetMoneyFormat("0");
-                if (cbGoodsType.Items.Count > 0)
-                {
-                    cbGoodsType.SelectedIndex = 0;
-                }
             }));
-        }
-
-        private string GetPrintWarehoseContent(KzParkingv5ApiHelper.WarehouseService warehouseService, string cardName, string plateNumber, DateTime timeIn)
-        {
-            string printTemplatePath = PathManagement.appPrintTemplateWarehousePath(((EmPrintTemplate)StaticPool.appOption.PrintTemplate).ToString());
-            if (File.Exists(printTemplatePath))
-            {
-                string baseContent = File.ReadAllText(printTemplatePath);
-                baseContent = baseContent.Replace("$card_name", cardName);
-                baseContent = baseContent.Replace("$plate_number", plateNumber);
-                baseContent = baseContent.Replace("$timeIn", timeIn.ToString("HH:mm:ss - dd/MM/yyyy"));
-                baseContent = baseContent.Replace("$warehouseNumber", (int.Parse(warehouseService.paperworkSequence)).ToString("00"));
-                baseContent = baseContent.Replace("$code", warehouseService.codeCharacterSequence + "-" + warehouseService.codeNumberSequence);
-                return baseContent;
-            }
-            else
-            {
-                MessageBox.Show("Không tìm thấy mẫu in", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return string.Empty;
-            }
-
-        }
-
-
-        private string GetPrintContent(List<WeighingActionDetail> weighingActionDetails)
-        {
-            string printContent = string.Empty;
-            if (weighingActionDetails.Count <= 2)
-            {
-                foreach (var item in weighingActionDetails)
-                {
-                    string scaleItem = GetPrintContentItem(item, item.Order_by);
-                    printContent += scaleItem;
-                }
-                if (weighingActionDetails.Count <= 1)
-                {
-                    printContent += GetPrintContentItem(null, 2);
-                    printContent += GetGoodsScaleItem("_");
-                }
-                else
-                {
-                    printContent += GetGoodsScaleItem(Math.Abs(weighingActionDetails[0].Weight - weighingActionDetails[1].Weight).ToString("#,0"));
-                }
-            }
-            else
-            {
-                foreach (var item in weighingActionDetails)
-                {
-                    string scaleItem = GetPrintContentItem(item, item.Order_by);
-                    printContent += scaleItem;
-                }
-            }
-
-            string printTemplatePath = PathManagement.appPrintScaleTemplateConfigPath(((EmPrintTemplate)StaticPool.appOption.PrintTemplate).ToString());
-            if (File.Exists(printTemplatePath))
-            {
-                string baseContent = File.ReadAllText(printTemplatePath);
-                baseContent = baseContent.Replace("{$content}", printContent);
-                baseContent = baseContent.Replace("{$plateNumber}", lastEvent.PlateNumber);
-                baseContent = baseContent.Replace("{$weightType}", cbGoodsType.Text);
-                return baseContent;
-            }
-            else
-            {
-                MessageBox.Show("Không tìm thấy mẫu in", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return string.Empty;
-            }
-        }
-        private string GetPrintScaleInvoiceOfflineContent(WeighingActionDetail weighingActionDetail, string companyTaxCode = "", string address = "",
-                                                          string companyName = "", string kyHieuHoaDon = "")
-        {
-            string printTemplatePath = PathManagement.appPrintScaleInvoiceOfflineTemplateConfigPath(((EmPrintTemplate)StaticPool.appOption.PrintTemplate).ToString());
-            if (File.Exists(printTemplatePath))
-            {
-                string baseContent = File.ReadAllText(printTemplatePath);
-                baseContent = baseContent.Replace("$companyTaxCode", companyTaxCode);
-                baseContent = baseContent.Replace("$companyAddress", address);
-                baseContent = baseContent.Replace("$companyName", companyName);
-                baseContent = baseContent.Replace("$templateCode", kyHieuHoaDon);
-
-                baseContent = baseContent.Replace("$day", DateTime.Now.Day.ToString("00"));
-                baseContent = baseContent.Replace("$month", DateTime.Now.Month.ToString("00"));
-                baseContent = baseContent.Replace("$year", DateTime.Now.Year.ToString("0000"));
-
-                baseContent = baseContent.Replace("$excecute_time", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
-                baseContent = baseContent.Replace("$plateNumber", lastEvent.PlateNumber);
-
-                baseContent = baseContent.Replace("$money_int", TextFormatingTool.GetMoneyFormat(weighingActionDetail.Price.ToString()));
-
-                baseContent = baseContent.Replace("$money_str", SayMoney.MISASaysMoney.MISASayMoney(weighingActionDetail.Price));
-
-                return baseContent;
-            }
-            else
-            {
-                MessageBox.Show("Không tìm thấy mẫu in", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return string.Empty;
-            }
-        }
-
-        private string GetPrintContentItem(WeighingActionDetail? weighingActionDetail, int index)
-        {
-            if (weighingActionDetail == null)
-            {
-                return $@"<tr>
-                    <td>
-                        <span>
-                            <center>Lần cân {index}</center>
-                        </span>
-                    </td>
-                    <td>
-                        <center><span>__/__/____ __:__</span></center>
-                    </td>
-                    <td>
-                        <center><span><b>_</b></span></center>
-                    </td>
-                    </tr>";
-            }
-            else
-                return $@"<tr>
-                    <td>
-                        <span>
-                            <center>Lần cân {weighingActionDetail.Order_by}</center>
-                        </span>
-                    </td>
-                    <td>
-                        <center><span>{weighingActionDetail.CreatedAtTime:dd/MM/yyyy HH:mm:ss}</span></center>
-                    </td>
-                    <td>
-                        <center><span><b>{weighingActionDetail.Weight.ToString("#,0")}</b></span></center>
-                    </td>
-                    </tr>";
-        }
-        private string GetGoodsScaleItem(string goodScale)
-        {
-            return $@" <tr>
-                    <td colspan=""2"">
-                        <span>
-                            <center>Khối lượng hàng</center>
-                        </span>
-                    </td>
-                    <td>
-                        <center><b><span>{goodScale}</span></b></center>
-                    </td>
-                    </tr>";
         }
         private void WbPrint_DocumentCompleted(object? sender, WebBrowserDocumentCompletedEventArgs e)
         {
@@ -1554,9 +805,9 @@ namespace iParkingv5_window.Usercontrols
 
         #region Xử lý sự kiện thẻ
         private async Task ExcecuteMonthCardEventIn(Identity identity, IdentityGroup identityGroup, VehicleBaseType vehicleType, string plateNumber,
-                                                    Dictionary<emParkingImageType, List<byte>> imageDatas,
+                                                    Dictionary<EmParkingImageType, List<byte>> imageDatas,
                                                     CardEventArgs ce, ControllerInLane? controllerInLane,
-                                                    Image? overviewImg, Image? vehicleImg, Image? lprImage, List<Image> optionalImages)
+                                                    Image? overviewImg, Image? vehicleImg, Image? lprImage)
         {
             bool isAlarm = false;
             if (identity.Vehicles == null)
@@ -1593,7 +844,7 @@ namespace iParkingv5_window.Usercontrols
 
         CheckInNormal:
             {
-                eventIn = await AppData.ApiServer.PostCheckInAsync(lane.id, plateNumber, identity, imageDatas, false, null, txtNote.Text);
+                eventIn = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plateNumber, identity, imageDatas, false, null, txtNote.Text);
                 if (eventIn == null)
                 {
                     goto LOI_HE_THONG;
@@ -1612,8 +863,8 @@ namespace iParkingv5_window.Usercontrols
                         {
                             string message = "Biển số không khớp với biển số đăng ký" + "\r\nBạn có muốn cho xe vào bãi?";
                             frmConfirmIn frmConfirmIn = new frmConfirmIn(message, identity?.Code ?? "", identity?.Name ?? "", identityGroup?.Name ?? "",
-                                                                         identity.Vehicles[0].Customer.Name, identity.Vehicles[0].PlateNumber,
-                                                                         identity.Vehicles[0].Customer.Address, vehicleImg, overviewImg, plateNumber);
+                                                                         "", "",
+                                                                         "", vehicleImg, overviewImg, plateNumber);
                             isConfirm = frmConfirmIn.ShowDialog()
                                                     == DialogResult.OK;
                             plateNumber = frmConfirmIn.updatePlate;
@@ -1650,7 +901,7 @@ namespace iParkingv5_window.Usercontrols
 
         CheckInWithForce:
             {
-                eventIn = await AppData.ApiServer.PostCheckInAsync(lane.id, plateNumber, identity, imageDatas, true, null, txtNote.Text);
+                eventIn = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plateNumber, identity, imageDatas, true, null, txtNote.Text);
                 if (eventIn == null)
                 {
                     goto LOI_HE_THONG;
@@ -1685,15 +936,15 @@ namespace iParkingv5_window.Usercontrols
             }
         SU_KIEN_HOP_LE:
             {
-                await ExcecuteValidEvent(identity, identityGroup, vehicleType, plateNumber, ce.EventTime, overviewImg, vehicleImg, lprImage, eventIn, isAlarm, imageDatas, optionalImages);
+                await ExcecuteValidEvent(identity, identityGroup, vehicleType, plateNumber, ce.EventTime, overviewImg, vehicleImg, lprImage, eventIn, isAlarm, imageDatas);
                 return;
             }
         }
 
         private async Task ExcecuteNonMonthCardEventIn(Identity identity, IdentityGroup identityGroup,
-                                                       VehicleBaseType vehicleType, string plateNumber, Dictionary<emParkingImageType, List<byte>> imageKeys,
+                                                       VehicleBaseType vehicleType, string plateNumber, Dictionary<EmParkingImageType, List<byte>> imageKeys,
                                                        CardEventArgs ce, ControllerInLane? controllerInLane,
-                                                       Image? overviewImg, Image? vehicleImg, Image? lprImage, List<Image> optionalImages)
+                                                       Image? overviewImg, Image? vehicleImg, Image? lprImage)
         {
 
             string errorMessage = string.Empty;
@@ -1717,7 +968,7 @@ namespace iParkingv5_window.Usercontrols
             {
                 note = txtNote.Text;
             }));
-            eventIn = await AppData.ApiServer.PostCheckInAsync(lane.id, plateNumber, identity, imageKeys, false, null, note);
+            eventIn = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plateNumber, identity, imageKeys, false, null, note);
             if (eventIn == null)
             {
                 goto LOI_HE_THONG;
@@ -1758,7 +1009,7 @@ namespace iParkingv5_window.Usercontrols
             {
                 await ExcecuteValidEvent(identity, identityGroup, vehicleType, ce.PlateNumber, ce.EventTime,
                                         overviewImg, vehicleImg, lprImage,
-                                        eventIn, isAlarm, imageKeys, optionalImages);
+                                        eventIn, isAlarm, imageKeys);
                 return;
             }
         }
@@ -1767,103 +1018,52 @@ namespace iParkingv5_window.Usercontrols
         {
             lblResult.UpdateResultMessage("Không gửi được thông tin xe vào lên hệ thống, vui lòng thử lại sau giây lát", Color.DarkRed);
         }
-        private void ExcecuteUnvalidEvent(Identity identity, IdentityGroup identityGroup, VehicleBaseType vehicleType, string detectPlate, DateTime eventTime, string errorMessage, Customer? customer, string registerPlate)
+        private void ExcecuteUnvalidEvent(Identity identity, IdentityGroup identityGroup, VehicleBaseType vehicleType, string detectPlate,
+                                          DateTime eventTime, string errorMessage, Customer? customer, string registerPlate)
         {
             lblResult.UpdateResultMessage(errorMessage, Color.DarkRed);
             DisplayEventInfo(eventTime, detectPlate, identity, identityGroup, vehicleType, customer, null);
         }
-        List<string> lastImageKeys1 = new List<string>();
-        DateTime lastTime = DateTime.Now;
+
         private async Task ExcecuteValidEvent(Identity? identity, IdentityGroup? identityGroup,
                                               VehicleBaseType vehicleType, string detectPlate,
                                               DateTime eventTime, Image? overviewImg,
                                               Image? vehicleImg, Image? lprImage,
-                                              EventInData? eventIn, bool isAlarm, Dictionary<emParkingImageType,
-                                              List<byte>> imageDatas, List<Image> optionalImages)
+                                              EventInData? eventIn, bool isAlarm, Dictionary<EmParkingImageType,
+                                              List<byte>> imageDatas)
         {
             txtPlate.Invoke(new Action(() =>
             {
                 txtPlate.Text = detectPlate;
             }));
             lblResult.UpdateResultMessage("Xin Mời Qua", Color.DarkGreen);
-
-            //WeighingDetail? weighingDetail = null;
-            //if (isScale)
-            //{
-            //    string weightFormId = ((ListItem)cbGoodsType.SelectedItem)?.Name ?? "";
-            //    weighingDetail = await KzScaleApiHelper.CreateScaleEvent(detectPlate, eventIn?.Id, this.ScaleValue, weightFormId,
-            //                                                             StaticPool.userId, StaticPool.user_name, eventIn?.fileKeys);
-            //    if (weighingDetail != null)
-            //    {
-            //        this.WeighingActionDetail = weighingDetail.weighing_action_detail[^1];
-            //    }
-
-            //}
-            DisplayEventInfo(eventTime, detectPlate, identity, identityGroup, vehicleType, null, null, null);
-            BaseLane.DisplayLed(detectPlate, eventTime, identity, identityGroup, "Hẹn Gặp lại", this.lane.id, "0");
-            //await BaseLane.SaveEventImage(overviewImg, vehicleImg, lprImage, imageKey, true, optionalImages);
+            RegisteredVehicle? registeredVehicle = eventIn!.vehicle;
+            Customer? customer = null;
+            if (registeredVehicle != null)
+            {
+                var customerResponse = await AppData.ApiServer.parkingDataService.GetCustomerByIdAsync(registeredVehicle.CustomerId);
+                if (customerResponse != null)
+                {
+                    customer = customerResponse.Item1;
+                }
+            }
+            DisplayEventInfo(eventTime, detectPlate, identity, identityGroup, vehicleType, customer, registeredVehicle, null);
+            BaseLane.DisplayLed(detectPlate, eventTime, identity, identityGroup, "Hẹn Gặp lại", this.lane.Id, "0");
             BaseLane.ShowImage(picLprImage, lprImage);
 
-            lastEvent = new EventIn()
-            {
-                Id = eventIn?.Id,
-                CreatedUtc = eventTime.AddHours(-7).ToString("yyyy-MM-ddTHH:mm:ss:ffff"),
-                PlateNumber = detectPlate,
-                Identity = identity,
-                IdentityId = identity?.Id,
-                LaneId = this.lane.id,
-                IdentityGroupId = identityGroup?.Id.ToString(),
-            };
+            lastEvent = eventIn;
 
             if (isAlarm)
             {
-                await AppData.ApiServer.CreateAlarmAsync(identity?.Code, this.lane.id, detectPlate, AbnormalCode.InvalidPlateNumber,
+                await AppData.ApiServer.parkingProcessService.CreateAlarmAsync(identity?.Code, this.lane.Id, detectPlate, AbnormalCode.InvalidPlateNumber,
                                                          imageDatas, true, identityGroup?.Id.ToString(), "", "", "Cảnh báo biển số");
             }
-
-            //this.Invoke(new Action(() =>
-            //{
-            //    for (int i = ucLastEventInfos.Count - 1; i > 0; i--)
-            //    {
-            //        string customerId = ucLastEventInfos[i - 1].CustomerId;
-            //        string registerVehicleId = ucLastEventInfos[i - 1].RegisterVehicleId;
-            //        string laneId = ucLastEventInfos[i - 1].LaneId;
-            //        string identityId = ucLastEventInfos[i - 1].IdentityId;
-            //        ucLastEventInfos[i].UpdateEventInfo(ucLastEventInfos[i - 1].eventId, ucLastEventInfos[i - 1].plateNumber,
-            //                                            ucLastEventInfos[i - 1].vehicleGroupId, ucLastEventInfos[i - 1].IdentityGroupId,
-            //                                            ucLastEventInfos[i - 1].datetimeIn, ucLastEventInfos[i - 1].picDirs,
-            //                                            customerId, registerVehicleId, laneId, identityId, true);
-            //    }
-            //    //var overviewKey = imageKey + "_OVERVIEWIN.jpeg";
-            //    //var vehicleKey = imageKey + "_VEHICLEIN.jpeg";
-            //    //var vehicleCutKey = imageKey + "_LPRIN.jpeg";
-            //    //var imageKeys = new List<string>() { overviewKey, vehicleKey, vehicleCutKey };
-            //    ucLastEventInfos[0].UpdateEventInfo(eventIn.Id, detectPlate, "",
-            //                                        identityGroup?.Id.ToString() ?? "", eventTime, eventIn.fileKeys,
-            //                                         "", "", this.lane.id, identity?.Id, true);
-            //}));
-            //if (((EmPrintTemplate)StaticPool.appOption.PrintTemplate) == EmPrintTemplate.XuanCuong)
-            //{
-            //    lastImageKeys = eventIn.fileKeys;
-            //    lastTime = eventTime;
-            //    XuanCuongApiHelper.SendParkingInfo(lastEvent.Id, "in", detectPlate, eventTime, eventIn.fileKeys, "");
-            //}
-            await AppData.ApiServer.CreateWarehouseService(lastEvent.Id, "", detectPlate, iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper.TransactionType.EmTransactionType.InBound, false);
         }
         #endregion End xử lý sự kiện thẻ
 
         #region CONTROLS IN FORM
 
         #region ACTION
-        private void CbNote_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            this.ActiveControl = lblLaneName;
-        }
-        private void CbGoodsType_SelectedIndexChanged(object? sender, EventArgs e)
-        {
-            this.ActiveControl = lblLaneName;
-        }
-
         /// <summary>
         /// Mở giao diện cấu hỉnh làn
         /// </summary>
@@ -1879,12 +1079,12 @@ namespace iParkingv5_window.Usercontrols
                     cameraList.Add(cameraItem);
                 }
             }
-            new frmLaneSetting(this.lane.id, StaticPool.leds, cameraList, this.lane.controlUnits.ToList(), true).ShowDialog();
+            new frmLaneSetting(this.lane.Id, StaticPool.leds, cameraList, this.lane.controlUnits.ToList(), true).ShowDialog();
             GetShortcutConfig();
 
             laneDirection = NewtonSoftHelper<LaneDirectionConfig>.DeserializeObjectFromPath(
-                                                       PathManagement.appLaneDirectionConfigPath(this.lane.id)) ?? LaneDirectionConfig.CreateDefault();
-            panelDisplayLastEVent.Visible = laneDirection.IsDisplayLastEvent;
+                                                       PathManagement.appLaneDirectionConfigPath(this.lane.Id)) ?? LaneDirectionConfig.CreateDefault();
+            panelDisplayLastEvent.Visible = laneDirection.IsDisplayLastEvent;
             SetDisplayDirection();
         }
 
@@ -2011,163 +1211,10 @@ namespace iParkingv5_window.Usercontrols
                 default:
                     break;
             }
-            panelDisplayLastEVent.Visible = laneDirection.IsDisplayLastEvent;
+            panelDisplayLastEvent.Visible = laneDirection.IsDisplayLastEvent;
             splitContainerMain.Panel2Collapsed = laneDirection.IsDisplayLastEvent ? false : true;
             panelLastEvent.Visible = laneDirection.IsDisplayLastEvent;
             PanelCameras_SizeChanged(null, null);
-        }
-
-        private async void BtnPrintScale_Click(object sender, EventArgs e)
-        {
-
-            if (lastEvent == null)
-            {
-                MessageBox.Show("Chưa có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            if (string.IsNullOrEmpty(lastEvent.Id))
-            {
-                MessageBox.Show("Chưa có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            if (this.WeighingActionDetail == null)
-            {
-                MessageBox.Show("Chưa có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            if (cbGoodsType.Items.Count > 0)
-            {
-                string weighingFormId = ((ListItem)cbGoodsType.SelectedItem).Name;
-                if (this.WeighingActionDetail.Weighting_form_id != weighingFormId)
-                {
-                    this.WeighingActionDetail = await KzScaleApiHelper.UpdateWeighingActionDetailById(this.WeighingActionDetail.Id, weighingFormId);
-                    if (this.WeighingActionDetail == null)
-                    {
-                        MessageBox.Show("Chưa có thông tin cân xe", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
-                    }
-                    else
-                    {
-                        this.Invoke(new Action(() =>
-                        {
-                            lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(this.WeighingActionDetail.Price.ToString());
-                        }));
-                    }
-                }
-
-            }
-
-
-            var frm = new frmSelectPrintCount();
-            if (frm.ShowDialog() == DialogResult.OK)
-            {
-                this.printCount = frm.PrintCount;
-
-                var wbPrint = new WebBrowser();
-                wbPrint.DocumentCompleted += WbPrint_DocumentCompleted;
-                wbPrint.DocumentText = GetPrintContent(await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(this.lastEvent.Id));
-            }
-        }
-        private async void btnPrintScaleOffline_Click(object sender, EventArgs e)
-        {
-            //Ra lệnh gửi hóa đơn điện tử
-            if (this.WeighingActionDetail == null)
-            {
-                MessageBox.Show("Chưa có thông tin cân xe", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            if (cbGoodsType.Items.Count > 0)
-            {
-                string weighingFormId = ((ListItem)cbGoodsType.SelectedItem).Name;
-                if (this.WeighingActionDetail.Weighting_form_id != weighingFormId)
-                {
-                    this.WeighingActionDetail = await KzScaleApiHelper.UpdateWeighingActionDetailById(this.WeighingActionDetail.Id, weighingFormId);
-                    if (this.WeighingActionDetail == null)
-                    {
-                        MessageBox.Show("Chưa có thông tin cân xe", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
-                    }
-                    else
-                    {
-                        this.Invoke(new Action(() =>
-                        {
-                            lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(this.WeighingActionDetail.Price.ToString());
-                        }));
-                    }
-                }
-
-            }
-
-            this.printCount = 1;
-            var wbPrint = new WebBrowser();
-            wbPrint.DocumentCompleted += WbPrint_DocumentCompleted;
-            wbPrint.DocumentText = GetPrintScaleInvoiceOfflineContent(this.WeighingActionDetail);
-        }
-        private async void btnPrintScaleOnline_Click(object sender, EventArgs e)
-        {
-            //Ra lệnh gửi hóa đơn điện tử
-            if (this.WeighingActionDetail == null)
-            {
-                MessageBox.Show("Chưa có thông tin cân xe", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            if (cbGoodsType.Items.Count > 0)
-            {
-                string weighingFormId = ((ListItem)cbGoodsType.SelectedItem).Name;
-                if (this.WeighingActionDetail.Weighting_form_id != weighingFormId)
-                {
-                    this.WeighingActionDetail = await KzScaleApiHelper.UpdateWeighingActionDetailById(this.WeighingActionDetail.Id, weighingFormId);
-                    if (this.WeighingActionDetail == null)
-                    {
-                        MessageBox.Show("Chưa có thông tin cân xe", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
-                    }
-                    else
-                    {
-                        this.Invoke(new Action(() =>
-                        {
-                            lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(this.WeighingActionDetail.Price.ToString());
-                        }));
-                    }
-                }
-            }
-
-            if (this.WeighingActionDetail.Price == 0)
-            {
-                MessageBox.Show("Phương tiện không phát sinh phí cân xe.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            //In hóa đơn internet
-            string orderId = await KzScaleApiHelper.CreateInvoice(this.WeighingActionDetail.Id, StaticPool.userId, StaticPool.user_name);
-            if (string.IsNullOrEmpty(orderId))
-            {
-                MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            var invoiceData = await AppData.ApiServer.GetInvoiceData(orderId);
-            if (invoiceData == null)
-            {
-                MessageBox.Show("Chưa có thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            try
-            {
-                string pdfContent = invoiceData.fileToBytes;
-                if (!string.IsNullOrEmpty(pdfContent))
-                {
-                    PrintHelper.PrintPdf(pdfContent);
-                }
-                else
-                {
-                    MessageBox.Show("Chưa có thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-            }
-            catch (Exception ex)
-            {
-            }
         }
 
         /// <summary>
@@ -2182,34 +1229,28 @@ namespace iParkingv5_window.Usercontrols
 
             if (frmSearchPlateNumber.ShowDialog() != DialogResult.OK) return;
             string selectedPlate = frmSearchPlateNumber.selectedVehiclePlate;
-            //RegisteredVehicle? registeredVehicle = await KzParkingApiHelper.GetRegisteredVehicle(selectedPlate);
-            RegisteredVehicle? registeredVehicle = (await AppData.ApiServer.GetRegistedVehilceByPlateAsync(selectedPlate)).Item1;
+            RegisteredVehicle? registeredVehicle = (await AppData.ApiServer.parkingDataService.GetRegistedVehilceByPlateAsync(selectedPlate)).Item1;
             if (registeredVehicle == null)
             {
                 return;
             }
             Image? vehicleImage = null;
             Image? overviewImage = ucOverView?.GetFullCurrentImage();
-            VehicleType? vehicleType = null;
             Customer? customer = null;
             EventInData? eventIn = null;
             string errorMessage = string.Empty;
 
-            string vehicleTypeId = registeredVehicle.VehicleTypeId;
             string customerId = registeredVehicle.CustomerId;
 
-            //vehicleType = await KzParkingApiHelper.GetVehicleTypeById(vehicleTypeId.ToString());
-            vehicleType = (await AppData.ApiServer.GetVehicleTypeByIdAsync(vehicleTypeId.ToString())).Item1;
-            switch (vehicleType.Type)
+            VehicleBaseType vehicleType = registeredVehicle.vehicleType;
+
+            switch (vehicleType)
             {
                 case VehicleBaseType.Car:
                     vehicleImage = ucCarLpr?.GetFullCurrentImage();
                     break;
                 case VehicleBaseType.Bike:
                 case VehicleBaseType.MotorBike:
-                    //case VehicleBaseType.ElectricalMotorBike:
-                    //case VehicleBaseType.Bicyle:
-                    //case VehicleBaseType.ElectricalBike:
                     vehicleImage = ucMotoLpr?.GetFullCurrentImage();
                     break;
                 default:
@@ -2217,33 +1258,36 @@ namespace iParkingv5_window.Usercontrols
             }
             if (!string.IsNullOrEmpty(customerId))
             {
-                //customer = await KzParkingApiHelper.GetCustomerById(customerId);
-                customer = (await AppData.ApiServer.GetCustomerByIdAsync(customerId)).Item1;
+                customer = (await AppData.ApiServer.parkingDataService.GetCustomerByIdAsync(customerId)).Item1;
             }
 
             ClearView();
-            //var imageKey = BaseLane.GetBaseImageKey(this.lane.name, "", selectedPlate, DateTime.Now);
-            //var imageKeys = new List<string>() {
-            //                            imageKey + "_OVERVIEWIN.jpeg",
-            //                            imageKey + "_VEHICLEIN.jpeg",
-            //                            imageKey + "_LPRIN.jpeg", };
-            //var responseWithForce = await KzParkingApiHelper.PostCheckInAsync(lane.id, selectedPlate, null, imageKeys, true);
-            Dictionary<emParkingImageType, List<byte>> imageDatas = new Dictionary<emParkingImageType, List<byte>>
+            //Hiển thị thông tin hình ảnh phương tiện
+            BaseLane.ShowImage(picVehicleImage, vehicleImage);
+            BaseLane.ShowImage(picOverviewImage, overviewImage);
+            Dictionary<EmParkingImageType, List<byte>> imageDatas = new Dictionary<EmParkingImageType, List<byte>>
                 {
-                    { emParkingImageType.Overview, overviewImage.ImageToByteArray() },
-                    { emParkingImageType.Vehicle, vehicleImage.ImageToByteArray() },
+                    { EmParkingImageType.Overview, overviewImage.ImageToByteArray() },
+                    { EmParkingImageType.Vehicle, vehicleImage.ImageToByteArray() },
                 };
 
-            eventIn = await AppData.ApiServer.PostCheckInAsync(lane.id, selectedPlate, null, imageDatas, true, null, txtNote.Text);
+            eventIn = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, selectedPlate, null, imageDatas, true, null, txtNote.Text);
             if (eventIn == null)
             {
                 goto LOI_HE_THONG;
             }
-            //if (responseWithForce.metadata.success == false)
-            //{
-            //    errorMessage = ApiInternalErrorMessages.ToString(ApiInternalErrorMessages.GetFromName(responseWithForce.metadata.message.code));
-            //    goto SU_KIEN_LOI;
-            //}
+            if (!eventIn.IsSuccess)
+            {
+                if (eventIn.fields == null)
+                {
+                    goto LOI_HE_THONG;
+                }
+                errorMessage = eventIn.fields.Count > 0 ? (eventIn.fields[0].ToString() ?? "") : eventIn.detailCode;
+                if (errorMessage != "Biển số không hợp lệ".ToUpper())
+                {
+                    goto SU_KIEN_LOI;
+                }
+            }
             else
             {
                 if (eventIn.OpenBarrier)
@@ -2291,25 +1335,19 @@ namespace iParkingv5_window.Usercontrols
             }
         SU_KIEN_LOI:
             {
-                ExcecuteUnvalidEvent(null, null, vehicleType.Type, selectedPlate, DateTime.Now, errorMessage, null, "");
+                ExcecuteUnvalidEvent(null, null, vehicleType, selectedPlate, DateTime.Now, errorMessage, null, "");
                 return;
             }
         SU_KIEN_HOP_LE:
             {
 
-                await ExcecuteValidEvent(null, null, vehicleType.Type, selectedPlate, DateTime.Now, overviewImage, vehicleImage, null, eventIn, false, imageDatas, new List<Image>());
-                if (lastEvent != null)
+                await ExcecuteValidEvent(null, null, vehicleType, selectedPlate, DateTime.Now, overviewImage, vehicleImage, null, eventIn, false, imageDatas);
+                if (lastEvent != null && eventIn.IsSuccess)
                 {
-                    //var identity = await KzParkingApiHelper.GetIdentityById(eventIn.IdentityId);
-                    var identity = (await AppData.ApiServer.GetIdentityByIdAsync(eventIn.Identity.Id)).Item1;
-                    //await KzParkingApiHelper.CreateAlarmAsync(identity.Id, this.lane.id, lastEvent.PlateNumber, AbnormalCode.ManualEvent,
-                    //                                     imageKey, true,
-                    //                                     identity?.IdentityGroupId, lastEvent?.customer?.Id,
-                    //                                     lastEvent?.RegisteredVehicle?.Id, "");
-                    await AppData.ApiServer.CreateAlarmAsync(identity.Code, this.lane.id, lastEvent.PlateNumber, AbnormalCode.ManualEvent,
+                    var identity = (await AppData.ApiServer.parkingDataService.GetIdentityByIdAsync(eventIn.Identity.Id)).Item1;
+                    await AppData.ApiServer.parkingProcessService.CreateAlarmAsync(identity.Code, this.lane.Id, lastEvent.PlateNumber, AbnormalCode.ManualEvent,
                                                        imageDatas, true,
-                                                       identity?.IdentityGroupId, lastEvent?.customer?.Id,
-                                                       lastEvent?.RegisteredVehicle?.Id, "");
+                                                       identity?.IdentityGroupId, "", "", "");
                 }
                 return;
             }
@@ -2392,7 +1430,7 @@ namespace iParkingv5_window.Usercontrols
                 string imageKey = BaseLane.GetBaseImageKey(this.lane.name, "", "", DateTime.Now);
                 var imageDatas = SaveAllCameraImage();
 
-                await AppData.ApiServer.CreateAlarmAsync("", this.lane.id, "", AbnormalCode.OpenBarrierByKeyboard, imageDatas, true,
+                await AppData.ApiServer.parkingProcessService.CreateAlarmAsync("", this.lane.Id, "", AbnormalCode.OpenBarrierByKeyboard, imageDatas, true,
                                                         "", "", "", "");
             }
         }
@@ -2407,7 +1445,6 @@ namespace iParkingv5_window.Usercontrols
         /// <param name="e"></param>
         private void PanelCameras_SizeChanged(object? sender, EventArgs e)
         {
-            panelOversizeCam.Size = panelCameras.Size;
             foreach (ucCameraView item in panelCameras.Controls.OfType<ucCameraView>())
             {
                 if (laneDirection.cameraDirection == LaneDirectionConfig.EmCameraDirection.Vertical)
@@ -2473,7 +1510,7 @@ namespace iParkingv5_window.Usercontrols
         #region OTHER
         private void SplitContainerEventContent_SizeChanged(object? sender, EventArgs e)
         {
-            onControlSizeChangeEvent?.Invoke(this, new ControlSizeChangedEventArgs()
+            onControlSizeChangeEventInvoke(this, new ControlSizeChangedEventArgs()
             {
                 Type = 1,
                 NewX = this.splitContainerMain.Location.X,
@@ -2552,40 +1589,9 @@ namespace iParkingv5_window.Usercontrols
         #endregion END EVENT
 
         #region PRIVATE FUNCTION
-        private async Task LoadGoodsType()
-        {
-            try
-            {
-                var weighingForms = await KzScaleApiHelper.GetWeighingForms();
-                if (weighingForms != null)
-                {
-
-                    foreach (var item in weighingForms)
-                    {
-                        ListItem li = new ListItem()
-                        {
-                            Name = item.Id,
-                            Value = item.Name,
-                        };
-                        if (item.Price == 0)
-                        {
-                            cbGoodsType.Items.Insert(0, li);
-                        }
-                        else
-                            cbGoodsType.Items.Add(li);
-                    }
-                    cbGoodsType.DisplayMember = "Value";
-                    cbGoodsType.SelectedIndex = cbGoodsType.Items.Count > 0 ? 0 : -1;
-                    cbGoodsType.SelectedIndexChanged += CbGoodsType_SelectedIndexChanged;
-                }
-            }
-            catch (Exception)
-            {
-            }
-        }
         private async Task<Tuple<bool, Identity?>> IsValidIdentity(string cardNumber)
         {
-            var identityResponse = await AppData.ApiServer.GetIdentityByCodeAsync(cardNumber);
+            var identityResponse = await AppData.ApiServer.parkingDataService.GetIdentityByCodeAsync(cardNumber);
             Identity? identity = identityResponse.Item1;
             if (identityResponse == null)
             {
@@ -2622,9 +1628,9 @@ namespace iParkingv5_window.Usercontrols
         public void GetShortcutConfig()
         {
             laneInShortcutConfig = NewtonSoftHelper<LaneInShortcutConfig>.DeserializeObjectFromPath(
-                                            PathManagement.laneShortcutConfigPath(this.lane.id)) ?? new LaneInShortcutConfig();
+                                            PathManagement.laneShortcutConfigPath(this.lane.Id)) ?? new LaneInShortcutConfig();
             controllerShortcutConfigs = NewtonSoftHelper<List<ControllerShortcutConfig>>.DeserializeObjectFromPath(
-                                            PathManagement.laneControllerShortcutConfigPath(this.lane.id)) ?? new List<ControllerShortcutConfig>();
+                                            PathManagement.laneControllerShortcutConfigPath(this.lane.Id)) ?? new List<ControllerShortcutConfig>();
         }
 
         /// <summary>
@@ -2692,7 +1698,7 @@ namespace iParkingv5_window.Usercontrols
             AllowDesignRealtime(true);
             return new LaneDisplayConfig()
             {
-                LaneId = this.lane.id,
+                LaneId = this.lane.Id,
                 DisplayIndex = 1,
                 splitContainerEventContent = this.splitContainerEventContent.SplitterDistance,
                 splitContainerMain = this.splitContainerMain.Panel2Collapsed ? this.splitContainerMain.Height : this.splitContainerMain.SplitterDistance,
@@ -2719,11 +1725,13 @@ namespace iParkingv5_window.Usercontrols
             {
                 if (e is CardEventArgs cardEvent)
                 {
+                    string controlUnitId = cardEvent.DeviceId;
+                    int readerIndex = cardEvent.ReaderIndex;                    
                     await ExcecuteCardEvent(cardEvent);
                 }
                 else if (e is InputEventArgs inputEvent)
                 {
-                    await ExcecuteInputEvent(inputEvent);
+                    await ExcecuteInputEvent(inputEvent, lblResult);
                 }
             }
             catch (Exception ex)
@@ -2736,5 +1744,22 @@ namespace iParkingv5_window.Usercontrols
             }
         }
         #endregion END PUBLIC FUNCTION
+
+        private void FocusOnTitle()
+        {
+            this.Invoke(new Action(() =>
+            {
+                this.ActiveControl = lblLaneName;
+                lblLaneName.Focus();
+            }));
+        }
+        private void DisplayDetectedPlate(string plate, Image? lprImage)
+        {
+            BaseLane.ShowImage(picLprImage, lprImage);
+            txtPlate.Invoke(new Action(() =>
+            {
+                txtPlate.Text = plate;
+            }));
+        }
     }
 }

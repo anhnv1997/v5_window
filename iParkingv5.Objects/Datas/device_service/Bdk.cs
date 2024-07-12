@@ -1,4 +1,6 @@
-﻿using System;
+﻿using iParkingv5.Objects.Configs;
+using iParkingv5.Objects.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -26,6 +28,8 @@ namespace iParkingv6.Objects.Datas
         public object UpdatedUtc { get; set; }
         public object UpdatedBy { get; set; }
 
-        public bool IsConnect { get; set; } 
+        public bool IsConnect { get; set; }
+
+        public List<CardFormatConfig> configs { get; set; } = new List<CardFormatConfig>();
     }
 }

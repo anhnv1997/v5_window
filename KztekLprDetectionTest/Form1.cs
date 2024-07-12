@@ -349,7 +349,7 @@ namespace KztekLprDetectionTest
 
             //    }
             //});
-            for (int i = lastIndex; i < files.Count; i += 1)
+            for (int i = 0; i < files.Count; i += 1)
             {
                 //1;5;7;9;11;13
                 //if (i % 2 == 0 || i % 3 == 0)

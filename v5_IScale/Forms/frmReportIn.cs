@@ -567,7 +567,7 @@ namespace v5_IScale.Forms
                     ListItem laneItem = new ListItem()
                     {
                         Name = item.name,
-                        Value = item.id
+                        Value = item.Id
                     };
                     cbLane.Items.Add(laneItem);
                 }
@@ -577,7 +577,7 @@ namespace v5_IScale.Forms
 
         private string GetLaneName(string laneId)
         {
-            Lane? selectedLane = lanes.Where(lane => lane.id.ToLower() == laneId.ToLower()).FirstOrDefault();
+            Lane? selectedLane = lanes.Where(lane => lane.Id.ToLower() == laneId.ToLower()).FirstOrDefault();
             return selectedLane == null ? "" : selectedLane.name;
         }
         private string GetIdentityGroupName(string identityGroupId)

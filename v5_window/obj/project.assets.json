@@ -874,6 +874,30 @@
           "bin/placeholder/iParkingv5.ApiManager.dll": {}
         }
       },
+      "iParkingv5.Auth/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "IPaking.Ultility": "1.0.0.2",
+          "IdentityModel": "7.0.0",
+          "IdentityModel.OidcClient": "6.0.0",
+          "Kztek.Tool": "1.0.0.2",
+          "Microsoft.Web.WebView2": "1.0.2420.47",
+          "Minio": "5.0.0",
+          "iPakrkingv5.Controls": "1.0.0.1",
+          "iParkingv5.ApiManager": "1.0.1.8",
+          "iParkingv5.Objects": "1.0.0.6"
+        },
+        "compile": {
+          "bin/placeholder/iParkingv5.Auth.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/iParkingv5.Auth.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WindowsForms"
+        ]
+      },
       "iParkingv5.Controller/1.0.0.2": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -2511,6 +2535,11 @@
       "path": "../iParkingv5.ApiManager/iParkingv5.ApiManager.csproj",
       "msbuildProject": "../iParkingv5.ApiManager/iParkingv5.ApiManager.csproj"
     },
+    "iParkingv5.Auth/1.0.0": {
+      "type": "project",
+      "path": "../iParkingv5.Auth/iParkingv5.Auth.csproj",
+      "msbuildProject": "../iParkingv5.Auth/iParkingv5.Auth.csproj"
+    },
     "iParkingv5.Controller/1.0.0.2": {
       "type": "project",
       "path": "../iParkingv5.Controller/iParkingv5.Controller.csproj",
@@ -2574,6 +2603,7 @@
       "iPakrkingv5.Controls >= 1.0.0.1",
       "iParking.ConfigurationManager >= 1.0.0.2",
       "iParkingv5.ApiManager >= 1.0.1.8",
+      "iParkingv5.Auth >= 1.0.0",
       "iParkingv5.Controller >= 1.0.0.2",
       "iParkingv5.FeeTest >= 1.0.0",
       "iParkingv5.LedDisplay >= 1.0.0.1",
@@ -2631,6 +2661,9 @@
             },
             "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.ApiManager\\iParkingv5.ApiManager.csproj": {
               "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.ApiManager\\iParkingv5.ApiManager.csproj"
+            },
+            "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Auth\\iParkingv5.Auth.csproj": {
+              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Auth\\iParkingv5.Auth.csproj"
             },
             "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Controller\\iParkingv5.Controller.csproj": {
               "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Controller\\iParkingv5.Controller.csproj"

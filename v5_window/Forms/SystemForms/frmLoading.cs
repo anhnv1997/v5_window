@@ -2,8 +2,8 @@
 using iParkingv5.LprDetecter.LprDetecters;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Datas.Device_service;
+using iParkingv5.Objects.Datas.parking_service;
 using iParkingv5_window.Forms.DataForms;
-using iParkingv6.ApiManager.KzParkingv3Apis;
 using iParkingv6.Objects.Datas;
 using Kztek.Tool.NetworkTools;
 using Kztek.Tools;
@@ -53,7 +53,7 @@ namespace iParkingv5_window.Forms.SystemForms
         }
         private async void FrmLoading_Load(object? sender, EventArgs e)
         {
-            var systemConfig = await AppData.ApiServer.GetSystemConfigAsync();
+            var systemConfig = await AppData.ApiServer.systemService.GetSystemConfigAsync();
 
             foreach (KeyValuePair<string, Func<Task<bool>>> actions in loadingWorks)
             {
@@ -223,8 +223,7 @@ namespace iParkingv5_window.Forms.SystemForms
             {
                 List<string> validIps = NetWorkTools.GetLocalIPAddress();
                 validIps.Add(Environment.MachineName);
-                var computers = await AppData.ApiServer.GetComputersAsync();
-                //computer = await KzParkingApiHelper.GetComputerByIPAddressAsync(Environment.MachineName);
+                var computers = await AppData.ApiServer.deviceService.GetComputersAsync();
                 if (computers.Item1 == null)
                 {
                     goto GetPCConfig;
@@ -266,8 +265,7 @@ namespace iParkingv5_window.Forms.SystemForms
 
         private async Task<bool> LoadGates()
         {
-            //StaticPool.gate = await KzParkingApiHelper.GetGateByIdAsync(StaticPool.selectedComputer.GateId);
-            StaticPool.gate = (await AppData.ApiServer.GetGateByIdAsync(StaticPool.selectedComputer.GateId)).Item1;
+            StaticPool.gate = (await AppData.ApiServer.deviceService.GetGateByIdAsync(StaticPool.selectedComputer.GateId)).Item1;
             return StaticPool.gate != null;
         }
 
@@ -282,8 +280,7 @@ namespace iParkingv5_window.Forms.SystemForms
             List<Camera>? cameras = null;
         GetCameraConfig:
             {
-                //cameras = await KzParkingApiHelper.GetCameraByComputerIdAsync(StaticPool.selectedComputer.Id);
-                cameras = (await AppData.ApiServer.GetCameraByComputerIdAsync(StaticPool.selectedComputer.Id)).Item1;
+                cameras = (await AppData.ApiServer.deviceService.GetCameraByComputerIdAsync(StaticPool.selectedComputer.Id)).Item1;
                 if (cameras == null)
                 {
                     goto GetCameraConfig;
@@ -299,10 +296,9 @@ namespace iParkingv5_window.Forms.SystemForms
 
         private async Task<bool> LoadCustomerGroup()
         {
-            StaticPool.customerGroupCollection = new iParkingv5.Objects.Datas.CustomerGroupCollection();
+            StaticPool.customerGroupCollection = new CustomerGroupCollection();
 
-            //var customerGroups = await KzParkingApiHelper.GetAllCustomerGroups();
-            var customerGroups = (await AppData.ApiServer.GetCustomerGroupsAsync()).Item1;
+            var customerGroups = (await AppData.ApiServer.parkingDataService.GetCustomerGroupsAsync()).Item1;
             if (customerGroups != null)
             {
                 foreach (var item in customerGroups)
@@ -324,8 +320,7 @@ namespace iParkingv5_window.Forms.SystemForms
             List<Lane>? laneByComputerIds = null;
         GetLaneConfig:
             {
-                //laneByComputerIds = await KzParkingApiHelper.GetLanesAsync(StaticPool.selectedComputer.Id);
-                laneByComputerIds = (await AppData.ApiServer.GetLaneByComputerIdAsync(StaticPool.selectedComputer.Id)).Item1;
+                laneByComputerIds = (await AppData.ApiServer.deviceService.GetLaneByComputerIdAsync(StaticPool.selectedComputer.Id)).Item1;
                 if (laneByComputerIds == null)
                 {
                     goto GetLaneConfig;
@@ -343,8 +338,7 @@ namespace iParkingv5_window.Forms.SystemForms
             {
                 foreach (var lane in laneByComputerIds)
                 {
-                    //Lane? _lane = await KzParkingApiHelper.GetLaneByIdAsync(lane.id);
-                    Lane? _lane = (await AppData.ApiServer.GetLaneByIdAsync(lane.id)).Item1;
+                    Lane? _lane = (await AppData.ApiServer.deviceService.GetLaneByIdAsync(lane.Id)).Item1;
 
                     if (_lane != null)
                     {
@@ -368,8 +362,7 @@ namespace iParkingv5_window.Forms.SystemForms
             List<Led> leds = null;
         GetLedConfig:
             {
-                //leds = await KzParkingApiHelper.GetLedsAsync(StaticPool.selectedComputer.Id);
-                leds = (await AppData.ApiServer.GetLedByComputerIdAsync(StaticPool.selectedComputer.Id)).Item1;
+                leds = (await AppData.ApiServer.deviceService.GetLedByComputerIdAsync(StaticPool.selectedComputer.Id)).Item1;
                 if (leds == null)
                 {
                     goto GetLedConfig;
@@ -394,8 +387,7 @@ namespace iParkingv5_window.Forms.SystemForms
             List<Bdk> bdks = null;
         GetBDKConfig:
             {
-                //bdks = await KzParkingApiHelper.GetControllerByPCId(StaticPool.selectedComputer.Id);
-                bdks = (await AppData.ApiServer.GetControlUnitByComputerIdAsync(StaticPool.selectedComputer.Id)).Item1;
+                bdks = (await AppData.ApiServer.deviceService.GetControlUnitByComputerIdAsync(StaticPool.selectedComputer.Id)).Item1;
                 if (bdks == null)
                 {
                     goto GetBDKConfig;

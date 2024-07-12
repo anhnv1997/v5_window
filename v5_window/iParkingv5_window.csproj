@@ -43,6 +43,7 @@
     <ProjectReference Include="..\iPakrkingv5.Controls\iPakrkingv5.Controls.csproj" />
     <ProjectReference Include="..\iParking.ConfigurationManager\iParking.ConfigurationManager.csproj" />
     <ProjectReference Include="..\iParkingv5.ApiManager\iParkingv5.ApiManager.csproj" />
+    <ProjectReference Include="..\iParkingv5.Auth\iParkingv5.Auth.csproj" />
     <ProjectReference Include="..\iParkingv5.Controller\iParkingv5.Controller.csproj" />
     <ProjectReference Include="..\iParkingv5.FeeTest\iParkingv5.FeeTest.csproj" />
     <ProjectReference Include="..\iParkingv5.LedDisplay\iParkingv5.LedDisplay.csproj" />
@@ -56,15 +57,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\DataForms\frmSearchPlateNumber.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\ReportForms\frmReportScaleWithInvoice.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\ReportForms\frmReportScaleWithoutInvoice.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\ReportForms\frmSelectPrintCount.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Properties\Resources.Designer.cs">

@@ -28,7 +28,7 @@ namespace iParkingv5_window.Forms
         {
             if (e.KeyCode == Keys.Enter)
             {
-                bool isUpdateSuccess = await KzParkingv5ApiHelper.UpdateBSXNote(txtNewNote.Text, this.eventId, this.isEventIn);
+                bool isUpdateSuccess = await AppData.ApiServer.parkingProcessService.UpdateBSXNote(txtNewNote.Text, this.eventId, this.isEventIn);
                 if (isUpdateSuccess)
                 {
                     MessageBox.Show("Cập nhật ghi chú thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -49,7 +49,7 @@ namespace iParkingv5_window.Forms
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            bool isUpdateSuccess = await KzParkingv5ApiHelper.UpdateBSXNote(txtNewNote.Text, this.eventId, this.isEventIn);
+            bool isUpdateSuccess = await AppData.ApiServer.parkingProcessService.UpdateBSXNote(txtNewNote.Text, this.eventId, this.isEventIn);
             if (isUpdateSuccess)
             {
                 MessageBox.Show("Cập nhật ghi chú thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace iParkingv5.Objects.Datas.invoice_service
 {
-    public enum EmFIleType
+    public enum EmFileType
     {
         Pdf,
         Xml

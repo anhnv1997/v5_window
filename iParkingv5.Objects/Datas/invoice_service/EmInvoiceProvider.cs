@@ -6,8 +6,8 @@ namespace iParkingv5.Objects.Datas.invoice_service
 {
     public enum EmInvoiceProvider
     {
-        THAI_SON = 86,
-        MISA = 33,
-        VIETTEL = 65
+        THAI_SON,
+        MISA,
+        VIETTEL
     }
 }

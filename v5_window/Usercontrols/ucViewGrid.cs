@@ -81,7 +81,7 @@ namespace iParkingv5_window.Usercontrols
             {
                 for (int j = 0; j < ColumnsCount; j++)
                 {
-                    string laneId = table.GetControlFromPosition(j, i) != null ? (table.GetControlFromPosition(j, i) as iLane)!.lane.id : string.Empty;
+                    string laneId = table.GetControlFromPosition(j, i) != null ? (table.GetControlFromPosition(j, i) as iLane)!.lane.Id : string.Empty;
                     orderLanes.Add(laneId);
                 }
             }

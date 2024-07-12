@@ -1,13 +1,8 @@
 ﻿using IPaking.Ultility;
 using iParkingv5.Objects;
-using iParkingv5.Objects.Datas.warehouse_service;
+using iParkingv5.Objects.Datas.weighing_service;
 using Kztek.Tool.TextFormatingTools;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static iParkingv5.Objects.Enums.PrintHelpers;
 
 namespace iParkingv5_window.Helpers
@@ -247,6 +242,5 @@ namespace iParkingv5_window.Helpers
                     </tr>";
         }
         #endregion END PRIVATE FUNCTION
-
     }
 }

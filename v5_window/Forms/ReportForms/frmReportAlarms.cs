@@ -1,7 +1,6 @@
 ﻿using IPaking.Ultility;
 using iPakrkingv5.Controls;
 using iPakrkingv5.Controls.Controls.Buttons;
-using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.Datas;
@@ -10,10 +9,8 @@ using iParkingv5.Objects.Datas.parking_service;
 using iParkingv5.Objects.EventDatas;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv5_window.Usercontrols.BuildControls;
-using iParkingv6.ApiManager.KzParkingv3Apis;
 using System.Data;
 using System.Runtime.InteropServices;
-using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper;
 
 namespace iParkingv5_window.Forms.ReportForms
 {
@@ -66,13 +63,13 @@ namespace iParkingv5_window.Forms.ReportForms
         {
             //registerVehicles = await KzParkingApiHelper.GetRegisteredVehicles("");
 
-            registerVehicles = (await  AppData.ApiServer.GetRegisterVehiclesAsync("")).Item1;
+            registerVehicles = (await  AppData.ApiServer.parkingDataService.GetRegisterVehiclesAsync("")).Item1;
 
             //customers = (await KzParkingApiHelper.GetAllCustomers())?.Item1 ?? new List<Customer>();
-            customers = (await  AppData.ApiServer.GetCustomersAsync())?.Item1 ?? new List<Customer>();
+            customers = (await  AppData.ApiServer.parkingDataService.GetCustomersAsync())?.Item1 ?? new List<Customer>();
 
             //identityGroups = await KzParkingApiHelper.GetIdentityGroupsAsync() ?? new List<IdentityGroup>();
-            identityGroups = (await  AppData.ApiServer.GetIdentityGroupsAsync()).Item1 ?? new List<IdentityGroup>();
+            identityGroups = (await  AppData.ApiServer.parkingDataService.GetIdentityGroupsAsync()).Item1 ?? new List<IdentityGroup>();
 
             picOverviewImageIn.Image = picVehicleImageIn.Image = defaultImg;
             await CreateUI();
@@ -121,7 +118,7 @@ namespace iParkingv5_window.Forms.ReportForms
             string vehicleTypeId = ((ListItem)cbVehicleType.SelectedItem)?.Value ?? "";
             string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
             //var alarmData = await KzParkingApiHelper.GetAlarms(keyword, startTime, endTime, "", vehicleTypeId, laneId);
-            var dtAlarm = await  AppData.ApiServer.GetAlarmReport(keyword, startTime, endTime, "", vehicleTypeId, laneId);
+            var dtAlarm = await  AppData.ApiServer.reportingService.GetAlarmReport(keyword, startTime, endTime, "", vehicleTypeId, laneId);
             if (dtAlarm == null)
             {
                 DisableFastLoading();
@@ -555,7 +552,7 @@ namespace iParkingv5_window.Forms.ReportForms
 
 
             //var vehicleTypes = await KzParkingApiHelper.GetAllVehicleTypes() ?? new List<iParkingv5.Objects.Enums.VehicleType>();
-            var vehicleTypes = (await  AppData.ApiServer.GetVehicleTypesAsync()).Item1 ?? new List<iParkingv5.Objects.Enums.VehicleType>();
+            var vehicleTypes = (await  AppData.ApiServer.parkingDataService.GetVehicleTypesAsync()).Item1 ?? new List<iParkingv5.Objects.Enums.VehicleType>();
             cbVehicleType.Invoke(new Action(() =>
             {
                 foreach (var item in vehicleTypes)
@@ -585,7 +582,7 @@ namespace iParkingv5_window.Forms.ReportForms
             }));
 
             //lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
-            lanes = (await  AppData.ApiServer.GetLanesAsync()).Item1 ?? new List<Lane>();
+            lanes = (await  AppData.ApiServer.deviceService.GetLanesAsync()).Item1 ?? new List<Lane>();
             cbLane.Invoke(new Action(() =>
             {
                 foreach (var item in lanes)
@@ -593,7 +590,7 @@ namespace iParkingv5_window.Forms.ReportForms
                     ListItem laneItem = new ListItem()
                     {
                         Name = item.name,
-                        Value = item.id
+                        Value = item.Id
                     };
                     cbLane.Items.Add(laneItem);
                 }
@@ -611,7 +608,7 @@ namespace iParkingv5_window.Forms.ReportForms
             {
                 return string.Empty;
             }
-            Lane? selectedLane = lanes.Where(lane => lane.id == laneId).FirstOrDefault();
+            Lane? selectedLane = lanes.Where(lane => lane.Id == laneId).FirstOrDefault();
             return selectedLane == null ? "" : selectedLane.name;
         }
         private string GetIdentityGroupName(string identityGroupId)

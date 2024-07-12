@@ -22,7 +22,7 @@ namespace iParkingv5_window.Usercontrols
             try
             {
                 timerUpdateCount.Enabled = false;
-                var eventCountDetail = await AppData.ApiServer.SummaryEventAsync();
+                var eventCountDetail = await AppData.ApiServer.reportingService.SummaryEventAsync();
                 int totalVehicleInPark = eventCountDetail.countAllEventIn;
                 int vehicleInDay = eventCountDetail.totalVehicleIn;
                 int vehicleOutDay = eventCountDetail.totalEventOut;

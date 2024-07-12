@@ -30,7 +30,7 @@ namespace iParkingv5.Objects.Datas.Device_service
 
     public class Lane
     {
-        public string id { get; set; }
+        public string Id { get; set; }
         public string code { get; set; }
         public string name { get; set; }
         public string computerId { get; set; }

@@ -34,7 +34,7 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             AddTabServerConfig();
             AddTabOptionConfig();
             AddTabLprConfig();
-            AddTabScaleConfig();
+            //AddTabScaleConfig();
             AddTabThirdParty();
 
             this.Size = new Size(Properties.Settings.Default.prefer_width, Properties.Settings.Default.prefer_height);
@@ -56,7 +56,7 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             SaveLprConfig();
             SaveOptionConfig();
             SaveDatabaseConfig();
-            SaveScaleConfig();
+            //SaveScaleConfig();
             SaveThirdPartyConfig();
             MessageBox.Show("Lưu cấu hình thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

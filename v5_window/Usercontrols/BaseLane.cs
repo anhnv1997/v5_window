@@ -84,7 +84,7 @@ namespace iParkingv5_window.Usercontrols
         {
             foreach (Lane item in StaticPool.lanes)
             {
-                if (item.id == laneId)
+                if (item.Id == laneId)
                 {
                     if (!item.displayLed)
                     {
@@ -116,18 +116,6 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
         }
-        //public static async Task SaveEventImage(Image? overviewImg, Image? vehicleImg, Image? lprImage, string imageKey, bool isInEvent, List<Image> optionImages)
-        //{
-        //    for (int i = 0; i < optionImages.Count; i++)
-        //    {
-        //        await MinioHelper.UploadPicture(optionImages[i], imageKey + (isInEvent ? $"_OPTIONIN{i}.jpeg" : $"_OPTIONOUT{i}.jpeg"));
-        //    }
-        //    var task1 = MinioHelper.UploadPicture(overviewImg, imageKey + (isInEvent ? "_OVERVIEWIN.jpeg" : "_OVERVIEWOUT.jpeg"));
-        //    var task2 = MinioHelper.UploadPicture(vehicleImg, imageKey + (isInEvent ? "_VEHICLEIN.jpeg" : "_VEHICLEOUT.jpeg"));
-        //    var task3 = MinioHelper.UploadPicture(lprImage, imageKey + (isInEvent ? "_LPRIN.jpeg" : "_LPROUT.jpeg"));
-        //    await Task.WhenAll(task1, task2, task3);
-        //}
-
         public static void ShowImage(MovablePictureBox pictureBox, Image? img)
         {
             pictureBox.BeginInvoke(new Action(() =>
@@ -141,10 +129,7 @@ namespace iParkingv5_window.Usercontrols
             lblResult.Invoke(() =>
             {
                 lblResult.Message = message;
-                //lblResult.Text = message;
                 lblResult.BackColor = backColor;
-                //lblResult.Height = lblResult.PreferredHeight;
-                //lblResult.Refresh();
             });
         }
         public static string GetBaseImageKey(string laneName, string cardNumber, string plate, DateTime eventTime)
@@ -225,7 +210,7 @@ namespace iParkingv5_window.Usercontrols
             }
         }
 
-        public static void GetPlate(string laneId, out Image? vehicleImd, out string plate, out Image? lprImage, ucCameraView? ucCameraView, List<Kztek.Cameras.Camera> camDuPhongs, bool isCar)
+        public static void GetPlate(string laneId, out Image? vehicleImg, out string plate, out Image? lprImage, ucCameraView? ucCameraView, List<Kztek.Cameras.Camera> camDuPhongs, bool isCar)
         {
             Rectangle? config = null;
            if (File.Exists(PathManagement.laneCameraConfigPath(laneId, ucCameraView?._Camera.ID)))
@@ -242,8 +227,8 @@ namespace iParkingv5_window.Usercontrols
                     };
                 }
             } 
-            vehicleImd = ucCameraView?.GetFullCurrentImage();
-            plate = StaticPool.LprDetect.GetPlateNumber(vehicleImd, isCar, config, out lprImage);
+            vehicleImg = ucCameraView?.GetFullCurrentImage();
+            plate = StaticPool.LprDetect.GetPlateNumber(vehicleImg, isCar, config, out lprImage);
             if (string.IsNullOrEmpty(plate))
             {
                 for (int i = 0; i < camDuPhongs.Count; i++)
@@ -266,11 +251,12 @@ namespace iParkingv5_window.Usercontrols
                     plate = StaticPool.LprDetect.GetPlateNumber(tempImg, isCar, config, out lprImage);
                     if (!string.IsNullOrEmpty(plate))
                     {
-                        vehicleImd = tempImg;
+                        vehicleImg = tempImg;
                         break;
                     }
                 }
             }
         }
+    
     }
 }

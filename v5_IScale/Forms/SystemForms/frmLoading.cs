@@ -5,6 +5,7 @@ using iParkingv5.LprDetecter.LprDetecters;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Datas.Device_service;
 using iParkingv5.Objects.Datas.warehouse_service;
+using iParkingv5.Objects.Datas.weighing_service;
 using iParkingv5.Objects.ScaleObjects;
 using iParkingv5_window;
 using iParkingv6.ApiManager.KzParkingv3Apis;
@@ -338,7 +339,7 @@ namespace v5_IScale.Forms.SystemForms
                 foreach (var lane in laneByComputerIds)
                 {
                     //Lane? _lane = await KzParkingApiHelper.GetLaneByIdAsync(lane.id);
-                    Lane? _lane = (await  AppData.ApiServer.GetLaneByIdAsync(lane.id)).Item1;
+                    Lane? _lane = (await  AppData.ApiServer.GetLaneByIdAsync(lane.Id)).Item1;
 
                     if (_lane != null)
                     {

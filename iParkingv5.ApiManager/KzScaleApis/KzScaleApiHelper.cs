@@ -1,5 +1,5 @@
 ﻿using iParkingv5.Objects;
-using iParkingv5.Objects.Datas.warehouse_service;
+using iParkingv5.Objects.Datas.weighing_service;
 using iParkingv6.ApiManager;
 using OpenCvSharp;
 using System;
