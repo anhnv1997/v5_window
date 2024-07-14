@@ -558,6 +558,7 @@ namespace iParkingv5_window.Forms.DataForms
                             laneDisplayConfig.splitContainerMain = temp.splitContainerMain;
                             laneDisplayConfig.SplitterCameraPosition = temp.SplitterCameraPosition;
                             laneDisplayConfig.splitEventInfoWithCameraPosition = temp.splitEventInfoWithCameraPosition;
+                            laneDisplayConfig.splitContainerCameraPosition = temp.splitContainerCameraPosition;
                         }
                     }
                 }
@@ -700,6 +701,11 @@ namespace iParkingv5_window.Forms.DataForms
             {
                 Log(EmLogType.ERROR, EmObjectLogType.System, hanh_dong: "frmMain", noi_dung_hanh_dong: "Clear log", obj: ex);
             }
+        }
+
+        private void menuStrip1_DoubleClick(object sender, EventArgs e)
+        {
+            panelAppStatus.Visible = !panelAppStatus.Visible;
         }
     }
 }

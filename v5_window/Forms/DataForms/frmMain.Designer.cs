@@ -73,6 +73,7 @@
             menuStrip1.Size = new Size(803, 29);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
+            menuStrip1.DoubleClick += menuStrip1_DoubleClick;
             // 
             // miSystem
             // 

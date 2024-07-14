@@ -76,7 +76,7 @@ namespace iParkingv5_window.Usercontrols
 
             SetDisplayDirection();
             DisplayUIConfig();
-            PanelCameras_SizeChanged(null, EventArgs.Empty);
+            //PanelCameras_SizeChanged(null, EventArgs.Empty);
         }
 
         /// <summary> 
@@ -112,23 +112,23 @@ namespace iParkingv5_window.Usercontrols
                         this.AllowDesignRealtime(this.IsAllowDesignRealtime);
                     }));
                 }
-                if (keys == Keys.Enter && this.lastEvent != null && txtNote.Focused)
-                {
-                    bool isUpdateNote = MessageBox.Show("Bạn có muốn cập nhật ghi chú?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
-                    if (isUpdateNote)
-                    {
-                        bool isUpdateSuccess = await AppData.ApiServer.parkingProcessService.UpdateBSXNote(txtNote.Text, lastEvent.Id, true);
-                        if (isUpdateSuccess)
-                        {
-                            lblResult.UpdateResultMessage("Ra Lệnh Cập Nhật Ghi Chú Biển Số Thành Công", Color.DarkBlue);
-                        }
-                        else
-                        {
-                            lblResult.UpdateResultMessage("Cập Nhật Lỗi, Vui Lòng Thử Lại", Color.DarkRed);
-                        }
-                    }
-                    FocusOnTitle();
-                }
+                //if (keys == Keys.Enter && this.lastEvent != null && txtNote.Focused)
+                //{
+                //    bool isUpdateNote = MessageBox.Show("Bạn có muốn cập nhật ghi chú?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
+                //    if (isUpdateNote)
+                //    {
+                //        bool isUpdateSuccess = await AppData.ApiServer.parkingProcessService.UpdateBSXNote(txtNote.Text, lastEvent.Id, true);
+                //        if (isUpdateSuccess)
+                //        {
+                //            lblResult.UpdateResultMessage("Ra Lệnh Cập Nhật Ghi Chú Biển Số Thành Công", Color.DarkBlue);
+                //        }
+                //        else
+                //        {
+                //            lblResult.UpdateResultMessage("Cập Nhật Lỗi, Vui Lòng Thử Lại", Color.DarkRed);
+                //        }
+                //    }
+                //    FocusOnTitle();
+                //}
 
                 if (laneInShortcutConfig != null)
                 {
@@ -340,7 +340,7 @@ namespace iParkingv5_window.Usercontrols
                     { EmParkingImageType.Plate, lprImage.ImageToByteArray() }
                 };
 
-            eventIn = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plate, null, imageDatas, false, null, txtNote.Text);
+            eventIn = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plate, null, imageDatas, false, null, "");
             if (eventIn == null)
             {
                 goto LOI_HE_THONG;
@@ -370,7 +370,7 @@ namespace iParkingv5_window.Usercontrols
 
         CheckInWithForce:
             {
-                eventIn = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plate, null, imageDatas, true, null, txtNote.Text);
+                eventIn = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plate, null, imageDatas, true, null, "");
                 if (eventIn == null)
                 {
                     goto LOI_HE_THONG;
@@ -545,7 +545,7 @@ namespace iParkingv5_window.Usercontrols
         private async Task CreateUI()
         {
             this.Dock = DockStyle.Fill;
-
+            panelCameras.BorderStyle = BorderStyle.None;
             lblResult.Padding = new Padding(StaticPool.baseSize);
             lblResult.UpdateResultMessage("XIN MỜI VÀO", Color.DarkGreen);
 
@@ -844,7 +844,7 @@ namespace iParkingv5_window.Usercontrols
 
         CheckInNormal:
             {
-                eventIn = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plateNumber, identity, imageDatas, false, null, txtNote.Text);
+                eventIn = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plateNumber, identity, imageDatas, false, null, "");
                 if (eventIn == null)
                 {
                     goto LOI_HE_THONG;
@@ -901,7 +901,7 @@ namespace iParkingv5_window.Usercontrols
 
         CheckInWithForce:
             {
-                eventIn = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plateNumber, identity, imageDatas, true, null, txtNote.Text);
+                eventIn = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plateNumber, identity, imageDatas, true, null, "");
                 if (eventIn == null)
                 {
                     goto LOI_HE_THONG;
@@ -963,12 +963,7 @@ namespace iParkingv5_window.Usercontrols
                     }
                 }
             }
-            string note = "";
-            this.Invoke(new Action(() =>
-            {
-                note = txtNote.Text;
-            }));
-            eventIn = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plateNumber, identity, imageKeys, false, null, note);
+            eventIn = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plateNumber, identity, imageKeys, false, null, "");
             if (eventIn == null)
             {
                 goto LOI_HE_THONG;
@@ -1082,14 +1077,21 @@ namespace iParkingv5_window.Usercontrols
             new frmLaneSetting(this.lane.Id, StaticPool.leds, cameraList, this.lane.controlUnits.ToList(), true).ShowDialog();
             GetShortcutConfig();
 
-            laneDirection = NewtonSoftHelper<LaneDirectionConfig>.DeserializeObjectFromPath(
+            var newConfig = NewtonSoftHelper<LaneDirectionConfig>.DeserializeObjectFromPath(
                                                        PathManagement.appLaneDirectionConfigPath(this.lane.Id)) ?? LaneDirectionConfig.CreateDefault();
-            panelDisplayLastEvent.Visible = laneDirection.IsDisplayLastEvent;
-            SetDisplayDirection();
+
+            bool isChangeDisplayConfig = false;
+            if (!laneDirection.IsSameConfig(newConfig))
+            {
+                laneDirection = newConfig;
+                panelDisplayLastEvent.Visible = laneDirection.IsDisplayLastEvent;
+                SetDisplayDirection();
+            }
         }
 
         private void SetDisplayDirection()
         {
+            panelCameras.SizeChanged -= PanelCameras_SizeChanged;
             switch (laneDirection.displayDirection)
             {
                 case LaneDirectionConfig.EmDisplayDirection.Vertical:
@@ -1214,7 +1216,8 @@ namespace iParkingv5_window.Usercontrols
             panelDisplayLastEvent.Visible = laneDirection.IsDisplayLastEvent;
             splitContainerMain.Panel2Collapsed = laneDirection.IsDisplayLastEvent ? false : true;
             panelLastEvent.Visible = laneDirection.IsDisplayLastEvent;
-            PanelCameras_SizeChanged(null, null);
+            PanelCameras_SizeChanged(null, EventArgs.Empty);
+            panelCameras.SizeChanged += PanelCameras_SizeChanged;
         }
 
         /// <summary>
@@ -1271,7 +1274,7 @@ namespace iParkingv5_window.Usercontrols
                     { EmParkingImageType.Vehicle, vehicleImage.ImageToByteArray() },
                 };
 
-            eventIn = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, selectedPlate, null, imageDatas, true, null, txtNote.Text);
+            eventIn = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, selectedPlate, null, imageDatas, true, null, "");
             if (eventIn == null)
             {
                 goto LOI_HE_THONG;
@@ -1445,30 +1448,38 @@ namespace iParkingv5_window.Usercontrols
         /// <param name="e"></param>
         private void PanelCameras_SizeChanged(object? sender, EventArgs e)
         {
+            int count = panelCameras.Controls.OfType<ucCameraView>().ToList().Count;
+            int marginHeight = 5;
+            int displayRegionHeight = panelCameras.Height - label15.Height - marginHeight;
             foreach (ucCameraView item in panelCameras.Controls.OfType<ucCameraView>())
             {
                 if (laneDirection.cameraDirection == LaneDirectionConfig.EmCameraDirection.Vertical)
                 {
-                    item.Width = panelCameras.Width - panelCameras.Margin.Left - panelCameras.Margin.Right - panelCameras.Padding.Left - panelCameras.Padding.Right
-                                                    - item.Margin.Left - item.Margin.Right - item.Padding.Left - item.Padding.Right;
+                    int newWidth = panelCameras.Width - panelCameras.Margin.Left - panelCameras.Margin.Right -
+                                                        panelCameras.Padding.Left - panelCameras.Padding.Right
+                                                    - /*item.Margin.Left - item.Margin.Right -*/ item.Padding.Left - item.Padding.Right;
+                    item.ChangeByWidth(new Size(newWidth, (displayRegionHeight) / count), this.laneDirection.cameraResolutionDisplay);
                 }
                 else
                 {
-                    item.changeHeight(panelCameras.Height - 50);
+                    item.ChangeByHeight(new Size((panelCameras.Width - panelCameras.Margin.Left - panelCameras.Margin.Right - panelCameras.Padding.Left - panelCameras.Padding.Right
+                                                    - item.Margin.Left - item.Margin.Right - item.Padding.Left - item.Padding.Right) / count, panelCameras.Height - 50), this.laneDirection.cameraResolutionDisplay);
                 }
             }
             for (int i = 0; i < panelCameras.Controls.OfType<ucCameraView>().ToList().Count; i++)
             {
+                var item = panelCameras.Controls.OfType<ucCameraView>().ToList()[i];
                 if (i == 0)
                 {
-                    panelCameras.Controls.OfType<ucCameraView>().ToList()[i].Location = new Point(0, 37);
+                    item.Location = new Point(0, label15.Height);
+                    item.BringToFront();
                 }
                 else
                 {
                     Control lastControl = panelCameras.Controls.OfType<ucCameraView>().ToList()[i - 1];
                     if (laneDirection.cameraDirection == LaneDirectionConfig.EmCameraDirection.Vertical)
                     {
-                        Point location = new Point(lastControl.Location.X, lastControl.Location.Y + lastControl.Height + 10);
+                        Point location = new Point(lastControl.Location.X, lastControl.Location.Y + lastControl.Height + marginHeight);
                         panelCameras.Controls.OfType<ucCameraView>().ToList()[i].Location = location;
                     }
                     else
@@ -1649,6 +1660,19 @@ namespace iParkingv5_window.Usercontrols
             {
                 LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.Form, "DisplayUIConfig", "splitterEventInfoWithCamera-SplitPosition", ex);
             }
+
+            try
+            {
+                if (this.laneDisplayConfig.splitContainerCameraPosition > 0)
+                {
+                    this.splitContainerCamera.SplitterDistance = this.laneDisplayConfig.splitContainerCameraPosition;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.Form, "DisplayUIConfig", "splitterEventInfoWithCamera-SplitPosition", ex);
+            }
+
             try
             {
                 if (this.splitContainerMain.Panel2Collapsed)
@@ -1704,6 +1728,7 @@ namespace iParkingv5_window.Usercontrols
                 splitContainerMain = this.splitContainerMain.Panel2Collapsed ? this.splitContainerMain.Height : this.splitContainerMain.SplitterDistance,
                 SplitterCameraPosition = this.splitterCamera.SplitPosition,
                 splitEventInfoWithCameraPosition = this.splitterEventInfoWithCamera.SplitPosition,
+                splitContainerCameraPosition = this.splitContainerCamera.SplitterDistance,
             };
         }
 
@@ -1726,7 +1751,7 @@ namespace iParkingv5_window.Usercontrols
                 if (e is CardEventArgs cardEvent)
                 {
                     string controlUnitId = cardEvent.DeviceId;
-                    int readerIndex = cardEvent.ReaderIndex;                    
+                    int readerIndex = cardEvent.ReaderIndex;
                     await ExcecuteCardEvent(cardEvent);
                 }
                 else if (e is InputEventArgs inputEvent)

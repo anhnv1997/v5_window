@@ -35,6 +35,8 @@ namespace v6_window
                 {
                     if (ownmutex)
                     {
+                        string cardNumberHex = Convert.ToInt64(4157927380).ToString("X");
+
                         //return;
                         //if (Environment.MachineName.ToUpper() != "VIETANHPC")
                         //{

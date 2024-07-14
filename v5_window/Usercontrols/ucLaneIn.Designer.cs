@@ -22,13 +22,14 @@
             label15 = new Label();
             splitContainerMain = new SplitContainer();
             tableCamera = new TableLayoutPanel();
-            label1 = new Label();
             tablePic = new TableLayoutPanel();
             picVehicleImage = new MovablePictureBox();
             panel3 = new Panel();
             picOverviewImage = new MovablePictureBox();
+            label1 = new Label();
             splitterCamera = new Splitter();
             panelAllCameras = new Panel();
+            splitContainerCamera = new SplitContainer();
             lblResult = new iPakrkingv5.Controls.Controls.Labels.lblResult();
             panelDisplayLastEvent = new Panel();
             panelLastEvent = new Panel();
@@ -47,10 +48,6 @@
             dgvEventContent = new DataGridView();
             Column1 = new DataGridViewTextBoxColumn();
             Column2 = new DataGridViewTextBoxColumn();
-            panelNote = new Panel();
-            tableLayoutPanelNote = new TableLayoutPanel();
-            groupBox1 = new GroupBox();
-            txtNote = new TextBox();
             picSetting = new PictureBox();
             panel5 = new Panel();
             picRetakePhoto = new PictureBox();
@@ -80,6 +77,9 @@
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picOverviewImage).BeginInit();
             panelAllCameras.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainerCamera).BeginInit();
+            splitContainerCamera.Panel1.SuspendLayout();
+            splitContainerCamera.SuspendLayout();
             panelDisplayLastEvent.SuspendLayout();
             panelLastEvent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainerEventContent).BeginInit();
@@ -92,9 +92,6 @@
             panelDetectPlate.SuspendLayout();
             panelEventInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEventContent).BeginInit();
-            panelNote.SuspendLayout();
-            tableLayoutPanelNote.SuspendLayout();
-            groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picSetting).BeginInit();
             panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picRetakePhoto).BeginInit();
@@ -117,7 +114,7 @@
             lblLaneName.Size = new Size(1242, 22);
             lblLaneName.TabIndex = 0;
             lblLaneName.Text = "label1";
-            lblLaneName.TextAlign = ContentAlignment.MiddleCenter;
+            lblLaneName.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // panelCameras
             // 
@@ -128,20 +125,19 @@
             panelCameras.Location = new Point(0, 0);
             panelCameras.Margin = new Padding(0);
             panelCameras.Name = "panelCameras";
-            panelCameras.Size = new Size(316, 396);
+            panelCameras.Size = new Size(316, 303);
             panelCameras.TabIndex = 3;
             // 
             // label15
             // 
-            label15.BorderStyle = BorderStyle.FixedSingle;
             label15.Dock = DockStyle.Top;
             label15.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline);
             label15.ForeColor = Color.Green;
             label15.Location = new Point(0, 0);
             label15.Name = "label15";
-            label15.Size = new Size(314, 36);
+            label15.Size = new Size(314, 37);
             label15.TabIndex = 3;
-            label15.Text = "Cam lối vào";
+            label15.Text = "CAM LỐI VÀO";
             label15.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // splitContainerMain
@@ -155,6 +151,7 @@
             // splitContainerMain.Panel1
             // 
             splitContainerMain.Panel1.Controls.Add(tableCamera);
+            splitContainerMain.Panel1.Controls.Add(label1);
             splitContainerMain.Panel1.Controls.Add(splitterCamera);
             splitContainerMain.Panel1.Controls.Add(panelAllCameras);
             splitContainerMain.Panel1.Controls.Add(lblResult);
@@ -164,38 +161,23 @@
             splitContainerMain.Panel2.Controls.Add(panelDisplayLastEvent);
             splitContainerMain.Size = new Size(869, 721);
             splitContainerMain.SplitterDistance = 440;
-            splitContainerMain.SplitterWidth = 3;
+            splitContainerMain.SplitterWidth = 2;
             splitContainerMain.TabIndex = 4;
             // 
             // tableCamera
             // 
-            tableCamera.CellBorderStyle = TableLayoutPanelCellBorderStyle.Inset;
             tableCamera.ColumnCount = 1;
             tableCamera.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableCamera.Controls.Add(label1, 0, 0);
-            tableCamera.Controls.Add(tablePic, 0, 1);
+            tableCamera.Controls.Add(tablePic, 0, 0);
             tableCamera.Dock = DockStyle.Fill;
-            tableCamera.Location = new Point(319, 0);
+            tableCamera.Location = new Point(318, 37);
             tableCamera.Margin = new Padding(0);
             tableCamera.Name = "tableCamera";
-            tableCamera.RowCount = 2;
-            tableCamera.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            tableCamera.RowCount = 1;
             tableCamera.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableCamera.Size = new Size(550, 396);
+            tableCamera.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableCamera.Size = new Size(551, 359);
             tableCamera.TabIndex = 5;
-            // 
-            // label1
-            // 
-            label1.Dock = DockStyle.Fill;
-            label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline);
-            label1.ForeColor = Color.Green;
-            label1.Location = new Point(2, 2);
-            label1.Margin = new Padding(0);
-            label1.Name = "label1";
-            label1.Size = new Size(546, 35);
-            label1.TabIndex = 2;
-            label1.Text = "Ảnh Vào";
-            label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // tablePic
             // 
@@ -205,13 +187,13 @@
             tablePic.Controls.Add(picVehicleImage, 0, 1);
             tablePic.Controls.Add(panel3, 0, 0);
             tablePic.Dock = DockStyle.Fill;
-            tablePic.Location = new Point(2, 39);
+            tablePic.Location = new Point(0, 0);
             tablePic.Margin = new Padding(0);
             tablePic.Name = "tablePic";
             tablePic.RowCount = 2;
             tablePic.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tablePic.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tablePic.Size = new Size(546, 355);
+            tablePic.Size = new Size(551, 359);
             tablePic.TabIndex = 3;
             // 
             // picVehicleImage
@@ -220,10 +202,10 @@
             picVehicleImage.Dock = DockStyle.Fill;
             picVehicleImage.ErrorImage = null;
             picVehicleImage.Image = (Image)resources.GetObject("picVehicleImage.Image");
-            picVehicleImage.Location = new Point(1, 178);
+            picVehicleImage.Location = new Point(1, 180);
             picVehicleImage.Margin = new Padding(0);
             picVehicleImage.Name = "picVehicleImage";
-            picVehicleImage.Size = new Size(544, 176);
+            picVehicleImage.Size = new Size(549, 178);
             picVehicleImage.SizeMode = PictureBoxSizeMode.StretchImage;
             picVehicleImage.TabIndex = 5;
             picVehicleImage.TabStop = false;
@@ -237,7 +219,7 @@
             panel3.Location = new Point(1, 1);
             panel3.Margin = new Padding(0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(544, 176);
+            panel3.Size = new Size(549, 178);
             panel3.TabIndex = 1;
             // 
             // picOverviewImage
@@ -249,11 +231,24 @@
             picOverviewImage.Location = new Point(0, 0);
             picOverviewImage.Margin = new Padding(0);
             picOverviewImage.Name = "picOverviewImage";
-            picOverviewImage.Size = new Size(544, 176);
+            picOverviewImage.Size = new Size(549, 178);
             picOverviewImage.SizeMode = PictureBoxSizeMode.StretchImage;
             picOverviewImage.TabIndex = 5;
             picOverviewImage.TabStop = false;
             picOverviewImage.LoadCompleted += Pic_LoadCompleted;
+            // 
+            // label1
+            // 
+            label1.Dock = DockStyle.Top;
+            label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline);
+            label1.ForeColor = Color.Green;
+            label1.Location = new Point(318, 0);
+            label1.Margin = new Padding(0);
+            label1.Name = "label1";
+            label1.Size = new Size(551, 37);
+            label1.TabIndex = 2;
+            label1.Text = "ẢNH VÀO";
+            label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // splitterCamera
             // 
@@ -261,19 +256,35 @@
             splitterCamera.Location = new Point(316, 0);
             splitterCamera.Margin = new Padding(3, 2, 3, 2);
             splitterCamera.Name = "splitterCamera";
-            splitterCamera.Size = new Size(3, 396);
+            splitterCamera.Size = new Size(2, 396);
             splitterCamera.TabIndex = 4;
             splitterCamera.TabStop = false;
             // 
             // panelAllCameras
             // 
-            panelAllCameras.BackColor = Color.FromArgb(255, 128, 0);
-            panelAllCameras.Controls.Add(panelCameras);
+            panelAllCameras.BackColor = Color.White;
+            panelAllCameras.Controls.Add(splitContainerCamera);
             panelAllCameras.Dock = DockStyle.Left;
             panelAllCameras.Location = new Point(0, 0);
             panelAllCameras.Name = "panelAllCameras";
             panelAllCameras.Size = new Size(316, 396);
             panelAllCameras.TabIndex = 7;
+            // 
+            // splitContainerCamera
+            // 
+            splitContainerCamera.Dock = DockStyle.Fill;
+            splitContainerCamera.Location = new Point(0, 0);
+            splitContainerCamera.Name = "splitContainerCamera";
+            splitContainerCamera.Orientation = Orientation.Horizontal;
+            // 
+            // splitContainerCamera.Panel1
+            // 
+            splitContainerCamera.Panel1.Controls.Add(panelCameras);
+            splitContainerCamera.Panel2MinSize = 0;
+            splitContainerCamera.Size = new Size(316, 396);
+            splitContainerCamera.SplitterDistance = 303;
+            splitContainerCamera.SplitterWidth = 2;
+            splitContainerCamera.TabIndex = 0;
             // 
             // lblResult
             // 
@@ -297,7 +308,7 @@
             panelDisplayLastEvent.Location = new Point(0, 0);
             panelDisplayLastEvent.Margin = new Padding(0);
             panelDisplayLastEvent.Name = "panelDisplayLastEvent";
-            panelDisplayLastEvent.Size = new Size(869, 278);
+            panelDisplayLastEvent.Size = new Size(869, 279);
             panelDisplayLastEvent.TabIndex = 2;
             // 
             // panelLastEvent
@@ -310,7 +321,7 @@
             panelLastEvent.Location = new Point(260, 0);
             panelLastEvent.Margin = new Padding(3, 2, 3, 2);
             panelLastEvent.Name = "panelLastEvent";
-            panelLastEvent.Size = new Size(609, 278);
+            panelLastEvent.Size = new Size(609, 279);
             panelLastEvent.TabIndex = 7;
             // 
             // panelNearestEvent
@@ -319,7 +330,7 @@
             panelNearestEvent.Location = new Point(0, 27);
             panelNearestEvent.Margin = new Padding(0);
             panelNearestEvent.Name = "panelNearestEvent";
-            panelNearestEvent.Size = new Size(607, 249);
+            panelNearestEvent.Size = new Size(607, 250);
             panelNearestEvent.TabIndex = 8;
             // 
             // label2
@@ -342,7 +353,7 @@
             ucEventCount1.Location = new Point(0, 0);
             ucEventCount1.Margin = new Padding(3, 2, 3, 2);
             ucEventCount1.Name = "ucEventCount1";
-            ucEventCount1.Size = new Size(260, 278);
+            ucEventCount1.Size = new Size(260, 279);
             ucEventCount1.TabIndex = 7;
             // 
             // splitContainerEventContent
@@ -363,7 +374,7 @@
             splitContainerEventContent.Panel2.Controls.Add(panelEventInfo);
             splitContainerEventContent.Size = new Size(469, 721);
             splitContainerEventContent.SplitterDistance = 350;
-            splitContainerEventContent.SplitterWidth = 3;
+            splitContainerEventContent.SplitterWidth = 2;
             splitContainerEventContent.TabIndex = 0;
             // 
             // panelLpr
@@ -414,12 +425,11 @@
             // 
             // panelDetectPlate
             // 
-            panelDetectPlate.BorderStyle = BorderStyle.FixedSingle;
             panelDetectPlate.Controls.Add(txtPlate);
             panelDetectPlate.Controls.Add(label25);
             panelDetectPlate.Dock = DockStyle.Bottom;
             panelDetectPlate.Location = new Point(0, 252);
-            panelDetectPlate.Margin = new Padding(3, 2, 3, 2);
+            panelDetectPlate.Margin = new Padding(0);
             panelDetectPlate.Name = "panelDetectPlate";
             panelDetectPlate.Size = new Size(467, 96);
             panelDetectPlate.TabIndex = 4;
@@ -427,12 +437,13 @@
             // txtPlate
             // 
             txtPlate.BackColor = SystemColors.HighlightText;
-            txtPlate.Dock = DockStyle.Top;
+            txtPlate.BorderStyle = BorderStyle.None;
+            txtPlate.Dock = DockStyle.Bottom;
             txtPlate.Font = new Font("Segoe UI", 36F, FontStyle.Bold);
-            txtPlate.Location = new Point(0, 21);
-            txtPlate.Margin = new Padding(3, 2, 3, 2);
+            txtPlate.Location = new Point(0, 32);
+            txtPlate.Margin = new Padding(0);
             txtPlate.Name = "txtPlate";
-            txtPlate.Size = new Size(465, 71);
+            txtPlate.Size = new Size(467, 64);
             txtPlate.TabIndex = 0;
             txtPlate.TextAlign = HorizontalAlignment.Center;
             // 
@@ -451,11 +462,10 @@
             // panelEventInfo
             // 
             panelEventInfo.Controls.Add(dgvEventContent);
-            panelEventInfo.Controls.Add(panelNote);
             panelEventInfo.Dock = DockStyle.Fill;
             panelEventInfo.Location = new Point(0, 0);
             panelEventInfo.Name = "panelEventInfo";
-            panelEventInfo.Size = new Size(467, 366);
+            panelEventInfo.Size = new Size(467, 367);
             panelEventInfo.TabIndex = 4;
             // 
             // dgvEventContent
@@ -472,13 +482,13 @@
             dgvEventContent.ColumnHeadersVisible = false;
             dgvEventContent.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2 });
             dgvEventContent.Dock = DockStyle.Fill;
-            dgvEventContent.Location = new Point(0, 76);
+            dgvEventContent.Location = new Point(0, 0);
             dgvEventContent.Margin = new Padding(3, 2, 3, 2);
             dgvEventContent.Name = "dgvEventContent";
             dgvEventContent.ReadOnly = true;
             dgvEventContent.RowHeadersVisible = false;
             dgvEventContent.RowTemplate.Height = 29;
-            dgvEventContent.Size = new Size(467, 290);
+            dgvEventContent.Size = new Size(467, 367);
             dgvEventContent.TabIndex = 0;
             // 
             // Column1
@@ -500,55 +510,6 @@
             Column2.HeaderText = "Content";
             Column2.Name = "Column2";
             Column2.ReadOnly = true;
-            // 
-            // panelNote
-            // 
-            panelNote.Controls.Add(tableLayoutPanelNote);
-            panelNote.Dock = DockStyle.Top;
-            panelNote.Location = new Point(0, 0);
-            panelNote.Margin = new Padding(3, 2, 3, 2);
-            panelNote.Name = "panelNote";
-            panelNote.Size = new Size(467, 76);
-            panelNote.TabIndex = 3;
-            // 
-            // tableLayoutPanelNote
-            // 
-            tableLayoutPanelNote.BackColor = Color.FromArgb(255, 128, 0);
-            tableLayoutPanelNote.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
-            tableLayoutPanelNote.ColumnCount = 1;
-            tableLayoutPanelNote.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanelNote.Controls.Add(groupBox1, 0, 0);
-            tableLayoutPanelNote.Dock = DockStyle.Fill;
-            tableLayoutPanelNote.Location = new Point(0, 0);
-            tableLayoutPanelNote.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanelNote.Name = "tableLayoutPanelNote";
-            tableLayoutPanelNote.RowCount = 1;
-            tableLayoutPanelNote.RowStyles.Add(new RowStyle(SizeType.Absolute, 76F));
-            tableLayoutPanelNote.Size = new Size(467, 76);
-            tableLayoutPanelNote.TabIndex = 1;
-            // 
-            // groupBox1
-            // 
-            groupBox1.AutoSize = true;
-            groupBox1.Controls.Add(txtNote);
-            groupBox1.Dock = DockStyle.Fill;
-            groupBox1.Font = new Font("Segoe UI", 15.75F);
-            groupBox1.Location = new Point(1, 1);
-            groupBox1.Margin = new Padding(0);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(3, 2, 3, 2);
-            groupBox1.Size = new Size(465, 76);
-            groupBox1.TabIndex = 1;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Ghi chú BSX";
-            // 
-            // txtNote
-            // 
-            txtNote.Dock = DockStyle.Fill;
-            txtNote.Location = new Point(3, 30);
-            txtNote.Name = "txtNote";
-            txtNote.Size = new Size(459, 35);
-            txtNote.TabIndex = 0;
             // 
             // picSetting
             // 
@@ -684,10 +645,10 @@
             // 
             splitterEventInfoWithCamera.BackColor = SystemColors.ButtonHighlight;
             splitterEventInfoWithCamera.Dock = DockStyle.Right;
-            splitterEventInfoWithCamera.Location = new Point(865, 22);
+            splitterEventInfoWithCamera.Location = new Point(867, 22);
             splitterEventInfoWithCamera.Margin = new Padding(3, 2, 3, 2);
             splitterEventInfoWithCamera.Name = "splitterEventInfoWithCamera";
-            splitterEventInfoWithCamera.Size = new Size(4, 721);
+            splitterEventInfoWithCamera.Size = new Size(2, 721);
             splitterEventInfoWithCamera.TabIndex = 7;
             splitterEventInfoWithCamera.TabStop = false;
             // 
@@ -760,6 +721,9 @@
             panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picOverviewImage).EndInit();
             panelAllCameras.ResumeLayout(false);
+            splitContainerCamera.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainerCamera).EndInit();
+            splitContainerCamera.ResumeLayout(false);
             panelDisplayLastEvent.ResumeLayout(false);
             panelLastEvent.ResumeLayout(false);
             splitContainerEventContent.Panel1.ResumeLayout(false);
@@ -774,11 +738,6 @@
             panelDetectPlate.PerformLayout();
             panelEventInfo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvEventContent).EndInit();
-            panelNote.ResumeLayout(false);
-            tableLayoutPanelNote.ResumeLayout(false);
-            tableLayoutPanelNote.PerformLayout();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)picSetting).EndInit();
             panel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picRetakePhoto).EndInit();
@@ -841,16 +800,13 @@
         private TableLayoutPanel tableLayoutPanel3;
         private Label label4;
         private Label label5;
-        private Panel panelNote;
-        private TableLayoutPanel tableLayoutPanelNote;
-        private GroupBox groupBox1;
         private Label label15;
         private Label label25;
         private Panel panel10;
         private Label label27;
-        private TextBox txtNote;
         private Panel panelAllCameras;
         private Panel panelLpr;
         private Panel panelEventInfo;
+        private SplitContainer splitContainerCamera;
     }
 }

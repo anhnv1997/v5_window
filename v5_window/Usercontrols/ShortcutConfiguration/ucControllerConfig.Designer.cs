@@ -32,9 +32,12 @@
             // 
             // ucControllerConfig
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
+            Font = new Font("Segoe UI", 12F);
+            Margin = new Padding(4, 3, 4, 3);
             Name = "ucControllerConfig";
+            Size = new Size(168, 157);
             ResumeLayout(false);
         }
 

@@ -320,41 +320,43 @@ namespace iParkingv5.Controller.SC200Devices
                 AllCardFormats = new List<string>(),
             };
             string cardNumberHEX = cardNumber;
-            if (!string.IsNullOrEmpty(cardNumberHEX))
-            {
-                e.AllCardFormats.Add(cardNumberHEX);
+            e.PreferCard = cardNumberHEX;
 
-                if (cardNumberHEX.Length == 6)
-                {
-                    string maTruocToiGian = long.Parse(cardNumberHEX, NumberStyles.HexNumber).ToString();
-                    string maTruocFull = Convert.ToInt64(cardNumberHEX, 16).ToString("0000000000");
+            //if (!string.IsNullOrEmpty(cardNumberHEX))
+            //{
+            //    e.AllCardFormats.Add(cardNumberHEX);
 
-                    string maSauFormat1 = int.Parse(cardNumberHEX.Substring(0, 2), NumberStyles.HexNumber).ToString("000") +
-                                          int.Parse(cardNumberHEX.Substring(2, 4), NumberStyles.HexNumber).ToString("00000");
+            //    if (cardNumberHEX.Length == 6)
+            //    {
+            //        string maTruocToiGian = long.Parse(cardNumberHEX, NumberStyles.HexNumber).ToString();
+            //        string maTruocFull = Convert.ToInt64(cardNumberHEX, 16).ToString("0000000000");
 
-                    string maSauFormat2 = int.Parse(cardNumberHEX.Substring(0, 2), NumberStyles.HexNumber).ToString("000") + ":" +
-                                          int.Parse(cardNumberHEX.Substring(2, 4), NumberStyles.HexNumber).ToString("00000");
+            //        string maSauFormat1 = int.Parse(cardNumberHEX.Substring(0, 2), NumberStyles.HexNumber).ToString("000") +
+            //                              int.Parse(cardNumberHEX.Substring(2, 4), NumberStyles.HexNumber).ToString("00000");
 
-                    string maSauFormat3 = int.Parse(cardNumberHEX.Substring(0, 2), NumberStyles.HexNumber).ToString() + ":" +
-                      int.Parse(cardNumberHEX.Substring(2, 4), NumberStyles.HexNumber).ToString("");
+            //        string maSauFormat2 = int.Parse(cardNumberHEX.Substring(0, 2), NumberStyles.HexNumber).ToString("000") + ":" +
+            //                              int.Parse(cardNumberHEX.Substring(2, 4), NumberStyles.HexNumber).ToString("00000");
 
-                    e.PreferCard = maSauFormat3;
+            //        string maSauFormat3 = int.Parse(cardNumberHEX.Substring(0, 2), NumberStyles.HexNumber).ToString() + ":" +
+            //          int.Parse(cardNumberHEX.Substring(2, 4), NumberStyles.HexNumber).ToString("");
 
-                    e.AllCardFormats.Add(maTruocToiGian);
-                    if (maTruocToiGian != maTruocFull)
-                    {
-                        e.AllCardFormats.Add(maTruocFull);
-                    }
-                    e.AllCardFormats.Add(maSauFormat1);
-                    e.AllCardFormats.Add(maSauFormat2);
-                }
-                else
-                {
-                    string maInt = Convert.ToInt64(cardNumberHEX, 16).ToString();
-                    e.PreferCard = maInt;
-                    e.AllCardFormats.Add(maInt);
-                }
-            }
+            //        e.PreferCard = maSauFormat3;
+
+            //        e.AllCardFormats.Add(maTruocToiGian);
+            //        if (maTruocToiGian != maTruocFull)
+            //        {
+            //            e.AllCardFormats.Add(maTruocFull);
+            //        }
+            //        e.AllCardFormats.Add(maSauFormat1);
+            //        e.AllCardFormats.Add(maSauFormat2);
+            //    }
+            //    else
+            //    {
+            //        string maInt = Convert.ToInt64(cardNumberHEX, 16).ToString();
+            //        e.PreferCard = maInt;
+            //        e.AllCardFormats.Add(maInt);
+            //    }
+            //}
             //string str_readerIndex = map.ContainsKey("reader") ? map["reader"] : "";
             e.ReaderIndex = readerIndex;
             OnCardEvent(e);

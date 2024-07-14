@@ -1,4 +1,5 @@
-﻿using System;
+﻿using iParkingv5.Objects.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -41,6 +42,7 @@ namespace iParkingv5.Objects.Configs
         public EmPicDirection picDirection = EmPicDirection.Vertical;
         public EmCameraPicFunction cameraPicDirection = EmCameraPicFunction.Vertical;
         public EmEventDirection eventDirection = EmEventDirection.Vertical;
+        public EmCameraResolutionDisplay cameraResolutionDisplay = EmCameraResolutionDisplay.Mode_16_9;
 
         public bool IsDisplayTitle { get; set; } = true;
         public bool IsDisplayLastEvent { get; set; } = true;
@@ -56,8 +58,20 @@ namespace iParkingv5.Objects.Configs
                 cameraPicDirection = EmCameraPicFunction.Vertical,
                 eventDirection = EmEventDirection.Vertical,
                 IsDisplayTitle = true,
-                IsDisplayLastEvent = true
+                IsDisplayLastEvent = true,
+                cameraResolutionDisplay = EmCameraResolutionDisplay.Mode_16_9
             };
+        }
+        public bool IsSameConfig(LaneDirectionConfig config)
+        {
+            return this.displayDirection == config.displayDirection &&
+                   this.cameraDirection == config.cameraDirection &&
+                   this.picDirection == config.picDirection &&
+                   this.cameraPicDirection == config.cameraPicDirection &&
+                   this.eventDirection == config.eventDirection &&
+                   this.IsDisplayTitle == config.IsDisplayTitle &&
+                   this.IsDisplayLastEvent == config.IsDisplayLastEvent &&
+                   this.cameraResolutionDisplay == config.cameraResolutionDisplay;
         }
     }
 }

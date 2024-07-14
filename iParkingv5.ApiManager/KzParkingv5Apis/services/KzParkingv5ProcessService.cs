@@ -55,8 +55,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                 {
                     request.AddFile($"images[{i}].File", kvp.Value.ToArray(), "x.jpg");
                     request.AddParameter($"images[{i}].Type", (int)kvp.Key);
+                    i++;
                 }
-                i++;
             }
             LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Api, mo_ta_them: request.Parameters);
             RestResponse response = await client.ExecuteAsync(request);
@@ -100,8 +100,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                 {
                     request.AddFile($"images[{i}].File", kvp.Value.ToArray(), "x.jpg");
                     request.AddParameter($"images[{i}].Type", (int)kvp.Key);
+                    i++;
                 }
-                i++;
             }
             LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Api, mo_ta_them: request.Parameters);
             RestResponse response = await client.ExecuteAsync(request);
@@ -223,8 +223,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                 {
                     request.AddFile($"images[{i}].File", kvp.Value.ToArray(), "x.jpg");
                     request.AddParameter($"images[{i}].Type", (int)kvp.Key);
+                    i++;
                 }
-                i++;
             }
             LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Api, mo_ta_them: request.Parameters);
             RestResponse response = await client.ExecuteAsync(request);
@@ -340,8 +340,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                 {
                     request.AddFile($"images[{i}].File", kvp.Value.ToArray(), "x.jpg");
                     request.AddParameter($"images[{i}].Type", (int)kvp.Key);
+                    i++;
                 }
-                i++;
             }
             LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Api, mo_ta_them: request.Parameters);
             RestResponse response = await client.ExecuteAsync(request);

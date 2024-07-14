@@ -26,7 +26,7 @@
             lblCameraName.ForeColor = SystemColors.ButtonHighlight;
             lblCameraName.Location = new Point(0, 0);
             lblCameraName.Name = "lblCameraName";
-            lblCameraName.Size = new Size(522, 25);
+            lblCameraName.Size = new Size(524, 25);
             lblCameraName.TabIndex = 0;
             lblCameraName.Text = "label1";
             lblCameraName.TextAlign = ContentAlignment.MiddleLeft;
@@ -39,19 +39,18 @@
             panelCameraView.Location = new Point(0, 25);
             panelCameraView.Margin = new Padding(3, 2, 3, 2);
             panelCameraView.Name = "panelCameraView";
-            panelCameraView.Size = new Size(522, 247);
+            panelCameraView.Size = new Size(524, 249);
             panelCameraView.TabIndex = 1;
             // 
             // ucCameraView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BorderStyle = BorderStyle.FixedSingle;
             Controls.Add(panelCameraView);
             Controls.Add(lblCameraName);
             Margin = new Padding(3, 2, 3, 2);
             Name = "ucCameraView";
-            Size = new Size(522, 272);
+            Size = new Size(524, 274);
             ResumeLayout(false);
         }
 

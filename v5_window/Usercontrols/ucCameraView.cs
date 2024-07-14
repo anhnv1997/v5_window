@@ -26,24 +26,67 @@ namespace iParkingv5_window.Usercontrols
         public ucCameraView()
         {
             InitializeComponent();
-            this.SizeChanged += UcCameraView_SizeChanged;
+            //this.SizeChanged += UcCameraView_SizeChanged;
         }
 
-      public  void changeHeight(int newHeight)
+        public void ChangeByHeight(Size newSize, EmCameraResolutionDisplay cameraResolutionDisplay)
         {
-            this.Invoke(new Action(() =>
+            switch (cameraResolutionDisplay)
             {
-                this.SizeChanged -= UcCameraView_SizeChanged;
-                this.Height = newHeight;
-                this.Refresh();
-                this.Width = newHeight * 4 / 3;
-                this.SizeChanged += UcCameraView_SizeChanged;
-            }));
+                case EmCameraResolutionDisplay.Mode_16_9:
+                    this.Height = newSize.Height;
+                    this.Refresh();
+                    this.Width = newSize.Height * 16 / 9;
+                    break;
+                case EmCameraResolutionDisplay.Mode_4_3:
+                    this.Height = newSize.Height;
+                    this.Refresh();
+                    this.Width = newSize.Height * 4 / 3;
+                    break;
+                case EmCameraResolutionDisplay.Mode_Fill:
+                    this.Size = newSize;
+                    break;
+                default:
+                    break;
+            }
         }
-        private void UcCameraView_SizeChanged(object? sender, EventArgs e)
+        public void ChangeByWidth(Size newSize, EmCameraResolutionDisplay cameraResolutionDisplay)
         {
-            this.Height = this.Width * 9 / 16 + lblCameraName.Height;
+            switch (cameraResolutionDisplay)
+            {
+                case EmCameraResolutionDisplay.Mode_16_9:
+                    this.Width = newSize.Width;
+                    this.Refresh();
+                    newSize.Height = this.Width * 9 / 16;
+                    break;
+                case EmCameraResolutionDisplay.Mode_4_3:
+                    this.Height = newSize.Height;
+                    this.Refresh();
+                    newSize.Height = this.Width * 3 / 4;
+                    break;
+                case EmCameraResolutionDisplay.Mode_Fill:
+                    this.Size = newSize;
+                    break;
+                default:
+                    break;
+            }
         }
+
+        //public void changeHeight(int newHeight)
+        //{
+        //    this.Invoke(new Action(() =>
+        //    {
+        //        //this.SizeChanged -= UcCameraView_SizeChanged;
+        //        this.Height = newHeight;
+        //        this.Refresh();
+        //        this.Width = newHeight * 4 / 3;
+        //        //this.SizeChanged += UcCameraView_SizeChanged;
+        //    }));
+        //}
+        //private void UcCameraView_SizeChanged(object? sender, EventArgs e)
+        //{
+        //    this.Height = this.Width * 9 / 16 + lblCameraName.Height;
+        //}
         #endregion End Forms
 
         #region Controls In Form

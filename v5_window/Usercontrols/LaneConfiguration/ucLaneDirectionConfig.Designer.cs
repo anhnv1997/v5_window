@@ -40,14 +40,17 @@
             lblCameraPicDirection = new Label();
             cbEventDirection = new ComboBox();
             lblEventDirection = new Label();
+            cbCamScale = new ComboBox();
+            lblCamScale = new Label();
             SuspendLayout();
             // 
             // lblDisplayDirection
             // 
             lblDisplayDirection.AutoSize = true;
-            lblDisplayDirection.Location = new Point(7, 14);
+            lblDisplayDirection.Location = new Point(15, 11);
+            lblDisplayDirection.Margin = new Padding(4, 0, 4, 0);
             lblDisplayDirection.Name = "lblDisplayDirection";
-            lblDisplayDirection.Size = new Size(81, 15);
+            lblDisplayDirection.Size = new Size(106, 21);
             lblDisplayDirection.TabIndex = 5;
             lblDisplayDirection.Text = "Chiều hiển thị";
             // 
@@ -55,19 +58,19 @@
             // 
             cbDisplayDirection.FormattingEnabled = true;
             cbDisplayDirection.Items.AddRange(new object[] { "Dọc", "Ngang từ trái sang phải", "Ngang từ phải sang trái", "Dọc Trái Qua Phải", "Dọc Phải Qua Trái" });
-            cbDisplayDirection.Location = new Point(155, 6);
-            cbDisplayDirection.Margin = new Padding(3, 2, 3, 2);
+            cbDisplayDirection.Location = new Point(199, 8);
+            cbDisplayDirection.Margin = new Padding(4, 3, 4, 3);
             cbDisplayDirection.Name = "cbDisplayDirection";
-            cbDisplayDirection.Size = new Size(214, 23);
+            cbDisplayDirection.Size = new Size(274, 29);
             cbDisplayDirection.TabIndex = 1;
             // 
             // chbIsDisplayTitle
             // 
             chbIsDisplayTitle.AutoSize = true;
-            chbIsDisplayTitle.Location = new Point(155, 159);
-            chbIsDisplayTitle.Margin = new Padding(3, 2, 3, 2);
+            chbIsDisplayTitle.Location = new Point(199, 233);
+            chbIsDisplayTitle.Margin = new Padding(4, 3, 4, 3);
             chbIsDisplayTitle.Name = "chbIsDisplayTitle";
-            chbIsDisplayTitle.Size = new Size(107, 19);
+            chbIsDisplayTitle.Size = new Size(134, 25);
             chbIsDisplayTitle.TabIndex = 6;
             chbIsDisplayTitle.Text = "Hiển thị tiêu đề";
             chbIsDisplayTitle.UseVisualStyleBackColor = true;
@@ -75,10 +78,10 @@
             // chbIsDisplayLastEvent
             // 
             chbIsDisplayLastEvent.AutoSize = true;
-            chbIsDisplayLastEvent.Location = new Point(155, 182);
-            chbIsDisplayLastEvent.Margin = new Padding(3, 2, 3, 2);
+            chbIsDisplayLastEvent.Location = new Point(199, 265);
+            chbIsDisplayLastEvent.Margin = new Padding(4, 3, 4, 3);
             chbIsDisplayLastEvent.Name = "chbIsDisplayLastEvent";
-            chbIsDisplayLastEvent.Size = new Size(158, 19);
+            chbIsDisplayLastEvent.Size = new Size(201, 25);
             chbIsDisplayLastEvent.TabIndex = 7;
             chbIsDisplayLastEvent.Text = "Hiển thị sự kiện gần nhất";
             chbIsDisplayLastEvent.UseVisualStyleBackColor = true;
@@ -87,37 +90,39 @@
             // 
             cbCameraDirection.FormattingEnabled = true;
             cbCameraDirection.Items.AddRange(new object[] { "Dọc", "Ngang" });
-            cbCameraDirection.Location = new Point(155, 33);
-            cbCameraDirection.Margin = new Padding(3, 2, 3, 2);
+            cbCameraDirection.Location = new Point(199, 46);
+            cbCameraDirection.Margin = new Padding(4, 3, 4, 3);
             cbCameraDirection.Name = "cbCameraDirection";
-            cbCameraDirection.Size = new Size(214, 23);
+            cbCameraDirection.Size = new Size(274, 29);
             cbCameraDirection.TabIndex = 2;
             // 
             // cbPicDiection
             // 
             cbPicDiection.FormattingEnabled = true;
             cbPicDiection.Items.AddRange(new object[] { "Dọc", "Ngang" });
-            cbPicDiection.Location = new Point(155, 60);
-            cbPicDiection.Margin = new Padding(3, 2, 3, 2);
+            cbPicDiection.Location = new Point(199, 84);
+            cbPicDiection.Margin = new Padding(4, 3, 4, 3);
             cbPicDiection.Name = "cbPicDiection";
-            cbPicDiection.Size = new Size(214, 23);
+            cbPicDiection.Size = new Size(274, 29);
             cbPicDiection.TabIndex = 3;
             // 
             // lblCameraDirection
             // 
             lblCameraDirection.AutoSize = true;
-            lblCameraDirection.Location = new Point(12, 44);
+            lblCameraDirection.Location = new Point(15, 49);
+            lblCameraDirection.Margin = new Padding(4, 0, 4, 0);
             lblCameraDirection.Name = "lblCameraDirection";
-            lblCameraDirection.Size = new Size(86, 15);
+            lblCameraDirection.Size = new Size(113, 21);
             lblCameraDirection.TabIndex = 6;
             lblCameraDirection.Text = "Khung Camera";
             // 
             // lblPicDirection
             // 
             lblPicDirection.AutoSize = true;
-            lblPicDirection.Location = new Point(12, 63);
+            lblPicDirection.Location = new Point(15, 87);
+            lblPicDirection.Margin = new Padding(4, 0, 4, 0);
             lblPicDirection.Name = "lblPicDirection";
-            lblPicDirection.Size = new Size(96, 15);
+            lblPicDirection.Size = new Size(124, 21);
             lblPicDirection.TabIndex = 6;
             lblPicDirection.Text = "Khung Hình Ảnh";
             // 
@@ -125,18 +130,19 @@
             // 
             cbCameraPicDirection.FormattingEnabled = true;
             cbCameraPicDirection.Items.AddRange(new object[] { "Dọc", "Ngang từ trái sang phải", "Ngang từ phải sang trái" });
-            cbCameraPicDirection.Location = new Point(155, 87);
-            cbCameraPicDirection.Margin = new Padding(3, 2, 3, 2);
+            cbCameraPicDirection.Location = new Point(199, 122);
+            cbCameraPicDirection.Margin = new Padding(4, 3, 4, 3);
             cbCameraPicDirection.Name = "cbCameraPicDirection";
-            cbCameraPicDirection.Size = new Size(214, 23);
+            cbCameraPicDirection.Size = new Size(274, 29);
             cbCameraPicDirection.TabIndex = 4;
             // 
             // lblCameraPicDirection
             // 
             lblCameraPicDirection.AutoSize = true;
-            lblCameraPicDirection.Location = new Point(12, 90);
+            lblCameraPicDirection.Location = new Point(15, 125);
+            lblCameraPicDirection.Margin = new Padding(4, 0, 4, 0);
             lblCameraPicDirection.Name = "lblCameraPicDirection";
-            lblCameraPicDirection.Size = new Size(132, 15);
+            lblCameraPicDirection.Size = new Size(170, 21);
             lblCameraPicDirection.TabIndex = 6;
             lblCameraPicDirection.Text = "Khung Cam - Hình Ảnh";
             // 
@@ -144,30 +150,52 @@
             // 
             cbEventDirection.FormattingEnabled = true;
             cbEventDirection.Items.AddRange(new object[] { "Dọc", "Ngang từ trái sang phải", "Ngang từ phải sang trái" });
-            cbEventDirection.Location = new Point(155, 114);
-            cbEventDirection.Margin = new Padding(3, 2, 3, 2);
+            cbEventDirection.Location = new Point(199, 160);
+            cbEventDirection.Margin = new Padding(4, 3, 4, 3);
             cbEventDirection.Name = "cbEventDirection";
-            cbEventDirection.Size = new Size(214, 23);
+            cbEventDirection.Size = new Size(274, 29);
             cbEventDirection.TabIndex = 5;
             // 
             // lblEventDirection
             // 
             lblEventDirection.AutoSize = true;
-            lblEventDirection.Location = new Point(12, 117);
+            lblEventDirection.Location = new Point(15, 163);
+            lblEventDirection.Margin = new Padding(4, 0, 4, 0);
             lblEventDirection.Name = "lblEventDirection";
-            lblEventDirection.Size = new Size(84, 15);
+            lblEventDirection.Size = new Size(111, 21);
             lblEventDirection.TabIndex = 6;
             lblEventDirection.Text = "Khung Sự Kiện";
             // 
+            // cbCamScale
+            // 
+            cbCamScale.FormattingEnabled = true;
+            cbCamScale.Location = new Point(199, 198);
+            cbCamScale.Margin = new Padding(4, 3, 4, 3);
+            cbCamScale.Name = "cbCamScale";
+            cbCamScale.Size = new Size(274, 29);
+            cbCamScale.TabIndex = 5;
+            // 
+            // lblCamScale
+            // 
+            lblCamScale.AutoSize = true;
+            lblCamScale.Location = new Point(15, 201);
+            lblCamScale.Margin = new Padding(4, 0, 4, 0);
+            lblCamScale.Name = "lblCamScale";
+            lblCamScale.Size = new Size(97, 21);
+            lblCamScale.TabIndex = 6;
+            lblCamScale.Text = "Tỷ lệ camera";
+            // 
             // ucLaneDirectionConfig
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(lblCamScale);
             Controls.Add(lblEventDirection);
             Controls.Add(lblCameraPicDirection);
             Controls.Add(lblPicDirection);
             Controls.Add(lblCameraDirection);
             Controls.Add(lblDisplayDirection);
+            Controls.Add(cbCamScale);
             Controls.Add(cbEventDirection);
             Controls.Add(cbCameraPicDirection);
             Controls.Add(cbPicDiection);
@@ -175,9 +203,10 @@
             Controls.Add(cbDisplayDirection);
             Controls.Add(chbIsDisplayLastEvent);
             Controls.Add(chbIsDisplayTitle);
-            Margin = new Padding(3, 2, 3, 2);
+            Font = new Font("Segoe UI", 12F);
+            Margin = new Padding(4, 3, 4, 3);
             Name = "ucLaneDirectionConfig";
-            Size = new Size(540, 338);
+            Size = new Size(604, 381);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -196,5 +225,7 @@
         private Label lblCameraPicDirection;
         private ComboBox cbEventDirection;
         private Label lblEventDirection;
+        private ComboBox cbCamScale;
+        private Label lblCamScale;
     }
 }

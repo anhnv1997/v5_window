@@ -37,6 +37,7 @@
             lblControllerName.Dock = DockStyle.Top;
             lblControllerName.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline);
             lblControllerName.Location = new Point(0, 0);
+            lblControllerName.Margin = new Padding(4, 0, 4, 0);
             lblControllerName.Name = "lblControllerName";
             lblControllerName.Size = new Size(17, 21);
             lblControllerName.TabIndex = 1;
@@ -44,13 +45,15 @@
             // 
             // ucControllerConfigItem
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             BorderStyle = BorderStyle.FixedSingle;
             Controls.Add(lblControllerName);
+            Font = new Font("Segoe UI", 12F);
+            Margin = new Padding(4, 3, 4, 3);
             Name = "ucControllerConfigItem";
-            Size = new Size(148, 148);
+            Size = new Size(167, 155);
             ResumeLayout(false);
             PerformLayout();
         }

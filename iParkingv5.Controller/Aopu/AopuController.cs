@@ -343,43 +343,44 @@ namespace iParkingv5.Controller.Aopu
                 DeviceName = controller.Name,
                 AllCardFormats = new List<string>(),
             };
-            string cardNumberHex = Convert.ToInt64(cardNumberInt).ToString("X8");
+            string cardNumberHex = Convert.ToInt64(cardNumberInt).ToString("X");
+            e.PreferCard = cardNumberHex;
             e.AllCardFormats.Add(cardNumberHex);
             e.AllCardFormats.Add(cardNumberInt);
 
-            bool isProximity = cardNumberHex[0] == '0' && cardNumberHex[1] == '0';
-            if (isProximity)
-            {
-                e.AllCardFormats.Add(cardNumberHex[2..]);
+            //bool isProximity = cardNumberHex[0] == '0' && cardNumberHex[1] == '0';
+            //if (isProximity)
+            //{
+            //    e.AllCardFormats.Add(cardNumberHex[2..]);
 
-                string maTruocFull = cardNumberInt;
-                while (maTruocFull.Length < 10)
-                {
-                    maTruocFull = "0" + maTruocFull;
-                }
-                if (maTruocFull != cardNumberInt)
-                {
-                    e.AllCardFormats.Add(maTruocFull);
-                }
+            //    string maTruocFull = cardNumberInt;
+            //    while (maTruocFull.Length < 10)
+            //    {
+            //        maTruocFull = "0" + maTruocFull;
+            //    }
+            //    if (maTruocFull != cardNumberInt)
+            //    {
+            //        e.AllCardFormats.Add(maTruocFull);
+            //    }
 
-                string maSauFormat1 = int.Parse(cardNumberHex.Substring(2, 2), NumberStyles.HexNumber).ToString("000") +
-                                      int.Parse(cardNumberHex.Substring(4, 4), NumberStyles.HexNumber).ToString("00000");
+            //    string maSauFormat1 = int.Parse(cardNumberHex.Substring(2, 2), NumberStyles.HexNumber).ToString("000") +
+            //                          int.Parse(cardNumberHex.Substring(4, 4), NumberStyles.HexNumber).ToString("00000");
 
-                string maSauFormat2 = int.Parse(cardNumberHex.Substring(2, 2), NumberStyles.HexNumber).ToString("000") + ":" +
-                                              int.Parse(cardNumberHex.Substring(4, 4), NumberStyles.HexNumber).ToString("00000");
-                string maSauFormat3 = int.Parse(cardNumberHex.Substring(2, 2), NumberStyles.HexNumber).ToString() + ":" +
-                                             int.Parse(cardNumberHex.Substring(4, 4), NumberStyles.HexNumber).ToString();
-                e.AllCardFormats.Add(maSauFormat1);
-                e.AllCardFormats.Add(maSauFormat2);
-                e.PreferCard = maSauFormat3;
-            }
-            else
-            {
-                int a = (int)(Convert.ToInt64(cardNumberInt, 10) / 65536);
-                int b = (int)(Convert.ToInt64(cardNumberInt, 10) - a * 65536);
-                //e.PreferCard = a.ToString("00000") + ":" + b.ToString("00000");
-                e.PreferCard =cardNumberHex;
-            }
+            //    string maSauFormat2 = int.Parse(cardNumberHex.Substring(2, 2), NumberStyles.HexNumber).ToString("000") + ":" +
+            //                                  int.Parse(cardNumberHex.Substring(4, 4), NumberStyles.HexNumber).ToString("00000");
+            //    string maSauFormat3 = int.Parse(cardNumberHex.Substring(2, 2), NumberStyles.HexNumber).ToString() + ":" +
+            //                                 int.Parse(cardNumberHex.Substring(4, 4), NumberStyles.HexNumber).ToString();
+            //    e.AllCardFormats.Add(maSauFormat1);
+            //    e.AllCardFormats.Add(maSauFormat2);
+            //    e.PreferCard = maSauFormat3;
+            //}
+            //else
+            //{
+            //    int a = (int)(Convert.ToInt64(cardNumberInt, 10) / 65536);
+            //    int b = (int)(Convert.ToInt64(cardNumberInt, 10) - a * 65536);
+            //    //e.PreferCard = a.ToString("00000") + ":" + b.ToString("00000");
+            //    e.PreferCard =cardNumberHex;
+            //}
             e.ReaderIndex = Regex.IsMatch(readerIndex, @"^\d+$") ? Convert.ToInt32(readerIndex) : -1;
             OnCardEvent(e);
         }

@@ -40,9 +40,10 @@
             // lblLed
             // 
             lblLed.AutoSize = true;
-            lblLed.Location = new Point(2, 6);
+            lblLed.Location = new Point(1, 13);
+            lblLed.Margin = new Padding(4, 0, 4, 0);
             lblLed.Name = "lblLed";
-            lblLed.Size = new Size(33, 20);
+            lblLed.Size = new Size(35, 21);
             lblLed.TabIndex = 0;
             lblLed.Text = "Led";
             // 
@@ -50,18 +51,20 @@
             // 
             cbLeds.DropDownStyle = ComboBoxStyle.DropDownList;
             cbLeds.FormattingEnabled = true;
-            cbLeds.Location = new Point(41, 3);
+            cbLeds.Location = new Point(45, 10);
+            cbLeds.Margin = new Padding(4, 3, 4, 3);
             cbLeds.Name = "cbLeds";
-            cbLeds.Size = new Size(346, 28);
+            cbLeds.Size = new Size(388, 29);
             cbLeds.TabIndex = 1;
             // 
             // btnAddLedDisplay
             // 
             btnAddLedDisplay.AutoSize = true;
             btnAddLedDisplay.Image = (Image)resources.GetObject("btnAddLedDisplay.Image");
-            btnAddLedDisplay.Location = new Point(393, 3);
+            btnAddLedDisplay.Location = new Point(442, 3);
+            btnAddLedDisplay.Margin = new Padding(4, 3, 4, 3);
             btnAddLedDisplay.Name = "btnAddLedDisplay";
-            btnAddLedDisplay.Size = new Size(113, 30);
+            btnAddLedDisplay.Size = new Size(127, 42);
             btnAddLedDisplay.TabIndex = 2;
             btnAddLedDisplay.Text = "Thêm";
             btnAddLedDisplay.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -71,18 +74,20 @@
             // panelLedConfigs
             // 
             panelLedConfigs.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panelLedConfigs.Location = new Point(3, 37);
+            panelLedConfigs.Location = new Point(4, 51);
+            panelLedConfigs.Margin = new Padding(4, 3, 4, 3);
             panelLedConfigs.Name = "panelLedConfigs";
-            panelLedConfigs.Size = new Size(788, 483);
+            panelLedConfigs.Size = new Size(887, 495);
             panelLedConfigs.TabIndex = 3;
             // 
             // btnSave
             // 
             btnSave.AutoSize = true;
             btnSave.Image = (Image)resources.GetObject("btnSave.Image");
-            btnSave.Location = new Point(512, 3);
+            btnSave.Location = new Point(576, 3);
+            btnSave.Margin = new Padding(4, 3, 4, 3);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(126, 30);
+            btnSave.Size = new Size(141, 42);
             btnSave.TabIndex = 4;
             btnSave.Text = "Lưu cấu hình";
             btnSave.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -93,9 +98,10 @@
             // 
             btnTest.AutoSize = true;
             btnTest.Image = (Image)resources.GetObject("btnTest.Image");
-            btnTest.Location = new Point(644, 3);
+            btnTest.Location = new Point(725, 3);
+            btnTest.Margin = new Padding(4, 3, 4, 3);
             btnTest.Name = "btnTest";
-            btnTest.Size = new Size(122, 30);
+            btnTest.Size = new Size(138, 42);
             btnTest.TabIndex = 4;
             btnTest.Text = "Test hiển thị";
             btnTest.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -104,7 +110,7 @@
             // 
             // ucLedDisplaySetting
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(btnTest);
             Controls.Add(btnSave);
@@ -112,8 +118,10 @@
             Controls.Add(btnAddLedDisplay);
             Controls.Add(cbLeds);
             Controls.Add(lblLed);
+            Font = new Font("Segoe UI", 12F);
+            Margin = new Padding(4, 3, 4, 3);
             Name = "ucLedDisplaySetting";
-            Size = new Size(794, 520);
+            Size = new Size(894, 546);
             ResumeLayout(false);
             PerformLayout();
         }

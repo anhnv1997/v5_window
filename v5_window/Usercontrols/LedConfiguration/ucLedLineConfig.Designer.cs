@@ -47,7 +47,7 @@ namespace iParkingv5_window.Usercontrols
             lblStepName.Dock = DockStyle.Left;
             lblStepName.Location = new Point(0, 0);
             lblStepName.Name = "lblStepName";
-            lblStepName.Size = new Size(68, 92);
+            lblStepName.Size = new Size(60, 69);
             lblStepName.TabIndex = 1;
             lblStepName.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -58,18 +58,19 @@ namespace iParkingv5_window.Usercontrols
             panel2.Controls.Add(numDelayTime);
             panel2.Controls.Add(label1);
             panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(68, 0);
+            panel2.Location = new Point(60, 0);
+            panel2.Margin = new Padding(3, 2, 3, 2);
             panel2.Name = "panel2";
-            panel2.Padding = new Padding(0, 5, 0, 0);
-            panel2.Size = new Size(332, 38);
+            panel2.Padding = new Padding(0, 4, 0, 0);
+            panel2.Size = new Size(284, 28);
             panel2.TabIndex = 2;
             // 
             // label2
             // 
             label2.Dock = DockStyle.Right;
-            label2.Location = new Point(289, 5);
+            label2.Location = new Point(246, 4);
             label2.Name = "label2";
-            label2.Size = new Size(43, 33);
+            label2.Size = new Size(38, 24);
             label2.TabIndex = 2;
             label2.Text = "ms";
             label2.TextAlign = ContentAlignment.MiddleLeft;
@@ -77,19 +78,20 @@ namespace iParkingv5_window.Usercontrols
             // numDelayTime
             // 
             numDelayTime.Dock = DockStyle.Fill;
-            numDelayTime.Location = new Point(71, 5);
+            numDelayTime.Location = new Point(62, 4);
+            numDelayTime.Margin = new Padding(3, 2, 3, 2);
             numDelayTime.Maximum = new decimal(new int[] { 99999, 0, 0, 0 });
             numDelayTime.Name = "numDelayTime";
-            numDelayTime.Size = new Size(261, 27);
+            numDelayTime.Size = new Size(222, 23);
             numDelayTime.TabIndex = 1;
             numDelayTime.Value = new decimal(new int[] { 300, 0, 0, 0 });
             // 
             // label1
             // 
             label1.Dock = DockStyle.Left;
-            label1.Location = new Point(0, 5);
+            label1.Location = new Point(0, 4);
             label1.Name = "label1";
-            label1.Size = new Size(71, 33);
+            label1.Size = new Size(62, 24);
             label1.TabIndex = 0;
             label1.Text = "Delay";
             label1.TextAlign = ContentAlignment.MiddleLeft;
@@ -100,15 +102,16 @@ namespace iParkingv5_window.Usercontrols
             btnCancel1.Dock = DockStyle.Right;
             btnCancel1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnCancel1.ForeColor = Color.Black;
-            btnCancel1.Location = new Point(400, 0);
+            btnCancel1.Location = new Point(344, 0);
+            btnCancel1.Margin = new Padding(3, 2, 3, 2);
             btnCancel1.Name = "btnCancel1";
-            btnCancel1.Size = new Size(46, 92);
+            btnCancel1.Size = new Size(46, 69);
             btnCancel1.TabIndex = 3;
             btnCancel1.Text = "Xóa";
             // 
             // ucLedLineConfig
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             Controls.Add(panel2);
@@ -116,7 +119,7 @@ namespace iParkingv5_window.Usercontrols
             Controls.Add(btnCancel1);
             Margin = new Padding(0);
             Name = "ucLedLineConfig";
-            Size = new Size(446, 92);
+            Size = new Size(390, 69);
             panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)numDelayTime).EndInit();
             ResumeLayout(false);

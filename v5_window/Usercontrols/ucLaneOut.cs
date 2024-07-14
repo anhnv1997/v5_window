@@ -69,7 +69,6 @@ namespace iParkingv5_window.Usercontrols
             LoadCamera(panelCameras);
             this.Dock = DockStyle.Top;
             lblResult.Padding = new Padding(StaticPool.baseSize);
-            panelCameras.AutoScroll = true;
             panelCameras.SizeChanged += PanelCameras_SizeChanged;
             splitContainerEventContent.SizeChanged += SplitContainerEventContent_SizeChanged;
             splitContainerMain.MouseDoubleClick += SplitContainerEventContent_MouseDoubleClick;
@@ -1117,7 +1116,16 @@ namespace iParkingv5_window.Usercontrols
             }
             new frmLaneSetting(this.lane.Id, StaticPool.leds, cameraList, this.lane.controlUnits.ToList(), false).ShowDialog();
             GetShortcutConfig();
-            UpdateLaneGUI();
+
+            var newConfig = NewtonSoftHelper<LaneDirectionConfig>.DeserializeObjectFromPath(
+                                                      PathManagement.appLaneDirectionConfigPath(this.lane.Id)) ?? LaneDirectionConfig.CreateDefault();
+
+            bool isChangeDisplayConfig = false;
+            if (!laneDirection.IsSameConfig(newConfig))
+            {
+                laneDirection = newConfig;
+                UpdateLaneGUI();
+            }
         }
 
         private async void btnPrintEInvoiceTicket_Click(object sender, EventArgs e)
@@ -1363,31 +1371,38 @@ namespace iParkingv5_window.Usercontrols
             //        panelCameras.Controls[i].Location = location;
             //    }
             //}
-            int panelHeight = panelCameras.Height - 50;
+            int count = panelCameras.Controls.OfType<ucCameraView>().ToList().Count;
+            int marginHeight = 5;
+            int displayRegionHeight = panelCameras.Height - label4.Height - marginHeight;
             foreach (ucCameraView item in panelCameras.Controls.OfType<ucCameraView>())
             {
                 if (laneDirection.cameraDirection == LaneDirectionConfig.EmCameraDirection.Vertical)
                 {
-                    item.Width = panelCameras.Width - panelCameras.Margin.Left - panelCameras.Margin.Right - panelCameras.Padding.Left - panelCameras.Padding.Right
-                                                    - item.Margin.Left - item.Margin.Right - item.Padding.Left - item.Padding.Right;
+                    int newWidth = panelCameras.Width - panelCameras.Margin.Left - panelCameras.Margin.Right -
+                                                        panelCameras.Padding.Left - panelCameras.Padding.Right
+                                                    - /*item.Margin.Left - item.Margin.Right -*/ item.Padding.Left - item.Padding.Right;
+                    item.ChangeByWidth(new Size(newWidth, (displayRegionHeight) / count), this.laneDirection.cameraResolutionDisplay);
                 }
                 else
                 {
-                    item.changeHeight(panelCameras.Height - 50);
+                    item.ChangeByHeight(new Size((panelCameras.Width - panelCameras.Margin.Left - panelCameras.Margin.Right - panelCameras.Padding.Left - panelCameras.Padding.Right
+                                                    - item.Margin.Left - item.Margin.Right - item.Padding.Left - item.Padding.Right) / count, panelCameras.Height - 50), this.laneDirection.cameraResolutionDisplay);
                 }
             }
             for (int i = 0; i < panelCameras.Controls.OfType<ucCameraView>().ToList().Count; i++)
             {
+                var item = panelCameras.Controls.OfType<ucCameraView>().ToList()[i];
                 if (i == 0)
                 {
-                    panelCameras.Controls.OfType<ucCameraView>().ToList()[i].Location = new Point(0, 37);
+                    item.Location = new Point(0, label4.Height);
+                    item.BringToFront();
                 }
                 else
                 {
                     Control lastControl = panelCameras.Controls.OfType<ucCameraView>().ToList()[i - 1];
                     if (laneDirection.cameraDirection == LaneDirectionConfig.EmCameraDirection.Vertical)
                     {
-                        Point location = new Point(lastControl.Location.X, lastControl.Location.Y + lastControl.Height + 10);
+                        Point location = new Point(lastControl.Location.X, lastControl.Location.Y + lastControl.Height + marginHeight);
                         panelCameras.Controls.OfType<ucCameraView>().ToList()[i].Location = location;
                     }
                     else
@@ -1857,7 +1872,17 @@ namespace iParkingv5_window.Usercontrols
             catch
             {
             }
-
+            try
+            {
+                if (this.laneDisplayConfig.splitContainerCameraPosition > 0)
+                {
+                    this.splitContainerCamera.SplitterDistance = this.laneDisplayConfig.splitContainerCameraPosition;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.Form, "DisplayUIConfig", "splitterEventInfoWithCamera-SplitPosition", ex);
+            }
             try
             {
                 this.splitContainerMain.SplitterDistance = this.laneDisplayConfig.splitContainerMain;
@@ -1906,6 +1931,7 @@ namespace iParkingv5_window.Usercontrols
                 splitContainerMain = this.splitContainerMain.Panel2Collapsed ? this.splitContainerMain.Height : this.splitContainerMain.SplitterDistance,
                 SplitterCameraPosition = this.splitterCamera.SplitPosition,
                 splitEventInfoWithCameraPosition = this.splitterEventInfoWithCamera.SplitPosition,
+                splitContainerCameraPosition = this.splitContainerCamera.SplitterDistance,
             };
         }
 
@@ -1942,17 +1968,17 @@ namespace iParkingv5_window.Usercontrols
                 case LaneDirectionConfig.EmDisplayDirection.Vertical:
                     splitterEventInfoWithCamera.Dock = DockStyle.Bottom;
                     panelEventData.Dock = DockStyle.Bottom;
-                    panelCameras.Height = 200;
+                    splitContainerCamera.Height = 200;
                     break;
                 case LaneDirectionConfig.EmDisplayDirection.HorizontalLeftToRight:
                     splitterEventInfoWithCamera.Dock = DockStyle.Right;
                     panelEventData.Dock = DockStyle.Right;
-                    panelCameras.Width = 200;
+                    splitContainerCamera.Width = 200;
                     break;
                 case LaneDirectionConfig.EmDisplayDirection.HorizontalRightToLeft:
                     splitterEventInfoWithCamera.Dock = DockStyle.Left;
                     panelEventData.Dock = DockStyle.Left;
-                    panelCameras.Width = 200;
+                    splitContainerCamera.Width = 200;
                     break;
                 default:
                     break;
@@ -1962,19 +1988,19 @@ namespace iParkingv5_window.Usercontrols
             {
                 case LaneDirectionConfig.EmCameraPicFunction.Vertical:
                     splitterCamera.Dock = DockStyle.Top;
-                    panelCameras.Dock = DockStyle.Top;
-                    panelCameras.Height = 100;
+                    splitContainerCamera.Dock = DockStyle.Top;
+                    splitContainerCamera.Height = 100;
                     break;
                 case LaneDirectionConfig.EmCameraPicFunction.HorizontalLeftToRight:
-                    panelCameras.Width = 100;
+                    splitContainerCamera.Width = 100;
+                    splitContainerCamera.Dock = DockStyle.Left;
                     splitterCamera.Dock = DockStyle.Left;
-                    panelCameras.Dock = DockStyle.Left;
 
                     break;
                 case LaneDirectionConfig.EmCameraPicFunction.HorizontalRightToLeft:
-                    panelCameras.Width = 100;
+                    splitContainerCamera.Width = 100;
+                    splitContainerCamera.Dock = DockStyle.Right;
                     splitterCamera.Dock = DockStyle.Right;
-                    panelCameras.Dock = DockStyle.Right;
                     break;
                 default:
                     break;

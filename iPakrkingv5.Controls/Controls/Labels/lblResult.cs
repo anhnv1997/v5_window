@@ -35,7 +35,7 @@ namespace iPakrkingv5.Controls.Controls.Labels
             Graphics g = e.Graphics;
             using (Font font = new Font("Segoe UI", 10, FontStyle.Bold))
             {
-                DrawTextInCenter(g, this.message, font, Color.White);
+                DrawTextInCenter(g, this.message.ToUpper(), font, Color.White);
             }
 
         }

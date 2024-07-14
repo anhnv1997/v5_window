@@ -119,6 +119,7 @@
             Name = "frmLaneSetting";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Cấu hình làn";
+            WindowState = FormWindowState.Maximized;
             tabSetting.ResumeLayout(false);
             ResumeLayout(false);
         }

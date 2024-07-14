@@ -1,7 +1,10 @@
 ﻿using iParkingv5.Controller;
 using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.Datas.parking_service;
+using iParkingv5.Objects.Enums;
+using iParkingv5.Objects.Events;
 using iParkingv6.Objects.Datas;
+using Kztek.Tools;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static iParkingv5.Objects.Enums.CardFormat;
 
 namespace IParkingv5.RegisterCard
 {
@@ -99,6 +103,21 @@ namespace IParkingv5.RegisterCard
             {
                 cbIdentityType.Items.Add(item);
             }
+            foreach (CardFormat.EmCardFormat item in Enum.GetValues(typeof(CardFormat.EmCardFormat)))
+            {
+                cbInputFormat.Items.Add(CardFormat.ToString(item));
+                cbOutputFormat.Items.Add(CardFormat.ToString(item));
+            }
+            foreach (CardFormat.EmCardFormatOption item in Enum.GetValues(typeof(CardFormat.EmCardFormatOption)))
+            {
+                cbOption.Items.Add(CardFormat.ToString(item));
+            }
+            cbInputFormat.SelectedIndexChanged += CbInputFormat_SelectedIndexChanged;
+            cbOutputFormat.SelectedIndexChanged += CbOutputFormat_SelectedIndexChanged;
+            cbOption.SelectedIndexChanged += CbOption_SelectedIndexChanged;
+            cbInputFormat.SelectedIndex = Properties.Settings.Default.input_format;
+            cbOutputFormat.SelectedIndex = Properties.Settings.Default.output_format;
+            cbOption.SelectedIndex = Properties.Settings.Default.option;
             //Load IdentityGroups
             IdentityGroups = (await AppData.ApiServer.parkingDataService.GetIdentityGroupsAsync())?.Item1 ?? new List<IdentityGroup>();
             foreach (var item in IdentityGroups)
@@ -132,6 +151,25 @@ namespace IParkingv5.RegisterCard
             btnStart.Enabled = true;
             btnStop.Enabled = false;
         }
+
+        private void CbOption_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            Properties.Settings.Default.option = cbOption.SelectedIndex;
+            Properties.Settings.Default.Save();
+        }
+
+        private void CbOutputFormat_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            Properties.Settings.Default.output_format = cbOutputFormat.SelectedIndex;
+            Properties.Settings.Default.Save();
+        }
+
+        private void CbInputFormat_SelectedIndexChanged(object? sender, EventArgs e)
+        {
+            Properties.Settings.Default.input_format = cbInputFormat.SelectedIndex;
+            Properties.Settings.Default.Save();
+        }
+
         private void RegisterUIEvent()
         {
             btnStart.Click += BtnStart_Click;
@@ -140,6 +178,8 @@ namespace IParkingv5.RegisterCard
         }
         private async void Controller_CardEvent(object sender, iParkingv5.Objects.Events.CardEventArgs e)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "NHẬN SK THẺ: " + e.PreferCard);
+
             string identityGroupId = "";
             this.Invoke(new Action(() =>
             {
@@ -150,7 +190,16 @@ namespace IParkingv5.RegisterCard
                     return;
                 }
             }));
-            string code = e.PreferCard;
+            string code = "";
+            this.Invoke(new Action(() =>
+            {
+                code = CardFactory.StandardlizedCardNumber(e.PreferCard, new iParkingv5.Objects.Configs.CardFormatConfig()
+                {
+                    InputFormat = (EmCardFormat)cbInputFormat.SelectedIndex,
+                    OutputFormat = (EmCardFormat)cbOutputFormat.SelectedIndex,
+                    OutputOption = (EmCardFormatOption)cbOption.SelectedIndex,
+                });
+            }));
             Identity? identity = (await AppData.ApiServer.parkingDataService.GetIdentityByCodeAsync(code)).Item1;
             if (identity == null)
             {
@@ -202,9 +251,84 @@ namespace IParkingv5.RegisterCard
         }
         #endregion End Private Function
 
-        private void btnStart_Click_1(object sender, EventArgs e)
+        private async void btnStart_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private async void button1_Click(object sender, EventArgs ea)
+        {
+            CardEventArgs e =  new CardEventArgs();
+            e.PreferCard = "F7D5B8E4";
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "NHẬN SK THẺ: " + e.PreferCard);
+
+            string identityGroupId = "";
+            this.Invoke(new Action(() =>
+            {
+                identityGroupId = ((ListItem)cbIdentityGroup.SelectedItem)?.Value ?? "";
+                if (string.IsNullOrWhiteSpace(identityGroupId))
+                {
+                    MessageBox.Show("Hãy chọn nhóm định danh", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+            }));
+            string code = "";
+            this.Invoke(new Action(() =>
+            {
+                code = CardFactory.StandardlizedCardNumber(e.PreferCard, new iParkingv5.Objects.Configs.CardFormatConfig()
+                {
+                    InputFormat = (EmCardFormat)cbInputFormat.SelectedIndex,
+                    OutputFormat = (EmCardFormat)cbOutputFormat.SelectedIndex,
+                    OutputOption = (EmCardFormatOption)cbOption.SelectedIndex,
+                });
+            }));
+            Identity? identity = (await AppData.ApiServer.parkingDataService.GetIdentityByCodeAsync(code)).Item1;
+            if (identity == null)
+            {
+                int currentIndex = (int)numericUpDown1.Value + 1;
+                string format = "";
+                IdentityType type = IdentityType.Card;
+                this.Invoke(new Action(() =>
+                {
+                    format = cbFormat.Text;
+                    type = (IdentityType)cbIdentityType.SelectedIndex;
+
+                }));
+                //Thêm mới
+                identity = new Identity()
+                {
+                    Name = txtLetter.Text + currentIndex.ToString(format),
+                    Code = code,
+                    IdentityGroupId = identityGroupId,
+                    Type = type,
+                };
+
+                identity = (await AppData.ApiServer.parkingDataService.CreateIdentityAsync(identity))?.Item1 ?? null;
+                if (identity != null)
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        numericUpDown1.Value = currentIndex;
+                        lsbShow.Items.Add(code + " - Thêm mới");
+                    }));
+                }
+                else
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        numericUpDown1.Value = currentIndex;
+                        lsbShow.Items.Add(code + " - Thêm mới thất bại");
+                    }));
+                }
+            }
+            else
+            {
+                this.Invoke((Action)(() =>
+                {
+                    //Thông báo đã có
+                    lsbShow.Items.Add(code + " - đã tồn tại trong hệ thống");
+                }));
+            }
         }
     }
 }

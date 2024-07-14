@@ -22,17 +22,15 @@ namespace iParkingv5_window.Usercontrols
             label4 = new Label();
             splitContainerMain = new SplitContainer();
             tableLayoutPanel1 = new TableLayoutPanel();
-            panel3 = new Panel();
             picVehicleImageIn = new MovablePictureBox();
-            panel2 = new Panel();
             picVehicleImageOut = new MovablePictureBox();
-            panel6 = new Panel();
             picOverviewImageOut = new MovablePictureBox();
-            panel5 = new Panel();
             picOverviewImageIn = new MovablePictureBox();
-            label1 = new Label();
-            label2 = new Label();
+            tableLayoutPanel4 = new TableLayoutPanel();
+            label5 = new Label();
+            label6 = new Label();
             splitterCamera = new Splitter();
+            splitContainerCamera = new SplitContainer();
             lblResult = new lblResult();
             panelLastEvent = new Panel();
             panel19 = new Panel();
@@ -87,14 +85,14 @@ namespace iParkingv5_window.Usercontrols
             splitContainerMain.Panel2.SuspendLayout();
             splitContainerMain.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
-            panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picVehicleImageIn).BeginInit();
-            panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picVehicleImageOut).BeginInit();
-            panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picOverviewImageOut).BeginInit();
-            panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picOverviewImageIn).BeginInit();
+            tableLayoutPanel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainerCamera).BeginInit();
+            splitContainerCamera.Panel1.SuspendLayout();
+            splitContainerCamera.SuspendLayout();
             panelLastEvent.SuspendLayout();
             panel19.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEventContent).BeginInit();
@@ -135,32 +133,30 @@ namespace iParkingv5_window.Usercontrols
             lblLaneName.Size = new Size(1179, 22);
             lblLaneName.TabIndex = 0;
             lblLaneName.Text = "label1";
-            lblLaneName.TextAlign = ContentAlignment.MiddleCenter;
+            lblLaneName.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // panelCameras
             // 
             panelCameras.BackColor = SystemColors.ButtonHighlight;
-            panelCameras.BorderStyle = BorderStyle.FixedSingle;
             panelCameras.Controls.Add(label4);
-            panelCameras.Dock = DockStyle.Left;
+            panelCameras.Dock = DockStyle.Fill;
             panelCameras.Font = new Font("Segoe UI", 12F);
             panelCameras.Location = new Point(0, 0);
             panelCameras.Margin = new Padding(0);
             panelCameras.Name = "panelCameras";
-            panelCameras.Size = new Size(271, 476);
+            panelCameras.Size = new Size(366, 436);
             panelCameras.TabIndex = 3;
             // 
             // label4
             // 
-            label4.BorderStyle = BorderStyle.FixedSingle;
             label4.Dock = DockStyle.Top;
             label4.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline);
             label4.ForeColor = Color.Maroon;
             label4.Location = new Point(0, 0);
             label4.Name = "label4";
-            label4.Size = new Size(269, 36);
+            label4.Size = new Size(366, 37);
             label4.TabIndex = 4;
-            label4.Text = "Cam lối ra";
+            label4.Text = "CAM LỐI RA";
             label4.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // splitContainerMain
@@ -175,8 +171,9 @@ namespace iParkingv5_window.Usercontrols
             // splitContainerMain.Panel1
             // 
             splitContainerMain.Panel1.Controls.Add(tableLayoutPanel1);
+            splitContainerMain.Panel1.Controls.Add(tableLayoutPanel4);
             splitContainerMain.Panel1.Controls.Add(splitterCamera);
-            splitContainerMain.Panel1.Controls.Add(panelCameras);
+            splitContainerMain.Panel1.Controls.Add(splitContainerCamera);
             splitContainerMain.Panel1.Controls.Add(lblResult);
             splitContainerMain.Panel1.Font = new Font("Segoe UI", 12F);
             // 
@@ -186,166 +183,154 @@ namespace iParkingv5_window.Usercontrols
             splitContainerMain.Panel2.Controls.Add(ucEventCount1);
             splitContainerMain.Size = new Size(892, 746);
             splitContainerMain.SplitterDistance = 520;
-            splitContainerMain.SplitterWidth = 3;
+            splitContainerMain.SplitterWidth = 2;
             splitContainerMain.TabIndex = 4;
             // 
             // tableLayoutPanel1
             // 
-            tableLayoutPanel1.CellBorderStyle = TableLayoutPanelCellBorderStyle.Inset;
+            tableLayoutPanel1.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             tableLayoutPanel1.ColumnCount = 2;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Controls.Add(panel3, 0, 2);
-            tableLayoutPanel1.Controls.Add(panel2, 1, 2);
-            tableLayoutPanel1.Controls.Add(panel6, 1, 1);
-            tableLayoutPanel1.Controls.Add(panel5, 0, 1);
-            tableLayoutPanel1.Controls.Add(label1, 0, 0);
-            tableLayoutPanel1.Controls.Add(label2, 1, 0);
+            tableLayoutPanel1.Controls.Add(picVehicleImageIn, 0, 1);
+            tableLayoutPanel1.Controls.Add(picVehicleImageOut, 1, 1);
+            tableLayoutPanel1.Controls.Add(picOverviewImageOut, 1, 0);
+            tableLayoutPanel1.Controls.Add(picOverviewImageIn, 0, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(275, 0);
+            tableLayoutPanel1.Location = new Point(368, 37);
             tableLayoutPanel1.Margin = new Padding(0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 3;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 36F));
+            tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(617, 476);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.Size = new Size(524, 439);
             tableLayoutPanel1.TabIndex = 5;
-            // 
-            // panel3
-            // 
-            panel3.BackColor = SystemColors.Control;
-            panel3.Controls.Add(picVehicleImageIn);
-            panel3.Dock = DockStyle.Fill;
-            panel3.Location = new Point(2, 258);
-            panel3.Margin = new Padding(0);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(305, 216);
-            panel3.TabIndex = 1;
             // 
             // picVehicleImageIn
             // 
             picVehicleImageIn.BackColor = Color.WhiteSmoke;
             picVehicleImageIn.Dock = DockStyle.Fill;
             picVehicleImageIn.Image = Properties.Resources.defaultWhite;
-            picVehicleImageIn.Location = new Point(0, 0);
+            picVehicleImageIn.Location = new Point(1, 220);
             picVehicleImageIn.Margin = new Padding(0);
             picVehicleImageIn.Name = "picVehicleImageIn";
-            picVehicleImageIn.Size = new Size(305, 216);
+            picVehicleImageIn.Size = new Size(260, 218);
             picVehicleImageIn.SizeMode = PictureBoxSizeMode.StretchImage;
             picVehicleImageIn.TabIndex = 5;
             picVehicleImageIn.TabStop = false;
             picVehicleImageIn.LoadCompleted += Pic_LoadCompleted;
-            // 
-            // panel2
-            // 
-            panel2.BackColor = SystemColors.Control;
-            panel2.Controls.Add(picVehicleImageOut);
-            panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(309, 258);
-            panel2.Margin = new Padding(0);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(306, 216);
-            panel2.TabIndex = 0;
             // 
             // picVehicleImageOut
             // 
             picVehicleImageOut.BackColor = Color.WhiteSmoke;
             picVehicleImageOut.Dock = DockStyle.Fill;
             picVehicleImageOut.Image = Properties.Resources.defaultWhite;
-            picVehicleImageOut.Location = new Point(0, 0);
+            picVehicleImageOut.Location = new Point(262, 220);
             picVehicleImageOut.Margin = new Padding(0);
             picVehicleImageOut.Name = "picVehicleImageOut";
-            picVehicleImageOut.Size = new Size(306, 216);
+            picVehicleImageOut.Size = new Size(261, 218);
             picVehicleImageOut.SizeMode = PictureBoxSizeMode.StretchImage;
             picVehicleImageOut.TabIndex = 5;
             picVehicleImageOut.TabStop = false;
             picVehicleImageOut.LoadCompleted += Pic_LoadCompleted;
-            // 
-            // panel6
-            // 
-            panel6.BackColor = SystemColors.Control;
-            panel6.Controls.Add(picOverviewImageOut);
-            panel6.Dock = DockStyle.Fill;
-            panel6.Location = new Point(309, 40);
-            panel6.Margin = new Padding(0);
-            panel6.Name = "panel6";
-            panel6.Size = new Size(306, 216);
-            panel6.TabIndex = 3;
             // 
             // picOverviewImageOut
             // 
             picOverviewImageOut.BackColor = Color.WhiteSmoke;
             picOverviewImageOut.Dock = DockStyle.Fill;
             picOverviewImageOut.Image = Properties.Resources.defaultWhite;
-            picOverviewImageOut.Location = new Point(0, 0);
+            picOverviewImageOut.Location = new Point(262, 1);
             picOverviewImageOut.Margin = new Padding(0);
             picOverviewImageOut.Name = "picOverviewImageOut";
-            picOverviewImageOut.Size = new Size(306, 216);
+            picOverviewImageOut.Size = new Size(261, 218);
             picOverviewImageOut.SizeMode = PictureBoxSizeMode.StretchImage;
             picOverviewImageOut.TabIndex = 5;
             picOverviewImageOut.TabStop = false;
             picOverviewImageOut.LoadCompleted += Pic_LoadCompleted;
-            // 
-            // panel5
-            // 
-            panel5.BackColor = SystemColors.Control;
-            panel5.Controls.Add(picOverviewImageIn);
-            panel5.Dock = DockStyle.Fill;
-            panel5.Location = new Point(2, 40);
-            panel5.Margin = new Padding(0);
-            panel5.Name = "panel5";
-            panel5.Size = new Size(305, 216);
-            panel5.TabIndex = 2;
             // 
             // picOverviewImageIn
             // 
             picOverviewImageIn.BackColor = Color.WhiteSmoke;
             picOverviewImageIn.Dock = DockStyle.Fill;
             picOverviewImageIn.Image = (Image)resources.GetObject("picOverviewImageIn.Image");
-            picOverviewImageIn.Location = new Point(0, 0);
+            picOverviewImageIn.Location = new Point(1, 1);
             picOverviewImageIn.Margin = new Padding(0);
             picOverviewImageIn.Name = "picOverviewImageIn";
-            picOverviewImageIn.Size = new Size(305, 216);
+            picOverviewImageIn.Size = new Size(260, 218);
             picOverviewImageIn.SizeMode = PictureBoxSizeMode.StretchImage;
             picOverviewImageIn.TabIndex = 5;
             picOverviewImageIn.TabStop = false;
             picOverviewImageIn.LoadCompleted += Pic_LoadCompleted;
             // 
-            // label1
+            // tableLayoutPanel4
             // 
-            label1.Dock = DockStyle.Fill;
-            label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline);
-            label1.ForeColor = Color.Green;
-            label1.Location = new Point(2, 2);
-            label1.Margin = new Padding(0);
-            label1.Name = "label1";
-            label1.Size = new Size(305, 36);
-            label1.TabIndex = 4;
-            label1.Text = "Ảnh Vào";
-            label1.TextAlign = ContentAlignment.MiddleCenter;
+            tableLayoutPanel4.ColumnCount = 2;
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel4.Controls.Add(label5, 0, 0);
+            tableLayoutPanel4.Controls.Add(label6, 1, 0);
+            tableLayoutPanel4.Dock = DockStyle.Top;
+            tableLayoutPanel4.Location = new Point(368, 0);
+            tableLayoutPanel4.Margin = new Padding(0);
+            tableLayoutPanel4.Name = "tableLayoutPanel4";
+            tableLayoutPanel4.RowCount = 1;
+            tableLayoutPanel4.RowStyles.Add(new RowStyle());
+            tableLayoutPanel4.Size = new Size(524, 37);
+            tableLayoutPanel4.TabIndex = 5;
             // 
-            // label2
+            // label5
             // 
-            label2.Dock = DockStyle.Fill;
-            label2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline);
-            label2.ForeColor = Color.Maroon;
-            label2.Location = new Point(309, 2);
-            label2.Margin = new Padding(0);
-            label2.Name = "label2";
-            label2.Size = new Size(306, 36);
-            label2.TabIndex = 5;
-            label2.Text = "Ảnh Ra";
-            label2.TextAlign = ContentAlignment.MiddleCenter;
+            label5.Dock = DockStyle.Fill;
+            label5.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline);
+            label5.ForeColor = Color.Green;
+            label5.Location = new Point(0, 0);
+            label5.Margin = new Padding(0);
+            label5.Name = "label5";
+            label5.Size = new Size(262, 37);
+            label5.TabIndex = 4;
+            label5.Text = "ẢNH VÀO";
+            label5.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // label6
+            // 
+            label6.Dock = DockStyle.Fill;
+            label6.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline);
+            label6.ForeColor = Color.Maroon;
+            label6.Location = new Point(262, 0);
+            label6.Margin = new Padding(0);
+            label6.Name = "label6";
+            label6.Size = new Size(262, 37);
+            label6.TabIndex = 5;
+            label6.Text = "ẢNH RA";
+            label6.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // splitterCamera
             // 
-            splitterCamera.Location = new Point(271, 0);
+            splitterCamera.Location = new Point(366, 0);
             splitterCamera.Margin = new Padding(4, 3, 4, 3);
             splitterCamera.Name = "splitterCamera";
-            splitterCamera.Size = new Size(4, 476);
+            splitterCamera.Size = new Size(2, 476);
             splitterCamera.TabIndex = 4;
             splitterCamera.TabStop = false;
+            // 
+            // splitContainerCamera
+            // 
+            splitContainerCamera.Dock = DockStyle.Left;
+            splitContainerCamera.Location = new Point(0, 0);
+            splitContainerCamera.Margin = new Padding(0);
+            splitContainerCamera.Name = "splitContainerCamera";
+            splitContainerCamera.Orientation = Orientation.Horizontal;
+            // 
+            // splitContainerCamera.Panel1
+            // 
+            splitContainerCamera.Panel1.BackColor = SystemColors.ButtonHighlight;
+            splitContainerCamera.Panel1.Controls.Add(panelCameras);
+            splitContainerCamera.Panel2MinSize = 0;
+            splitContainerCamera.Size = new Size(366, 476);
+            splitContainerCamera.SplitterDistance = 436;
+            splitContainerCamera.SplitterWidth = 2;
+            splitContainerCamera.TabIndex = 6;
             // 
             // lblResult
             // 
@@ -369,7 +354,7 @@ namespace iParkingv5_window.Usercontrols
             panelLastEvent.Location = new Point(356, 0);
             panelLastEvent.Margin = new Padding(4, 3, 4, 3);
             panelLastEvent.Name = "panelLastEvent";
-            panelLastEvent.Size = new Size(536, 223);
+            panelLastEvent.Size = new Size(536, 224);
             panelLastEvent.TabIndex = 8;
             // 
             // panel19
@@ -380,7 +365,7 @@ namespace iParkingv5_window.Usercontrols
             panel19.Location = new Point(0, 0);
             panel19.MinimumSize = new Size(423, 0);
             panel19.Name = "panel19";
-            panel19.Size = new Size(534, 221);
+            panel19.Size = new Size(534, 222);
             panel19.TabIndex = 11;
             // 
             // panelTop3Event
@@ -390,7 +375,7 @@ namespace iParkingv5_window.Usercontrols
             panelTop3Event.Location = new Point(0, 35);
             panelTop3Event.Margin = new Padding(0);
             panelTop3Event.Name = "panelTop3Event";
-            panelTop3Event.Size = new Size(534, 186);
+            panelTop3Event.Size = new Size(534, 187);
             panelTop3Event.TabIndex = 8;
             // 
             // label3
@@ -416,7 +401,7 @@ namespace iParkingv5_window.Usercontrols
             ucEventCount1.Location = new Point(0, 0);
             ucEventCount1.Margin = new Padding(4, 3, 4, 3);
             ucEventCount1.Name = "ucEventCount1";
-            ucEventCount1.Size = new Size(356, 223);
+            ucEventCount1.Size = new Size(356, 224);
             ucEventCount1.TabIndex = 2;
             // 
             // dgvEventContent
@@ -439,7 +424,7 @@ namespace iParkingv5_window.Usercontrols
             dgvEventContent.ReadOnly = true;
             dgvEventContent.RowHeadersVisible = false;
             dgvEventContent.RowTemplate.Height = 29;
-            dgvEventContent.Size = new Size(472, 389);
+            dgvEventContent.Size = new Size(472, 390);
             dgvEventContent.TabIndex = 1;
             // 
             // Column1
@@ -481,7 +466,7 @@ namespace iParkingv5_window.Usercontrols
             splitContainerEventContent.Panel2.Controls.Add(panelEventInfo);
             splitContainerEventContent.Size = new Size(474, 688);
             splitContainerEventContent.SplitterDistance = 294;
-            splitContainerEventContent.SplitterWidth = 3;
+            splitContainerEventContent.SplitterWidth = 2;
             splitContainerEventContent.TabIndex = 0;
             // 
             // panelLpr
@@ -524,7 +509,6 @@ namespace iParkingv5_window.Usercontrols
             // picLprImage
             // 
             picLprImage.BackColor = Color.WhiteSmoke;
-            picLprImage.BorderStyle = BorderStyle.FixedSingle;
             picLprImage.Dock = DockStyle.Fill;
             picLprImage.Image = (Image)resources.GetObject("picLprImage.Image");
             picLprImage.Location = new Point(0, 21);
@@ -563,7 +547,6 @@ namespace iParkingv5_window.Usercontrols
             // picLprImageIn
             // 
             picLprImageIn.BackColor = Color.WhiteSmoke;
-            picLprImageIn.BorderStyle = BorderStyle.FixedSingle;
             picLprImageIn.Dock = DockStyle.Fill;
             picLprImageIn.Image = Properties.Resources.defaultWhite;
             picLprImageIn.Location = new Point(0, 21);
@@ -617,13 +600,14 @@ namespace iParkingv5_window.Usercontrols
             // 
             // lblPlateIn
             // 
-            lblPlateIn.Dock = DockStyle.Fill;
+            lblPlateIn.BorderStyle = BorderStyle.None;
+            lblPlateIn.Dock = DockStyle.Bottom;
             lblPlateIn.Enabled = false;
             lblPlateIn.Font = new Font("Segoe UI", 30F);
-            lblPlateIn.Location = new Point(0, 21);
+            lblPlateIn.Location = new Point(0, 26);
             lblPlateIn.Margin = new Padding(0);
             lblPlateIn.Name = "lblPlateIn";
-            lblPlateIn.Size = new Size(472, 61);
+            lblPlateIn.Size = new Size(472, 54);
             lblPlateIn.TabIndex = 7;
             // 
             // label22
@@ -652,12 +636,13 @@ namespace iParkingv5_window.Usercontrols
             // 
             // txtPlate
             // 
-            txtPlate.Dock = DockStyle.Fill;
+            txtPlate.BorderStyle = BorderStyle.None;
+            txtPlate.Dock = DockStyle.Bottom;
             txtPlate.Font = new Font("Segoe UI", 30F, FontStyle.Bold);
-            txtPlate.Location = new Point(0, 21);
+            txtPlate.Location = new Point(0, 26);
             txtPlate.Margin = new Padding(0);
             txtPlate.Name = "txtPlate";
-            txtPlate.Size = new Size(472, 61);
+            txtPlate.Size = new Size(472, 54);
             txtPlate.TabIndex = 6;
             // 
             // label23
@@ -679,7 +664,7 @@ namespace iParkingv5_window.Usercontrols
             panelEventInfo.Dock = DockStyle.Fill;
             panelEventInfo.Location = new Point(0, 0);
             panelEventInfo.Name = "panelEventInfo";
-            panelEventInfo.Size = new Size(472, 389);
+            panelEventInfo.Size = new Size(472, 390);
             panelEventInfo.TabIndex = 0;
             // 
             // panel4
@@ -841,10 +826,10 @@ namespace iParkingv5_window.Usercontrols
             // splitterEventInfoWithCamera
             // 
             splitterEventInfoWithCamera.Dock = DockStyle.Right;
-            splitterEventInfoWithCamera.Location = new Point(889, 22);
+            splitterEventInfoWithCamera.Location = new Point(890, 22);
             splitterEventInfoWithCamera.Margin = new Padding(4, 3, 4, 3);
             splitterEventInfoWithCamera.Name = "splitterEventInfoWithCamera";
-            splitterEventInfoWithCamera.Size = new Size(3, 746);
+            splitterEventInfoWithCamera.Size = new Size(2, 746);
             splitterEventInfoWithCamera.TabIndex = 6;
             splitterEventInfoWithCamera.TabStop = false;
             // 
@@ -936,14 +921,14 @@ namespace iParkingv5_window.Usercontrols
             ((System.ComponentModel.ISupportInitialize)splitContainerMain).EndInit();
             splitContainerMain.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
-            panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picVehicleImageIn).EndInit();
-            panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picVehicleImageOut).EndInit();
-            panel6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picOverviewImageOut).EndInit();
-            panel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picOverviewImageIn).EndInit();
+            tableLayoutPanel4.ResumeLayout(false);
+            splitContainerCamera.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainerCamera).EndInit();
+            splitContainerCamera.ResumeLayout(false);
             panelLastEvent.ResumeLayout(false);
             panel19.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvEventContent).EndInit();
@@ -988,16 +973,10 @@ namespace iParkingv5_window.Usercontrols
         private SplitContainer splitContainerEventContent;
         private lblResult lblResult;
         private MovablePictureBox picLprImage;
-        private Panel panel2;
         private MovablePictureBox picOverviewImageOut;
-        private Panel panel3;
         private MovablePictureBox picOverviewImageIn;
-        private Panel panel6;
         private MovablePictureBox picVehicleImageOut;
-        private Panel panel5;
         private MovablePictureBox picVehicleImageIn;
-        private Label label1;
-        private Label label2;
         private DataGridView dgvEventContent;
         private Panel panel4;
         private PictureBox picSetting;
@@ -1044,5 +1023,9 @@ namespace iParkingv5_window.Usercontrols
         private Label label4;
         private Panel panelLpr;
         private Panel panelEventInfo;
+        private TableLayoutPanel tableLayoutPanel4;
+        private Label label5;
+        private Label label6;
+        private SplitContainer splitContainerCamera;
     }
 }
