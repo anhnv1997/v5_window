@@ -881,6 +881,7 @@
           "IPaking.Ultility": "1.0.0.2",
           "IdentityModel": "7.0.0",
           "IdentityModel.OidcClient": "6.0.0",
+          "Kztek.Helper": "1.0.0",
           "Kztek.Tool": "1.0.0.2",
           "Microsoft.Web.WebView2": "1.0.2420.47",
           "Minio": "5.0.0",
@@ -920,11 +921,11 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "IdentityModel": "7.0.0",
-          "IdentityModel.OidcClient": "6.0.0",
+          "Kztek.Helper": "1.0.0",
           "Kztek.Tool": "1.0.0.2",
-          "Microsoft.Web.WebView2": "1.0.2420.47",
-          "iParkingv5.ApiManager": "1.0.1.8"
+          "iParking.ConfigurationManager": "1.0.0.2",
+          "iParkingv5.ApiManager": "1.0.1.8",
+          "iParkingv5.Auth": "1.0.0"
         },
         "compile": {
           "bin/placeholder/iParkingv5.FeeTest.dll": {}
@@ -993,6 +994,24 @@
         },
         "runtime": {
           "bin/placeholder/Kztek.Cameras.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WindowsForms"
+        ]
+      },
+      "Kztek.Helper/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Kztek.Tool": "1.0.0.2",
+          "Minio": "5.0.0",
+          "SpreadsheetLight": "3.5.0"
+        },
+        "compile": {
+          "bin/placeholder/Kztek.Helper.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Kztek.Helper.dll": {}
         },
         "frameworkReferences": [
           "Microsoft.WindowsDesktop.App.WindowsForms"
@@ -2570,6 +2589,11 @@
       "path": "../../../../../../../BaseLib/Kztek.Cameras/Kztek.Cameras.csproj",
       "msbuildProject": "../../../../../../../BaseLib/Kztek.Cameras/Kztek.Cameras.csproj"
     },
+    "Kztek.Helper/1.0.0": {
+      "type": "project",
+      "path": "../Kztek.Helper/Kztek.Helper.csproj",
+      "msbuildProject": "../Kztek.Helper/Kztek.Helper.csproj"
+    },
     "Kztek.RtspPlayer/1.0.0.2": {
       "type": "project",
       "path": "../../../../../../../BaseLib/Kztek.RtspPlayer/Kztek.RtspPlayer/Kztek.RtspPlayer.csproj",
@@ -2592,13 +2616,13 @@
       "IdentityModel >= 7.0.0",
       "IdentityModel.OidcClient >= 6.0.0",
       "Kztek.Cameras >= 1.0.0.2",
+      "Kztek.Helper >= 1.0.0",
       "Kztek.RtspPlayer >= 1.0.0.2",
       "Kztek.Scale_net6 >= 1.0.0.10",
       "Kztek.Tool >= 1.0.0.2",
       "Microsoft.Web.WebView2 >= 1.0.2420.47",
       "Minio >= 5.0.0",
       "RabbitMQ.Client >= 6.8.1",
-      "SpreadsheetLight >= 3.5.0",
       "System.Management >= 7.0.2",
       "iPakrkingv5.Controls >= 1.0.0.1",
       "iParking.ConfigurationManager >= 1.0.0.2",
@@ -2680,6 +2704,9 @@
             "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj": {
               "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj"
             },
+            "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Helper\\Kztek.Helper.csproj": {
+              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Helper\\Kztek.Helper.csproj"
+            },
             "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Scale\\Net6\\Kztek.Scale\\Kztek.Scale_net6.csproj": {
               "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Scale\\Net6\\Kztek.Scale\\Kztek.Scale_net6.csproj"
             },
@@ -2726,10 +2753,6 @@
           "RabbitMQ.Client": {
             "target": "Package",
             "version": "[6.8.1, )"
-          },
-          "SpreadsheetLight": {
-            "target": "Package",
-            "version": "[3.5.0, )"
           },
           "System.Management": {
             "target": "Package",

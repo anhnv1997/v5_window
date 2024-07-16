@@ -1,4 +1,10 @@
-﻿namespace iPakrkingv5.Controls.Usercontrols
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace iPakrkingv5.Controls.Usercontrols
 {
     public class lblPageIndex : Label
     {
@@ -7,7 +13,8 @@
         {
             this.PageIndex = index;
             this.Text = index.ToString();
-            this.ForeColor = Color.Navy;
+            //this.Font = new Font(this.Font, FontStyle.Underline);
+            //this.ForeColor = Color.Navy;
             this.AutoSize = false;
             this.Padding = new Padding(3);
             this.TextAlign = ContentAlignment.MiddleCenter;
@@ -19,7 +26,7 @@
 
         private void LblPageIndex_MouseLeave(object? sender, EventArgs e)
         {
-            this.Cursor = Cursors.Default;
+            this.Cursor = Cursors.Arrow;
         }
         private void LblPageIndex_MouseEnter(object? sender, EventArgs e)
         {

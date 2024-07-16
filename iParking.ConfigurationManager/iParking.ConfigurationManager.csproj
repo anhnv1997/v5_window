@@ -33,10 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Forms\DataForms\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="DahuaLib">
       <HintPath>..\packages\DahuaLib.dll</HintPath>
     </Reference>

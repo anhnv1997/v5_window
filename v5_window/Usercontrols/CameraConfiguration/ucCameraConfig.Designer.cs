@@ -1,4 +1,6 @@
-﻿namespace iParkingv5_window.Usercontrols
+﻿using iPakrkingv5.Controls.Usercontrols;
+
+namespace iParkingv5_window.Usercontrols
 {
     partial class ucCameraConfig
     {
@@ -139,7 +141,7 @@
             // 
             // btnMotorLprDetect
             // 
-            btnMotorLprDetect.Location = new Point(580, 45);
+            btnMotorLprDetect.Location = new Point(580, 43);
             btnMotorLprDetect.Margin = new Padding(4, 3, 4, 3);
             btnMotorLprDetect.Name = "btnMotorLprDetect";
             btnMotorLprDetect.Size = new Size(167, 29);

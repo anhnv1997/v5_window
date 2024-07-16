@@ -26,7 +26,6 @@ namespace iParkingv5_window.Usercontrols
         public ucCameraView()
         {
             InitializeComponent();
-            //this.SizeChanged += UcCameraView_SizeChanged;
         }
 
         public void ChangeByHeight(Size newSize, EmCameraResolutionDisplay cameraResolutionDisplay)
@@ -71,22 +70,6 @@ namespace iParkingv5_window.Usercontrols
                     break;
             }
         }
-
-        //public void changeHeight(int newHeight)
-        //{
-        //    this.Invoke(new Action(() =>
-        //    {
-        //        //this.SizeChanged -= UcCameraView_SizeChanged;
-        //        this.Height = newHeight;
-        //        this.Refresh();
-        //        this.Width = newHeight * 4 / 3;
-        //        //this.SizeChanged += UcCameraView_SizeChanged;
-        //    }));
-        //}
-        //private void UcCameraView_SizeChanged(object? sender, EventArgs e)
-        //{
-        //    this.Height = this.Width * 9 / 16 + lblCameraName.Height;
-        //}
         #endregion End Forms
 
         #region Controls In Form

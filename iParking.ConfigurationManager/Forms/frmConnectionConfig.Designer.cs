@@ -39,26 +39,30 @@
             // 
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 0);
+            tabControl1.Margin = new Padding(4, 3, 4, 3);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(800, 405);
+            tabControl1.Size = new Size(691, 354);
             tabControl1.TabIndex = 0;
             // 
             // panel1
             // 
+            panel1.BackColor = Color.White;
             panel1.Controls.Add(btnSave);
             panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 405);
+            panel1.Location = new Point(0, 354);
+            panel1.Margin = new Padding(4, 3, 4, 3);
             panel1.Name = "panel1";
-            panel1.Size = new Size(800, 45);
+            panel1.Size = new Size(691, 48);
             panel1.TabIndex = 1;
             // 
             // btnSave
             // 
             btnSave.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnSave.Location = new Point(654, 6);
+            btnSave.Location = new Point(526, 6);
+            btnSave.Margin = new Padding(4, 3, 4, 3);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(142, 36);
+            btnSave.Size = new Size(159, 38);
             btnSave.TabIndex = 0;
             btnSave.Text = "Lưu cấu hình";
             btnSave.UseVisualStyleBackColor = true;
@@ -66,12 +70,15 @@
             // 
             // frmConnectionConfig
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            BackColor = SystemColors.ButtonHighlight;
+            ClientSize = new Size(691, 402);
             Controls.Add(tabControl1);
             Controls.Add(panel1);
+            Font = new Font("Segoe UI", 12F);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(4, 3, 4, 3);
             Name = "frmConnectionConfig";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Cấu hình hệ thống";

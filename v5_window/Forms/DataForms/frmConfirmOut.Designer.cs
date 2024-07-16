@@ -1,4 +1,5 @@
 ﻿using iPakrkingv5.Controls.Controls.Buttons;
+using iPakrkingv5.Controls.Usercontrols;
 
 namespace iParkingv5_window.Forms.DataForms
 {
@@ -43,8 +44,8 @@ namespace iParkingv5_window.Forms.DataForms
             panel1 = new Panel();
             panelEventPic = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
-            picOverview = new Usercontrols.MovablePictureBox();
-            picVehicle = new Usercontrols.MovablePictureBox();
+            picOverview = new MovablePictureBox();
+            picVehicle = new MovablePictureBox();
             lblGuide = new Label();
             panelAction.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEventInData).BeginInit();
@@ -248,8 +249,8 @@ namespace iParkingv5_window.Forms.DataForms
         private Panel panel1;
         private Panel panelEventPic;
         private TableLayoutPanel tableLayoutPanel1;
-        private Usercontrols.MovablePictureBox picOverview;
-        private Usercontrols.MovablePictureBox picVehicle;
+        private MovablePictureBox picOverview;
+        private MovablePictureBox picVehicle;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
         private Label lblGuide;

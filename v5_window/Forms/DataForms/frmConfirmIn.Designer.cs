@@ -1,4 +1,6 @@
-﻿namespace iParkingv5_window.Forms.DataForms
+﻿using iPakrkingv5.Controls.Usercontrols;
+
+namespace iParkingv5_window.Forms.DataForms
 {
     partial class frmConfirmIn
     {
@@ -37,8 +39,8 @@
             Column2 = new DataGridViewTextBoxColumn();
             panelEventPic = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
-            picOverview = new Usercontrols.MovablePictureBox();
-            picVehicle = new Usercontrols.MovablePictureBox();
+            picOverview = new MovablePictureBox();
+            picVehicle = new MovablePictureBox();
             lblMessage = new Label();
             panelAction = new Panel();
             lblCancel1 = new iPakrkingv5.Controls.Controls.Buttons.LblCancel();
@@ -235,8 +237,8 @@
         private DataGridViewTextBoxColumn Column2;
         private Panel panelEventPic;
         private TableLayoutPanel tableLayoutPanel1;
-        private Usercontrols.MovablePictureBox picOverview;
-        private Usercontrols.MovablePictureBox picVehicle;
+        private MovablePictureBox picOverview;
+        private MovablePictureBox picVehicle;
         private Label lblMessage;
         private Panel panelAction;
         private iPakrkingv5.Controls.Controls.Buttons.LblCancel lblCancel1;

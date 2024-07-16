@@ -3,6 +3,7 @@ using IPaking.Ultility;
 using iParkingv5.ApiManager.interfaces;
 using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.Objects;
+using Kztek.Helper;
 using Kztek.Tool;
 using System;
 using System.Collections.Generic;

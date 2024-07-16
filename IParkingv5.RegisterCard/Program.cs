@@ -78,7 +78,6 @@ namespace IParkingv5.RegisterCard
                         LoadSystemConfig();
                         LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Mở giao diện đăng nhập hệ thống");
                         Application.Run(new frmLogin(AppData.ApiServer, KzParkingv5BaseApi.server, OpenMainPage));
-
                     }
                     else
                     {

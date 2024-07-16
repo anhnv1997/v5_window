@@ -1,9 +1,13 @@
-﻿using System.Drawing.Imaging;
-using Kztek.Tools;
+﻿using Kztek.Tools;
 using Minio;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
+using System;
+using System.Collections.Generic;
+using System.Drawing.Imaging;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace iParkingv5_window
+namespace Kztek.Helper
 {
     public static class MinioHelper
     {

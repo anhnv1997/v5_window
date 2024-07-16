@@ -7,9 +7,9 @@ using Kztek.Tool;
 using Kztek.Tools;
 using System.Diagnostics;
 using iParkingv5.Auth;
-using MinioHelper = iParkingv5_window.MinioHelper;
 using iParkingv5.FeeTest;
 using iParkingv5_window.Forms.SystemForms;
+using Kztek.Helper;
 
 namespace v6_window
 {
@@ -27,16 +27,13 @@ namespace v6_window
 
         StartApp:
             {
-                const string appName = "IP_DA_V5_LU_TEST";
+                const string appName = "IP_DA_V5_LU";
                 PathManagement.baseBath = LogHelper.SaveLogFolder = Application.StartupPath;
                 LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Khởi chạy ứng dụng");
-                string appCode = "IP_DA_V5_LU";
                 using (Mutex mutex = new Mutex(true, appName, out bool ownmutex))
                 {
                     if (ownmutex)
                     {
-                        string cardNumberHex = Convert.ToInt64(4157927380).ToString("X");
-
                         //return;
                         //if (Environment.MachineName.ToUpper() != "VIETANHPC")
                         //{

@@ -1,7 +1,4 @@
-﻿using iPakrkingv5.Controls.Controls.Buttons;
-using iPakrkingv5.Controls.Usercontrols.BuildControls;
-
-namespace iParkingv5_window.Forms.DataForms
+﻿namespace iParkingv5_window.Forms.DataForms
 {
     partial class frmSearchCustomer
     {

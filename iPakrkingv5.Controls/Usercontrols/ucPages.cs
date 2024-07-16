@@ -1,4 +1,15 @@
-﻿namespace iPakrkingv5.Controls.Usercontrols
+﻿using iPakrkingv5.Controls;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace iPakrkingv5.Controls.Usercontrols
 {
     public delegate void OnpageSelect(int pageIndex);
     public partial class ucPages : UserControl
@@ -13,9 +24,11 @@
         public ucPages()
         {
             InitializeComponent();
+            this.ToggleDoubleBuffered(true);
+            panelPages.ToggleDoubleBuffered(true);
             panelPages.Font = new Font(this.Font, FontStyle.Underline);
             panelPages.Height = 44;
-            panelPages.MinimumSize = new System.Drawing.Size(0, 44);
+            panelPages.MinimumSize = new Size(0, 44);
         }
         #endregion End Forms
 
@@ -36,26 +49,27 @@
 
             panelPages.Controls.Clear();
             panelPages.AutoScroll = false;
+            Control[] list = new Control[maxPage];
             for (int i = 0; i < maxPage; i++)
             {
-                lblPageIndex lblPageIndex = new lblPageIndex(i + 1);
-                lblPageIndex.BackColor = Color.Transparent;
+                lblPageIndex lblPageIndex = new lblPageIndex(maxPage - i);
                 lblPageIndex.Click += LblPageIndex_Click;
-                panelPages.Controls.Add(lblPageIndex);
                 lblPageIndex.Dock = DockStyle.Left;
-                lblPageIndex.BringToFront();
-                if (i == 0)
+                //lblPageIndex.BackColor = Color.Transparent;
+                if (i == maxPage - 1)
                 {
                     lblPageIndex.BorderStyle = BorderStyle.Fixed3D;
+                    lblPageIndex.ForeColor = Color.FromArgb(253, 149, 40);
                 }
+                list[i] = lblPageIndex;
             }
+            panelPages.Controls.AddRange(list.ToArray());
             currentPage = 0;
             panelPages.AutoScroll = true;
             this.Height = panelPages.Height;
             this.ResumeLayout();
             panelPages.ResumeLayout();
         }
-
         private void LblPageIndex_Click(object? sender, EventArgs e)
         {
             lblPageIndex lblPageIndex = (sender as lblPageIndex)!;
@@ -66,11 +80,13 @@
                     if (currentPage != lblPageIndex.PageIndex)
                     {
                         item.BorderStyle = BorderStyle.None;
+                        item.ForeColor = Color.Black;
                     }
                     break;
                 }
             }
             lblPageIndex.BorderStyle = BorderStyle.Fixed3D;
+            lblPageIndex.ForeColor = Color.FromArgb(253, 149, 40);
             lblPageIndex.Size = lblPageIndex.PreferredSize;
             panelPages.Refresh();
             OnpageSelect?.Invoke(lblPageIndex!.PageIndex);

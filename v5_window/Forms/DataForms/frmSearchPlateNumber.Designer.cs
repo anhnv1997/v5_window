@@ -1,5 +1,5 @@
 ﻿using iPakrkingv5.Controls.Controls.Buttons;
-using iPakrkingv5.Controls.Usercontrols.BuildControls;
+using iParkingv5_window.Usercontrols.BuildControls;
 
 namespace iParkingv5_CustomerRegister.Forms
 {

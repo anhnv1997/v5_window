@@ -1,6 +1,5 @@
 ﻿using IPaking.Ultility;
 using iPakrkingv5.Controls.Controls.Buttons;
-using iPakrkingv5.Controls.Usercontrols.BuildControls;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Enums;
 using System.Runtime.InteropServices;
@@ -8,6 +7,7 @@ using iPakrkingv5.Controls;
 using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5_window;
 using iParkingv5.Objects.Datas.parking_service;
+using iParkingv5_window.Usercontrols.BuildControls;
 
 namespace iParkingv5_CustomerRegister.Forms
 {

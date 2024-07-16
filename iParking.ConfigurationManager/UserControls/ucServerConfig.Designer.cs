@@ -57,8 +57,10 @@
             groupBox2.Controls.Add(label2);
             groupBox2.Dock = DockStyle.Top;
             groupBox2.Location = new Point(0, 0);
+            groupBox2.Margin = new Padding(4, 3, 4, 3);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(625, 73);
+            groupBox2.Padding = new Padding(4, 3, 4, 3);
+            groupBox2.Size = new Size(703, 78);
             groupBox2.TabIndex = 5;
             groupBox2.TabStop = false;
             groupBox2.Text = "Thông tin Parking Server";
@@ -66,18 +68,20 @@
             // txtParkingServerUrl
             // 
             txtParkingServerUrl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtParkingServerUrl.Location = new Point(147, 20);
+            txtParkingServerUrl.Location = new Point(166, 21);
+            txtParkingServerUrl.Margin = new Padding(4, 3, 4, 3);
             txtParkingServerUrl.Name = "txtParkingServerUrl";
             txtParkingServerUrl.PlaceholderText = "Url của server";
-            txtParkingServerUrl.Size = new Size(457, 27);
+            txtParkingServerUrl.Size = new Size(513, 29);
             txtParkingServerUrl.TabIndex = 1;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(6, 23);
+            label2.Location = new Point(6, 24);
+            label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
-            label2.Size = new Size(28, 20);
+            label2.Size = new Size(31, 21);
             label2.TabIndex = 2;
             label2.Text = "Url";
             // 
@@ -91,9 +95,11 @@
             groupBox1.Controls.Add(txtMinioServerUsername);
             groupBox1.Controls.Add(label4);
             groupBox1.Dock = DockStyle.Top;
-            groupBox1.Location = new Point(0, 73);
+            groupBox1.Location = new Point(0, 78);
+            groupBox1.Margin = new Padding(4, 3, 4, 3);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(625, 139);
+            groupBox1.Padding = new Padding(4, 3, 4, 3);
+            groupBox1.Size = new Size(703, 147);
             groupBox1.TabIndex = 6;
             groupBox1.TabStop = false;
             groupBox1.Text = "Thông tin Minio Server";
@@ -101,56 +107,62 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(6, 89);
+            label1.Location = new Point(6, 94);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(90, 20);
+            label1.Size = new Size(93, 21);
             label1.TabIndex = 6;
             label1.Text = "Mã bảo mật";
             // 
             // txtMinioServerUrl
             // 
             txtMinioServerUrl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtMinioServerUrl.Location = new Point(147, 20);
+            txtMinioServerUrl.Location = new Point(166, 21);
+            txtMinioServerUrl.Margin = new Padding(4, 3, 4, 3);
             txtMinioServerUrl.Name = "txtMinioServerUrl";
             txtMinioServerUrl.PlaceholderText = "Url của server";
-            txtMinioServerUrl.Size = new Size(457, 27);
+            txtMinioServerUrl.Size = new Size(513, 29);
             txtMinioServerUrl.TabIndex = 1;
             // 
             // txtMinioServerPassword
             // 
             txtMinioServerPassword.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtMinioServerPassword.Location = new Point(147, 86);
+            txtMinioServerPassword.Location = new Point(166, 90);
+            txtMinioServerPassword.Margin = new Padding(4, 3, 4, 3);
             txtMinioServerPassword.Name = "txtMinioServerPassword";
             txtMinioServerPassword.PasswordChar = '*';
             txtMinioServerPassword.PlaceholderText = "Mật khẩu tài khoản hoặc mã bảo mật";
-            txtMinioServerPassword.Size = new Size(457, 27);
+            txtMinioServerPassword.Size = new Size(513, 29);
             txtMinioServerPassword.TabIndex = 3;
             txtMinioServerPassword.UseSystemPasswordChar = true;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(6, 52);
+            label3.Location = new Point(6, 55);
+            label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
-            label3.Size = new Size(107, 20);
+            label3.Size = new Size(111, 21);
             label3.TabIndex = 7;
             label3.Text = "Tên đăng nhập";
             // 
             // txtMinioServerUsername
             // 
             txtMinioServerUsername.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtMinioServerUsername.Location = new Point(147, 53);
+            txtMinioServerUsername.Location = new Point(166, 56);
+            txtMinioServerUsername.Margin = new Padding(4, 3, 4, 3);
             txtMinioServerUsername.Name = "txtMinioServerUsername";
             txtMinioServerUsername.PlaceholderText = "Tên đăng nhập vào hệ thống";
-            txtMinioServerUsername.Size = new Size(457, 27);
+            txtMinioServerUsername.Size = new Size(513, 29);
             txtMinioServerUsername.TabIndex = 2;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(6, 23);
+            label4.Location = new Point(6, 24);
+            label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
-            label4.Size = new Size(28, 20);
+            label4.Size = new Size(31, 21);
             label4.TabIndex = 2;
             label4.Text = "Url";
             // 
@@ -164,9 +176,11 @@
             groupBox3.Controls.Add(txtRabbitMQUsername);
             groupBox3.Controls.Add(label7);
             groupBox3.Dock = DockStyle.Top;
-            groupBox3.Location = new Point(0, 212);
+            groupBox3.Location = new Point(0, 225);
+            groupBox3.Margin = new Padding(4, 3, 4, 3);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(625, 139);
+            groupBox3.Padding = new Padding(4, 3, 4, 3);
+            groupBox3.Size = new Size(703, 147);
             groupBox3.TabIndex = 7;
             groupBox3.TabStop = false;
             groupBox3.Text = "Thông tin Rabbit MQ Server";
@@ -174,68 +188,77 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(6, 89);
+            label5.Location = new Point(6, 94);
+            label5.Margin = new Padding(4, 0, 4, 0);
             label5.Name = "label5";
-            label5.Size = new Size(90, 20);
+            label5.Size = new Size(93, 21);
             label5.TabIndex = 6;
             label5.Text = "Mã bảo mật";
             // 
             // txtRabbitMqServer
             // 
             txtRabbitMqServer.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtRabbitMqServer.Location = new Point(147, 20);
+            txtRabbitMqServer.Location = new Point(166, 21);
+            txtRabbitMqServer.Margin = new Padding(4, 3, 4, 3);
             txtRabbitMqServer.Name = "txtRabbitMqServer";
             txtRabbitMqServer.PlaceholderText = "Địa chỉ IP của Server";
-            txtRabbitMqServer.Size = new Size(457, 27);
+            txtRabbitMqServer.Size = new Size(513, 29);
             txtRabbitMqServer.TabIndex = 1;
             // 
             // txtRabbitMQPassword
             // 
             txtRabbitMQPassword.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtRabbitMQPassword.Location = new Point(147, 86);
+            txtRabbitMQPassword.Location = new Point(166, 90);
+            txtRabbitMQPassword.Margin = new Padding(4, 3, 4, 3);
             txtRabbitMQPassword.Name = "txtRabbitMQPassword";
             txtRabbitMQPassword.PasswordChar = '*';
             txtRabbitMQPassword.PlaceholderText = "Mật khẩu tài khoản hoặc mã bảo mật";
-            txtRabbitMQPassword.Size = new Size(457, 27);
+            txtRabbitMQPassword.Size = new Size(513, 29);
             txtRabbitMQPassword.TabIndex = 3;
             txtRabbitMQPassword.UseSystemPasswordChar = true;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(6, 52);
+            label6.Location = new Point(6, 55);
+            label6.Margin = new Padding(4, 0, 4, 0);
             label6.Name = "label6";
-            label6.Size = new Size(107, 20);
+            label6.Size = new Size(111, 21);
             label6.TabIndex = 7;
             label6.Text = "Tên đăng nhập";
             // 
             // txtRabbitMQUsername
             // 
             txtRabbitMQUsername.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtRabbitMQUsername.Location = new Point(147, 53);
+            txtRabbitMQUsername.Location = new Point(166, 56);
+            txtRabbitMQUsername.Margin = new Padding(4, 3, 4, 3);
             txtRabbitMQUsername.Name = "txtRabbitMQUsername";
             txtRabbitMQUsername.PlaceholderText = "Tên đăng nhập vào hệ thống";
-            txtRabbitMQUsername.Size = new Size(457, 27);
+            txtRabbitMQUsername.Size = new Size(513, 29);
             txtRabbitMQUsername.TabIndex = 2;
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(6, 23);
+            label7.Location = new Point(6, 24);
+            label7.Margin = new Padding(4, 0, 4, 0);
             label7.Name = "label7";
-            label7.Size = new Size(28, 20);
+            label7.Size = new Size(31, 21);
             label7.TabIndex = 2;
             label7.Text = "Url";
             // 
             // ucServerConfig
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.ButtonHighlight;
             Controls.Add(groupBox3);
             Controls.Add(groupBox1);
             Controls.Add(groupBox2);
+            Font = new Font("Segoe UI", 12F);
+            Margin = new Padding(4, 3, 4, 3);
             Name = "ucServerConfig";
-            Size = new Size(625, 390);
+            Size = new Size(703, 409);
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             groupBox1.ResumeLayout(false);

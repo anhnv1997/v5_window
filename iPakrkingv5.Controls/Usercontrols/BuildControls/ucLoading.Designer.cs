@@ -1,4 +1,4 @@
-﻿namespace iPakrkingv5.Controls.Usercontrols.BuildControls
+﻿namespace iParkingv5_window.Usercontrols.BuildControls
 {
     partial class ucLoading
     {

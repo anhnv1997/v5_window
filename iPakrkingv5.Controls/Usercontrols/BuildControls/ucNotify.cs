@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace iPakrkingv5.Controls.Usercontrols.BuildControls
+namespace iParkingv5_window.Usercontrols.BuildControls
 {
     public partial class ucNotify : UserControl
     {
@@ -48,24 +48,24 @@ namespace iPakrkingv5.Controls.Usercontrols.BuildControls
                 switch (emNotiType)
                 {
                     case EmNotiType.Information:
-                        lblMessageType.Text = TextManagement.GetDisplayStr(TextManagement.EmTextDisplay.NOTIFY_INFORMATION,TextManagement.ROOT_LANGUAGE);
-                        picNotiType.Image = Properties.Resources.noti_ok_64;
+                        lblMessageType.Text = TextManagement.GetDisplayStr(TextManagement.EmTextDisplay.NOTIFY_INFORMATION, 0);
+                        //picNotiType.Image = Properties.Resources.noti_ok_64;
                         break;
                     case EmNotiType.Error:
-                        lblMessageType.Text = TextManagement.GetDisplayStr(TextManagement.EmTextDisplay.NOTIFY_ERROR, TextManagement.ROOT_LANGUAGE);
-                        picNotiType.Image = Properties.Resources.noti_error_64;
+                        lblMessageType.Text = TextManagement.GetDisplayStr(TextManagement.EmTextDisplay.NOTIFY_ERROR, 0);
+                        //picNotiType.Image = Properties.Resources.noti_error_64;
                         break;
                     case EmNotiType.Warning:
-                        lblMessageType.Text = TextManagement.GetDisplayStr(TextManagement.EmTextDisplay.NOTIFY_WARNING, TextManagement.ROOT_LANGUAGE);
-                        picNotiType.Image = Properties.Resources.noti_warning_64;
+                        lblMessageType.Text = TextManagement.GetDisplayStr(TextManagement.EmTextDisplay.NOTIFY_WARNING, 0);
+                        //picNotiType.Image = Properties.Resources.noti_warning_64;
                         break;
                     case EmNotiType.Question:
-                        lblMessageType.Text = TextManagement.GetDisplayStr(TextManagement.EmTextDisplay.NOTIFY_QUESTION, TextManagement.ROOT_LANGUAGE);
-                        picNotiType.Image = Properties.Resources.noti_question_64;
+                        lblMessageType.Text = TextManagement.GetDisplayStr(TextManagement.EmTextDisplay.NOTIFY_QUESTION, 0);
+                        //picNotiType.Image = Properties.Resources.noti_question_64;
                         break;
                     default:
-                        lblMessageType.Text = TextManagement.GetDisplayStr(TextManagement.EmTextDisplay.NOTIFY_INFORMATION, TextManagement.ROOT_LANGUAGE);
-                        picNotiType.Image = Properties.Resources.noti_ok_64;
+                        lblMessageType.Text = TextManagement.GetDisplayStr(TextManagement.EmTextDisplay.NOTIFY_INFORMATION, 0);
+                        //picNotiType.Image = Properties.Resources.noti_ok_64;
                         break;
                 }
                 lblMessageType.Location = new Point((this.Width - lblMessageType.Width) / 2,
@@ -81,6 +81,7 @@ namespace iPakrkingv5.Controls.Usercontrols.BuildControls
         {
             InitializeComponent();
             this.Load += UcNotify_Load;
+            this.DoubleBuffered = true;
         }
         private void UcNotify_Load(object? sender, EventArgs e)
         {
@@ -89,7 +90,7 @@ namespace iPakrkingv5.Controls.Usercontrols.BuildControls
             btnConfirm.InitControl(BtnConfirm_Click);
             btnCancel.InitControl(BtnCancel_Click);
 
-            lblMessage.MaximumSize = new Size(this.Width - TextManagement.ROOT_SIZE * 2, 0);
+            lblMessage.MaximumSize = new Size(this.Width - 32, 0);
             lblMessage.MinimumSize = new Size(this.Width - 80, 0);
 
             picNotiType.Location = new Point((this.Width - picNotiType.Width) / 2, 40);
@@ -97,9 +98,9 @@ namespace iPakrkingv5.Controls.Usercontrols.BuildControls
             lblMessage.Location = new Point((this.Width - lblMessage.Width) / 2,
                                         lblMessageType.Location.Y + lblMessageType.Height + 7);
 
-            btnCancel.Location = new Point(this.Width - btnCancel.Width - TextManagement.ROOT_SIZE * 2,
-                                           this.Height - btnCancel.Height - TextManagement.ROOT_SIZE * 2);
-            btnConfirm.Location = new Point(btnCancel.Location.X - btnConfirm.Width - TextManagement.ROOT_SIZE,
+            btnCancel.Location = new Point(this.Width - btnCancel.Width - 32,
+                                           this.Height - btnCancel.Height - 32);
+            btnConfirm.Location = new Point(btnCancel.Location.X - btnConfirm.Width - 16,
                                             btnCancel.Location.Y);
             this.Visible = false;
         }
@@ -127,8 +128,8 @@ namespace iPakrkingv5.Controls.Usercontrols.BuildControls
 
             this.NotiType = emNotiType;
             this.Message = message;
-            btnConfirm.Text = TextManagement.GetDisplayStr(TextManagement.EmTextDisplay.RESULT_CONFIRM, TextManagement.ROOT_LANGUAGE);
-            btnCancel.Text = TextManagement.GetDisplayStr(TextManagement.EmTextDisplay.RESULT_CANCEL, TextManagement.ROOT_LANGUAGE);
+            btnConfirm.Text = TextManagement.GetDisplayStr(TextManagement.EmTextDisplay.RESULT_CONFIRM, 0);
+            btnCancel.Text = TextManagement.GetDisplayStr(TextManagement.EmTextDisplay.RESULT_CANCEL, 0);
             this.Location = new Point(this.Parent.Location.X + (this.Parent.Width - this.Width) / 2,
                                       this.Parent.Location.Y + (this.Parent.Height - this.Height) / 2);
 
@@ -142,6 +143,7 @@ namespace iPakrkingv5.Controls.Usercontrols.BuildControls
             }
 
             this.Visible = true;
+            this.MaximumSize = this.MinimumSize = new Size(this.Width, lblMessage.Location.Y + lblMessage.Height + 100);
             this.Parent.SizeChanged += Parent_SizeChanged;
 
             this.BringToFront();

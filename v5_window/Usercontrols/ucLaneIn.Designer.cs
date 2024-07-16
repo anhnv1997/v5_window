@@ -1,4 +1,6 @@
-﻿namespace iParkingv5_window.Usercontrols
+﻿using iPakrkingv5.Controls.Usercontrols;
+
+namespace iParkingv5_window.Usercontrols
 {
     partial class ucLaneIn
     {

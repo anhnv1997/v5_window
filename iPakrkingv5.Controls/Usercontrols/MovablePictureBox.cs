@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using iPakrkingv5.Controls.Forms;
+using System.Runtime.InteropServices;
 
 namespace iPakrkingv5.Controls.Usercontrols
 {
@@ -50,11 +51,11 @@ namespace iPakrkingv5.Controls.Usercontrols
 
         private void MovablePictureBox_MouseDoubleClick(object? sender, MouseEventArgs e)
         {
-            //frmViewImage frmViewImage = new frmViewImage
-            //{
-            //    CurrentImage = this.Image
-            //};
-            //frmViewImage.Show();
+            frmViewImage frmViewImage = new frmViewImage
+            {
+                CurrentImage = this.Image
+            };
+            frmViewImage.Show();
         }
 
         bool isWheeling = false;

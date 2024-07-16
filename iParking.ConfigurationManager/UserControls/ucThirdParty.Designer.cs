@@ -32,38 +32,41 @@
             label7 = new Label();
             label3 = new Label();
             groupBox2 = new GroupBox();
-            label1 = new Label();
+            chbIsUse = new CheckBox();
+            txtPassword = new TextBox();
             txtUsername = new TextBox();
             label2 = new Label();
-            txtPassword = new TextBox();
-            chbIsUse = new CheckBox();
+            label1 = new Label();
             groupBox2.SuspendLayout();
             SuspendLayout();
             // 
             // txtServerUrl
             // 
             txtServerUrl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtServerUrl.Location = new Point(127, 28);
+            txtServerUrl.Location = new Point(143, 29);
+            txtServerUrl.Margin = new Padding(4, 3, 4, 3);
             txtServerUrl.Name = "txtServerUrl";
-            txtServerUrl.Size = new Size(425, 27);
+            txtServerUrl.Size = new Size(477, 29);
             txtServerUrl.TabIndex = 13;
             // 
             // label7
             // 
             label7.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label7.AutoSize = true;
-            label7.Location = new Point(899, 230);
+            label7.Location = new Point(1012, 241);
+            label7.Margin = new Padding(4, 0, 4, 0);
             label7.Name = "label7";
-            label7.Size = new Size(28, 20);
+            label7.Size = new Size(31, 21);
             label7.TabIndex = 12;
             label7.Text = "ms";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(6, 31);
+            label3.Location = new Point(6, 32);
+            label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
-            label3.Size = new Size(50, 20);
+            label3.Size = new Size(55, 21);
             label3.TabIndex = 8;
             label3.Text = "Server";
             // 
@@ -80,65 +83,75 @@
             groupBox2.Controls.Add(label3);
             groupBox2.Dock = DockStyle.Top;
             groupBox2.Location = new Point(0, 0);
+            groupBox2.Margin = new Padding(4, 3, 4, 3);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(555, 273);
+            groupBox2.Padding = new Padding(4, 3, 4, 3);
+            groupBox2.Size = new Size(625, 287);
             groupBox2.TabIndex = 7;
             groupBox2.TabStop = false;
             groupBox2.Text = "Thông tin thiết bị cân";
             // 
-            // label1
+            // chbIsUse
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(6, 64);
-            label1.Name = "label1";
-            label1.Size = new Size(107, 20);
-            label1.TabIndex = 8;
-            label1.Text = "Tên đăng nhập";
+            chbIsUse.AutoSize = true;
+            chbIsUse.Location = new Point(143, 133);
+            chbIsUse.Margin = new Padding(4, 3, 4, 3);
+            chbIsUse.Name = "chbIsUse";
+            chbIsUse.Size = new Size(87, 25);
+            chbIsUse.TabIndex = 14;
+            chbIsUse.Text = "Sử dụng";
+            chbIsUse.UseVisualStyleBackColor = true;
+            // 
+            // txtPassword
+            // 
+            txtPassword.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtPassword.Location = new Point(143, 98);
+            txtPassword.Margin = new Padding(4, 3, 4, 3);
+            txtPassword.Name = "txtPassword";
+            txtPassword.PasswordChar = '*';
+            txtPassword.Size = new Size(477, 29);
+            txtPassword.TabIndex = 13;
+            txtPassword.UseSystemPasswordChar = true;
             // 
             // txtUsername
             // 
             txtUsername.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtUsername.Location = new Point(127, 61);
+            txtUsername.Location = new Point(143, 64);
+            txtUsername.Margin = new Padding(4, 3, 4, 3);
             txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(425, 27);
+            txtUsername.Size = new Size(477, 29);
             txtUsername.TabIndex = 13;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(6, 97);
+            label2.Location = new Point(6, 102);
+            label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
-            label2.Size = new Size(70, 20);
+            label2.Size = new Size(75, 21);
             label2.TabIndex = 8;
             label2.Text = "Mật khẩu";
             // 
-            // txtPassword
+            // label1
             // 
-            txtPassword.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtPassword.Location = new Point(127, 94);
-            txtPassword.Name = "txtPassword";
-            txtPassword.PasswordChar = '*';
-            txtPassword.Size = new Size(425, 27);
-            txtPassword.TabIndex = 13;
-            txtPassword.UseSystemPasswordChar = true;
-            // 
-            // chbIsUse
-            // 
-            chbIsUse.AutoSize = true;
-            chbIsUse.Location = new Point(127, 127);
-            chbIsUse.Name = "chbIsUse";
-            chbIsUse.Size = new Size(83, 24);
-            chbIsUse.TabIndex = 14;
-            chbIsUse.Text = "Sử dụng";
-            chbIsUse.UseVisualStyleBackColor = true;
+            label1.AutoSize = true;
+            label1.Location = new Point(6, 67);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(111, 21);
+            label1.TabIndex = 8;
+            label1.Text = "Tên đăng nhập";
             // 
             // ucThirdParty
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.ButtonHighlight;
             Controls.Add(groupBox2);
+            Font = new Font("Segoe UI", 12F);
+            Margin = new Padding(4, 3, 4, 3);
             Name = "ucThirdParty";
-            Size = new Size(555, 331);
+            Size = new Size(625, 347);
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             ResumeLayout(false);

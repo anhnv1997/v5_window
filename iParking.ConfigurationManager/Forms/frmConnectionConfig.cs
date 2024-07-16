@@ -68,6 +68,7 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             TabPage tabDatabaseConfig = new TabPage();
             tabDatabaseConfig.Text = "Database";
             tabControl1.TabPages.Add(tabDatabaseConfig);
+            tabDatabaseConfig.BackColor = SystemColors.ButtonHighlight;
 
             SQLConn? sqlconf = null;
             FileXML.ReadXMLSQLConn(PathManagement.databaseConfigPath, ref sqlconf);
@@ -84,6 +85,7 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             TabPage tabEinvoice = new TabPage();
             tabEinvoice.Text = "Hóa đơn điện tử";
             tabControl1.TabPages.Add(tabEinvoice);
+            tabEinvoice.BackColor = SystemColors.ButtonHighlight;
 
             EInvoiceConfig? einvoiceCOnfig = NewtonSoftHelper<EInvoiceConfig>.DeserializeObjectFromPath(PathManagement.einvoiceConfigPath) ?? new EInvoiceConfig();
 
@@ -98,6 +100,7 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             TabPage tabOption = new TabPage();
             tabOption.Text = "Tùy chọn";
             tabControl1.TabPages.Add(tabOption);
+            tabOption.BackColor = SystemColors.ButtonHighlight;
 
             AppOption? appOption = NewtonSoftHelper<AppOption>.DeserializeObjectFromPath(PathManagement.appOptionConfigPath) ?? new AppOption();
 
@@ -112,6 +115,7 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             TabPage tabServerConfig = new TabPage();
             tabServerConfig.Text = "Server";
             tabControl1.TabPages.Add(tabServerConfig);
+            tabServerConfig.BackColor = SystemColors.ButtonHighlight;
 
             ServerConfig? serverConfig = NewtonSoftHelper<ServerConfig>.DeserializeObjectFromPath(PathManagement.serverConfigPath);
             ucServer = new ucServerConfig(serverConfig);
@@ -125,6 +129,7 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             TabPage tabLprConfig = new TabPage();
             tabLprConfig.Text = "Nhận dạng biển số";
             tabControl1.TabPages.Add(tabLprConfig);
+            tabLprConfig.BackColor = SystemColors.ButtonHighlight;
 
             LprConfig? lprConfig = NewtonSoftHelper<LprConfig>.DeserializeObjectFromPath(PathManagement.lprConfigPath) ?? new LprConfig();
             ucLprConnection = new ucLprConnection(lprConfig);
@@ -138,6 +143,8 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             TabPage tabScaleConfig = new TabPage();
             tabScaleConfig.Text = "Thiết bị cân";
             tabControl1.TabPages.Add(tabScaleConfig);
+            tabScaleConfig.BackColor = SystemColors.ButtonHighlight;
+
             ScaleConfig? scaleConfig = NewtonSoftHelper<ScaleConfig>.DeserializeObjectFromPath(PathManagement.scaleConfigPath) ?? new ScaleConfig();
 
             ucScaleConfig = new ucScaleConfig(scaleConfig);
@@ -152,6 +159,8 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             TabPage tabThirdParty = new TabPage();
             tabThirdParty.Text = "Tích hợp hệ thống thứ 3";
             tabControl1.TabPages.Add(tabThirdParty);
+            tabThirdParty.BackColor = SystemColors.ButtonHighlight;
+
             ThirdPartyConfig? thirdPartyConfig = NewtonSoftHelper<ThirdPartyConfig>.DeserializeObjectFromPath(PathManagement.thirtPartyConfigPath) ?? new ThirdPartyConfig();
 
             ucThirdParty = new ucThirdParty(thirdPartyConfig);

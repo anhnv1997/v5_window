@@ -59,7 +59,7 @@ namespace iParkingv5_window.Usercontrols
             lblIdentityNameTitle.AutoSize = true;
             lblIdentityNameTitle.BackColor = Color.Transparent;
             lblIdentityNameTitle.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblIdentityNameTitle.Location = new Point(24, 208);
+            lblIdentityNameTitle.Location = new Point(21, 156);
             lblIdentityNameTitle.Name = "lblIdentityNameTitle";
             lblIdentityNameTitle.Size = new Size(108, 20);
             lblIdentityNameTitle.TabIndex = 0;
@@ -70,7 +70,7 @@ namespace iParkingv5_window.Usercontrols
             lblIdentityCodeTitle.AutoSize = true;
             lblIdentityCodeTitle.BackColor = Color.Transparent;
             lblIdentityCodeTitle.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblIdentityCodeTitle.Location = new Point(24, 239);
+            lblIdentityCodeTitle.Location = new Point(21, 179);
             lblIdentityCodeTitle.Name = "lblIdentityCodeTitle";
             lblIdentityCodeTitle.Size = new Size(105, 20);
             lblIdentityCodeTitle.TabIndex = 0;
@@ -81,7 +81,7 @@ namespace iParkingv5_window.Usercontrols
             lblIdentityGroupTitle.AutoSize = true;
             lblIdentityGroupTitle.BackColor = Color.Transparent;
             lblIdentityGroupTitle.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblIdentityGroupTitle.Location = new Point(24, 276);
+            lblIdentityGroupTitle.Location = new Point(21, 207);
             lblIdentityGroupTitle.Name = "lblIdentityGroupTitle";
             lblIdentityGroupTitle.Size = new Size(127, 20);
             lblIdentityGroupTitle.TabIndex = 0;
@@ -92,7 +92,7 @@ namespace iParkingv5_window.Usercontrols
             lblLaneNameTitle.AutoSize = true;
             lblLaneNameTitle.BackColor = Color.Transparent;
             lblLaneNameTitle.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblLaneNameTitle.Location = new Point(24, 79);
+            lblLaneNameTitle.Location = new Point(21, 59);
             lblLaneNameTitle.Name = "lblLaneNameTitle";
             lblLaneNameTitle.Size = new Size(59, 20);
             lblLaneNameTitle.TabIndex = 0;
@@ -103,7 +103,7 @@ namespace iParkingv5_window.Usercontrols
             lblTimeInTitle.AutoSize = true;
             lblTimeInTitle.BackColor = Color.Transparent;
             lblTimeInTitle.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblTimeInTitle.Location = new Point(24, 110);
+            lblTimeInTitle.Location = new Point(21, 82);
             lblTimeInTitle.Name = "lblTimeInTitle";
             lblTimeInTitle.Size = new Size(62, 20);
             lblTimeInTitle.TabIndex = 0;
@@ -114,7 +114,7 @@ namespace iParkingv5_window.Usercontrols
             lblPlateNumberTitle.AutoSize = true;
             lblPlateNumberTitle.BackColor = Color.Transparent;
             lblPlateNumberTitle.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblPlateNumberTitle.Location = new Point(24, 143);
+            lblPlateNumberTitle.Location = new Point(21, 107);
             lblPlateNumberTitle.Name = "lblPlateNumberTitle";
             lblPlateNumberTitle.Size = new Size(80, 20);
             lblPlateNumberTitle.TabIndex = 0;
@@ -124,9 +124,9 @@ namespace iParkingv5_window.Usercontrols
             // 
             lblIdentityName.AutoSize = true;
             lblIdentityName.BackColor = Color.Transparent;
-            lblIdentityName.Location = new Point(185, 208);
+            lblIdentityName.Location = new Point(162, 156);
             lblIdentityName.Name = "lblIdentityName";
-            lblIdentityName.Size = new Size(15, 20);
+            lblIdentityName.Size = new Size(12, 15);
             lblIdentityName.TabIndex = 1;
             lblIdentityName.Text = "_";
             lblIdentityName.TextAlign = ContentAlignment.MiddleRight;
@@ -135,9 +135,9 @@ namespace iParkingv5_window.Usercontrols
             // 
             lblIdentityCode.AutoSize = true;
             lblIdentityCode.BackColor = Color.Transparent;
-            lblIdentityCode.Location = new Point(185, 239);
+            lblIdentityCode.Location = new Point(162, 179);
             lblIdentityCode.Name = "lblIdentityCode";
-            lblIdentityCode.Size = new Size(15, 20);
+            lblIdentityCode.Size = new Size(12, 15);
             lblIdentityCode.TabIndex = 2;
             lblIdentityCode.Text = "_";
             lblIdentityCode.TextAlign = ContentAlignment.MiddleRight;
@@ -146,9 +146,9 @@ namespace iParkingv5_window.Usercontrols
             // 
             lblIdentityGroup.AutoSize = true;
             lblIdentityGroup.BackColor = Color.Transparent;
-            lblIdentityGroup.Location = new Point(185, 276);
+            lblIdentityGroup.Location = new Point(162, 207);
             lblIdentityGroup.Name = "lblIdentityGroup";
-            lblIdentityGroup.Size = new Size(15, 20);
+            lblIdentityGroup.Size = new Size(12, 15);
             lblIdentityGroup.TabIndex = 3;
             lblIdentityGroup.Text = "_";
             lblIdentityGroup.TextAlign = ContentAlignment.MiddleRight;
@@ -157,9 +157,9 @@ namespace iParkingv5_window.Usercontrols
             // 
             lblLaneName.AutoSize = true;
             lblLaneName.BackColor = Color.Transparent;
-            lblLaneName.Location = new Point(185, 79);
+            lblLaneName.Location = new Point(162, 59);
             lblLaneName.Name = "lblLaneName";
-            lblLaneName.Size = new Size(15, 20);
+            lblLaneName.Size = new Size(12, 15);
             lblLaneName.TabIndex = 1;
             lblLaneName.Text = "_";
             lblLaneName.TextAlign = ContentAlignment.MiddleRight;
@@ -168,9 +168,9 @@ namespace iParkingv5_window.Usercontrols
             // 
             lblTimeIn.AutoSize = true;
             lblTimeIn.BackColor = Color.Transparent;
-            lblTimeIn.Location = new Point(185, 110);
+            lblTimeIn.Location = new Point(162, 82);
             lblTimeIn.Name = "lblTimeIn";
-            lblTimeIn.Size = new Size(15, 20);
+            lblTimeIn.Size = new Size(12, 15);
             lblTimeIn.TabIndex = 2;
             lblTimeIn.Text = "_";
             lblTimeIn.TextAlign = ContentAlignment.MiddleRight;
@@ -179,9 +179,9 @@ namespace iParkingv5_window.Usercontrols
             // 
             lblPlateNumber.AutoSize = true;
             lblPlateNumber.BackColor = Color.Transparent;
-            lblPlateNumber.Location = new Point(185, 143);
+            lblPlateNumber.Location = new Point(162, 107);
             lblPlateNumber.Name = "lblPlateNumber";
-            lblPlateNumber.Size = new Size(15, 20);
+            lblPlateNumber.Size = new Size(12, 15);
             lblPlateNumber.TabIndex = 3;
             lblPlateNumber.Text = "_";
             lblPlateNumber.TextAlign = ContentAlignment.MiddleRight;
@@ -191,7 +191,7 @@ namespace iParkingv5_window.Usercontrols
             lblVehilceTypeTitle.AutoSize = true;
             lblVehilceTypeTitle.BackColor = Color.Transparent;
             lblVehilceTypeTitle.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblVehilceTypeTitle.Location = new Point(24, 175);
+            lblVehilceTypeTitle.Location = new Point(21, 131);
             lblVehilceTypeTitle.Name = "lblVehilceTypeTitle";
             lblVehilceTypeTitle.Size = new Size(58, 20);
             lblVehilceTypeTitle.TabIndex = 0;
@@ -201,9 +201,9 @@ namespace iParkingv5_window.Usercontrols
             // 
             lblVehilceType.AutoSize = true;
             lblVehilceType.BackColor = Color.Transparent;
-            lblVehilceType.Location = new Point(185, 175);
+            lblVehilceType.Location = new Point(162, 131);
             lblVehilceType.Name = "lblVehilceType";
-            lblVehilceType.Size = new Size(15, 20);
+            lblVehilceType.Size = new Size(12, 15);
             lblVehilceType.TabIndex = 3;
             lblVehilceType.Text = "_";
             lblVehilceType.TextAlign = ContentAlignment.MiddleRight;
@@ -213,7 +213,7 @@ namespace iParkingv5_window.Usercontrols
             lblTitle.AutoSize = true;
             lblTitle.BackColor = Color.Transparent;
             lblTitle.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
-            lblTitle.Location = new Point(24, 24);
+            lblTitle.Location = new Point(21, 18);
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(345, 45);
             lblTitle.TabIndex = 4;
@@ -223,9 +223,10 @@ namespace iParkingv5_window.Usercontrols
             // 
             lblCancel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             lblCancel1.AutoSize = true;
-            lblCancel1.Location = new Point(355, 405);
+            lblCancel1.Location = new Point(345, 353);
+            lblCancel1.Margin = new Padding(3, 2, 3, 2);
             lblCancel1.Name = "lblCancel1";
-            lblCancel1.Size = new Size(88, 30);
+            lblCancel1.Size = new Size(77, 25);
             lblCancel1.TabIndex = 5;
             lblCancel1.Text = "lblCancel1";
             // 
@@ -234,7 +235,7 @@ namespace iParkingv5_window.Usercontrols
             lblCustomerTitle.AutoSize = true;
             lblCustomerTitle.BackColor = Color.Transparent;
             lblCustomerTitle.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblCustomerTitle.Location = new Point(24, 310);
+            lblCustomerTitle.Location = new Point(21, 232);
             lblCustomerTitle.Name = "lblCustomerTitle";
             lblCustomerTitle.Size = new Size(91, 20);
             lblCustomerTitle.TabIndex = 0;
@@ -244,9 +245,9 @@ namespace iParkingv5_window.Usercontrols
             // 
             lblCustomer.AutoSize = true;
             lblCustomer.BackColor = Color.Transparent;
-            lblCustomer.Location = new Point(185, 310);
+            lblCustomer.Location = new Point(162, 232);
             lblCustomer.Name = "lblCustomer";
-            lblCustomer.Size = new Size(15, 20);
+            lblCustomer.Size = new Size(12, 15);
             lblCustomer.TabIndex = 3;
             lblCustomer.Text = "_";
             lblCustomer.TextAlign = ContentAlignment.MiddleRight;
@@ -256,7 +257,7 @@ namespace iParkingv5_window.Usercontrols
             lblPhoneTitle.AutoSize = true;
             lblPhoneTitle.BackColor = Color.Transparent;
             lblPhoneTitle.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblPhoneTitle.Location = new Point(24, 340);
+            lblPhoneTitle.Location = new Point(21, 255);
             lblPhoneTitle.Name = "lblPhoneTitle";
             lblPhoneTitle.Size = new Size(100, 20);
             lblPhoneTitle.TabIndex = 0;
@@ -266,9 +267,9 @@ namespace iParkingv5_window.Usercontrols
             // 
             lblPhoneNumber.AutoSize = true;
             lblPhoneNumber.BackColor = Color.Transparent;
-            lblPhoneNumber.Location = new Point(185, 340);
+            lblPhoneNumber.Location = new Point(162, 255);
             lblPhoneNumber.Name = "lblPhoneNumber";
-            lblPhoneNumber.Size = new Size(15, 20);
+            lblPhoneNumber.Size = new Size(12, 15);
             lblPhoneNumber.TabIndex = 3;
             lblPhoneNumber.Text = "_";
             lblPhoneNumber.TextAlign = ContentAlignment.MiddleRight;
@@ -278,7 +279,7 @@ namespace iParkingv5_window.Usercontrols
             lblExpireTimeTitle.AutoSize = true;
             lblExpireTimeTitle.BackColor = Color.Transparent;
             lblExpireTimeTitle.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblExpireTimeTitle.Location = new Point(24, 372);
+            lblExpireTimeTitle.Location = new Point(21, 279);
             lblExpireTimeTitle.Name = "lblExpireTimeTitle";
             lblExpireTimeTitle.Size = new Size(98, 20);
             lblExpireTimeTitle.TabIndex = 0;
@@ -288,16 +289,16 @@ namespace iParkingv5_window.Usercontrols
             // 
             lblExpireTime.AutoSize = true;
             lblExpireTime.BackColor = Color.Transparent;
-            lblExpireTime.Location = new Point(185, 372);
+            lblExpireTime.Location = new Point(162, 279);
             lblExpireTime.Name = "lblExpireTime";
-            lblExpireTime.Size = new Size(15, 20);
+            lblExpireTime.Size = new Size(12, 15);
             lblExpireTime.TabIndex = 3;
             lblExpireTime.Text = "_";
             lblExpireTime.TextAlign = ContentAlignment.MiddleRight;
             // 
             // ucEventInInfo
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 224, 192);
             Controls.Add(lblCancel1);
@@ -322,8 +323,9 @@ namespace iParkingv5_window.Usercontrols
             Controls.Add(lblIdentityCodeTitle);
             Controls.Add(lblLaneNameTitle);
             Controls.Add(lblIdentityNameTitle);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "ucEventInInfo";
-            Size = new Size(494, 448);
+            Size = new Size(436, 389);
             ResumeLayout(false);
             PerformLayout();
         }

@@ -44,6 +44,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Transparent;
             BorderStyle = BorderStyle.Fixed3D;
             Controls.Add(panelPages);
             Name = "ucPages";

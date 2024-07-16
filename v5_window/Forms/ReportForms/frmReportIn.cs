@@ -11,6 +11,7 @@ using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.EventDatas;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv5_window.Usercontrols.BuildControls;
+using Kztek.Helper;
 using Kztek.Tool.TextFormatingTools;
 using Kztek.Tools;
 using System.Data;

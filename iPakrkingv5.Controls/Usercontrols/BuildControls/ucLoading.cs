@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using static IPaking.Ultility.TextManagement;
 
-namespace iPakrkingv5.Controls.Usercontrols.BuildControls
+namespace iParkingv5_window.Usercontrols.BuildControls
 {
     public partial class ucLoading : UserControl
     {
@@ -16,7 +16,7 @@ namespace iPakrkingv5.Controls.Usercontrols.BuildControls
                 lblMessage.Text = value;
                 lblMessage.Location = new Point(picWaiting.Location.X + picWaiting.Width,
                                                 picWaiting.Location.Y + (picWaiting.Height - lblMessage.Height) / 2);
-                this.Height = Math.Max(lblMessage.Location.Y + lblMessage.Height + TextManagement.ROOT_SIZE * 2, picWaiting.Location.Y + picWaiting.Height + TextManagement.ROOT_SIZE * 2);
+                this.Height = Math.Max(lblMessage.Location.Y + lblMessage.Height + 32, picWaiting.Location.Y + picWaiting.Height + 32);
 
             }
         }
@@ -38,6 +38,7 @@ namespace iPakrkingv5.Controls.Usercontrols.BuildControls
         {
             InitializeComponent();
             this.Load += UcLoading_Load;
+            this.DoubleBuffered = true;
         }
 
         private void UcLoading_Load(object? sender, EventArgs e)

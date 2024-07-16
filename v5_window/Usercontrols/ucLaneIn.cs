@@ -1463,7 +1463,7 @@ namespace iParkingv5_window.Usercontrols
                 else
                 {
                     item.ChangeByHeight(new Size((panelCameras.Width - panelCameras.Margin.Left - panelCameras.Margin.Right - panelCameras.Padding.Left - panelCameras.Padding.Right
-                                                    - item.Margin.Left - item.Margin.Right - item.Padding.Left - item.Padding.Right) / count, panelCameras.Height - 50), this.laneDirection.cameraResolutionDisplay);
+                                                    - /*item.Margin.Left - item.Margin.Right -*/ item.Padding.Left - item.Padding.Right) / count, panelCameras.Height - 50), this.laneDirection.cameraResolutionDisplay);
                 }
             }
             for (int i = 0; i < panelCameras.Controls.OfType<ucCameraView>().ToList().Count; i++)
@@ -1484,7 +1484,7 @@ namespace iParkingv5_window.Usercontrols
                     }
                     else
                     {
-                        Point location = new Point(lastControl.Location.X + lastControl.Width + 10, lastControl.Location.Y);
+                        Point location = new Point(lastControl.Location.X + lastControl.Width + 3, lastControl.Location.Y);
                         panelCameras.Controls.OfType<ucCameraView>().ToList()[i].Location = location;
                     }
                 }

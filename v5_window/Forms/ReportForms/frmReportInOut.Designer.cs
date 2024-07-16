@@ -1,4 +1,5 @@
 ﻿using iPakrkingv5.Controls.Controls.Buttons;
+using iPakrkingv5.Controls.Usercontrols;
 using iParkingv5_window.Usercontrols;
 
 namespace iParkingv5_window.Forms.ReportForms
@@ -772,7 +773,7 @@ namespace iParkingv5_window.Forms.ReportForms
         private TableLayoutPanel tableLayoutPanel2;
         private MovablePictureBox picOverviewImageOut;
         private MovablePictureBox picVehicleImageOut;
-        private Usercontrols.ucPages ucPages1;
+        private ucPages ucPages1;
         private Label lblTotalEvents;
         private LblCancel btnCancel;
         private BtnSearch btnSearch;

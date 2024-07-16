@@ -1,4 +1,6 @@
-﻿namespace iParkingv5_window.Forms.DataForms
+﻿using iPakrkingv5.Controls.Usercontrols;
+
+namespace iParkingv5_window.Forms.DataForms
 {
     partial class frmEventInDetail
     {
@@ -44,8 +46,8 @@
             lblLaneNameTitle = new Label();
             lblIdentityNameTitle = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
-            picOverviewImageIn = new iPakrkingv5.Controls.Usercontrols.MovablePictureBox();
-            picVehicleImageIn = new iPakrkingv5.Controls.Usercontrols.MovablePictureBox();
+            picOverviewImageIn = new MovablePictureBox();
+            picVehicleImageIn = new MovablePictureBox();
             tableLayoutPanel2 = new TableLayoutPanel();
             panel1 = new Panel();
             txtPlate = new TextBox();
@@ -465,8 +467,8 @@
         private Label lblLaneNameTitle;
         private Label lblIdentityNameTitle;
         private TableLayoutPanel tableLayoutPanel1;
-        private iPakrkingv5.Controls.Usercontrols.MovablePictureBox movablePictureBox1;
-        private iPakrkingv5.Controls.Usercontrols.MovablePictureBox movablePictureBox2;
+        private MovablePictureBox movablePictureBox1;
+        private MovablePictureBox movablePictureBox2;
         private TableLayoutPanel tableLayoutPanel2;
         private Panel panel1;
         private TextBox txtPlate;
@@ -478,7 +480,7 @@
         private Label lblCustomer;
         private Label lblPhoneNumber;
         private Label lblExpireTime;
-        private iPakrkingv5.Controls.Usercontrols.MovablePictureBox picOverviewImageIn;
-        private iPakrkingv5.Controls.Usercontrols.MovablePictureBox picVehicleImageIn;
+        private MovablePictureBox picOverviewImageIn;
+        private MovablePictureBox picVehicleImageIn;
     }
 }

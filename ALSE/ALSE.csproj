@@ -20,6 +20,7 @@
     <ProjectReference Include="..\iParking.ConfigurationManager\iParking.ConfigurationManager.csproj" />
     <ProjectReference Include="..\iParkingv5.ApiManager\iParkingv5.ApiManager.csproj" />
     <ProjectReference Include="..\iParkingv5.Objects\iParkingv5.Objects.csproj" />
+    <ProjectReference Include="..\Kztek.Helper\Kztek.Helper.csproj" />
   </ItemGroup>
 
   <ItemGroup>

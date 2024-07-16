@@ -1,11 +1,12 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
-using SpreadsheetLight;
+﻿using SpreadsheetLight;
+using Font = System.Drawing.Font;
+using DocumentFormat.OpenXml.Spreadsheet;
 
-
-namespace IPGS.Controls.Helpers
+namespace Kztek.Helper
 {
     public class ExcelTools
     {
+        public static string preferPath = @"C:\";
         #region: Styling
         public static SLStyle CreateAlignCenterStyle(SLDocument sl)
         {
@@ -61,17 +62,21 @@ namespace IPGS.Controls.Helpers
         #endregion: End Styling
 
         #region:Excel_Export
-        public static void CreatReportFile(DataGridView dgvCard, string tittle)
+        public static void CreatReportFile(DataGridView dgvCard, string tittle, List<string> reserverData )
         {
             var sl = new SLDocument();
             //Create
             CreateTableHeader(sl, dgvCard, tittle);
             if (dgvCard.Rows.Count > 0)
             {
-                SetCardTableContent(sl, dgvCard);
+                SetCardTableContent(sl, dgvCard, reserverData);
             }
             //Save
             SaveReportFile(sl, tittle);
+        }
+        public static Size GetTextSize(string data, Font font)
+        {
+            return TextRenderer.MeasureText(data, font);
         }
         public static char NextCharacter(char input)
         {
@@ -86,9 +91,9 @@ namespace IPGS.Controls.Helpers
             {
                 var excelColumnName = currentChar.ToString() + "2";
                 if (column.HeaderText.Trim() == "ID" || column.HeaderText.Trim() == "" ||
-                    column.HeaderText.Trim() == "Code") continue;
+                    column.HeaderText.Trim() == "Code" || !column.Visible) continue;
                 sl.SetCellValue(excelColumnName, column.HeaderText);
-                var textSize = TextRenderer.MeasureText(column.HeaderText, dgvData.ColumnHeadersDefaultCellStyle.Font);
+                var textSize = GetTextSize(column.HeaderText, dgvData.ColumnHeadersDefaultCellStyle.Font);
                 var columnWidth = Math.Truncate(textSize.Width / 7d * 256) / 256;
                 sl.SetColumnWidth(columnIndex, columnWidth);
                 currentChar = NextCharacter(currentChar);
@@ -145,7 +150,7 @@ namespace IPGS.Controls.Helpers
             sl.SetCellValue(startCell, tittle);
             sl.SetCellStyle(startCell, CreateHeader1Style(sl));
         }
-        public static void SetCardTableContent(SLDocument sl, DataGridView dgvCard)
+        public static void SetCardTableContent(SLDocument sl, DataGridView dgvCard, List<string> additionalDatas)
         {
             var currentExcellCollumRow = 3;
             const char startChar = 'A';
@@ -156,12 +161,16 @@ namespace IPGS.Controls.Helpers
                 foreach (DataGridViewCell cell in row.Cells)
                 {
                     var cellHeaderText = cell.OwningColumn.HeaderText.Trim();
+                    if (!cell.Visible)
+                    {
+                        continue;
+                    }
                     if (cellHeaderText is "ID" or "" or "Code") continue;
                     var cellName = currentChar.ToString() + currentExcellCollumRow;
                     if (cell.Value != null)
                     {
                         sl.SetCellValue(cellName, cell.Value == null ? "" : cell.Value.ToString());
-                        var textSize = TextRenderer.MeasureText(cell.Value == null ? "" : cell.Value.ToString() ?? "", dgvCard.ColumnHeadersDefaultCellStyle.Font);
+                        var textSize = GetTextSize(cell.Value == null ? "" : cell.Value.ToString() ?? "", dgvCard.ColumnHeadersDefaultCellStyle.Font);
                         var currentWidth = sl.GetColumnWidth(columnIndex);
                         var newWidth = Math.Truncate(textSize.Width / 7d * 256) / 256;
                         if (currentWidth < newWidth)
@@ -182,9 +191,19 @@ namespace IPGS.Controls.Helpers
                 currentChar = startChar;
                 currentExcellCollumRow++;
             }
-            var lastCellName = ((char)(currentChar - 1)).ToString() + (currentExcellCollumRow) + "";
+            var lastCellName = ((char)(currentChar - 1)).ToString() + currentExcellCollumRow + "";
 
             sl.SetCellStyle("A" + 3, lastCellName, CreateAllBorderStyle(sl));
+            currentExcellCollumRow++;
+
+            for (int i = 0; i < additionalDatas.Count; i++)
+            {
+                currentChar = startChar;
+                currentExcellCollumRow++;
+                var cellName = currentChar.ToString() + currentExcellCollumRow;
+
+                sl.SetCellValue(cellName, additionalDatas[i] == null ? "" : additionalDatas[i]);
+            }
         }
         public static void SaveReportFile(SLDocument sl, string fileName)
         {
@@ -195,9 +214,10 @@ namespace IPGS.Controls.Helpers
                 saveFile.DefaultExt = "xlsx";
                 saveFile.AddExtension = true;
                 saveFile.FileName = $"{fileName} {DateTime.Now:yyyy_MM_dd_HH_mm_ss}";
-                saveFile.InitialDirectory = @"C:\";
+                saveFile.InitialDirectory = preferPath;
                 if (saveFile.ShowDialog() == DialogResult.OK)
                 {
+                    preferPath = Path.GetDirectoryName(saveFile.FileName);
                     sl.SaveAs(saveFile.FileName);
                 }
             }

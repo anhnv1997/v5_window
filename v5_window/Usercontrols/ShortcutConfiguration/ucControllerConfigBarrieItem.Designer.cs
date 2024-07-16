@@ -68,7 +68,6 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
             picChangeConfig.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             picChangeConfig.ForeColor = Color.Black;
             picChangeConfig.Image = (Image)resources.GetObject("picChangeConfig.Image");
-            picChangeConfig.ImageAlign = ContentAlignment.MiddleRight;
             picChangeConfig.Location = new Point(832, 0);
             picChangeConfig.Margin = new Padding(4, 3, 4, 3);
             picChangeConfig.Name = "picChangeConfig";

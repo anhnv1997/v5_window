@@ -1,5 +1,6 @@
 ﻿using iParkingv5.ApiManager.KzScaleApis;
 using iParkingv5.Objects.Enums;
+using Kztek.Helper;
 
 namespace iParkingv5_window.Forms.DataForms
 {

@@ -32,6 +32,7 @@ namespace iParkingv5.Auth
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLogin));
             lblUsername = new Label();
             lblPassword = new Label();
             chbIsRemember = new CheckBox();
@@ -190,6 +191,7 @@ namespace iParkingv5.Auth
             Controls.Add(lblStatus);
             Controls.Add(webView21);
             Controls.Add(panelMain);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
             Name = "frmLogin";

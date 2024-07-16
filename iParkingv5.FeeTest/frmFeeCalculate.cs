@@ -123,29 +123,27 @@ namespace iParkingv5.FeeTest
 
                 string feeMoney = await ApiServer.parkingProcessService.GetFeeCalculate(dateTimeInUTC, dateTimeOutUTC, cbbIdentityGroup.SelectedValue.ToString());
                 NumberFormatInfo num = new CultureInfo("de-DE", false).NumberFormat;
-                if(feeMoney != "")
+                if (feeMoney != "")
                 {
                     if (decimal.TryParse(feeMoney, out decimal feeAmount))
                     {
                         txbMoney.Text = feeAmount.ToString("N0", num);
+                        FeeTest_Model newResult = new FeeTest_Model()
+                        {
+                            Stt = dgvShow.Rows.Count + 1,
+                            FeeName = txtFeeName.Text,
+                            CardGroupName = cbbIdentityGroup.Text,
+                            TimeIn_List = dateTimeIn.ToString("dd/MM/yyyy HH:mm:ss"),
+                            TimeOut_List = dateTimeOut.ToString("dd/MM/yyyy HH:mm:ss"),
+                            Monney_List = feeAmount.ToString("N0", num),
+                        };
+                        dgvShow.Rows.Add(dgvShow.Rows.Count + 1, txtFeeName.Text, newResult.CardGroupName, newResult.TimeIn_List, newResult.TimeOut_List, newResult.Monney_List);
                     }
                     else
                     {
-                        txbMoney.Text = "Invalid fee amount";
+                        txbMoney.Text = "Mời thử lại";
                     }
-                    FeeTest_Model newResult = new FeeTest_Model()
-                    {
-                        Stt = dgvShow.Rows.Count + 1,
-                        FeeName = "XuanCuong",
-                        CardGroupName = cbbIdentityGroup.Text,
-                        TimeIn_List = dateTimeIn.ToString("dd/MM/yyyy HH:mm:ss"),
-                        TimeOut_List = dateTimeOut.ToString("dd/MM/yyyy HH:mm:ss"),
-                        Monney_List = feeAmount.ToString("N0", num),
-                    };
-                    //LstTest.Add(newResult);
 
-                    dgvShow.Rows.Add(dgvShow.Rows.Count + 1, "XuanCuong", newResult.CardGroupName, newResult.TimeIn_List, newResult.TimeOut_List, newResult.Monney_List);
-                    //DataSet();
                 }
                 else
                 {
@@ -165,7 +163,7 @@ namespace iParkingv5.FeeTest
             if (dgvShow.Rows.Count > 1)
             {
                 // Lặp ngược từ hàng cuối đến hàng thứ hai và xóa từng hàng
-                for (int i = dgvShow.Rows.Count-1; i >= 0; i--)
+                for (int i = dgvShow.Rows.Count - 1; i >= 0; i--)
                 {
                     dgvShow.Rows.RemoveAt(i);
                 }

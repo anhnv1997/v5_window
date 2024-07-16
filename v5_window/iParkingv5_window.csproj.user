@@ -40,12 +40,6 @@
     <Compile Update="Forms\SystemForms\frmSelectLaneMode.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Usercontrols\BuildControls\ucLoading.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Usercontrols\BuildControls\ucNotify.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Update="Usercontrols\CameraConfiguration\frmCameraConfigSet.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -57,9 +51,6 @@
     </Compile>
     <Compile Update="Usercontrols\LaneConfiguration\ucLaneDirectionConfig.cs">
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Usercontrols\lblPageIndex.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Update="Usercontrols\Payments\ucPayment.cs">
       <SubType>UserControl</SubType>
@@ -94,9 +85,6 @@
     <Compile Update="Forms\ReportForms\frmReportInOut.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Usercontrols\MovablePictureBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Update="Usercontrols\CameraConfiguration\ucCameraConfig.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -125,9 +113,6 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Usercontrols\ucLastEventInfo.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Usercontrols\ucPages.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Usercontrols\ucViewGrid.cs">

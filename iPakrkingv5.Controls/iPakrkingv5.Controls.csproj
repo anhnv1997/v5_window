@@ -38,6 +38,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Update="Controls\Buttons\BtnSetting.cs" />
+    <Compile Update="Forms\frmViewImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

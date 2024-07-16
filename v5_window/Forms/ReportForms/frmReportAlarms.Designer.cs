@@ -1,4 +1,7 @@
 ﻿using iPakrkingv5.Controls.Controls.Buttons;
+using iPakrkingv5.Controls.Usercontrols;
+using iParkingv5_window.Usercontrols;
+using iParkingv5_window.Usercontrols.BuildControls;
 
 namespace iParkingv5_window.Forms.ReportForms
 {
@@ -37,20 +40,20 @@ namespace iParkingv5_window.Forms.ReportForms
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmReportAlarms));
             cbLane = new ComboBox();
             cbVehicleType = new ComboBox();
-            ucEventInInfo1 = new Usercontrols.ucEventInInfo();
-            ucNotify1 = new Usercontrols.BuildControls.ucNotify();
-            ucLoading1 = new Usercontrols.BuildControls.ucLoading();
+            ucEventInInfo1 = new ucEventInInfo();
+            ucNotify1 = new ucNotify();
+            ucLoading1 = new ucLoading();
             lblKeyword = new Label();
             btnExportExcel = new BtnExcel();
             lblLane = new Label();
             lblVehicleType = new Label();
             btnCancel = new LblCancel();
             btnSearch = new BtnSearch();
-            ucPages1 = new Usercontrols.ucPages();
+            ucPages1 = new ucPages();
             lblTotalEvents = new Label();
             tablePic = new TableLayoutPanel();
-            picOverviewImageIn = new Usercontrols.MovablePictureBox();
-            picVehicleImageIn = new Usercontrols.MovablePictureBox();
+            picOverviewImageIn = new MovablePictureBox();
+            picVehicleImageIn = new MovablePictureBox();
             panelData = new Panel();
             cbAbNormalType = new ComboBox();
             lblAbNormalType = new Label();
@@ -120,7 +123,7 @@ namespace iParkingv5_window.Forms.ReportForms
             ucNotify1.Message = "Nội dung thông báo";
             ucNotify1.MinimumSize = new Size(291, 267);
             ucNotify1.Name = "ucNotify1";
-            ucNotify1.NotiType = Usercontrols.BuildControls.ucNotify.EmNotiType.Information;
+            ucNotify1.NotiType = ucNotify.EmNotiType.Information;
             ucNotify1.Size = new Size(291, 267);
             ucNotify1.TabIndex = 63;
             // 
@@ -552,20 +555,20 @@ namespace iParkingv5_window.Forms.ReportForms
 
         private ComboBox cbLane;
         private ComboBox cbVehicleType;
-        private Usercontrols.ucEventInInfo ucEventInInfo1;
-        private Usercontrols.BuildControls.ucNotify ucNotify1;
-        private Usercontrols.BuildControls.ucLoading ucLoading1;
+        private ucEventInInfo ucEventInInfo1;
+        private ucNotify ucNotify1;
+        private ucLoading ucLoading1;
         private Label lblKeyword;
         private BtnExcel btnExportExcel;
         private Label lblLane;
         private Label lblVehicleType;
         private LblCancel btnCancel;
         private BtnSearch btnSearch;
-        private Usercontrols.ucPages ucPages1;
+        private ucPages ucPages1;
         private Label lblTotalEvents;
         private TableLayoutPanel tablePic;
-        private Usercontrols.MovablePictureBox picOverviewImageIn;
-        private Usercontrols.MovablePictureBox picVehicleImageIn;
+        private MovablePictureBox picOverviewImageIn;
+        private MovablePictureBox picVehicleImageIn;
         private Panel panelData;
         private Label lblStartTime;
         private Label lblEndTime;
