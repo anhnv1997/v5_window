@@ -190,7 +190,7 @@ namespace v5_IScale.Forms.ReportForms
             string plateNumber = txtPlateNumber.Text;
             string userCode = txtUsername.Text;
             string goodsTypeId = ((ListItem)cbGoodsType.SelectedItem)?.Name ?? "";
-            return await KzScaleApiHelper.GetWeighingActionDetails(startTime, endTime, plateNumber, userCode, goodsTypeId);
+            return await KzScaleApiHelper.GetWeighingActionInvoiceDetails(startTime, endTime, plateNumber, userCode, goodsTypeId);
         }
         private void DisplayInGridview(List<WeighingAction> data)
         {
@@ -221,14 +221,14 @@ namespace v5_IScale.Forms.ReportForms
                         string scaleTime = orderData[i].createdUtcTime?.ToString(UltilityManagement.fullDayFormat) ?? "";
                         string plateNumber = orderData[i].plateNumber;
                         var weight = orderData[i].Weight.ToString("#,0");
-                        string goodType = orderData[i].weighingType.Name;
+                        string goodType = orderData[i].weighingTypeName;
                         string userAction = orderData[i].createdBy;
                         string vehicleImage = "";
 
-                        string invoiceNo = "";
+                        string invoiceNo = orderData[i].invoiceCode;
                         string templateCode = StaticPool.scaleSymbolCode;
                         string charge = TextFormatingTool.GetMoneyFormat(orderData[i].Charge.ToString());
-                        string firstScaleImage = orderData.Count > 0 ? string.Join(";", orderData[i].FileKeys) : "";
+                        string firstScaleImage = orderData.Count > 0 ? string.Join(";", orderData[i].FileKeys?? new List<string>()) : "";
                         dgvData.Rows.Add(item.Key, dgvData.Rows.Count + 1, scaleTime, plateNumber, weight, i + 1, charge, goodType,
                                          userAction, templateCode, invoiceNo, vehicleImage, firstScaleImage, secondScaleImage);
                     }

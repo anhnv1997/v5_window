@@ -707,7 +707,7 @@ namespace iParkingv5_window.Forms.ReportForms
                 row.Cells[i++].Value = GetIdentityGroupName(item.IdentityGroupId);//6
 
                 row.Cells[i++].Value = TransactionType.GetTransactionTypeStr(item.TransactionType); //9
-                row.Cells[i++].Value = item.TransactionCode.Contains("-0-0") ? "" : item.TransactionCode;              //10
+                row.Cells[i++].Value = (item.TransactionCode??"").Contains("-0-0") ? "" : item.TransactionCode;              //10
 
                 count_by_countries[countryCode][TransactionType.GetTransactionTypeStr(item.TransactionType)] =
                     count_by_countries[countryCode][TransactionType.GetTransactionTypeStr(item.TransactionType)] + 1;

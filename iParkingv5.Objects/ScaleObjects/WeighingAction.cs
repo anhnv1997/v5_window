@@ -44,5 +44,7 @@ namespace iParkingv5.Objects.ScaleObjects
         public float Charge { get; set; }
         public string createdBy { get; set; }
         public string InvoiceId { get; set; }
+        public string invoiceCode { get; set; }
+        public string weighingTypeName { get; set; }
     }
 }

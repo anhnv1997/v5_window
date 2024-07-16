@@ -162,11 +162,11 @@ namespace iParkingv5.ApiManager.KzScaleApis
 
 
             List<FilterModel> filterModels = new List<FilterModel>()
-                        {
-                            new FilterModel("createdUtc", EmPageSearchType.DATETIME, startTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), EmOperation._gte),
-                            new FilterModel("createdUtc", EmPageSearchType.DATETIME, endTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"),  EmOperation._lte),
-                            new FilterModel("createdBy", EmPageSearchType.TEXT, user_code,  EmOperation._contains),
-                        };
+            {
+                new FilterModel("createdUtc", EmPageSearchType.DATETIME, startTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), EmOperation._gte),
+                new FilterModel("createdUtc", EmPageSearchType.DATETIME, endTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"),  EmOperation._lte),
+                new FilterModel("createdBy", EmPageSearchType.TEXT, user_code,  EmOperation._contains),
+            };
             if (!string.IsNullOrEmpty(weighingFormId))
             {
                 filterModels.Add(new FilterModel("weighingType.id", EmPageSearchType.GUID, weighingFormId, EmOperation._in));
@@ -209,6 +209,53 @@ namespace iParkingv5.ApiManager.KzScaleApis
             }
             return new List<WeighingAction>();
         }
+
+        public static async Task<List<WeighingAction>> GetWeighingActionInvoiceDetails(DateTime startTime, DateTime endTime, string plateNumber = "",
+                                        string user_code = "", string weighingFormId = "", int is_weighing_bill = 0, string id = "", string eventInId = "")
+        {
+            if (string.IsNullOrEmpty(server))
+            {
+                return new List<WeighingAction>();
+            }
+            StandardlizeServerName();
+            string apiUrl = server + KzScaleUrlManagement.GetReportingWeighingHistory();
+
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+
+            var data = new
+            {
+                paging = false,
+                pageIndex = 0,
+                pageSize =1,
+                filter = new
+                {
+                    fromUtc = startTime.ToUniversalTime().ToString("MM/dd/yyyy HH:mm:ss"),
+                    toUtc = endTime.ToUniversalTime().ToString("MM/dd/yyyy HH:mm:ss"),
+                    upns = new List<string>(),
+                    keyword = plateNumber,
+                    weighingTypeIds = new List<string>(),
+                }
+            };
+            if (!string.IsNullOrEmpty(user_code))
+            {
+                data.filter.upns.Add(user_code);
+            }
+            if (!string.IsNullOrEmpty(weighingFormId))
+            {
+                data.filter.weighingTypeIds.Add(weighingFormId);
+            }
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                return NewtonSoftHelper<KzParkingv5BaseResponse<List<WeighingAction>>>.GetBaseResponse(response.Item1)?.data ?? new List<WeighingAction>();
+            }
+            return new List<WeighingAction>();
+        }
+
         public static async Task<WeighingAction> UpdateWeighingActionDetailById(string weighingActionDetailId, string weighingTypeId)
         {
             if (string.IsNullOrEmpty(server))

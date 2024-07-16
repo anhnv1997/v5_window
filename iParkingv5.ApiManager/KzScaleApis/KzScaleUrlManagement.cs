@@ -12,6 +12,7 @@ namespace iParkingv5.ApiManager.KzScaleApis
 
         public static string CreateWeighingAction() => "weighing";
         public static string GetAllWeighingHistory() => "weighing/search";
+        public static string GetReportingWeighingHistory() => "reporting/weighing";
         public static string UpdatePlate(string id) => $"weighing/{id}";
         public static string updateWeighingActionDetailById(string id) => $"weighing/{id}";
 
