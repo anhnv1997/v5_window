@@ -31,13 +31,13 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmReportScaleDetail));
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmReportScaleDetail));
             label1 = new Label();
             label2 = new Label();
             dtpStartTime = new DateTimePicker();
@@ -49,6 +49,21 @@
             cbGoodsType = new ComboBox();
             txtUsername = new TextBox();
             dgvData = new DataGridView();
+            parking_event_in_id = new DataGridViewTextBoxColumn();
+            Column1 = new DataGridViewTextBoxColumn();
+            time = new DataGridViewTextBoxColumn();
+            plate_number = new DataGridViewTextBoxColumn();
+            weight = new DataGridViewTextBoxColumn();
+            index = new DataGridViewTextBoxColumn();
+            charge = new DataGridViewTextBoxColumn();
+            weighing_type_name = new DataGridViewTextBoxColumn();
+            created_by = new DataGridViewTextBoxColumn();
+            invoice_code = new DataGridViewTextBoxColumn();
+            invoice_no = new DataGridViewTextBoxColumn();
+            vehicleImage = new DataGridViewTextBoxColumn();
+            firstScaleImage = new DataGridViewTextBoxColumn();
+            secondScaleImage = new DataGridViewTextBoxColumn();
+            invoice_id = new DataGridViewTextBoxColumn();
             groupBox1 = new GroupBox();
             btnExcel = new Button();
             btnSearch = new Button();
@@ -61,22 +76,9 @@
             label6 = new Label();
             picOverview = new iParkingv5_window.Usercontrols.MovablePictureBox();
             groupBox2 = new GroupBox();
+            btnSendInvoice = new Button();
             btnPrintInternetEInvoice = new Button();
             btnPrintEInvoice = new Button();
-            Column13 = new DataGridViewTextBoxColumn();
-            Column1 = new DataGridViewTextBoxColumn();
-            Column2 = new DataGridViewTextBoxColumn();
-            Column4 = new DataGridViewTextBoxColumn();
-            Column5 = new DataGridViewTextBoxColumn();
-            index = new DataGridViewTextBoxColumn();
-            Column7 = new DataGridViewTextBoxColumn();
-            Column8 = new DataGridViewTextBoxColumn();
-            Column9 = new DataGridViewTextBoxColumn();
-            Column3 = new DataGridViewTextBoxColumn();
-            Column14 = new DataGridViewTextBoxColumn();
-            vehicleImage = new DataGridViewTextBoxColumn();
-            firstScaleImage = new DataGridViewTextBoxColumn();
-            secondScaleImage = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgvData).BeginInit();
             groupBox1.SuspendLayout();
             panel1.SuspendLayout();
@@ -202,7 +204,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvData.Columns.AddRange(new DataGridViewColumn[] { Column13, Column1, Column2, Column4, Column5, index, Column7, Column8, Column9, Column3, Column14, vehicleImage, firstScaleImage, secondScaleImage });
+            dgvData.Columns.AddRange(new DataGridViewColumn[] { parking_event_in_id, Column1, time, plate_number, weight, index, charge, weighing_type_name, created_by, invoice_code, invoice_no, vehicleImage, firstScaleImage, secondScaleImage, invoice_id });
             dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle9.BackColor = SystemColors.Window;
             dataGridViewCellStyle9.Font = new Font("Segoe UI", 12F);
@@ -223,6 +225,129 @@
             dgvData.Size = new Size(1198, 316);
             dgvData.TabIndex = 5;
             dgvData.CellClick += dgvData_CellClick;
+            // 
+            // parking_event_in_id
+            // 
+            parking_event_in_id.HeaderText = "parkingEventId";
+            parking_event_in_id.Name = "parking_event_in_id";
+            parking_event_in_id.ReadOnly = true;
+            parking_event_in_id.Visible = false;
+            parking_event_in_id.Width = 143;
+            // 
+            // Column1
+            // 
+            Column1.HeaderText = "STT";
+            Column1.Name = "Column1";
+            Column1.ReadOnly = true;
+            Column1.Width = 72;
+            // 
+            // time
+            // 
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            time.DefaultCellStyle = dataGridViewCellStyle3;
+            time.HeaderText = "Giờ cân";
+            time.Name = "time";
+            time.ReadOnly = true;
+            time.Width = 102;
+            // 
+            // plate_number
+            // 
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            plate_number.DefaultCellStyle = dataGridViewCellStyle4;
+            plate_number.HeaderText = "Biển số";
+            plate_number.Name = "plate_number";
+            plate_number.ReadOnly = true;
+            // 
+            // weight
+            // 
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Font = new Font("Digital-7", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            weight.DefaultCellStyle = dataGridViewCellStyle5;
+            weight.HeaderText = "Khối lượng";
+            weight.Name = "weight";
+            weight.ReadOnly = true;
+            weight.Width = 130;
+            // 
+            // index
+            // 
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle6.Font = new Font("Digital-7", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            index.DefaultCellStyle = dataGridViewCellStyle6;
+            index.HeaderText = "STT cân";
+            index.Name = "index";
+            index.ReadOnly = true;
+            index.Width = 103;
+            // 
+            // charge
+            // 
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleRight;
+            charge.DefaultCellStyle = dataGridViewCellStyle7;
+            charge.HeaderText = "Phí cân";
+            charge.Name = "charge";
+            charge.ReadOnly = true;
+            charge.Width = 101;
+            // 
+            // weighing_type_name
+            // 
+            weighing_type_name.HeaderText = "Loại hàng";
+            weighing_type_name.Name = "weighing_type_name";
+            weighing_type_name.ReadOnly = true;
+            weighing_type_name.Width = 120;
+            // 
+            // created_by
+            // 
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
+            created_by.DefaultCellStyle = dataGridViewCellStyle8;
+            created_by.HeaderText = "Người cân";
+            created_by.Name = "created_by";
+            created_by.ReadOnly = true;
+            created_by.Width = 125;
+            // 
+            // invoice_code
+            // 
+            invoice_code.HeaderText = "Mẫu hóa đơn";
+            invoice_code.Name = "invoice_code";
+            invoice_code.ReadOnly = true;
+            invoice_code.Width = 146;
+            // 
+            // invoice_no
+            // 
+            invoice_no.HeaderText = "Số hóa đơn";
+            invoice_no.Name = "invoice_no";
+            invoice_no.ReadOnly = true;
+            invoice_no.Width = 131;
+            // 
+            // vehicleImage
+            // 
+            vehicleImage.HeaderText = "vehicleInImage";
+            vehicleImage.Name = "vehicleImage";
+            vehicleImage.ReadOnly = true;
+            vehicleImage.Visible = false;
+            vehicleImage.Width = 163;
+            // 
+            // firstScaleImage
+            // 
+            firstScaleImage.HeaderText = "firstScaleImage";
+            firstScaleImage.Name = "firstScaleImage";
+            firstScaleImage.ReadOnly = true;
+            firstScaleImage.Visible = false;
+            firstScaleImage.Width = 163;
+            // 
+            // secondScaleImage
+            // 
+            secondScaleImage.HeaderText = "secondScaleImage";
+            secondScaleImage.Name = "secondScaleImage";
+            secondScaleImage.ReadOnly = true;
+            secondScaleImage.Visible = false;
+            secondScaleImage.Width = 187;
+            // 
+            // invoice_id
+            // 
+            invoice_id.HeaderText = "invoice_id";
+            invoice_id.Name = "invoice_id";
+            invoice_id.ReadOnly = true;
+            invoice_id.Visible = false;
+            invoice_id.Width = 123;
             // 
             // groupBox1
             // 
@@ -328,9 +453,9 @@
             label7.Location = new Point(0, 0);
             label7.Margin = new Padding(4, 0, 4, 0);
             label7.Name = "label7";
-            label7.Size = new Size(114, 20);
+            label7.Size = new Size(152, 20);
             label7.TabIndex = 0;
-            label7.Text = "ẢNH XE CÂN 1";
+            label7.Text = "ẢNH PHƯƠNG TIỆN";
             // 
             // picVehicle
             // 
@@ -385,6 +510,7 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(btnSendInvoice);
             groupBox2.Controls.Add(btnPrintInternetEInvoice);
             groupBox2.Controls.Add(btnPrintEInvoice);
             groupBox2.Dock = DockStyle.Top;
@@ -395,6 +521,21 @@
             groupBox2.TabIndex = 10;
             groupBox2.TabStop = false;
             groupBox2.Text = "In phiếu";
+            // 
+            // btnSendInvoice
+            // 
+            btnSendInvoice.AutoSize = true;
+            btnSendInvoice.Font = new Font("Segoe UI", 14F);
+            btnSendInvoice.Image = (Image)resources.GetObject("btnSendInvoice.Image");
+            btnSendInvoice.Location = new Point(392, 27);
+            btnSendInvoice.Name = "btnSendInvoice";
+            btnSendInvoice.Size = new Size(183, 41);
+            btnSendInvoice.TabIndex = 9;
+            btnSendInvoice.Text = "Gửi hóa đơn";
+            btnSendInvoice.TextAlign = ContentAlignment.MiddleRight;
+            btnSendInvoice.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnSendInvoice.UseVisualStyleBackColor = true;
+            btnSendInvoice.Visible = false;
             // 
             // btnPrintInternetEInvoice
             // 
@@ -425,121 +566,6 @@
             btnPrintEInvoice.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnPrintEInvoice.UseVisualStyleBackColor = true;
             btnPrintEInvoice.Click += btnPrintEInvoice_Click;
-            // 
-            // Column13
-            // 
-            Column13.HeaderText = "parkingEventId";
-            Column13.Name = "Column13";
-            Column13.ReadOnly = true;
-            Column13.Visible = false;
-            Column13.Width = 143;
-            // 
-            // Column1
-            // 
-            Column1.HeaderText = "STT";
-            Column1.Name = "Column1";
-            Column1.ReadOnly = true;
-            Column1.Width = 72;
-            // 
-            // Column2
-            // 
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-            Column2.DefaultCellStyle = dataGridViewCellStyle3;
-            Column2.HeaderText = "Giờ cân";
-            Column2.Name = "Column2";
-            Column2.ReadOnly = true;
-            Column2.Width = 102;
-            // 
-            // Column4
-            // 
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            Column4.DefaultCellStyle = dataGridViewCellStyle4;
-            Column4.HeaderText = "Biển số";
-            Column4.Name = "Column4";
-            Column4.ReadOnly = true;
-            // 
-            // Column5
-            // 
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle5.Font = new Font("Digital-7", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Column5.DefaultCellStyle = dataGridViewCellStyle5;
-            Column5.HeaderText = "Khối lượng";
-            Column5.Name = "Column5";
-            Column5.ReadOnly = true;
-            Column5.Width = 130;
-            // 
-            // index
-            // 
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle6.Font = new Font("Digital-7", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            index.DefaultCellStyle = dataGridViewCellStyle6;
-            index.HeaderText = "STT cân";
-            index.Name = "index";
-            index.ReadOnly = true;
-            index.Width = 103;
-            // 
-            // Column7
-            // 
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleRight;
-            Column7.DefaultCellStyle = dataGridViewCellStyle7;
-            Column7.HeaderText = "Phí cân";
-            Column7.Name = "Column7";
-            Column7.ReadOnly = true;
-            Column7.Width = 101;
-            // 
-            // Column8
-            // 
-            Column8.HeaderText = "Loại hàng";
-            Column8.Name = "Column8";
-            Column8.ReadOnly = true;
-            Column8.Width = 120;
-            // 
-            // Column9
-            // 
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
-            Column9.DefaultCellStyle = dataGridViewCellStyle8;
-            Column9.HeaderText = "Người cân";
-            Column9.Name = "Column9";
-            Column9.ReadOnly = true;
-            Column9.Width = 125;
-            // 
-            // Column3
-            // 
-            Column3.HeaderText = "Mẫu hóa đơn";
-            Column3.Name = "Column3";
-            Column3.ReadOnly = true;
-            Column3.Width = 146;
-            // 
-            // Column14
-            // 
-            Column14.HeaderText = "Số hóa đơn";
-            Column14.Name = "Column14";
-            Column14.ReadOnly = true;
-            Column14.Width = 131;
-            // 
-            // vehicleImage
-            // 
-            vehicleImage.HeaderText = "vehicleInImage";
-            vehicleImage.Name = "vehicleImage";
-            vehicleImage.ReadOnly = true;
-            vehicleImage.Visible = false;
-            vehicleImage.Width = 163;
-            // 
-            // firstScaleImage
-            // 
-            firstScaleImage.HeaderText = "firstScaleImage";
-            firstScaleImage.Name = "firstScaleImage";
-            firstScaleImage.ReadOnly = true;
-            firstScaleImage.Visible = false;
-            firstScaleImage.Width = 163;
-            // 
-            // secondScaleImage
-            // 
-            secondScaleImage.HeaderText = "secondScaleImage";
-            secondScaleImage.Name = "secondScaleImage";
-            secondScaleImage.ReadOnly = true;
-            secondScaleImage.Visible = false;
-            secondScaleImage.Width = 187;
             // 
             // frmReportScaleDetail
             // 
@@ -601,19 +627,21 @@
         private DataGridViewTextBoxColumn Column10;
         private DataGridViewTextBoxColumn Column11;
         private DataGridViewTextBoxColumn Column12;
-        private DataGridViewTextBoxColumn Column13;
+        private DataGridViewTextBoxColumn parking_event_in_id;
         private DataGridViewTextBoxColumn Column1;
-        private DataGridViewTextBoxColumn Column2;
-        private DataGridViewTextBoxColumn Column4;
-        private DataGridViewTextBoxColumn Column5;
+        private DataGridViewTextBoxColumn time;
+        private DataGridViewTextBoxColumn plate_number;
+        private DataGridViewTextBoxColumn weight;
         private DataGridViewTextBoxColumn index;
-        private DataGridViewTextBoxColumn Column7;
-        private DataGridViewTextBoxColumn Column8;
-        private DataGridViewTextBoxColumn Column9;
-        private DataGridViewTextBoxColumn Column3;
-        private DataGridViewTextBoxColumn Column14;
+        private DataGridViewTextBoxColumn charge;
+        private DataGridViewTextBoxColumn weighing_type_name;
+        private DataGridViewTextBoxColumn created_by;
+        private DataGridViewTextBoxColumn invoice_code;
+        private DataGridViewTextBoxColumn invoice_no;
         private DataGridViewTextBoxColumn vehicleImage;
         private DataGridViewTextBoxColumn firstScaleImage;
         private DataGridViewTextBoxColumn secondScaleImage;
+        private DataGridViewTextBoxColumn invoice_id;
+        private Button btnSendInvoice;
     }
 }

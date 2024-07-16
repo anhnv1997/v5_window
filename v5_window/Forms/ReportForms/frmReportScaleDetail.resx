@@ -117,10 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="Column3.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="invoice_code.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="Column14.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="invoice_no.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="invoice_id.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
@@ -162,6 +165,18 @@
         zFv+ykeDhS6/O9/m7TFr/gz2jrK7ORektNJPnci7RB4S+ZTIv4m8pbyPU4f7WK9Gm7Z3hHItbSPPVzcP
         fMpv8KJa5zLNvUQNyT4y4xyzzfNiWgHSPN0FTb4Vakj2+S+KSC67udHbMb0Ic4O3ffmD3lw1JPskixBx
         57QihvLsnrWqe3bIcwUXi7hVmq/A5itWp2eXP7dD8xeqwzkUJtNvSY6qsisHCR0AAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="btnSendInvoice.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAZdJREFUWEdj
+        GAWDGgS8/K8c8Oz/MiDeTSZeGvzyvxLUONJBwPP/c4GG/KcQz4EaRzoAal6FZhg5eBXUOBJA+VU5htIb
+        oS7Xfh3DYiBJGGQGyCyGosuyUNOJAGXXlwHxf9MDn7AaSgoGmQEyi6H0+lKo6USA8uurqO4AkJlEg4Fw
+        QEZJg1huRdN1IP5PS5xT0XQtt7JNFGotAuRWNgdh00ATDLQLai0C5FQ0hmJVTAMMsgtqLQLQygHT5i/7
+        v2Pfkf9VrX1wMbo5IK+y6f/hJ+//++5983/bvkNwcbqGwK5jZ/4fvP/m/6TZi+FidHUANjzqgMHvAN/g
+        yP/q6ur/ZYsX/Zec9YAiDDIDZJZfSBQpDoj4r6am9t+oc+F/s1XnKMIgM0Bm+YVEEu8AGI48eBVrBUMK
+        BpmBbu6oA7A6wNnLz8PV0/c/MvbZeASroaRgkBno5gKxG9RaBHBwcGBx8/Jtd/XyXQXDPvsuPcZmKCkY
+        ZAaymUDLW0NDQ5mh1uIHA98sh3RMFgAxqHlODl5AUcdkFNAeMDAAAC2qsQJQjjOTAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="btnPrintInternetEInvoice.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

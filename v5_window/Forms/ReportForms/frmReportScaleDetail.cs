@@ -2,6 +2,7 @@
 using iParkingv5.ApiManager.KzScaleApis;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Databases;
+using iParkingv5.Objects.Invoices;
 using iParkingv5.Objects.ScaleObjects;
 using iParkingv5_window;
 using iParkingv5_window.Forms.DataForms;
@@ -39,6 +40,7 @@ namespace v5_IScale.Forms.ReportForms
         {
             try
             {
+                btnSendInvoice.Click += BtnSendInvoice_Click;
                 dtpStartTime.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
                 dtpEndTime.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
 
@@ -50,6 +52,7 @@ namespace v5_IScale.Forms.ReportForms
             {
             }
         }
+
         private void frmReportScaleWithInvoice_KeyDown(object? sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Return)
@@ -72,6 +75,31 @@ namespace v5_IScale.Forms.ReportForms
             {
                 LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
             }
+        }
+        private async void BtnSendInvoice_Click(object? sender, EventArgs e)
+        {
+            string eventInId = dgvData.CurrentRow.Cells["parking_event_in_id"].Value?.ToString() ?? "";
+            string invoiceId = dgvData.CurrentRow.Cells["invoice_id"].Value?.ToString() ?? "";
+            string invoiceNo = dgvData.CurrentRow.Cells["invoice_no"].Value?.ToString() ?? "";
+
+            //Hóa đơn lỗi || chờ thì gửi lại theo invoice_id
+            //Hóa đơn chưa gửi thì tạo mới theo event_in_id
+            bool isErrorInvoice = !string.IsNullOrWhiteSpace(invoiceId) && string.IsNullOrEmpty(invoiceNo);
+            InvoiceResponse? response = null;
+            if (isErrorInvoice)
+            {
+                response = await KzScaleApiHelper.CreateInvoice(invoiceId, true);
+            }
+            else
+            {
+                response = await KzScaleApiHelper.CreateInvoice(eventInId, true);
+            }
+            if (string.IsNullOrEmpty(response.id) || response.id == Guid.Empty.ToString())
+            {
+                MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            btnSearch.PerformClick();
         }
         private async void btnPrintEInvoice_Click(object sender, EventArgs e)
         {
@@ -147,7 +175,10 @@ namespace v5_IScale.Forms.ReportForms
                 string trafficId = "";
                 string vehicleImage = "";
                 string firstScaleImage = dgvData.CurrentRow.Cells["firstScaleImage"].Value.ToString() ?? "";
-                //string secondScaleImage = dgvData.CurrentRow.Cells[dgvData.ColumnCount - 1].Value.ToString() ?? "";
+                string invoiceId = dgvData.CurrentRow.Cells["invoice_id"].Value?.ToString() ?? "";
+
+                btnSendInvoice.Visible = string.IsNullOrEmpty(invoiceId) || invoiceId == Guid.Empty.ToString();
+
                 if (!string.IsNullOrEmpty(firstScaleImage))
                 {
                     string[] firstScaleImages = firstScaleImage.Split(";");
@@ -162,18 +193,6 @@ namespace v5_IScale.Forms.ReportForms
                         }));
                     }
                 }
-                //if (!string.IsNullOrEmpty(secondScaleImage))
-                //{
-                //    string[] secondScaleImages = secondScaleImage.Split(";");
-                //    if (secondScaleImages.Length > 1)
-                //    {
-                //        string tempPath = await MinioHelper.GetImage(secondScaleImages[1]);
-                //        this.Invoke(new Action(() =>
-                //        {
-                //            picSecondWeight.LoadAsync(tempPath);
-                //        }));
-                //    }
-                //}
             }
             catch (Exception)
             {
@@ -225,54 +244,15 @@ namespace v5_IScale.Forms.ReportForms
                         string userAction = orderData[i].createdBy;
                         string vehicleImage = "";
 
-                        string invoiceNo = orderData[i].invoiceCode;
+                        string invoiceNo = orderData[i].invoiceCode ?? "";
                         string templateCode = StaticPool.scaleSymbolCode;
                         string charge = TextFormatingTool.GetMoneyFormat(orderData[i].Charge.ToString());
-                        string firstScaleImage = orderData.Count > 0 ? string.Join(";", orderData[i].FileKeys?? new List<string>()) : "";
+                        string firstScaleImage = orderData.Count > 0 ? string.Join(";", orderData[i].FileKeys ?? new List<string>()) : "";
+                        string invoiceId = orderData[i].InvoiceId ?? "";
                         dgvData.Rows.Add(item.Key, dgvData.Rows.Count + 1, scaleTime, plateNumber, weight, i + 1, charge, goodType,
-                                         userAction, templateCode, invoiceNo, vehicleImage, firstScaleImage, secondScaleImage);
+                                         userAction, templateCode, invoiceNo, vehicleImage, firstScaleImage, secondScaleImage, invoiceId);
                     }
                 }
-
-                //foreach (WeighingAction item in data)
-                //{
-                //    string firstScaleTime = "";
-                //    string secondScaleTime = "";
-                //    string largerThan2TimesScale = "";
-                //    string plateNumber = "";
-                //    string firstWeightScale = "";
-                //    string secondWeightScale = "";
-                //    string goodType = "";
-                //    plateNumber = item.plateNumber;
-                //    if (item.weighing_action_detail.Count > 0)
-                //    {
-                //        firstScaleTime = item.weighing_action_detail[0].CreatedAtTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
-                //        firstWeightScale = item.weighing_action_detail[0].Weight.ToString("#,0");
-                //        goodType = StaticPool.WeighingFormCollection.GetObjectById(item.weighing_action_detail[0].Weighting_form_id ?? "")?.Name ?? "";
-                //    }
-                //    if (item.weighing_action_detail.Count > 1)
-                //    {
-                //        secondScaleTime = item.weighing_action_detail[1].CreatedAtTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
-                //        secondWeightScale = item.weighing_action_detail[1].Weight.ToString("#,0");
-                //    }
-                //    if (item.weighing_action_detail.Count > 2)
-                //    {
-                //        for (int i = 1; i < item.weighing_action_detail.Count; i++)
-                //        {
-                //            string tempTime = item.weighing_action_detail[i].CreatedAtTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
-                //            string tempWeight = item.weighing_action_detail[i].Weight.ToString("#,0");
-                //            largerThan2TimesScale += "Lần " + item.weighing_action_detail[i].Order_by + " : " + tempTime + " - " + tempWeight + "\r\n";
-                //        }
-                //    }
-                //    largerThan2TimesScale = largerThan2TimesScale.TrimEnd();
-                //    string userAction = item.weighing_action_detail.Count > 0 ? item.weighing_action_detail[0].User_code : "";
-                //    string vehicleImage = "";
-                //    string firstScaleImage = item.weighing_action_detail.Count > 0 ? item.weighing_action_detail[0].list_image : "";
-                //    string secondScaleImage = item.weighing_action_detail.Count > 1 ? item.weighing_action_detail[1].list_image : "";
-                //    dgvData.Rows.Add(item.eventInId, dgvData.Rows.Count + 1, firstScaleTime, secondScaleTime,
-                //                     plateNumber, firstWeightScale, secondWeightScale, largerThan2TimesScale, goodType,
-                //                     userAction, vehicleImage, firstScaleImage, secondScaleImage);
-                //}
             }));
         }
         #endregion End Private Function
@@ -424,7 +404,6 @@ namespace v5_IScale.Forms.ReportForms
                 pictureBox.Image = defaultImg;
             }
         }
-
         #endregion End Public Function
     }
 }

@@ -370,7 +370,6 @@ namespace iParkingv5.ApiManager.KzScaleApis
             };
             var data = new
             {
-                //WeighingActionDetailID = weighingActionDetailId,
                 targetId = weighingActionDetailId,
                 send = isSentNow ? 1 : 0,
                 provider = (int)EmInvoiceProvider.Viettel,

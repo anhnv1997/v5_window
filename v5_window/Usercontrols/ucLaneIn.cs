@@ -2164,7 +2164,7 @@ namespace iParkingv5_window.Usercontrols
             if (string.IsNullOrEmpty(this.WeighingActionDetail.InvoiceId))
             {
                 var invoiceData = await KzScaleApiHelper.CreateInvoice(this.WeighingActionDetail.Id, true);
-                if (string.IsNullOrEmpty(invoiceData.id))
+                if (string.IsNullOrEmpty(invoiceData.id) || invoiceData.id == Guid.Empty.ToString())
                 {
                     MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
