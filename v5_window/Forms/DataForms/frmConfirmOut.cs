@@ -1,4 +1,5 @@
-﻿using iParkingv5.ApiManager.KzParkingv5Apis;
+﻿using IPaking.Ultility;
+using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Datas.Devices;
 using iParkingv5.Objects.Datas.parking;
@@ -41,11 +42,10 @@ namespace iParkingv5_window.Forms.DataForms
             this.identityIdIn = identityIdIn;
             this.laneId = laneId;
             this.fileKeys = fileKeys;
-            this.datetimeIn = datetimeIn?.ToString() ?? "";
+            this.datetimeIn = datetimeIn?.ToString(UltilityManagement.fullDayFormat) ?? "";
             this.charge = charge;
             this.updatePlate = detectedPlate;
             btnOk.Focus();
-            //this.Size = new Size(lblMessage.Width, lblMessage.Height + panelAction.Height + 100);
             this.Load += FrmConfirm_Load;
         }
 
@@ -117,7 +117,7 @@ namespace iParkingv5_window.Forms.DataForms
                 {
                     dgvEventInData.Rows.Clear();
                     dgvEventInData.Rows.Add("Thời gian vào", datetimeIn);
-                    dgvEventInData.Rows.Add("Thời gian ra", DateTime.Now.ToString());
+                    dgvEventInData.Rows.Add("Thời gian ra", DateTime.Now.ToString(UltilityManagement.fullDayFormat));
                     dgvEventInData.Rows.Add("Mã định danh", identityIn?.Code);
                     dgvEventInData.Rows.Add("Biển số vào", plateIn);
                     dgvEventInData.Rows.Add("Biển số Ra", detectedPlate);

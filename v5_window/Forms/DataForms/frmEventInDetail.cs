@@ -54,22 +54,16 @@ namespace iParkingv5_window.Forms.DataForms
 
         private async void FrmEventInDetail_Load(object? sender, EventArgs e)
         {
-            //var lane = await KzParkingApiHelper.GetLaneByIdAsync(laneId);
             var lane = (await AppData.ApiServer.GetLaneByIdAsync(laneId)).Item1;
-            //var identity = await KzParkingApiHelper.GetIdentityById(this.identityId);
             var identity = (await AppData.ApiServer.GetIdentityByIdAsync(this.identityId)).Item1;
 
             var identityGroup = (await AppData.ApiServer.GetIdentityGroupByIdAsync(this.cardGroupId)).Item1;
 
-            //var customer = await KzParkingApiHelper.GetCustomerById(this.customerId);
             var customer = (await AppData.ApiServer.GetCustomerByIdAsync(this.customerId)).Item1;
 
-            //var registerVehicle = await KzParkingApiHelper.GetRegisteredVehicleById(this.registerVehicleId);
             var registerVehicle = (await AppData.ApiServer.GetRegistedVehilceByIdAsync(this.registerVehicleId)).Item1;
 
-            //VehicleType vehicleType = await KzParkingApiHelper.GetVehicleTypeById(identityGroup?.VehicleTypeId.ToString());
             VehicleType.VehicleBaseType vehicleType = identityGroup.VehicleType;
-            //(await AppData.ApiServer.GetVehicleTypeByIdAsync(identityGroup?.VehicleType.Id.ToString())).Item1;
 
             txtPlate.Text = this.PlateNumber;
             lblLaneName.Text = lane?.name;

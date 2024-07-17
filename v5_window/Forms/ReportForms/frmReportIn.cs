@@ -390,7 +390,7 @@ namespace iParkingv5_window.Forms.ReportForms
                                         TransactionType.EmTransactionType.OutBound, true);
                                     var wbPrint = new WebBrowser();
                                     wbPrint.DocumentCompleted += WbPrint_DocumentCompleted;
-                                    wbPrint.DocumentText = GetPrintWarehoseContent(warehouse, identityName, currentPlateIn, DateTime.Parse(timeIn));
+                                    wbPrint.DocumentText = GetPrintWarehoseContent(warehouse, identityName, currentPlateIn, DateTime.ParseExact(timeIn, UltilityManagement.fullDayFormat, CultureInfo.InvariantCulture));
                                 }
                                 break;
                             }

@@ -78,7 +78,7 @@ namespace v5_IScale.Forms.ReportForms
         }
         private async void BtnSendInvoice_Click(object? sender, EventArgs e)
         {
-            string eventInId = dgvData.CurrentRow.Cells["parking_event_in_id"].Value?.ToString() ?? "";
+            string weighing_id = dgvData.CurrentRow.Cells["weighing_id"].Value?.ToString() ?? "";
             string invoiceId = dgvData.CurrentRow.Cells["invoice_id"].Value?.ToString() ?? "";
             string invoiceNo = dgvData.CurrentRow.Cells["invoice_no"].Value?.ToString() ?? "";
 
@@ -88,11 +88,11 @@ namespace v5_IScale.Forms.ReportForms
             InvoiceResponse? response = null;
             if (isErrorInvoice)
             {
-                response = await KzScaleApiHelper.CreateInvoice(invoiceId, true);
+                response = await KzScaleApiHelper.sendPendingEInvoice(invoiceId);
             }
             else
             {
-                response = await KzScaleApiHelper.CreateInvoice(eventInId, true);
+                response = await KzScaleApiHelper.CreateInvoice(weighing_id, true);
             }
             if (string.IsNullOrEmpty(response.id) || response.id == Guid.Empty.ToString())
             {
@@ -176,8 +176,10 @@ namespace v5_IScale.Forms.ReportForms
                 string vehicleImage = "";
                 string firstScaleImage = dgvData.CurrentRow.Cells["firstScaleImage"].Value.ToString() ?? "";
                 string invoiceId = dgvData.CurrentRow.Cells["invoice_id"].Value?.ToString() ?? "";
+                string invoice_no = dgvData.CurrentRow.Cells["invoice_no"].Value?.ToString() ?? "";
 
-                btnSendInvoice.Visible = string.IsNullOrEmpty(invoiceId) || invoiceId == Guid.Empty.ToString();
+                btnSendInvoice.Visible = (string.IsNullOrEmpty(invoiceId) || invoiceId == Guid.Empty.ToString()) ||
+                                         (!string.IsNullOrEmpty(invoiceId)&& string.IsNullOrEmpty(invoice_no));
 
                 if (!string.IsNullOrEmpty(firstScaleImage))
                 {
@@ -250,7 +252,7 @@ namespace v5_IScale.Forms.ReportForms
                         string firstScaleImage = orderData.Count > 0 ? string.Join(";", orderData[i].FileKeys ?? new List<string>()) : "";
                         string invoiceId = orderData[i].InvoiceId ?? "";
                         dgvData.Rows.Add(item.Key, dgvData.Rows.Count + 1, scaleTime, plateNumber, weight, i + 1, charge, goodType,
-                                         userAction, templateCode, invoiceNo, vehicleImage, firstScaleImage, secondScaleImage, invoiceId);
+                                         userAction, templateCode, invoiceNo, vehicleImage, firstScaleImage, secondScaleImage, invoiceId, orderData[i].Id);
                     }
                 }
             }));

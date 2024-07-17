@@ -64,6 +64,7 @@
             firstScaleImage = new DataGridViewTextBoxColumn();
             secondScaleImage = new DataGridViewTextBoxColumn();
             invoice_id = new DataGridViewTextBoxColumn();
+            weighing_id = new DataGridViewTextBoxColumn();
             groupBox1 = new GroupBox();
             btnExcel = new Button();
             btnSearch = new Button();
@@ -204,7 +205,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvData.Columns.AddRange(new DataGridViewColumn[] { parking_event_in_id, Column1, time, plate_number, weight, index, charge, weighing_type_name, created_by, invoice_code, invoice_no, vehicleImage, firstScaleImage, secondScaleImage, invoice_id });
+            dgvData.Columns.AddRange(new DataGridViewColumn[] { parking_event_in_id, Column1, time, plate_number, weight, index, charge, weighing_type_name, created_by, invoice_code, invoice_no, vehicleImage, firstScaleImage, secondScaleImage, invoice_id, weighing_id });
             dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle9.BackColor = SystemColors.Window;
             dataGridViewCellStyle9.Font = new Font("Segoe UI", 12F);
@@ -348,6 +349,14 @@
             invoice_id.ReadOnly = true;
             invoice_id.Visible = false;
             invoice_id.Width = 123;
+            // 
+            // weighing_id
+            // 
+            weighing_id.HeaderText = "weighing_id";
+            weighing_id.Name = "weighing_id";
+            weighing_id.ReadOnly = true;
+            weighing_id.Visible = false;
+            weighing_id.Width = 139;
             // 
             // groupBox1
             // 
@@ -627,6 +636,7 @@
         private DataGridViewTextBoxColumn Column10;
         private DataGridViewTextBoxColumn Column11;
         private DataGridViewTextBoxColumn Column12;
+        private Button btnSendInvoice;
         private DataGridViewTextBoxColumn parking_event_in_id;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn time;
@@ -642,6 +652,6 @@
         private DataGridViewTextBoxColumn firstScaleImage;
         private DataGridViewTextBoxColumn secondScaleImage;
         private DataGridViewTextBoxColumn invoice_id;
-        private Button btnSendInvoice;
+        private DataGridViewTextBoxColumn weighing_id;
     }
 }

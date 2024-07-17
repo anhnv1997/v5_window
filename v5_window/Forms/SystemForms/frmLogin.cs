@@ -56,7 +56,7 @@ namespace iParkingv5_window.Forms.SystemForms
             KzParkingv5BaseApi.client_id = clientId;
             options = new OidcClientOptions
             {
-                Authority = KzParkingv5BaseApi.server.Replace(":5000", ":3000"),
+                Authority = KzParkingv5BaseApi.server.Replace(":5000", ":3000").Replace("api.","oauth."),
                 ClientId = clientId,
                 Scope = "openid role-data user-data parking-data offline_access device-data invoice-data project-data payment-data tenant-data warehouse-data reporting-data",
                 RedirectUri = "http://localhost/winforms.client",

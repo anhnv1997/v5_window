@@ -187,21 +187,6 @@ namespace iParkingv5.ApiManager.KzScaleApis
             var filter = Filter.CreateFilter(new List<Dictionary<string, List<FilterModel>>>() { filter1, filter2 },
             pageIndex: 1,
             pageSize: 10000);
-
-            //var filter = Filter.CreateFilter(new List<FilterModel>()
-            //{
-            //    new FilterModel("createdUtc", "DATETIME", startTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), "gte"),
-            //    new FilterModel("createdUtc", "DATETIME", endTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), "lte"),
-            //});
-            //Dictionary<string, string> parameters = new Dictionary<string, string>()
-            //{
-            //    { "start_date",startTime.ToString("yyyy-MM-dd HH:mm:ss") },
-            //    { "end_date", endTime.ToString("yyyy-MM-dd HH:mm:ss") },
-            //    { "plate_number", plateNumber},
-            //    { "user_code", user_code },
-            //    { "weighting_form_id", weighingFormId },
-            //    { "is_weighing_bill", is_weighing_bill.ToString() },
-            //};
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, RestSharp.Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
@@ -372,11 +357,35 @@ namespace iParkingv5.ApiManager.KzScaleApis
             {
                 targetId = weighingActionDetailId,
                 send = isSentNow ? 1 : 0,
+                //send =0,
                 provider = (int)EmInvoiceProvider.Viettel,
                 TargetType = TargetType.Weghing,
             };
 
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, Method.Post);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                try
+                {
+                    return JsonConvert.DeserializeObject<InvoiceResponse>(response.Item1);
+                }
+                catch (Exception)
+                {
+                    return null;
+
+                }
+            }
+            return null;
+        }
+        public static async Task<InvoiceResponse> sendPendingEInvoice(string invoiceID)
+        {
+            StandardlizeServerName();
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Invoice) + "/" + invoiceID + "/resend";
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
                 try

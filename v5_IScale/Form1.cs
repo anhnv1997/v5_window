@@ -340,7 +340,7 @@ namespace v5_IScale
                 }
                 this.WeighingActionDetail.InvoiceId = invoiceData.id;
             }
-
+            await Task.Delay(1000);
             var invoiceFile = await AppData.ApiServer.GetInvoiceData(this.WeighingActionDetail.InvoiceId);
             if (invoiceFile == null)
             {
@@ -878,11 +878,6 @@ namespace v5_IScale
                     lblSecondScale.Text = weighingActionDetails.Count > 1 ? weighingActionDetails[1].Weight.ToString() : "0";
                     lblGoodsScale.Text = Math.Abs(int.Parse(lblFirstScale.Text) - int.Parse(lblSecondScale.Text)).ToString();
                 }));
-                //await ShowImage(weighingActionDetails[0].list_image.Split(";")[1], picFirstScale);
-                //if (weighingActionDetails.Count > 1)
-                //{
-                //    await ShowImage(weighingActionDetails[0].list_image.Split(";")[1], picSecondScale);
-                //}
             }
             else
             {

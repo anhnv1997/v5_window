@@ -1377,21 +1377,14 @@ namespace iParkingv5_window.Usercontrols
                 {
                     dgvEventContent.Rows.Add("Nhóm", identityGroup.Name);
                 }
-                if (weighingAction != null)
-                {
 
-                    //dgvEventContent.Rows.Add("Cân nặng", this.ScaleValue.ToString("#,0"));
-                    if (weighingAction != null)
-                    {
-                        lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(weighingAction.weighingType.Price.ToString());
-                        //dgvEventContent.Rows.Add("Phí cân", TextFormatingTool.GetMoneyFormat(weighingDetail.weighing_action_detail[^1].Price.ToString()));
-                        //dgvEventContent.Rows[dgvEventContent.RowCount - 1].DefaultCellStyle.Font = new Font(dgvEventContent.DefaultCellStyle.Font.Name, dgvEventContent.DefaultCellStyle.Font.Size * 3);
-                        //dgvEventContent.Rows[dgvEventContent.RowCount - 1].DefaultCellStyle.ForeColor = Color.Red;
-                    }
-                    else
-                    {
-                        //LOG
-                    }
+                if (weighingAction != null && !string.IsNullOrEmpty(weighingAction.Id))
+                {
+                    lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(weighingAction.weighingType.Price.ToString());
+                }
+                else
+                {
+                    //LOG
                 }
                 dgvEventContent.BringToFront();
             }));
@@ -2203,7 +2196,7 @@ namespace iParkingv5_window.Usercontrols
                 string weighingTypeId = ((ListItem)cbGoodsType.SelectedItem).Name;
                 if (this.WeighingActionDetail.WeighingTypeId != weighingTypeId)
                 {
-                    bool isConfirm = MessageBox.Show($"Bạn có xác nhận đổi từ loại cân ${this.WeighingActionDetail.weighingType.Name} sang {cbGoodsType.Text} không", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
+                    bool isConfirm = MessageBox.Show($"Bạn có xác nhận đổi từ loại cân {this.WeighingActionDetail.weighingType.Name} sang {cbGoodsType.Text} không", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
                     if (!isConfirm)
                     {
                         return false;

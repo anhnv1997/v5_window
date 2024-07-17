@@ -356,34 +356,32 @@ namespace v5_IScale.Forms.ReportForms
         private string GetPrintContent(List<WeighingAction> weighingActionDetails)
         {
             string printContent = string.Empty;
-            if (weighingActionDetails.Count <= 2)
+            int turnPrint = cbPrintMode.SelectedIndex + 1;
+
+            switch (turnPrint)
             {
-                int i = 1;
-                foreach (var item in weighingActionDetails)
-                {
-                    string scaleItem = GetPrintContentItem(item, i);
-                    printContent += scaleItem;
-                    i++;
-                }
-                if (weighingActionDetails.Count <= 1)
-                {
+                case 1:
+                    printContent += GetPrintContentItem(weighingActionDetails[0], 1);
                     printContent += GetPrintContentItem(null, 2);
                     printContent += GetGoodsScaleItem("_");
-                }
-                else
-                {
-                    printContent += GetGoodsScaleItem(Math.Abs(weighingActionDetails[0].Weight - weighingActionDetails[1].Weight).ToString("#,0"));
-                }
-            }
-            else
-            {
-                int i = 1;
-                foreach (var item in weighingActionDetails)
-                {
-                    string scaleItem = GetPrintContentItem(item, i);
-                    printContent += scaleItem;
-                    i++;
-                }
+                    break;
+                case 2:
+                    printContent += GetPrintContentItem(weighingActionDetails[0], 1);
+                    printContent += weighingActionDetails.Count >= 2 ? GetPrintContentItem(weighingActionDetails[1], 2) :
+                                                                       GetPrintContentItem(null, 2);
+                    printContent += weighingActionDetails.Count >= 2 ? GetGoodsScaleItem(Math.Abs(weighingActionDetails[0].Weight - weighingActionDetails[1].Weight).ToString("#,0")) :
+                                                                       GetGoodsScaleItem("_");
+                    break;
+                default:
+                    for (int i = 1; i <= turnPrint; i++)
+                    {
+                        if (weighingActionDetails.Count >= i)
+                        {
+                            string scaleItem = GetPrintContentItem(weighingActionDetails[i - 1], i);
+                            printContent += scaleItem;
+                        }
+                    }
+                    break;
             }
 
             string plateNumber = dgvData.CurrentRow.Cells[4].Value.ToString() ?? "";

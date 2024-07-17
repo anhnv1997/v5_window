@@ -1506,7 +1506,7 @@ namespace iParkingv5_window.Usercontrols
                 string weighingTypeId = ((ListItem)cbGoodsType.SelectedItem).Name;
                 if (this.WeighingActionDetail.WeighingTypeId != weighingTypeId)
                 {
-                    bool isConfirm = MessageBox.Show($"Bạn có xác nhận đổi từ loại cân ${this.WeighingActionDetail.weighingType.Name} sang {cbGoodsType.Text} không", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
+                    bool isConfirm = MessageBox.Show($"Bạn có xác nhận đổi từ loại cân {this.WeighingActionDetail.weighingType.Name} sang {cbGoodsType.Text} không", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
                     if (!isConfirm)
                     {
                         return false;
@@ -2415,7 +2415,7 @@ namespace iParkingv5_window.Usercontrols
                 }
                 dgvEventContent.Rows[dgvEventContent.RowCount - 1].DefaultCellStyle.ForeColor = Color.Red;
 
-                if (weighingDetail != null)
+                if (weighingDetail != null && !string.IsNullOrEmpty(weighingDetail.Id))
                 {
                     lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(weighingDetail.weighingType.Price.ToString());
                 }

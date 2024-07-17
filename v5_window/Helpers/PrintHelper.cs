@@ -177,7 +177,7 @@ namespace iParkingv5_window.Helpers
             {
                 Directory.CreateDirectory(@"C:\print");
             }
-            string fileName = (@"C:\print\file" + DateTime.Now.ToString("yyyy_mm_dd_HH_mm_ss") + ".pdf");
+            string fileName = (@"C:\print\file" + DateTime.Now.ToString("yyyy_mm_dd_HH_mm_ss_ffff") + ".pdf");
 
             System.IO.FileStream stream =
                 new FileStream(fileName, FileMode.CreateNew);
