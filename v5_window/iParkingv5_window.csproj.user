@@ -10,6 +10,9 @@
     <Compile Update="Forms\DataForms\frmEventInDetail.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\DataForms\frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\DataForms\frmSelectVehicle.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -17,9 +20,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\DataForms\frmLaneSetting.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\DataForms\frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\DataForms\frmSelectCard.cs">

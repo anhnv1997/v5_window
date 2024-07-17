@@ -3,6 +3,7 @@ using iParkingv5.Objects.Datas.parking_service;
 using iParkingv5.Objects.Datas.payment_service;
 using System;
 using System.Collections.Generic;
+using static iParkingv5.Objects.Enums.ParkingImageType;
 
 namespace iParkingv5.Objects.EventDatas
 {
@@ -65,6 +66,6 @@ namespace iParkingv5.Objects.EventDatas
         public string detailCode { get; set; } = string.Empty;
         public List<ErrorDescription> fields { get; set; } = new List<ErrorDescription>();
         public Dictionary<string, EventInData> payload { get; set; }
+        public Dictionary<EmParkingImageType, ImageData> images { get; set; }
     }
-
 }

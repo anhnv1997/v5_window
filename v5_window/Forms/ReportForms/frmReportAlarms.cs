@@ -507,7 +507,7 @@ namespace iParkingv5_window.Forms.ReportForms
                 row.Cells[i++].Value = item.GetAbnormalStr();//("dd/MM/yyyy HH:mm:ss"); //4
                 row.Cells[i++].Value = item.LaneId;                //5
                 row.Cells[i++].Value = item.CreatedBy;             //6
-                row.Cells[i++].Value = item.FileKeys?.Count > 0 ? string.Join(";", item.FileKeys) : "";//7
+                //row.Cells[i++].Value = item.FileKeys?.Count > 0 ? string.Join(";", item.FileKeys) : "";//7
                 row.Cells[i++].Value = item.CustomerId;//8
                 row.Cells[i++].Value = item.RegisteredVehicleId;//8
                 row.Cells[i++].Value = GetLaneName(item.LaneId);//7

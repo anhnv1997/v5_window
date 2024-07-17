@@ -3,6 +3,7 @@ using iParkingv5.Objects.Datas.parking_service;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using static iParkingv5.Objects.Enums.ParkingImageType;
 
 namespace iParkingv5.Objects.EventDatas
 {
@@ -23,7 +24,7 @@ namespace iParkingv5.Objects.EventDatas
         public Identity Identity { get; set; }
         public Lane Lane { get; set; }
 
-        public List<string> FileKeys { get; set; }
+        public Dictionary<EmParkingImageType, ImageData> images { get; set; }
         [JsonIgnore]
         public DateTime? AlarmTime
         {

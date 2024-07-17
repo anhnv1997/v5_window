@@ -17,6 +17,7 @@ using Kztek.Tools;
 using System.Data;
 using System.Data.SqlTypes;
 using System.Runtime.InteropServices;
+using static iParkingv5.Objects.Enums.ParkingImageType;
 
 namespace iParkingv5_window.Forms.ReportForms
 {
@@ -219,9 +220,14 @@ namespace iParkingv5_window.Forms.ReportForms
         {
             try
             {
-                var imageDatas = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ImageData>>(dgvData.CurrentRow?.Cells[col_file_keys].Value.ToString()!)!;
-                ShowImage(imageDatas.FirstOrDefault(e => e.type == ParkingImageType.EmParkingImageType.Overview)?.Url ?? "", picOverviewImageIn);
-                ShowImage(imageDatas.FirstOrDefault(e => e.type == ParkingImageType.EmParkingImageType.Vehicle)?.Url ?? "", picVehicleImageIn);
+                var imageDatas = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<EmParkingImageType, ImageData>>(dgvData.CurrentRow?.Cells[col_file_keys].Value.ToString()!)!;
+
+                ImageData? displayOverviewInImage = imageDatas.ContainsKey(EmParkingImageType.Overview) ? imageDatas[EmParkingImageType.Overview] : null;
+                ImageData? vehicleInImage = imageDatas.ContainsKey(EmParkingImageType.Vehicle) ? imageDatas[EmParkingImageType.Vehicle] : null;
+                ImageData? lprCutImahe = imageDatas.ContainsKey(EmParkingImageType.Plate) ? imageDatas[EmParkingImageType.Plate] : null;
+
+                ShowImage(displayOverviewInImage, picOverviewImageIn);
+                ShowImage(vehicleInImage, picVehicleImageIn);
             }
             catch (Exception ex)
             {
@@ -540,17 +546,18 @@ namespace iParkingv5_window.Forms.ReportForms
             }));
         }
 
-        private void ShowImage(string fileKey, PictureBox pic)
+        private async Task ShowImage(ImageData? imageData, PictureBox pic)
         {
             try
             {
-                if (string.IsNullOrEmpty(fileKey))
+                if (imageData == null)
                 {
                     pic.Image = defaultImg;
                 }
                 else
                 {
-                    pic.LoadAsync(fileKey);
+                    string imageUrl = await AppData.ApiServer.parkingProcessService.GetImageUrl(imageData.bucket, imageData.objectKey);
+                    pic.LoadAsync(imageUrl);
                 }
             }
             catch (Exception)

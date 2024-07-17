@@ -21,6 +21,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             this.reportingService = reportingService;
             this.systemService = systemService;
         }
+
         public KzParkingv5ApiHelper() :
             this(new KzParkingv5DeviceService(), new KzParkingv5InvoiceService(), new KzParkingv5DataService(),
                  new KzParkingv5ProcessService(), new KzParkingv5PaymentService(), new KzParkingv5UserService(),

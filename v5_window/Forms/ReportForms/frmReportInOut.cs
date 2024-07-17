@@ -1,4 +1,5 @@
-﻿using IPaking.Ultility;
+﻿using DocumentFormat.OpenXml.Vml;
+using IPaking.Ultility;
 using iPakrkingv5.Controls;
 using iPakrkingv5.Controls.Controls.Buttons;
 using iParkingv5.ApiManager.KzParkingv5Apis;
@@ -20,7 +21,9 @@ using Kztek.Tool.TextFormatingTools;
 using Kztek.Tools;
 using System.Data;
 using System.Runtime.InteropServices;
+using static iParkingv5.Objects.Enums.ParkingImageType;
 using static iParkingv5.Objects.Enums.PrintHelpers;
+using ImageData = iParkingv5.Objects.EventDatas.ImageData;
 
 namespace iParkingv5_window.Forms.ReportForms
 {
@@ -295,13 +298,20 @@ namespace iParkingv5_window.Forms.ReportForms
         {
             try
             {
-                var imageOutDatas = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ImageData>>(dgvData.CurrentRow?.Cells[col_file_keys_out].Value.ToString()!)!;
-                var task1 = ShowImage(imageOutDatas.FirstOrDefault(eo => eo.type == ParkingImageType.EmParkingImageType.Overview)?.Url ?? "", picOverviewImageOut);
-                var task2 = ShowImage(imageOutDatas.FirstOrDefault(eo => eo.type == ParkingImageType.EmParkingImageType.Vehicle)?.Url ?? "", picVehicleImageOut);
+                var imageOutDatas = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<EmParkingImageType, ImageData>>(dgvData.CurrentRow?.Cells[col_file_keys_out].Value.ToString()!)!;
+                ImageData? displayOverviewOutImage = imageOutDatas.ContainsKey(EmParkingImageType.Overview) ? imageOutDatas[EmParkingImageType.Overview] : null;
+                ImageData? vehicleOutImage = imageOutDatas.ContainsKey(EmParkingImageType.Vehicle) ? imageOutDatas[EmParkingImageType.Vehicle] : null;
 
-                var imageInDatas = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ImageData>>(dgvData.CurrentRow?.Cells[col_file_keys_in].Value.ToString()!)!;
-                var task3 = ShowImage(imageInDatas.FirstOrDefault(ei => ei.type == ParkingImageType.EmParkingImageType.Overview)?.Url ?? "", picOverviewImageIn);
-                var task4 = ShowImage(imageInDatas.FirstOrDefault(ei => ei.type == ParkingImageType.EmParkingImageType.Vehicle)?.Url ?? "", picVehicleImageIn);
+                var task1 = ShowImage(displayOverviewOutImage, picOverviewImageOut);
+                var task2 = ShowImage(vehicleOutImage, picVehicleImageOut);
+
+                var imageInDatas = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<EmParkingImageType, ImageData>>(dgvData.CurrentRow?.Cells[col_file_keys_in].Value.ToString()!)!;
+                ImageData? displayOverviewInImage = imageInDatas.ContainsKey(EmParkingImageType.Overview) ? imageInDatas[EmParkingImageType.Overview] : null;
+                ImageData? vehicleInImage = imageInDatas.ContainsKey(EmParkingImageType.Vehicle) ? imageInDatas[EmParkingImageType.Vehicle] : null;
+
+
+                var task3 = ShowImage(displayOverviewInImage, picOverviewImageIn);
+                var task4 = ShowImage(vehicleInImage, picVehicleImageIn);
                 await Task.WhenAll(task1, task2, task3, task4);
             }
             catch (Exception)
@@ -617,18 +627,18 @@ namespace iParkingv5_window.Forms.ReportForms
             eventOutData.Clear();
             InvoiceDatas.Clear();
         }
-
-        private async Task ShowImage(string fileKey, PictureBox pic)
+        private async Task ShowImage(ImageData? imageData, PictureBox pic)
         {
             try
             {
-                if (string.IsNullOrEmpty(fileKey))
+                if (imageData == null)
                 {
                     pic.Image = defaultImg;
                 }
                 else
                 {
-                    pic.LoadAsync(fileKey);
+                    string imageUrl = await AppData.ApiServer.parkingProcessService.GetImageUrl(imageData.bucket, imageData.objectKey);
+                    pic.LoadAsync(imageUrl);
                 }
             }
             catch (Exception)

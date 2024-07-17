@@ -4,6 +4,7 @@ using iParkingv5.Objects.Datas.parking_service;
 using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.EventDatas;
 using Kztek.Tool.TextFormatingTools;
+using static iParkingv5.Objects.Enums.ParkingImageType;
 using static iParkingv5.Objects.Enums.VehicleType;
 
 namespace iParkingv5_window.Forms.DataForms
@@ -15,13 +16,13 @@ namespace iParkingv5_window.Forms.DataForms
         private string detectedPlate;
         private string identityIdIn;
         private string laneId;
-        private List<ImageData> imageDatas;
+        private Dictionary<EmParkingImageType, ImageData> imageDatas;
         private string datetimeIn;
         private long charge = 0;
         public string updatePlate;
         #region Forms
         public frmConfirmOut(string detectedPlate, string errorMessage, string plateIn, string identityIdIn,
-                            string laneId, List<ImageData> fileKeys, DateTime? datetimeIn, bool isDisplayQuestion = true, long charge = 0)
+                            string laneId, Dictionary<EmParkingImageType, ImageData> fileKeys, DateTime? datetimeIn, bool isDisplayQuestion = true, long charge = 0)
         {
             InitializeComponent();
             this.Text = "Xác nhận xe ra khỏi bãi";
@@ -137,13 +138,23 @@ namespace iParkingv5_window.Forms.DataForms
                 }));
                 if (this.imageDatas?.Count >= 2)
                 {
-                    Task task1 = ShowImage(this.imageDatas[0]?.Url ?? "", picOverview);
-                    Task task2 = ShowImage(this.imageDatas[1]?.Url ?? "", picVehicle);
-                    await Task.WhenAll(task1, task2);
+                    List<Task> tasks = new List<Task>();
+                    foreach (KeyValuePair<EmParkingImageType, ImageData> item in this.imageDatas)
+                    {
+                        if (item.Key == EmParkingImageType.Overview)
+                        {
+                            tasks.Add(ShowImage(this.imageDatas[item.Key], picOverview));
+                        }
+                        else if (item.Key == EmParkingImageType.Vehicle)
+                        {
+                            tasks.Add(ShowImage(this.imageDatas[item.Key], picVehicle));
+                        }
+                    }
+                    await Task.WhenAll(tasks);
                 }
                 else if (this.imageDatas?.Count > 0)
                 {
-                    await ShowImage(this.imageDatas[0]?.Url ?? "", picOverview);
+                    await ShowImage(this.imageDatas[0], picOverview);
                     this.Invoke(() =>
                     {
                         picOverview.Image = defaultImg;
@@ -165,35 +176,24 @@ namespace iParkingv5_window.Forms.DataForms
             {
             }
         }
-        private async Task ShowImage(string fileKey, PictureBox pic)
+        private async Task ShowImage(ImageData? imageData, PictureBox pic)
         {
             try
             {
-                if (string.IsNullOrEmpty(fileKey))
+                if (imageData == null)
                 {
                     pic.Image = defaultImg;
                 }
                 else
                 {
-                    pic.LoadAsync(fileKey);
+                    string imageUrl = await AppData.ApiServer.parkingProcessService.GetImageUrl(imageData.bucket, imageData.objectKey);
+                    pic.LoadAsync(imageUrl);
                 }
             }
             catch (Exception)
             {
                 pic.Image = defaultImg;
             }
-
-
-            //if (!string.IsNullOrEmpty(fileKey))
-            //{
-            //    string displayPath = await MinioHelper.GetImage(fileKey);
-            //    if (!string.IsNullOrEmpty(displayPath))
-            //    {
-            //        pic.LoadAsync(displayPath);
-            //        return;
-            //    }
-            //}
-            //pic.Image = defaultImg;
         }
 
     }

@@ -4,6 +4,7 @@ using iParkingv5.Objects.Datas.parking_service;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static iParkingv5.Objects.Enums.ParkingImageType;
 
 namespace iParkingv5.Objects.EventDatas
 {
@@ -24,7 +25,7 @@ namespace iParkingv5.Objects.EventDatas
         public string errorCode { get; set; } = string.Empty;
         public string detailCode { get; set; } = string.Empty;
         public int Charge { get; set; } = 0;
-        public List<ImageData> images { get; set; }
+        public Dictionary<EmParkingImageType, ImageData> images { get; set; }
         public DateTime? DatetimeIn
         {
             get

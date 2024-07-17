@@ -20,11 +20,14 @@ namespace iParkingv5.ApiManager.interfaces
         Task<bool> CommitOutAsync(AddEventOutResponse eventOut);
         Task<bool> CancelCheckOut(string eventOutId);
 
-        Task<bool> CreateAlarmAsync(string identityCode, string laneId, string plate, AbnormalCode abnormalCode,
+        Task<AbnormalEvent> CreateAlarmAsync(string identityCode, string laneId, string plate, AbnormalCode abnormalCode,
                                    Dictionary<EmParkingImageType, List<byte>> imageDatas, bool isLaneIn, string _identityGroupId, string customerId,
                                    string registerVehicleId, string description);
 
         Task<string> GetFeeCalculate(string dateTimeIn, string dateTimeOut, string identityGroupID);
         Task<bool> UpdateBSXNote(string newNote, string eventId, bool isEventIn);
+        Task<bool> SaveEventImage(string bucketName, string objKey, EmParkingImageType objType, List<byte> imageData);
+        Task<string> GetImageUrl(string bucketName, string objKey);
+
     }
 }
