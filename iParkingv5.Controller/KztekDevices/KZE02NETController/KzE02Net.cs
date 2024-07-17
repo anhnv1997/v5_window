@@ -144,7 +144,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
                             CallInputEvent(this.ControllerInfo, map);
                         }
                     }
-                    await Task.Delay(150);
+                    await Task.Delay(100);
                 }
                 catch (Exception ex)
                 {
