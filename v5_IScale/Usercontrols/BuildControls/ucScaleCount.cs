@@ -37,9 +37,9 @@ namespace v5_IScale.Usercontrols.BuildControls
             try
             {
                 var countInDay = await KzScaleApiHelper.GetCountInDayRoute();
-                lblFirstCount.Text = countInDay.count_equal_1.ToString();
-                lblSecondCount.Text = countInDay.count__equal_2.ToString();
-                lblMoreThanSecondCount.Text = countInDay.count_greater_2.ToString();
+                lblFirstCount.Text = countInDay.numberFirstWeighing.ToString();
+                lblSecondCount.Text = countInDay.numberSecondWeighing.ToString();
+                lblMoreThanSecondCount.Text = countInDay.numberOtherWeighing.ToString();
             }
             catch (Exception)
             {

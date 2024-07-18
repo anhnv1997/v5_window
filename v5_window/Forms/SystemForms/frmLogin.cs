@@ -54,6 +54,7 @@ namespace iParkingv5_window.Forms.SystemForms
             }
             string clientId = "910ae83b-5205-4c35-bf45-8926ff620386";
             KzParkingv5BaseApi.client_id = clientId;
+            
             options = new OidcClientOptions
             {
                 Authority = KzParkingv5BaseApi.server.Replace(":5000", ":3000").Replace("api.","oauth."),

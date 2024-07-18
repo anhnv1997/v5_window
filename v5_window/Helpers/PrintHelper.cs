@@ -85,6 +85,7 @@ namespace iParkingv5_window.Helpers
                 baseContent = baseContent.Replace("{$content}", printContent);
                 baseContent = baseContent.Replace("{$plateNumber}", plateNumber);
                 baseContent = baseContent.Replace("{$weightType}", weighingType);
+                baseContent = baseContent.Replace("{$number}", weighingActionDetails[0].weighingSlip?.printNumber ?? "");
                 return baseContent;
             }
             else

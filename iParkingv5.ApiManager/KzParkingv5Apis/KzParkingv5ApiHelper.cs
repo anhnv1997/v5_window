@@ -1023,9 +1023,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         {
             DateTime startTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
             DateTime endTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
-           
+
             int vehicleInPark = await GetVehicleInParkCount();
-            int vehicleGotInIn = await GetVehicleGotInInDay(startTime,endTime);
+            int vehicleGotInIn = await GetVehicleGotInInDay(startTime, endTime);
             int vehicleGotOutInDay = await GetVehicleGotOutCountInDay(startTime, endTime);
 
             return new SumaryCountEvent()
@@ -1066,7 +1066,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventInReport>>>.GetBaseResponse(response.Item1);
                 if (baseResponse != null)
                 {
-                    return baseResponse.data.Count;
+                    return baseResponse.data?.Count ?? 0;
                 }
             }
             return 0;
@@ -1083,8 +1083,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
 
             var searchData = new
             {
-                FromUTC =  startTime.ToUniversalTime(),
-                ToUTC =  endTime.ToUniversalTime(),
+                FromUTC = startTime.ToUniversalTime(),
+                ToUTC = endTime.ToUniversalTime(),
             };
             var data = new
             {
@@ -1101,7 +1101,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventInReport>>>.GetBaseResponse(response.Item1);
                 if (baseResponse != null)
                 {
-                    return baseResponse.data.Count;
+                    return baseResponse.data?.Count??0;
                 }
             }
             return 0;
@@ -1136,7 +1136,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventInReport>>>.GetBaseResponse(response.Item1);
                 if (baseResponse != null)
                 {
-                    return baseResponse.data.Count;
+                    return baseResponse.data?.Count??0;
                 }
             }
             return 0;

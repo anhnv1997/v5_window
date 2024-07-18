@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace iParkingv5.Objects.ScaleObjects
 {
+    public class WeighingSlip
+    {
+        public string id { get; set; }
+        public string printNumber { get; set; }
+    }
     public class WeighingAction
     {
         public string Id { get; set; } = string.Empty;
@@ -46,5 +51,8 @@ namespace iParkingv5.Objects.ScaleObjects
         public string InvoiceId { get; set; }
         public string invoiceCode { get; set; }
         public string weighingTypeName { get; set; }
+        public string printNumber { get; set; }
+
+        public WeighingSlip weighingSlip { get; set; }
     }
 }

@@ -196,7 +196,7 @@ namespace v5_IScale
             }
             await RefreshData();
             lblMoney.Text = TextFormatingTool.GetMoneyFormat(this.WeighingActionDetail.Charge.ToString());
-            await SaveEventImage(this.ucOverView.GetFullCurrentImage(), this.ucCarLpr.GetFullCurrentImage(), imageKey);
+            await SaveEventImage(this.ucOverView?.GetFullCurrentImage(), this.ucCarLpr?.GetFullCurrentImage(), imageKey);
         }
 
         //private async void BtnPrintScale_Click(object sender, EventArgs e)
@@ -939,6 +939,7 @@ namespace v5_IScale
                 baseContent = baseContent.Replace("{$content}", printContent);
                 baseContent = baseContent.Replace("{$plateNumber}", txtPlateNumber.Text);
                 baseContent = baseContent.Replace("{$weightType}", cbWeighingTypes.Text);
+                baseContent = baseContent.Replace("{$number}", weighingActionDetails[0].weighingSlip.printNumber);
                 return baseContent;
             }
             else

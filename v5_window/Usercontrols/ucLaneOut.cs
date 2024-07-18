@@ -1504,27 +1504,34 @@ namespace iParkingv5_window.Usercontrols
             if (cbGoodsType.Items.Count > 0)
             {
                 string weighingTypeId = ((ListItem)cbGoodsType.SelectedItem).Name;
-                if (this.WeighingActionDetail.WeighingTypeId != weighingTypeId)
+                if (this.WeighingActionDetail != null && !string.IsNullOrEmpty(this.WeighingActionDetail.Id))
                 {
-                    bool isConfirm = MessageBox.Show($"Bạn có xác nhận đổi từ loại cân {this.WeighingActionDetail.weighingType.Name} sang {cbGoodsType.Text} không", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
-                    if (!isConfirm)
+                    if (this.WeighingActionDetail.WeighingTypeId != weighingTypeId)
                     {
-                        return false;
-                    }
-                    var response = await KzScaleApiHelper.UpdateWeighingActionDetailById(this.WeighingActionDetail.Id, weighingTypeId);
-                    if (response == null)
-                    {
-                        MessageBox.Show("Gặp lỗi khi cập nhật thông tin lên hệ thống, vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return false;
-                    }
-                    else
-                    {
-                        this.WeighingActionDetail = response;
-                        this.Invoke(new Action(() =>
+                        bool isConfirm = MessageBox.Show($"Bạn có xác nhận đổi từ loại cân {this.WeighingActionDetail.weighingType.Name} sang {cbGoodsType.Text} không", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
+                        if (!isConfirm)
                         {
-                            lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(this.WeighingActionDetail.weighingType.Price.ToString());
-                        }));
+                            return false;
+                        }
+                        var response = await KzScaleApiHelper.UpdateWeighingActionDetailById(this.WeighingActionDetail.Id, weighingTypeId);
+                        if (response == null)
+                        {
+                            MessageBox.Show("Gặp lỗi khi cập nhật thông tin lên hệ thống, vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return false;
+                        }
+                        else
+                        {
+                            this.WeighingActionDetail = response;
+                            this.Invoke(new Action(() =>
+                            {
+                                lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(this.WeighingActionDetail.weighingType.Price.ToString());
+                            }));
+                        }
                     }
+                }
+                else
+                {
+                    return false;
                 }
             }
             return true;

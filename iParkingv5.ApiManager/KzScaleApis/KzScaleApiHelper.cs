@@ -24,9 +24,9 @@ namespace iParkingv5.ApiManager.KzScaleApis
 {
     public class CountInDayDetail
     {
-        public int count_equal_1 { get; set; } = 0;
-        public int count__equal_2 { get; set; } = 0;
-        public int count_greater_2 { get; set; } = 0;
+        public int numberFirstWeighing { get; set; } = 0;
+        public int numberSecondWeighing { get; set; } = 0;
+        public int numberOtherWeighing { get; set; } = 0;
     }
     public class KzScaleBaseResponse<T>
     {
@@ -301,24 +301,20 @@ namespace iParkingv5.ApiManager.KzScaleApis
             DateTime queryTime = DateTime.Now;
             Dictionary<string, string> parameters = new Dictionary<string, string>()
             {
-                { "fromDateTime",new DateTime().ToUniversalTime().ToString("yyyy-MM-ddT00:00:00:0000") },
-                { "toDateTime",new DateTime().ToUniversalTime().ToString("yyyy-MM-ddT23:59:59:0000") }
+                { "fromDateTime",new DateTime(queryTime.Year, queryTime.Month, queryTime.Day, 0,0,0).ToUniversalTime().ToString("MM/dd/yyyy HH:mm:ss") },
+                { "toDateTime",new DateTime(queryTime.Year, queryTime.Month, queryTime.Day, 23,59,59).ToUniversalTime().ToString("MM/dd/yyyy HH:mm:ss") }
             };
 
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null, timeOut, RestSharp.Method.Get);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, parameters, timeOut, RestSharp.Method.Get);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                KzScaleBaseResponse<CountInDayDetail> data =
-                  Newtonsoft.Json.JsonConvert.DeserializeObject<KzScaleBaseResponse<CountInDayDetail>>(response.Item1);
+                CountInDayDetail data =
+                  Newtonsoft.Json.JsonConvert.DeserializeObject<CountInDayDetail>(response.Item1);
                 if (data == null)
                 {
                     return new CountInDayDetail();
                 }
-                if (data.result == null)
-                {
-                    return new CountInDayDetail();
-                }
-                return data.result;
+                return data;
             }
             return new CountInDayDetail();
         }

@@ -61,6 +61,7 @@ namespace v5_IScale.Forms.ReportForms
             Column6 = new DataGridViewTextBoxColumn();
             Column7 = new DataGridViewTextBoxColumn();
             Column8 = new DataGridViewTextBoxColumn();
+            print_number = new DataGridViewTextBoxColumn();
             Column9 = new DataGridViewTextBoxColumn();
             Column10 = new DataGridViewTextBoxColumn();
             Column11 = new DataGridViewTextBoxColumn();
@@ -211,7 +212,7 @@ namespace v5_IScale.Forms.ReportForms
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvData.Columns.AddRange(new DataGridViewColumn[] { Column13, Column1, Column2, Column3, Column4, Column5, Column6, Column7, Column8, Column9, Column10, Column11, Column12 });
+            dgvData.Columns.AddRange(new DataGridViewColumn[] { Column13, Column1, Column2, Column3, Column4, Column5, Column6, Column7, Column8, print_number, Column9, Column10, Column11, Column12 });
             dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle10.BackColor = SystemColors.Window;
             dataGridViewCellStyle10.Font = new Font("Segoe UI", 12F);
@@ -310,6 +311,13 @@ namespace v5_IScale.Forms.ReportForms
             Column8.Name = "Column8";
             Column8.ReadOnly = true;
             Column8.Width = 113;
+            // 
+            // print_number
+            // 
+            print_number.HeaderText = "Số phiếu cân";
+            print_number.Name = "print_number";
+            print_number.ReadOnly = true;
+            print_number.Width = 134;
             // 
             // Column9
             // 
@@ -690,6 +698,7 @@ namespace v5_IScale.Forms.ReportForms
         private DataGridViewTextBoxColumn Column6;
         private DataGridViewTextBoxColumn Column7;
         private DataGridViewTextBoxColumn Column8;
+        private DataGridViewTextBoxColumn print_number;
         private DataGridViewTextBoxColumn Column9;
         private DataGridViewTextBoxColumn Column10;
         private DataGridViewTextBoxColumn Column11;

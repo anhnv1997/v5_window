@@ -277,7 +277,8 @@ namespace v5_IScale.Forms.ReportForms
                     string firstScaleImage = orderData.Count > 0 ? string.Join(";", orderData[0].FileKeys) : "";
                     string secondScaleImage = orderData.Count > 1 ? string.Join(";", orderData[1].FileKeys) : "";
                     dgvData.Rows.Add(item.Key, dgvData.Rows.Count + 1, firstScaleTime, secondScaleTime,
-                                     plateNumber, firstWeightScale, secondWeightScale, largerThan2TimesScale, goodType,
+                                     plateNumber, firstWeightScale, secondWeightScale, largerThan2TimesScale, 
+                                     goodType, orderData[0].weighingSlip.printNumber,
                                      userAction, vehicleImage, firstScaleImage, secondScaleImage);
                 }
 
@@ -393,6 +394,7 @@ namespace v5_IScale.Forms.ReportForms
                 baseContent = baseContent.Replace("{$content}", printContent);
                 baseContent = baseContent.Replace("{$plateNumber}", plateNumber);
                 baseContent = baseContent.Replace("{$weightType}", weighingType);
+                baseContent = baseContent.Replace("{$number}", weighingActionDetails[0].weighingSlip.printNumber);
                 return baseContent;
             }
             else
