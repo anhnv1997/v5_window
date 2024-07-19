@@ -40,10 +40,10 @@ namespace iParkingv5.Controller
         {
             try
             {
-                if (cardFormatConfig.InputFormat == cardFormatConfig.OutputFormat)
-                {
-                    return PreferCard;
-                }
+                //if (cardFormatConfig.InputFormat == cardFormatConfig.OutputFormat)
+                //{
+                //    return PreferCard;
+                //}
                 string cardNumberDec = "";
                 string baseOutput = "";
                 switch (cardFormatConfig.InputFormat)
@@ -76,6 +76,10 @@ namespace iParkingv5.Controller
                         break;
                     case CardFormat.EmCardFormat.HEXA:
                         baseOutput = DEC_TO_HEX(cardNumberDec);
+                        while (baseOutput.Length < 8)
+                        {
+                            baseOutput = "0" + baseOutput;
+                        }
                         break;
                     case CardFormat.EmCardFormat.REHEXA:
                         baseOutput = DEC_TO_REHEX(cardNumberDec);
@@ -112,8 +116,9 @@ namespace iParkingv5.Controller
                         return baseOutput;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                //MessageBox.Show(e.Message);
                 return PreferCard;
             }
         }

@@ -5,7 +5,7 @@ namespace XUnitTestProj
 {
     public class UnitTest1
     {
-        string baseHexExpected = "9741F1";
+        string baseHexExpected = "E34D51A";
         string baseDecExpected = "9912817";
         string baseReHexExpected = "F14197";
         string baseReHexEcpected = "F14197";
@@ -20,7 +20,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.DECIMA,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.DECIMA,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseDecExpected, config);
             Assert.Equal(baseDecExpected, result);
@@ -33,7 +33,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.DECIMA,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.HEXA,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseDecExpected, config);
             Assert.Equal(baseHexExpected, result);
@@ -46,7 +46,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.DECIMA,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.REHEXA,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseDecExpected, config);
             Assert.Equal(baseReHexEcpected, result);
@@ -59,7 +59,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.DECIMA,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.REDECIMA,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseDecExpected, config);
             Assert.Equal(baseReDecEcpected, result);
@@ -72,7 +72,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.DECIMA,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.XXX_XXXXX,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseDecExpected, config);
             Assert.Equal(baseXXX_XXXXXExpected, result);
@@ -87,7 +87,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.HEXA,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.DECIMA,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseHexExpected, config);
             Assert.Equal("9912817", result);
@@ -100,10 +100,10 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.HEXA,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.HEXA,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.MIN_8
             };
             string result = CardFactory.StandardlizedCardNumber(baseHexExpected, config);
-            Assert.Equal("9741F1", result);
+            Assert.Equal("0E34D51A", result);
         }
 
         [Fact]
@@ -113,7 +113,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.HEXA,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.REHEXA,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseHexExpected, config);
             Assert.Equal("F14197", result);
@@ -126,7 +126,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.HEXA,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.REDECIMA,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseHexExpected, config);
             Assert.Equal("15810967", result);
@@ -139,7 +139,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.HEXA,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.XXX_XXXXX,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseHexExpected, config);
             Assert.Equal("151:16881", result);
@@ -154,7 +154,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.REHEXA,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.DECIMA,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseReHexEcpected, config);
             Assert.Equal(baseDecExpected, result);
@@ -167,7 +167,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.REHEXA,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.HEXA,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseReHexEcpected, config);
             Assert.Equal(baseHexExpected, result);
@@ -180,7 +180,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.REHEXA,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.REHEXA,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseReHexEcpected, config);
             Assert.Equal(baseReHexEcpected, result);
@@ -193,7 +193,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.REHEXA,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.REDECIMA,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseReHexEcpected, config);
             Assert.Equal(baseReDecEcpected, result);
@@ -206,7 +206,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.REHEXA,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.XXX_XXXXX,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseReHexEcpected, config);
             Assert.Equal(baseXXX_XXXXXExpected, result);
@@ -221,7 +221,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.REDECIMA,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.DECIMA,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseReDecEcpected, config);
             Assert.Equal(baseDecExpected, result);
@@ -234,7 +234,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.REDECIMA,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.HEXA,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseReDecEcpected, config);
             Assert.Equal(baseHexExpected, result);
@@ -247,7 +247,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.REDECIMA,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.REHEXA,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseReDecEcpected, config);
             Assert.Equal(baseReHexEcpected, result);
@@ -260,7 +260,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.REDECIMA,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.REDECIMA,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseReDecEcpected, config);
             Assert.Equal(baseReDecEcpected, result);
@@ -273,7 +273,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.REDECIMA,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.XXX_XXXXX,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseReDecEcpected, config);
             Assert.Equal(baseXXX_XXXXXExpected, result);
@@ -288,7 +288,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.XXX_XXXXX,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.DECIMA,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseXXX_XXXXXExpected, config);
             Assert.Equal(baseDecExpected, result);
@@ -301,7 +301,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.XXX_XXXXX,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.HEXA,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseXXX_XXXXXExpected, config);
             Assert.Equal(baseHexExpected, result);
@@ -314,7 +314,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.XXX_XXXXX,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.REHEXA,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseXXX_XXXXXExpected, config);
             Assert.Equal(baseReHexEcpected, result);
@@ -327,7 +327,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.XXX_XXXXX,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.REDECIMA,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseXXX_XXXXXExpected, config);
             Assert.Equal(baseReDecEcpected, result);
@@ -340,7 +340,7 @@ namespace XUnitTestProj
             {
                 InputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.XXX_XXXXX,
                 OutputFormat = iParkingv5.Objects.Enums.CardFormat.EmCardFormat.XXX_XXXXX,
-                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.Type1
+                OutputOption = iParkingv5.Objects.Enums.CardFormat.EmCardFormatOption.ToiGian
             };
             string result = CardFactory.StandardlizedCardNumber(baseXXX_XXXXXExpected, config);
             Assert.Equal(baseXXX_XXXXXExpected, result);

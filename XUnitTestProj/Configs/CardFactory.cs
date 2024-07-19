@@ -16,10 +16,10 @@ namespace iParkingv5.Controller
         {
             try
             {
-                if (cardFormatConfig.InputFormat == cardFormatConfig.OutputFormat)
-                {
-                    return PreferCard;
-                }
+                //if (cardFormatConfig.InputFormat == cardFormatConfig.OutputFormat)
+                //{
+                //    return PreferCard;
+                //}
                 string cardNumberDec = "";
                 string baseOutput = "";
                 switch (cardFormatConfig.InputFormat)
@@ -67,9 +67,28 @@ namespace iParkingv5.Controller
                     default:
                         break;
                 }
-                return baseOutput;
+
+                switch (cardFormatConfig.OutputOption)
+                {
+                    case CardFormat.EmCardFormatOption.ToiGian:
+                        return baseOutput;
+                    case CardFormat.EmCardFormatOption.MIN_8:
+                        while (baseOutput.Length < 8)
+                        {
+                            baseOutput = "0" + baseOutput;
+                        }
+                        return baseOutput;
+                    case CardFormat.EmCardFormatOption.MIN_10:
+                        while (baseOutput.Length < 10)
+                        {
+                            baseOutput = "0" + baseOutput;
+                        }
+                        return baseOutput;
+                    default:
+                        return baseOutput;
+                }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return PreferCard;
             }

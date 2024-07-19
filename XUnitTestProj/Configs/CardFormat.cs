@@ -16,8 +16,9 @@ namespace iParkingv5.Objects.Enums
         }
         public enum EmCardFormatOption
         {
-            Type1,
-            Type2,
+            ToiGian,
+            MIN_8,
+            MIN_10,
         }
         public static string ToString(EmCardFormat cardFormat)
         {

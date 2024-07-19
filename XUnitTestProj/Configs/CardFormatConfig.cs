@@ -10,6 +10,6 @@ namespace iParkingv5.Objects.Configs
         public int ReaderIndex { get; set; }
         public CardFormat.EmCardFormat InputFormat { get; set; } = CardFormat.EmCardFormat.HEXA;
         public CardFormat.EmCardFormat OutputFormat { get; set; } = CardFormat.EmCardFormat.HEXA;
-        public CardFormat.EmCardFormatOption OutputOption { get; set; } = CardFormat.EmCardFormatOption.Type1;
+        public CardFormat.EmCardFormatOption OutputOption { get; set; } = CardFormat.EmCardFormatOption.ToiGian;
     }
 }

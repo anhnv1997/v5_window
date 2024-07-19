@@ -307,10 +307,14 @@ namespace iParkingv5_window.Forms.DataForms
                                             ReaderIndex = e.ReaderIndex,
                                             InputFormat = CardFormat.EmCardFormat.HEXA,
                                             OutputFormat = CardFormat.EmCardFormat.HEXA,
-                                            OutputOption = CardFormat.EmCardFormatOption.Toi_Gian,
+                                            OutputOption = CardFormat.EmCardFormatOption.Min_8,
                                         };
+                        LogHelper.Log(EmLogType.WARN, EmObjectLogType.System, configPath);
                         e.PreferCard = CardFactory.StandardlizedCardNumber(e.PreferCard, config);
-
+                        while(e.PreferCard.Length < 8)
+                        {
+                            e.PreferCard = "0" + e.PreferCard;
+                        }
                         lblLoadingStatus.Text = $"Nhận sự kiện quẹt thẻ READER: {e.ReaderIndex}, CARD: {e.PreferCard} từ bộ điều khiển " + e.DeviceName;
                         lblLoadingStatus.Refresh();
 
