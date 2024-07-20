@@ -46,10 +46,10 @@ namespace IParkingv5.RegisterCard
                 }
             }
             string clientId = "910ae83b-5205-4c35-bf45-8926ff620386";
-            KzParkingv5ApiHelper.client_id = clientId;
+            KzParkingv5BaseApi.client_id = clientId;
             options = new OidcClientOptions
             {
-                Authority = KzParkingv5ApiHelper.server.Replace(":5000", ":3000"),//"http://192.168.21.13:3000",// 
+                Authority = KzParkingv5BaseApi.server.Replace(":5000", ":3000"),//"http://192.168.21.13:3000",// 
                 ClientId = clientId,
                 Scope = "openid role-data user-data parking-data offline_access device-data invoice-data project-data payment-data tenant-data warehouse-data",
                 RedirectUri = "http://localhost/winforms.client",
@@ -96,11 +96,11 @@ namespace IParkingv5.RegisterCard
                 timerRefreshToken.Enabled = true;
                 NewtonSoftHelper<string>.SaveConfig(loginResult.RefreshToken, PathManagement.tokenPath);
                 this.refreshToken = loginResult.RefreshToken;
-                KzParkingv5ApiHelper.refresh_token = this.refreshToken;
+                KzParkingv5BaseApi.refresh_token = this.refreshToken;
 
                 this.Hide();
                 //KzParkingApiHelper.token = loginResult.TokenResponse.AccessToken;
-                KzParkingv5ApiHelper.token = loginResult.TokenResponse.AccessToken;
+                KzParkingv5BaseApi.token = loginResult.TokenResponse.AccessToken;
                 await AppData.ApiServer.GetUserInforAsync();
                 frmMain frm = new()
                 {
@@ -238,11 +238,11 @@ namespace IParkingv5.RegisterCard
                 if (!refreshToken.IsError)
                 {
                     lblStatus.Text = "Đăng nhập thành công";
-                    KzParkingv5ApiHelper.token = refreshToken.AccessToken;
+                    KzParkingv5BaseApi.token = refreshToken.AccessToken;
                     KzScaleApiHelper.token = refreshToken.AccessToken;
                     NewtonSoftHelper<string>.SaveConfig(refreshToken.RefreshToken, PathManagement.tokenPath);
                     this.refreshToken = refreshToken.RefreshToken;
-                    KzParkingv5ApiHelper.refresh_token = refreshToken.RefreshToken;
+                    KzParkingv5BaseApi.refresh_token = refreshToken.RefreshToken;
                     timerRefreshToken.Enabled = true;
                     this.Hide();
                     await AppData.ApiServer.GetUserInforAsync();
@@ -271,9 +271,9 @@ namespace IParkingv5.RegisterCard
             timerRefreshToken.Enabled = false;
             try
             {
-                if (this.refreshToken != KzParkingv5ApiHelper.refresh_token)
+                if (this.refreshToken != KzParkingv5BaseApi.refresh_token)
                 {
-                    this.refreshToken = KzParkingv5ApiHelper.refresh_token;
+                    this.refreshToken = KzParkingv5BaseApi.refresh_token;
                     NewtonSoftHelper<string>.SaveConfig(this.refreshToken, PathManagement.tokenPath);
                 }
                 //var refreshToken = await _oidcClient.RefreshTokenAsync(this.refreshToken);

@@ -340,7 +340,7 @@ namespace v5_IScale
                 }
                 this.WeighingActionDetail.InvoiceId = invoiceData.id;
             }
-            await Task.Delay(1000);
+            await Task.Delay(300);
             var invoiceFile = await AppData.ApiServer.GetInvoiceData(this.WeighingActionDetail.InvoiceId);
             if (invoiceFile == null)
             {

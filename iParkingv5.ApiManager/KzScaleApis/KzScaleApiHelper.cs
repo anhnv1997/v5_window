@@ -76,7 +76,7 @@ namespace iParkingv5.ApiManager.KzScaleApis
                                                          List<string> imageKeys, string updateTrafficId = "")
         {
             string apiUrl = server + KzScaleUrlManagement.CreateWeighingAction();
-            weight = new Random().Next(10000, 50000);
+            //weight = new Random().Next(10000, 50000);
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {

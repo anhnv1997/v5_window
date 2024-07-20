@@ -77,7 +77,7 @@ namespace v5_IScale.Forms.SystemForms
         OidcClientOptions options = null;
         private void FrmLogin_FormClosed(object? sender, FormClosedEventArgs e)
         {
-            Application.Restart();
+            //Application.Restart();
         }
 
         LoginResult loginResult;
