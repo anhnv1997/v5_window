@@ -492,7 +492,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         {
 
             server = server.StandardlizeServerName();
-            string apiUrl = server + "event-out";
+            string apiUrl = server + "abnormal-event";
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
              {
