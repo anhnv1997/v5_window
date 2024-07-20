@@ -1195,7 +1195,7 @@ namespace iParkingv5_window.Usercontrols
             btnPrintScaleOffline.Name = "btnPrintScaleOffline";
             btnPrintScaleOffline.Size = new Size(131, 52);
             btnPrintScaleOffline.TabIndex = 4;
-            btnPrintScaleOffline.Text = "In hóa đơn";
+            btnPrintScaleOffline.Text = "In phiếu thu";
             btnPrintScaleOffline.TextImageRelation = TextImageRelation.ImageAboveText;
             btnPrintScaleOffline.UseVisualStyleBackColor = false;
             btnPrintScaleOffline.Click += btnPrintScaleOffline_Click;

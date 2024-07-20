@@ -673,7 +673,7 @@ namespace iParkingv5_window.Forms.ReportForms
 
                 row.Cells[i++].Value = item.DatetimeIn?.ToString(UltilityManagement.fullDayFormat); //5
                 row.Cells[i++].Value = TransactionType.GetTransactionTypeStr(item.TransactionType); //8
-                row.Cells[i++].Value = item.TransactionCode.Contains("-0-0") ? "" : item.TransactionCode;              //9
+                row.Cells[i++].Value = (item.TransactionCode??"").Contains("-0-0") ? "" : item.TransactionCode;              //9
                 row.Cells[i++].Value = item.note;              //
 
                 if (string.IsNullOrEmpty(item.thirdpartynote))

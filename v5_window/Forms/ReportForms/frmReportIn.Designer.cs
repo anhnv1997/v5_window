@@ -42,6 +42,30 @@ namespace iParkingv5_window.Forms.ReportForms
             lblKeyword = new Label();
             txtKeyword = new TextBox();
             dgvData = new DataGridView();
+            id = new DataGridViewTextBoxColumn();
+            Column1 = new DataGridViewTextBoxColumn();
+            identity_id = new DataGridViewTextBoxColumn();
+            plate = new DataGridViewTextBoxColumn();
+            vehicle_reagion_type = new DataGridViewTextBoxColumn();
+            timeIn = new DataGridViewTextBoxColumn();
+            warehouse = new DataGridViewTextBoxColumn();
+            warehouse_code = new DataGridViewTextBoxColumn();
+            NoteBSX = new DataGridViewTextBoxColumn();
+            note_3rd_1 = new DataGridViewTextBoxColumn();
+            note_3rd_2 = new DataGridViewTextBoxColumn();
+            Column10 = new DataGridViewTextBoxColumn();
+            Column6 = new DataGridViewTextBoxColumn();
+            Column4 = new DataGridViewTextBoxColumn();
+            identityName = new DataGridViewTextBoxColumn();
+            Column16 = new DataGridViewTextBoxColumn();
+            Column12 = new DataGridViewTextBoxColumn();
+            Column11 = new DataGridViewTextBoxColumn();
+            note_3rd_3 = new DataGridViewTextBoxColumn();
+            Column5 = new DataGridViewTextBoxColumn();
+            FileIds = new DataGridViewTextBoxColumn();
+            Column13 = new DataGridViewTextBoxColumn();
+            Column14 = new DataGridViewTextBoxColumn();
+            Column3 = new DataGridViewButtonColumn();
             dtpEndTime = new DateTimePicker();
             dtpStartTime = new DateTimePicker();
             lblEndTime = new Label();
@@ -68,30 +92,6 @@ namespace iParkingv5_window.Forms.ReportForms
             lblIdentityType = new Label();
             ucPages1 = new ucPages();
             toolTip1 = new ToolTip(components);
-            id = new DataGridViewTextBoxColumn();
-            Column1 = new DataGridViewTextBoxColumn();
-            identity_id = new DataGridViewTextBoxColumn();
-            plate = new DataGridViewTextBoxColumn();
-            vehicle_reagion_type = new DataGridViewTextBoxColumn();
-            timeIn = new DataGridViewTextBoxColumn();
-            warehouse = new DataGridViewTextBoxColumn();
-            warehouse_code = new DataGridViewTextBoxColumn();
-            NoteBSX = new DataGridViewTextBoxColumn();
-            note_3rd_1 = new DataGridViewTextBoxColumn();
-            note_3rd_2 = new DataGridViewTextBoxColumn();
-            Column10 = new DataGridViewTextBoxColumn();
-            Column6 = new DataGridViewTextBoxColumn();
-            Column4 = new DataGridViewTextBoxColumn();
-            identityName = new DataGridViewTextBoxColumn();
-            Column16 = new DataGridViewTextBoxColumn();
-            Column12 = new DataGridViewTextBoxColumn();
-            Column11 = new DataGridViewTextBoxColumn();
-            note_3rd_3 = new DataGridViewTextBoxColumn();
-            Column5 = new DataGridViewTextBoxColumn();
-            FileIds = new DataGridViewTextBoxColumn();
-            Column13 = new DataGridViewTextBoxColumn();
-            Column14 = new DataGridViewTextBoxColumn();
-            Column3 = new DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)picOverviewImageIn).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picVehicleImageIn).BeginInit();
             tablePic.SuspendLayout();
@@ -203,6 +203,181 @@ namespace iParkingv5_window.Forms.ReportForms
             dgvData.TabIndex = 39;
             dgvData.CellMouseClick += dgvData_CellMouseClick;
             // 
+            // id
+            // 
+            id.HeaderText = "id";
+            id.Name = "id";
+            id.ReadOnly = true;
+            id.Visible = false;
+            id.Width = 35;
+            // 
+            // Column1
+            // 
+            Column1.HeaderText = "STT";
+            Column1.Name = "Column1";
+            Column1.ReadOnly = true;
+            Column1.Width = 66;
+            // 
+            // identity_id
+            // 
+            identity_id.HeaderText = "Tên Định Danh";
+            identity_id.Name = "identity_id";
+            identity_id.ReadOnly = true;
+            identity_id.Visible = false;
+            identity_id.Width = 142;
+            // 
+            // plate
+            // 
+            plate.HeaderText = "Biển Số Xe";
+            plate.Name = "plate";
+            plate.ReadOnly = true;
+            plate.Width = 114;
+            // 
+            // vehicle_reagion_type
+            // 
+            vehicle_reagion_type.HeaderText = "Xe VN/TQ";
+            vehicle_reagion_type.Name = "vehicle_reagion_type";
+            vehicle_reagion_type.ReadOnly = true;
+            vehicle_reagion_type.Width = 110;
+            // 
+            // timeIn
+            // 
+            timeIn.HeaderText = "Giờ Vào";
+            timeIn.Name = "timeIn";
+            timeIn.ReadOnly = true;
+            timeIn.Width = 96;
+            // 
+            // warehouse
+            // 
+            warehouse.HeaderText = "Phân loại";
+            warehouse.Name = "warehouse";
+            warehouse.ReadOnly = true;
+            warehouse.Width = 105;
+            // 
+            // warehouse_code
+            // 
+            warehouse_code.HeaderText = "Số phiếu xuất";
+            warehouse_code.Name = "warehouse_code";
+            warehouse_code.ReadOnly = true;
+            warehouse_code.Width = 135;
+            // 
+            // NoteBSX
+            // 
+            NoteBSX.HeaderText = "Ghi chú BSX";
+            NoteBSX.Name = "NoteBSX";
+            NoteBSX.ReadOnly = true;
+            NoteBSX.Width = 125;
+            // 
+            // note_3rd_1
+            // 
+            note_3rd_1.HeaderText = "Lý do chặn kích xe";
+            note_3rd_1.Name = "note_3rd_1";
+            note_3rd_1.ReadOnly = true;
+            note_3rd_1.Width = 166;
+            // 
+            // note_3rd_2
+            // 
+            note_3rd_2.HeaderText = "Ghi chú DVHT";
+            note_3rd_2.Name = "note_3rd_2";
+            note_3rd_2.ReadOnly = true;
+            note_3rd_2.Width = 138;
+            // 
+            // Column10
+            // 
+            Column10.HeaderText = "Nhóm";
+            Column10.Name = "Column10";
+            Column10.ReadOnly = true;
+            Column10.Width = 85;
+            // 
+            // Column6
+            // 
+            Column6.HeaderText = "Người Dùng";
+            Column6.Name = "Column6";
+            Column6.ReadOnly = true;
+            Column6.Width = 127;
+            // 
+            // Column4
+            // 
+            Column4.HeaderText = "Làn vào";
+            Column4.Name = "Column4";
+            Column4.ReadOnly = true;
+            Column4.Width = 95;
+            // 
+            // identityName
+            // 
+            identityName.HeaderText = "Tên Thẻ";
+            identityName.Name = "identityName";
+            identityName.ReadOnly = true;
+            identityName.Width = 93;
+            // 
+            // Column16
+            // 
+            Column16.HeaderText = "Mã Thẻ";
+            Column16.Name = "Column16";
+            Column16.ReadOnly = true;
+            Column16.Width = 92;
+            // 
+            // Column12
+            // 
+            Column12.HeaderText = "Biển số đăng ký";
+            Column12.Name = "Column12";
+            Column12.ReadOnly = true;
+            Column12.Width = 150;
+            // 
+            // Column11
+            // 
+            Column11.HeaderText = "Khách hàng";
+            Column11.Name = "Column11";
+            Column11.ReadOnly = true;
+            Column11.Width = 122;
+            // 
+            // note_3rd_3
+            // 
+            note_3rd_3.HeaderText = "Người cho phép ra";
+            note_3rd_3.Name = "note_3rd_3";
+            note_3rd_3.ReadOnly = true;
+            note_3rd_3.Width = 171;
+            // 
+            // Column5
+            // 
+            Column5.HeaderText = "Làn Vào Id";
+            Column5.Name = "Column5";
+            Column5.ReadOnly = true;
+            Column5.Visible = false;
+            Column5.Width = 113;
+            // 
+            // FileIds
+            // 
+            FileIds.HeaderText = "physicalFileIds";
+            FileIds.Name = "FileIds";
+            FileIds.ReadOnly = true;
+            FileIds.Visible = false;
+            FileIds.Width = 141;
+            // 
+            // Column13
+            // 
+            Column13.HeaderText = "customerID";
+            Column13.Name = "Column13";
+            Column13.ReadOnly = true;
+            Column13.Visible = false;
+            Column13.Width = 121;
+            // 
+            // Column14
+            // 
+            Column14.HeaderText = "registerVehicleId";
+            Column14.Name = "Column14";
+            Column14.ReadOnly = true;
+            Column14.Visible = false;
+            Column14.Width = 156;
+            // 
+            // Column3
+            // 
+            Column3.HeaderText = "Xem Thêm";
+            Column3.Name = "Column3";
+            Column3.ReadOnly = true;
+            Column3.Visible = false;
+            Column3.Width = 96;
+            // 
             // dtpEndTime
             // 
             dtpEndTime.CustomFormat = "HH:mm:ss dd/MM/yyyy";
@@ -251,7 +426,7 @@ namespace iParkingv5_window.Forms.ReportForms
             lblTotalEvents.BackColor = Color.Transparent;
             lblTotalEvents.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             lblTotalEvents.ForeColor = Color.FromArgb(253, 149, 40);
-            lblTotalEvents.Location = new Point(1034, 200);
+            lblTotalEvents.Location = new Point(1033, 201);
             lblTotalEvents.Margin = new Padding(4, 0, 4, 0);
             lblTotalEvents.Name = "lblTotalEvents";
             lblTotalEvents.Size = new Size(153, 25);
@@ -277,7 +452,7 @@ namespace iParkingv5_window.Forms.ReportForms
             btnSearch.AutoSize = true;
             btnSearch.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnSearch.ForeColor = Color.Black;
-            btnSearch.Location = new Point(918, 199);
+            btnSearch.Location = new Point(917, 187);
             btnSearch.Margin = new Padding(4, 3, 4, 3);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(108, 42);
@@ -515,181 +690,6 @@ namespace iParkingv5_window.Forms.ReportForms
             // toolTip1
             // 
             toolTip1.IsBalloon = true;
-            // 
-            // id
-            // 
-            id.HeaderText = "id";
-            id.Name = "id";
-            id.ReadOnly = true;
-            id.Visible = false;
-            id.Width = 35;
-            // 
-            // Column1
-            // 
-            Column1.HeaderText = "STT";
-            Column1.Name = "Column1";
-            Column1.ReadOnly = true;
-            Column1.Width = 66;
-            // 
-            // identity_id
-            // 
-            identity_id.HeaderText = "Tên Định Danh";
-            identity_id.Name = "identity_id";
-            identity_id.ReadOnly = true;
-            identity_id.Visible = false;
-            identity_id.Width = 142;
-            // 
-            // plate
-            // 
-            plate.HeaderText = "Biển Số Xe";
-            plate.Name = "plate";
-            plate.ReadOnly = true;
-            plate.Width = 114;
-            // 
-            // vehicle_reagion_type
-            // 
-            vehicle_reagion_type.HeaderText = "Xe VN/TQ";
-            vehicle_reagion_type.Name = "vehicle_reagion_type";
-            vehicle_reagion_type.ReadOnly = true;
-            vehicle_reagion_type.Width = 110;
-            // 
-            // timeIn
-            // 
-            timeIn.HeaderText = "Giờ Vào";
-            timeIn.Name = "timeIn";
-            timeIn.ReadOnly = true;
-            timeIn.Width = 96;
-            // 
-            // warehouse
-            // 
-            warehouse.HeaderText = "Phân loại";
-            warehouse.Name = "warehouse";
-            warehouse.ReadOnly = true;
-            warehouse.Width = 105;
-            // 
-            // warehouse_code
-            // 
-            warehouse_code.HeaderText = "Số phiếu xuất";
-            warehouse_code.Name = "warehouse_code";
-            warehouse_code.ReadOnly = true;
-            warehouse_code.Width = 135;
-            // 
-            // NoteBSX
-            // 
-            NoteBSX.HeaderText = "Ghi chú BSX";
-            NoteBSX.Name = "NoteBSX";
-            NoteBSX.ReadOnly = true;
-            NoteBSX.Width = 125;
-            // 
-            // note_3rd_1
-            // 
-            note_3rd_1.HeaderText = "Lý do chặn kích xe";
-            note_3rd_1.Name = "note_3rd_1";
-            note_3rd_1.ReadOnly = true;
-            note_3rd_1.Width = 166;
-            // 
-            // note_3rd_2
-            // 
-            note_3rd_2.HeaderText = "Ghi chú DVHT";
-            note_3rd_2.Name = "note_3rd_2";
-            note_3rd_2.ReadOnly = true;
-            note_3rd_2.Width = 138;
-            // 
-            // Column10
-            // 
-            Column10.HeaderText = "Nhóm";
-            Column10.Name = "Column10";
-            Column10.ReadOnly = true;
-            Column10.Width = 85;
-            // 
-            // Column6
-            // 
-            Column6.HeaderText = "Người Dùng";
-            Column6.Name = "Column6";
-            Column6.ReadOnly = true;
-            Column6.Width = 127;
-            // 
-            // Column4
-            // 
-            Column4.HeaderText = "Làn vào";
-            Column4.Name = "Column4";
-            Column4.ReadOnly = true;
-            Column4.Width = 95;
-            // 
-            // identityName
-            // 
-            identityName.HeaderText = "Tên Thẻ";
-            identityName.Name = "identityName";
-            identityName.ReadOnly = true;
-            identityName.Width = 93;
-            // 
-            // Column16
-            // 
-            Column16.HeaderText = "Mã Thẻ";
-            Column16.Name = "Column16";
-            Column16.ReadOnly = true;
-            Column16.Width = 92;
-            // 
-            // Column12
-            // 
-            Column12.HeaderText = "Biển số đăng ký";
-            Column12.Name = "Column12";
-            Column12.ReadOnly = true;
-            Column12.Width = 150;
-            // 
-            // Column11
-            // 
-            Column11.HeaderText = "Khách hàng";
-            Column11.Name = "Column11";
-            Column11.ReadOnly = true;
-            Column11.Width = 122;
-            // 
-            // note_3rd_3
-            // 
-            note_3rd_3.HeaderText = "Người cho phép ra";
-            note_3rd_3.Name = "note_3rd_3";
-            note_3rd_3.ReadOnly = true;
-            note_3rd_3.Width = 171;
-            // 
-            // Column5
-            // 
-            Column5.HeaderText = "Làn Vào Id";
-            Column5.Name = "Column5";
-            Column5.ReadOnly = true;
-            Column5.Visible = false;
-            Column5.Width = 113;
-            // 
-            // FileIds
-            // 
-            FileIds.HeaderText = "physicalFileIds";
-            FileIds.Name = "FileIds";
-            FileIds.ReadOnly = true;
-            FileIds.Visible = false;
-            FileIds.Width = 141;
-            // 
-            // Column13
-            // 
-            Column13.HeaderText = "customerID";
-            Column13.Name = "Column13";
-            Column13.ReadOnly = true;
-            Column13.Visible = false;
-            Column13.Width = 121;
-            // 
-            // Column14
-            // 
-            Column14.HeaderText = "registerVehicleId";
-            Column14.Name = "Column14";
-            Column14.ReadOnly = true;
-            Column14.Visible = false;
-            Column14.Width = 156;
-            // 
-            // Column3
-            // 
-            Column3.HeaderText = "Xem Thêm";
-            Column3.Name = "Column3";
-            Column3.ReadOnly = true;
-            Column3.Visible = false;
-            Column3.Width = 96;
             // 
             // frmReportIn
             // 

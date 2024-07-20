@@ -1073,9 +1073,9 @@
             btnPrintScaleOffline.Location = new Point(124, 4);
             btnPrintScaleOffline.Margin = new Padding(3, 2, 3, 2);
             btnPrintScaleOffline.Name = "btnPrintScaleOffline";
-            btnPrintScaleOffline.Size = new Size(106, 52);
+            btnPrintScaleOffline.Size = new Size(116, 52);
             btnPrintScaleOffline.TabIndex = 0;
-            btnPrintScaleOffline.Text = "In hóa đơn";
+            btnPrintScaleOffline.Text = "In Phiếu Thu";
             btnPrintScaleOffline.TextImageRelation = TextImageRelation.ImageAboveText;
             btnPrintScaleOffline.UseVisualStyleBackColor = false;
             btnPrintScaleOffline.Click += btnPrintScaleOffline_Click;

@@ -1768,19 +1768,20 @@ namespace iParkingv5_window.Usercontrols
             string errorMessage = string.Empty;
             AddEventInResponse? eventIn = null;
             bool isAlarm = false;
-            if (identityGroup.PlateNumberValidation != (int)EmPlateCompareRule.UnCheck)
-            {
-                if (string.IsNullOrEmpty(plateNumber))
-                {
-                    isAlarm = true;
-                    bool isConfirm = MessageBox.Show("Không nhận diện được biển số, bạn có muốn cho xe vào bãi?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
-                    if (!isConfirm)
-                    {
-                        ClearView();
-                        return;
-                    }
-                }
-            }
+            //UPDATE TEST
+            //if (identityGroup.PlateNumberValidation != (int)EmPlateCompareRule.UnCheck)
+            //{
+            //    if (string.IsNullOrEmpty(plateNumber))
+            //    {
+            //        isAlarm = true;
+            //        bool isConfirm = MessageBox.Show("Không nhận diện được biển số, bạn có muốn cho xe vào bãi?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
+            //        if (!isConfirm)
+            //        {
+            //            ClearView();
+            //            return;
+            //        }
+            //    }
+            //}
             string note = "";
             this.Invoke(new Action(() =>
             {
@@ -2155,40 +2156,41 @@ namespace iParkingv5_window.Usercontrols
                 return;
             }
             //In hóa đơn internet
-            if (string.IsNullOrEmpty(this.WeighingActionDetail.InvoiceId))
-            {
-                var invoiceData = await KzScaleApiHelper.CreateInvoice(this.WeighingActionDetail.Id, true);
-                if (invoiceData==null|| string.IsNullOrEmpty(invoiceData.id) || invoiceData.id == Guid.Empty.ToString())
-                {
-                    MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-                this.WeighingActionDetail.InvoiceId = invoiceData.id;
-            }
+            //UPDATE TEST
+            //if (string.IsNullOrEmpty(this.WeighingActionDetail.InvoiceId))
+            //{
+            //    var invoiceData = await KzScaleApiHelper.CreateInvoice(this.WeighingActionDetail.Id, true);
+            //    if (invoiceData==null|| string.IsNullOrEmpty(invoiceData.id) || invoiceData.id == Guid.Empty.ToString())
+            //    {
+            //        MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //        return;
+            //    }
+            //    this.WeighingActionDetail.InvoiceId = invoiceData.id;
+            //}
 
-            var invoiceFile = await AppData.ApiServer.GetInvoiceData(this.WeighingActionDetail.InvoiceId);
-            if (invoiceFile == null)
-            {
-                MessageBox.Show("Chưa có thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
+            //var invoiceFile = await AppData.ApiServer.GetInvoiceData(this.WeighingActionDetail.InvoiceId);
+            //if (invoiceFile == null)
+            //{
+            //    MessageBox.Show("Chưa có thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    return;
+            //}
 
-            try
-            {
-                string pdfContent = invoiceFile.fileToBytes;
-                if (!string.IsNullOrEmpty(pdfContent))
-                {
-                    PrintHelper.PrintPdf(pdfContent);
-                }
-                else
-                {
-                    MessageBox.Show("Chưa có thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-            }
-            catch (Exception ex)
-            {
-            }
+            //try
+            //{
+            //    string pdfContent = invoiceFile.fileToBytes;
+            //    if (!string.IsNullOrEmpty(pdfContent))
+            //    {
+            //        PrintHelper.PrintPdf(pdfContent);
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("Chưa có thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //        return;
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //}
         }
         private async Task<bool> CheckWeighingType()
         {

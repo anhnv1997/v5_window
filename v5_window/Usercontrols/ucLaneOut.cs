@@ -922,20 +922,23 @@ namespace iParkingv5_window.Usercontrols
                     goto SU_KIEN_LOI;
                 }
 
+                bool isCOnfirm = true;
 
-                frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, errorMessage, eventIn.PlateNumber ?? "",
-                                                                eventIn.identity?.Id ?? "", this.lane.id,
-                                                                eventIn.fileKeys ?? new List<string>(), eventIn.DatetimeIn ?? DateTime.Now,
-                                                                true, eventOut.eventIn.charge);
-                if (frmConfirmOut.ShowDialog() == DialogResult.OK)
+                //UPDATE TEST
+                //frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, errorMessage, eventIn.PlateNumber ?? "",
+                //                                                eventIn.identity?.Id ?? "", this.lane.id,
+                //                                                eventIn.fileKeys ?? new List<string>(), eventIn.DatetimeIn ?? DateTime.Now,
+                //                                                true, eventOut.eventIn.charge);
+                //if (frmConfirmOut.ShowDialog() == DialogResult.OK)
+                if (isCOnfirm)
                 {
-                    if (plateNumber.ToUpper() != frmConfirmOut.updatePlate.ToUpper())
-                    {
-                        LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, specailName: "LPR_EDIT_OUT", mo_ta_them: "Sửa biển số khi quẹt thẻ EventInId: " + eventIn.Id +
-                                                                                                                                   "\r\nOld Plate: " + plateNumber +
-                                                                                                                                   " => New Plate: " + frmConfirmOut.updatePlate);
-                    }
-                    plateNumber = frmConfirmOut.updatePlate.ToUpper();
+                    //if (plateNumber.ToUpper() != frmConfirmOut.updatePlate.ToUpper())
+                    //{
+                    //    LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, specailName: "LPR_EDIT_OUT", mo_ta_them: "Sửa biển số khi quẹt thẻ EventInId: " + eventIn.Id +
+                    //                                                                                                               "\r\nOld Plate: " + plateNumber +
+                    //                                                                                                               " => New Plate: " + frmConfirmOut.updatePlate);
+                    //}
+                    //plateNumber = frmConfirmOut.updatePlate.ToUpper();
                     goto CheckOutWithForce;
                 }
                 else
@@ -1311,22 +1314,23 @@ namespace iParkingv5_window.Usercontrols
             if ((eventOut?.charge?.Amount ?? 0) > 0)
             {
                 await AppData.ApiServer.CreatePaymentTransaction(eventOut);
-                bool isConfirmSendEinvoie = MessageBox.Show($"Bạn có muốn gửi hóa đơn ({TextFormatingTool.GetMoneyFormat(eventOut.charge.Amount.ToString())}) không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
-                //bool isConfirmSendEinvoie = true;
-                if (isConfirmSendEinvoie)
-                {
-                    var invoiceDto = await AppData.ApiServer.CreateEinvoice(eventOut.charge.Amount, eventOut.eventIn.PlateNumber,
-                                                                                eventOut.eventIn.DatetimeIn ?? DateTime.Now, eventOut.DatetimeOut ?? DateTime.Now,
-                                                                                eventOut.Id, true, identityGroup?.Name ?? "");
-                    lastEvent.invoiceId = invoiceDto?.id ?? "";
-                }
-                else
-                {
-                    var invoiceDto = await AppData.ApiServer.CreateEinvoice(eventOut.charge.Amount, eventOut.eventIn.PlateNumber,
-                                                                               eventOut.eventIn.DatetimeIn ?? DateTime.Now, eventOut.DatetimeOut ?? DateTime.Now,
-                                                                               eventOut.Id, false, identityGroup?.Name ?? "");
-                    lastEvent.invoiceId = invoiceDto?.id ?? "";
-                }
+                //UPDATE TEST
+                //bool isConfirmSendEinvoie = MessageBox.Show($"Bạn có muốn gửi hóa đơn ({TextFormatingTool.GetMoneyFormat(eventOut.charge.Amount.ToString())}) không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
+                ////bool isConfirmSendEinvoie = true;
+                //if (isConfirmSendEinvoie)
+                //{
+                //    var invoiceDto = await AppData.ApiServer.CreateEinvoice(eventOut.charge.Amount, eventOut.eventIn.PlateNumber,
+                //                                                                eventOut.eventIn.DatetimeIn ?? DateTime.Now, eventOut.DatetimeOut ?? DateTime.Now,
+                //                                                                eventOut.Id, true, identityGroup?.Name ?? "");
+                //    lastEvent.invoiceId = invoiceDto?.id ?? "";
+                //}
+                //else
+                //{
+                //    var invoiceDto = await AppData.ApiServer.CreateEinvoice(eventOut.charge.Amount, eventOut.eventIn.PlateNumber,
+                //                                                               eventOut.eventIn.DatetimeIn ?? DateTime.Now, eventOut.DatetimeOut ?? DateTime.Now,
+                //                                                               eventOut.Id, false, identityGroup?.Name ?? "");
+                //    lastEvent.invoiceId = invoiceDto?.id ?? "";
+                //}
             }
         }
 
@@ -1471,32 +1475,33 @@ namespace iParkingv5_window.Usercontrols
             }
 
             //In hóa đơn internet
-            if (string.IsNullOrEmpty(this.WeighingActionDetail.InvoiceId))
-            {
-                var invoiceData = await KzScaleApiHelper.CreateInvoice(this.WeighingActionDetail.Id, true);
-                if (string.IsNullOrEmpty(invoiceData.id))
-                {
-                    MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-                this.WeighingActionDetail.InvoiceId = invoiceData.id;
-            }
+            //UPDATE TEST
+            //if (string.IsNullOrEmpty(this.WeighingActionDetail.InvoiceId))
+            //{
+            //    var invoiceData = await KzScaleApiHelper.CreateInvoice(this.WeighingActionDetail.Id, true);
+            //    if (string.IsNullOrEmpty(invoiceData.id))
+            //    {
+            //        MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //        return;
+            //    }
+            //    this.WeighingActionDetail.InvoiceId = invoiceData.id;
+            //}
 
-            var invoiceFile = await AppData.ApiServer.GetInvoiceData(this.WeighingActionDetail.InvoiceId);
-            if (invoiceFile == null)
-            {
-                MessageBox.Show("Chưa có thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            try
-            {
-                string pdfContent = invoiceFile.fileToBytes;
-                PrintHelper.PrintPdf(pdfContent);
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
-            }
+            //var invoiceFile = await AppData.ApiServer.GetInvoiceData(this.WeighingActionDetail.InvoiceId);
+            //if (invoiceFile == null)
+            //{
+            //    MessageBox.Show("Chưa có thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    return;
+            //}
+            //try
+            //{
+            //    string pdfContent = invoiceFile.fileToBytes;
+            //    PrintHelper.PrintPdf(pdfContent);
+            //}
+            //catch (Exception ex)
+            //{
+            //    LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
+            //}
         }
 
         private async Task<bool> CheckWeighingType()

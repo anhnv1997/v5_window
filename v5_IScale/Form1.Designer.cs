@@ -108,6 +108,7 @@
             báoCáoToolStripMenuItem = new ToolStripMenuItem();
             tsmiScaleReport = new ToolStripMenuItem();
             tsmiScaleDetailReport = new ToolStripMenuItem();
+            testToolStripMenuItem = new ToolStripMenuItem();
             panelAppStatus = new Panel();
             lblLoadingStatus = new Label();
             lblAppVersion = new Label();
@@ -654,7 +655,7 @@
             btnInvoice.Name = "btnInvoice";
             btnInvoice.Size = new Size(141, 51);
             btnInvoice.TabIndex = 0;
-            btnInvoice.Text = "In hóa đơn";
+            btnInvoice.Text = "In phiếu thu";
             btnInvoice.UseVisualStyleBackColor = true;
             btnInvoice.Click += btnPrintScaleOffline_Click;
             // 
@@ -912,7 +913,7 @@
             // 
             // báoCáoToolStripMenuItem
             // 
-            báoCáoToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { tsmiScaleReport, tsmiScaleDetailReport });
+            báoCáoToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { tsmiScaleReport, tsmiScaleDetailReport, testToolStripMenuItem });
             báoCáoToolStripMenuItem.Name = "báoCáoToolStripMenuItem";
             báoCáoToolStripMenuItem.Size = new Size(76, 25);
             báoCáoToolStripMenuItem.Text = "Báo cáo";
@@ -930,6 +931,13 @@
             tsmiScaleDetailReport.Size = new Size(202, 26);
             tsmiScaleDetailReport.Text = "Báo cáo chi tiết";
             tsmiScaleDetailReport.Click += tsmiScaleDetailReport_Click;
+            // 
+            // testToolStripMenuItem
+            // 
+            testToolStripMenuItem.Name = "testToolStripMenuItem";
+            testToolStripMenuItem.Size = new Size(202, 26);
+            testToolStripMenuItem.Text = "Test";
+            testToolStripMenuItem.Click += testToolStripMenuItem_Click;
             // 
             // panelAppStatus
             // 
@@ -1114,5 +1122,6 @@
         private DataGridViewTextBoxColumn Column15;
         private Label lblAppVersion;
         private Usercontrols.BuildControls.ucScaleCount ucScaleCount2;
+        private ToolStripMenuItem testToolStripMenuItem;
     }
 }
