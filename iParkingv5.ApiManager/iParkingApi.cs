@@ -102,7 +102,7 @@ namespace iParkingv5.ApiManager
         Task<AddEventInResponse> PostCheckInAsync(int weight,
             string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys,
             bool isForce = false, RegisteredVehicle? registeredVehicle = null, string note = "");
-        Task<List<EventInReport>> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
+        Task<KzParkingv5BaseResponse<List<EventInReport>>> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
                                     string identityGroupId, string vehicleTypeId, string laneId, string user,
                                     int pageIndex = 1, int pageSize = 100);
         #endregion End Event In
@@ -111,7 +111,7 @@ namespace iParkingv5.ApiManager
         Task<string> GetLastEventOutIdentityGroupIdByPlateNumber(string plateNumber);
 
         Task<bool> UpdateEventOutPlate(string eventId, string newPlate, string oldPlate);
-        Task<List<EventOutReport>> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000);
+        Task<KzParkingv5BaseResponse<List<EventOutReport>>> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000);
         Task<AddEventOutResponse> PostCheckOutAsync(string _laneId, string _plateNumber, Identity? identitiy, List<string> imageKeys, bool isForce, int weight);
         Task<bool> CommitOutAsync(AddEventOutResponse eventOut);
         Task<bool> CancelCheckOut(string eventOutId);
@@ -128,7 +128,7 @@ namespace iParkingv5.ApiManager
         #region EInvoice
         Task<InvoiceResponse> CreateEinvoice(long price, string plateNumber, DateTime datetimeIn, DateTime datetimeOut, string eventOutId, bool isSendNow = true, string cardGroupName = "");
         Task<InvoiceFileInfor> GetInvoiceData(string eventId, EmInvoiceProvider provider = EmInvoiceProvider.Viettel);
-        Task<List<InvoiceResponse>> GetMultipleInvoiceData(DateTime startTime, DateTime endTime, EmInvoiceProvider provider = EmInvoiceProvider.Viettel);
+        Task<List<InvoiceResponse>> GetMultipleInvoiceData(DateTime startTime, DateTime endTime, List<string> eventIds, EmInvoiceProvider provider = EmInvoiceProvider.Viettel);
         Task<List<InvoiceResponse>> getPendingEInvoice(DateTime startTime, DateTime endTime);
         Task<bool> sendPendingEInvoice(string orderId);
         #endregion End Einvoice

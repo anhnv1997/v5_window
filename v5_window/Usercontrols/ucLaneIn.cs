@@ -1164,7 +1164,8 @@ namespace iParkingv5_window.Usercontrols
             ucLastEventInfos.Add(ucTop2Event);
             ucLastEventInfos.Add(ucTop3Event);
             //Tuple<List<EventInReport>, int, int> top3Event = await KzParkingApiHelper.GetEventIns("", startTime, endTime, "", "", this.lane.id, 1, 3);
-            var top3Event = await AppData.ApiServer.GetEventIns("", startTime, endTime, "", "", this.lane.id, "", 1, 3);
+            var top3EventReport = await AppData.ApiServer.GetEventIns("", startTime, endTime, "", "", this.lane.id, "", 0, 3);
+            var top3Event = top3EventReport?.data ?? null;
             if (top3Event != null)
             {
                 for (int i = 0; i < 3; i++)

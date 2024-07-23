@@ -799,7 +799,8 @@ namespace v5_IScale
                     lblLoadingStatus.Refresh();
                 }));
                 DateTime minValue = new DateTime(1999, 12, 12, 1, 1, 1);
-                var eventInData = await AppData.ApiServer.GetEventIns(e.PreferCard, minValue, DateTime.Now, "", "", "", "");
+                var eventInReport = await AppData.ApiServer.GetEventIns(e.PreferCard, minValue, DateTime.Now, "", "", "", "", 0, 1);
+                var eventInData = eventInReport?.data ?? null;
                 if (eventInData != null)
                 {
                     if (eventInData.Count > 0)

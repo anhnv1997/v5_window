@@ -36,6 +36,10 @@ namespace iParkingv5_window.Forms.ReportForms
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmReportInOut));
             dtpEndTime = new DateTimePicker();
             dtpStartTime = new DateTimePicker();
@@ -46,35 +50,6 @@ namespace iParkingv5_window.Forms.ReportForms
             lblKeyword = new Label();
             txtKeyword = new TextBox();
             dgvData = new DataGridView();
-            lblEndTime = new Label();
-            tableLayoutPanel2 = new TableLayoutPanel();
-            picOverviewImageOut = new MovablePictureBox();
-            picVehicleImageOut = new MovablePictureBox();
-            ucPages1 = new ucPages();
-            lblTotalEvents = new Label();
-            btnCancel = new LblCancel();
-            btnSearch = new BtnSearch();
-            btnExportExcel = new BtnExcel();
-            panelData = new Panel();
-            pictureBox1 = new PictureBox();
-            btnPrintOffline = new BtnPrint();
-            btnPrintInternet = new BtnPrint();
-            lblUser = new Label();
-            cbUser = new ComboBox();
-            cbLane = new ComboBox();
-            lblLane = new Label();
-            cbIdentityGroup = new ComboBox();
-            cbVehicleType = new ComboBox();
-            lblVehicleType = new Label();
-            lblIdentityGroup = new Label();
-            lblTQ = new Label();
-            lblVN = new Label();
-            lblMoney = new Label();
-            ucEventOutInfo1 = new ucEventOutInfo();
-            ucNotify1 = new Usercontrols.BuildControls.ucNotify();
-            ucLoading1 = new Usercontrols.BuildControls.ucLoading();
-            tablePic = new TableLayoutPanel();
-            toolTip1 = new ToolTip(components);
             id = new DataGridViewTextBoxColumn();
             eventinid = new DataGridViewTextBoxColumn();
             Column1 = new DataGridViewTextBoxColumn();
@@ -105,6 +80,64 @@ namespace iParkingv5_window.Forms.ReportForms
             Column14 = new DataGridViewTextBoxColumn();
             pending_invoice_id = new DataGridViewTextBoxColumn();
             invoice_id = new DataGridViewTextBoxColumn();
+            lblEndTime = new Label();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            picOverviewImageOut = new MovablePictureBox();
+            picVehicleImageOut = new MovablePictureBox();
+            ucPages1 = new ucPages();
+            lblTotalEvents = new Label();
+            btnCancel = new LblCancel();
+            btnSearch = new BtnSearch();
+            btnExportExcel = new BtnExcel();
+            panelData = new Panel();
+            pictureBox1 = new PictureBox();
+            btnPrintOffline = new BtnPrint();
+            btnPrintInternet = new BtnPrint();
+            lblUser = new Label();
+            cbUser = new ComboBox();
+            cbLane = new ComboBox();
+            lblLane = new Label();
+            cbIdentityGroup = new ComboBox();
+            cbVehicleType = new ComboBox();
+            lblVehicleType = new Label();
+            lblIdentityGroup = new Label();
+            lblTQ = new Label();
+            lblVN = new Label();
+            lblMoney = new Label();
+            ucEventOutInfo1 = new ucEventOutInfo();
+            tablePic = new TableLayoutPanel();
+            toolTip1 = new ToolTip(components);
+            dgvExport = new DataGridView();
+            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn6 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn7 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn8 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn9 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn10 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn11 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn12 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn13 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn14 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn15 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn16 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn17 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn18 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn19 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn20 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn21 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn22 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn23 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn24 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn25 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn26 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn27 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn28 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn29 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn30 = new DataGridViewTextBoxColumn();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picOverviewImageIn).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picVehicleImageIn).BeginInit();
@@ -115,6 +148,7 @@ namespace iParkingv5_window.Forms.ReportForms
             panelData.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tablePic.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvExport).BeginInit();
             SuspendLayout();
             // 
             // dtpEndTime
@@ -258,388 +292,6 @@ namespace iParkingv5_window.Forms.ReportForms
             dgvData.TabIndex = 50;
             dgvData.CellMouseClick += dgvData_CellMouseClick;
             dgvData.MouseClick += dgvData_MouseClick;
-            // 
-            // lblEndTime
-            // 
-            lblEndTime.AutoSize = true;
-            lblEndTime.BackColor = Color.Transparent;
-            lblEndTime.Font = new Font("Segoe UI", 12F);
-            lblEndTime.Location = new Point(492, 70);
-            lblEndTime.Margin = new Padding(4, 0, 4, 0);
-            lblEndTime.Name = "lblEndTime";
-            lblEndTime.Size = new Size(74, 21);
-            lblEndTime.TabIndex = 43;
-            lblEndTime.Text = "Kết thúc  ";
-            // 
-            // tableLayoutPanel2
-            // 
-            tableLayoutPanel2.ColumnCount = 1;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Controls.Add(picOverviewImageOut, 0, 0);
-            tableLayoutPanel2.Controls.Add(picVehicleImageOut, 0, 1);
-            tableLayoutPanel2.Dock = DockStyle.Fill;
-            tableLayoutPanel2.Location = new Point(252, 0);
-            tableLayoutPanel2.Margin = new Padding(0);
-            tableLayoutPanel2.Name = "tableLayoutPanel2";
-            tableLayoutPanel2.RowCount = 2;
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel2.Size = new Size(252, 402);
-            tableLayoutPanel2.TabIndex = 53;
-            // 
-            // picOverviewImageOut
-            // 
-            picOverviewImageOut.BackColor = Color.WhiteSmoke;
-            picOverviewImageOut.BorderStyle = BorderStyle.FixedSingle;
-            picOverviewImageOut.Dock = DockStyle.Fill;
-            picOverviewImageOut.Location = new Point(0, 0);
-            picOverviewImageOut.Margin = new Padding(0);
-            picOverviewImageOut.Name = "picOverviewImageOut";
-            picOverviewImageOut.Size = new Size(252, 201);
-            picOverviewImageOut.SizeMode = PictureBoxSizeMode.StretchImage;
-            picOverviewImageOut.TabIndex = 30;
-            picOverviewImageOut.TabStop = false;
-            picOverviewImageOut.LoadCompleted += Pic_LoadCompleted;
-            // 
-            // picVehicleImageOut
-            // 
-            picVehicleImageOut.BackColor = Color.WhiteSmoke;
-            picVehicleImageOut.BorderStyle = BorderStyle.FixedSingle;
-            picVehicleImageOut.Dock = DockStyle.Fill;
-            picVehicleImageOut.Location = new Point(0, 201);
-            picVehicleImageOut.Margin = new Padding(0);
-            picVehicleImageOut.Name = "picVehicleImageOut";
-            picVehicleImageOut.Size = new Size(252, 201);
-            picVehicleImageOut.SizeMode = PictureBoxSizeMode.StretchImage;
-            picVehicleImageOut.TabIndex = 29;
-            picVehicleImageOut.TabStop = false;
-            picVehicleImageOut.LoadCompleted += Pic_LoadCompleted;
-            // 
-            // ucPages1
-            // 
-            ucPages1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            ucPages1.BackColor = Color.Transparent;
-            ucPages1.BorderStyle = BorderStyle.Fixed3D;
-            ucPages1.Location = new Point(15, 689);
-            ucPages1.Margin = new Padding(4, 3, 4, 3);
-            ucPages1.Name = "ucPages1";
-            ucPages1.Size = new Size(1336, 50);
-            ucPages1.TabIndex = 54;
-            ucPages1.Visible = false;
-            // 
-            // lblTotalEvents
-            // 
-            lblTotalEvents.AutoSize = true;
-            lblTotalEvents.BackColor = Color.Transparent;
-            lblTotalEvents.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            lblTotalEvents.ForeColor = Color.FromArgb(253, 149, 40);
-            lblTotalEvents.Location = new Point(1202, 97);
-            lblTotalEvents.Margin = new Padding(4, 0, 4, 0);
-            lblTotalEvents.Name = "lblTotalEvents";
-            lblTotalEvents.Size = new Size(153, 25);
-            lblTotalEvents.TabIndex = 56;
-            lblTotalEvents.Text = "Tổng số sự kiện";
-            lblTotalEvents.Visible = false;
-            // 
-            // btnCancel
-            // 
-            btnCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnCancel.AutoSize = true;
-            btnCancel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            btnCancel.ForeColor = Color.Black;
-            btnCancel.Location = new Point(1259, 746);
-            btnCancel.Margin = new Padding(4, 3, 4, 3);
-            btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(73, 42);
-            btnCancel.TabIndex = 57;
-            btnCancel.Text = "Đóng";
-            // 
-            // btnSearch
-            // 
-            btnSearch.AutoSize = true;
-            btnSearch.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            btnSearch.ForeColor = Color.Black;
-            btnSearch.Location = new Point(924, 132);
-            btnSearch.Margin = new Padding(4, 3, 4, 3);
-            btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(108, 42);
-            btnSearch.TabIndex = 58;
-            btnSearch.Text = "Tìm kiếm";
-            // 
-            // btnExportExcel
-            // 
-            btnExportExcel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnExportExcel.AutoSize = true;
-            btnExportExcel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            btnExportExcel.Location = new Point(1167, 746);
-            btnExportExcel.Margin = new Padding(4, 3, 4, 3);
-            btnExportExcel.Name = "btnExportExcel";
-            btnExportExcel.Size = new Size(103, 42);
-            btnExportExcel.TabIndex = 59;
-            btnExportExcel.Text = "lblExcel1";
-            // 
-            // panelData
-            // 
-            panelData.Controls.Add(pictureBox1);
-            panelData.Controls.Add(btnPrintOffline);
-            panelData.Controls.Add(btnPrintInternet);
-            panelData.Controls.Add(lblUser);
-            panelData.Controls.Add(cbUser);
-            panelData.Controls.Add(cbLane);
-            panelData.Controls.Add(lblLane);
-            panelData.Controls.Add(cbIdentityGroup);
-            panelData.Controls.Add(cbVehicleType);
-            panelData.Controls.Add(lblVehicleType);
-            panelData.Controls.Add(lblIdentityGroup);
-            panelData.Controls.Add(lblTQ);
-            panelData.Controls.Add(lblVN);
-            panelData.Controls.Add(lblMoney);
-            panelData.Controls.Add(ucEventOutInfo1);
-            panelData.Controls.Add(ucNotify1);
-            panelData.Controls.Add(ucLoading1);
-            panelData.Controls.Add(tablePic);
-            panelData.Controls.Add(txtKeyword);
-            panelData.Controls.Add(btnExportExcel);
-            panelData.Controls.Add(lblEndTime);
-            panelData.Controls.Add(btnCancel);
-            panelData.Controls.Add(btnSearch);
-            panelData.Controls.Add(ucPages1);
-            panelData.Controls.Add(lblTotalEvents);
-            panelData.Controls.Add(lblKeyword);
-            panelData.Controls.Add(dgvData);
-            panelData.Controls.Add(lblStartTime);
-            panelData.Controls.Add(dtpStartTime);
-            panelData.Controls.Add(dtpEndTime);
-            panelData.Dock = DockStyle.Fill;
-            panelData.Font = new Font("Segoe UI", 12F);
-            panelData.Location = new Point(0, 0);
-            panelData.Margin = new Padding(4, 3, 4, 3);
-            panelData.Name = "panelData";
-            panelData.Size = new Size(1376, 805);
-            panelData.TabIndex = 60;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            pictureBox1.Image = Properties.Resources.noti_question_64;
-            pictureBox1.Location = new Point(1321, 18);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(30, 30);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 73;
-            pictureBox1.TabStop = false;
-            toolTip1.SetToolTip(pictureBox1, "Bấm chuột phải vào bản ghi để mở tính năng bổ sung\r\n\r\nPhím Tắt:\r\nF6 - In phiếu thu\r\nF7 - In hóa đơn internet\r\nF8 - In hóa đơn offline");
-            // 
-            // btnPrintOffline
-            // 
-            btnPrintOffline.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnPrintOffline.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            btnPrintOffline.Location = new Point(1225, 127);
-            btnPrintOffline.Margin = new Padding(4);
-            btnPrintOffline.Name = "btnPrintOffline";
-            btnPrintOffline.Size = new Size(158, 45);
-            btnPrintOffline.TabIndex = 72;
-            btnPrintOffline.Text = "In hóa đơn";
-            btnPrintOffline.UseVisualStyleBackColor = true;
-            btnPrintOffline.Click += btnPrintOffline_Click_1;
-            // 
-            // btnPrintInternet
-            // 
-            btnPrintInternet.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnPrintInternet.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            btnPrintInternet.Location = new Point(1040, 127);
-            btnPrintInternet.Margin = new Padding(4);
-            btnPrintInternet.Name = "btnPrintInternet";
-            btnPrintInternet.Size = new Size(177, 45);
-            btnPrintInternet.TabIndex = 72;
-            btnPrintInternet.Text = "In hóa đơn(Internet)";
-            btnPrintInternet.UseVisualStyleBackColor = true;
-            btnPrintInternet.Click += btnPrintInternet_Click_1;
-            // 
-            // lblUser
-            // 
-            lblUser.AutoSize = true;
-            lblUser.Location = new Point(5, 144);
-            lblUser.Margin = new Padding(4, 0, 4, 0);
-            lblUser.Name = "lblUser";
-            lblUser.Size = new Size(94, 21);
-            lblUser.TabIndex = 71;
-            lblUser.Text = "Người dùng";
-            // 
-            // cbUser
-            // 
-            cbUser.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbUser.FormattingEnabled = true;
-            cbUser.Location = new Point(131, 148);
-            cbUser.Margin = new Padding(4, 3, 4, 3);
-            cbUser.Name = "cbUser";
-            cbUser.Size = new Size(320, 29);
-            cbUser.TabIndex = 6;
-            // 
-            // cbLane
-            // 
-            cbLane.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbLane.Font = new Font("Segoe UI", 12F);
-            cbLane.FormattingEnabled = true;
-            cbLane.Location = new Point(596, 145);
-            cbLane.Margin = new Padding(4, 3, 4, 3);
-            cbLane.Name = "cbLane";
-            cbLane.Size = new Size(320, 29);
-            cbLane.TabIndex = 7;
-            // 
-            // lblLane
-            // 
-            lblLane.AutoSize = true;
-            lblLane.BackColor = Color.Transparent;
-            lblLane.Font = new Font("Segoe UI", 12F);
-            lblLane.Location = new Point(496, 151);
-            lblLane.Margin = new Padding(4, 0, 4, 0);
-            lblLane.Name = "lblLane";
-            lblLane.Size = new Size(35, 21);
-            lblLane.TabIndex = 69;
-            lblLane.Text = "Làn";
-            // 
-            // cbIdentityGroup
-            // 
-            cbIdentityGroup.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbIdentityGroup.Font = new Font("Segoe UI", 12F);
-            cbIdentityGroup.FormattingEnabled = true;
-            cbIdentityGroup.Location = new Point(595, 110);
-            cbIdentityGroup.Margin = new Padding(4, 3, 4, 3);
-            cbIdentityGroup.Name = "cbIdentityGroup";
-            cbIdentityGroup.Size = new Size(320, 29);
-            cbIdentityGroup.TabIndex = 5;
-            // 
-            // cbVehicleType
-            // 
-            cbVehicleType.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbVehicleType.Font = new Font("Segoe UI", 12F);
-            cbVehicleType.FormattingEnabled = true;
-            cbVehicleType.Location = new Point(130, 105);
-            cbVehicleType.Margin = new Padding(4, 3, 4, 3);
-            cbVehicleType.Name = "cbVehicleType";
-            cbVehicleType.Size = new Size(320, 29);
-            cbVehicleType.TabIndex = 4;
-            // 
-            // lblVehicleType
-            // 
-            lblVehicleType.AutoSize = true;
-            lblVehicleType.BackColor = Color.Transparent;
-            lblVehicleType.Font = new Font("Segoe UI", 12F);
-            lblVehicleType.Location = new Point(17, 113);
-            lblVehicleType.Margin = new Padding(4, 0, 4, 0);
-            lblVehicleType.Name = "lblVehicleType";
-            lblVehicleType.Size = new Size(58, 21);
-            lblVehicleType.TabIndex = 66;
-            lblVehicleType.Text = "Loại xe";
-            // 
-            // lblIdentityGroup
-            // 
-            lblIdentityGroup.AutoSize = true;
-            lblIdentityGroup.BackColor = Color.Transparent;
-            lblIdentityGroup.Font = new Font("Segoe UI", 12F);
-            lblIdentityGroup.Location = new Point(492, 116);
-            lblIdentityGroup.Margin = new Padding(4, 0, 4, 0);
-            lblIdentityGroup.Name = "lblIdentityGroup";
-            lblIdentityGroup.Size = new Size(80, 21);
-            lblIdentityGroup.TabIndex = 67;
-            lblIdentityGroup.Text = "Nhóm thẻ";
-            // 
-            // lblTQ
-            // 
-            lblTQ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            lblTQ.AutoSize = true;
-            lblTQ.BackColor = Color.Transparent;
-            lblTQ.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
-            lblTQ.ForeColor = Color.Red;
-            lblTQ.Location = new Point(17, 707);
-            lblTQ.Margin = new Padding(4, 0, 4, 0);
-            lblTQ.Name = "lblTQ";
-            lblTQ.Size = new Size(52, 32);
-            lblTQ.TabIndex = 64;
-            lblTQ.Text = "TQ:";
-            // 
-            // lblVN
-            // 
-            lblVN.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            lblVN.AutoSize = true;
-            lblVN.BackColor = Color.Transparent;
-            lblVN.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
-            lblVN.ForeColor = Color.Red;
-            lblVN.Location = new Point(14, 666);
-            lblVN.Margin = new Padding(4, 0, 4, 0);
-            lblVN.Name = "lblVN";
-            lblVN.Size = new Size(56, 32);
-            lblVN.TabIndex = 64;
-            lblVN.Text = "VN:";
-            // 
-            // lblMoney
-            // 
-            lblMoney.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            lblMoney.AutoSize = true;
-            lblMoney.BackColor = Color.Transparent;
-            lblMoney.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
-            lblMoney.ForeColor = Color.Red;
-            lblMoney.Location = new Point(734, 666);
-            lblMoney.Margin = new Padding(4, 0, 4, 0);
-            lblMoney.Name = "lblMoney";
-            lblMoney.Size = new Size(83, 32);
-            lblMoney.TabIndex = 64;
-            lblMoney.Text = "label1";
-            // 
-            // ucEventOutInfo1
-            // 
-            ucEventOutInfo1.BackColor = Color.FromArgb(255, 224, 192);
-            ucEventOutInfo1.Location = new Point(247, 174);
-            ucEventOutInfo1.Margin = new Padding(4, 3, 4, 3);
-            ucEventOutInfo1.Name = "ucEventOutInfo1";
-            ucEventOutInfo1.Size = new Size(858, 392);
-            ucEventOutInfo1.TabIndex = 63;
-            // 
-            // ucNotify1
-            // 
-            ucNotify1.BackColor = Color.FromArgb(255, 224, 192);
-            ucNotify1.Location = new Point(671, 52);
-            ucNotify1.Margin = new Padding(4, 3, 4, 3);
-            ucNotify1.MaximumSize = new Size(374, 374);
-            ucNotify1.Message = "Nội dung thông báo";
-            ucNotify1.MinimumSize = new Size(374, 374);
-            ucNotify1.Name = "ucNotify1";
-            ucNotify1.NotiType = Usercontrols.BuildControls.ucNotify.EmNotiType.Information;
-            ucNotify1.Size = new Size(374, 374);
-            ucNotify1.TabIndex = 62;
-            ucNotify1.Visible = false;
-            // 
-            // ucLoading1
-            // 
-            ucLoading1.BackColor = Color.FromArgb(255, 224, 192);
-            ucLoading1.Language = IPaking.Ultility.TextManagement.EmLanguage.Vietnamese;
-            ucLoading1.Location = new Point(685, 38);
-            ucLoading1.Margin = new Padding(4, 3, 4, 3);
-            ucLoading1.Message = "Preparing to download";
-            ucLoading1.Name = "ucLoading1";
-            ucLoading1.Size = new Size(441, 197);
-            ucLoading1.TabIndex = 61;
-            // 
-            // tablePic
-            // 
-            tablePic.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            tablePic.ColumnCount = 2;
-            tablePic.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tablePic.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tablePic.Controls.Add(tableLayoutPanel1, 0, 0);
-            tablePic.Controls.Add(tableLayoutPanel2, 1, 0);
-            tablePic.Location = new Point(847, 262);
-            tablePic.Margin = new Padding(0);
-            tablePic.Name = "tablePic";
-            tablePic.RowCount = 1;
-            tablePic.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tablePic.Size = new Size(504, 402);
-            tablePic.TabIndex = 60;
-            // 
-            // toolTip1
-            // 
-            toolTip1.IsBalloon = true;
             // 
             // id
             // 
@@ -858,6 +510,621 @@ namespace iParkingv5_window.Forms.ReportForms
             invoice_id.Visible = false;
             invoice_id.Width = 112;
             // 
+            // lblEndTime
+            // 
+            lblEndTime.AutoSize = true;
+            lblEndTime.BackColor = Color.Transparent;
+            lblEndTime.Font = new Font("Segoe UI", 12F);
+            lblEndTime.Location = new Point(492, 70);
+            lblEndTime.Margin = new Padding(4, 0, 4, 0);
+            lblEndTime.Name = "lblEndTime";
+            lblEndTime.Size = new Size(74, 21);
+            lblEndTime.TabIndex = 43;
+            lblEndTime.Text = "Kết thúc  ";
+            // 
+            // tableLayoutPanel2
+            // 
+            tableLayoutPanel2.ColumnCount = 1;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.Controls.Add(picOverviewImageOut, 0, 0);
+            tableLayoutPanel2.Controls.Add(picVehicleImageOut, 0, 1);
+            tableLayoutPanel2.Dock = DockStyle.Fill;
+            tableLayoutPanel2.Location = new Point(252, 0);
+            tableLayoutPanel2.Margin = new Padding(0);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 2;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.Size = new Size(252, 402);
+            tableLayoutPanel2.TabIndex = 53;
+            // 
+            // picOverviewImageOut
+            // 
+            picOverviewImageOut.BackColor = Color.WhiteSmoke;
+            picOverviewImageOut.BorderStyle = BorderStyle.FixedSingle;
+            picOverviewImageOut.Dock = DockStyle.Fill;
+            picOverviewImageOut.Location = new Point(0, 0);
+            picOverviewImageOut.Margin = new Padding(0);
+            picOverviewImageOut.Name = "picOverviewImageOut";
+            picOverviewImageOut.Size = new Size(252, 201);
+            picOverviewImageOut.SizeMode = PictureBoxSizeMode.StretchImage;
+            picOverviewImageOut.TabIndex = 30;
+            picOverviewImageOut.TabStop = false;
+            picOverviewImageOut.LoadCompleted += Pic_LoadCompleted;
+            // 
+            // picVehicleImageOut
+            // 
+            picVehicleImageOut.BackColor = Color.WhiteSmoke;
+            picVehicleImageOut.BorderStyle = BorderStyle.FixedSingle;
+            picVehicleImageOut.Dock = DockStyle.Fill;
+            picVehicleImageOut.Location = new Point(0, 201);
+            picVehicleImageOut.Margin = new Padding(0);
+            picVehicleImageOut.Name = "picVehicleImageOut";
+            picVehicleImageOut.Size = new Size(252, 201);
+            picVehicleImageOut.SizeMode = PictureBoxSizeMode.StretchImage;
+            picVehicleImageOut.TabIndex = 29;
+            picVehicleImageOut.TabStop = false;
+            picVehicleImageOut.LoadCompleted += Pic_LoadCompleted;
+            // 
+            // ucPages1
+            // 
+            ucPages1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            ucPages1.BackColor = Color.Transparent;
+            ucPages1.BorderStyle = BorderStyle.Fixed3D;
+            ucPages1.Location = new Point(15, 689);
+            ucPages1.Margin = new Padding(4, 3, 4, 3);
+            ucPages1.Name = "ucPages1";
+            ucPages1.Size = new Size(1336, 50);
+            ucPages1.TabIndex = 54;
+            ucPages1.Visible = false;
+            // 
+            // lblTotalEvents
+            // 
+            lblTotalEvents.AutoSize = true;
+            lblTotalEvents.BackColor = Color.Transparent;
+            lblTotalEvents.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblTotalEvents.ForeColor = Color.FromArgb(253, 149, 40);
+            lblTotalEvents.Location = new Point(1202, 97);
+            lblTotalEvents.Margin = new Padding(4, 0, 4, 0);
+            lblTotalEvents.Name = "lblTotalEvents";
+            lblTotalEvents.Size = new Size(153, 25);
+            lblTotalEvents.TabIndex = 56;
+            lblTotalEvents.Text = "Tổng số sự kiện";
+            lblTotalEvents.Visible = false;
+            // 
+            // btnCancel
+            // 
+            btnCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnCancel.AutoSize = true;
+            btnCancel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            btnCancel.ForeColor = Color.Black;
+            btnCancel.Location = new Point(1259, 746);
+            btnCancel.Margin = new Padding(4, 3, 4, 3);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(73, 42);
+            btnCancel.TabIndex = 57;
+            btnCancel.Text = "Đóng";
+            // 
+            // btnSearch
+            // 
+            btnSearch.AutoSize = true;
+            btnSearch.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            btnSearch.ForeColor = Color.Black;
+            btnSearch.Location = new Point(924, 132);
+            btnSearch.Margin = new Padding(4, 3, 4, 3);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(108, 42);
+            btnSearch.TabIndex = 58;
+            btnSearch.Text = "Tìm kiếm";
+            // 
+            // btnExportExcel
+            // 
+            btnExportExcel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnExportExcel.AutoSize = true;
+            btnExportExcel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            btnExportExcel.Location = new Point(1167, 746);
+            btnExportExcel.Margin = new Padding(4, 3, 4, 3);
+            btnExportExcel.Name = "btnExportExcel";
+            btnExportExcel.Size = new Size(103, 42);
+            btnExportExcel.TabIndex = 59;
+            btnExportExcel.Text = "lblExcel1";
+            // 
+            // panelData
+            // 
+            panelData.Controls.Add(dgvExport);
+            panelData.Controls.Add(pictureBox1);
+            panelData.Controls.Add(btnPrintOffline);
+            panelData.Controls.Add(btnPrintInternet);
+            panelData.Controls.Add(lblUser);
+            panelData.Controls.Add(cbUser);
+            panelData.Controls.Add(cbLane);
+            panelData.Controls.Add(lblLane);
+            panelData.Controls.Add(cbIdentityGroup);
+            panelData.Controls.Add(cbVehicleType);
+            panelData.Controls.Add(lblVehicleType);
+            panelData.Controls.Add(lblIdentityGroup);
+            panelData.Controls.Add(lblTQ);
+            panelData.Controls.Add(lblVN);
+            panelData.Controls.Add(lblMoney);
+            panelData.Controls.Add(ucEventOutInfo1);
+            panelData.Controls.Add(tablePic);
+            panelData.Controls.Add(txtKeyword);
+            panelData.Controls.Add(btnExportExcel);
+            panelData.Controls.Add(lblEndTime);
+            panelData.Controls.Add(btnCancel);
+            panelData.Controls.Add(btnSearch);
+            panelData.Controls.Add(ucPages1);
+            panelData.Controls.Add(lblTotalEvents);
+            panelData.Controls.Add(lblKeyword);
+            panelData.Controls.Add(dgvData);
+            panelData.Controls.Add(lblStartTime);
+            panelData.Controls.Add(dtpStartTime);
+            panelData.Controls.Add(dtpEndTime);
+            panelData.Dock = DockStyle.Fill;
+            panelData.Font = new Font("Segoe UI", 12F);
+            panelData.Location = new Point(0, 0);
+            panelData.Margin = new Padding(4, 3, 4, 3);
+            panelData.Name = "panelData";
+            panelData.Size = new Size(1376, 805);
+            panelData.TabIndex = 60;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pictureBox1.Image = Properties.Resources.noti_question_64;
+            pictureBox1.Location = new Point(1321, 18);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(30, 30);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 73;
+            pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Bấm chuột phải vào bản ghi để mở tính năng bổ sung\r\n\r\nPhím Tắt:\r\nF6 - In phiếu thu\r\nF7 - In hóa đơn internet\r\nF8 - In hóa đơn offline");
+            // 
+            // btnPrintOffline
+            // 
+            btnPrintOffline.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnPrintOffline.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            btnPrintOffline.Location = new Point(1225, 127);
+            btnPrintOffline.Margin = new Padding(4);
+            btnPrintOffline.Name = "btnPrintOffline";
+            btnPrintOffline.Size = new Size(158, 45);
+            btnPrintOffline.TabIndex = 72;
+            btnPrintOffline.Text = "In hóa đơn";
+            btnPrintOffline.UseVisualStyleBackColor = true;
+            btnPrintOffline.Click += btnPrintOffline_Click_1;
+            // 
+            // btnPrintInternet
+            // 
+            btnPrintInternet.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnPrintInternet.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            btnPrintInternet.Location = new Point(1040, 127);
+            btnPrintInternet.Margin = new Padding(4);
+            btnPrintInternet.Name = "btnPrintInternet";
+            btnPrintInternet.Size = new Size(177, 45);
+            btnPrintInternet.TabIndex = 72;
+            btnPrintInternet.Text = "In hóa đơn(Internet)";
+            btnPrintInternet.UseVisualStyleBackColor = true;
+            btnPrintInternet.Click += btnPrintInternet_Click_1;
+            // 
+            // lblUser
+            // 
+            lblUser.AutoSize = true;
+            lblUser.Location = new Point(5, 144);
+            lblUser.Margin = new Padding(4, 0, 4, 0);
+            lblUser.Name = "lblUser";
+            lblUser.Size = new Size(94, 21);
+            lblUser.TabIndex = 71;
+            lblUser.Text = "Người dùng";
+            // 
+            // cbUser
+            // 
+            cbUser.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbUser.FormattingEnabled = true;
+            cbUser.Location = new Point(131, 148);
+            cbUser.Margin = new Padding(4, 3, 4, 3);
+            cbUser.Name = "cbUser";
+            cbUser.Size = new Size(320, 29);
+            cbUser.TabIndex = 6;
+            // 
+            // cbLane
+            // 
+            cbLane.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbLane.Font = new Font("Segoe UI", 12F);
+            cbLane.FormattingEnabled = true;
+            cbLane.Location = new Point(596, 145);
+            cbLane.Margin = new Padding(4, 3, 4, 3);
+            cbLane.Name = "cbLane";
+            cbLane.Size = new Size(320, 29);
+            cbLane.TabIndex = 7;
+            // 
+            // lblLane
+            // 
+            lblLane.AutoSize = true;
+            lblLane.BackColor = Color.Transparent;
+            lblLane.Font = new Font("Segoe UI", 12F);
+            lblLane.Location = new Point(496, 151);
+            lblLane.Margin = new Padding(4, 0, 4, 0);
+            lblLane.Name = "lblLane";
+            lblLane.Size = new Size(35, 21);
+            lblLane.TabIndex = 69;
+            lblLane.Text = "Làn";
+            // 
+            // cbIdentityGroup
+            // 
+            cbIdentityGroup.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbIdentityGroup.Font = new Font("Segoe UI", 12F);
+            cbIdentityGroup.FormattingEnabled = true;
+            cbIdentityGroup.Location = new Point(595, 110);
+            cbIdentityGroup.Margin = new Padding(4, 3, 4, 3);
+            cbIdentityGroup.Name = "cbIdentityGroup";
+            cbIdentityGroup.Size = new Size(320, 29);
+            cbIdentityGroup.TabIndex = 5;
+            // 
+            // cbVehicleType
+            // 
+            cbVehicleType.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbVehicleType.Font = new Font("Segoe UI", 12F);
+            cbVehicleType.FormattingEnabled = true;
+            cbVehicleType.Location = new Point(130, 105);
+            cbVehicleType.Margin = new Padding(4, 3, 4, 3);
+            cbVehicleType.Name = "cbVehicleType";
+            cbVehicleType.Size = new Size(320, 29);
+            cbVehicleType.TabIndex = 4;
+            // 
+            // lblVehicleType
+            // 
+            lblVehicleType.AutoSize = true;
+            lblVehicleType.BackColor = Color.Transparent;
+            lblVehicleType.Font = new Font("Segoe UI", 12F);
+            lblVehicleType.Location = new Point(17, 113);
+            lblVehicleType.Margin = new Padding(4, 0, 4, 0);
+            lblVehicleType.Name = "lblVehicleType";
+            lblVehicleType.Size = new Size(58, 21);
+            lblVehicleType.TabIndex = 66;
+            lblVehicleType.Text = "Loại xe";
+            // 
+            // lblIdentityGroup
+            // 
+            lblIdentityGroup.AutoSize = true;
+            lblIdentityGroup.BackColor = Color.Transparent;
+            lblIdentityGroup.Font = new Font("Segoe UI", 12F);
+            lblIdentityGroup.Location = new Point(492, 116);
+            lblIdentityGroup.Margin = new Padding(4, 0, 4, 0);
+            lblIdentityGroup.Name = "lblIdentityGroup";
+            lblIdentityGroup.Size = new Size(80, 21);
+            lblIdentityGroup.TabIndex = 67;
+            lblIdentityGroup.Text = "Nhóm thẻ";
+            // 
+            // lblTQ
+            // 
+            lblTQ.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            lblTQ.AutoSize = true;
+            lblTQ.BackColor = Color.Transparent;
+            lblTQ.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            lblTQ.ForeColor = Color.Red;
+            lblTQ.Location = new Point(17, 707);
+            lblTQ.Margin = new Padding(4, 0, 4, 0);
+            lblTQ.Name = "lblTQ";
+            lblTQ.Size = new Size(52, 32);
+            lblTQ.TabIndex = 64;
+            lblTQ.Text = "TQ:";
+            // 
+            // lblVN
+            // 
+            lblVN.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            lblVN.AutoSize = true;
+            lblVN.BackColor = Color.Transparent;
+            lblVN.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            lblVN.ForeColor = Color.Red;
+            lblVN.Location = new Point(14, 666);
+            lblVN.Margin = new Padding(4, 0, 4, 0);
+            lblVN.Name = "lblVN";
+            lblVN.Size = new Size(56, 32);
+            lblVN.TabIndex = 64;
+            lblVN.Text = "VN:";
+            // 
+            // lblMoney
+            // 
+            lblMoney.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            lblMoney.AutoSize = true;
+            lblMoney.BackColor = Color.Transparent;
+            lblMoney.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            lblMoney.ForeColor = Color.Red;
+            lblMoney.Location = new Point(734, 666);
+            lblMoney.Margin = new Padding(4, 0, 4, 0);
+            lblMoney.Name = "lblMoney";
+            lblMoney.Size = new Size(83, 32);
+            lblMoney.TabIndex = 64;
+            lblMoney.Text = "label1";
+            // 
+            // ucEventOutInfo1
+            // 
+            ucEventOutInfo1.BackColor = Color.FromArgb(255, 224, 192);
+            ucEventOutInfo1.Location = new Point(247, 174);
+            ucEventOutInfo1.Margin = new Padding(4, 3, 4, 3);
+            ucEventOutInfo1.Name = "ucEventOutInfo1";
+            ucEventOutInfo1.Size = new Size(858, 392);
+            ucEventOutInfo1.TabIndex = 63;
+            // 
+            // tablePic
+            // 
+            tablePic.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            tablePic.ColumnCount = 2;
+            tablePic.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tablePic.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tablePic.Controls.Add(tableLayoutPanel1, 0, 0);
+            tablePic.Controls.Add(tableLayoutPanel2, 1, 0);
+            tablePic.Location = new Point(847, 262);
+            tablePic.Margin = new Padding(0);
+            tablePic.Name = "tablePic";
+            tablePic.RowCount = 1;
+            tablePic.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tablePic.Size = new Size(504, 402);
+            tablePic.TabIndex = 60;
+            // 
+            // toolTip1
+            // 
+            toolTip1.IsBalloon = true;
+            // 
+            // dgvExport
+            // 
+            dgvExport.AllowUserToAddRows = false;
+            dgvExport.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(192, 255, 255);
+            dgvExport.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dgvExport.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvExport.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dgvExport.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgvExport.BackgroundColor = SystemColors.Control;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = SystemColors.Control;
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 12F);
+            dataGridViewCellStyle6.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle6.Padding = new Padding(3);
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
+            dgvExport.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dgvExport.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvExport.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4, dataGridViewTextBoxColumn5, dataGridViewTextBoxColumn6, dataGridViewTextBoxColumn7, dataGridViewTextBoxColumn8, dataGridViewTextBoxColumn9, dataGridViewTextBoxColumn10, dataGridViewTextBoxColumn11, dataGridViewTextBoxColumn12, dataGridViewTextBoxColumn13, dataGridViewTextBoxColumn14, dataGridViewTextBoxColumn15, dataGridViewTextBoxColumn16, dataGridViewTextBoxColumn17, dataGridViewTextBoxColumn18, dataGridViewTextBoxColumn19, dataGridViewTextBoxColumn20, dataGridViewTextBoxColumn21, dataGridViewTextBoxColumn22, dataGridViewTextBoxColumn23, dataGridViewTextBoxColumn24, dataGridViewTextBoxColumn25, dataGridViewTextBoxColumn26, dataGridViewTextBoxColumn27, dataGridViewTextBoxColumn28, dataGridViewTextBoxColumn29, dataGridViewTextBoxColumn30 });
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = SystemColors.Window;
+            dataGridViewCellStyle8.Font = new Font("Segoe UI", 12F);
+            dataGridViewCellStyle8.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle8.Padding = new Padding(3);
+            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
+            dgvExport.DefaultCellStyle = dataGridViewCellStyle8;
+            dgvExport.Location = new Point(960, 26);
+            dgvExport.Margin = new Padding(4, 3, 4, 3);
+            dgvExport.Name = "dgvExport";
+            dgvExport.ReadOnly = true;
+            dgvExport.RowHeadersVisible = false;
+            dgvExport.RowTemplate.Height = 29;
+            dgvExport.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvExport.Size = new Size(99, 73);
+            dgvExport.TabIndex = 74;
+            dgvExport.Visible = false;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewTextBoxColumn1.HeaderText = "id";
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.ReadOnly = true;
+            dataGridViewTextBoxColumn1.Visible = false;
+            dataGridViewTextBoxColumn1.Width = 37;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewTextBoxColumn2.HeaderText = "eventInId";
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            dataGridViewTextBoxColumn2.ReadOnly = true;
+            dataGridViewTextBoxColumn2.Visible = false;
+            dataGridViewTextBoxColumn2.Width = 95;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewTextBoxColumn3.HeaderText = "STT";
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            dataGridViewTextBoxColumn3.ReadOnly = true;
+            dataGridViewTextBoxColumn3.Width = 66;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.HeaderText = "Biển Số Vào";
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            dataGridViewTextBoxColumn4.ReadOnly = true;
+            dataGridViewTextBoxColumn4.Width = 123;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            dataGridViewTextBoxColumn5.HeaderText = "Biển Số Ra";
+            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            dataGridViewTextBoxColumn5.ReadOnly = true;
+            dataGridViewTextBoxColumn5.Width = 115;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            dataGridViewTextBoxColumn6.HeaderText = "Xe VN/TQ";
+            dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            dataGridViewTextBoxColumn6.ReadOnly = true;
+            dataGridViewTextBoxColumn6.Width = 110;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            dataGridViewTextBoxColumn7.HeaderText = "Giờ Vào";
+            dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            dataGridViewTextBoxColumn7.ReadOnly = true;
+            dataGridViewTextBoxColumn7.Width = 96;
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            dataGridViewTextBoxColumn8.HeaderText = "Giờ Ra";
+            dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            dataGridViewTextBoxColumn8.ReadOnly = true;
+            dataGridViewTextBoxColumn8.Width = 88;
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            dataGridViewTextBoxColumn9.HeaderText = "Thời Gian Lưu Bãi";
+            dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            dataGridViewTextBoxColumn9.ReadOnly = true;
+            dataGridViewTextBoxColumn9.Width = 163;
+            // 
+            // dataGridViewTextBoxColumn10
+            // 
+            dataGridViewTextBoxColumn10.HeaderText = "Loại";
+            dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            dataGridViewTextBoxColumn10.ReadOnly = true;
+            dataGridViewTextBoxColumn10.Width = 70;
+            // 
+            // dataGridViewTextBoxColumn11
+            // 
+            dataGridViewTextBoxColumn11.HeaderText = "Phân Loại";
+            dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
+            dataGridViewTextBoxColumn11.ReadOnly = true;
+            dataGridViewTextBoxColumn11.Width = 109;
+            // 
+            // dataGridViewTextBoxColumn12
+            // 
+            dataGridViewTextBoxColumn12.HeaderText = "Số phiếu xuất";
+            dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
+            dataGridViewTextBoxColumn12.ReadOnly = true;
+            dataGridViewTextBoxColumn12.Width = 135;
+            // 
+            // dataGridViewTextBoxColumn13
+            // 
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewTextBoxColumn13.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewTextBoxColumn13.HeaderText = "Phí";
+            dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+            dataGridViewTextBoxColumn13.ReadOnly = true;
+            dataGridViewTextBoxColumn13.Width = 63;
+            // 
+            // dataGridViewTextBoxColumn14
+            // 
+            dataGridViewTextBoxColumn14.HeaderText = "Vé Xe";
+            dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
+            dataGridViewTextBoxColumn14.ReadOnly = true;
+            dataGridViewTextBoxColumn14.Width = 79;
+            // 
+            // dataGridViewTextBoxColumn15
+            // 
+            dataGridViewTextBoxColumn15.HeaderText = "Người Dùng Vào";
+            dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
+            dataGridViewTextBoxColumn15.ReadOnly = true;
+            dataGridViewTextBoxColumn15.Width = 157;
+            // 
+            // dataGridViewTextBoxColumn16
+            // 
+            dataGridViewTextBoxColumn16.HeaderText = "Người Dùng Ra";
+            dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+            dataGridViewTextBoxColumn16.ReadOnly = true;
+            dataGridViewTextBoxColumn16.Width = 149;
+            // 
+            // dataGridViewTextBoxColumn17
+            // 
+            dataGridViewTextBoxColumn17.HeaderText = "Mẫu hóa đơn";
+            dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
+            dataGridViewTextBoxColumn17.ReadOnly = true;
+            dataGridViewTextBoxColumn17.Width = 134;
+            // 
+            // dataGridViewTextBoxColumn18
+            // 
+            dataGridViewTextBoxColumn18.HeaderText = "Số hóa đơn";
+            dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
+            dataGridViewTextBoxColumn18.ReadOnly = true;
+            dataGridViewTextBoxColumn18.Width = 121;
+            // 
+            // dataGridViewTextBoxColumn19
+            // 
+            dataGridViewTextBoxColumn19.HeaderText = "Làn Vào";
+            dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
+            dataGridViewTextBoxColumn19.ReadOnly = true;
+            dataGridViewTextBoxColumn19.Width = 96;
+            // 
+            // dataGridViewTextBoxColumn20
+            // 
+            dataGridViewTextBoxColumn20.HeaderText = "Làn Ra";
+            dataGridViewTextBoxColumn20.Name = "dataGridViewTextBoxColumn20";
+            dataGridViewTextBoxColumn20.ReadOnly = true;
+            dataGridViewTextBoxColumn20.Width = 88;
+            // 
+            // dataGridViewTextBoxColumn21
+            // 
+            dataGridViewTextBoxColumn21.HeaderText = "Ghi chú BSX";
+            dataGridViewTextBoxColumn21.Name = "dataGridViewTextBoxColumn21";
+            dataGridViewTextBoxColumn21.ReadOnly = true;
+            dataGridViewTextBoxColumn21.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn22
+            // 
+            dataGridViewTextBoxColumn22.HeaderText = "Ghi chú chặn kích xe";
+            dataGridViewTextBoxColumn22.Name = "dataGridViewTextBoxColumn22";
+            dataGridViewTextBoxColumn22.ReadOnly = true;
+            dataGridViewTextBoxColumn22.Width = 182;
+            // 
+            // dataGridViewTextBoxColumn23
+            // 
+            dataGridViewTextBoxColumn23.HeaderText = "Ghi chú DVHT";
+            dataGridViewTextBoxColumn23.Name = "dataGridViewTextBoxColumn23";
+            dataGridViewTextBoxColumn23.ReadOnly = true;
+            dataGridViewTextBoxColumn23.Width = 138;
+            // 
+            // dataGridViewTextBoxColumn24
+            // 
+            dataGridViewTextBoxColumn24.HeaderText = "Người cho phép ra";
+            dataGridViewTextBoxColumn24.Name = "dataGridViewTextBoxColumn24";
+            dataGridViewTextBoxColumn24.ReadOnly = true;
+            dataGridViewTextBoxColumn24.Width = 171;
+            // 
+            // dataGridViewTextBoxColumn25
+            // 
+            dataGridViewTextBoxColumn25.HeaderText = "Khối lượng cân vào";
+            dataGridViewTextBoxColumn25.Name = "dataGridViewTextBoxColumn25";
+            dataGridViewTextBoxColumn25.ReadOnly = true;
+            dataGridViewTextBoxColumn25.Width = 174;
+            // 
+            // dataGridViewTextBoxColumn26
+            // 
+            dataGridViewTextBoxColumn26.HeaderText = "Khối lượng cân ra";
+            dataGridViewTextBoxColumn26.Name = "dataGridViewTextBoxColumn26";
+            dataGridViewTextBoxColumn26.ReadOnly = true;
+            dataGridViewTextBoxColumn26.Width = 163;
+            // 
+            // dataGridViewTextBoxColumn27
+            // 
+            dataGridViewTextBoxColumn27.HeaderText = "physicalFileIdIns";
+            dataGridViewTextBoxColumn27.Name = "dataGridViewTextBoxColumn27";
+            dataGridViewTextBoxColumn27.ReadOnly = true;
+            dataGridViewTextBoxColumn27.Visible = false;
+            dataGridViewTextBoxColumn27.Width = 168;
+            // 
+            // dataGridViewTextBoxColumn28
+            // 
+            dataGridViewTextBoxColumn28.HeaderText = "physicalIdOuts";
+            dataGridViewTextBoxColumn28.Name = "dataGridViewTextBoxColumn28";
+            dataGridViewTextBoxColumn28.ReadOnly = true;
+            dataGridViewTextBoxColumn28.Visible = false;
+            dataGridViewTextBoxColumn28.Width = 154;
+            // 
+            // dataGridViewTextBoxColumn29
+            // 
+            dataGridViewTextBoxColumn29.HeaderText = "pendingId";
+            dataGridViewTextBoxColumn29.Name = "dataGridViewTextBoxColumn29";
+            dataGridViewTextBoxColumn29.ReadOnly = true;
+            dataGridViewTextBoxColumn29.Visible = false;
+            dataGridViewTextBoxColumn29.Width = 120;
+            // 
+            // dataGridViewTextBoxColumn30
+            // 
+            dataGridViewTextBoxColumn30.HeaderText = "invoiceId";
+            dataGridViewTextBoxColumn30.Name = "dataGridViewTextBoxColumn30";
+            dataGridViewTextBoxColumn30.ReadOnly = true;
+            dataGridViewTextBoxColumn30.Visible = false;
+            dataGridViewTextBoxColumn30.Width = 112;
+            // 
             // frmReportInOut
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -882,6 +1149,7 @@ namespace iParkingv5_window.Forms.ReportForms
             panelData.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             tablePic.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvExport).EndInit();
             ResumeLayout(false);
         }
 
@@ -906,8 +1174,6 @@ namespace iParkingv5_window.Forms.ReportForms
         private BtnExcel btnExportExcel;
         private Panel panelData;
         private TableLayoutPanel tablePic;
-        private Usercontrols.BuildControls.ucNotify ucNotify1;
-        private Usercontrols.BuildControls.ucLoading ucLoading1;
         private ucEventOutInfo ucEventOutInfo1;
         private Label lblMoney;
         private ComboBox cbIdentityGroup;
@@ -954,5 +1220,36 @@ namespace iParkingv5_window.Forms.ReportForms
         private DataGridViewTextBoxColumn Column14;
         private DataGridViewTextBoxColumn pending_invoice_id;
         private DataGridViewTextBoxColumn invoice_id;
+        private DataGridView dgvExport;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn20;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn21;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn22;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn23;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn24;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn25;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn26;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn27;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn28;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn29;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn30;
     }
 }

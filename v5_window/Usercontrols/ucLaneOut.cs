@@ -2302,7 +2302,8 @@ namespace iParkingv5_window.Usercontrols
                                                         0, 0, 0);
             DateTime endTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,
                                             23, 59, 59);
-            var top3Event = await AppData.ApiServer.GetEventOuts("", startTime, endTime, "", "", this.lane.id, "", 1, 3);
+            var top3EventReport = await AppData.ApiServer.GetEventOuts("", startTime, endTime, "", "", this.lane.id, "", 0, 3);
+            var top3Event = top3EventReport?.data ?? null;
             if (top3Event != null)
             {
                 for (int i = 0; i < 3; i++)
@@ -2573,12 +2574,15 @@ namespace iParkingv5_window.Usercontrols
             DateTime startTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 1, 1, 1);
             DateTime endTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
             string transactionCode = "";
-            var data = await AppData.ApiServer.GetEventOuts(identity.Code, startTime, endTime, "", "", "", "", 1, 1);
+            var data = await AppData.ApiServer.GetEventOuts(identity.Code, startTime, endTime, "", "", "", "", 0, 1);
             if (data != null)
             {
-                if (data.Count > 0)
+                if (data.data != null)
                 {
-                    transactionCode = (data[0].TransactionCode ?? "").Contains("-0-0") ? "" : data[0].TransactionCode;
+                    if (data.data.Count > 0)
+                    {
+                        transactionCode = (data.data[0].TransactionCode ?? "").Contains("-0-0") ? "" : data.data[0].TransactionCode;
+                    }
                 }
             }
 

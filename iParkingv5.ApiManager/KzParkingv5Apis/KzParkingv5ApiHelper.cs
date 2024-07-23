@@ -25,6 +25,7 @@ using static iParkingv5.Objects.warehouse.TransactionType;
 using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5BaseApi;
 using PaymentTransaction = iParkingv5.Objects.Datas.payments.PaymentTransaction;
 using iParkingv5.ApiManager.KzParkingv5Apis;
+using System.Linq;
 
 namespace iParkingv5.ApiManager.KzParkingv5Apis
 {
@@ -924,7 +925,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return null;
         }
-        public async Task<List<InvoiceResponse>> GetMultipleInvoiceData(DateTime startTime, DateTime endTime, EmInvoiceProvider provider = EmInvoiceProvider.Viettel)
+        public async Task<List<InvoiceResponse>> GetMultipleInvoiceData(DateTime startTime, DateTime endTime, List<string> eventIds, EmInvoiceProvider provider = EmInvoiceProvider.Viettel)
         {
             //string url = $"http://14.160.26.45:26868/invoice/many";
             StandardlizeServerName();
@@ -935,11 +936,15 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             {
                 { "Authorization","Bearer " + token  }
             };
+            string searchIds = string.Join(",", eventIds);
             var filter = Filter.CreateFilter(new List<FilterModel>()
             {
+                new FilterModel("targetId", "GUID", searchIds, "in"),
+                new FilterModel("EventOut", "TEXT", searchIds, "eq"),
                 new FilterModel("sent", "BOOLEAN", "true", "eq"),
-                new FilterModel("createdUtc", "DATETIME", startTime.ToUniversalTime().ToString(UTCFormat), "gte"),
-                new FilterModel("createdUtc", "DATETIME", endTime.ToUniversalTime().ToString(UTCFormat), "lte"),
+                //new FilterModel("targetId", "BOOLEAN", "true", "eq"),
+                //new FilterModel("createdUtc", "DATETIME", startTime.ToUniversalTime().ToString(UTCFormat), "gte"),
+                //new FilterModel("createdUtc", "DATETIME", endTime.ToUniversalTime().ToString(UTCFormat), "lte"),
             }, EmMainOperation.and, 0, 10000);
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
@@ -1176,7 +1181,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
 
         #region EVENT IN
 
-        public async Task<List<EventInReport>> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
+        public async Task<KzParkingv5BaseResponse<List<EventInReport>>> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
                                    string identityGroupId, string vehicleTypeId, string laneId, string user,
                                    int pageIndex = 1, int pageSize = 100)
         {
@@ -1201,9 +1206,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             var data = new
             {
                 filter = searchData,
-                pageIndex = 0,
-                pageSize = 1,
-                paging = false
+                pageIndex = pageIndex,
+                pageSize = pageSize <= 0 ? 1 : pageSize,
+                paging = pageSize <= 0 ? false : true
             };
 
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
@@ -1211,17 +1216,18 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             if (!string.IsNullOrEmpty(response.Item1))
             {
                 var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventInReport>>>.GetBaseResponse(response.Item1);
-                if (baseResponse != null)
-                {
-                    return baseResponse.data;
-                }
+                //if (baseResponse != null)
+                //{
+                //    return baseResponse.data;
+                //}
+                return baseResponse;
             }
             return null;
         }
         #endregion END EVENT IN
 
         #region EVENT OUT
-        public async Task<List<EventOutReport>> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000)
+        public async Task<KzParkingv5BaseResponse<List<EventOutReport>>> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000)
         {
             StandardlizeServerName();
             string apiUrl = server + "reporting/parking/event-out";
@@ -1229,7 +1235,6 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             {
                 { "Authorization","Bearer " + token  }
             };
-
 
             var searchData = new SearchEventIn()
             {
@@ -1243,9 +1248,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             var data = new
             {
                 filter = searchData,
-                pageIndex = 0,
-                pageSize = 1,
-                paging = false
+                pageIndex = pageIndex,
+                pageSize = pageSize <= 0 ? 1 : pageSize,
+                paging = pageSize <= 0 ? false : true
             };
 
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
@@ -1253,10 +1258,11 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             if (!string.IsNullOrEmpty(response.Item1))
             {
                 var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventOutReport>>>.GetBaseResponse(response.Item1);
-                if (baseResponse != null)
-                {
-                    return baseResponse.data;
-                }
+                return baseResponse;
+                //if (baseResponse != null)
+                //{
+                //    return baseResponse.data;
+                //}
             }
             return null;
         }

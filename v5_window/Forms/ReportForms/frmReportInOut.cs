@@ -1,4 +1,5 @@
-﻿using IPaking.Ultility;
+﻿using DocumentFormat.OpenXml.Vml;
+using IPaking.Ultility;
 using iPakrkingv5.Controls;
 using iPakrkingv5.Controls.Controls.Buttons;
 using iParkingv5.ApiManager.KzParkingv5Apis;
@@ -13,6 +14,7 @@ using iParkingv5.Objects.warehouse;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv5_window.Helpers;
 using iParkingv5_window.Usercontrols.BuildControls;
+using iParkingv6.ApiManager.KzParkingv3Apis;
 using Kztek.Tool.TextFormatingTools;
 using Kztek.Tools;
 using System.Data;
@@ -184,17 +186,19 @@ namespace iParkingv5_window.Forms.ReportForms
                 string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
                 string user = string.IsNullOrEmpty(((ListItem)cbUser.SelectedItem)?.Value) ? "" : cbUser.Text;
 
-                eventOutData = await AppData.ApiServer.GetEventOuts(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user);
-
+                var eventOutDataReport = await AppData.ApiServer.GetEventOuts(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user, 0, 100);
+                eventOutData = eventOutDataReport?.data ?? null;
                 if (eventOutData == null)
                 {
                     DisableFastLoading();
-                    ucNotify1.Show(ucNotify.EmNotiType.Error, "Không tải được thông tin xe trong bãi. Vui lòng thử lại!");
+                    MessageBox.Show("Không tải được thông tin xe trong bãi. Vui lòng thử lại!");
+                    //ucNotify1.Show(ucNotify.EmNotiType.Error, "Không tải được thông tin xe trong bãi. Vui lòng thử lại!");
                     return;
                 }
 
-                totalPages = 1;
-                totalEvents = eventOutData.Count;
+                totalPages = eventOutDataReport!.totalPage;
+                totalEvents = eventOutDataReport.totalCount;
+                lblMoney.Text = TextFormatingTool.GetMoneyFormat(eventOutDataReport.revenue.ToString());
 
                 List<string> ids = new List<string>();
                 foreach (var ev in eventOutData)
@@ -206,7 +210,7 @@ namespace iParkingv5_window.Forms.ReportForms
                 }
                 if (ids.Count > 0)
                 {
-                    InvoiceDatas = await AppData.ApiServer.GetMultipleInvoiceData(startTime, endTime) ?? new List<InvoiceResponse>();
+                    InvoiceDatas = await AppData.ApiServer.GetMultipleInvoiceData(startTime, endTime, ids) ?? new List<InvoiceResponse>();
                 }
                 else
                 {
@@ -233,9 +237,31 @@ namespace iParkingv5_window.Forms.ReportForms
         {
             this.Close();
         }
-        private void btnExportExcel_Click(object? sender, EventArgs e)
+        private async void btnExportExcel_Click(object? sender, EventArgs e)
         {
-            ExcelTools.CreatReportFile(dgvData, "Báo cáo Xe Ra Khỏi Bãi", new List<string>() { lblVN.Text, lblTQ.Text });
+            btnExportExcel.Enabled = false;
+            string keyword = txtKeyword.Text;
+            DateTime startTime = dtpStartTime.Value;
+            DateTime endTime = dtpEndTime.Value;
+            string vehicleTypeId = ((ListItem)cbVehicleType.SelectedItem)?.Value ?? "";
+            string identityGroupId = ((ListItem)cbIdentityGroup.SelectedItem)?.Value ?? "";
+            string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
+            string user = string.IsNullOrEmpty(((ListItem)cbUser.SelectedItem)?.Value) ? "" : cbUser.Text;
+
+            var eventOutDataReport = await AppData.ApiServer.GetEventOuts(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user, 0, -1);
+            eventOutData = eventOutDataReport?.data ?? null;
+            if (eventOutData == null)
+            {
+                DisableFastLoading();
+                MessageBox.Show("Không tải được thông tin xe trong bãi. Vui lòng thử lại!");
+                //ucNotify1.Show(ucNotify.EmNotiType.Error, "Không tải được thông tin xe trong bãi. Vui lòng thử lại!");
+                return;
+            }
+
+            var additionalData = DisplayExportEventOutData(eventOutData);
+            ExcelTools.CreatReportFile(dgvExport, "Báo cáo Xe Ra Khỏi Bãi", additionalData);
+            dgvExport.Rows.Clear();
+            btnExportExcel.Enabled = true;
         }
 
         private async void BtnPrintInternet_Click(object? sender, EventArgs e)
@@ -465,6 +491,51 @@ namespace iParkingv5_window.Forms.ReportForms
         }
         private void UcPages1_OnpageSelect(int pageIndex)
         {
+            this.Invoke(new Action(async () =>
+            {
+                EnableFastLoading();
+
+                string keyword = txtKeyword.Text;
+                DateTime startTime = dtpStartTime.Value;
+                DateTime endTime = dtpEndTime.Value;
+                string vehicleTypeId = ((ListItem)cbVehicleType.SelectedItem)?.Value ?? "";
+                string identityGroupId = ((ListItem)cbIdentityGroup.SelectedItem)?.Value ?? "";
+                string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
+                string user = string.IsNullOrEmpty(((ListItem)cbUser.SelectedItem)?.Value) ? "" : cbUser.Text;
+
+                var eventOutDataReport = await AppData.ApiServer.GetEventOuts(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user, pageIndex - 1, 100);
+                eventOutData = eventOutDataReport?.data ?? null;
+                if (eventOutData == null)
+                {
+                    DisableFastLoading();
+                    MessageBox.Show("Không tải được thông tin xe trong bãi. Vui lòng thử lại!");
+                    //ucNotify1.Show(ucNotify.EmNotiType.Error, "Không tải được thông tin xe trong bãi. Vui lòng thử lại!");
+                    return;
+                }
+
+                List<string> ids = new List<string>();
+                foreach (var ev in eventOutData)
+                {
+                    if (ev.charge > 0)
+                    {
+                        ids.Add(ev.id.ToLower());
+                    }
+                }
+                if (ids.Count > 0)
+                {
+                    InvoiceDatas = await AppData.ApiServer.GetMultipleInvoiceData(startTime, endTime, ids) ?? new List<InvoiceResponse>();
+                }
+                else
+                {
+                    InvoiceDatas = new List<InvoiceResponse>();
+                }
+
+                pendingDatas = await AppData.ApiServer.getPendingEInvoice(startTime, endTime);
+
+                await DisplayEventOutData(eventOutData);
+                DisableFastLoading();
+                eventOutData.Clear();
+            }));
         }
         private void UcNotify1_OnSelectResultEvent(DialogResult result)
         {
@@ -662,7 +733,7 @@ namespace iParkingv5_window.Forms.ReportForms
         }
         private async Task DisplayEventOutData(List<EventOutReport> eventOutData)
         {
-            long total = 0;
+            //long total = 0;
             List<DataGridViewRow> rows = new List<DataGridViewRow>();
             Dictionary<string, Dictionary<string, int>> count_by_countries = new Dictionary<string, Dictionary<string, int>>();
             count_by_countries.Add("VN", new Dictionary<string, int>());
@@ -760,12 +831,11 @@ namespace iParkingv5_window.Forms.ReportForms
                 row.Cells[i++].Value = invoiceData?.id ?? "";        //16
 
                 rows.Add(row);
-                total += item.charge;
+                //total += item.charge;
             }
             this.Invoke(new Action(() =>
             {
                 dgvData.Rows.AddRange(rows.ToArray());
-                lblMoney.Text = TextFormatingTool.GetMoneyFormat(total.ToString());
                 lblVN.Text = "";
                 lblTQ.Text = "";
                 string TH_VN = "";
@@ -784,6 +854,132 @@ namespace iParkingv5_window.Forms.ReportForms
             eventOutData.Clear();
             InvoiceDatas.Clear();
         }
+        private List<string> DisplayExportEventOutData(List<EventOutReport> eventOutData)
+        {
+            List<string> additionalData = new List<string>();
+            //long total = 0;
+            List<DataGridViewRow> rows = new List<DataGridViewRow>();
+            Dictionary<string, Dictionary<string, int>> count_by_countries = new Dictionary<string, Dictionary<string, int>>();
+            count_by_countries.Add("VN", new Dictionary<string, int>());
+            count_by_countries.Add("TQ", new Dictionary<string, int>());
+            foreach (KeyValuePair<string, Dictionary<string, int>> item in count_by_countries)
+            {
+                foreach (TransactionType.EmTransactionType type in Enum.GetValues(typeof(TransactionType.EmTransactionType)))
+                {
+                    item.Value.Add(TransactionType.GetTransactionTypeStr((int)type), 0);
+                }
+            }
+
+            foreach (var item in eventOutData)
+            {
+                List<string?> physicalFileIdsIn = new List<string?>();
+                if (item.eventInFileKeys != null)
+                {
+                    foreach (var eventInImageKey in item.eventInFileKeys)
+                    {
+                        physicalFileIdsIn.Add(eventInImageKey);
+                    }
+                }
+                DataGridViewRow row = new DataGridViewRow();
+                this.Invoke(new Action(() =>
+                {
+                    row.CreateCells(dgvData);
+                }));
+                int i = 0;
+                row.Cells[i++].Value = item.id;   //0
+                row.Cells[i++].Value = item.eventinid;   //0
+                row.Cells[i++].Value = (rows.Count + 1).ToString();   //1
+
+                row.Cells[i++].Value = item.eventInPlateNumber;                   //7
+                row.Cells[i++].Value = item.plateNumber;                          //8
+                string countryCode = item.plateNumber.Length > 0 ?
+                                                            (int.TryParse(item.plateNumber[0].ToString(), out int x) ? "VN" : "TQ") :
+                                                            "VN";
+                row.Cells[i++].Value = countryCode;           //2
+                row.Cells[i++].Value = DateTime.Parse(item.eventInCreatedUtc).AddHours(7).ToString(UltilityManagement.fullDayFormat); //2
+                row.Cells[i++].Value = DateTime.Parse(item.createdUtc).AddHours(7).ToString(UltilityManagement.fullDayFormat); //3
+                row.Cells[i++].Value = item.ParkingTime(); //4
+                row.Cells[i++].Value = GetIdentityGroupName(item.IdentityGroupId);//6
+
+                row.Cells[i++].Value = TransactionType.GetTransactionTypeStr(item.TransactionType); //9
+                row.Cells[i++].Value = (item.TransactionCode ?? "").Contains("-0-0") ? "" : item.TransactionCode;              //10
+
+                count_by_countries[countryCode][TransactionType.GetTransactionTypeStr(item.TransactionType)] =
+                    count_by_countries[countryCode][TransactionType.GetTransactionTypeStr(item.TransactionType)] + 1;
+
+                string moneyStr = TextFormatingTool.GetMoneyFormat(item.charge.ToString());
+                row.Cells[i++].Value = moneyStr.Substring(0, moneyStr.Length - 1);              //11
+
+                row.Cells[i++].Value = item.IdentityName;       //5
+
+                row.Cells[i++].Value = item.eventInCreatedBy;//12
+                row.Cells[i++].Value = item.createdBy;       //13
+
+                var invoiceData = InvoiceDatas.Where(e => e.targetId.Equals(item.id, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+                row.Cells[i++].Value = invoiceData == null ? "" : StaticPool.templateCode;
+                row.Cells[i++].Value = invoiceData == null ? "" : (invoiceData?.code ?? "").Replace(StaticPool.symbolCode, "");  //13
+
+                row.Cells[i++].Value = item.eventInLaneName;//17
+                row.Cells[i++].Value = GetLaneName(item.laneId);       //16
+
+
+                row.Cells[i++].Value = item.note;              //
+
+                if (string.IsNullOrEmpty(item.thirdpartynote))
+                {
+                    row.Cells[i++].Value = "";              //
+                    row.Cells[i++].Value = "";             //
+                    row.Cells[i++].Value = "";             //
+                }
+                else
+                {
+                    try
+                    {
+                        string[] noteArray = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(item.thirdpartynote)!.ToArray();// note.Split(";");
+                        row.Cells[i++].Value = noteArray.Length > 0 ? noteArray[0] : "";
+                        row.Cells[i++].Value = noteArray.Length > 1 ? noteArray[1] : "";
+                        row.Cells[i++].Value = noteArray.Length > 2 ? noteArray[2] : "";
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+
+                row.Cells[i++].Value = item.eventInWeight;//14
+                row.Cells[i++].Value = item.Weight;
+
+
+                row.Cells[i++].Value = physicalFileIdsIn == null ? "" : string.Join(";", physicalFileIdsIn);//14
+                row.Cells[i++].Value = item.fileKeys == null ? "" : string.Join(";", item.fileKeys);        //15
+                row.Cells[i++].Value = pendingDatas.Where(e => e.targetId.ToLower() == item.id.ToLower()).FirstOrDefault()?.id ?? "";        //16
+                row.Cells[i++].Value = invoiceData?.id ?? "";        //16
+
+                rows.Add(row);
+                //total += item.charge;
+            }
+            this.Invoke(new Action(() =>
+            {
+                dgvExport.Rows.AddRange(rows.ToArray());
+                lblVN.Text = "";
+                lblTQ.Text = "";
+                string TH_VN = "";
+                string TH_TQ = "";
+                foreach (var item in count_by_countries["VN"])
+                {
+                    TH_VN += item.Key + " - " + item.Value + "    ";
+                }
+                foreach (var item in count_by_countries["TQ"])
+                {
+                    TH_TQ += item.Key + " - " + item.Value + "    ";
+                }
+                additionalData.Add("VN: " + TH_VN);
+                additionalData.Add("TQ: " + TH_TQ);
+            }));
+            eventOutData.Clear();
+            InvoiceDatas.Clear();
+            return additionalData;
+        }
+
 
         private async Task ShowImage(string fileKey, PictureBox pic)
         {

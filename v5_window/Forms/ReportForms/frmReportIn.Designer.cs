@@ -35,6 +35,9 @@ namespace iParkingv5_window.Forms.ReportForms
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmReportIn));
             picOverviewImageIn = new MovablePictureBox();
             picVehicleImageIn = new MovablePictureBox();
@@ -42,6 +45,31 @@ namespace iParkingv5_window.Forms.ReportForms
             lblKeyword = new Label();
             txtKeyword = new TextBox();
             dgvData = new DataGridView();
+            id = new DataGridViewTextBoxColumn();
+            Column1 = new DataGridViewTextBoxColumn();
+            identity_id = new DataGridViewTextBoxColumn();
+            plate = new DataGridViewTextBoxColumn();
+            vehicle_reagion_type = new DataGridViewTextBoxColumn();
+            timeIn = new DataGridViewTextBoxColumn();
+            warehouse = new DataGridViewTextBoxColumn();
+            warehouse_code = new DataGridViewTextBoxColumn();
+            NoteBSX = new DataGridViewTextBoxColumn();
+            note_3rd_1 = new DataGridViewTextBoxColumn();
+            note_3rd_2 = new DataGridViewTextBoxColumn();
+            Column10 = new DataGridViewTextBoxColumn();
+            Column6 = new DataGridViewTextBoxColumn();
+            Column4 = new DataGridViewTextBoxColumn();
+            identityName = new DataGridViewTextBoxColumn();
+            Column16 = new DataGridViewTextBoxColumn();
+            Column12 = new DataGridViewTextBoxColumn();
+            Column11 = new DataGridViewTextBoxColumn();
+            note_3rd_3 = new DataGridViewTextBoxColumn();
+            Column2 = new DataGridViewTextBoxColumn();
+            Column5 = new DataGridViewTextBoxColumn();
+            FileIds = new DataGridViewTextBoxColumn();
+            Column13 = new DataGridViewTextBoxColumn();
+            Column14 = new DataGridViewTextBoxColumn();
+            Column3 = new DataGridViewButtonColumn();
             dtpEndTime = new DateTimePicker();
             dtpStartTime = new DateTimePicker();
             lblEndTime = new Label();
@@ -68,37 +96,39 @@ namespace iParkingv5_window.Forms.ReportForms
             lblIdentityType = new Label();
             ucPages1 = new ucPages();
             toolTip1 = new ToolTip(components);
-            id = new DataGridViewTextBoxColumn();
-            Column1 = new DataGridViewTextBoxColumn();
-            identity_id = new DataGridViewTextBoxColumn();
-            plate = new DataGridViewTextBoxColumn();
-            vehicle_reagion_type = new DataGridViewTextBoxColumn();
-            timeIn = new DataGridViewTextBoxColumn();
-            warehouse = new DataGridViewTextBoxColumn();
-            warehouse_code = new DataGridViewTextBoxColumn();
-            NoteBSX = new DataGridViewTextBoxColumn();
-            note_3rd_1 = new DataGridViewTextBoxColumn();
-            note_3rd_2 = new DataGridViewTextBoxColumn();
-            Column10 = new DataGridViewTextBoxColumn();
-            Column6 = new DataGridViewTextBoxColumn();
-            Column4 = new DataGridViewTextBoxColumn();
-            identityName = new DataGridViewTextBoxColumn();
-            Column16 = new DataGridViewTextBoxColumn();
-            Column12 = new DataGridViewTextBoxColumn();
-            Column11 = new DataGridViewTextBoxColumn();
-            note_3rd_3 = new DataGridViewTextBoxColumn();
-            Column2 = new DataGridViewTextBoxColumn();
-            Column5 = new DataGridViewTextBoxColumn();
-            FileIds = new DataGridViewTextBoxColumn();
-            Column13 = new DataGridViewTextBoxColumn();
-            Column14 = new DataGridViewTextBoxColumn();
-            Column3 = new DataGridViewButtonColumn();
+            dgvExport = new DataGridView();
+            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn6 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn7 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn8 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn9 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn10 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn11 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn12 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn13 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn14 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn15 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn16 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn17 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn18 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn19 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn20 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn21 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn22 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn23 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn24 = new DataGridViewTextBoxColumn();
+            dataGridViewButtonColumn1 = new DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)picOverviewImageIn).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picVehicleImageIn).BeginInit();
             tablePic.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvData).BeginInit();
             panelData.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvExport).BeginInit();
             SuspendLayout();
             // 
             // picOverviewImageIn
@@ -204,6 +234,188 @@ namespace iParkingv5_window.Forms.ReportForms
             dgvData.TabIndex = 39;
             dgvData.CellMouseClick += dgvData_CellMouseClick;
             // 
+            // id
+            // 
+            id.HeaderText = "id";
+            id.Name = "id";
+            id.ReadOnly = true;
+            id.Visible = false;
+            id.Width = 35;
+            // 
+            // Column1
+            // 
+            Column1.HeaderText = "STT";
+            Column1.Name = "Column1";
+            Column1.ReadOnly = true;
+            Column1.Width = 66;
+            // 
+            // identity_id
+            // 
+            identity_id.HeaderText = "Tên Định Danh";
+            identity_id.Name = "identity_id";
+            identity_id.ReadOnly = true;
+            identity_id.Visible = false;
+            identity_id.Width = 142;
+            // 
+            // plate
+            // 
+            plate.HeaderText = "Biển Số Xe";
+            plate.Name = "plate";
+            plate.ReadOnly = true;
+            plate.Width = 114;
+            // 
+            // vehicle_reagion_type
+            // 
+            vehicle_reagion_type.HeaderText = "Xe VN/TQ";
+            vehicle_reagion_type.Name = "vehicle_reagion_type";
+            vehicle_reagion_type.ReadOnly = true;
+            vehicle_reagion_type.Width = 110;
+            // 
+            // timeIn
+            // 
+            timeIn.HeaderText = "Giờ Vào";
+            timeIn.Name = "timeIn";
+            timeIn.ReadOnly = true;
+            timeIn.Width = 96;
+            // 
+            // warehouse
+            // 
+            warehouse.HeaderText = "Phân loại";
+            warehouse.Name = "warehouse";
+            warehouse.ReadOnly = true;
+            warehouse.Width = 105;
+            // 
+            // warehouse_code
+            // 
+            warehouse_code.HeaderText = "Số phiếu xuất";
+            warehouse_code.Name = "warehouse_code";
+            warehouse_code.ReadOnly = true;
+            warehouse_code.Width = 135;
+            // 
+            // NoteBSX
+            // 
+            NoteBSX.HeaderText = "Ghi chú BSX";
+            NoteBSX.Name = "NoteBSX";
+            NoteBSX.ReadOnly = true;
+            NoteBSX.Width = 125;
+            // 
+            // note_3rd_1
+            // 
+            note_3rd_1.HeaderText = "Lý do chặn kích xe";
+            note_3rd_1.Name = "note_3rd_1";
+            note_3rd_1.ReadOnly = true;
+            note_3rd_1.Width = 166;
+            // 
+            // note_3rd_2
+            // 
+            note_3rd_2.HeaderText = "Ghi chú DVHT";
+            note_3rd_2.Name = "note_3rd_2";
+            note_3rd_2.ReadOnly = true;
+            note_3rd_2.Width = 138;
+            // 
+            // Column10
+            // 
+            Column10.HeaderText = "Nhóm";
+            Column10.Name = "Column10";
+            Column10.ReadOnly = true;
+            Column10.Width = 85;
+            // 
+            // Column6
+            // 
+            Column6.HeaderText = "Người Dùng";
+            Column6.Name = "Column6";
+            Column6.ReadOnly = true;
+            Column6.Width = 127;
+            // 
+            // Column4
+            // 
+            Column4.HeaderText = "Làn vào";
+            Column4.Name = "Column4";
+            Column4.ReadOnly = true;
+            Column4.Width = 95;
+            // 
+            // identityName
+            // 
+            identityName.HeaderText = "Tên Thẻ";
+            identityName.Name = "identityName";
+            identityName.ReadOnly = true;
+            identityName.Width = 93;
+            // 
+            // Column16
+            // 
+            Column16.HeaderText = "Mã Thẻ";
+            Column16.Name = "Column16";
+            Column16.ReadOnly = true;
+            Column16.Width = 92;
+            // 
+            // Column12
+            // 
+            Column12.HeaderText = "Biển số đăng ký";
+            Column12.Name = "Column12";
+            Column12.ReadOnly = true;
+            Column12.Width = 150;
+            // 
+            // Column11
+            // 
+            Column11.HeaderText = "Khách hàng";
+            Column11.Name = "Column11";
+            Column11.ReadOnly = true;
+            Column11.Width = 122;
+            // 
+            // note_3rd_3
+            // 
+            note_3rd_3.HeaderText = "Người cho phép ra";
+            note_3rd_3.Name = "note_3rd_3";
+            note_3rd_3.ReadOnly = true;
+            note_3rd_3.Width = 171;
+            // 
+            // Column2
+            // 
+            Column2.HeaderText = "Khối lượng cân";
+            Column2.Name = "Column2";
+            Column2.ReadOnly = true;
+            Column2.Width = 145;
+            // 
+            // Column5
+            // 
+            Column5.HeaderText = "Làn Vào Id";
+            Column5.Name = "Column5";
+            Column5.ReadOnly = true;
+            Column5.Visible = false;
+            Column5.Width = 113;
+            // 
+            // FileIds
+            // 
+            FileIds.HeaderText = "physicalFileIds";
+            FileIds.Name = "FileIds";
+            FileIds.ReadOnly = true;
+            FileIds.Visible = false;
+            FileIds.Width = 141;
+            // 
+            // Column13
+            // 
+            Column13.HeaderText = "customerID";
+            Column13.Name = "Column13";
+            Column13.ReadOnly = true;
+            Column13.Visible = false;
+            Column13.Width = 121;
+            // 
+            // Column14
+            // 
+            Column14.HeaderText = "registerVehicleId";
+            Column14.Name = "Column14";
+            Column14.ReadOnly = true;
+            Column14.Visible = false;
+            Column14.Width = 156;
+            // 
+            // Column3
+            // 
+            Column3.HeaderText = "Xem Thêm";
+            Column3.Name = "Column3";
+            Column3.ReadOnly = true;
+            Column3.Visible = false;
+            Column3.Width = 96;
+            // 
             // dtpEndTime
             // 
             dtpEndTime.CustomFormat = "HH:mm:ss dd/MM/yyyy";
@@ -299,6 +511,7 @@ namespace iParkingv5_window.Forms.ReportForms
             // 
             // panelData
             // 
+            panelData.Controls.Add(dgvExport);
             panelData.Controls.Add(lblTQ);
             panelData.Controls.Add(lblVN);
             panelData.Controls.Add(pictureBox1);
@@ -517,187 +730,228 @@ namespace iParkingv5_window.Forms.ReportForms
             // 
             toolTip1.IsBalloon = true;
             // 
-            // id
+            // dgvExport
             // 
-            id.HeaderText = "id";
-            id.Name = "id";
-            id.ReadOnly = true;
-            id.Visible = false;
-            id.Width = 35;
+            dgvExport.AllowUserToAddRows = false;
+            dgvExport.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(192, 255, 255);
+            dgvExport.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dgvExport.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvExport.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dgvExport.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgvExport.BackgroundColor = SystemColors.Control;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 12F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.Padding = new Padding(3);
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
+            dgvExport.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dgvExport.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvExport.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4, dataGridViewTextBoxColumn5, dataGridViewTextBoxColumn6, dataGridViewTextBoxColumn7, dataGridViewTextBoxColumn8, dataGridViewTextBoxColumn9, dataGridViewTextBoxColumn10, dataGridViewTextBoxColumn11, dataGridViewTextBoxColumn12, dataGridViewTextBoxColumn13, dataGridViewTextBoxColumn14, dataGridViewTextBoxColumn15, dataGridViewTextBoxColumn16, dataGridViewTextBoxColumn17, dataGridViewTextBoxColumn18, dataGridViewTextBoxColumn19, dataGridViewTextBoxColumn20, dataGridViewTextBoxColumn21, dataGridViewTextBoxColumn22, dataGridViewTextBoxColumn23, dataGridViewTextBoxColumn24, dataGridViewButtonColumn1 });
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = SystemColors.Window;
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 12F);
+            dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle6.Padding = new Padding(3);
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
+            dgvExport.DefaultCellStyle = dataGridViewCellStyle6;
+            dgvExport.Location = new Point(935, 31);
+            dgvExport.Margin = new Padding(4, 3, 4, 3);
+            dgvExport.Name = "dgvExport";
+            dgvExport.ReadOnly = true;
+            dgvExport.RowHeadersVisible = false;
+            dgvExport.RowTemplate.Height = 29;
+            dgvExport.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvExport.Size = new Size(227, 152);
+            dgvExport.TabIndex = 70;
+            dgvExport.Visible = false;
             // 
-            // Column1
+            // dataGridViewTextBoxColumn1
             // 
-            Column1.HeaderText = "STT";
-            Column1.Name = "Column1";
-            Column1.ReadOnly = true;
-            Column1.Width = 66;
+            dataGridViewTextBoxColumn1.HeaderText = "id";
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.ReadOnly = true;
+            dataGridViewTextBoxColumn1.Visible = false;
+            dataGridViewTextBoxColumn1.Width = 35;
             // 
-            // identity_id
+            // dataGridViewTextBoxColumn2
             // 
-            identity_id.HeaderText = "Tên Định Danh";
-            identity_id.Name = "identity_id";
-            identity_id.ReadOnly = true;
-            identity_id.Visible = false;
-            identity_id.Width = 142;
+            dataGridViewTextBoxColumn2.HeaderText = "STT";
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            dataGridViewTextBoxColumn2.ReadOnly = true;
+            dataGridViewTextBoxColumn2.Width = 66;
             // 
-            // plate
+            // dataGridViewTextBoxColumn3
             // 
-            plate.HeaderText = "Biển Số Xe";
-            plate.Name = "plate";
-            plate.ReadOnly = true;
-            plate.Width = 114;
+            dataGridViewTextBoxColumn3.HeaderText = "Tên Định Danh";
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            dataGridViewTextBoxColumn3.ReadOnly = true;
+            dataGridViewTextBoxColumn3.Visible = false;
+            dataGridViewTextBoxColumn3.Width = 142;
             // 
-            // vehicle_reagion_type
+            // dataGridViewTextBoxColumn4
             // 
-            vehicle_reagion_type.HeaderText = "Xe VN/TQ";
-            vehicle_reagion_type.Name = "vehicle_reagion_type";
-            vehicle_reagion_type.ReadOnly = true;
-            vehicle_reagion_type.Width = 110;
+            dataGridViewTextBoxColumn4.HeaderText = "Biển Số Xe";
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            dataGridViewTextBoxColumn4.ReadOnly = true;
+            dataGridViewTextBoxColumn4.Width = 114;
             // 
-            // timeIn
+            // dataGridViewTextBoxColumn5
             // 
-            timeIn.HeaderText = "Giờ Vào";
-            timeIn.Name = "timeIn";
-            timeIn.ReadOnly = true;
-            timeIn.Width = 96;
+            dataGridViewTextBoxColumn5.HeaderText = "Xe VN/TQ";
+            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            dataGridViewTextBoxColumn5.ReadOnly = true;
+            dataGridViewTextBoxColumn5.Width = 110;
             // 
-            // warehouse
+            // dataGridViewTextBoxColumn6
             // 
-            warehouse.HeaderText = "Phân loại";
-            warehouse.Name = "warehouse";
-            warehouse.ReadOnly = true;
-            warehouse.Width = 105;
+            dataGridViewTextBoxColumn6.HeaderText = "Giờ Vào";
+            dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            dataGridViewTextBoxColumn6.ReadOnly = true;
+            dataGridViewTextBoxColumn6.Width = 96;
             // 
-            // warehouse_code
+            // dataGridViewTextBoxColumn7
             // 
-            warehouse_code.HeaderText = "Số phiếu xuất";
-            warehouse_code.Name = "warehouse_code";
-            warehouse_code.ReadOnly = true;
-            warehouse_code.Width = 135;
+            dataGridViewTextBoxColumn7.HeaderText = "Phân loại";
+            dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            dataGridViewTextBoxColumn7.ReadOnly = true;
+            dataGridViewTextBoxColumn7.Width = 105;
             // 
-            // NoteBSX
+            // dataGridViewTextBoxColumn8
             // 
-            NoteBSX.HeaderText = "Ghi chú BSX";
-            NoteBSX.Name = "NoteBSX";
-            NoteBSX.ReadOnly = true;
-            NoteBSX.Width = 125;
+            dataGridViewTextBoxColumn8.HeaderText = "Số phiếu xuất";
+            dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            dataGridViewTextBoxColumn8.ReadOnly = true;
+            dataGridViewTextBoxColumn8.Width = 135;
             // 
-            // note_3rd_1
+            // dataGridViewTextBoxColumn9
             // 
-            note_3rd_1.HeaderText = "Lý do chặn kích xe";
-            note_3rd_1.Name = "note_3rd_1";
-            note_3rd_1.ReadOnly = true;
-            note_3rd_1.Width = 166;
+            dataGridViewTextBoxColumn9.HeaderText = "Ghi chú BSX";
+            dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            dataGridViewTextBoxColumn9.ReadOnly = true;
+            dataGridViewTextBoxColumn9.Width = 125;
             // 
-            // note_3rd_2
+            // dataGridViewTextBoxColumn10
             // 
-            note_3rd_2.HeaderText = "Ghi chú DVHT";
-            note_3rd_2.Name = "note_3rd_2";
-            note_3rd_2.ReadOnly = true;
-            note_3rd_2.Width = 138;
+            dataGridViewTextBoxColumn10.HeaderText = "Lý do chặn kích xe";
+            dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            dataGridViewTextBoxColumn10.ReadOnly = true;
+            dataGridViewTextBoxColumn10.Width = 166;
             // 
-            // Column10
+            // dataGridViewTextBoxColumn11
             // 
-            Column10.HeaderText = "Nhóm";
-            Column10.Name = "Column10";
-            Column10.ReadOnly = true;
-            Column10.Width = 85;
+            dataGridViewTextBoxColumn11.HeaderText = "Ghi chú DVHT";
+            dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
+            dataGridViewTextBoxColumn11.ReadOnly = true;
+            dataGridViewTextBoxColumn11.Width = 138;
             // 
-            // Column6
+            // dataGridViewTextBoxColumn12
             // 
-            Column6.HeaderText = "Người Dùng";
-            Column6.Name = "Column6";
-            Column6.ReadOnly = true;
-            Column6.Width = 127;
+            dataGridViewTextBoxColumn12.HeaderText = "Nhóm";
+            dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
+            dataGridViewTextBoxColumn12.ReadOnly = true;
+            dataGridViewTextBoxColumn12.Width = 85;
             // 
-            // Column4
+            // dataGridViewTextBoxColumn13
             // 
-            Column4.HeaderText = "Làn vào";
-            Column4.Name = "Column4";
-            Column4.ReadOnly = true;
-            Column4.Width = 95;
+            dataGridViewTextBoxColumn13.HeaderText = "Người Dùng";
+            dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+            dataGridViewTextBoxColumn13.ReadOnly = true;
+            dataGridViewTextBoxColumn13.Width = 127;
             // 
-            // identityName
+            // dataGridViewTextBoxColumn14
             // 
-            identityName.HeaderText = "Tên Thẻ";
-            identityName.Name = "identityName";
-            identityName.ReadOnly = true;
-            identityName.Width = 93;
+            dataGridViewTextBoxColumn14.HeaderText = "Làn vào";
+            dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
+            dataGridViewTextBoxColumn14.ReadOnly = true;
+            dataGridViewTextBoxColumn14.Width = 95;
             // 
-            // Column16
+            // dataGridViewTextBoxColumn15
             // 
-            Column16.HeaderText = "Mã Thẻ";
-            Column16.Name = "Column16";
-            Column16.ReadOnly = true;
-            Column16.Width = 92;
+            dataGridViewTextBoxColumn15.HeaderText = "Tên Thẻ";
+            dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
+            dataGridViewTextBoxColumn15.ReadOnly = true;
+            dataGridViewTextBoxColumn15.Width = 93;
             // 
-            // Column12
+            // dataGridViewTextBoxColumn16
             // 
-            Column12.HeaderText = "Biển số đăng ký";
-            Column12.Name = "Column12";
-            Column12.ReadOnly = true;
-            Column12.Width = 150;
+            dataGridViewTextBoxColumn16.HeaderText = "Mã Thẻ";
+            dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+            dataGridViewTextBoxColumn16.ReadOnly = true;
+            dataGridViewTextBoxColumn16.Width = 92;
             // 
-            // Column11
+            // dataGridViewTextBoxColumn17
             // 
-            Column11.HeaderText = "Khách hàng";
-            Column11.Name = "Column11";
-            Column11.ReadOnly = true;
-            Column11.Width = 122;
+            dataGridViewTextBoxColumn17.HeaderText = "Biển số đăng ký";
+            dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
+            dataGridViewTextBoxColumn17.ReadOnly = true;
+            dataGridViewTextBoxColumn17.Width = 150;
             // 
-            // note_3rd_3
+            // dataGridViewTextBoxColumn18
             // 
-            note_3rd_3.HeaderText = "Người cho phép ra";
-            note_3rd_3.Name = "note_3rd_3";
-            note_3rd_3.ReadOnly = true;
-            note_3rd_3.Width = 171;
+            dataGridViewTextBoxColumn18.HeaderText = "Khách hàng";
+            dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
+            dataGridViewTextBoxColumn18.ReadOnly = true;
+            dataGridViewTextBoxColumn18.Width = 122;
             // 
-            // Column2
+            // dataGridViewTextBoxColumn19
             // 
-            Column2.HeaderText = "Khối lượng cân";
-            Column2.Name = "Column2";
-            Column2.ReadOnly = true;
-            Column2.Width = 145;
+            dataGridViewTextBoxColumn19.HeaderText = "Người cho phép ra";
+            dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
+            dataGridViewTextBoxColumn19.ReadOnly = true;
+            dataGridViewTextBoxColumn19.Width = 171;
             // 
-            // Column5
+            // dataGridViewTextBoxColumn20
             // 
-            Column5.HeaderText = "Làn Vào Id";
-            Column5.Name = "Column5";
-            Column5.ReadOnly = true;
-            Column5.Visible = false;
-            Column5.Width = 113;
+            dataGridViewTextBoxColumn20.HeaderText = "Khối lượng cân";
+            dataGridViewTextBoxColumn20.Name = "dataGridViewTextBoxColumn20";
+            dataGridViewTextBoxColumn20.ReadOnly = true;
+            dataGridViewTextBoxColumn20.Width = 145;
             // 
-            // FileIds
+            // dataGridViewTextBoxColumn21
             // 
-            FileIds.HeaderText = "physicalFileIds";
-            FileIds.Name = "FileIds";
-            FileIds.ReadOnly = true;
-            FileIds.Visible = false;
-            FileIds.Width = 141;
+            dataGridViewTextBoxColumn21.HeaderText = "Làn Vào Id";
+            dataGridViewTextBoxColumn21.Name = "dataGridViewTextBoxColumn21";
+            dataGridViewTextBoxColumn21.ReadOnly = true;
+            dataGridViewTextBoxColumn21.Visible = false;
+            dataGridViewTextBoxColumn21.Width = 113;
             // 
-            // Column13
+            // dataGridViewTextBoxColumn22
             // 
-            Column13.HeaderText = "customerID";
-            Column13.Name = "Column13";
-            Column13.ReadOnly = true;
-            Column13.Visible = false;
-            Column13.Width = 121;
+            dataGridViewTextBoxColumn22.HeaderText = "physicalFileIds";
+            dataGridViewTextBoxColumn22.Name = "dataGridViewTextBoxColumn22";
+            dataGridViewTextBoxColumn22.ReadOnly = true;
+            dataGridViewTextBoxColumn22.Visible = false;
+            dataGridViewTextBoxColumn22.Width = 141;
             // 
-            // Column14
+            // dataGridViewTextBoxColumn23
             // 
-            Column14.HeaderText = "registerVehicleId";
-            Column14.Name = "Column14";
-            Column14.ReadOnly = true;
-            Column14.Visible = false;
-            Column14.Width = 156;
+            dataGridViewTextBoxColumn23.HeaderText = "customerID";
+            dataGridViewTextBoxColumn23.Name = "dataGridViewTextBoxColumn23";
+            dataGridViewTextBoxColumn23.ReadOnly = true;
+            dataGridViewTextBoxColumn23.Visible = false;
+            dataGridViewTextBoxColumn23.Width = 121;
             // 
-            // Column3
+            // dataGridViewTextBoxColumn24
             // 
-            Column3.HeaderText = "Xem Thêm";
-            Column3.Name = "Column3";
-            Column3.ReadOnly = true;
-            Column3.Visible = false;
-            Column3.Width = 96;
+            dataGridViewTextBoxColumn24.HeaderText = "registerVehicleId";
+            dataGridViewTextBoxColumn24.Name = "dataGridViewTextBoxColumn24";
+            dataGridViewTextBoxColumn24.ReadOnly = true;
+            dataGridViewTextBoxColumn24.Visible = false;
+            dataGridViewTextBoxColumn24.Width = 156;
+            // 
+            // dataGridViewButtonColumn1
+            // 
+            dataGridViewButtonColumn1.HeaderText = "Xem Thêm";
+            dataGridViewButtonColumn1.Name = "dataGridViewButtonColumn1";
+            dataGridViewButtonColumn1.ReadOnly = true;
+            dataGridViewButtonColumn1.Visible = false;
+            dataGridViewButtonColumn1.Width = 96;
             // 
             // frmReportIn
             // 
@@ -719,6 +973,7 @@ namespace iParkingv5_window.Forms.ReportForms
             panelData.ResumeLayout(false);
             panelData.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvExport).EndInit();
             ResumeLayout(false);
         }
 
@@ -781,5 +1036,31 @@ namespace iParkingv5_window.Forms.ReportForms
         private DataGridViewTextBoxColumn Column13;
         private DataGridViewTextBoxColumn Column14;
         private DataGridViewButtonColumn Column3;
+        private DataGridView dgvExport;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn20;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn21;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn22;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn23;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn24;
+        private DataGridViewButtonColumn dataGridViewButtonColumn1;
     }
 }

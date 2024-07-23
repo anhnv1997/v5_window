@@ -844,7 +844,7 @@
         "dependencies": {
           "IPaking.Ultility": "1.0.0.3",
           "Kztek.Scale_net6": "1.0.0.10",
-          "iParkingv5.ApiManager": "1.0.2.3",
+          "iParkingv5.ApiManager": "1.0.2.4",
           "iParkingv5.Controller": "1.0.0.1"
         },
         "compile": {
@@ -857,7 +857,7 @@
           "Microsoft.WindowsDesktop.App.WindowsForms"
         ]
       },
-      "iParkingv5.ApiManager/1.0.2.3": {
+      "iParkingv5.ApiManager/1.0.2.4": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
@@ -865,7 +865,7 @@
           "Kztek.Tool": "1.0.0.2",
           "Newtonsoft.Json": "13.0.3",
           "RestSharp": "110.2.0",
-          "iParkingv5.Objects": "1.0.0.8"
+          "iParkingv5.Objects": "1.0.0.9"
         },
         "compile": {
           "bin/placeholder/iParkingv5.ApiManager.dll": {}
@@ -880,7 +880,7 @@
         "dependencies": {
           "Kztek.Tool": "1.0.0.2",
           "System.IO.Ports": "8.0.0",
-          "iParkingv5.Objects": "1.0.0.8"
+          "iParkingv5.Objects": "1.0.0.9"
         },
         "compile": {
           "bin/placeholder/iParkingv5.Controller.dll": {}
@@ -900,7 +900,7 @@
           "IdentityModel.OidcClient": "6.0.0",
           "Kztek.Tool": "1.0.0.2",
           "Microsoft.Web.WebView2": "1.0.2420.47",
-          "iParkingv5.ApiManager": "1.0.2.3"
+          "iParkingv5.ApiManager": "1.0.2.4"
         },
         "compile": {
           "bin/placeholder/iParkingv5.FeeTest.dll": {}
@@ -918,7 +918,7 @@
         "dependencies": {
           "Kztek.Tool": "1.0.0.2",
           "iParkingv5.Lpr": "1.0.0.1",
-          "iParkingv5.Objects": "1.0.0.8"
+          "iParkingv5.Objects": "1.0.0.9"
         },
         "compile": {
           "bin/placeholder/iParkingv5.LedDisplay.dll": {}
@@ -942,7 +942,7 @@
           "bin/placeholder/iParkingv5.Lpr.dll": {}
         }
       },
-      "iParkingv5.Objects/1.0.0.8": {
+      "iParkingv5.Objects/1.0.0.9": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
@@ -2506,7 +2506,7 @@
       "path": "../iParking.ConfigurationManager/iParking.ConfigurationManager.csproj",
       "msbuildProject": "../iParking.ConfigurationManager/iParking.ConfigurationManager.csproj"
     },
-    "iParkingv5.ApiManager/1.0.2.3": {
+    "iParkingv5.ApiManager/1.0.2.4": {
       "type": "project",
       "path": "../iParkingv5.ApiManager/iParkingv5.ApiManager.csproj",
       "msbuildProject": "../iParkingv5.ApiManager/iParkingv5.ApiManager.csproj"
@@ -2531,7 +2531,7 @@
       "path": "../iParkingv5.Lpr/iParkingv5.Lpr.csproj",
       "msbuildProject": "../iParkingv5.Lpr/iParkingv5.Lpr.csproj"
     },
-    "iParkingv5.Objects/1.0.0.8": {
+    "iParkingv5.Objects/1.0.0.9": {
       "type": "project",
       "path": "../iParkingv5.Objects/iParkingv5.Objects.csproj",
       "msbuildProject": "../iParkingv5.Objects/iParkingv5.Objects.csproj"
@@ -2573,12 +2573,12 @@
       "System.Management >= 7.0.2",
       "iPakrkingv5.Controls >= 1.0.0.1",
       "iParking.ConfigurationManager >= 1.0.0.2",
-      "iParkingv5.ApiManager >= 1.0.2.3",
+      "iParkingv5.ApiManager >= 1.0.2.4",
       "iParkingv5.Controller >= 1.0.0.1",
       "iParkingv5.FeeTest >= 1.0.0",
       "iParkingv5.LedDisplay >= 1.0.0.1",
       "iParkingv5.Lpr >= 1.0.0.1",
-      "iParkingv5.Objects >= 1.0.0.8"
+      "iParkingv5.Objects >= 1.0.0.9"
     ]
   },
   "packageFolders": {
@@ -2587,7 +2587,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.7.8",
+    "version": "1.0.7.9",
     "restore": {
       "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\v5_window\\iParkingv5_window.csproj",
       "projectName": "iParkingv5_window",

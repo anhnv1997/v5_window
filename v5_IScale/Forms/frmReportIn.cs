@@ -66,10 +66,10 @@ namespace v5_IScale.Forms
         private async void FrmReportIn_Load(object? sender, EventArgs e)
         {
             //registerVehicles = await KzParkingApiHelper.GetRegisteredVehicles("");
-            registerVehicles = (await  AppData.ApiServer.GetRegisterVehiclesAsync("")).Item1;
+            registerVehicles = (await AppData.ApiServer.GetRegisterVehiclesAsync("")).Item1;
 
             //customers = (await KzParkingApiHelper.GetAllCustomers())?.Item1 ?? new List<Customer>();
-            customers = (await  AppData.ApiServer.GetCustomersAsync())?.Item1 ?? new List<Customer>();
+            customers = (await AppData.ApiServer.GetCustomersAsync())?.Item1 ?? new List<Customer>();
 
             await CreateUI();
             this.ActiveControl = btnSearch;
@@ -149,7 +149,8 @@ namespace v5_IScale.Forms
             string identityGroupId = ((ListItem)cbIdentityGroupType.SelectedItem)?.Value ?? "";
             string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
             //Tuple<List<EventInReport>, int, int> eventInData = await KzParkingApiHelper.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId);
-            List<EventInReport> eventInReports = await  AppData.ApiServer.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId,"");
+            var data = await AppData.ApiServer.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, "", 0, -1);
+            List<EventInReport> eventInReports = data?.data ?? null;
             if (eventInReports == null)
             {
                 panelData.BackColor = Color.White;
@@ -160,7 +161,7 @@ namespace v5_IScale.Forms
 
             totalPages = 1;
             totalEvents = eventInReports.Count;
-       
+
             panelData.SuspendLayout();
             EnableFastLoading();
             DisplayNavigation();
@@ -227,7 +228,7 @@ namespace v5_IScale.Forms
             }
             this.selectedEventId = dgvData.Rows[e.RowIndex].Cells["id"].Value?.ToString() ?? "";
             this.selectedPlateNumber = dgvData.Rows[e.RowIndex].Cells["plate_number"].Value?.ToString() ?? "";
-            fileKeys = dgvData.Rows[e.RowIndex].Cells["file_keys"].Value?.ToString().Split(";")??new string[] { };
+            fileKeys = dgvData.Rows[e.RowIndex].Cells["file_keys"].Value?.ToString().Split(";") ?? new string[] { };
             this.DialogResult = DialogResult.OK;
         }
 
@@ -486,7 +487,7 @@ namespace v5_IScale.Forms
 
 
             //var vehicleTypes = await KzParkingApiHelper.GetAllVehicleTypes() ?? new List<VehicleType>();
-            var vehicleTypes = (await  AppData.ApiServer.GetVehicleTypesAsync()).Item1 ?? new List<VehicleType>();
+            var vehicleTypes = (await AppData.ApiServer.GetVehicleTypesAsync()).Item1 ?? new List<VehicleType>();
             cbVehicleType.Invoke(new Action(() =>
             {
                 foreach (var item in vehicleTypes)
@@ -513,7 +514,7 @@ namespace v5_IScale.Forms
             }));
 
             //identityGroups = await KzParkingApiHelper.GetIdentityGroupsAsync() ?? new List<IdentityGroup>();
-            identityGroups = (await  AppData.ApiServer.GetIdentityGroupsAsync()).Item1 ?? new List<IdentityGroup>();
+            identityGroups = (await AppData.ApiServer.GetIdentityGroupsAsync()).Item1 ?? new List<IdentityGroup>();
             cbIdentityGroupType.Invoke(new Action(() =>
             {
                 foreach (var item in identityGroups)
@@ -540,7 +541,7 @@ namespace v5_IScale.Forms
             }));
 
             //lanes = await KzParkingApiHelper.GetLanesAsync() ?? new List<iParkingv6.Objects.Datas.Lane>();
-            lanes = (await  AppData.ApiServer.GetLanesAsync()).Item1 ?? new List<Lane>();
+            lanes = (await AppData.ApiServer.GetLanesAsync()).Item1 ?? new List<Lane>();
             cbLane.Invoke(new Action(() =>
             {
                 foreach (var item in lanes)
