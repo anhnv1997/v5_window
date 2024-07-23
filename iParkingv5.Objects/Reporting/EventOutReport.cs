@@ -22,6 +22,8 @@ namespace iParkingv5.Objects.Reporting
         //Thông tin sự kiện vào
         public string eventInIdentityName { get; set; }
         public string[] eventInFileKeys { get; set; }
+        public int? eventInWeight { get; set; }
+
 
         public string eventInCreatedUtc { get; set; }
         public string createdUtc { get; set; }
@@ -103,6 +105,7 @@ namespace iParkingv5.Objects.Reporting
         public string thirdpartynote { get; set; }
         public int FirstWeight { get; set; }
         public int LastWeight { get; set; }
+        public int Weight { get; set; }
     }
 
 }

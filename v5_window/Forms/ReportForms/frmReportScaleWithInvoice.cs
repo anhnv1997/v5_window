@@ -58,6 +58,7 @@ namespace v5_IScale.Forms.ReportForms
             try
             {
                 var data = await GetReportData();
+                cbPrintMode.SelectedIndex = 0;
                 DisplayInGridview(data);
                 dgvData_CellClick(null, null);
             }
@@ -93,7 +94,6 @@ namespace v5_IScale.Forms.ReportForms
                 wbPrint.DocumentText = GetPrintContent(await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(parkingEventId));
             }
         }
-
         private async void btnPrintEInvoice_Click(object sender, EventArgs e)
         {
             if (dgvData.Rows.Count == 0)
@@ -172,42 +172,96 @@ namespace v5_IScale.Forms.ReportForms
                 {
                     return;
                 }
-                string trafficId = "";
-                string vehicleImage = "";
-                string firstScaleImage = dgvData.CurrentRow.Cells[dgvData.ColumnCount - 2].Value.ToString() ?? "";
-                string secondScaleImage = dgvData.CurrentRow.Cells[dgvData.ColumnCount - 1].Value.ToString() ?? "";
-                if (!string.IsNullOrEmpty(firstScaleImage))
-                {
-                    string[] firstScaleImages = firstScaleImage.Split(";");
-                    if (firstScaleImages.Length > 1)
-                    {
-                        string firstWeightImagePath = await MinioHelper.GetImage(firstScaleImages[1]);
-                        string vehicleImagePath = await MinioHelper.GetImage(firstScaleImages[0]);
-                        this.Invoke(new Action(() =>
-                        {
-                            picVehicleImage.LoadAsync(vehicleImagePath);
-                            picFirstWeight.LoadAsync(firstWeightImagePath);
-                        }));
-                    }
-                }
-                if (!string.IsNullOrEmpty(secondScaleImage))
-                {
-                    string[] secondScaleImages = secondScaleImage.Split(";");
-                    if (secondScaleImages.Length > 1)
-                    {
-                        string tempPath = await MinioHelper.GetImage(secondScaleImages[1]);
-                        this.Invoke(new Action(() =>
-                        {
-                            picSecondWeight.LoadAsync(tempPath);
-                        }));
-                    }
-                }
+                cbPrintMode.SelectedIndexChanged -= cbPrintMode_SelectedIndexChanged;
+                cbPrintMode.SelectedIndex = 0;
+                cbPrintMode_SelectedIndexChanged(null, EventArgs.Empty);
+                cbPrintMode.SelectedIndexChanged += cbPrintMode_SelectedIndexChanged;
+                //string trafficId = "";
+                //string vehicleImage = "";
+                //string firstScaleImage = dgvData.CurrentRow.Cells[dgvData.ColumnCount - 2].Value.ToString() ?? "";
+                //string secondScaleImage = dgvData.CurrentRow.Cells[dgvData.ColumnCount - 1].Value.ToString() ?? "";
+                //if (!string.IsNullOrEmpty(firstScaleImage))
+                //{
+                //    string[] firstScaleImages = firstScaleImage.Split(";");
+                //    if (firstScaleImages.Length > 1)
+                //    {
+                //        string frontImagePath = firstScaleImages.Length > 1 ? await MinioHelper.GetImage(firstScaleImages[1]) : "";
+                //        string rearImagePath = firstScaleImages.Length > 2 ? await MinioHelper.GetImage(firstScaleImages[2]) : "";
+                //        string vehicleImagePath = firstScaleImages.Length > 0 ? await MinioHelper.GetImage(firstScaleImages[0]) : "";
+                //        this.Invoke(new Action(() =>
+                //        {
+                //            if (!string.IsNullOrEmpty(vehicleImagePath))
+                //            {
+                //                picVehicleImage.LoadAsync(vehicleImagePath);
+                //            }
+
+                //            if (!string.IsNullOrEmpty(frontImagePath))
+                //            {
+                //                picFirstWeight.LoadAsync(frontImagePath);
+                //            }
+
+                //            if (!string.IsNullOrEmpty(rearImagePath))
+                //            {
+                //                picSecondWeight.LoadAsync(rearImagePath);
+                //            }
+                //        }));
+                //    }
+                //}
             }
             catch (Exception)
             {
             }
 
         }
+
+        //private async void dgvData_CellClick(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (dgvData.CurrentRow == null)
+        //        {
+        //            return;
+        //        }
+        //        //cbPrintMode.SelectedIndexChanged -= cbPrintMode_SelectedIndexChanged;
+        //        cbPrintMode.SelectedIndex = 0;
+        //        //cbPrintMode.SelectedIndexChanged += cbPrintMode_SelectedIndexChanged;
+        //        //string trafficId = "";
+        //        //string vehicleImage = "";
+        //        //string firstScaleImage = dgvData.CurrentRow.Cells[dgvData.ColumnCount - 2].Value.ToString() ?? "";
+        //        //string secondScaleImage = dgvData.CurrentRow.Cells[dgvData.ColumnCount - 1].Value.ToString() ?? "";
+        //        //if (!string.IsNullOrEmpty(firstScaleImage))
+        //        //{
+        //        //    string[] firstScaleImages = firstScaleImage.Split(";");
+        //        //    if (firstScaleImages.Length > 1)
+        //        //    {
+        //        //        string frontImagePath = firstScaleImages.Length > 1 ? await MinioHelper.GetImage(firstScaleImages[1]) : "";
+        //        //        string rearImagePath = firstScaleImages.Length > 2 ? await MinioHelper.GetImage(firstScaleImages[2]) : "";
+        //        //        string vehicleImagePath = firstScaleImages.Length > 0 ? await MinioHelper.GetImage(firstScaleImages[0]) : "";
+        //        //        this.Invoke(new Action(() =>
+        //        //        {
+        //        //            if (!string.IsNullOrEmpty(vehicleImagePath))
+        //        //            {
+        //        //                picVehicleImage.LoadAsync(vehicleImagePath);
+        //        //            }
+
+        //        //            if (!string.IsNullOrEmpty(frontImagePath))
+        //        //            {
+        //        //                picFirstWeight.LoadAsync(frontImagePath);
+        //        //            }
+
+        //        //            if (!string.IsNullOrEmpty(rearImagePath))
+        //        //            {
+        //        //                picSecondWeight.LoadAsync(rearImagePath);
+        //        //            }
+        //        //        }));
+        //        //    }
+        //        //}
+        //    }
+        //    catch (Exception)
+        //    {
+        //    }
+
+        //}
         #endregion End Controls In Form
 
         #region Private Function
@@ -276,51 +330,12 @@ namespace v5_IScale.Forms.ReportForms
                     string vehicleImage = "";
                     string firstScaleImage = orderData.Count > 0 ? string.Join(";", orderData[0].FileKeys) : "";
                     string secondScaleImage = orderData.Count > 1 ? string.Join(";", orderData[1].FileKeys) : "";
+
                     dgvData.Rows.Add(item.Key, dgvData.Rows.Count + 1, firstScaleTime, secondScaleTime,
-                                     plateNumber, firstWeightScale, secondWeightScale, largerThan2TimesScale, 
+                                     plateNumber, firstWeightScale, secondWeightScale, largerThan2TimesScale,
                                      goodType, orderData[0].weighingSlip.printNumber,
                                      userAction, vehicleImage, firstScaleImage, secondScaleImage);
                 }
-
-                //foreach (WeighingAction item in data)
-                //{
-                //    string firstScaleTime = "";
-                //    string secondScaleTime = "";
-                //    string largerThan2TimesScale = "";
-                //    string plateNumber = "";
-                //    string firstWeightScale = "";
-                //    string secondWeightScale = "";
-                //    string goodType = "";
-                //    plateNumber = item.plateNumber;
-                //    if (item.weighing_action_detail.Count > 0)
-                //    {
-                //        firstScaleTime = item.weighing_action_detail[0].CreatedAtTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
-                //        firstWeightScale = item.weighing_action_detail[0].Weight.ToString("#,0");
-                //        goodType = StaticPool.WeighingFormCollection.GetObjectById(item.weighing_action_detail[0].Weighting_form_id ?? "")?.Name ?? "";
-                //    }
-                //    if (item.weighing_action_detail.Count > 1)
-                //    {
-                //        secondScaleTime = item.weighing_action_detail[1].CreatedAtTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
-                //        secondWeightScale = item.weighing_action_detail[1].Weight.ToString("#,0");
-                //    }
-                //    if (item.weighing_action_detail.Count > 2)
-                //    {
-                //        for (int i = 1; i < item.weighing_action_detail.Count; i++)
-                //        {
-                //            string tempTime = item.weighing_action_detail[i].CreatedAtTime?.ToString("dd/MM/yyyy HH:mm:ss") ?? "";
-                //            string tempWeight = item.weighing_action_detail[i].Weight.ToString("#,0");
-                //            largerThan2TimesScale += "Lần " + item.weighing_action_detail[i].Order_by + " : " + tempTime + " - " + tempWeight + "\r\n";
-                //        }
-                //    }
-                //    largerThan2TimesScale = largerThan2TimesScale.TrimEnd();
-                //    string userAction = item.weighing_action_detail.Count > 0 ? item.weighing_action_detail[0].User_code : "";
-                //    string vehicleImage = "";
-                //    string firstScaleImage = item.weighing_action_detail.Count > 0 ? item.weighing_action_detail[0].list_image : "";
-                //    string secondScaleImage = item.weighing_action_detail.Count > 1 ? item.weighing_action_detail[1].list_image : "";
-                //    dgvData.Rows.Add(item.eventInId, dgvData.Rows.Count + 1, firstScaleTime, secondScaleTime,
-                //                     plateNumber, firstWeightScale, secondWeightScale, largerThan2TimesScale, goodType,
-                //                     userAction, vehicleImage, firstScaleImage, secondScaleImage);
-                //}
             }));
         }
         #endregion End Private Function
@@ -474,5 +489,133 @@ namespace v5_IScale.Forms.ReportForms
         }
 
         #endregion End Public Function
+
+        //private async void cbPrintMode_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    if (dgvData.Rows.Count == 0)
+        //    {
+        //        return;
+        //    }
+
+        //    if (dgvData.CurrentRow == null)
+        //    {
+        //        return;
+        //    }
+
+        //    string parkingEventId = dgvData.CurrentRow.Cells[0].Value.ToString() ?? "";
+
+        //    var scaleData = await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(parkingEventId);
+        //    if (scaleData.Count < (cbPrintMode.SelectedIndex + 1))
+        //    {
+        //        MessageBox.Show("Không có thông tin cân lần " + (cbPrintMode.SelectedIndex + 1), "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //        return;
+        //    }
+
+        //    var firstScaleImages = scaleData[cbPrintMode.SelectedIndex].FileKeys;
+        //    if (firstScaleImages.Count > 1)
+        //    {
+        //        string frontImagePath = firstScaleImages.Count > 1 ? await MinioHelper.GetImage(firstScaleImages[1]) : "";
+        //        string rearImagePath = firstScaleImages.Count > 2 ? await MinioHelper.GetImage(firstScaleImages[2]) : "";
+        //        string vehicleImagePath = firstScaleImages.Count > 0 ? await MinioHelper.GetImage(firstScaleImages[0]) : "";
+        //        this.Invoke(new Action(() =>
+        //        {
+        //            if (!string.IsNullOrEmpty(vehicleImagePath))
+        //            {
+        //                picVehicleImage.LoadAsync(vehicleImagePath);
+        //            }
+
+        //            if (!string.IsNullOrEmpty(frontImagePath))
+        //            {
+        //                picFirstWeight.LoadAsync(frontImagePath);
+        //            }
+
+        //            if (!string.IsNullOrEmpty(rearImagePath))
+        //            {
+        //                picSecondWeight.LoadAsync(rearImagePath);
+        //            }
+        //        }));
+        //    }
+        //}
+        private async void cbPrintMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (dgvData.Rows.Count == 0)
+            {
+                return;
+            }
+
+            if (dgvData.CurrentRow == null)
+            {
+                return;
+            }
+
+            string parkingEventId = dgvData.CurrentRow.Cells[0].Value.ToString() ?? "";
+
+            var scaleData = await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(parkingEventId);
+            if (scaleData.Count < (cbPrintMode.SelectedIndex + 1))
+            {
+                MessageBox.Show("Không có thông tin cân lần " + (cbPrintMode.SelectedIndex + 1), "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var firstScaleImages = scaleData[cbPrintMode.SelectedIndex].FileKeys;
+            if (firstScaleImages.Count > 1)
+            {
+
+                string frontImagePath = "";
+                string rearImagePath = "";
+                string vehicleImagePath = "";
+
+                foreach (var item in firstScaleImages)
+                {
+                    if (item.Contains("VEHICLEOUT") || item.Contains("VEHICLEIN"))
+                    {
+                        vehicleImagePath = item;
+                        frontImagePath = item;
+                    }
+                    else if (item.Contains("OVERVIEWOUT") || item.Contains("OVERVIEWIN"))
+                    {
+                        rearImagePath = item;
+                    }
+                    else if (item.Contains("EventInImage"))
+                    {
+                        vehicleImagePath = item;
+                    }
+                    else if (item.Contains("EventInImage"))
+                    {
+                        vehicleImagePath = item;
+                    }
+                    else if (item.Contains("VEHICLESCALE"))
+                    {
+                        rearImagePath = item;
+                    }
+                    else if (item.Contains("OVERVIEWSCALE"))
+                    {
+                        frontImagePath = item;
+                    }
+                }
+                frontImagePath = string.IsNullOrEmpty(frontImagePath) ? "" : await MinioHelper.GetImage(frontImagePath);
+                vehicleImagePath = string.IsNullOrEmpty(vehicleImagePath) ? "" : await MinioHelper.GetImage(vehicleImagePath);
+                rearImagePath = string.IsNullOrEmpty(rearImagePath) ? "" : await MinioHelper.GetImage(rearImagePath);
+
+                this.Invoke(new Action(() =>
+                {
+                    if (!string.IsNullOrEmpty(vehicleImagePath))
+                    {
+                        picVehicleImage.LoadAsync(vehicleImagePath);
+                    }
+
+                    if (!string.IsNullOrEmpty(frontImagePath))
+                    {
+                        picFirstWeight.LoadAsync(frontImagePath);
+                    }
+
+                    if (!string.IsNullOrEmpty(rearImagePath))
+                    {
+                        picSecondWeight.LoadAsync(rearImagePath);
+                    }
+                }));
+            }
+        }
+
     }
 }

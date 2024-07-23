@@ -33,11 +33,15 @@
             btnSelect2 = new Button();
             btnSelect3 = new Button();
             btnSelect4 = new Button();
+            label1 = new Label();
+            panelScale = new Panel();
+            lblScale = new Label();
+            panelScale.SuspendLayout();
             SuspendLayout();
             // 
             // btnSelect1
             // 
-            btnSelect1.Location = new Point(139, 48);
+            btnSelect1.Location = new Point(137, 107);
             btnSelect1.Margin = new Padding(4, 3, 4, 3);
             btnSelect1.Name = "btnSelect1";
             btnSelect1.Size = new Size(170, 134);
@@ -49,7 +53,7 @@
             // 
             // btnSelect2
             // 
-            btnSelect2.Location = new Point(328, 48);
+            btnSelect2.Location = new Point(326, 107);
             btnSelect2.Margin = new Padding(4, 3, 4, 3);
             btnSelect2.Name = "btnSelect2";
             btnSelect2.Size = new Size(170, 134);
@@ -61,7 +65,7 @@
             // 
             // btnSelect3
             // 
-            btnSelect3.Location = new Point(139, 188);
+            btnSelect3.Location = new Point(137, 247);
             btnSelect3.Margin = new Padding(4, 3, 4, 3);
             btnSelect3.Name = "btnSelect3";
             btnSelect3.Size = new Size(170, 134);
@@ -73,7 +77,7 @@
             // 
             // btnSelect4
             // 
-            btnSelect4.Location = new Point(328, 188);
+            btnSelect4.Location = new Point(326, 247);
             btnSelect4.Margin = new Padding(4, 3, 4, 3);
             btnSelect4.Name = "btnSelect4";
             btnSelect4.Size = new Size(170, 134);
@@ -83,11 +87,44 @@
             btnSelect4.UseVisualStyleBackColor = true;
             btnSelect4.Click += btnSelect4_Click;
             // 
+            // label1
+            // 
+            label1.Dock = DockStyle.Left;
+            label1.Location = new Point(0, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(97, 72);
+            label1.TabIndex = 4;
+            label1.Text = "Cân nặng";
+            label1.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // panelScale
+            // 
+            panelScale.Controls.Add(lblScale);
+            panelScale.Controls.Add(label1);
+            panelScale.Dock = DockStyle.Top;
+            panelScale.Location = new Point(0, 0);
+            panelScale.Name = "panelScale";
+            panelScale.Size = new Size(636, 72);
+            panelScale.TabIndex = 5;
+            // 
+            // lblScale
+            // 
+            lblScale.Dock = DockStyle.Fill;
+            lblScale.Font = new Font("Digital-7", 48F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblScale.ForeColor = Color.Red;
+            lblScale.Location = new Point(97, 0);
+            lblScale.Name = "lblScale";
+            lblScale.Size = new Size(539, 72);
+            lblScale.TabIndex = 5;
+            lblScale.Text = "00000";
+            lblScale.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // frmSelectPrintCount
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(633, 370);
+            ClientSize = new Size(636, 433);
+            Controls.Add(panelScale);
             Controls.Add(btnSelect4);
             Controls.Add(btnSelect2);
             Controls.Add(btnSelect3);
@@ -99,6 +136,7 @@
             Name = "frmSelectPrintCount";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Chọn số lượng phiếu in";
+            panelScale.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -108,5 +146,8 @@
         private Button btnSelect2;
         private Button btnSelect3;
         private Button btnSelect4;
+        private Label label1;
+        private Panel panelScale;
+        private Label lblScale;
     }
 }

@@ -16,6 +16,10 @@ using static Kztek.Tools.LogHelper;
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
+using iParkingv5.ApiManager.KzScaleApis;
+using Kztek.Scale_net6.Interfaces;
+using Kztek.Scale_net6.Objects;
+using static iParkingv5.Objects.Enums.PrintHelpers;
 
 namespace v6_window
 {
@@ -25,7 +29,7 @@ namespace v6_window
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        static  void Main()
+        static void Main()
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
@@ -36,6 +40,8 @@ namespace v6_window
                 const string appName = "IP_DA_V5_LU_TEST";
                 PathManagement.baseBath = LogHelper.SaveLogFolder = Application.StartupPath;
                 LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Khởi chạy ứng dụng");
+                
+
                 string appCode = "IP_DA_V5_LU";
                 using (Mutex mutex = new Mutex(true, appName, out bool ownmutex))
                 {
@@ -185,7 +191,7 @@ namespace v6_window
                     if (realCurrentFiles.Contains(fileName))
                     {
                         string currentFilePath = currentVersionFiles.Where(e => e.Contains(fileName)).FirstOrDefault() ?? "";
-                         string updateFilePath = updatefiles[i];
+                        string updateFilePath = updatefiles[i];
 
                         string? currentFilePathVersion = null;
                         string? updateFilePathVersion = null;

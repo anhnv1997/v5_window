@@ -50,6 +50,7 @@
             splliterEventList = new SplitContainer();
             splitterCurrentVehicle = new SplitContainer();
             panelParkiEvent = new Panel();
+            btnRefresh = new Button();
             label13 = new Label();
             panel2 = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
@@ -108,7 +109,6 @@
             báoCáoToolStripMenuItem = new ToolStripMenuItem();
             tsmiScaleReport = new ToolStripMenuItem();
             tsmiScaleDetailReport = new ToolStripMenuItem();
-            testToolStripMenuItem = new ToolStripMenuItem();
             panelAppStatus = new Panel();
             lblLoadingStatus = new Label();
             lblAppVersion = new Label();
@@ -247,6 +247,7 @@
             // 
             // panelParkiEvent
             // 
+            panelParkiEvent.Controls.Add(btnRefresh);
             panelParkiEvent.Controls.Add(label13);
             panelParkiEvent.Controls.Add(panel2);
             panelParkiEvent.Controls.Add(btnGetEventIn);
@@ -264,6 +265,17 @@
             panelParkiEvent.Name = "panelParkiEvent";
             panelParkiEvent.Size = new Size(318, 455);
             panelParkiEvent.TabIndex = 0;
+            // 
+            // btnRefresh
+            // 
+            btnRefresh.Font = new Font("Segoe UI", 12F);
+            btnRefresh.Location = new Point(92, 224);
+            btnRefresh.Name = "btnRefresh";
+            btnRefresh.Size = new Size(213, 50);
+            btnRefresh.TabIndex = 6;
+            btnRefresh.Text = "Quay lại";
+            btnRefresh.UseVisualStyleBackColor = true;
+            btnRefresh.Click += btnRefresh_Click;
             // 
             // label13
             // 
@@ -913,7 +925,7 @@
             // 
             // báoCáoToolStripMenuItem
             // 
-            báoCáoToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { tsmiScaleReport, tsmiScaleDetailReport, testToolStripMenuItem });
+            báoCáoToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { tsmiScaleReport, tsmiScaleDetailReport });
             báoCáoToolStripMenuItem.Name = "báoCáoToolStripMenuItem";
             báoCáoToolStripMenuItem.Size = new Size(76, 25);
             báoCáoToolStripMenuItem.Text = "Báo cáo";
@@ -931,13 +943,6 @@
             tsmiScaleDetailReport.Size = new Size(202, 26);
             tsmiScaleDetailReport.Text = "Báo cáo chi tiết";
             tsmiScaleDetailReport.Click += tsmiScaleDetailReport_Click;
-            // 
-            // testToolStripMenuItem
-            // 
-            testToolStripMenuItem.Name = "testToolStripMenuItem";
-            testToolStripMenuItem.Size = new Size(202, 26);
-            testToolStripMenuItem.Text = "Test";
-            testToolStripMenuItem.Click += testToolStripMenuItem_Click;
             // 
             // panelAppStatus
             // 
@@ -1122,6 +1127,6 @@
         private DataGridViewTextBoxColumn Column15;
         private Label lblAppVersion;
         private Usercontrols.BuildControls.ucScaleCount ucScaleCount2;
-        private ToolStripMenuItem testToolStripMenuItem;
+        private Button btnRefresh;
     }
 }

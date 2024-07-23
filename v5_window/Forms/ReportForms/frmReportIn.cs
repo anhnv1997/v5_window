@@ -28,8 +28,8 @@ namespace iParkingv5_window.Forms.ReportForms
         #region Properties
         private List<Lane> lanes = new List<Lane>();
         private List<IdentityGroup> identityGroups = new List<IdentityGroup>();
-        private List<RegisteredVehicle> registerVehicles = new List<RegisteredVehicle>();
-        private List<Customer> customers = new List<Customer>();
+        //private List<RegisteredVehicle> registerVehicles = new List<RegisteredVehicle>();
+        //private List<Customer> customers = new List<Customer>();
         private List<User> users = new List<User>();
         public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
         #endregion End Properties
@@ -69,8 +69,8 @@ namespace iParkingv5_window.Forms.ReportForms
 
         private async void FrmReportIn_Load(object? sender, EventArgs e)
         {
-            registerVehicles = (await AppData.ApiServer.GetRegisterVehiclesAsync("")).Item1;
-            customers = (await AppData.ApiServer.GetCustomersAsync())?.Item1 ?? new List<Customer>();
+            //registerVehicles = (await AppData.ApiServer.GetRegisterVehiclesAsync("")).Item1;
+            //customers = (await AppData.ApiServer.GetCustomersAsync())?.Item1 ?? new List<Customer>();
             users = (await AppData.ApiServer.GetAllUsersAsync())?.Item1 ?? new List<User>();
 
             if (StaticPool.appOption.PrintTemplate != (int)EmPrintTemplate.XuanCuong)
@@ -103,7 +103,7 @@ namespace iParkingv5_window.Forms.ReportForms
             cbLane.SelectedIndexChanged += ChangeSearchConditionEvent;
             cbUser.SelectedIndexChanged += ChangeSearchConditionEvent;
 
-            btnSearch.PerformClick();
+            //btnSearch.PerformClick();
 
             this.FormClosing += FrmReportIn_FormClosing;
         }
@@ -112,8 +112,8 @@ namespace iParkingv5_window.Forms.ReportForms
         {
             lanes?.Clear();
             identityGroups?.Clear();
-            registerVehicles?.Clear();
-            customers?.Clear();
+            //registerVehicles?.Clear();
+            //customers?.Clear();
         }
 
         private void ChangeSearchConditionEvent(object? sender, EventArgs e)
@@ -172,7 +172,6 @@ namespace iParkingv5_window.Forms.ReportForms
                 string identityGroupId = ((ListItem)cbIdentityGroupType.SelectedItem)?.Value ?? "";
                 string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
                 string user = string.IsNullOrEmpty(((ListItem)cbUser.SelectedItem)?.Value) ? "" : cbUser.Text;
-                //Tuple<List<EventInReport>, int, int> eventInData = await KzParkingApiHelper.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId);
                 List<EventInReport> eventInReports = await AppData.ApiServer.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user);
                 if (eventInReports == null)
                 {
@@ -184,42 +183,7 @@ namespace iParkingv5_window.Forms.ReportForms
 
                 totalPages = 1;
                 totalEvents = eventInReports.Count;
-                //List<EventInReport> eventInReports = new List<EventInReport>();
-                //foreach (DataRow row in eventInData.Rows)
-                //{
-                //    string transactionCode = eventInData.Columns.Contains("transactioncode") ? row["transactioncode"].ToString() ?? "" : "";
-                //    transactionCode = transactionCode.Contains("0-0") ? "" : transactionCode;
-
-                //    int transactionType = 0;
-                //    try
-                //    {
-                //        transactionType = eventInData.Columns.Contains("transactiontype") ? int.Parse(row["transactiontype"].ToString() ?? "0") : 0;
-                //    }
-                //    catch (Exception)
-                //    {
-                //    }
-                //    EventInReport ev = new EventInReport()
-                //    {
-                //        id = row["id"].ToString(),
-                //        identityId = row["identityid"].ToString(),
-                //        plateNumber = row["platenumber"].ToString(),
-                //        createdUtc = row["createdutc"].ToString(),
-                //        laneId = row["laneId"].ToString(),
-                //        createdBy = eventInData.Columns.Contains("createdby") ? row["createdby"].ToString() : "",
-                //        fileKeys = row["filekeys"].ToString()?.Split(","),
-                //        CustomerId = eventInData.Columns.Contains("customerid") ? row["customerid"].ToString() : "",
-                //        RegisteredVehicleId = eventInData.Columns.Contains("vehicleid") ? row["vehicleid"].ToString() : "",
-                //        IdentityGroupId = row["identitygroupid"].ToString(),
-                //        identityCode = eventInData.Columns.Contains("identityCode") ? row["identityCode"].ToString() : "",
-                //        identityName = eventInData.Columns.Contains("identityName") ? row["identityName"].ToString() : "",
-                //        TransactionType = transactionType,
-                //        TransactionCode = transactionCode,
-                //        note = eventInData.Columns.Contains("note") ? row["note"].ToString() : "",
-                //        thirdpartynote = eventInData.Columns.Contains("thirdpartynote") ? row["thirdpartynote"].ToString() : "",
-                //    };
-                //    eventInReports.Add(ev);
-                //}
-                //eventInData.Rows.Clear();
+                
                 panelData.SuspendLayout();
                 EnableFastLoading();
                 DisplayNavigation();
@@ -337,12 +301,12 @@ namespace iParkingv5_window.Forms.ReportForms
                 ctx.ItemClicked += async (sender, ctx_e) =>
                 {
                     string id = dgvData.Rows[e.RowIndex].Cells[0].Value.ToString() ?? "";
-                    string currentPlateIn = dgvData.Rows[e.RowIndex].Cells["plate"].Value.ToString() ?? "";
-                    string currentNote = dgvData.Rows[e.RowIndex].Cells["NoteBSX"].Value.ToString() ?? "";
-                    string current_warehouse = dgvData.Rows[e.RowIndex].Cells["warehouse"].Value.ToString() ?? "";
-                    string timeIn = dgvData.Rows[e.RowIndex].Cells["timeIn"].Value.ToString() ?? "";
-                    string identityName = dgvData.Rows[e.RowIndex].Cells["identityName"].Value.ToString() ?? "";
-                    string FileIds = dgvData.Rows[e.RowIndex].Cells["FileIds"].Value.ToString() ?? "";
+                    string currentPlateIn = dgvData.Rows[e.RowIndex].Cells["plate"].Value?.ToString() ?? "";
+                    string currentNote = dgvData.Rows[e.RowIndex].Cells["NoteBSX"].Value?.ToString() ?? "";
+                    string current_warehouse = dgvData.Rows[e.RowIndex].Cells["warehouse"].Value?.ToString() ?? "";
+                    string timeIn = dgvData.Rows[e.RowIndex].Cells["timeIn"].Value?.ToString() ?? "";
+                    string identityName = dgvData.Rows[e.RowIndex].Cells["identityName"].Value?.ToString() ?? "";
+                    string FileIds = dgvData.Rows[e.RowIndex].Cells["FileIds"].Value?.ToString() ?? "";
                     switch (ctx_e.ClickedItem.Name.ToString())
                     {
                         case "UpdateNote":
@@ -673,7 +637,7 @@ namespace iParkingv5_window.Forms.ReportForms
 
                 row.Cells[i++].Value = item.DatetimeIn?.ToString(UltilityManagement.fullDayFormat); //5
                 row.Cells[i++].Value = TransactionType.GetTransactionTypeStr(item.TransactionType); //8
-                row.Cells[i++].Value = (item.TransactionCode??"").Contains("-0-0") ? "" : item.TransactionCode;              //9
+                row.Cells[i++].Value = (item.TransactionCode ?? "").Contains("-0-0") ? "" : item.TransactionCode;              //9
                 row.Cells[i++].Value = item.note;              //
 
                 if (string.IsNullOrEmpty(item.thirdpartynote))
@@ -721,7 +685,7 @@ namespace iParkingv5_window.Forms.ReportForms
                     {
                     }
                 }
-
+                row.Cells[i++].Value = item.Weight;                //6
                 row.Cells[i++].Value = item.laneId;                //6
                 row.Cells[i++].Value = item.fileKeys.Count > 0 ? string.Join(";", item.fileKeys.ToArray()) : "";//8
                 row.Cells[i++].Value = item.CustomerId;//9
@@ -780,21 +744,21 @@ namespace iParkingv5_window.Forms.ReportForms
 
 
             //var vehicleTypes = await KzParkingApiHelper.GetAllVehicleTypes() ?? new List<VehicleType>();
-            var vehicleTypes = (await AppData.ApiServer.GetVehicleTypesAsync()).Item1 ?? new List<VehicleType>();
-            vehicleTypes = vehicleTypes.OrderBy(x => x.Name).ThenBy(x => x.Name.Length).ToList();
-            cbVehicleType.Invoke(new Action(() =>
-            {
-                foreach (var item in vehicleTypes)
-                {
-                    ListItem vehicleTypeItem = new ListItem()
-                    {
-                        Name = item.Name,
-                        Value = item.Id.ToString()
-                    };
-                    cbVehicleType.Items.Add(vehicleTypeItem);
-                }
-                cbVehicleType.SelectedIndex = 0;
-            }));
+            //var vehicleTypes = (await AppData.ApiServer.GetVehicleTypesAsync()).Item1 ?? new List<VehicleType>();
+            //vehicleTypes = vehicleTypes.OrderBy(x => x.Name).ThenBy(x => x.Name.Length).ToList();
+            //cbVehicleType.Invoke(new Action(() =>
+            //{
+            //    foreach (var item in vehicleTypes)
+            //    {
+            //        ListItem vehicleTypeItem = new ListItem()
+            //        {
+            //            Name = item.Name,
+            //            Value = item.Id.ToString()
+            //        };
+            //        cbVehicleType.Items.Add(vehicleTypeItem);
+            //    }
+            //    cbVehicleType.SelectedIndex = 0;
+            //}));
         }
         private async Task LoadIdentityGroup()
         {
@@ -894,29 +858,31 @@ namespace iParkingv5_window.Forms.ReportForms
         }
         private string GetRegisterVehiclePlate(string registerVehicleId)
         {
-            if (string.IsNullOrEmpty(registerVehicleId))
-            {
-                return string.Empty;
-            }
-            if (registerVehicles == null)
-            {
-                return string.Empty;
-            }
-            var registerVehicle = registerVehicles.Where(e => e.Id.ToLower() == registerVehicleId.ToLower()).FirstOrDefault();
-            return registerVehicle?.PlateNumber ?? "";
+            return "";
+            //if (string.IsNullOrEmpty(registerVehicleId))
+            //{
+            //    return string.Empty;
+            //}
+            //if (registerVehicles == null)
+            //{
+            //    return string.Empty;
+            //}
+            //var registerVehicle = registerVehicles.Where(e => e.Id.ToLower() == registerVehicleId.ToLower()).FirstOrDefault();
+            //return registerVehicle?.PlateNumber ?? "";
         }
         private string GetCustomer(string customerID)
         {
-            if (string.IsNullOrEmpty(customerID))
-            {
-                return string.Empty;
-            }
-            if (customers == null)
-            {
-                return string.Empty;
-            }
-            Customer? customer = customers.Where(e => e.Id.ToLower() == customerID.ToLower()).FirstOrDefault();
-            return customer == null ? "" : customer.Name + " / " + customer.PhoneNumber;
+            return "";
+            //if (string.IsNullOrEmpty(customerID))
+            //{
+            //    return string.Empty;
+            //}
+            //if (customers == null)
+            //{
+            //    return string.Empty;
+            //}
+            //Customer? customer = customers.Where(e => e.Id.ToLower() == customerID.ToLower()).FirstOrDefault();
+            //return customer == null ? "" : customer.Name + " / " + customer.PhoneNumber;
         }
         #endregion End Private Function
         private string GetPrintWarehoseContent(WarehouseService warehouseService, string cardName, string plateNumber, DateTime timeIn)

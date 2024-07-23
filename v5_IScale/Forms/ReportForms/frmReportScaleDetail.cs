@@ -7,6 +7,7 @@ using iParkingv5.Objects.ScaleObjects;
 using iParkingv5_window;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv5_window.Helpers;
+using iParkingv6.ApiManager.KzParkingv3Apis;
 using Kztek.Tool.TextFormatingTools;
 using Kztek.Tools;
 using System;
@@ -45,6 +46,8 @@ namespace v5_IScale.Forms.ReportForms
                 dtpEndTime.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
 
                 await LoadGoodsType();
+                await LoadLanes();
+                cbFeeType.SelectedIndex = 0;
                 btnSearch.PerformClick();
                 this.ActiveControl = btnSearch;
             }
@@ -116,7 +119,7 @@ namespace v5_IScale.Forms.ReportForms
             }
 
             string parkingEventId = dgvData.CurrentRow.Cells[0].Value.ToString() ?? "";
-            string plateNumber = dgvData.CurrentRow.Cells[3].Value.ToString() ?? "";
+            string plateNumber = dgvData.CurrentRow.Cells[4].Value.ToString() ?? "";
             string index = dgvData.CurrentRow.Cells["index"].Value.ToString() ?? "";
             var weighingActionDetails = await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(parkingEventId);
             this.printCount = 1;
@@ -184,16 +187,53 @@ namespace v5_IScale.Forms.ReportForms
                 if (!string.IsNullOrEmpty(firstScaleImage))
                 {
                     string[] firstScaleImages = firstScaleImage.Split(";");
-                    if (firstScaleImages.Length > 1)
+
+                    string frontImagePath = "";
+                    string rearImagePath = "";
+                    string vehicleImagePath = "";
+
+                    foreach (var item in firstScaleImages)
                     {
-                        string overviewPath = await MinioHelper.GetImage(firstScaleImages.First(e => e.Contains("OVERVIEW")));
-                        string vehiclePath = await MinioHelper.GetImage(firstScaleImages.First(e => e.Contains("VEHICLE")));
-                        this.Invoke(new Action(() =>
+                        if (item.Contains("VEHICLEOUT") || item.Contains("VEHICLEIN"))
                         {
-                            picOverview.LoadAsync(overviewPath);
-                            picVehicle.LoadAsync(vehiclePath);
-                        }));
+                            vehicleImagePath = item;
+                            frontImagePath = item;
+                        }
+                        else if (item.Contains("OVERVIEWOUT") || item.Contains("OVERVIEWIN"))
+                        {
+                            rearImagePath = item;
+                        }
+                        else if (item.Contains("EventInImage"))
+                        {
+                            vehicleImagePath = item;
+                        }
+                        else if (item.Contains("EventInImage"))
+                        {
+                            vehicleImagePath = item;
+                        }
+                        else if (item.Contains("VEHICLESCALE"))
+                        {
+                            rearImagePath = item;
+                        }
+                        else if (item.Contains("OVERVIEWSCALE"))
+                        {
+                            frontImagePath = item;
+                        }
                     }
+                    frontImagePath = string.IsNullOrEmpty(frontImagePath) ? "" : await MinioHelper.GetImage(frontImagePath);
+                    vehicleImagePath = string.IsNullOrEmpty(vehicleImagePath) ? "" : await MinioHelper.GetImage(vehicleImagePath);
+                    rearImagePath = string.IsNullOrEmpty(rearImagePath) ? "" : await MinioHelper.GetImage(rearImagePath);
+                    picOverview.LoadAsync(frontImagePath);
+                    picVehicle.LoadAsync(rearImagePath);
+                    //if (firstScaleImages.Length > 1)
+                    //{
+                    //    string overviewPath = await MinioHelper.GetImage(firstScaleImages.First(e => e.Contains("VEHICLE")));
+                    //    string vehiclePath = await MinioHelper.GetImage(firstScaleImages.First(e => e.Contains("OVERVIEW")));
+                    //    this.Invoke(new Action(() =>
+                    //    {
+
+                    //    }));
+                    //}
                 }
             }
             catch (Exception)
@@ -211,7 +251,23 @@ namespace v5_IScale.Forms.ReportForms
             string plateNumber = txtPlateNumber.Text;
             string userCode = txtUsername.Text;
             string goodsTypeId = ((ListItem)cbGoodsType.SelectedItem)?.Name ?? "";
-            return await KzScaleApiHelper.GetWeighingActionInvoiceDetails(startTime, endTime, plateNumber, userCode, goodsTypeId);
+            int? isFee = null;
+            if (cbFeeType.SelectedIndex == 0)
+            {
+                isFee = null;
+            }
+            else if (cbFeeType.SelectedIndex == 1)
+            {
+                isFee = 1;
+            }
+            else if (cbFeeType.SelectedIndex == 2)
+            {
+                isFee = 0;
+            }
+
+            string laneId = ((ListItem)cbLanes.SelectedItem)?.Name ?? "";
+
+            return await KzScaleApiHelper.GetWeighingActionInvoiceDetails(startTime, endTime, isFee, laneId, plateNumber, userCode, goodsTypeId);
         }
         private void DisplayInGridview(List<WeighingAction> data)
         {
@@ -233,7 +289,7 @@ namespace v5_IScale.Forms.ReportForms
                         reports.Add(eventId, new List<WeighingAction> { item });
                     }
                 }
-
+                float money = 0;
                 foreach (KeyValuePair<string, List<WeighingAction>> item in reports)
                 {
                     var orderData = item.Value.OrderBy(e => e.createdUtcTime).ToList();
@@ -251,10 +307,12 @@ namespace v5_IScale.Forms.ReportForms
                         string charge = TextFormatingTool.GetMoneyFormat(orderData[i].Charge.ToString());
                         string firstScaleImage = orderData.Count > 0 ? string.Join(";", orderData[i].FileKeys ?? new List<string>()) : "";
                         string invoiceId = orderData[i].InvoiceId ?? "";
-                        dgvData.Rows.Add(item.Key, dgvData.Rows.Count + 1, scaleTime, plateNumber, weight, i + 1, charge, goodType,
+                        dgvData.Rows.Add(item.Key, dgvData.Rows.Count + 1, scaleTime, orderData[i].laneName, plateNumber, weight, i + 1, charge, goodType,
                                          userAction, templateCode, invoiceNo, vehicleImage, firstScaleImage, secondScaleImage, invoiceId, orderData[i].Id);
+                        money += orderData[i].Charge;
                     }
                 }
+                lblTotal.Text = "Tổng số: " + TextFormatingTool.GetMoneyFormat(money.ToString());
             }));
         }
         #endregion End Private Function
@@ -287,6 +345,37 @@ namespace v5_IScale.Forms.ReportForms
             cbGoodsType.DisplayMember = "Value";
             cbGoodsType.SelectedIndex = cbGoodsType.Items.Count > 0 ? 0 : -1;
         }
+        private async Task LoadLanes()
+        {
+            var lanes = await AppData.ApiServer.GetLanesAsync();
+            if (lanes == null)
+            {
+                return;
+            }
+            if (lanes.Item1 == null)
+            {
+                return;
+            }
+            cbLanes.Items.Add(new ListItem()
+            {
+                Name = "",
+                Value = "Tất cả",
+            });
+
+            foreach (var item in lanes.Item1)
+            {
+                ListItem li = new()
+                {
+                    Name = item.id,
+                    Value = item.name,
+                };
+                cbLanes.Items.Add(li);
+            }
+
+            cbLanes.DisplayMember = "Value";
+            cbLanes.SelectedIndex = cbLanes.Items.Count > 0 ? 0 : -1;
+        }
+
         private string GetPrintContent(List<WeighingAction> weighingActionDetails)
         {
             string printContent = string.Empty;

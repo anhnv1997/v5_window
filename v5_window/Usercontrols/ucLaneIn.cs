@@ -44,15 +44,19 @@ namespace iParkingv5_window.Usercontrols
                 {
                     lblScaleInfo.Invoke(new Action(() =>
                     {
-                        lblScaleInfo.Text = scaleValue.ToString();
+                        if (lblScaleInfo.Text != scaleValue.ToString())
+                        {
+                            lblScaleInfo.Text = scaleValue.ToString();
+                        }
                     }));
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-
+                    MessageBox.Show(ex.Message);
                 }
             }
         }
+        List<WeighingType> weighingForms = new List<WeighingType>();
 
         #region PROPERTIES
         public event OnControlSizeChanged onControlSizeChangeEvent;
@@ -355,8 +359,8 @@ namespace iParkingv5_window.Usercontrols
 
             CheckInNormal:
                 {
-                    //var responseNormal = await KzParkingApiHelper.PostCheckInAsync(lane.id, plate, null, imageKeys);
-                    eventIn = await AppData.ApiServer.PostCheckInAsync(lane.id, plate, null, imageKeys, false, null, txtNote.Text);
+                    int weight = 0;
+                    eventIn = await AppData.ApiServer.PostCheckInAsync(weight, lane.id, plate, null, imageKeys, false, null, txtNote.Text);
                     if (eventIn == null)
                     {
                         goto LOI_HE_THONG;
@@ -399,7 +403,7 @@ namespace iParkingv5_window.Usercontrols
             CheckInWithForce:
                 {
                     //var responseWithForce = await KzParkingApiHelper.PostCheckInAsync(lane.id, plate, null, imageKeys, true);
-                    eventIn = await AppData.ApiServer.PostCheckInAsync(lane.id, plate, null, imageKeys, true, null, txtNote.Text);
+                    eventIn = await AppData.ApiServer.PostCheckInAsync(0, lane.id, plate, null, imageKeys, true, null, txtNote.Text);
                     if (eventIn == null)
                     {
                         goto LOI_HE_THONG;
@@ -1082,6 +1086,8 @@ namespace iParkingv5_window.Usercontrols
             picLprImage.Image = picLprImage.InitialImage = picLprImage.ErrorImage = defaultImg;
             picOverviewImage.Image = picOverviewImage.InitialImage = picOverviewImage.ErrorImage = defaultImg;
             picVehicleImage.Image = picVehicleImage.InitialImage = picVehicleImage.ErrorImage = defaultImg;
+            picOther1.Image = picOther1.InitialImage = picOther1.ErrorImage = defaultImg;
+            picOther2.Image = picOther2.InitialImage = picOther2.ErrorImage = defaultImg;
 
             //Get Top3 Event
             DateTime startTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,
@@ -1380,7 +1386,7 @@ namespace iParkingv5_window.Usercontrols
 
                 if (weighingAction != null && !string.IsNullOrEmpty(weighingAction.Id))
                 {
-                    lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(weighingAction.weighingType.Price.ToString());
+                    lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(weighingAction.Charge.ToString());
                 }
                 else
                 {
@@ -1430,11 +1436,18 @@ namespace iParkingv5_window.Usercontrols
         {
             this.Invoke(new Action(() =>
             {
+                txtNote.Text = "";
                 dgvEventContent.Rows.Clear();
                 dgvEventContent.Refresh();
 
                 picOverviewImage.Image = null;
                 picOverviewImage.Refresh();
+
+                picOther1.Image = null;
+                picOther1.Refresh();
+
+                picOther2.Image = null;
+                picOther2.Refresh();
 
                 picLprImage.Image = null;
                 picLprImage.Refresh();
@@ -1453,7 +1466,8 @@ namespace iParkingv5_window.Usercontrols
                 lblScaleFee.Text = TextFormatingTool.GetMoneyFormat("0");
                 if (cbGoodsType.Items.Count > 0)
                 {
-                    cbGoodsType.SelectedIndex = 0;
+                    cbGoodsType.SelectedIndex = cbGoodsType.FindString("Xuất");
+                    //cbGoodsType.SelectedIndex = 0;
                 }
             }));
         }
@@ -1478,7 +1492,6 @@ namespace iParkingv5_window.Usercontrols
             }
 
         }
-
 
         private string GetPrintContent(List<WeighingAction> weighingActionDetails)
         {
@@ -1546,9 +1559,9 @@ namespace iParkingv5_window.Usercontrols
                 baseContent = baseContent.Replace("$excecute_time", DateTime.Now.ToString(UltilityManagement.fullDayFormat));
                 baseContent = baseContent.Replace("$plateNumber", lastEvent.PlateNumber);
 
-                baseContent = baseContent.Replace("$money_int", TextFormatingTool.GetMoneyFormat(weighingActionDetail.weighingType.Price.ToString()));
+                baseContent = baseContent.Replace("$money_int", TextFormatingTool.GetMoneyFormat(weighingActionDetail.Charge.ToString()));
 
-                baseContent = baseContent.Replace("$money_str", SayMoney.MISASaysMoney.MISASayMoney(weighingActionDetail.weighingType.Price));
+                baseContent = baseContent.Replace("$money_str", SayMoney.MISASaysMoney.MISASayMoney((long)weighingActionDetail.Charge));
 
                 return baseContent;
             }
@@ -1662,7 +1675,8 @@ namespace iParkingv5_window.Usercontrols
 
         CheckInNormal:
             {
-                eventIn = await AppData.ApiServer.PostCheckInAsync(lane.id, plateNumber, identity, imageKeys, false, null, txtNote.Text);
+                int weight = isScale ? ScaleValue : 0;
+                eventIn = await AppData.ApiServer.PostCheckInAsync(weight, lane.id, plateNumber, identity, imageKeys, false, null, txtNote.Text);
                 if (eventIn == null)
                 {
                     goto LOI_HE_THONG;
@@ -1719,7 +1733,8 @@ namespace iParkingv5_window.Usercontrols
 
         CheckInWithForce:
             {
-                eventIn = await AppData.ApiServer.PostCheckInAsync(lane.id, plateNumber, identity, imageKeys, true, null, txtNote.Text);
+                int weight = isScale ? ScaleValue : 0;
+                eventIn = await AppData.ApiServer.PostCheckInAsync(weight, lane.id, plateNumber, identity, imageKeys, true, null, txtNote.Text);
                 if (eventIn == null)
                 {
                     goto LOI_HE_THONG;
@@ -1769,25 +1784,26 @@ namespace iParkingv5_window.Usercontrols
             AddEventInResponse? eventIn = null;
             bool isAlarm = false;
             //UPDATE TEST
-            //if (identityGroup.PlateNumberValidation != (int)EmPlateCompareRule.UnCheck)
-            //{
-            //    if (string.IsNullOrEmpty(plateNumber))
-            //    {
-            //        isAlarm = true;
-            //        bool isConfirm = MessageBox.Show("Không nhận diện được biển số, bạn có muốn cho xe vào bãi?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
-            //        if (!isConfirm)
-            //        {
-            //            ClearView();
-            //            return;
-            //        }
-            //    }
-            //}
+            if (identityGroup.PlateNumberValidation != (int)EmPlateCompareRule.UnCheck)
+            {
+                if (string.IsNullOrEmpty(plateNumber))
+                {
+                    isAlarm = true;
+                    bool isConfirm = MessageBox.Show("Không nhận diện được biển số, bạn có muốn cho xe vào bãi?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
+                    if (!isConfirm)
+                    {
+                        ClearView();
+                        return;
+                    }
+                }
+            }
             string note = "";
             this.Invoke(new Action(() =>
             {
                 note = txtNote.Text;
             }));
-            eventIn = await AppData.ApiServer.PostCheckInAsync(lane.id, plateNumber, identity, imageKeys, false, null, note);
+            int weight = isScale ? ScaleValue : 0;
+            eventIn = await AppData.ApiServer.PostCheckInAsync(weight, lane.id, plateNumber, identity, imageKeys, false, null, note);
             if (eventIn == null)
             {
                 goto LOI_HE_THONG;
@@ -1856,16 +1872,34 @@ namespace iParkingv5_window.Usercontrols
             }));
             lblResult.UpdateResultMessage("Xin Mời Qua", Color.DarkGreen);
 
-            WeighingAction? weigingAction = null;
-            if (isScale)
+            DisplayEventInfo(eventTime, detectPlate, identity, identityGroup, vehicleType, null, null, null);
+
+            Task.Run(async () =>
             {
-                string weightFormId = ((ListItem)cbGoodsType.SelectedItem)?.Name ?? "";
-                this.WeighingActionDetail = await KzScaleApiHelper.CreateScaleEvent(detectPlate, eventIn?.Id, this.ScaleValue, weightFormId,
-                                                        StaticPool.userId, StaticPool.user_name, imageKeys);
-            }
-            DisplayEventInfo(eventTime, detectPlate, identity, identityGroup, vehicleType, null, null, weigingAction);
-            BaseLane.DisplayLed(detectPlate, eventTime, identity, identityGroup, "Hẹn Gặp lại", this.lane.id, "0");
-            await BaseLane.SaveEventImage(overviewImg, vehicleImg, lprImage, imageKey, true, optionalImages);
+                BaseLane.DisplayLed(detectPlate, eventTime, identity, identityGroup, "Hẹn Gặp lại", this.lane.id, "0");
+                await BaseLane.SaveEventImage(overviewImg, vehicleImg, lprImage, imageKey, true, optionalImages);
+                this.Invoke(new Action(() =>
+                {
+                    for (int i = ucLastEventInfos.Count - 1; i > 0; i--)
+                    {
+                        string customerId = ucLastEventInfos[i - 1].CustomerId;
+                        string registerVehicleId = ucLastEventInfos[i - 1].RegisterVehicleId;
+                        string laneId = ucLastEventInfos[i - 1].LaneId;
+                        string identityId = ucLastEventInfos[i - 1].IdentityId;
+                        ucLastEventInfos[i].UpdateEventInfo(ucLastEventInfos[i - 1].eventId, ucLastEventInfos[i - 1].plateNumber,
+                                                            ucLastEventInfos[i - 1].vehicleGroupId, ucLastEventInfos[i - 1].IdentityGroupId,
+                                                            ucLastEventInfos[i - 1].datetimeIn, ucLastEventInfos[i - 1].picDirs,
+                                                            customerId, registerVehicleId, laneId, identityId, true);
+                    }
+                    var overviewKey = imageKey + "_OVERVIEWIN.jpeg";
+                    var vehicleKey = imageKey + "_VEHICLEIN.jpeg";
+                    var vehicleCutKey = imageKey + "_LPRIN.jpeg";
+                    var imageKeys = new List<string>() { overviewKey, vehicleKey, vehicleCutKey };
+                    ucLastEventInfos[0].UpdateEventInfo(eventIn.Id, detectPlate, "",
+                                                        identityGroup?.Id.ToString() ?? "", eventTime, imageKeys,
+                                                         "", "", this.lane.id, identity?.Id, true);
+                }));
+            });
 
             lastEvent = new EventIn()
             {
@@ -1880,37 +1914,21 @@ namespace iParkingv5_window.Usercontrols
 
             if (isAlarm)
             {
-                await AppData.ApiServer.CreateAlarmAsync(identity?.Id, this.lane.id, detectPlate, EmAbnormalCode.InvalidPlateNumber,
+                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Tạo sự kiện cảnh bào");
+                AppData.ApiServer.CreateAlarmAsync(identity?.Id, this.lane.id, detectPlate, EmAbnormalCode.InvalidPlateNumber,
                                                          imageKey, true, identityGroup?.Id.ToString(), "", "", "Cảnh báo biển số");
             }
 
-            this.Invoke(new Action(() =>
-            {
-                for (int i = ucLastEventInfos.Count - 1; i > 0; i--)
-                {
-                    string customerId = ucLastEventInfos[i - 1].CustomerId;
-                    string registerVehicleId = ucLastEventInfos[i - 1].RegisterVehicleId;
-                    string laneId = ucLastEventInfos[i - 1].LaneId;
-                    string identityId = ucLastEventInfos[i - 1].IdentityId;
-                    ucLastEventInfos[i].UpdateEventInfo(ucLastEventInfos[i - 1].eventId, ucLastEventInfos[i - 1].plateNumber,
-                                                        ucLastEventInfos[i - 1].vehicleGroupId, ucLastEventInfos[i - 1].IdentityGroupId,
-                                                        ucLastEventInfos[i - 1].datetimeIn, ucLastEventInfos[i - 1].picDirs,
-                                                        customerId, registerVehicleId, laneId, identityId, true);
-                }
-                var overviewKey = imageKey + "_OVERVIEWIN.jpeg";
-                var vehicleKey = imageKey + "_VEHICLEIN.jpeg";
-                var vehicleCutKey = imageKey + "_LPRIN.jpeg";
-                var imageKeys = new List<string>() { overviewKey, vehicleKey, vehicleCutKey };
-                ucLastEventInfos[0].UpdateEventInfo(eventIn.Id, detectPlate, "",
-                                                    identityGroup?.Id.ToString() ?? "", eventTime, imageKeys,
-                                                     "", "", this.lane.id, identity?.Id, true);
-            }));
             if (((EmPrintTemplate)StaticPool.appOption.PrintTemplate) == EmPrintTemplate.XuanCuong)
             {
+                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Gửi API XC");
+
                 lastImageKeys = imageKeys;
                 lastTime = eventTime;
                 XuanCuongApiHelper.SendParkingInfo(lastEvent.Id, "in", detectPlate, eventTime, imageKeys, "");
             }
+
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Tạo Warehouse");
             await AppData.ApiServer.CreateWarehouseService(lastEvent.Id, "", detectPlate, TransactionType.EmTransactionType.InBound, false);
         }
         #endregion End xử lý sự kiện thẻ
@@ -1924,7 +1942,19 @@ namespace iParkingv5_window.Usercontrols
         }
         private void CbGoodsType_SelectedIndexChanged(object? sender, EventArgs e)
         {
+            if (this.weighingForms != null)
+            {
+                foreach (var item in this.weighingForms)
+                {
+                    if (item.Name == cbGoodsType.Text)
+                    {
+                        lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(item.Price.ToString());
+                    }
+                }
+            }
+
             this.ActiveControl = lblLaneName;
+
         }
 
         /// <summary>
@@ -2082,7 +2112,6 @@ namespace iParkingv5_window.Usercontrols
 
         private async void BtnPrintScale_Click(object sender, EventArgs e)
         {
-
             if (lastEvent == null)
             {
                 MessageBox.Show("Chưa có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -2096,6 +2125,23 @@ namespace iParkingv5_window.Usercontrols
 
             if (this.WeighingActionDetail == null)
             {
+                if (isScale)
+                {
+                    LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Tạo sự kiện cân");
+                    string weightFormId = ((ListItem)cbGoodsType.SelectedItem)?.Name ?? "";
+                    if (string.IsNullOrEmpty(weightFormId))
+                    {
+                        MessageBox.Show("Hãy chọn loại hàng", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                    this.WeighingActionDetail = await KzScaleApiHelper.CreateScaleEvent(lastEvent.PlateNumber ?? "", lastEvent.Id ?? "",
+                                                                                        this.ScaleValue, weightFormId,
+                                                                                        StaticPool.userId, StaticPool.user_name, lastImageKeys, "", this.lane.id);
+                }
+            }
+
+            if (this.WeighingActionDetail == null)
+            {
                 MessageBox.Show("Chưa có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
@@ -2105,6 +2151,7 @@ namespace iParkingv5_window.Usercontrols
             {
                 return;
             }
+            lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(this.WeighingActionDetail.Charge.ToString());
 
             var frm = new frmSelectPrintCount();
             if (frm.ShowDialog() == DialogResult.OK)
@@ -2119,17 +2166,45 @@ namespace iParkingv5_window.Usercontrols
         private async void btnPrintScaleOffline_Click(object sender, EventArgs e)
         {
             //Ra lệnh gửi hóa đơn điện tử
-            if (this.WeighingActionDetail == null)
+            if (lastEvent == null)
             {
-                MessageBox.Show("Chưa có thông tin cân xe", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Chưa có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            if (string.IsNullOrEmpty(lastEvent.Id))
+            {
+                MessageBox.Show("Chưa có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            if (this.WeighingActionDetail == null)
+            {
+                if (isScale)
+                {
+                    LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Tạo sự kiện cân");
+                    string weightFormId = ((ListItem)cbGoodsType.SelectedItem).Name;
+                    if (string.IsNullOrEmpty(weightFormId))
+                    {
+                        MessageBox.Show("Hãy chọn loại hàng", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                    this.WeighingActionDetail = await KzScaleApiHelper.CreateScaleEvent(lastEvent.PlateNumber ?? "", lastEvent.Id ?? "",
+                                                                                        this.ScaleValue, weightFormId,
+                                                                                        StaticPool.userId, StaticPool.user_name, lastImageKeys, "", this.lane.id);
+                }
+            }
+
+            if (this.WeighingActionDetail == null)
+            {
+                MessageBox.Show("Chưa có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             bool isContinue = await CheckWeighingType();
             if (!isContinue)
             {
                 return;
             }
-
+            lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(this.WeighingActionDetail.Charge.ToString());
             this.printCount = 1;
             var wbPrint = new WebBrowser();
             wbPrint.DocumentCompleted += WbPrint_DocumentCompleted;
@@ -2137,60 +2212,81 @@ namespace iParkingv5_window.Usercontrols
         }
         private async void btnPrintScaleOnline_Click(object sender, EventArgs e)
         {
-            //Ra lệnh gửi hóa đơn điện tử
-            if (this.WeighingActionDetail == null)
+            //Kiểm tra nếu chưa có sự kiện cân thì tạo sự kiện cân và lưu lại
+            if (lastEvent == null)
             {
-                MessageBox.Show("Chưa có thông tin cân xe", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Chưa có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-
+            if (string.IsNullOrEmpty(lastEvent.Id))
+            {
+                MessageBox.Show("Chưa có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            if (this.WeighingActionDetail == null)
+            {
+                if (isScale)
+                {
+                    LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Tạo sự kiện cân");
+                    string weightFormId = ((ListItem)cbGoodsType.SelectedItem).Name;
+                    if (string.IsNullOrEmpty(weightFormId))
+                    {
+                        MessageBox.Show("Hãy chọn loại hàng", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                    this.WeighingActionDetail = await KzScaleApiHelper.CreateScaleEvent(lastEvent.PlateNumber ?? "", lastEvent.Id ?? "",
+                                                                                        this.ScaleValue, weightFormId,
+                                                                                        StaticPool.userId, StaticPool.user_name, lastImageKeys, "", this.lane.id);
+                }
+            }
+            lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(this.WeighingActionDetail.Charge.ToString());
             bool isContinue = await CheckWeighingType();
             if (!isContinue)
             {
                 return;
             }
 
-            if (this.WeighingActionDetail.weighingType.Price == 0)
+            if (this.WeighingActionDetail.Charge == 0)
             {
                 MessageBox.Show("Phương tiện không phát sinh phí cân xe.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             //In hóa đơn internet
             //UPDATE TEST
-            //if (string.IsNullOrEmpty(this.WeighingActionDetail.InvoiceId))
-            //{
-            //    var invoiceData = await KzScaleApiHelper.CreateInvoice(this.WeighingActionDetail.Id, true);
-            //    if (invoiceData==null|| string.IsNullOrEmpty(invoiceData.id) || invoiceData.id == Guid.Empty.ToString())
-            //    {
-            //        MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //        return;
-            //    }
-            //    this.WeighingActionDetail.InvoiceId = invoiceData.id;
-            //}
+            if (string.IsNullOrEmpty(this.WeighingActionDetail.InvoiceId))
+            {
+                var invoiceData = await KzScaleApiHelper.CreateInvoice(this.WeighingActionDetail.Id, true);
+                if (invoiceData == null || string.IsNullOrEmpty(invoiceData.id) || invoiceData.id == Guid.Empty.ToString())
+                {
+                    MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                this.WeighingActionDetail.InvoiceId = invoiceData.id;
+            }
 
-            //var invoiceFile = await AppData.ApiServer.GetInvoiceData(this.WeighingActionDetail.InvoiceId);
-            //if (invoiceFile == null)
-            //{
-            //    MessageBox.Show("Chưa có thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //    return;
-            //}
+            var invoiceFile = await AppData.ApiServer.GetInvoiceData(this.WeighingActionDetail.InvoiceId);
+            if (invoiceFile == null)
+            {
+                MessageBox.Show("Chưa có thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
-            //try
-            //{
-            //    string pdfContent = invoiceFile.fileToBytes;
-            //    if (!string.IsNullOrEmpty(pdfContent))
-            //    {
-            //        PrintHelper.PrintPdf(pdfContent);
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("Chưa có thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //        return;
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //}
+            try
+            {
+                string pdfContent = invoiceFile.fileToBytes;
+                if (!string.IsNullOrEmpty(pdfContent))
+                {
+                    PrintHelper.PrintPdf(pdfContent);
+                }
+                else
+                {
+                    MessageBox.Show("Chưa có thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+            }
         }
         private async Task<bool> CheckWeighingType()
         {
@@ -2217,7 +2313,7 @@ namespace iParkingv5_window.Usercontrols
                             this.WeighingActionDetail = response;
                             this.Invoke(new Action(() =>
                             {
-                                lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(this.WeighingActionDetail.weighingType.Price.ToString());
+                                lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(this.WeighingActionDetail.Charge.ToString());
                             }));
                         }
                     }
@@ -2229,7 +2325,6 @@ namespace iParkingv5_window.Usercontrols
             }
             return true;
         }
-
 
         /// <summary>
         /// Ghi vé vào=> Chọn vé cần ghi ==> Kích hoạt sự kiện như sự kiện quẹt thẻ
@@ -2282,8 +2377,8 @@ namespace iParkingv5_window.Usercontrols
                                         imageKey + "_OVERVIEWIN.jpeg",
                                         imageKey + "_VEHICLEIN.jpeg",
                                         imageKey + "_LPRIN.jpeg", };
-            //var responseWithForce = await KzParkingApiHelper.PostCheckInAsync(lane.id, selectedPlate, null, imageKeys, true);
-            eventIn = await AppData.ApiServer.PostCheckInAsync(lane.id, selectedPlate, null, imageKeys, true, null, txtNote.Text);
+            int weight = isScale ? ScaleValue : 0;
+            eventIn = await AppData.ApiServer.PostCheckInAsync(weight, lane.id, selectedPlate, null, imageKeys, true, null, txtNote.Text);
             if (eventIn == null)
             {
                 goto LOI_HE_THONG;
@@ -2606,7 +2701,7 @@ namespace iParkingv5_window.Usercontrols
         {
             try
             {
-                var weighingForms = await KzScaleApiHelper.GetWeighingForms();
+                weighingForms = await KzScaleApiHelper.GetWeighingForms();
                 if (weighingForms != null)
                 {
 
@@ -2625,7 +2720,10 @@ namespace iParkingv5_window.Usercontrols
                             cbGoodsType.Items.Add(li);
                     }
                     cbGoodsType.DisplayMember = "Value";
-                    cbGoodsType.SelectedIndex = cbGoodsType.Items.Count > 0 ? 0 : -1;
+                    if (cbGoodsType.Items.Count > 0)
+                    {
+                        cbGoodsType.SelectedIndex = cbGoodsType.FindString("Xuất");
+                    }
                     cbGoodsType.SelectedIndexChanged += CbGoodsType_SelectedIndexChanged;
                 }
             }

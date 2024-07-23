@@ -177,47 +177,58 @@ namespace iParkingv6.ApiManager
                 var response = await client.ExecuteAsync(request);
                 if (response.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                GetToken:
-                    {
-                        string loginUrl = KzParkingv5BaseApi.server.Replace("5000", "3000");
-                        if (loginUrl[loginUrl.Length - 1] == '/')
-                        {
-                            loginUrl += "connect/token";
-                        }
-                        else
-                        {
-                            loginUrl += "/connect/token";
-                        }
-                        var _client = new RestClient(loginUrl);
-                        var _request = new RestRequest
-                        {
-                            Method = Method.Post,
-                            Timeout = timeOut,
-                        };
-                        _request.AddHeader("content-type", "application/x-www-form-urlencoded");
-                        _request.AddParameter("application/x-www-form-urlencoded", $"grant_type=refresh_token&refresh_token={KzParkingv5BaseApi.refresh_token}&client_id={KzParkingv5BaseApi.client_id}", ParameterType.RequestBody);
-                        var _response = _client.Execute(_request);
-                        var LoginResult = Newtonsoft.Json.JsonConvert.DeserializeObject<LoginResult>(_response.Content);
-                        if (string.IsNullOrEmpty(LoginResult.access_token))
-                        {
-                            goto GetToken;
-                        }
-                        else
-                        {
-                            KzParkingv5BaseApi.token = LoginResult.access_token;
-                            KzParkingv5BaseApi.refresh_token = LoginResult.refresh_token;
-                            if (KzParkingv5BaseApi.refresh_token != LoginResult.refresh_token)
-                            {
+                    return Tuple.Create<string, string>(string.Empty, errorMessage);
 
-                            }
-                            if (headerValues.ContainsKey("Authorization"))
-                            {
-                                headerValues["Authorization"] = "Bearer " + KzParkingv5BaseApi.token;
-                            }
-                            return await GeneralJsonAPIAsync(apiUrl, data, headerValues, requiredParams, timeOut, method);
-                        }
-                    }
+                //    LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, "MẤT ĐĂNG NHẬP HỆ THỐNG");
+                //GetToken:
+                //    {
+                //        string loginUrl = KzParkingv5BaseApi.server.Replace("5000", "3000");
+                //        if (loginUrl[loginUrl.Length - 1] == '/')
+                //        {
+                //            loginUrl += "connect/token";
+                //        }
+                //        else
+                //        {
+                //            loginUrl += "/connect/token";
+                //        }
+                //        var _client = new RestClient(loginUrl);
+                //        var _request = new RestRequest
+                //        {
+                //            Method = Method.Post,
+                //            Timeout = timeOut,
+                //        };
+                //        _request.AddHeader("content-type", "application/x-www-form-urlencoded");
+                //        _request.AddParameter("application/x-www-form-urlencoded", $"grant_type=refresh_token&refresh_token={KzParkingv5BaseApi.refresh_token}&client_id={KzParkingv5BaseApi.client_id}", ParameterType.RequestBody);
 
+                //        try
+                //        {
+                //            var _response = _client.Execute(_request);
+                //            var LoginResult = Newtonsoft.Json.JsonConvert.DeserializeObject<LoginResult>(_response.Content);
+                //            if (string.IsNullOrEmpty(LoginResult.access_token))
+                //            {
+                //                goto GetToken;
+                //            }
+                //            else
+                //            {
+                //                KzParkingv5BaseApi.token = LoginResult.access_token;
+                //                KzParkingv5BaseApi.refresh_token = LoginResult.refresh_token;
+                //                if (KzParkingv5BaseApi.refresh_token != LoginResult.refresh_token)
+                //                {
+
+                //                }
+                //                if (headerValues.ContainsKey("Authorization"))
+                //                {
+                //                    headerValues["Authorization"] = "Bearer " + KzParkingv5BaseApi.token;
+                //                }
+                //                return await GeneralJsonAPIAsync(apiUrl, data, headerValues, requiredParams, timeOut, method);
+                //            }
+                //        }
+                //        catch (Exception)
+                //        {
+                //            goto GetToken;
+                //        }
+
+                //    }
                 }
                 if (!response.IsSuccessful)
                 {

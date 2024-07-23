@@ -464,7 +464,7 @@ namespace iParkingv5_window.Usercontrols
             // lblNote1
             // 
             lblNote1.Dock = DockStyle.Fill;
-            lblNote1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            lblNote1.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             lblNote1.Location = new Point(0, 0);
             lblNote1.Margin = new Padding(4, 0, 4, 0);
             lblNote1.Name = "lblNote1";
@@ -485,7 +485,7 @@ namespace iParkingv5_window.Usercontrols
             // lblNote2
             // 
             lblNote2.Dock = DockStyle.Fill;
-            lblNote2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            lblNote2.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             lblNote2.Location = new Point(0, 0);
             lblNote2.Margin = new Padding(4, 0, 4, 0);
             lblNote2.Name = "lblNote2";

@@ -99,6 +99,8 @@ namespace iParkingv5_window.Forms.ReportForms
             note_3rd_1 = new DataGridViewTextBoxColumn();
             note_3rd_2 = new DataGridViewTextBoxColumn();
             note_3rd_3 = new DataGridViewTextBoxColumn();
+            Column2 = new DataGridViewTextBoxColumn();
+            Column3 = new DataGridViewTextBoxColumn();
             Column9 = new DataGridViewTextBoxColumn();
             Column14 = new DataGridViewTextBoxColumn();
             pending_invoice_id = new DataGridViewTextBoxColumn();
@@ -235,7 +237,7 @@ namespace iParkingv5_window.Forms.ReportForms
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvData.Columns.AddRange(new DataGridViewColumn[] { id, eventinid, Column1, PlateIn, PlateOut, vehicle_reagion_type, TimeIn, TimeOut, ParkingTime, IdentityGroup, WarehouseType, WarehouseCode, Charge, IdentityCode, UserIn, UserOut, InvoiceTemplate, InvoiceNo, LaneIn, LaneOut, NoteBSX, note_3rd_1, note_3rd_2, note_3rd_3, Column9, Column14, pending_invoice_id, invoice_id });
+            dgvData.Columns.AddRange(new DataGridViewColumn[] { id, eventinid, Column1, PlateIn, PlateOut, vehicle_reagion_type, TimeIn, TimeOut, ParkingTime, IdentityGroup, WarehouseType, WarehouseCode, Charge, IdentityCode, UserIn, UserOut, InvoiceTemplate, InvoiceNo, LaneIn, LaneOut, NoteBSX, note_3rd_1, note_3rd_2, note_3rd_3, Column2, Column3, Column9, Column14, pending_invoice_id, invoice_id });
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = SystemColors.Window;
             dataGridViewCellStyle4.Font = new Font("Segoe UI", 12F);
@@ -810,6 +812,20 @@ namespace iParkingv5_window.Forms.ReportForms
             note_3rd_3.ReadOnly = true;
             note_3rd_3.Width = 184;
             // 
+            // Column2
+            // 
+            Column2.HeaderText = "Khối lượng cân vào";
+            Column2.Name = "Column2";
+            Column2.ReadOnly = true;
+            Column2.Width = 189;
+            // 
+            // Column3
+            // 
+            Column3.HeaderText = "Khối lượng cân ra";
+            Column3.Name = "Column3";
+            Column3.ReadOnly = true;
+            Column3.Width = 176;
+            // 
             // Column9
             // 
             Column9.HeaderText = "physicalFileIdIns";
@@ -932,6 +948,8 @@ namespace iParkingv5_window.Forms.ReportForms
         private DataGridViewTextBoxColumn note_3rd_1;
         private DataGridViewTextBoxColumn note_3rd_2;
         private DataGridViewTextBoxColumn note_3rd_3;
+        private DataGridViewTextBoxColumn Column2;
+        private DataGridViewTextBoxColumn Column3;
         private DataGridViewTextBoxColumn Column9;
         private DataGridViewTextBoxColumn Column14;
         private DataGridViewTextBoxColumn pending_invoice_id;

@@ -146,8 +146,8 @@ namespace iParkingv5_window.Forms.DataForms
                 //this.Size = new Size(1366, 768);
                 this.Location = new Point(0, 0);
 
-                LoadAppDisplayConfig();
                 LoadScaleConfig();
+                LoadAppDisplayConfig();
                 LoadThirdPartyConfig();
 
                 InitLaneView();
@@ -180,19 +180,64 @@ namespace iParkingv5_window.Forms.DataForms
         }
         private void LoadScaleConfig()
         {
+            //if (File.Exists(PathManagement.scaleConfigPath))
+            //{
+            //    var scaleConfig = NewtonSoftHelper<ScaleConfig>.DeserializeObjectFromPath(PathManagement.scaleConfigPath) ?? ScaleConfig.CreateDefaultConfig();
+            //    isScale = scaleConfig.IsUseScaleDevice;
+            //    KzScaleApiHelper.server = scaleConfig.ScaleServer;
+            //    scaleController = ScaleFactory.CreateScaleController(scaleConfig);
+            //    scaleController.Connect(scaleConfig.Comport, scaleConfig.Baudrate);
+            //    scaleController.PollingStart();
+            //    if (scaleController != null)
+            //    {
+            //        scaleController.ScaleEvent += ScaleController_ScaleEvent;
+            //        scaleController.PollingStart();
+            //    }
+            //    LogHelper.Log(EmLogType.INFOR, EmObjectLogType.System, "Kết nối đầu cân " + Newtonsoft.Json.JsonConvert.SerializeObject(scaleController));
+            //}
+            //else
+            //{
+            //    LogHelper.Log(EmLogType.INFOR, EmObjectLogType.System, "Không có config " + PathManagement.scaleConfigPath);
+            //}
             if (File.Exists(PathManagement.scaleConfigPath))
             {
-                var scaleConfig = NewtonSoftHelper<ScaleConfig>.DeserializeObjectFromPath(PathManagement.scaleConfigPath) ?? ScaleConfig.CreateDefaultConfig();
-                isScale = scaleConfig.IsUseScaleDevice;
-                KzScaleApiHelper.server = scaleConfig.ScaleServer;
-                scaleController = ScaleFactory.CreateScaleController(scaleConfig);
-                scaleController.Connect(scaleConfig.Comport, scaleConfig.Baudrate);
-                scaleController.PollingStart();
-                if (scaleController != null)
+                string content = File.ReadAllText(PathManagement.scaleConfigPath);
+                var scaleConfig = Newtonsoft.Json.JsonConvert.DeserializeObject<ScaleConfig>(content);//  NewtonSoftHelper<ScaleConfig>.DeserializeObjectFromPath(PathManagement.scaleConfigPath) ?? ScaleConfig.CreateDefaultConfig();
+                if (scaleConfig!=null)
                 {
-                    scaleController.ScaleEvent += ScaleController_ScaleEvent;
-                    scaleController.PollingStart();
+                    LogHelper.Log(EmLogType.INFOR, EmObjectLogType.System, "Kết nối đầu cân COM:  " +scaleConfig.Comport);
+                    isScale = scaleConfig.IsUseScaleDevice;
+                    KzScaleApiHelper.server = scaleConfig.ScaleServer;
+                    try
+                    {
+                        scaleController = ScaleFactory.CreateScaleController(scaleConfig);
+                        scaleController.Connect(scaleConfig.Comport, scaleConfig.Baudrate);
+                        scaleController.PollingStart();
+                        if (scaleController != null)
+                        {
+                            LogHelper.Log(EmLogType.INFOR, EmObjectLogType.System, "start connect");
+                            scaleController.ScaleEvent += ScaleController_ScaleEvent;
+                            scaleController.PollingStart();
+                        }
+                        else
+                        {
+                            LogHelper.Log(EmLogType.INFOR, EmObjectLogType.System, "scaleController null");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        LogHelper.Log(EmLogType.INFOR, EmObjectLogType.System, "Kết nối đầu cân lỗi " + ex.Message);
+                    }
                 }
+                else
+                {
+                    LogHelper.Log(EmLogType.INFOR, EmObjectLogType.System, "Scale Config null");
+                }
+
+            }
+            else
+            {
+                LogHelper.Log(EmLogType.INFOR, EmObjectLogType.System, "Không có config " + PathManagement.scaleConfigPath);
             }
             if (((EmPrintTemplate)StaticPool.appOption.PrintTemplate) != EmPrintTemplate.XuanCuong)
             {

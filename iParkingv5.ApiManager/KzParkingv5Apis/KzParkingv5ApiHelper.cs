@@ -455,19 +455,19 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         }
 
         //--ADD--
-        public async Task<AddEventInResponse> PostCheckInAsync(
+        public async Task<AddEventInResponse> PostCheckInAsync(int weight,
             string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null, string _note = "")
         {
             if (identity == null)
             {
-                return await PostCheckInByPlateAsync(_laneId, _plateNumber, identity, imageKeys, isForce, registeredVehicle, _note);
+                return await PostCheckInByPlateAsync(weight, _laneId, _plateNumber, identity, imageKeys, isForce, registeredVehicle, _note);
             }
             else
             {
-                return await PostCheckInByIdentityAsync(_laneId, _plateNumber, identity, imageKeys, isForce, registeredVehicle, _note);
+                return await PostCheckInByIdentityAsync(weight, _laneId, _plateNumber, identity, imageKeys, isForce, registeredVehicle, _note);
             }
         }
-        private async Task<AddEventInResponse> PostCheckInByIdentityAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null, string _note = "")
+        private async Task<AddEventInResponse> PostCheckInByIdentityAsync(int weight, string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null, string _note = "")
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/identity";
@@ -485,7 +485,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 plateNumber = _plateNumber,
                 force = isForce,
                 fileKeys = new List<string>(),
-                note = _note
+                note = _note,
+                Weight = weight,
             };
 
             foreach (var item in imageKeys)
@@ -507,10 +508,10 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return null;
         }
-        private async Task<AddEventInResponse> PostCheckInByPlateAsync(string _laneId, string _plateNumber, Identity? identity,
-                                                                      List<string> imageKeys, bool isForce = false,
-                                                                      RegisteredVehicle? registeredVehicle = null,
-                                                                      string _note = "")
+        private async Task<AddEventInResponse> PostCheckInByPlateAsync(int weight, string _laneId, string _plateNumber, Identity? identity,
+                                                                       List<string> imageKeys, bool isForce = false,
+                                                                       RegisteredVehicle? registeredVehicle = null,
+                                                                       string _note = "")
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/vehicle";
@@ -527,6 +528,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 plateNumber = _plateNumber,
                 force = isForce,
                 fileKeys = new List<string>(),
+                Weight = weight,
                 note = _note
             };
 
@@ -553,20 +555,20 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
 
         #region EVENT OUT
         //--ADD--
-        public async Task<AddEventOutResponse> PostCheckOutAsync(string _laneId, string _plateNumber, Identity? identitiy, List<string> imageKeys, bool isForce)
+        public async Task<AddEventOutResponse> PostCheckOutAsync(string _laneId, string _plateNumber, Identity? identitiy, List<string> imageKeys, bool isForce, int weight)
         {
             StandardlizeServerName();
             string apiUrl = server + KzApiUrlManagement.EmObjectType.EventOut.CreateRoute();
             if (identitiy == null)
             {
-                return await PostCheckOutByPlateAsync(_laneId, _plateNumber, identitiy, imageKeys, isForce);
+                return await PostCheckOutByPlateAsync(_laneId, _plateNumber, identitiy, imageKeys, isForce, null, weight);
             }
             else
             {
-                return await PostCheckOutByIdentityAsync(_laneId, _plateNumber, identitiy, imageKeys, isForce);
+                return await PostCheckOutByIdentityAsync(_laneId, _plateNumber, identitiy, imageKeys, isForce, weight);
             }
         }
-        private async Task<AddEventOutResponse> PostCheckOutByIdentityAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false)
+        private async Task<AddEventOutResponse> PostCheckOutByIdentityAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, int weight = 0)
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/identity";
@@ -585,7 +587,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 identityType = 0,
                 plateNumber = _plateNumber,
                 force = isForce,
-                fileKeys = new List<string>()
+                fileKeys = new List<string>(),
+                Weight = weight,
             };
 
             foreach (var item in imageKeys)
@@ -611,7 +614,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return null;
         }
-        private async Task<AddEventOutResponse> PostCheckOutByPlateAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null)
+        private async Task<AddEventOutResponse> PostCheckOutByPlateAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null, int weight = 0)
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/vehicle";
@@ -625,14 +628,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             {
                 laneId = _laneId,
                 plateNumber = _plateNumber,
-                //vehicle = new
-                //{
-                //    id = registeredVehicle.Id,
-                //    plateNumber = registeredVehicle.PlateNumber,
-                //    customerId = registeredVehicle.CustomerId,
-                //},
                 force = isForce,
-                fileKeys = new List<string>()
+                fileKeys = new List<string>(),
+                Weight = weight,
             };
 
             foreach (var item in imageKeys)
@@ -1048,15 +1046,15 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
 
             var searchData = new SearchEventIn()
             {
-                FromUTC = new DateTime(2023, 1, 1, 0, 0, 0).ToUniversalTime(),
+                FromUTC = new DateTime(2015, 1, 1, 0, 0, 0).ToUniversalTime(),
                 ToUTC = new DateTime(2099, 1, 1, 0, 0, 0).ToUniversalTime(),
             };
             var data = new
             {
                 filter = searchData,
                 pageIndex = 0,
-                pageSize = 10000,
-                paging = false
+                pageSize = 1,
+                paging = true
             };
 
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
@@ -1066,7 +1064,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventInReport>>>.GetBaseResponse(response.Item1);
                 if (baseResponse != null)
                 {
-                    return baseResponse.data?.Count ?? 0;
+                    return baseResponse.totalCount;
                 }
             }
             return 0;
@@ -1090,8 +1088,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             {
                 filter = searchData,
                 pageIndex = 0,
-                pageSize = 10000,
-                paging = false
+                pageSize = 1,
+                paging = true
             };
 
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
@@ -1101,7 +1099,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventInReport>>>.GetBaseResponse(response.Item1);
                 if (baseResponse != null)
                 {
-                    return baseResponse.data?.Count??0;
+                    return baseResponse.totalCount;
                 }
             }
             return 0;
@@ -1125,8 +1123,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             {
                 filter = searchData,
                 pageIndex = 0,
-                pageSize = 10000,
-                paging = false
+                pageSize = 1,
+                paging = true
             };
 
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
@@ -1136,7 +1134,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventInReport>>>.GetBaseResponse(response.Item1);
                 if (baseResponse != null)
                 {
-                    return baseResponse.data?.Count??0;
+                    return baseResponse.totalCount;
                 }
             }
             return 0;
@@ -1204,8 +1202,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             {
                 filter = searchData,
                 pageIndex = 0,
-                pageSize = 10000,
-                paging = true
+                pageSize = 1,
+                paging = false
             };
 
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);

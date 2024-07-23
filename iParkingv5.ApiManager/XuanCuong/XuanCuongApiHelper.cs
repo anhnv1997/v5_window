@@ -10,8 +10,8 @@ namespace iParkingv5.ApiManager.XuanCuong
 {
     public class XuanCuongApiHelper
     {
-        public static string url = "https://xc-main-dev.maychudev.com/api/kztek/notify";
-        public static string apiKey = "VPVYJIVRQHEPDTOA";
+        public static string url = "https://main.xuancuong.vn/api/kztek/notify";
+        public static string apiKey = "5GKSWHDYSH1SKB";
         private static int timeOut = 10000;
         public class XuanCuongApiResponse
         {

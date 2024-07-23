@@ -12,6 +12,7 @@ using System.Net;
 using System.Text;
 using System.Diagnostics;
 using System.Reflection;
+using iParkingv5.ApiManager.KzScaleApis;
 
 namespace iParkingv5_window.Forms.SystemForms
 {
@@ -49,7 +50,7 @@ namespace iParkingv5_window.Forms.SystemForms
                 refreshToken = NewtonSoftHelper<string>.DeserializeObjectFromPath(PathManagement.tokenPath) ?? "";
                 if (!string.IsNullOrEmpty(refreshToken))
                 {
-                    timerAutoConnect.Enabled = true;
+                    //timerAutoConnect.Enabled = true;
                 }
             }
             string clientId = "910ae83b-5205-4c35-bf45-8926ff620386";
@@ -95,14 +96,14 @@ namespace iParkingv5_window.Forms.SystemForms
                 MessageBox.Show(exception.Message);
                 return;
             }
-            timerAutoConnect.Enabled = false;
+            //timerAutoConnect.Enabled = false;
             if (loginResult.IsError)
             {
                 MessageBox.Show(this, loginResult.Error, "Login", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                timerRefreshToken.Enabled = true;
+                //timerRefreshToken.Enabled = true;
                 StartSocketServer();
                 timerRestartSocket.Enabled = true;
                 NewtonSoftHelper<string>.SaveConfig(loginResult.RefreshToken, PathManagement.tokenPath);
@@ -112,6 +113,8 @@ namespace iParkingv5_window.Forms.SystemForms
                 this.Hide();
                 //KzParkingApiHelper.token = loginResult.TokenResponse.AccessToken;
                 KzParkingv5BaseApi.token = loginResult.TokenResponse.AccessToken;
+                KzScaleApiHelper.token = loginResult.TokenResponse.AccessToken;
+
                 await AppData.ApiServer.GetUserInforAsync();
 
                 frmLoading frm = new()
@@ -175,7 +178,7 @@ namespace iParkingv5_window.Forms.SystemForms
             lblStatus.Location = new Point(lblLoginTitle.Location.X,
                                            btnLogin.Location.Y + (btnLogin.Height - lblStatus.Height) / 2);
 
-            timerAutoConnect.Enabled = true;
+            //timerAutoConnect.Enabled = true;
             if (File.Exists(Application.StartupPath + @"Resources\defaultImage.png"))
             {
                 picLogo.Image = Image.FromFile(Application.StartupPath + @"Resources\logo.png");
@@ -191,7 +194,7 @@ namespace iParkingv5_window.Forms.SystemForms
         {
             btnLogin.Enabled = false;
             lblStatus.Visible = false;
-            timerAutoConnect.Enabled = false;
+            //timerAutoConnect.Enabled = false;
 
             panelMain.SuspendLayout();
             panelMain.BackColor = Color.FromArgb((int)(0.37 * 255), 42, 47, 48);
@@ -263,19 +266,19 @@ namespace iParkingv5_window.Forms.SystemForms
         private void textBox_TextChanged(object sender, EventArgs e)
         {
             lblStatus.Visible = false;
-            timerAutoConnect.Enabled = false;
+            //timerAutoConnect.Enabled = false;
         }
 
         private void Control_Click(object sender, EventArgs e)
         {
             lblStatus.Visible = false;
-            timerAutoConnect.Enabled = false;
+            //timerAutoConnect.Enabled = false;
         }
 
         private void chbIsRemember_CheckedChanged(object sender, EventArgs e)
         {
             lblStatus.Visible = false;
-            timerAutoConnect.Enabled = false;
+            //timerAutoConnect.Enabled = false;
         }
 
         private void UcNotify1_OnSelectResultEvent(DialogResult result)
@@ -290,7 +293,7 @@ namespace iParkingv5_window.Forms.SystemForms
         private void btnExit_Click(object? sender, EventArgs e)
         {
             lblStatus.Visible = false;
-            timerAutoConnect.Enabled = false;
+            //timerAutoConnect.Enabled = false;
             Application.Exit();
             Environment.Exit(0);
         }
@@ -299,7 +302,7 @@ namespace iParkingv5_window.Forms.SystemForms
         #region TIMER
         private async void timerAutoConnect_Tick(object sender, EventArgs e)
         {
-            timerAutoConnect.Enabled = false;
+            //timerAutoConnect.Enabled = false;
 
             waitTimeForLogin++;
             if (waitTimeForLogin > 30)
@@ -317,7 +320,7 @@ namespace iParkingv5_window.Forms.SystemForms
                     NewtonSoftHelper<string>.SaveConfig(refreshToken.RefreshToken, PathManagement.tokenPath);
                     this.refreshToken = refreshToken.RefreshToken;
                     KzParkingv5BaseApi.refresh_token = refreshToken.RefreshToken;
-                    timerRefreshToken.Enabled = true;
+                    //timerRefreshToken.Enabled = true;
                     this.Hide();
                     await AppData.ApiServer.GetUserInforAsync();
                     StartSocketServer();
@@ -339,12 +342,12 @@ namespace iParkingv5_window.Forms.SystemForms
                 lblStatus.Visible = true;
                 lblStatus.Text = "Tự động đăng nhập sau: " + (30 - waitTimeForLogin) + "s";
                 lblStatus.Refresh();
-                timerAutoConnect.Enabled = true;
+                //timerAutoConnect.Enabled = true;
             }
         }
         private async void timerRefreshToken_Tick(object sender, EventArgs e)
         {
-            timerRefreshToken.Enabled = false;
+            //timerRefreshToken.Enabled = false;
             try
             {
                 if (this.refreshToken != KzParkingv5BaseApi.refresh_token)
@@ -371,7 +374,7 @@ namespace iParkingv5_window.Forms.SystemForms
             }
             finally
             {
-                timerRefreshToken.Enabled = true;
+                //timerRefreshToken.Enabled = true;
             }
         }
         private async void timerRestartSocket_Tick(object sender, EventArgs e)

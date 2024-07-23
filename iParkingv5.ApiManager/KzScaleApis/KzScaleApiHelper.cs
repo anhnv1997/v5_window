@@ -73,7 +73,8 @@ namespace iParkingv5.ApiManager.KzScaleApis
         public static async Task<WeighingAction> CreateScaleEvent(string plateNumber, string parkingEventId,
                                                          long weight, string weightFormId,
                                                          string user_action, string user_code,
-                                                         List<string> imageKeys, string updateTrafficId = "")
+                                                         List<string> imageKeys, string updateTrafficId = "",
+                                                         string laneId = "")
         {
             string apiUrl = server + KzScaleUrlManagement.CreateWeighingAction();
             //weight = new Random().Next(10000, 50000);
@@ -90,7 +91,7 @@ namespace iParkingv5.ApiManager.KzScaleApis
                 weighingTypeId = weightFormId,
                 weight = weight.ToString(),
                 fileKeys = imageKeys,
-                //{ "update_traffic_id", updateTrafficId},
+                laneId = laneId,
             };
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, obj, headers, null, timeOut, RestSharp.Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
@@ -194,9 +195,10 @@ namespace iParkingv5.ApiManager.KzScaleApis
             }
             return new List<WeighingAction>();
         }
-
-        public static async Task<List<WeighingAction>> GetWeighingActionInvoiceDetails(DateTime startTime, DateTime endTime, string plateNumber = "",
-                                        string user_code = "", string weighingFormId = "", int is_weighing_bill = 0, string id = "", string eventInId = "")
+        public static async Task<List<WeighingAction>> GetWeighingActionInvoiceDetails(DateTime startTime, DateTime endTime, int? isFee = null, string laneId = "",
+                                        string plateNumber = "",
+                                        string user_code = "", string weighingFormId = "",
+                                        int is_weighing_bill = 0, string id = "", string eventInId = "")
         {
             if (string.IsNullOrEmpty(server))
             {
@@ -215,7 +217,7 @@ namespace iParkingv5.ApiManager.KzScaleApis
             {
                 paging = false,
                 pageIndex = 0,
-                pageSize =1,
+                pageSize = 1,
                 filter = new
                 {
                     fromUtc = startTime.ToUniversalTime().ToString("MM/dd/yyyy HH:mm:ss"),
@@ -223,11 +225,17 @@ namespace iParkingv5.ApiManager.KzScaleApis
                     upns = new List<string>(),
                     keyword = plateNumber,
                     weighingTypeIds = new List<string>(),
+                    laneIds = new List<string>(),
+                    isFee = isFee,
                 }
             };
             if (!string.IsNullOrEmpty(user_code))
             {
                 data.filter.upns.Add(user_code);
+            }
+            if (!string.IsNullOrEmpty(laneId))
+            {
+                data.filter.laneIds.Add(laneId);
             }
             if (!string.IsNullOrEmpty(weighingFormId))
             {

@@ -99,7 +99,7 @@ namespace iParkingv5.ApiManager
 
         #region Event In
         Task<bool> UpdateEventInPlateAsync(string eventId, string newPlate, string oldPlate);
-        Task<AddEventInResponse> PostCheckInAsync(
+        Task<AddEventInResponse> PostCheckInAsync(int weight,
             string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys,
             bool isForce = false, RegisteredVehicle? registeredVehicle = null, string note = "");
         Task<List<EventInReport>> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
@@ -112,7 +112,7 @@ namespace iParkingv5.ApiManager
 
         Task<bool> UpdateEventOutPlate(string eventId, string newPlate, string oldPlate);
         Task<List<EventOutReport>> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000);
-        Task<AddEventOutResponse> PostCheckOutAsync(string _laneId, string _plateNumber, Identity? identitiy, List<string> imageKeys, bool isForce);
+        Task<AddEventOutResponse> PostCheckOutAsync(string _laneId, string _plateNumber, Identity? identitiy, List<string> imageKeys, bool isForce, int weight);
         Task<bool> CommitOutAsync(AddEventOutResponse eventOut);
         Task<bool> CancelCheckOut(string eventOutId);
         Task<Objects.Datas.payments.PaymentTransaction> CreatePaymentTransaction(AddEventOutResponse eventOut);

@@ -13,9 +13,14 @@ namespace v5_IScale.Forms
     public partial class frmSelectPrintCount : Form
     {
         public int PrintCount { get; set; } = 1;
-        public frmSelectPrintCount()
+        public frmSelectPrintCount(int scale)
         {
             InitializeComponent();
+            if (scale < 0)
+            {
+                panelScale.Visible = false;
+            }
+            lblScale.Text = scale.ToString();
         }
 
         private void btnSelect1_Click(object sender, EventArgs e)

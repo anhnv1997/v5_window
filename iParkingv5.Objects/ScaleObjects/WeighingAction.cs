@@ -52,6 +52,7 @@ namespace iParkingv5.Objects.ScaleObjects
         public string invoiceCode { get; set; }
         public string weighingTypeName { get; set; }
         public string printNumber { get; set; }
+        public string laneName { get; set; }
 
         public WeighingSlip weighingSlip { get; set; }
     }

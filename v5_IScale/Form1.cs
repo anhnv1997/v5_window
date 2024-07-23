@@ -141,6 +141,7 @@ namespace v5_IScale
             {
                 ClearView();
                 string selectedPlateNumber = frm.selectedPlateNumber;
+                this.selectedParkingEventId = frm.selectedEventId;
                 this.Invoke(new Action(() =>
                 {
                     txtPlateNumber.Text = selectedPlateNumber;
@@ -175,8 +176,11 @@ namespace v5_IScale
 
         private async void btnSave_Click(object sender, EventArgs e)
         {
-            var frm = new frmSelectPrintCount();
+            int weight = int.Parse(lblScale.Text);
+            var frm = new frmSelectPrintCount(weight);
             if (frm.ShowDialog() == DialogResult.OK)
+            //bool isSave = true;
+            //if (isSave)
             {
                 this.printCount = frm.PrintCount;
 
@@ -192,7 +196,6 @@ namespace v5_IScale
                 DateTime eventTime = DateTime.Now;
                 var imageKey = BaseLane.GetBaseImageKey(Environment.MachineName, "", selectedPlateNumber, eventTime);
 
-                long weight = int.Parse(lblScale.Text);
                 if (weight <= 0)
                 {
                     bool isAcceptScale = MessageBox.Show("Cân nặng <= 0, bạn có chắc chắn muốn lưu thông tin?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
@@ -215,7 +218,7 @@ namespace v5_IScale
                 this.WeighingActionDetail = await KzScaleApiHelper.CreateScaleEvent(txtPlateNumber.Text, this.selectedParkingEventId,
                                                                      weight, weightFormId,
                                                                      StaticPool.user_name, StaticPool.userId,
-                                                                     imageKeys);
+                                                                     imageKeys, "", this.activeLanes[0].id);
                 if (this.WeighingActionDetail == null)
                 {
                     MessageBox.Show("Lưu thông tin cân không thành công, vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -241,27 +244,46 @@ namespace v5_IScale
 
         private async void BtnPrintScale_Click(object sender, EventArgs e)
         {
-            if (this.WeighingActionDetail == null)
+            int weight = int.Parse(lblScale.Text);
+            if (!string.IsNullOrEmpty(this.selectedParkingEventId))
             {
-                MessageBox.Show("Chưa có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var frm = new frmSelectPrintCount(weight);
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    this.printCount = frm.PrintCount;
+
+                    var wbPrint = new WebBrowser();
+                    wbPrint.DocumentCompleted += WbPrint_DocumentCompleted;
+                    wbPrint.DocumentText = GetPrintContent(await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(this.selectedParkingEventId));
+                }
                 return;
             }
-
-            bool isContinue = await CheckWeighingType();
-            if (!isContinue)
+            else
             {
-                return;
+                if (this.WeighingActionDetail == null)
+                {
+                    MessageBox.Show("Chưa có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                bool isContinue = await CheckWeighingType();
+                if (!isContinue)
+                {
+                    return;
+                }
+
+                var frm = new frmSelectPrintCount(weight);
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    this.printCount = frm.PrintCount;
+
+                    var wbPrint = new WebBrowser();
+                    wbPrint.DocumentCompleted += WbPrint_DocumentCompleted;
+                    wbPrint.DocumentText = GetPrintContent(await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(this.selectedParkingEventId));
+                }
+
             }
 
-            var frm = new frmSelectPrintCount();
-            if (frm.ShowDialog() == DialogResult.OK)
-            {
-                this.printCount = frm.PrintCount;
-
-                var wbPrint = new WebBrowser();
-                wbPrint.DocumentCompleted += WbPrint_DocumentCompleted;
-                wbPrint.DocumentText = GetPrintContent(await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(this.selectedParkingEventId));
-            }
         }
         private async void btnPrintScaleOffline_Click(object sender, EventArgs e)
         {
@@ -280,7 +302,7 @@ namespace v5_IScale
             this.printCount = 1;
             var wbPrint = new WebBrowser();
             wbPrint.DocumentCompleted += WbPrint_DocumentCompleted;
-            wbPrint.DocumentText = GetPrintScaleInvoiceOfflineContent(this.WeighingActionDetail, this.selectedPlateNumber);
+            wbPrint.DocumentText = GetPrintScaleInvoiceOfflineContent(this.WeighingActionDetail, txtPlateNumber.Text);
         }
         private async void btnPrintScaleOnline_Click(object sender, EventArgs e)
         {
@@ -304,40 +326,40 @@ namespace v5_IScale
             }
             //In hóa đơn internet
             //UPDATE_TEST
-            //if (string.IsNullOrEmpty(this.WeighingActionDetail.InvoiceId))
-            //{
-            //    var invoiceData = await KzScaleApiHelper.CreateInvoice(this.WeighingActionDetail.Id, true);
-            //    if (string.IsNullOrEmpty(invoiceData.id))
-            //    {
-            //        MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //        return;
-            //    }
-            //    this.WeighingActionDetail.InvoiceId = invoiceData.id;
-            //}
-            //await Task.Delay(300);
-            //var invoiceFile = await AppData.ApiServer.GetInvoiceData(this.WeighingActionDetail.InvoiceId);
-            //if (invoiceFile == null)
-            //{
-            //    MessageBox.Show("Chưa có thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //    return;
-            //}
+            if (string.IsNullOrEmpty(this.WeighingActionDetail.InvoiceId))
+            {
+                var invoiceData = await KzScaleApiHelper.CreateInvoice(this.WeighingActionDetail.Id, true);
+                if (string.IsNullOrEmpty(invoiceData.id))
+                {
+                    MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                this.WeighingActionDetail.InvoiceId = invoiceData.id;
+            }
+            await Task.Delay(300);
+            var invoiceFile = await AppData.ApiServer.GetInvoiceData(this.WeighingActionDetail.InvoiceId);
+            if (invoiceFile == null)
+            {
+                MessageBox.Show("Chưa có thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
-            //try
-            //{
-            //    string pdfContent = invoiceFile.fileToBytes;
-            //    if (!string.IsNullOrEmpty(pdfContent))
-            //    {
-            //        PrintHelper.PrintPdf(pdfContent);
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("Chưa có thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //        return;
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //}
+            try
+            {
+                string pdfContent = invoiceFile.fileToBytes;
+                if (!string.IsNullOrEmpty(pdfContent))
+                {
+                    PrintHelper.PrintPdf(pdfContent);
+                }
+                else
+                {
+                    MessageBox.Show("Chưa có thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+            }
         }
 
         private async Task<bool> CheckWeighingType()
@@ -591,35 +613,97 @@ namespace v5_IScale
             string vehicleImage = "";
             string firstScaleImage = dgvData.CurrentRow.Cells[dgvData.ColumnCount - 2].Value.ToString() ?? "";
             string secondScaleImage = dgvData.CurrentRow.Cells[dgvData.ColumnCount - 1].Value.ToString() ?? "";
+            txtPlateNumber.Text = dgvData.CurrentRow.Cells[4].Value.ToString() ?? "";
+
+
+
             if (!string.IsNullOrEmpty(firstScaleImage))
             {
+                //string[] firstScaleImages = firstScaleImage.Split(";");
+                //if (firstScaleImages.Length > 1)
+                //{
+                //    string firstWeightPath = await MinioHelper.GetImage(firstScaleImages[1]);
+                //    this.Invoke(new Action(() =>
+                //    {
+                //        picFirstScale.LoadAsync(firstWeightPath);
+                //    }));
+                //    string vehicleImagePath = await MinioHelper.GetImage(firstScaleImages[0]);
+                //    this.Invoke(new Action(() =>
+                //    {
+                //        picVehicleImageIn.LoadAsync(vehicleImagePath);
+                //    }));
+                //}
+
                 string[] firstScaleImages = firstScaleImage.Split(";");
-                if (firstScaleImages.Length > 1)
+                string frontImagePath = "";
+                string rearImagePath = "";
+                string vehicleImagePath = "";
+                foreach (var item in firstScaleImages)
                 {
-                    string firstWeightPath = await MinioHelper.GetImage(firstScaleImages[1]);
-                    this.Invoke(new Action(() =>
+                    if (item.Contains("VEHICLEOUT") || item.Contains("VEHICLEIN"))
                     {
-                        picFirstScale.LoadAsync(firstWeightPath);
-                    }));
-                    string vehicleImagePath = await MinioHelper.GetImage(firstScaleImages[0]);
-                    this.Invoke(new Action(() =>
+                        vehicleImagePath = item;
+                        frontImagePath = item;
+                    }
+                    else if (item.Contains("OVERVIEWOUT") || item.Contains("OVERVIEWIN"))
                     {
-                        picVehicleImageIn.LoadAsync(vehicleImagePath);
-                    }));
+                        rearImagePath = item;
+                    }
+                    else if (item.Contains("EventInImage"))
+                    {
+                        vehicleImagePath = item;
+                    }
+                    else if (item.Contains("EventInImage"))
+                    {
+                        vehicleImagePath = item;
+                    }
+                    else if (item.Contains("VEHICLESCALE"))
+                    {
+                        rearImagePath = item;
+                    }
+                    else if (item.Contains("OVERVIEWSCALE"))
+                    {
+                        frontImagePath = item;
+                    }
+                }
+                frontImagePath = string.IsNullOrEmpty(frontImagePath) ? "" : await MinioHelper.GetImage(frontImagePath);
+                vehicleImagePath = string.IsNullOrEmpty(vehicleImagePath) ? "" : await MinioHelper.GetImage(vehicleImagePath);
+                rearImagePath = string.IsNullOrEmpty(rearImagePath) ? "" : await MinioHelper.GetImage(rearImagePath);
+                try
+                {
+                    picFirstScale.LoadAsync(frontImagePath);
+                }
+                catch (Exception)
+                {
+                }
+                try
+                {
+                    picVehicleImageIn.LoadAsync(vehicleImagePath);
+
+                }
+                catch (Exception)
+                {
+                }
+                try
+                {
+                    picSecondScale.LoadAsync(rearImagePath);
+                }
+                catch (Exception)
+                {
                 }
             }
-            if (!string.IsNullOrEmpty(secondScaleImage))
-            {
-                string[] secondScaleImages = secondScaleImage.Split(";");
-                if (secondScaleImages.Length > 1)
-                {
-                    string tempPath = await MinioHelper.GetImage(secondScaleImages[1]);
-                    this.Invoke(new Action(() =>
-                    {
-                        picSecondScale.LoadAsync(tempPath);
-                    }));
-                }
-            }
+            //if (!string.IsNullOrEmpty(secondScaleImage))
+            //{
+            //    string[] secondScaleImages = secondScaleImage.Split(";");
+            //    if (secondScaleImages.Length > 1)
+            //    {
+            //        string tempPath = await MinioHelper.GetImage(secondScaleImages[1]);
+            //        this.Invoke(new Action(() =>
+            //        {
+            //            picSecondScale.LoadAsync(tempPath);
+            //        }));
+            //    }
+            //}
 
             int firstScale = int.Parse(dgvData.CurrentRow.Cells[5].Value.ToString()?.Replace(",", "") ?? "0");
             string secondScaleStr = dgvData.CurrentRow.Cells[7].Value.ToString()?.Replace(",", "") ?? "";
@@ -642,6 +726,10 @@ namespace v5_IScale
             }
 
             this.selectedParkingEventId = dgvData.CurrentRow.Cells[0].Value.ToString();
+            //if (!string.IsNullOrEmpty(this.selectedParkingEventId))
+            //{
+            //    this.WeighingActionDetail = await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(selectedParkingEventId);
+            //}
         }
         private void Pic_LoadCompleted(object? sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
@@ -1109,34 +1197,83 @@ namespace v5_IScale
                     string secondScaleImage = dgvData.CurrentRow.Cells[dgvData.ColumnCount - 1].Value.ToString() ?? "";
                     if (!string.IsNullOrEmpty(firstScaleImage))
                     {
-                        string[] firstScaleImages = firstScaleImage.Split(";");
-                        if (firstScaleImages.Length > 1)
+                        if (!string.IsNullOrEmpty(firstScaleImage))
                         {
-                            string firstWeightPath = await MinioHelper.GetImage(firstScaleImages[1]);
-                            this.Invoke(new Action(() =>
+                            //string[] firstScaleImages = firstScaleImage.Split(";");
+                            //if (firstScaleImages.Length > 1)
+                            //{
+                            //    string firstWeightPath = await MinioHelper.GetImage(firstScaleImages[1]);
+                            //    this.Invoke(new Action(() =>
+                            //    {
+                            //        picFirstScale.LoadAsync(firstWeightPath);
+                            //    }));
+                            //    string vehicleImagePath = await MinioHelper.GetImage(firstScaleImages[0]);
+                            //    this.Invoke(new Action(() =>
+                            //    {
+                            //        picVehicleImageIn.LoadAsync(vehicleImagePath);
+                            //    }));
+                            //}
+
+                            string[] firstScaleImages = firstScaleImage.Split(";");
+                            string frontImagePath = "";
+                            string rearImagePath = "";
+                            string vehicleImagePath = "";
+                            foreach (var item in firstScaleImages)
                             {
-                                picFirstScale.LoadAsync(firstWeightPath);
-                            }));
-                            string vehicleImagePath = await MinioHelper.GetImage(firstScaleImages[0]);
-                            this.Invoke(new Action(() =>
+                                if (item.Contains("VEHICLEOUT") || item.Contains("VEHICLEIN"))
+                                {
+                                    vehicleImagePath = item;
+                                    frontImagePath = item;
+                                }
+                                else if (item.Contains("OVERVIEWOUT") || item.Contains("OVERVIEWIN"))
+                                {
+                                    rearImagePath = item;
+                                }
+                                else if (item.Contains("EventInImage"))
+                                {
+                                    vehicleImagePath = item;
+                                }
+                                else if (item.Contains("EventInImage"))
+                                {
+                                    vehicleImagePath = item;
+                                }
+                                else if (item.Contains("VEHICLESCALE"))
+                                {
+                                    rearImagePath = item;
+                                }
+                                else if (item.Contains("OVERVIEWSCALE"))
+                                {
+                                    frontImagePath = item;
+                                }
+                            }
+                            frontImagePath = string.IsNullOrEmpty(frontImagePath) ? "" : await MinioHelper.GetImage(frontImagePath);
+                            vehicleImagePath = string.IsNullOrEmpty(vehicleImagePath) ? "" : await MinioHelper.GetImage(vehicleImagePath);
+                            rearImagePath = string.IsNullOrEmpty(rearImagePath) ? "" : await MinioHelper.GetImage(rearImagePath);
+                            try
+                            {
+                                picFirstScale.LoadAsync(frontImagePath);
+                            }
+                            catch (Exception)
+                            {
+                            }
+                            try
                             {
                                 picVehicleImageIn.LoadAsync(vehicleImagePath);
-                            }));
-                        }
-                    }
-                    if (!string.IsNullOrEmpty(secondScaleImage))
-                    {
-                        string[] secondScaleImages = secondScaleImage.Split(";");
-                        if (secondScaleImages.Length > 1)
-                        {
-                            string tempPath = await MinioHelper.GetImage(secondScaleImages[1]);
-                            this.Invoke(new Action(() =>
-                            {
-                                picSecondScale.LoadAsync(tempPath);
-                            }));
-                        }
-                    }
 
+                            }
+                            catch (Exception)
+                            {
+                            }
+                            try
+                            {
+                                picSecondScale.LoadAsync(rearImagePath);
+                            }
+                            catch (Exception)
+                            {
+                            }
+                        }
+
+                    }
                     int firstScale = int.Parse(dgvData.CurrentRow.Cells[5].Value.ToString()?.Replace(",", "") ?? "0");
                     string secondScaleStr = dgvData.CurrentRow.Cells[7].Value.ToString()?.Replace(",", "") ?? "";
                     if (string.IsNullOrEmpty(secondScaleStr))
@@ -1214,6 +1351,14 @@ namespace v5_IScale
                 ReaderIndex = 1,
             };
             Controller_CardEvent(null, ce);
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            btnSave.Enabled = false;
+            btnPrint.Enabled = false;
+            this.selectedParkingEventId = "";
+            ClearView();
         }
     }
 }

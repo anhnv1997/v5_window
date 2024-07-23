@@ -52,6 +52,7 @@
             parking_event_in_id = new DataGridViewTextBoxColumn();
             Column1 = new DataGridViewTextBoxColumn();
             time = new DataGridViewTextBoxColumn();
+            laneName = new DataGridViewTextBoxColumn();
             plate_number = new DataGridViewTextBoxColumn();
             weight = new DataGridViewTextBoxColumn();
             index = new DataGridViewTextBoxColumn();
@@ -68,6 +69,10 @@
             groupBox1 = new GroupBox();
             btnExcel = new Button();
             btnSearch = new Button();
+            cbFeeType = new ComboBox();
+            cbLanes = new ComboBox();
+            label9 = new Label();
+            label8 = new Label();
             panel1 = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
             panel3 = new Panel();
@@ -80,6 +85,8 @@
             btnSendInvoice = new Button();
             btnPrintInternetEInvoice = new Button();
             btnPrintEInvoice = new Button();
+            panel4 = new Panel();
+            lblTotal = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvData).BeginInit();
             groupBox1.SuspendLayout();
             panel1.SuspendLayout();
@@ -89,6 +96,7 @@
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picOverview).BeginInit();
             groupBox2.SuspendLayout();
+            panel4.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -205,7 +213,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvData.Columns.AddRange(new DataGridViewColumn[] { parking_event_in_id, Column1, time, plate_number, weight, index, charge, weighing_type_name, created_by, invoice_code, invoice_no, vehicleImage, firstScaleImage, secondScaleImage, invoice_id, weighing_id });
+            dgvData.Columns.AddRange(new DataGridViewColumn[] { parking_event_in_id, Column1, time, laneName, plate_number, weight, index, charge, weighing_type_name, created_by, invoice_code, invoice_no, vehicleImage, firstScaleImage, secondScaleImage, invoice_id, weighing_id });
             dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle9.BackColor = SystemColors.Window;
             dataGridViewCellStyle9.Font = new Font("Segoe UI", 12F);
@@ -216,14 +224,14 @@
             dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
             dgvData.DefaultCellStyle = dataGridViewCellStyle9;
             dgvData.Dock = DockStyle.Fill;
-            dgvData.Location = new Point(0, 251);
+            dgvData.Location = new Point(0, 380);
             dgvData.Margin = new Padding(4, 3, 4, 3);
             dgvData.Name = "dgvData";
             dgvData.ReadOnly = true;
             dgvData.RowHeadersVisible = false;
             dgvData.RowTemplate.Height = 29;
             dgvData.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvData.Size = new Size(1198, 316);
+            dgvData.Size = new Size(1198, 239);
             dgvData.TabIndex = 5;
             dgvData.CellClick += dgvData_CellClick;
             // 
@@ -250,6 +258,13 @@
             time.Name = "time";
             time.ReadOnly = true;
             time.Width = 102;
+            // 
+            // laneName
+            // 
+            laneName.HeaderText = "Làn";
+            laneName.Name = "laneName";
+            laneName.ReadOnly = true;
+            laneName.Width = 72;
             // 
             // plate_number
             // 
@@ -364,6 +379,8 @@
             groupBox1.Controls.Add(btnSearch);
             groupBox1.Controls.Add(label1);
             groupBox1.Controls.Add(label2);
+            groupBox1.Controls.Add(cbFeeType);
+            groupBox1.Controls.Add(cbLanes);
             groupBox1.Controls.Add(cbGoodsType);
             groupBox1.Controls.Add(dtpStartTime);
             groupBox1.Controls.Add(txtUsername);
@@ -371,6 +388,8 @@
             groupBox1.Controls.Add(txtPlateNumber);
             groupBox1.Controls.Add(label3);
             groupBox1.Controls.Add(label5);
+            groupBox1.Controls.Add(label9);
+            groupBox1.Controls.Add(label8);
             groupBox1.Controls.Add(label4);
             groupBox1.Dock = DockStyle.Left;
             groupBox1.Font = new Font("Segoe UI", 12F);
@@ -378,7 +397,7 @@
             groupBox1.Margin = new Padding(4, 3, 4, 3);
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(4, 3, 4, 3);
-            groupBox1.Size = new Size(393, 251);
+            groupBox1.Size = new Size(393, 322);
             groupBox1.TabIndex = 6;
             groupBox1.TabStop = false;
             groupBox1.Text = "Điều kiện lọc";
@@ -388,7 +407,7 @@
             btnExcel.AutoSize = true;
             btnExcel.Font = new Font("Segoe UI", 14F);
             btnExcel.Image = (Image)resources.GetObject("btnExcel.Image");
-            btnExcel.Location = new Point(274, 206);
+            btnExcel.Location = new Point(274, 278);
             btnExcel.Margin = new Padding(4, 3, 4, 3);
             btnExcel.Name = "btnExcel";
             btnExcel.Size = new Size(109, 38);
@@ -403,7 +422,7 @@
             btnSearch.AutoSize = true;
             btnSearch.Font = new Font("Segoe UI", 14F);
             btnSearch.Image = (Image)resources.GetObject("btnSearch.Image");
-            btnSearch.Location = new Point(117, 206);
+            btnSearch.Location = new Point(117, 278);
             btnSearch.Margin = new Padding(4, 3, 4, 3);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(149, 38);
@@ -412,6 +431,47 @@
             btnSearch.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnSearch.UseVisualStyleBackColor = true;
             btnSearch.Click += btnSearch_Click;
+            // 
+            // cbFeeType
+            // 
+            cbFeeType.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbFeeType.FormattingEnabled = true;
+            cbFeeType.Items.AddRange(new object[] { "Tất cả", "Mất phí", "Không mất phí" });
+            cbFeeType.Location = new Point(103, 241);
+            cbFeeType.Margin = new Padding(4, 3, 4, 3);
+            cbFeeType.Name = "cbFeeType";
+            cbFeeType.Size = new Size(280, 29);
+            cbFeeType.TabIndex = 8;
+            // 
+            // cbLanes
+            // 
+            cbLanes.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbLanes.FormattingEnabled = true;
+            cbLanes.Location = new Point(103, 206);
+            cbLanes.Margin = new Padding(4, 3, 4, 3);
+            cbLanes.Name = "cbLanes";
+            cbLanes.Size = new Size(280, 29);
+            cbLanes.TabIndex = 7;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(6, 244);
+            label9.Margin = new Padding(4, 0, 4, 0);
+            label9.Name = "label9";
+            label9.Size = new Size(77, 21);
+            label9.TabIndex = 2;
+            label9.Text = "Hình thức";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(6, 209);
+            label8.Margin = new Padding(4, 0, 4, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(35, 21);
+            label8.TabIndex = 2;
+            label8.Text = "Làn";
             // 
             // panel1
             // 
@@ -422,7 +482,7 @@
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(4, 3, 4, 3);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1198, 251);
+            panel1.Size = new Size(1198, 322);
             panel1.TabIndex = 7;
             // 
             // tableLayoutPanel1
@@ -438,7 +498,7 @@
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(762, 163);
+            tableLayoutPanel1.Size = new Size(762, 238);
             tableLayoutPanel1.TabIndex = 8;
             // 
             // panel3
@@ -449,7 +509,7 @@
             panel3.Location = new Point(382, 2);
             panel3.Margin = new Padding(0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(378, 159);
+            panel3.Size = new Size(378, 234);
             panel3.TabIndex = 0;
             // 
             // label7
@@ -462,9 +522,9 @@
             label7.Location = new Point(0, 0);
             label7.Margin = new Padding(4, 0, 4, 0);
             label7.Name = "label7";
-            label7.Size = new Size(152, 20);
+            label7.Size = new Size(77, 20);
             label7.TabIndex = 0;
-            label7.Text = "ẢNH PHƯƠNG TIỆN";
+            label7.Text = "ẢNH SAU";
             // 
             // picVehicle
             // 
@@ -473,7 +533,7 @@
             picVehicle.Location = new Point(0, 0);
             picVehicle.Margin = new Padding(0);
             picVehicle.Name = "picVehicle";
-            picVehicle.Size = new Size(378, 159);
+            picVehicle.Size = new Size(378, 234);
             picVehicle.SizeMode = PictureBoxSizeMode.StretchImage;
             picVehicle.TabIndex = 1;
             picVehicle.TabStop = false;
@@ -487,7 +547,7 @@
             panel2.Location = new Point(2, 2);
             panel2.Margin = new Padding(0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(378, 159);
+            panel2.Size = new Size(378, 234);
             panel2.TabIndex = 0;
             // 
             // label6
@@ -500,9 +560,9 @@
             label6.Location = new Point(0, 0);
             label6.Margin = new Padding(4, 0, 4, 0);
             label6.Name = "label6";
-            label6.Size = new Size(100, 20);
+            label6.Size = new Size(99, 20);
             label6.TabIndex = 0;
-            label6.Text = "ẢNH XE VÀO";
+            label6.Text = "ẢNH TRƯỚC";
             // 
             // picOverview
             // 
@@ -511,7 +571,7 @@
             picOverview.Location = new Point(0, 0);
             picOverview.Margin = new Padding(0);
             picOverview.Name = "picOverview";
-            picOverview.Size = new Size(378, 159);
+            picOverview.Size = new Size(378, 234);
             picOverview.SizeMode = PictureBoxSizeMode.StretchImage;
             picOverview.TabIndex = 1;
             picOverview.TabStop = false;
@@ -575,12 +635,34 @@
             btnPrintEInvoice.UseVisualStyleBackColor = true;
             btnPrintEInvoice.Click += btnPrintEInvoice_Click;
             // 
+            // panel4
+            // 
+            panel4.Controls.Add(lblTotal);
+            panel4.Dock = DockStyle.Top;
+            panel4.Location = new Point(0, 322);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(1198, 58);
+            panel4.TabIndex = 8;
+            // 
+            // lblTotal
+            // 
+            lblTotal.Dock = DockStyle.Left;
+            lblTotal.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            lblTotal.ForeColor = Color.DarkRed;
+            lblTotal.Location = new Point(0, 0);
+            lblTotal.Name = "lblTotal";
+            lblTotal.Size = new Size(896, 58);
+            lblTotal.TabIndex = 0;
+            lblTotal.Text = "Tổng Tiền : 0";
+            lblTotal.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // frmReportScaleDetail
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1198, 567);
+            ClientSize = new Size(1198, 619);
             Controls.Add(dgvData);
+            Controls.Add(panel4);
             Controls.Add(panel1);
             Font = new Font("Segoe UI", 12F);
             Margin = new Padding(4, 3, 4, 3);
@@ -602,6 +684,7 @@
             ((System.ComponentModel.ISupportInitialize)picOverview).EndInit();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
+            panel4.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -636,9 +719,14 @@
         private DataGridViewTextBoxColumn Column11;
         private DataGridViewTextBoxColumn Column12;
         private Button btnSendInvoice;
+        private ComboBox cbLanes;
+        private Label label8;
+        private ComboBox cbFeeType;
+        private Label label9;
         private DataGridViewTextBoxColumn parking_event_in_id;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn time;
+        private DataGridViewTextBoxColumn laneName;
         private DataGridViewTextBoxColumn plate_number;
         private DataGridViewTextBoxColumn weight;
         private DataGridViewTextBoxColumn index;
@@ -652,5 +740,7 @@
         private DataGridViewTextBoxColumn secondScaleImage;
         private DataGridViewTextBoxColumn invoice_id;
         private DataGridViewTextBoxColumn weighing_id;
+        private Panel panel4;
+        private Label lblTotal;
     }
 }

@@ -56,6 +56,7 @@ namespace iParkingv5.Objects.Reporting
         public string TransactionCode { get; set; }
         public int FirstWeight { get; set; }
         public int LastWeight { get; set; }
+        public int? Weight { get; set; }
     }
 
 }

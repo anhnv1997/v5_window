@@ -458,9 +458,9 @@ namespace v5_IScale.Forms.ReportForms
             label8.Location = new Point(0, 0);
             label8.Margin = new Padding(4, 0, 4, 0);
             label8.Name = "label8";
-            label8.Size = new Size(114, 20);
+            label8.Size = new Size(77, 20);
             label8.TabIndex = 0;
-            label8.Text = "ẢNH XE CÂN 2";
+            label8.Text = "ẢNH SAU";
             // 
             // picSecondWeight
             // 
@@ -496,9 +496,9 @@ namespace v5_IScale.Forms.ReportForms
             label7.Location = new Point(0, 0);
             label7.Margin = new Padding(4, 0, 4, 0);
             label7.Name = "label7";
-            label7.Size = new Size(114, 20);
+            label7.Size = new Size(99, 20);
             label7.TabIndex = 0;
-            label7.Text = "ẢNH XE CÂN 1";
+            label7.Text = "ẢNH TRƯỚC";
             // 
             // picFirstWeight
             // 

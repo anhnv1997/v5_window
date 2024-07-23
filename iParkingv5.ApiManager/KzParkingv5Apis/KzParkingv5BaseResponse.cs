@@ -2,6 +2,7 @@
 {
     public class KzParkingv5BaseResponse<T> where T : class
     {
+        public decimal revenue { get; set; }
         public bool isSuccess { get; set; } = true;
         public string message { get; set; } = string.Empty;
         public string errorCode { get; set; } = string.Empty;
@@ -13,7 +14,7 @@
         public int totalCount { get; set; }
         public int totalPage { get; set; }
         public int pageSize { get; set; }
-        public int pageIndex { get; set; }
+        public string laneName { get; set; }
         public T data { get; set; }
     }
 
