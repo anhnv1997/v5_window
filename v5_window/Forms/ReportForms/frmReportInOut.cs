@@ -8,6 +8,7 @@ using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.Datas.Devices;
 using iParkingv5.Objects.Datas.parking;
 using iParkingv5.Objects.Enums;
+using iParkingv5.Objects.EventDatas;
 using iParkingv5.Objects.Invoices;
 using iParkingv5.Objects.Reporting;
 using iParkingv5.Objects.warehouse;
@@ -56,7 +57,7 @@ namespace iParkingv5_window.Forms.ReportForms
             ucPages1.OnpageSelect += UcPages1_OnpageSelect;
             ucEventOutInfo1.onBackClickEvent += UcEventInInfo1_onBackClickEvent;
 
-            lblMoney.Text = "Tổng Số: " + TextFormatingTool.GetMoneyFormat("0");
+            //lblMoney.Text = "Tổng Số: " + TextFormatingTool.GetMoneyFormat("0");
 
             this.ToggleDoubleBuffered(true);
             panelData.ToggleDoubleBuffered(true);
@@ -137,11 +138,11 @@ namespace iParkingv5_window.Forms.ReportForms
 
             if (ucPages1.Visible)
             {
-                dgvData.Height = ucPages1.Location.Y - dgvData.Location.Y - TextManagement.ROOT_SIZE * 2 - lblMoney.Height - 16;
+                dgvData.Height = ucPages1.Location.Y - dgvData.Location.Y - TextManagement.ROOT_SIZE * 2 - 16 - lblVN.Height - lblTQ.Height;
             }
             else
             {
-                dgvData.Height = ucPages1.Location.Y + ucPages1.Height - dgvData.Location.Y - TextManagement.ROOT_SIZE * 2 - lblMoney.Height;
+                dgvData.Height = lblVN.Location.Y + lblVN.Height - dgvData.Location.Y - TextManagement.ROOT_SIZE * 2;
             }
             tablePic.Height = dgvData.Height;
             tablePic.Width = tablePic.Height * 9 * 2 / 30;
@@ -151,10 +152,10 @@ namespace iParkingv5_window.Forms.ReportForms
             tablePic.Location = new Point(panelData.Width - tablePic.Width - StaticPool.baseSize * 2,
                                           dgvData.Location.Y);
 
-            lblTotalEvents.Location = new Point(btnPrintOffline.Location.X + btnPrintOffline.Width + TextManagement.ROOT_SIZE,
-                                             btnPrintOffline.Location.Y - lblTotalEvents.Height + btnPrintOffline.Height);
-            lblMoney.Location = new Point(dgvData.Location.X + (dgvData.Width - lblMoney.Width), dgvData.Location.Y + dgvData.Height + 16);
-            lblVN.Location = new Point(dgvData.Location.X, lblMoney.Location.Y);
+            lblTotalEvents.Location = new Point(btnSearch.Location.X,
+                                             btnSearch.Location.Y - lblTotalEvents.Height - 3);
+            //ucPages1.Location = new Point(dgvData.Location.X, dgvData.Location.Y + dgvData.Height + TextManagement.ROOT_SIZE);
+            lblVN.Location = new Point(dgvData.Location.X, dgvData.Location.Y + dgvData.Height + 3);
             lblTQ.Location = new Point(dgvData.Location.X, lblVN.Location.Y + lblVN.Height + 3);
             this.Refresh();
         }
@@ -198,7 +199,7 @@ namespace iParkingv5_window.Forms.ReportForms
 
                 totalPages = eventOutDataReport!.totalPage;
                 totalEvents = eventOutDataReport.totalCount;
-                lblMoney.Text = TextFormatingTool.GetMoneyFormat(eventOutDataReport.revenue.ToString());
+                //lblMoney.Text = TextFormatingTool.GetMoneyFormat(eventOutDataReport.revenue.ToString());
 
                 List<string> ids = new List<string>();
                 foreach (var ev in eventOutData)
@@ -219,7 +220,7 @@ namespace iParkingv5_window.Forms.ReportForms
 
                 pendingDatas = await AppData.ApiServer.getPendingEInvoice(startTime, endTime);
 
-                DisplayNavigation();
+                DisplayNavigation(eventOutDataReport.revenue);
                 await DisplayEventOutData(eventOutData);
                 DisableFastLoading();
                 eventOutData.Clear();
@@ -259,6 +260,7 @@ namespace iParkingv5_window.Forms.ReportForms
             }
 
             var additionalData = DisplayExportEventOutData(eventOutData);
+            additionalData.Add("Tổng tiền " + eventOutDataReport.revenue);
             ExcelTools.CreatReportFile(dgvExport, "Báo cáo Xe Ra Khỏi Bãi", additionalData);
             dgvExport.Rows.Clear();
             btnExportExcel.Enabled = true;
@@ -638,7 +640,6 @@ namespace iParkingv5_window.Forms.ReportForms
                 lblIdentityGroup.Location = new Point(lblEndTime.Location.X, lblVehicleType.Location.Y);
                 cbIdentityGroup.Location = new Point(dtpEndTime.Location.X, cbVehicleType.Location.Y);
 
-
                 //Làn
                 cbLane.Location = new Point(dtpEndTime.Location.X, cbUser.Location.Y);
                 lblLane.Location = new Point(lblEndTime.Location.X, lblUser.Location.Y);
@@ -663,11 +664,11 @@ namespace iParkingv5_window.Forms.ReportForms
 
                 if (ucPages1.Visible)
                 {
-                    dgvData.Height = ucPages1.Location.Y - dgvData.Location.Y - TextManagement.ROOT_SIZE * 2 - lblMoney.Height;
+                    dgvData.Height = ucPages1.Location.Y - dgvData.Location.Y - TextManagement.ROOT_SIZE * 2;
                 }
                 else
                 {
-                    dgvData.Height = ucPages1.Location.Y + ucPages1.Height - dgvData.Location.Y - TextManagement.ROOT_SIZE * 2 - lblMoney.Height;
+                    dgvData.Height = ucPages1.Location.Y + ucPages1.Height - dgvData.Location.Y - TextManagement.ROOT_SIZE * 2;
                 }
                 tablePic.Height = dgvData.Height;
                 tablePic.Width = tablePic.Height * 9 * 2 / 30;
@@ -677,11 +678,8 @@ namespace iParkingv5_window.Forms.ReportForms
                 tablePic.Location = new Point(panelData.Width - tablePic.Width - StaticPool.baseSize * 2,
                                               dgvData.Location.Y);
 
-
                 lblTotalEvents.Location = new Point(btnPrintOffline.Location.X + btnPrintOffline.Width + TextManagement.ROOT_SIZE,
                                                     btnPrintOffline.Location.Y - lblTotalEvents.Height + btnPrintOffline.Height);
-
-                lblMoney.Location = new Point(dgvData.Location.X + (dgvData.Width - lblMoney.Width), dgvData.Location.Y + dgvData.Height + 16);
 
                 cbVehicleType.DisplayMember = cbIdentityGroup.DisplayMember = cbLane.DisplayMember = cbUser.DisplayMember = "Name";
                 cbVehicleType.ValueMember = cbIdentityGroup.ValueMember = cbLane.ValueMember = cbUser.ValueMember = "Value";
@@ -715,10 +713,17 @@ namespace iParkingv5_window.Forms.ReportForms
             dgvData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
             dgvData.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
         }
-        private void DisplayNavigation()
+        private void DisplayNavigation(decimal revenue)
         {
             lblTotalEvents.Visible = true;
-            lblTotalEvents.Text = "Tổng số sự kiện: " + totalEvents;
+            try
+            {
+                lblTotalEvents.Text = "Tổng số: Sự kiện: " + totalEvents + " - Phí: " + TextFormatingTool.GetMoneyFormat(((long)revenue).ToString());
+            }
+            catch (Exception)
+            {
+                lblTotalEvents.Text = "Tổng số: Sự kiện: " + totalEvents + " - Phí: " + revenue;
+            }
             lblTotalEvents.Refresh();
             if (totalPages > 1)
             {
@@ -733,126 +738,133 @@ namespace iParkingv5_window.Forms.ReportForms
         }
         private async Task DisplayEventOutData(List<EventOutReport> eventOutData)
         {
-            //long total = 0;
-            List<DataGridViewRow> rows = new List<DataGridViewRow>();
-            Dictionary<string, Dictionary<string, int>> count_by_countries = new Dictionary<string, Dictionary<string, int>>();
-            count_by_countries.Add("VN", new Dictionary<string, int>());
-            count_by_countries.Add("TQ", new Dictionary<string, int>());
-            foreach (KeyValuePair<string, Dictionary<string, int>> item in count_by_countries)
+            try
             {
-                foreach (TransactionType.EmTransactionType type in Enum.GetValues(typeof(TransactionType.EmTransactionType)))
-                {
-                    item.Value.Add(TransactionType.GetTransactionTypeStr((int)type), 0);
-                }
-            }
 
-            foreach (var item in eventOutData)
-            {
-                List<string?> physicalFileIdsIn = new List<string?>();
-                if (item.eventInFileKeys != null)
+                //long total = 0;
+                List<DataGridViewRow> rows = new List<DataGridViewRow>();
+                Dictionary<string, Dictionary<string, int>> count_by_countries = new Dictionary<string, Dictionary<string, int>>();
+                count_by_countries.Add("VN", new Dictionary<string, int>());
+                count_by_countries.Add("TQ", new Dictionary<string, int>());
+                foreach (KeyValuePair<string, Dictionary<string, int>> item in count_by_countries)
                 {
-                    foreach (var eventInImageKey in item.eventInFileKeys)
+                    foreach (TransactionType.EmTransactionType type in Enum.GetValues(typeof(TransactionType.EmTransactionType)))
                     {
-                        physicalFileIdsIn.Add(eventInImageKey);
+                        item.Value.Add(TransactionType.GetTransactionTypeStr((int)type), 0);
                     }
                 }
-                DataGridViewRow row = new DataGridViewRow();
+
+                foreach (var item in eventOutData)
+                {
+                    List<string?> physicalFileIdsIn = new List<string?>();
+                    if (item.eventInFileKeys != null)
+                    {
+                        foreach (var eventInImageKey in item.eventInFileKeys)
+                        {
+                            physicalFileIdsIn.Add(eventInImageKey);
+                        }
+                    }
+                    DataGridViewRow row = new DataGridViewRow();
+                    this.Invoke(new Action(() =>
+                    {
+                        row.CreateCells(dgvData);
+                    }));
+                    int i = 0;
+                    row.Cells[i++].Value = item.id;   //0
+                    row.Cells[i++].Value = item.eventinid;   //0
+                    row.Cells[i++].Value = (rows.Count + 1).ToString();   //1
+
+                    row.Cells[i++].Value = item.eventInPlateNumber;                   //7
+                    row.Cells[i++].Value = item.plateNumber;                          //8
+                    string countryCode = item.plateNumber.Length > 0 ?
+                                                                (int.TryParse(item.plateNumber[0].ToString(), out int x) ? "VN" : "TQ") :
+                                                                "VN";
+                    row.Cells[i++].Value = countryCode;           //2
+                    row.Cells[i++].Value = DateTime.Parse(item.eventInCreatedUtc).AddHours(7).ToString(UltilityManagement.fullDayFormat); //2
+                    row.Cells[i++].Value = DateTime.Parse(item.createdUtc).AddHours(7).ToString(UltilityManagement.fullDayFormat); //3
+                    row.Cells[i++].Value = item.ParkingTime(); //4
+                    row.Cells[i++].Value = GetIdentityGroupName(item.IdentityGroupId);//6
+
+                    row.Cells[i++].Value = TransactionType.GetTransactionTypeStr(item.TransactionType); //9
+                    row.Cells[i++].Value = (item.TransactionCode ?? "").Contains("-0-0") ? "" : item.TransactionCode;              //10
+
+                    count_by_countries[countryCode][TransactionType.GetTransactionTypeStr(item.TransactionType)] =
+                        count_by_countries[countryCode][TransactionType.GetTransactionTypeStr(item.TransactionType)] + 1;
+
+                    string moneyStr = TextFormatingTool.GetMoneyFormat(item.charge.ToString());
+                    row.Cells[i++].Value = moneyStr.Substring(0, moneyStr.Length - 1);              //11
+
+                    row.Cells[i++].Value = item.IdentityName;       //5
+
+                    row.Cells[i++].Value = item.eventInCreatedBy;//12
+                    row.Cells[i++].Value = item.createdBy;       //13
+
+                    var invoiceData = InvoiceDatas.Where(e => e.targetId.Equals(item.id, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+                    row.Cells[i++].Value = invoiceData == null ? "" : StaticPool.templateCode;
+                    row.Cells[i++].Value = invoiceData == null ? "" : (invoiceData?.code ?? "").Replace(StaticPool.symbolCode, "");  //13
+
+                    row.Cells[i++].Value = item.eventInLaneName;//17
+                    row.Cells[i++].Value = GetLaneName(item.laneId);       //16
+
+
+                    row.Cells[i++].Value = item.note;              //
+
+                    if (string.IsNullOrEmpty(item.thirdpartynote))
+                    {
+                        row.Cells[i++].Value = "";              //
+                        row.Cells[i++].Value = "";             //
+                        row.Cells[i++].Value = "";             //
+                    }
+                    else
+                    {
+                        try
+                        {
+                            string[] noteArray = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(item.thirdpartynote)!.ToArray();// note.Split(";");
+                            row.Cells[i++].Value = noteArray.Length > 0 ? noteArray[0] : "";
+                            row.Cells[i++].Value = noteArray.Length > 1 ? noteArray[1] : "";
+                            row.Cells[i++].Value = noteArray.Length > 2 ? noteArray[2] : "";
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    }
+
+                    row.Cells[i++].Value = item.eventInWeight;//14
+                    row.Cells[i++].Value = item.Weight;
+
+
+                    row.Cells[i++].Value = physicalFileIdsIn == null ? "" : string.Join(";", physicalFileIdsIn);//14
+                    row.Cells[i++].Value = item.fileKeys == null ? "" : string.Join(";", item.fileKeys);        //15
+                    row.Cells[i++].Value = pendingDatas.Where(e => e.targetId.ToLower() == item.id.ToLower()).FirstOrDefault()?.id ?? "";        //16
+                    row.Cells[i++].Value = invoiceData?.id ?? "";        //16
+
+                    rows.Add(row);
+                    //total += item.charge;
+                }
                 this.Invoke(new Action(() =>
                 {
-                    row.CreateCells(dgvData);
+                    dgvData.Rows.AddRange(rows.ToArray());
+                    lblVN.Text = "";
+                    lblTQ.Text = "";
+                    string TH_VN = "";
+                    string TH_TQ = "";
+                    foreach (var item in count_by_countries["VN"])
+                    {
+                        TH_VN += item.Key + " - " + item.Value + "    ";
+                    }
+                    foreach (var item in count_by_countries["TQ"])
+                    {
+                        TH_TQ += item.Key + " - " + item.Value + "    ";
+                    }
+                    lblVN.Text = "VN: " + TH_VN;
+                    lblTQ.Text = "TQ: " + TH_TQ;
                 }));
-                int i = 0;
-                row.Cells[i++].Value = item.id;   //0
-                row.Cells[i++].Value = item.eventinid;   //0
-                row.Cells[i++].Value = (rows.Count + 1).ToString();   //1
-
-                row.Cells[i++].Value = item.eventInPlateNumber;                   //7
-                row.Cells[i++].Value = item.plateNumber;                          //8
-                string countryCode = item.plateNumber.Length > 0 ?
-                                                            (int.TryParse(item.plateNumber[0].ToString(), out int x) ? "VN" : "TQ") :
-                                                            "VN";
-                row.Cells[i++].Value = countryCode;           //2
-                row.Cells[i++].Value = DateTime.Parse(item.eventInCreatedUtc).AddHours(7).ToString(UltilityManagement.fullDayFormat); //2
-                row.Cells[i++].Value = DateTime.Parse(item.createdUtc).AddHours(7).ToString(UltilityManagement.fullDayFormat); //3
-                row.Cells[i++].Value = item.ParkingTime(); //4
-                row.Cells[i++].Value = GetIdentityGroupName(item.IdentityGroupId);//6
-
-                row.Cells[i++].Value = TransactionType.GetTransactionTypeStr(item.TransactionType); //9
-                row.Cells[i++].Value = (item.TransactionCode ?? "").Contains("-0-0") ? "" : item.TransactionCode;              //10
-
-                count_by_countries[countryCode][TransactionType.GetTransactionTypeStr(item.TransactionType)] =
-                    count_by_countries[countryCode][TransactionType.GetTransactionTypeStr(item.TransactionType)] + 1;
-
-                string moneyStr = TextFormatingTool.GetMoneyFormat(item.charge.ToString());
-                row.Cells[i++].Value = moneyStr.Substring(0, moneyStr.Length - 1);              //11
-
-                row.Cells[i++].Value = item.IdentityName;       //5
-
-                row.Cells[i++].Value = item.eventInCreatedBy;//12
-                row.Cells[i++].Value = item.createdBy;       //13
-
-                var invoiceData = InvoiceDatas.Where(e => e.targetId.Equals(item.id, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-                row.Cells[i++].Value = invoiceData == null ? "" : StaticPool.templateCode;
-                row.Cells[i++].Value = invoiceData == null ? "" : (invoiceData?.code ?? "").Replace(StaticPool.symbolCode, "");  //13
-
-                row.Cells[i++].Value = item.eventInLaneName;//17
-                row.Cells[i++].Value = GetLaneName(item.laneId);       //16
-
-
-                row.Cells[i++].Value = item.note;              //
-
-                if (string.IsNullOrEmpty(item.thirdpartynote))
-                {
-                    row.Cells[i++].Value = "";              //
-                    row.Cells[i++].Value = "";             //
-                    row.Cells[i++].Value = "";             //
-                }
-                else
-                {
-                    try
-                    {
-                        string[] noteArray = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(item.thirdpartynote)!.ToArray();// note.Split(";");
-                        row.Cells[i++].Value = noteArray.Length > 0 ? noteArray[0] : "";
-                        row.Cells[i++].Value = noteArray.Length > 1 ? noteArray[1] : "";
-                        row.Cells[i++].Value = noteArray.Length > 2 ? noteArray[2] : "";
-                    }
-                    catch (Exception)
-                    {
-                    }
-                }
-
-                row.Cells[i++].Value = item.eventInWeight;//14
-                row.Cells[i++].Value = item.Weight;
-
-
-                row.Cells[i++].Value = physicalFileIdsIn == null ? "" : string.Join(";", physicalFileIdsIn);//14
-                row.Cells[i++].Value = item.fileKeys == null ? "" : string.Join(";", item.fileKeys);        //15
-                row.Cells[i++].Value = pendingDatas.Where(e => e.targetId.ToLower() == item.id.ToLower()).FirstOrDefault()?.id ?? "";        //16
-                row.Cells[i++].Value = invoiceData?.id ?? "";        //16
-
-                rows.Add(row);
-                //total += item.charge;
+                eventOutData.Clear();
+                InvoiceDatas.Clear();
             }
-            this.Invoke(new Action(() =>
+            catch (Exception)
             {
-                dgvData.Rows.AddRange(rows.ToArray());
-                lblVN.Text = "";
-                lblTQ.Text = "";
-                string TH_VN = "";
-                string TH_TQ = "";
-                foreach (var item in count_by_countries["VN"])
-                {
-                    TH_VN += item.Key + " - " + item.Value + "    ";
-                }
-                foreach (var item in count_by_countries["TQ"])
-                {
-                    TH_TQ += item.Key + " - " + item.Value + "    ";
-                }
-                lblVN.Text = "VN: " + TH_VN;
-                lblTQ.Text = "TQ: " + TH_TQ;
-            }));
-            eventOutData.Clear();
-            InvoiceDatas.Clear();
+            }
         }
         private List<string> DisplayExportEventOutData(List<EventOutReport> eventOutData)
         {
@@ -960,8 +972,6 @@ namespace iParkingv5_window.Forms.ReportForms
             this.Invoke(new Action(() =>
             {
                 dgvExport.Rows.AddRange(rows.ToArray());
-                lblVN.Text = "";
-                lblTQ.Text = "";
                 string TH_VN = "";
                 string TH_TQ = "";
                 foreach (var item in count_by_countries["VN"])
@@ -979,7 +989,6 @@ namespace iParkingv5_window.Forms.ReportForms
             InvoiceDatas.Clear();
             return additionalData;
         }
-
 
         private async Task ShowImage(string fileKey, PictureBox pic)
         {
@@ -1134,24 +1143,34 @@ namespace iParkingv5_window.Forms.ReportForms
                     ctx.Items.Add("Sửa biển số ra", Properties.Resources.setting_0_0_0_32px).Name = "UpdatePlateOut";
                 }
                 string pendingOrderId = dgvData.Rows[e.RowIndex].Cells["pending_invoice_id"].Value.ToString() ?? "";
-                if (!string.IsNullOrEmpty(pendingOrderId))
+                string invoiceId = dgvData.CurrentRow.Cells["invoice_id"].Value.ToString() ?? "";
+
+                if (!string.IsNullOrEmpty(pendingOrderId) || string.IsNullOrEmpty(invoiceId))
                 {
                     ctx.Items.Add("Gửi hóa đơn", Properties.Resources.setting_0_0_0_32px).Name = "SendPendingEInvoice";
                     ctx.Items.Add("Sửa biển số vào", Properties.Resources.setting_0_0_0_32px).Name = "UpdatePlateIn";
                     ctx.Items.Add("Sửa biển số ra", Properties.Resources.setting_0_0_0_32px).Name = "UpdatePlateOut";
                 }
+                ctx.Items.Add("Cân thủ công", Properties.Resources.setting_0_0_0_32px).Name = "ScaleManual";
+
                 ctx.Font = new Font(dgvData.Font.Name, 16, FontStyle.Bold);
                 ctx.BackColor = Color.DarkOrange;
                 ctx.ItemClicked += async (sender, ctx_e) =>
                 {
                     string eventInId = dgvData.Rows[e.RowIndex].Cells["eventinid"].Value?.ToString() ?? "";
-                    string invoice_id = dgvData.Rows[e.RowIndex].Cells["invoice_id"].Value?.ToString() ?? "";
                     string eventOutId = dgvData.Rows[e.RowIndex].Cells["id"].Value?.ToString() ?? "";
                     string currentPlateIn = dgvData.Rows[e.RowIndex].Cells["PlateIn"].Value?.ToString() ?? "";
                     string currentPlateOut = dgvData.Rows[e.RowIndex].Cells["PlateOut"].Value?.ToString() ?? "";
                     string currentNote = dgvData.Rows[e.RowIndex].Cells["NoteBSX"].Value?.ToString() ?? "";
+                    string FileIds = dgvData.Rows[e.RowIndex].Cells["file_key_out"].Value?.ToString() ?? "";
+
                     switch (ctx_e.ClickedItem.Name.ToString())
                     {
+                        case "ScaleManual":
+                            {
+                                new frmScaleManual(eventInId, currentPlateIn, FileIds.Split(";").ToList()).ShowDialog(); ;
+                                break;
+                            }
                         case "UpdateNote":
                             var frmUpdateNote = new frmEditNote(currentNote, eventOutId, false);
                             if (frmUpdateNote.ShowDialog() == DialogResult.OK)
@@ -1162,7 +1181,7 @@ namespace iParkingv5_window.Forms.ReportForms
                             break;
                         case "UpdatePlateIn":
                             {
-                                var frmUpdatePlate = new frmEditPlate(currentPlateIn, eventInId, true, currentNote);
+                                var frmUpdatePlate = new frmEditPlate(currentPlateIn, eventInId, true, currentNote, pendingOrderId, eventOutId);
                                 if (frmUpdatePlate.ShowDialog() == DialogResult.OK)
                                 {
                                     dgvData.Rows[e.RowIndex].Cells["PlateIn"].Value = frmUpdatePlate.UpdatePlate;
@@ -1170,11 +1189,10 @@ namespace iParkingv5_window.Forms.ReportForms
                                     frmUpdatePlate.Dispose();
                                 }
                             }
-
                             break;
                         case "UpdatePlateOut":
                             {
-                                var frmUpdatePlate = new frmEditPlate(currentPlateOut, eventOutId, false, currentNote);
+                                var frmUpdatePlate = new frmEditPlate(currentPlateOut, eventInId, false, currentNote, pendingOrderId, eventOutId);
                                 if (frmUpdatePlate.ShowDialog() == DialogResult.OK)
                                 {
                                     dgvData.Rows[e.RowIndex].Cells["PlateOut"].Value = frmUpdatePlate.UpdatePlate;
@@ -1185,15 +1203,40 @@ namespace iParkingv5_window.Forms.ReportForms
                             break;
                         case "SendPendingEInvoice":
                             {
-                                bool isSendSuccess = await AppData.ApiServer.sendPendingEInvoice(pendingOrderId);
-                                if (isSendSuccess)
+                                //Gửi hóa đơn chờ
+                                if (!string.IsNullOrEmpty(pendingOrderId))
                                 {
-                                    MessageBox.Show("Gửi hóa đơn thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    btnSearch_Click(null, null);
+                                    bool isSendSuccess = await AppData.ApiServer.sendPendingEInvoice(pendingOrderId);
+                                    if (isSendSuccess)
+                                    {
+                                        MessageBox.Show("Gửi hóa đơn thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        btnSearch_Click(null, null);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Gửi hóa đơn không thành công, vui lòng thử lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    }
                                 }
-                                else
+                                //Gửi lại hóa đơn lỗi
+                                else if (string.IsNullOrEmpty(invoiceId))
                                 {
-                                    MessageBox.Show("Gửi hóa đơn không thành công, vui lòng thử lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    var invoiceDto = await AppData.ApiServer.CreateEinvoice(0, "", DateTime.Now, DateTime.Now, eventOutId, true, "");
+                                    if (invoiceDto != null)
+                                    {
+                                        if (!string.IsNullOrEmpty(invoiceDto.id) && invoiceDto.id != Guid.Empty.ToString())
+                                        {
+                                            MessageBox.Show("Gửi hóa đơn thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                            btnSearch_Click(null, null);
+                                        }
+                                        else
+                                        {
+                                            MessageBox.Show("Gửi hóa đơn không thành công, vui lòng thử lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Gửi hóa đơn không thành công, vui lòng thử lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    }
                                 }
                                 break;
                             }

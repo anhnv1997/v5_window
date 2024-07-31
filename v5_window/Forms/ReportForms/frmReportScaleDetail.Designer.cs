@@ -597,7 +597,7 @@
             btnSendInvoice.Font = new Font("Segoe UI", 14F);
             btnSendInvoice.Location = new Point(392, 27);
             btnSendInvoice.Name = "btnSendInvoice";
-            btnSendInvoice.Size = new Size(183, 41);
+            btnSendInvoice.Size = new Size(126, 41);
             btnSendInvoice.TabIndex = 9;
             btnSendInvoice.Text = "Gửi hóa đơn";
             btnSendInvoice.TextAlign = ContentAlignment.MiddleRight;

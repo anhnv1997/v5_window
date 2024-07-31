@@ -109,6 +109,8 @@
             báoCáoToolStripMenuItem = new ToolStripMenuItem();
             tsmiScaleReport = new ToolStripMenuItem();
             tsmiScaleDetailReport = new ToolStripMenuItem();
+            chứcNăngToolStripMenuItem = new ToolStripMenuItem();
+            tsmiScaleManual = new ToolStripMenuItem();
             panelAppStatus = new Panel();
             lblLoadingStatus = new Label();
             lblAppVersion = new Label();
@@ -902,7 +904,7 @@
             // menuStrip1
             // 
             menuStrip1.Font = new Font("Segoe UI", 12F);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { hệThốngToolStripMenuItem, báoCáoToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { hệThốngToolStripMenuItem, báoCáoToolStripMenuItem, chứcNăngToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(5, 2, 0, 2);
@@ -943,6 +945,20 @@
             tsmiScaleDetailReport.Size = new Size(202, 26);
             tsmiScaleDetailReport.Text = "Báo cáo chi tiết";
             tsmiScaleDetailReport.Click += tsmiScaleDetailReport_Click;
+            // 
+            // chứcNăngToolStripMenuItem
+            // 
+            chứcNăngToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { tsmiScaleManual });
+            chứcNăngToolStripMenuItem.Name = "chứcNăngToolStripMenuItem";
+            chứcNăngToolStripMenuItem.Size = new Size(96, 25);
+            chứcNăngToolStripMenuItem.Text = "Chức năng";
+            // 
+            // tsmiScaleManual
+            // 
+            tsmiScaleManual.Name = "tsmiScaleManual";
+            tsmiScaleManual.Size = new Size(172, 26);
+            tsmiScaleManual.Text = "Cân thủ công";
+            tsmiScaleManual.Click += tsmiScaleManual_Click;
             // 
             // panelAppStatus
             // 
@@ -1128,5 +1144,7 @@
         private Label lblAppVersion;
         private Usercontrols.BuildControls.ucScaleCount ucScaleCount2;
         private Button btnRefresh;
+        private ToolStripMenuItem chứcNăngToolStripMenuItem;
+        private ToolStripMenuItem tsmiScaleManual;
     }
 }

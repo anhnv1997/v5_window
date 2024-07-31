@@ -53,24 +53,26 @@
             // 
             // txtInputPath
             // 
-            txtInputPath.Location = new Point(75, 12);
+            txtInputPath.Location = new Point(66, 9);
+            txtInputPath.Margin = new Padding(3, 2, 3, 2);
             txtInputPath.Name = "txtInputPath";
-            txtInputPath.Size = new Size(454, 27);
+            txtInputPath.Size = new Size(398, 23);
             txtInputPath.TabIndex = 1;
             // 
             // txtOutputPath
             // 
-            txtOutputPath.Location = new Point(75, 45);
+            txtOutputPath.Location = new Point(66, 34);
+            txtOutputPath.Margin = new Padding(3, 2, 3, 2);
             txtOutputPath.Name = "txtOutputPath";
-            txtOutputPath.Size = new Size(454, 27);
+            txtOutputPath.Size = new Size(398, 23);
             txtOutputPath.TabIndex = 1;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(13, 15);
+            label1.Location = new Point(11, 11);
             label1.Name = "label1";
-            label1.Size = new Size(43, 20);
+            label1.Size = new Size(35, 15);
             label1.TabIndex = 2;
             label1.Text = "Input";
             label1.DoubleClick += label1_DoubleClick;
@@ -78,17 +80,18 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(13, 48);
+            label2.Location = new Point(11, 36);
             label2.Name = "label2";
-            label2.Size = new Size(55, 20);
+            label2.Size = new Size(45, 15);
             label2.TabIndex = 2;
             label2.Text = "Output";
             // 
             // btnDetect
             // 
-            btnDetect.Location = new Point(535, 12);
+            btnDetect.Location = new Point(468, 9);
+            btnDetect.Margin = new Padding(3, 2, 3, 2);
             btnDetect.Name = "btnDetect";
-            btnDetect.Size = new Size(137, 28);
+            btnDetect.Size = new Size(120, 21);
             btnDetect.TabIndex = 0;
             btnDetect.Text = "Nhận dạng";
             btnDetect.UseVisualStyleBackColor = true;
@@ -113,13 +116,14 @@
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
             dgvData.DefaultCellStyle = dataGridViewCellStyle1;
-            dgvData.Location = new Point(12, 91);
+            dgvData.Location = new Point(10, 68);
+            dgvData.Margin = new Padding(3, 2, 3, 2);
             dgvData.Name = "dgvData";
             dgvData.ReadOnly = true;
             dgvData.RowHeadersVisible = false;
             dgvData.RowTemplate.Height = 29;
             dgvData.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvData.Size = new Size(554, 454);
+            dgvData.Size = new Size(783, 594);
             dgvData.TabIndex = 3;
             // 
             // Column1
@@ -127,7 +131,7 @@
             Column1.HeaderText = "STT";
             Column1.Name = "Column1";
             Column1.ReadOnly = true;
-            Column1.Width = 64;
+            Column1.Width = 56;
             // 
             // Column4
             // 
@@ -150,36 +154,38 @@
             Column2.HeaderText = "Ảnh gốc";
             Column2.Name = "Column2";
             Column2.ReadOnly = true;
-            Column2.Width = 95;
+            Column2.Width = 83;
             // 
             // Column3
             // 
             Column3.HeaderText = "Biển nhận diện";
             Column3.Name = "Column3";
             Column3.ReadOnly = true;
-            Column3.Width = 138;
+            Column3.Width = 117;
             // 
             // Column6
             // 
             Column6.HeaderText = "Thời gian xử lý";
             Column6.Name = "Column6";
             Column6.ReadOnly = true;
-            Column6.Width = 137;
+            Column6.Width = 115;
             // 
             // picInput
             // 
-            picInput.Location = new Point(572, 91);
+            picInput.Location = new Point(799, 68);
+            picInput.Margin = new Padding(3, 2, 3, 2);
             picInput.Name = "picInput";
-            picInput.Size = new Size(354, 224);
+            picInput.Size = new Size(381, 294);
             picInput.SizeMode = PictureBoxSizeMode.Zoom;
             picInput.TabIndex = 4;
             picInput.TabStop = false;
             // 
             // picOutput
             // 
-            picOutput.Location = new Point(572, 330);
+            picOutput.Location = new Point(799, 366);
+            picOutput.Margin = new Padding(3, 2, 3, 2);
             picOutput.Name = "picOutput";
-            picOutput.Size = new Size(354, 215);
+            picOutput.Size = new Size(381, 294);
             picOutput.SizeMode = PictureBoxSizeMode.Zoom;
             picOutput.TabIndex = 4;
             picOutput.TabStop = false;
@@ -187,18 +193,20 @@
             // chbIsCar
             // 
             chbIsCar.AutoSize = true;
-            chbIsCar.Location = new Point(535, 46);
+            chbIsCar.Location = new Point(468, 34);
+            chbIsCar.Margin = new Padding(3, 2, 3, 2);
             chbIsCar.Name = "chbIsCar";
-            chbIsCar.Size = new Size(59, 24);
+            chbIsCar.Size = new Size(50, 19);
             chbIsCar.TabIndex = 5;
             chbIsCar.Text = "Ô Tô";
             chbIsCar.UseVisualStyleBackColor = true;
             // 
             // btnSaveErrorPic
             // 
-            btnSaveErrorPic.Location = new Point(793, 12);
+            btnSaveErrorPic.Location = new Point(694, 9);
+            btnSaveErrorPic.Margin = new Padding(3, 2, 3, 2);
             btnSaveErrorPic.Name = "btnSaveErrorPic";
-            btnSaveErrorPic.Size = new Size(133, 28);
+            btnSaveErrorPic.Size = new Size(116, 21);
             btnSaveErrorPic.TabIndex = 0;
             btnSaveErrorPic.Text = "Lưu ảnh sai";
             btnSaveErrorPic.UseVisualStyleBackColor = true;
@@ -206,9 +214,10 @@
             // 
             // btnStop
             // 
-            btnStop.Location = new Point(678, 12);
+            btnStop.Location = new Point(593, 9);
+            btnStop.Margin = new Padding(3, 2, 3, 2);
             btnStop.Name = "btnStop";
-            btnStop.Size = new Size(109, 28);
+            btnStop.Size = new Size(95, 21);
             btnStop.TabIndex = 0;
             btnStop.Text = "Dừng";
             btnStop.UseVisualStyleBackColor = true;
@@ -216,9 +225,9 @@
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(938, 557);
+            ClientSize = new Size(1190, 672);
             Controls.Add(chbIsCar);
             Controls.Add(picOutput);
             Controls.Add(picInput);
@@ -230,6 +239,7 @@
             Controls.Add(btnSaveErrorPic);
             Controls.Add(btnStop);
             Controls.Add(btnDetect);
+            Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
             Name = "Form1";
             Text = "Form1";

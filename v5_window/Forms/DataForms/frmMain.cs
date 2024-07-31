@@ -96,6 +96,7 @@ namespace iParkingv5_window.Forms.DataForms
         public frmMain(List<Lane> activeLanes)
         {
             InitializeComponent();
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Khởi chạy ứng dụng");
             this.Load += FrmMain_Load;
             this.Shown += FrmMain_Shown;
             lblServerName.Text = Environment.MachineName;

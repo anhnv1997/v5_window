@@ -1793,6 +1793,7 @@ namespace iParkingv5_window.Usercontrols
                     bool isConfirm = MessageBox.Show("Không nhận diện được biển số, bạn có muốn cho xe vào bãi?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
                     if (!isConfirm)
                     {
+                        LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, specailName: "confirm_in", mo_ta_them: "Không xác nhận cho xe vào bãi: " + identity.Code);
                         ClearView();
                         return;
                     }

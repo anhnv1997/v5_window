@@ -38,7 +38,6 @@ namespace iParkingv5_window.Forms.SystemForms
             chbIsRemember = new CheckBox();
             txtUsername = new TextBox();
             txtPassword = new TextBox();
-            timerAutoConnect = new System.Windows.Forms.Timer(components);
             lblStatus = new Label();
             btnCancel1 = new LblCancel();
             btnLogin = new BtnLogin();
@@ -46,7 +45,6 @@ namespace iParkingv5_window.Forms.SystemForms
             lblLoginTitle = new Label();
             picLogo = new PictureBox();
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
-            timerRefreshToken = new System.Windows.Forms.Timer(components);
             timerRestartSocket = new System.Windows.Forms.Timer(components);
             panelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picLogo).BeginInit();
@@ -107,11 +105,6 @@ namespace iParkingv5_window.Forms.SystemForms
             txtPassword.Size = new Size(0, 29);
             txtPassword.TabIndex = 4;
             txtPassword.TextChanged += textBox_TextChanged;
-            // 
-            // timerAutoConnect
-            // 
-            timerAutoConnect.Interval = 1000;
-            timerAutoConnect.Tick += timerAutoConnect_Tick;
             // 
             // lblStatus
             // 
@@ -175,9 +168,6 @@ namespace iParkingv5_window.Forms.SystemForms
             panelMain.Size = new Size(0, 379);
             panelMain.TabIndex = 9;
             // 
-            // ucLoading1
-            // 
-            // 
             // lblLoginTitle
             // 
             lblLoginTitle.AutoSize = true;
@@ -202,9 +192,6 @@ namespace iParkingv5_window.Forms.SystemForms
             picLogo.TabIndex = 11;
             picLogo.TabStop = false;
             // 
-            // ucNotify1
-            // 
-            // 
             // webView21
             // 
             webView21.AllowExternalDrop = true;
@@ -216,11 +203,6 @@ namespace iParkingv5_window.Forms.SystemForms
             webView21.Size = new Size(631, 473);
             webView21.TabIndex = 10;
             webView21.ZoomFactor = 1D;
-            // 
-            // timerRefreshToken
-            // 
-            timerRefreshToken.Interval = 60000;
-            timerRefreshToken.Tick += timerRefreshToken_Tick;
             // 
             // timerRestartSocket
             // 
@@ -256,7 +238,6 @@ namespace iParkingv5_window.Forms.SystemForms
         private CheckBox chbIsRemember;
         private TextBox txtUsername;
         private TextBox txtPassword;
-        private System.Windows.Forms.Timer timerAutoConnect;
         private Label lblStatus;
         private LblCancel btnCancel1;
         private BtnLogin btnLogin;
@@ -264,7 +245,6 @@ namespace iParkingv5_window.Forms.SystemForms
         private PictureBox picLogo;
         private Label lblLoginTitle;
         private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
-        private System.Windows.Forms.Timer timerRefreshToken;
         private System.Windows.Forms.Timer timerRestartSocket;
     }
 }

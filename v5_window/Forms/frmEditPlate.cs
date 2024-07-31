@@ -1,4 +1,5 @@
 ﻿using iParkingv5.ApiManager.KzParkingv5Apis;
+using Kztek.Tools;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,22 +16,30 @@ namespace iParkingv5_window.Forms
     {
         public string UpdatePlate { get => txtNewPlate.Text; }
         public string UpdateNote { get => txtNote.Text; }
-        private string eventId;
+        private string eventInId;
         private bool isEventIn;
-        public frmEditPlate(string currentPlate, string eventId, bool isEVentIn, string note)
+        private string eventOutId;
+        private bool isWaiting = false;
+        private string pendingInvoiceId = "";
+        public frmEditPlate(string currentPlate, string eventInId, bool isEVentIn, string note, string pendingInvoiceId, string eventOutId)
         {
             InitializeComponent();
             lblCurrentPlate.Text = currentPlate;
-            this.eventId = eventId;
+            this.eventInId = eventInId;
+            this.eventOutId = eventOutId;
             this.isEventIn = isEVentIn;
             txtNote.Text = note;
+            this.pendingInvoiceId = pendingInvoiceId;
         }
 
         private async void frmEditPlate_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
+                if (isWaiting) { return; }
+                isWaiting = true;
                 await Update();
+                isWaiting = false;
                 return;
             }
             else if (e.KeyCode == Keys.Escape)
@@ -49,12 +58,20 @@ namespace iParkingv5_window.Forms
             txtNewPlate.Text = txtNewPlate.Text.ToUpper();
 
             bool isUpdateSuccess = isEventIn ?
-                        await AppData.ApiServer.UpdateEventInPlateAsync(this.eventId, txtNewPlate.Text, lblCurrentPlate.Text) :
-                        await AppData.ApiServer.UpdateEventOutPlate(this.eventId, txtNewPlate.Text, lblCurrentPlate.Text)
+                        await AppData.ApiServer.UpdateEventInPlateAsync(this.eventInId, txtNewPlate.Text, lblCurrentPlate.Text) :
+                        await AppData.ApiServer.UpdateEventOutPlate(this.eventOutId, txtNewPlate.Text, lblCurrentPlate.Text)
                         ;
-            bool isUpdateNoteSuccess = await KzParkingv5ApiHelper.UpdateBSXNote(txtNote.Text, this.eventId, this.isEventIn);
+            bool isUpdateNoteSuccess = isEventIn ?
+                        await KzParkingv5ApiHelper.UpdateBSXNote(txtNote.Text, this.eventInId, this.isEventIn) :
+                        await KzParkingv5ApiHelper.UpdateBSXNote(txtNote.Text, this.eventOutId, this.isEventIn)
+                        ;
             if (isUpdateSuccess)
             {
+                if (!string.IsNullOrEmpty(pendingInvoiceId))
+                {
+                    LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, $"Ra lệnh cập nhật lại thông tin biển số xe cho hóa đơn chờ gửi Plate: {txtNewPlate.Text}, EvOutId: {this.eventOutId}, PendingId: {pendingInvoiceId}");
+                    await AppData.ApiServer.CreateEinvoice(0, "", DateTime.Now, DateTime.Now, this.eventOutId, false, "");
+                }
                 MessageBox.Show("Cập nhật biển số thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
                 return;
@@ -68,7 +85,9 @@ namespace iParkingv5_window.Forms
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            Update();
+            button1.Enabled = false;
+            await Update();
+            button1.Enabled = true;
             //txtNewPlate.Text = txtNewPlate.Text.ToUpper();
             //bool isUpdateSuccess = isEventIn ?
             //                await AppData.ApiServer.UpdateEventInPlateAsync(this.eventId, txtNewPlate.Text.ToUpper(), lblCurrentPlate.Text) :

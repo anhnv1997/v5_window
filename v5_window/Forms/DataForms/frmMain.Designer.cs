@@ -202,15 +202,15 @@
             // 
             miCheck.DropDownItems.AddRange(new ToolStripItem[] { tsmiCheck });
             miCheck.Name = "miCheck";
-            miCheck.Size = new Size(64, 25);
-            miCheck.Text = "Check";
+            miCheck.Size = new Size(96, 25);
+            miCheck.Text = "Chức năng";
             miCheck.Visible = false;
             // 
             // tsmiCheck
             // 
             tsmiCheck.Name = "tsmiCheck";
-            tsmiCheck.Size = new Size(180, 26);
-            tsmiCheck.Text = "check";
+            tsmiCheck.Size = new Size(189, 26);
+            tsmiCheck.Text = "Ghi vé thủ công";
             tsmiCheck.Click += tsmiCheck_Click;
             // 
             // panelMain

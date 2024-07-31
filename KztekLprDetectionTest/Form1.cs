@@ -349,6 +349,7 @@ namespace KztekLprDetectionTest
 
             //    }
             //});
+            lastIndex = 0;
             for (int i = lastIndex; i < files.Count; i += 1)
             {
                 //1;5;7;9;11;13
@@ -368,20 +369,27 @@ namespace KztekLprDetectionTest
                             var detectTime = sw.ElapsedMilliseconds;
                             string savePath = string.Empty;
 
-                            //Task.Run(() =>
-                            //{
-                            if (string.IsNullOrEmpty(plate))
+                            Task.Run(() =>
                             {
-                                savePath = Path.Combine(resultPath, DateTime.Now.ToString("yyyy_MM_dd"), "ERROR", $"{Path.GetFileNameWithoutExtension(file)}_{plate.Replace("-", "").Replace(" ", "")}.jpg");
-                                img?.Save(savePath, ImageFormat.Jpeg);
-                            }
-                            else
-                            {
-                                savePath = Path.Combine(resultPath, DateTime.Now.ToString("yyyy_MM_dd"), "LPR", $"{Path.GetFileNameWithoutExtension(file)}_{plate.Replace("-", "").Replace(" ", "")}.jpg");
-                                resultImg?.Save(savePath, ImageFormat.Jpeg);
-                                resultImg?.Dispose();
-                            }
-                            //});
+                                try
+                                {
+                                    if (string.IsNullOrEmpty(plate))
+                                    {
+                                        savePath = Path.Combine(resultPath, DateTime.Now.ToString("yyyy_MM_dd"), "ERROR", $"{Path.GetFileNameWithoutExtension(file)}_{plate.Replace("-", "").Replace(" ", "")}.jpg");
+                                        img?.Save(savePath, ImageFormat.Jpeg);
+                                    }
+                                    else
+                                    {
+                                        savePath = Path.Combine(resultPath, DateTime.Now.ToString("yyyy_MM_dd"), "LPR", $"{Path.GetFileNameWithoutExtension(file)}_{plate.Replace("-", "").Replace(" ", "")}.jpg");
+                                        resultImg?.Save(savePath, ImageFormat.Jpeg);
+                                        resultImg?.Dispose();
+                                    }
+                                }
+                                catch (Exception)
+                                {
+                                }
+                              
+                            });
 
 
                             this.Invoke(new Action(() =>

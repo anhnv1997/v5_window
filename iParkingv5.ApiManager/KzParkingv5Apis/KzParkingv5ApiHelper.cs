@@ -573,7 +573,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         {
             StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/identity";
-            //string apiUrl = "http://192.168.21.17:3006/pk/" + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/identity";
+            //string apiUrl = "http://10.10.0.103:3006/pk/" + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/identity";
             //Gửi API
             //apiUrl = "http://192.168.21.13:3004/pk/event-out/identity";
             Dictionary<string, string> headers = new Dictionary<string, string>()
@@ -709,6 +709,34 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return false;
         }
+
+
+        public static async Task<bool> ApproveExit(string eventid)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + "event-in/" + eventid;
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            var commitData = new List<CommitData>();
+            commitData.Add(new CommitData()
+            {
+                op = "replace",
+                path = "approveExit",
+                value = true
+            });
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, commitData, headers, null, timeOut, RestSharp.Method.Patch);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                return Convert.ToBoolean(response.Item1);
+                //AddEventOutResponse addEventOutResponse = NewtonSoftHelper<AddEventOutResponse>.GetBaseResponse(response.Item1);
+                //return addEventOutResponse;
+            }
+            return false;
+        }
+
 
         //--DELETE--
         public async Task<bool> CancelCheckOut(string eventOutId)
@@ -855,7 +883,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             {
                 { "Authorization","Bearer " + token  }
             };
-            TimeSpan parkingTime = datetimeOut - datetimeIn;
+            //TimeSpan parkingTime = datetimeOut - datetimeIn;
             var data = new
             {
                 targetId = eventOutId,
@@ -940,7 +968,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             var filter = Filter.CreateFilter(new List<FilterModel>()
             {
                 new FilterModel("targetId", "GUID", searchIds, "in"),
-                new FilterModel("EventOut", "TEXT", searchIds, "eq"),
+                new FilterModel("targetType", "TEXT", "EventOut", "eq"),
                 new FilterModel("sent", "BOOLEAN", "true", "eq"),
                 //new FilterModel("targetId", "BOOLEAN", "true", "eq"),
                 //new FilterModel("createdUtc", "DATETIME", startTime.ToUniversalTime().ToString(UTCFormat), "gte"),

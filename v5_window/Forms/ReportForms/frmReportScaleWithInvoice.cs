@@ -123,16 +123,18 @@ namespace v5_IScale.Forms.ReportForms
         }
         private async void btnPrintInternetEInvoice_Click(object sender, EventArgs e)
         {
-
+            btnPrintInternetEInvoice.Enabled = false;
             if (dgvData.Rows.Count == 0)
             {
                 MessageBox.Show("Không có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                btnPrintInternetEInvoice.Enabled = true;
                 return;
             }
 
             if (dgvData.CurrentRow == null)
             {
                 MessageBox.Show("Hãy chọn sự kiện cần in phiếu cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                btnPrintInternetEInvoice.Enabled = true;
                 return;
             }
 
@@ -143,10 +145,13 @@ namespace v5_IScale.Forms.ReportForms
             if (weighingActionDetails.Count < (cbPrintMode.SelectedIndex + 1))
             {
                 MessageBox.Show("Không có thông tin hóa đơn", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                btnPrintInternetEInvoice.Enabled = true;
                 return;
             }
             var invoiceData = await KzScaleApiHelper.CreateInvoice(weighingActionDetails[cbPrintMode.SelectedIndex].Id, true);
-            if (string.IsNullOrEmpty(invoiceData.id))
+            btnPrintInternetEInvoice.Enabled = true;
+
+            if (invoiceData == null || string.IsNullOrEmpty(invoiceData.id) || invoiceData.id == Guid.Empty.ToString())
             {
                 MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;

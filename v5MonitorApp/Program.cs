@@ -116,7 +116,7 @@ namespace v5MonitorApp
                     Application.Exit();
                     return;
                 }
-                KzParkingv5ApiHelper.server = StaticPool.serverConfig.ParkingServerUrl;
+                KzParkingv5BaseApi.server = StaticPool.serverConfig.ParkingServerUrl;
             }
             catch (Exception ex)
             {

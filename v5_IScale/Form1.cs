@@ -328,7 +328,10 @@ namespace v5_IScale
             //UPDATE_TEST
             if (string.IsNullOrEmpty(this.WeighingActionDetail.InvoiceId))
             {
+                btnPrintInternetInvoice.Enabled = false;
                 var invoiceData = await KzScaleApiHelper.CreateInvoice(this.WeighingActionDetail.Id, true);
+                btnPrintInternetInvoice.Enabled = true;
+
                 if (string.IsNullOrEmpty(invoiceData.id))
                 {
                     MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -1360,6 +1363,24 @@ namespace v5_IScale
             btnPrint.Enabled = false;
             this.selectedParkingEventId = "";
             ClearView();
+        }
+
+        private async void tsmiScaleManual_Click(object sender, EventArgs e)
+        {
+            frmReportIn frm = new frmReportIn(true);
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                ClearView();
+                string selectedPlateNumber = frm.selectedPlateNumber;
+                string eventInId = frm.selectedEventId;
+                string[] physicalFileIds = frm.fileKeys;
+
+                var frmScaleManual = new frmScaleManual(eventInId, selectedPlateNumber, physicalFileIds.ToList());
+                if (frmScaleManual.ShowDialog() == DialogResult.OK)
+                {
+                    await RefreshData();
+                }
+            }
         }
     }
 }

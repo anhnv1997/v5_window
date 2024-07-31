@@ -927,15 +927,25 @@ namespace iParkingv5_window.Usercontrols
                 //bool isCOnfirm = true;
 
                 //UPDATE TEST
+                LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, mo_ta_them: "Yêu cầu xác nhận phương tiện: " + (eventIn.PlateNumber ?? "") + " ; IdentityCode: " + (eventIn.identity?.Code ?? ""));
                 frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, errorMessage, eventIn.PlateNumber ?? "",
                                                                 eventIn.identity?.Id ?? "", this.lane.id,
                                                                 eventIn.fileKeys ?? new List<string>(), eventIn.DatetimeIn ?? DateTime.Now,
                                                                 true, eventOut.eventIn.charge);
                 if (frmConfirmOut.ShowDialog() == DialogResult.OK)
                 {
+                    LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, mo_ta_them: "Xác nhận");
+                    string eventInPlate = eventIn.PlateNumber ?? "";
+                    if (eventInPlate.ToUpper() != frmConfirmOut.updatePlate.ToUpper())
+                    {
+                        LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, specailName: "LPR_EDIT_OUT", mo_ta_them: "Sửa biển số vào khi quẹt thẻ EventInId: " + eventIn.Id +
+                                                                                                                                 "\r\nOld Plate: " + plateNumber +
+                                                                                                                                 " => New Plate: " + frmConfirmOut.updatePlate);
+                        await AppData.ApiServer.UpdateEventInPlateAsync(eventIn.Id, frmConfirmOut.updatePlate, eventIn.PlateNumber ?? "");
+                    }
                     if (plateNumber.ToUpper() != frmConfirmOut.updatePlate.ToUpper())
                     {
-                        LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, specailName: "LPR_EDIT_OUT", mo_ta_them: "Sửa biển số khi quẹt thẻ EventInId: " + eventIn.Id +
+                        LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, specailName: "LPR_EDIT_OUT", mo_ta_them: "Sửa biển số ra khi quẹt thẻ EventInId: " + eventIn.Id +
                                                                                                                                    "\r\nOld Plate: " + plateNumber +
                                                                                                                                    " => New Plate: " + frmConfirmOut.updatePlate);
                     }
@@ -944,6 +954,7 @@ namespace iParkingv5_window.Usercontrols
                 }
                 else
                 {
+                    LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, mo_ta_them: "Không Xác nhận");
                     lblResult.UpdateResultMessage("Không xác nhận sự kiện ra", Color.DarkOrange);
                     ClearView();
                     return;
@@ -1314,10 +1325,15 @@ namespace iParkingv5_window.Usercontrols
                 LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Create Payment Transaction");
                 AppData.ApiServer.CreatePaymentTransaction(eventOut);
                 //UPDATE TEST
-                bool isConfirmSendEinvoie = MessageBox.Show($"Bạn có muốn gửi hóa đơn ({TextFormatingTool.GetMoneyFormat(eventOut.charge.Amount.ToString())}) không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
+                LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, mo_ta_them: "Yêu cầu xác nhận gửi hóa đơn: " + lastEvent.Id);
+                //bool isConfirmSendEinvoie = MessageBox.Show($"Bạn có muốn gửi hóa đơn ({TextFormatingTool.GetMoneyFormat(eventOut.charge.Amount.ToString())}) không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
+
+                var frm = new frmConfirmSendInvoice();
+                bool isConfirmSendEinvoie = frm.ShowDialog() == DialogResult.OK;
                 //bool isConfirmSendEinvoie = true;
                 if (isConfirmSendEinvoie)
                 {
+                    LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, mo_ta_them: "xác nhận");
                     var invoiceDto = await AppData.ApiServer.CreateEinvoice(eventOut.charge.Amount, eventOut.eventIn.PlateNumber,
                                                                                 eventOut.eventIn.DatetimeIn ?? DateTime.Now, eventOut.DatetimeOut ?? DateTime.Now,
                                                                                 eventOut.Id, true, identityGroup?.Name ?? "");
@@ -1325,6 +1341,7 @@ namespace iParkingv5_window.Usercontrols
                 }
                 else
                 {
+                    LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, mo_ta_them: "không xác nhận: " + lastEvent.Id);
                     var invoiceDto = await AppData.ApiServer.CreateEinvoice(eventOut.charge.Amount, eventOut.eventIn.PlateNumber,
                                                                                eventOut.eventIn.DatetimeIn ?? DateTime.Now, eventOut.DatetimeOut ?? DateTime.Now,
                                                                                eventOut.Id, false, identityGroup?.Name ?? "");
@@ -1465,29 +1482,26 @@ namespace iParkingv5_window.Usercontrols
                 {
                     return;
                 }
-                LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.Camera, "10");
+                LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, "10");
                 this.Invoke(new Action(() =>
                 {
                     lblScaleFee.Text = TextFormatingTool.GetMoneyFormat(this.WeighingActionDetail.Charge.ToString());
                 }));
-                LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.Camera, "11");
                 var frm = new frmSelectPrintCount();
-                LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.Camera, "12");
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
-                    LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.Camera, "13");
                     this.printCount = frm.PrintCount;
 
                     var wbPrint = new WebBrowser();
                     wbPrint.DocumentCompleted += WbPrint_DocumentCompleted;
-                    LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.Camera, "14");
+                    LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, "Bắt đầu tin phiếu cân " + (lastEvent.PlateNumber ?? ""));
                     wbPrint.DocumentText = PrintHelper.GetScalePrintContent(
                         await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(this.lastEvent.eventIn.Id), lastEvent.PlateNumber ?? "", cbGoodsType.Text);
                 }
             }
             else
             {
-                LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.Camera, "14");
+                LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, "Chưa có thông tin sự kiện cân");
                 MessageBox.Show("Chưa có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }

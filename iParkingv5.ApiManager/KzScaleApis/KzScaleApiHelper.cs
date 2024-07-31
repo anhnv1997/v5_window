@@ -74,7 +74,7 @@ namespace iParkingv5.ApiManager.KzScaleApis
                                                          long weight, string weightFormId,
                                                          string user_action, string user_code,
                                                          List<string> imageKeys, string updateTrafficId = "",
-                                                         string laneId = "")
+                                                         string laneId = "", DateTime? createdUtc = null)
         {
             string apiUrl = server + KzScaleUrlManagement.CreateWeighingAction();
             //weight = new Random().Next(10000, 50000);
@@ -92,6 +92,7 @@ namespace iParkingv5.ApiManager.KzScaleApis
                 weight = weight.ToString(),
                 fileKeys = imageKeys,
                 laneId = laneId,
+                CreatedUtc = createdUtc,
             };
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, obj, headers, null, timeOut, RestSharp.Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))

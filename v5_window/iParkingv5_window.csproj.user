@@ -10,7 +10,13 @@
     <Compile Update="Forms\DataForms\frmEventInDetail.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\DataForms\frmScaleManual.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\DataForms\frmSelectVehicle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\DataForms\frmUpdateWeighingType.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\DataForms\Registers\frmCustomerRegister.cs">
@@ -50,6 +56,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\ReportForms\frmConfirmCardGroup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\ReportForms\frmConfirmSendInvoice.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\SystemForms\frmLoading.cs">
@@ -137,6 +146,9 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Usercontrols\ucLaneIn.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Usercontrols\ucLaneOut.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Usercontrols\ucLastEventInfo.cs">

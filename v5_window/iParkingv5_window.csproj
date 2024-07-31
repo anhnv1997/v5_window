@@ -1,123 +1,121 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Platforms>x64;x86</Platforms>
-    <Version>1.0.7.9</Version>
-    <ApplicationIcon>bin\x64\Debug\net6.0-windows\icons8_parking_2.ico</ApplicationIcon>
-    <PackageIcon>icons8_parking_32px.png</PackageIcon>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Platforms>x64;x86</Platforms>
+		<Version>1.0.9.7</Version>
+		<ApplicationIcon>bin\x64\Debug\net6.0-windows\icons8_parking_2.ico</ApplicationIcon>
+		<PackageIcon>icons8_parking_32px.png</PackageIcon>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<PlatformTarget>x64</PlatformTarget>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="bin\x64\Debug\net6.0-windows\icons8_parking_2.ico" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="bin\x64\Debug\net6.0-windows\icons8_parking_2.ico" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Include="bin\x64\Debug\net6.0-windows\icons8_parking_32px.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="bin\x64\Debug\net6.0-windows\icons8_parking_32px.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="IdentityModel" Version="7.0.0" />
-    <PackageReference Include="IdentityModel.OidcClient" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2420.47" />
-    <PackageReference Include="Minio" Version="5.0.0" />
-    <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
-    <PackageReference Include="SpreadsheetLight" Version="3.5.0" />
-    <PackageReference Include="System.Management" Version="7.0.2" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="IdentityModel" Version="7.0.0" />
+		<PackageReference Include="IdentityModel.OidcClient" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2420.47" />
+		<PackageReference Include="Minio" Version="5.0.0" />
+		<PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
+		<PackageReference Include="SpreadsheetLight" Version="3.5.0" />
+		<PackageReference Include="System.Management" Version="7.0.2" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\..\BaseLib\Kztek.Cameras\Kztek.Cameras.csproj" />
-    <ProjectReference Include="..\..\..\..\..\..\..\BaseLib\Kztek.RtspPlayer\Kztek.RtspPlayer\Kztek.RtspPlayer.csproj" />
-    <ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\Kztek.Tool\Kztek.Tool.csproj" />
-    <ProjectReference Include="..\IPaking.Ultility\IPaking.Ultility.csproj" />
-    <ProjectReference Include="..\iPakrkingv5.Controls\iPakrkingv5.Controls.csproj" />
-    <ProjectReference Include="..\iParking.ConfigurationManager\iParking.ConfigurationManager.csproj" />
-    <ProjectReference Include="..\iParkingv5.ApiManager\iParkingv5.ApiManager.csproj" />
-    <ProjectReference Include="..\iParkingv5.Controller\iParkingv5.Controller.csproj" />
-    <ProjectReference Include="..\iParkingv5.FeeTest\iParkingv5.FeeTest.csproj" />
-    <ProjectReference Include="..\iParkingv5.LedDisplay\iParkingv5.LedDisplay.csproj" />
-    <ProjectReference Include="..\iParkingv5.Lpr\iParkingv5.Lpr.csproj" />
-    <ProjectReference Include="..\iParkingv5.Objects\iParkingv5.Objects.csproj" />
-    <ProjectReference Include="..\Kztek.Scale\Net6\Kztek.Scale\Kztek.Scale_net6.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\..\..\..\..\BaseLib\Kztek.Cameras\Kztek.Cameras.csproj" />
+		<ProjectReference Include="..\..\..\..\..\..\..\BaseLib\Kztek.RtspPlayer\Kztek.RtspPlayer\Kztek.RtspPlayer.csproj" />
+		<ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\Kztek.Tool\Kztek.Tool.csproj" />
+		<ProjectReference Include="..\IPaking.Ultility\IPaking.Ultility.csproj" />
+		<ProjectReference Include="..\iPakrkingv5.Controls\iPakrkingv5.Controls.csproj" />
+		<ProjectReference Include="..\iParking.ConfigurationManager\iParking.ConfigurationManager.csproj" />
+		<ProjectReference Include="..\iParkingv5.ApiManager\iParkingv5.ApiManager.csproj" />
+		<ProjectReference Include="..\iParkingv5.Controller\iParkingv5.Controller.csproj" />
+		<ProjectReference Include="..\iParkingv5.FeeTest\iParkingv5.FeeTest.csproj" />
+		<ProjectReference Include="..\iParkingv5.LedDisplay\iParkingv5.LedDisplay.csproj" />
+		<ProjectReference Include="..\iParkingv5.Lpr\iParkingv5.Lpr.csproj" />
+		<ProjectReference Include="..\iParkingv5.Objects\iParkingv5.Objects.csproj" />
+		<ProjectReference Include="..\Kztek.Scale\Net6\Kztek.Scale\Kztek.Scale_net6.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Forms\DataForms\frmSearchCustomer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\DataForms\frmSearchPlateNumber.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\ReportForms\frmReportScaleWithInvoice.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\ReportForms\frmReportScaleDetail.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\ReportForms\frmSelectPrintCount.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Properties\Settings.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Update="Usercontrols\ucLaneOut.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Forms\DataForms\frmSearchCustomer.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Update="Forms\DataForms\frmSearchPlateNumber.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Update="Forms\ReportForms\frmReportScaleWithInvoice.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Update="Forms\ReportForms\frmReportScaleDetail.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Update="Forms\ReportForms\frmSelectPrintCount.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Settings.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Settings.settings</DependentUpon>
+		</Compile>
+		<Compile Update="Usercontrols\ucLaneOut.cs" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="Properties\Settings.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="obj\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="obj\" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="AForge.Imaging">
-      <HintPath>..\..\..\..\..\..\4..Library Reference\CameraLib\AForge.Imaging.dll</HintPath>
-    </Reference>
-    <Reference Include="AForge.Video.DirectShowEx">
-      <HintPath>..\..\..\..\..\..\4..Library Reference\CameraLib\AForge.Video.DirectShowEx.dll</HintPath>
-    </Reference>
-    <Reference Include="AForge.VideoEx">
-      <HintPath>..\..\..\..\..\..\4..Library Reference\CameraLib\AForge.VideoEx.dll</HintPath>
-    </Reference>
-    <Reference Include="Kztek.Security">
-      <HintPath>..\..\..\..\..\..\..\BaseLib\KztekKey_net6\Kztek.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="KztekKeyRegister">
-      <HintPath>..\..\..\..\..\..\..\BaseLib\KztekKey_net6\KztekKeyRegister.dll</HintPath>
-    </Reference>
-    <Reference Include="SayMoney">
-      <HintPath>..\packages\SayMoney.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+	<ItemGroup>
+		<Reference Include="AForge.Imaging">
+			<HintPath>..\..\..\..\..\..\4..Library Reference\CameraLib\AForge.Imaging.dll</HintPath>
+		</Reference>
+		<Reference Include="AForge.Video.DirectShowEx">
+			<HintPath>..\..\..\..\..\..\4..Library Reference\CameraLib\AForge.Video.DirectShowEx.dll</HintPath>
+		</Reference>
+		<Reference Include="AForge.VideoEx">
+			<HintPath>..\..\..\..\..\..\4..Library Reference\CameraLib\AForge.VideoEx.dll</HintPath>
+		</Reference>
+		<Reference Include="Kztek.Security">
+			<HintPath>..\..\..\..\..\..\..\BaseLib\KztekKey_net6\Kztek.Security.dll</HintPath>
+		</Reference>
+		<Reference Include="KztekKeyRegister">
+			<HintPath>..\..\..\..\..\..\..\BaseLib\KztekKey_net6\KztekKeyRegister.dll</HintPath>
+		</Reference>
+		<Reference Include="SayMoney">
+			<HintPath>..\packages\SayMoney.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 </Project>

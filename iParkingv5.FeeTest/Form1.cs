@@ -22,7 +22,7 @@ namespace iParkingv5.FeeTest
         public static iParkingApi ApiServer = new KzParkingv5ApiHelper();
         private List<IdentityGroup> IdentityGroups = new List<IdentityGroup>();
         public static string pathBase = Application.StartupPath;
-
+         
         public Form1()
         {
             InitializeComponent();
@@ -30,13 +30,15 @@ namespace iParkingv5.FeeTest
             LoadSystemConfig();
             //KzParkingv5ApiHelper.server = "http://103.127.207.247:5000";
 
-
+            //KzParkingv5BaseApi.server = "http://10.10.0.103:5000";
             string clientId = "910ae83b-5205-4c35-bf45-8926ff620386";
+            KzParkingv5BaseApi.client_id = clientId;
+
             options = new OidcClientOptions
             {
-                Authority = KzParkingv5BaseApi.server.Replace(":5000", ":3000"),//"http://192.168.21.13:3000",// 
+                Authority = KzParkingv5BaseApi.server.Replace(":5000", ":3000").Replace("api.", "oauth."),
                 ClientId = clientId,
-                Scope = "openid role-data user-data parking-data offline_access device-data electronic-invoice-data",
+                Scope = "openid role-data user-data parking-data offline_access device-data invoice-data project-data payment-data tenant-data warehouse-data reporting-data",
                 RedirectUri = "http://localhost/winforms.client",
                 Browser = new WinFormsWebView(webView21, this),
                 Policy = new Policy
@@ -75,7 +77,7 @@ namespace iParkingv5.FeeTest
             {
                 token = loginResult.TokenResponse.AccessToken;
                 KzParkingv5BaseApi.token = loginResult.TokenResponse.AccessToken;
-                
+
                 frmFeeCalculate frm = new()
                 {
                     Owner = this

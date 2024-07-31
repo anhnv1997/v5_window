@@ -1,10 +1,13 @@
 ﻿using IPaking.Ultility;
+using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.ApiManager.KzScaleApis;
+using iParkingv5.ApiManager.XuanCuong;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.Invoices;
 using iParkingv5.Objects.ScaleObjects;
 using iParkingv5_window;
+using iParkingv5_window.Forms;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv5_window.Helpers;
 using Kztek.Tool.TextFormatingTools;
@@ -14,6 +17,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,7 +39,9 @@ namespace v5_IScale.Forms.ReportForms
             InitializeComponent();
             this.KeyPreview = true;
             this.KeyDown += frmReportScaleWithInvoice_KeyDown;
+            dgvData.CellMouseClick += DgvData_CellMouseClick;
         }
+
         private async void frmReportScaleWithInvoice_Load(object sender, EventArgs e)
         {
             try
@@ -80,6 +86,7 @@ namespace v5_IScale.Forms.ReportForms
         }
         private async void BtnSendInvoice_Click(object? sender, EventArgs e)
         {
+            btnSendInvoice.Enabled = false;
             string weighing_id = dgvData.CurrentRow.Cells["weighing_id"].Value?.ToString() ?? "";
             string invoiceId = dgvData.CurrentRow.Cells["invoice_id"].Value?.ToString() ?? "";
             string invoiceNo = dgvData.CurrentRow.Cells["invoice_no"].Value?.ToString() ?? "";
@@ -96,7 +103,9 @@ namespace v5_IScale.Forms.ReportForms
             {
                 response = await KzScaleApiHelper.CreateInvoice(weighing_id, true);
             }
-            if (string.IsNullOrEmpty(response.id) || response.id == Guid.Empty.ToString())
+            btnSendInvoice.Enabled = true;
+
+            if (response == null || string.IsNullOrEmpty(response.id) || response.id == Guid.Empty.ToString())
             {
                 MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -128,16 +137,18 @@ namespace v5_IScale.Forms.ReportForms
         }
         private async void btnPrintInternetEInvoice_Click(object sender, EventArgs e)
         {
-
+            btnPrintInternetEInvoice.Enabled = false;
             if (dgvData.Rows.Count == 0)
             {
                 MessageBox.Show("Không có thông tin sự kiện cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                btnPrintInternetEInvoice.Enabled = true;
                 return;
             }
 
             if (dgvData.CurrentRow == null)
             {
                 MessageBox.Show("Hãy chọn sự kiện cần in phiếu cân", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                btnPrintInternetEInvoice.Enabled = true;
                 return;
             }
 
@@ -148,7 +159,8 @@ namespace v5_IScale.Forms.ReportForms
             var weighingActionDetails = await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(parkingEventId);
 
             var invoiceData = await KzScaleApiHelper.CreateInvoice(weighingActionDetails[int.Parse(index) - 1].Id, true);
-            if (string.IsNullOrEmpty(invoiceData.id))
+            btnPrintInternetEInvoice.Enabled = true;
+            if (invoiceData == null || string.IsNullOrEmpty(invoiceData.id) || invoiceData.id == Guid.Empty.ToString())
             {
                 MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -165,6 +177,48 @@ namespace v5_IScale.Forms.ReportForms
         private void btnExcel_Click(object sender, EventArgs e)
         {
             ExcelTools.CreatReportFile(dgvData, "Báo cáo sự kiện cân", new List<string>());
+        }
+        private void DgvData_CellMouseClick(object? sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+
+                dgvData.CurrentCell = dgvData.Rows[e.RowIndex].Cells[1];
+                ContextMenuStrip ctx = new ContextMenuStrip();
+                ctx.Items.Add("Đổi loại hàng").Name = "UpdateWeighingType";
+                ctx.Font = new Font(dgvData.Font.Name, 16, FontStyle.Bold);
+                ctx.BackColor = Color.DarkOrange;
+                ctx.ItemClicked += async (sender, ctx_e) =>
+                {
+                    string id = dgvData.Rows[e.RowIndex].Cells["weighing_id"].Value.ToString() ?? "";
+                    string invoice_id = dgvData.Rows[e.RowIndex].Cells["invoice_id"].Value.ToString() ?? "";
+                    string weighingTypeName = dgvData.Rows[e.RowIndex].Cells["weighing_type_name"].Value.ToString() ?? "";
+                    switch (ctx_e.ClickedItem.Name.ToString())
+                    {
+                        case "UpdateWeighingType":
+                            {
+                                //if (string.IsNullOrEmpty(invoice_id))
+                                {
+                                    var frm = new frmUpdateWeighingType(id, weighingTypeName);
+                                    if (frm.ShowDialog() == DialogResult.OK)
+                                    {
+                                        btnSearch.PerformClick();
+                                    }
+                                }
+                                //else
+                                //{
+                                //    MessageBox.Show("Lượt cân đã được gửi hóa đơn, không được phép đổi thông tin loại hàng", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                //    return;
+                                //}
+                                break;
+                            }
+                        default:
+                            break;
+                    }
+                };
+                var location = dgvData.PointToScreen(dgvData.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false).Location);
+                ctx.Show(dgvData, new Point(location.X - dgvData.Location.X, location.Y - dgvData.Location.Y));
+            }
         }
         private async void dgvData_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -224,15 +278,6 @@ namespace v5_IScale.Forms.ReportForms
                     rearImagePath = string.IsNullOrEmpty(rearImagePath) ? "" : await MinioHelper.GetImage(rearImagePath);
                     picOverview.LoadAsync(frontImagePath);
                     picVehicle.LoadAsync(rearImagePath);
-                    //if (firstScaleImages.Length > 1)
-                    //{
-                    //    string overviewPath = await MinioHelper.GetImage(firstScaleImages.First(e => e.Contains("VEHICLE")));
-                    //    string vehiclePath = await MinioHelper.GetImage(firstScaleImages.First(e => e.Contains("OVERVIEW")));
-                    //    this.Invoke(new Action(() =>
-                    //    {
-
-                    //    }));
-                    //}
                 }
             }
             catch (Exception)
