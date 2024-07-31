@@ -332,7 +332,7 @@ namespace v5_IScale
                 var invoiceData = await KzScaleApiHelper.CreateInvoice(this.WeighingActionDetail.Id, true);
                 btnPrintInternetInvoice.Enabled = true;
 
-                if (string.IsNullOrEmpty(invoiceData.id))
+                if (invoiceData == null || string.IsNullOrEmpty(invoiceData.id))
                 {
                     MessageBox.Show("Chưa gửi được thông tin hóa đơn điện tử", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
@@ -1381,6 +1381,12 @@ namespace v5_IScale
                     await RefreshData();
                 }
             }
+        }
+
+        private void thoátToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+            Environment.Exit(0);
         }
     }
 }
