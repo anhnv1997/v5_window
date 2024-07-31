@@ -407,16 +407,6 @@ namespace iParkingv5.Controller.KztekDevices
             return output;
         }
 
-        public Task<bool> AddFinger(List<string> fingerDatas)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> ModifyFinger(string userId, int fingerIndex, string fingerData)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<bool> DeleteFinger(string userId, int fingerIndex)
         {
             throw new NotImplementedException();
