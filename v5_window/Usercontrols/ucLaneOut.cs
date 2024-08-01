@@ -425,7 +425,7 @@ namespace iParkingv5_window.Usercontrols
                     frmConfirmOut frmConfirmOut = new frmConfirmOut(plate, "Bạn có xác nhận mở barrie?",
                                                                     eventOut.eventIn.PlateNumber ?? "", eventOut.eventIn?.Identity?.Id ?? "",
                                                                     eventOut.eventIn?.Lane?.Id ?? "", eventOut.eventIn?.images,
-                                                                    eventOut.eventIn?.DatetimeIn ?? DateTime.Now, false, eventOut.charge.Amount);
+                                                                    eventOut.eventIn?.DatetimeIn ?? DateTime.Now, false, eventOut.charge);
                     bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
                     if (!isConfirm)
                     {
@@ -693,7 +693,7 @@ namespace iParkingv5_window.Usercontrols
                     frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, "Bạn có xác nhận mở barrie?", eventIn.PlateNumber ?? "",
                                                                     eventIn.Identity?.Id ?? "", eventIn.Lane?.Id ?? "",
                                                                     eventIn.images, eventIn.DatetimeIn ?? DateTime.Now,
-                                                                    false, eventOut.charge.Amount);
+                                                                    false, eventOut.charge);
                     bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
                     if (!isConfirm)
                     {
@@ -746,7 +746,7 @@ namespace iParkingv5_window.Usercontrols
                         frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, "Bạn có xác nhận mở barrie?",
                                                                         eventIn.PlateNumber ?? "", eventIn?.Identity?.Id ?? "",
                                                                         eventIn?.Lane?.Id ?? "", eventIn?.images,
-                                                                        eventIn.DatetimeIn ?? DateTime.Now, false, eventOut.charge.Amount);
+                                                                        eventIn.DatetimeIn ?? DateTime.Now, false, eventOut.charge);
                         bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
                         if (!isConfirm)
                         {
@@ -846,7 +846,7 @@ namespace iParkingv5_window.Usercontrols
                         frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, "Bạn có xác nhận mở barrie?",
                                                                         eventOut.eventIn?.PlateNumber ?? "", eventOut.eventIn?.Identity?.Id ?? "",
                                                                         eventOut.eventIn?.Lane?.Id ?? "", eventOut.eventIn?.images,
-                                                                        eventOut.eventIn?.DatetimeIn ?? DateTime.Now, false, eventOut.charge.Amount);
+                                                                        eventOut.eventIn?.DatetimeIn ?? DateTime.Now, false, eventOut.charge);
                         bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
                         if (!isConfirm)
                         {
@@ -925,7 +925,7 @@ namespace iParkingv5_window.Usercontrols
                         frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, "Bạn có xác nhận mở barrie?",
                                                                         eventOut.eventIn?.PlateNumber ?? "", eventOut.eventIn?.Identity?.Id ?? "",
                                                                         eventOut.eventIn?.Lane?.Id ?? "", eventOut.eventIn?.images,
-                                                                        eventOut.eventIn?.DatetimeIn ?? DateTime.Now, false, eventOut.charge.Amount);
+                                                                        eventOut.eventIn?.DatetimeIn ?? DateTime.Now, false, eventOut.charge);
                         bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
                         if (!isConfirm)
                         {
@@ -971,7 +971,7 @@ namespace iParkingv5_window.Usercontrols
         private void ExcecuteUnvalidEvent(Identity identity, VehicleBaseType vehicleType, string plate, DateTime eventTime, AddEventOutResponse? eventOut, string errorMessage)
         {
             lblResult.UpdateResultMessage(errorMessage, Color.DarkRed);
-            DisplayEventOutInfo(eventOut?.eventIn?.DatetimeIn, eventTime, plate, identity, null, vehicleType, eventOut?.RegisteredVehicle, (long)(eventOut?.charge?.Amount ?? 0), eventOut?.Customer, null, "", "");
+            DisplayEventOutInfo(eventOut?.eventIn?.DatetimeIn, eventTime, plate, identity, null, vehicleType, eventOut?.RegisteredVehicle, (long)(eventOut?.charge ?? 0), eventOut?.Customer, null, "", "");
         }
         List<string> lastImageKeys = new List<string>();
         DateTime lastTime = DateTime.Now;
@@ -1017,7 +1017,7 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
 
-            if (eventOut.charge.Amount > 0)
+            if (eventOut.charge > 0)
             {
                 lblResult.UpdateResultMessage("Thu tiền", Color.DarkGreen);
             }
@@ -1027,9 +1027,9 @@ namespace iParkingv5_window.Usercontrols
             }
 
             DisplayEventOutInfo(eventOut?.eventIn?.DatetimeIn, eventTime, detectedPlate, identity, identityGroup, vehicleType,
-                                eventOut?.RegisteredVehicle, (long)(eventOut?.charge?.Amount ?? 0), eventOut?.Customer, null, "", "");
+                                eventOut?.RegisteredVehicle, (long)(eventOut?.charge ?? 0), eventOut?.Customer, null, "", "");
             ShowEventInData(eventOut);
-            BaseLane.DisplayLed(detectedPlate, eventTime, identity, identityGroup, "Hẹn gặp lại", this.lane.Id, eventOut.charge.Amount.ToString());
+            BaseLane.DisplayLed(detectedPlate, eventTime, identity, identityGroup, "Hẹn gặp lại", this.lane.Id, eventOut.charge.ToString());
             lastEvent = eventOut;
             BaseLane.SaveImage(eventOut.images, imageDatas);
             if (isAlarm)
@@ -1059,15 +1059,15 @@ namespace iParkingv5_window.Usercontrols
                                                     "", "", this.lane.Id, identity?.Id, false);
             }));
 
-            if ((eventOut?.charge?.Amount ?? 0) > 0)
+            if ((eventOut?.charge ?? 0) > 0)
             {
                 await AppData.ApiServer.paymentService.CreatePaymentTransaction(eventOut);
                 if (StaticPool.eInvoiceConfig.IsUseEInvoice)
                 {
-                    bool isConfirmSendEinvoie = MessageBox.Show($"Bạn có muốn gửi hóa đơn ({TextFormatingTool.GetMoneyFormat(eventOut.charge.Amount.ToString())}) không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
+                    bool isConfirmSendEinvoie = MessageBox.Show($"Bạn có muốn gửi hóa đơn ({TextFormatingTool.GetMoneyFormat(eventOut.charge.ToString())}) không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
                     if (isConfirmSendEinvoie)
                     {
-                        InvoiceResponse? invoiceDto = await AppData.ApiServer.invoiceService?.CreateEinvoice(eventOut.charge.Amount, eventOut.eventIn.PlateNumber,
+                        InvoiceResponse? invoiceDto = await AppData.ApiServer.invoiceService?.CreateEinvoice(eventOut.charge, eventOut.eventIn.PlateNumber,
                                                                                     eventOut.eventIn.DatetimeIn ?? DateTime.Now, eventOut.DatetimeOut ?? DateTime.Now,
                                                                                     eventOut.Id, true, identityGroup?.Name ?? "");
                         if (invoiceDto != null)
@@ -1077,7 +1077,7 @@ namespace iParkingv5_window.Usercontrols
                     }
                     else
                     {
-                        InvoiceResponse? invoiceDto = await AppData.ApiServer.invoiceService?.CreateEinvoice(eventOut.charge.Amount, eventOut.eventIn.PlateNumber,
+                        InvoiceResponse? invoiceDto = await AppData.ApiServer.invoiceService?.CreateEinvoice(eventOut.charge, eventOut.eventIn.PlateNumber,
                                                                                    eventOut.eventIn.DatetimeIn ?? DateTime.Now, eventOut.DatetimeOut ?? DateTime.Now,
                                                                                    eventOut.Id, false, identityGroup?.Name ?? "");
                         if (invoiceDto != null)
@@ -1161,7 +1161,7 @@ namespace iParkingv5_window.Usercontrols
                 MessageBox.Show("Chưa có thông tin phương tiện vào ra", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            if (this.lastEvent.charge?.Amount == 0)
+            if (this.lastEvent.charge == 0)
             {
                 MessageBox.Show("Phương tiện không phát sinh phí gửi xe", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -1214,7 +1214,7 @@ namespace iParkingv5_window.Usercontrols
                 }
                 string printContent = PrintHelper.GetPhieuThuContent(File.ReadAllText(printTemplatePath), lastEvent.Identity.Name, lastEvent.IdentityGroup.Name, picLprImage.Image,
                                                       lastEvent.eventIn.DatetimeIn ?? DateTime.Now, lastEvent.DatetimeOut ?? DateTime.Now,
-                                                      lastEvent.PlateNumber, TextFormatingTool.GetMoneyFormat(lastEvent.charge.Amount.ToString()), lastEvent.charge.Amount);
+                                                      lastEvent.PlateNumber, TextFormatingTool.GetMoneyFormat(lastEvent.charge.ToString()), lastEvent.charge);
                 var wbPrint = new WebBrowser();
                 wbPrint.DocumentCompleted += WbPrint_DocumentCompleted;
                 wbPrint.DocumentText = printContent;
@@ -1244,7 +1244,7 @@ namespace iParkingv5_window.Usercontrols
                 }
                 string printContent = PrintHelper.GetParkingPrintContent(File.ReadAllText(printTemplatePath),
                                                       lastEvent.eventIn.DatetimeIn ?? DateTime.Now, lastEvent.DatetimeOut ?? DateTime.Now,
-                                                      lastEvent.PlateNumber, TextFormatingTool.GetMoneyFormat(lastEvent.charge.Amount.ToString()), lastEvent.charge.Amount);
+                                                      lastEvent.PlateNumber, TextFormatingTool.GetMoneyFormat(lastEvent.charge.ToString()), lastEvent.charge);
                 var wbPrint = new WebBrowser();
                 wbPrint.DocumentCompleted += WbPrint_DocumentCompleted;
                 wbPrint.DocumentText = printContent;

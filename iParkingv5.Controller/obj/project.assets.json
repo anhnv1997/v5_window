@@ -515,7 +515,7 @@
           "bin/placeholder/iParkingv5.Lpr.dll": {}
         }
       },
-      "iParkingv5.Objects/1.0.0.6": {
+      "iParkingv5.Objects/6.0.0.1": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
@@ -1466,7 +1466,7 @@
       "path": "../iParkingv5.Lpr/iParkingv5.Lpr.csproj",
       "msbuildProject": "../iParkingv5.Lpr/iParkingv5.Lpr.csproj"
     },
-    "iParkingv5.Objects/1.0.0.6": {
+    "iParkingv5.Objects/6.0.0.1": {
       "type": "project",
       "path": "../iParkingv5.Objects/iParkingv5.Objects.csproj",
       "msbuildProject": "../iParkingv5.Objects/iParkingv5.Objects.csproj"
@@ -1481,7 +1481,7 @@
     "net6.0-windows7.0": [
       "Kztek.Tool >= 1.0.0.2",
       "System.IO.Ports >= 8.0.0",
-      "iParkingv5.Objects >= 1.0.0.6"
+      "iParkingv5.Objects >= 6.0.0.1"
     ]
   },
   "packageFolders": {

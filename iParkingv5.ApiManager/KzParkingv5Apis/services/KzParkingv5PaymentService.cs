@@ -28,14 +28,14 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             {
                 targetId = eventOut.Id,
                 targetType = InvoiceTargetType.EventOut,
-                amount = eventOut.charge.Amount,
+                amount = eventOut.charge,
 
-                details = new List<PaymentDetail>()
-                {
-                    new PaymentDetail(){purpose = EmPaymentPurpose.ParkingDay, quantity = eventOut.charge.Day, amount = eventOut.charge.DayAmount, price = eventOut.charge.DayPrice },
-                    new PaymentDetail(){purpose = EmPaymentPurpose.ParkingNight, quantity = eventOut.charge.Night, amount = eventOut.charge.NightAmount, price = eventOut.charge.NightPrice },
-                    new PaymentDetail(){purpose = EmPaymentPurpose.ParkingNormalCharge, quantity = 1, amount =eventOut.charge.FullDayAmount, price =eventOut.charge.FullDayPrice },
-                },
+                //details = new List<PaymentDetail>()
+                //{
+                //    new PaymentDetail(){purpose = EmPaymentPurpose.ParkingDay, quantity = eventOut.charge.Day, amount = eventOut.charge.DayAmount, price = eventOut.charge.DayPrice },
+                //    new PaymentDetail(){purpose = EmPaymentPurpose.ParkingNight, quantity = eventOut.charge.Night, amount = eventOut.charge.NightAmount, price = eventOut.charge.NightPrice },
+                //    new PaymentDetail(){purpose = EmPaymentPurpose.ParkingNormalCharge, quantity = 1, amount =eventOut.charge.FullDayAmount, price =eventOut.charge.FullDayPrice },
+                //},
             };
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))

@@ -509,41 +509,48 @@ namespace iParkingv5_window.Forms.ReportForms
 
         private void DisplayEventInData(List<EventInData> eventInReports)
         {
-            List<DataGridViewRow> rows = new List<DataGridViewRow>();
-            foreach (var item in eventInReports)
+            try
             {
-                DataGridViewRow row = new DataGridViewRow();
+
+                List<DataGridViewRow> rows = new List<DataGridViewRow>();
+                foreach (var item in eventInReports)
+                {
+                    DataGridViewRow row = new DataGridViewRow();
+                    this.Invoke(new Action(() =>
+                    {
+                        row.CreateCells(dgvData);
+
+                    }));
+                    row.Cells[dgvData.Columns[col_event_id].Index].Value = item.Id;
+                    row.Cells[dgvData.Columns[col_identity_id].Index].Value = item.Identity.Id;
+                    row.Cells[dgvData.Columns[col_lane_in_id].Index].Value = item.Lane.Id;
+                    row.Cells[dgvData.Columns[col_file_keys].Index].Value = item.images == null ? "[]" : Newtonsoft.Json.JsonConvert.SerializeObject(item.images);
+                    row.Cells[dgvData.Columns[col_customer_id].Index].Value = item.customer?.Id;
+                    row.Cells[dgvData.Columns[col_register_vehicle_id].Index].Value = item.vehicle?.Id;
+                    row.Cells[dgvData.Columns[col_index].Index].Value = (rows.Count + 1).ToString();
+                    row.Cells[dgvData.Columns[col_plate].Index].Value = item.PlateNumber;
+                    row.Cells[dgvData.Columns[col_time_in].Index].Value = item.DatetimeIn.ToVNTime();
+                    row.Cells[dgvData.Columns[col_note].Index].Value = item.note;
+                    row.Cells[dgvData.Columns[col_identity_group_name].Index].Value = GetIdentityGroupName(item.IdentityGroup.Id);
+                    row.Cells[dgvData.Columns[col_user].Index].Value = item.createdBy;
+                    row.Cells[dgvData.Columns[col_lane_in_name].Index].Value = item.Lane.name;
+                    row.Cells[dgvData.Columns[col_identity_name].Index].Value = item.Identity.Name;
+                    row.Cells[dgvData.Columns[col_identity_code].Index].Value = item.Identity.Code;
+                    row.Cells[dgvData.Columns[col_register_plate].Index].Value = item.vehicle?.PlateNumber ?? "";
+                    row.Cells[dgvData.Columns[col_customer].Index].Value = item.customer?.Name ?? "";
+                    row.Cells[dgvData.Columns[col_see_more].Index].Value = "Xem Thêm";//15
+
+                    rows.Add(row);
+                }
+
                 this.Invoke(new Action(() =>
                 {
-                    row.CreateCells(dgvData);
-
+                    dgvData.Rows.AddRange(rows.ToArray());
                 }));
-                row.Cells[dgvData.Columns[col_event_id].Index].Value = item.Id;
-                row.Cells[dgvData.Columns[col_identity_id].Index].Value = item.Identity.Id;
-                row.Cells[dgvData.Columns[col_lane_in_id].Index].Value = item.Lane.Id;
-                row.Cells[dgvData.Columns[col_file_keys].Index].Value = item.images == null ? "[]" : Newtonsoft.Json.JsonConvert.SerializeObject(item.images);
-                row.Cells[dgvData.Columns[col_customer_id].Index].Value = item.customer?.Id;
-                row.Cells[dgvData.Columns[col_register_vehicle_id].Index].Value = item.vehicle?.Id;
-                row.Cells[dgvData.Columns[col_index].Index].Value = (rows.Count + 1).ToString();
-                row.Cells[dgvData.Columns[col_plate].Index].Value = item.PlateNumber;
-                row.Cells[dgvData.Columns[col_time_in].Index].Value = item.DatetimeIn.ToVNTime();
-                row.Cells[dgvData.Columns[col_note].Index].Value = item.note;
-                row.Cells[dgvData.Columns[col_identity_group_name].Index].Value = GetIdentityGroupName(item.IdentityGroup.Id);
-                row.Cells[dgvData.Columns[col_user].Index].Value = item.createdBy;
-                row.Cells[dgvData.Columns[col_lane_in_name].Index].Value = item.Lane.name;
-                row.Cells[dgvData.Columns[col_identity_name].Index].Value = item.Identity.Name;
-                row.Cells[dgvData.Columns[col_identity_code].Index].Value = item.Identity.Code;
-                row.Cells[dgvData.Columns[col_register_plate].Index].Value = item.vehicle?.PlateNumber ?? "";
-                row.Cells[dgvData.Columns[col_customer].Index].Value = item.customer?.Name ?? "";
-                row.Cells[dgvData.Columns[col_see_more].Index].Value = "Xem Thêm";//15
-
-                rows.Add(row);
             }
-
-            this.Invoke(new Action(() =>
+            catch (Exception)
             {
-                dgvData.Rows.AddRange(rows.ToArray());
-            }));
+            }
         }
 
         private async Task ShowImage(ImageData? imageData, PictureBox pic)
