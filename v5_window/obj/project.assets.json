@@ -844,7 +844,7 @@
         "dependencies": {
           "IPaking.Ultility": "1.0.0.3",
           "Kztek.Scale_net6": "1.0.0.10",
-          "iParkingv5.ApiManager": "1.0.2.6",
+          "iParkingv5.ApiManager": "1.0.2.7",
           "iParkingv5.Controller": "1.0.0.1"
         },
         "compile": {
@@ -857,7 +857,7 @@
           "Microsoft.WindowsDesktop.App.WindowsForms"
         ]
       },
-      "iParkingv5.ApiManager/1.0.2.6": {
+      "iParkingv5.ApiManager/1.0.2.7": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
@@ -900,7 +900,7 @@
           "IdentityModel.OidcClient": "6.0.0",
           "Kztek.Tool": "1.0.0.2",
           "Microsoft.Web.WebView2": "1.0.2420.47",
-          "iParkingv5.ApiManager": "1.0.2.6"
+          "iParkingv5.ApiManager": "1.0.2.7"
         },
         "compile": {
           "bin/placeholder/iParkingv5.FeeTest.dll": {}
@@ -2506,7 +2506,7 @@
       "path": "../iParking.ConfigurationManager/iParking.ConfigurationManager.csproj",
       "msbuildProject": "../iParking.ConfigurationManager/iParking.ConfigurationManager.csproj"
     },
-    "iParkingv5.ApiManager/1.0.2.6": {
+    "iParkingv5.ApiManager/1.0.2.7": {
       "type": "project",
       "path": "../iParkingv5.ApiManager/iParkingv5.ApiManager.csproj",
       "msbuildProject": "../iParkingv5.ApiManager/iParkingv5.ApiManager.csproj"
@@ -2573,7 +2573,7 @@
       "System.Management >= 7.0.2",
       "iPakrkingv5.Controls >= 1.0.0.1",
       "iParking.ConfigurationManager >= 1.0.0.2",
-      "iParkingv5.ApiManager >= 1.0.2.6",
+      "iParkingv5.ApiManager >= 1.0.2.7",
       "iParkingv5.Controller >= 1.0.0.1",
       "iParkingv5.FeeTest >= 1.0.0",
       "iParkingv5.LedDisplay >= 1.0.0.1",
@@ -2587,7 +2587,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.9.7",
+    "version": "1.0.9.8",
     "restore": {
       "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\v5_window\\iParkingv5_window.csproj",
       "projectName": "iParkingv5_window",
