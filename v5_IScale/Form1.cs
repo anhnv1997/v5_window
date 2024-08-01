@@ -903,7 +903,12 @@ namespace v5_IScale
                 cbGoodsType.Items.Add(li);
             }
             cbGoodsType.DisplayMember = "Value";
-            cbGoodsType.SelectedIndex = cbGoodsType.Items.Count > 0 ? 0 : -1;
+            if (cbGoodsType.Items.Count > 0)
+            {
+                cbGoodsType.SelectedIndex = cbGoodsType.FindString("Xuất");
+                //cbGoodsType.SelectedIndex = 0;
+            }
+            //cbGoodsType.SelectedIndex = cbGoodsType.Items.Count > 0 ? 0 : -1;
         }
         private async Task ShowParkingEventImage(string[] physicalFileIds)
         {

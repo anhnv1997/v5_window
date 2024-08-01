@@ -148,6 +148,13 @@ namespace v5_IScale.Forms.ReportForms
                 btnPrintInternetEInvoice.Enabled = true;
                 return;
             }
+
+            if (weighingActionDetails[cbPrintMode.SelectedIndex].Charge == 0)
+            {
+                MessageBox.Show("Phương tiện không phát sinh phí cân xe.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                btnPrintInternetEInvoice.Enabled = true;
+                return;
+            }
             var invoiceData = await KzScaleApiHelper.CreateInvoice(weighingActionDetails[cbPrintMode.SelectedIndex].Id, true);
             btnPrintInternetEInvoice.Enabled = true;
 

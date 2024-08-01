@@ -86,7 +86,14 @@ namespace v5_IScale.Forms.ReportForms
             string weighing_id = dgvData.CurrentRow.Cells["weighing_id"].Value?.ToString() ?? "";
             string invoiceId = dgvData.CurrentRow.Cells["invoice_id"].Value?.ToString() ?? "";
             string invoiceNo = dgvData.CurrentRow.Cells["invoice_no"].Value?.ToString() ?? "";
-
+            string chargeStr = dgvData.CurrentRow.Cells["charge"].Value?.ToString() ?? "";
+            int charge = TextFormatingTool.MoneyToSpecific<int>(chargeStr);
+            if (charge == 0)
+            {
+                MessageBox.Show("Phương tiện không phát sinh phí cân xe.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                btnSendInvoice.Enabled = true;
+                return;
+            }
             //Hóa đơn lỗi || chờ thì gửi lại theo invoice_id
             //Hóa đơn chưa gửi thì tạo mới theo event_in_id
             bool isErrorInvoice = !string.IsNullOrWhiteSpace(invoiceId) && string.IsNullOrEmpty(invoiceNo);
@@ -154,6 +161,12 @@ namespace v5_IScale.Forms.ReportForms
 
             var weighingActionDetails = await KzScaleApiHelper.GetWeighingActionDetailsByTrafficId(parkingEventId);
 
+            if (weighingActionDetails[int.Parse(index) - 1].Charge == 0)
+            {
+                MessageBox.Show("Phương tiện không phát sinh phí cân xe.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                btnPrintInternetEInvoice.Enabled = true;
+                return;
+            }
             var invoiceData = await KzScaleApiHelper.CreateInvoice(weighingActionDetails[int.Parse(index) - 1].Id, true);
             btnPrintInternetEInvoice.Enabled = true;
 
