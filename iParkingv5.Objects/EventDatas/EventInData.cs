@@ -25,7 +25,7 @@ namespace iParkingv5.Objects.EventDatas
         public string errorCode { get; set; } = string.Empty;
         public string detailCode { get; set; } = string.Empty;
         public int Charge { get; set; } = 0;
-        public Dictionary<EmParkingImageType, ImageData> images { get; set; }
+        public Dictionary<EmParkingImageType, List<ImageData>> images { get; set; }
         public DateTime? DatetimeIn
         {
             get

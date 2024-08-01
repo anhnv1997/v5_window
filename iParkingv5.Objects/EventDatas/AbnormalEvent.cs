@@ -24,7 +24,7 @@ namespace iParkingv5.Objects.EventDatas
         public Identity Identity { get; set; }
         public Lane Lane { get; set; }
 
-        public Dictionary<EmParkingImageType, ImageData> images { get; set; }
+        public Dictionary<EmParkingImageType, List<ImageData>> images { get; set; }
         [JsonIgnore]
         public DateTime? AlarmTime
         {

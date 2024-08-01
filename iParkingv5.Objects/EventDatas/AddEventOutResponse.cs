@@ -22,7 +22,7 @@ namespace iParkingv5.Objects.EventDatas
         public EventInData eventIn { get; set; }
 
         public string lastPaymentUtc { get; set; }
-        public ChargeDetail chargeDetail { get; set; }
+        public long charge { get; set; }
         public long discount { get; set; }
         public long paid { get; set; }
         public bool free { get; set; }
@@ -66,6 +66,6 @@ namespace iParkingv5.Objects.EventDatas
         public string detailCode { get; set; } = string.Empty;
         public List<ErrorDescription> fields { get; set; } = new List<ErrorDescription>();
         public Dictionary<string, EventInData> payload { get; set; }
-        public Dictionary<EmParkingImageType, ImageData> images { get; set; }
+        public Dictionary<EmParkingImageType, List<ImageData>> images { get; set; }
     }
 }

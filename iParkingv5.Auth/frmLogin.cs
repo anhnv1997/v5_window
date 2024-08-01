@@ -59,10 +59,6 @@ namespace iParkingv5.Auth
             if (File.Exists(PathManagement.tokenPath))
             {
                 refreshToken = NewtonSoftHelper<string>.DeserializeObjectFromPath(PathManagement.tokenPath) ?? "";
-                if (!string.IsNullOrEmpty(refreshToken))
-                {
-                    timerAutoConnect.Enabled = true;
-                }
             }
             string clientId = "910ae83b-5205-4c35-bf45-8926ff620386";
             KzParkingv5BaseApi.client_id = clientId;
@@ -106,7 +102,6 @@ namespace iParkingv5.Auth
                 MessageBox.Show(exception.Message);
                 return;
             }
-            timerAutoConnect.Enabled = false;
             if (loginResult.IsError)
             {
                 MessageBox.Show(this, loginResult.Error, "Login", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -139,8 +134,6 @@ namespace iParkingv5.Auth
         #region TIMER
         private async void timerAutoConnect_Tick(object sender, EventArgs e)
         {
-            timerAutoConnect.Enabled = false;
-
             waitTimeForLogin++;
             if (waitTimeForLogin > 30)
             {
@@ -175,7 +168,6 @@ namespace iParkingv5.Auth
                 lblStatus.Visible = true;
                 lblStatus.Text = "Tự động đăng nhập sau: " + (30 - waitTimeForLogin) + "s";
                 lblStatus.Refresh();
-                timerAutoConnect.Enabled = true;
             }
         }
         private async void timerRefreshToken_Tick(object sender, EventArgs e)
@@ -188,19 +180,6 @@ namespace iParkingv5.Auth
                     this.refreshToken = KzParkingv5BaseApi.refresh_token;
                     NewtonSoftHelper<string>.SaveConfig(this.refreshToken, PathManagement.tokenPath);
                 }
-                //var refreshToken = await _oidcClient.RefreshTokenAsync(this.refreshToken);
-                //if (refreshToken != null)
-                //{
-                //    if (!refreshToken.IsError)
-                //    {
-                //        KzParkingv5ApiHelper.token = refreshToken.AccessToken;
-                //        if (this.refreshToken != refreshToken.RefreshToken)
-                //        {
-                //            this.refreshToken = refreshToken.RefreshToken;
-                //        }
-                //        NewtonSoftHelper<string>.SaveConfig(refreshToken.RefreshToken, PathManagement.tokenPath);
-                //    }
-                //}
             }
             catch (Exception ex)
             {

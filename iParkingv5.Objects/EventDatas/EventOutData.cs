@@ -22,7 +22,7 @@ namespace iParkingv5.Objects.EventDatas
         public string message { get; set; } = string.Empty;
         public string errorCode { get; set; } = string.Empty;
         public string detailCode { get; set; } = string.Empty;
-        public Dictionary<EmParkingImageType, ImageData> images { get; set; }
+        public Dictionary<EmParkingImageType, List<ImageData>> images { get; set; }
         public EventInData eventIn { get; set; }
         public DateTime? DatetimeOut
         {

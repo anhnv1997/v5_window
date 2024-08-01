@@ -333,11 +333,11 @@ namespace iParkingv5_window.Usercontrols
                 customer = (await AppData.ApiServer.parkingDataService.GetCustomerByIdAsync(customerId))?.Item1;
             }
 
-            Dictionary<EmParkingImageType, List<byte>> imageDatas = new Dictionary<EmParkingImageType, List<byte>>
+            Dictionary<EmParkingImageType, List<List<byte>>> imageDatas = new Dictionary<EmParkingImageType, List<List<byte>>>
                 {
-                    { EmParkingImageType.Overview, overviewImage.ImageToByteArray() },
-                    { EmParkingImageType.Vehicle, vehicleImg.ImageToByteArray() },
-                    { EmParkingImageType.Plate, lprImage.ImageToByteArray() }
+                    { EmParkingImageType.Overview,new List<List<byte>>(){ overviewImage.ImageToByteArray() } },
+                    { EmParkingImageType.Vehicle, new List<List<byte>>(){vehicleImg.ImageToByteArray() } },
+                    { EmParkingImageType.Plate, new List<List<byte>>(){lprImage.ImageToByteArray() } }
                 };
 
             eventIn = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plate, null, imageDatas, false, null, "");
@@ -421,13 +421,7 @@ namespace iParkingv5_window.Usercontrols
                 var response = await AppData.ApiServer.parkingProcessService.CreateAlarmAsync("", this.lane.Id, "", AbnormalCode.OpenBarrierByButton, imageData, true, "", "", "", "");
                 if (response != null)
                 {
-                    if (response.images != null)
-                    {
-                        foreach (KeyValuePair<EmParkingImageType, ImageData> item in response.images)
-                        {
-                            AppData.ApiServer.parkingProcessService.SaveEventImage(item.Value.bucket, item.Value.objectKey, item.Key, imageData[item.Key]);
-                        }
-                    }
+                    BaseLane.SaveImage(response.images, imageData);
                 }
                 return;
             }
@@ -442,13 +436,7 @@ namespace iParkingv5_window.Usercontrols
                                                              lastEvent?.IdentityGroup.Id, "", "", "");
                 if (response != null)
                 {
-                    if (response.images != null)
-                    {
-                        foreach (KeyValuePair<EmParkingImageType, ImageData> item in response.images)
-                        {
-                            AppData.ApiServer.parkingProcessService.SaveEventImage(item.Value.bucket, item.Value.objectKey, item.Key, imageData[item.Key]);
-                        }
-                    }
+                    BaseLane.SaveImage(response.images, imageData);
                 }
 
             }
@@ -520,11 +508,11 @@ namespace iParkingv5_window.Usercontrols
 
             //Đọc thông tin loại phương tiện
             lblResult.UpdateResultMessage("Đang check in..." + ce.PreferCard, Color.DarkBlue);
-            var imageData = new Dictionary<EmParkingImageType, List<byte>>
+            var imageData = new Dictionary<EmParkingImageType, List<List<byte>>>
             {
-                { EmParkingImageType.Overview, overviewImg.ImageToByteArray() },
-                { EmParkingImageType.Vehicle, vehicleImg.ImageToByteArray() },
-                { EmParkingImageType.Plate, lprImage.ImageToByteArray() }
+                { EmParkingImageType.Overview, new List<List<byte>>(){ overviewImg.ImageToByteArray() } },
+                { EmParkingImageType.Vehicle,new List<List<byte>>(){ vehicleImg.ImageToByteArray() } },
+                { EmParkingImageType.Plate, new List<List<byte>>(){ lprImage.ImageToByteArray() } }
             };
 
             bool isMonthCard = identityGroup.Type == IdentityGroupType.Monthly;
@@ -556,10 +544,7 @@ namespace iParkingv5_window.Usercontrols
                 {
                     if (response.images != null)
                     {
-                        foreach (KeyValuePair<EmParkingImageType, ImageData> item in response.images)
-                        {
-                            AppData.ApiServer.parkingProcessService.SaveEventImage(item.Value.bucket, item.Value.objectKey, item.Key, imageData[item.Key]);
-                        }
+                        BaseLane.SaveImage(response.images, imageData);
                     }
                 }
             }
@@ -571,13 +556,7 @@ namespace iParkingv5_window.Usercontrols
                                                         lastEvent?.IdentityGroup?.Id ?? "", "", "", "");
                 if (response != null)
                 {
-                    if (response.images != null)
-                    {
-                        foreach (KeyValuePair<EmParkingImageType, ImageData> item in response.images)
-                        {
-                            AppData.ApiServer.parkingProcessService.SaveEventImage(item.Value.bucket, item.Value.objectKey, item.Key, imageData[item.Key]);
-                        }
-                    }
+                    BaseLane.SaveImage(response.images, imageData);
                 }
             }
         }
@@ -773,9 +752,9 @@ namespace iParkingv5_window.Usercontrols
             }));
         }
 
-        private Dictionary<EmParkingImageType, List<byte>> SaveAllCameraImage()
+        private Dictionary<EmParkingImageType, List<List<byte>>> SaveAllCameraImage()
         {
-            var imageData = new Dictionary<EmParkingImageType, List<byte>>();
+            var imageData = new Dictionary<EmParkingImageType, List<List<byte>>>();
             //--Lưu hình ảnh sự kiện
             //Danh sách biến sử dụng
             Image? overviewImg = null;
@@ -787,17 +766,17 @@ namespace iParkingv5_window.Usercontrols
                 {
                     case CameraPurposeType.EmCameraPurposeType.MainOverView:
                         overviewImg = ucOverView?.GetFullCurrentImage();
-                        imageData.Add(EmParkingImageType.Overview, overviewImg.ImageToByteArray());
+                        imageData.Add(EmParkingImageType.Overview, new List<List<byte>>() { overviewImg.ImageToByteArray() });
                         break;
                     case CameraPurposeType.EmCameraPurposeType.CarLPR:
                         carVehicleImage = ucCarLpr?.GetFullCurrentImage();
                         if (!imageData.ContainsKey(EmParkingImageType.Vehicle))
-                            imageData.Add(EmParkingImageType.Vehicle, carVehicleImage.ImageToByteArray());
+                            imageData.Add(EmParkingImageType.Vehicle, new List<List<byte>>() { carVehicleImage.ImageToByteArray() });
                         break;
                     case CameraPurposeType.EmCameraPurposeType.MotorLPR:
                         motorVehicleImage = ucMotoLpr?.GetFullCurrentImage();
                         if (!imageData.ContainsKey(EmParkingImageType.Vehicle))
-                            imageData.Add(EmParkingImageType.Vehicle, motorVehicleImage.ImageToByteArray());
+                            imageData.Add(EmParkingImageType.Vehicle, new List<List<byte>>() { motorVehicleImage.ImageToByteArray() });
                         break;
                     default:
                         break;
@@ -848,7 +827,7 @@ namespace iParkingv5_window.Usercontrols
 
         #region Xử lý sự kiện thẻ
         private async Task ExcecuteMonthCardEventIn(Identity identity, IdentityGroup identityGroup, VehicleBaseType vehicleType, string plateNumber,
-                                                    Dictionary<EmParkingImageType, List<byte>> imageDatas,
+                                                    Dictionary<EmParkingImageType, List<List<byte>>> imageDatas,
                                                     CardEventArgs ce, ControllerInLane? controllerInLane,
                                                     Image? overviewImg, Image? vehicleImg, Image? lprImage)
         {
@@ -985,7 +964,7 @@ namespace iParkingv5_window.Usercontrols
         }
 
         private async Task ExcecuteNonMonthCardEventIn(Identity identity, IdentityGroup identityGroup,
-                                                       VehicleBaseType vehicleType, string plateNumber, Dictionary<EmParkingImageType, List<byte>> imageKeys,
+                                                       VehicleBaseType vehicleType, string plateNumber, Dictionary<EmParkingImageType, List<List<byte>>> imageKeys,
                                                        CardEventArgs ce, ControllerInLane? controllerInLane,
                                                        Image? overviewImg, Image? vehicleImg, Image? lprImage)
         {
@@ -1068,7 +1047,7 @@ namespace iParkingv5_window.Usercontrols
                                               DateTime eventTime, Image? overviewImg,
                                               Image? vehicleImg, Image? lprImage,
                                               EventInData? eventIn, bool isAlarm, Dictionary<EmParkingImageType,
-                                              List<byte>> imageDatas)
+                                              List<List<byte>>> imageDatas)
         {
             txtPlate.Invoke(new Action(() =>
             {
@@ -1091,24 +1070,14 @@ namespace iParkingv5_window.Usercontrols
 
             lastEvent = eventIn;
 
-            foreach (KeyValuePair<EmParkingImageType, ImageData> item in eventIn.images)
-            {
-                AppData.ApiServer.parkingProcessService.SaveEventImage(item.Value.bucket, item.Value.objectKey, item.Key, imageDatas[item.Key]);
-            }
-
+            BaseLane.SaveImage(eventIn.images, imageDatas);
             if (isAlarm)
             {
                 var response = await AppData.ApiServer.parkingProcessService.CreateAlarmAsync(identity?.Code, this.lane.Id, detectPlate, AbnormalCode.InvalidPlateNumber,
                                                             imageDatas, true, identityGroup?.Id.ToString(), "", "", "Cảnh báo biển số");
                 if (response != null)
                 {
-                    if (response.images != null)
-                    {
-                        foreach (KeyValuePair<EmParkingImageType, ImageData> item in response.images)
-                        {
-                            AppData.ApiServer.parkingProcessService.SaveEventImage(item.Value.bucket, item.Value.objectKey, item.Key, imageDatas[item.Key]);
-                        }
-                    }
+                    BaseLane.SaveImage(response.images, imageDatas);
                 }
             }
         }
@@ -1326,10 +1295,10 @@ namespace iParkingv5_window.Usercontrols
             //Hiển thị thông tin hình ảnh phương tiện
             BaseLane.ShowImage(picVehicleImage, vehicleImage);
             BaseLane.ShowImage(picOverviewImage, overviewImage);
-            Dictionary<EmParkingImageType, List<byte>> imageDatas = new Dictionary<EmParkingImageType, List<byte>>
+            Dictionary<EmParkingImageType, List<List<byte>>> imageDatas = new Dictionary<EmParkingImageType, List<List<byte>>>
                 {
-                    { EmParkingImageType.Overview, overviewImage.ImageToByteArray() },
-                    { EmParkingImageType.Vehicle, vehicleImage.ImageToByteArray() },
+                    { EmParkingImageType.Overview, new List<List<byte>>(){ overviewImage.ImageToByteArray() } },
+                    { EmParkingImageType.Vehicle, new List<List<byte>>(){ vehicleImage.ImageToByteArray() } },
                 };
 
             eventIn = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, selectedPlate, null, imageDatas, true, null, "");
@@ -1411,13 +1380,7 @@ namespace iParkingv5_window.Usercontrols
                                                           identity?.IdentityGroupId, "", "", "");
                     if (response != null)
                     {
-                        if (response.images != null)
-                        {
-                            foreach (KeyValuePair<EmParkingImageType, ImageData> item in response.images)
-                            {
-                                AppData.ApiServer.parkingProcessService.SaveEventImage(item.Value.bucket, item.Value.objectKey, item.Key, imageDatas[item.Key]);
-                            }
-                        }
+                        BaseLane.SaveImage(response.images, imageDatas);
                     }
                 }
                 return;
@@ -1498,20 +1461,13 @@ namespace iParkingv5_window.Usercontrols
             if (lastEvent == null ||
                 (DateTime.Now - lastEvent.DatetimeIn)?.TotalSeconds >= StaticPool.appOption.AllowBarrieDelayOpenTime)
             {
-                string imageKey = BaseLane.GetBaseImageKey(this.lane.name, "", "", DateTime.Now);
                 var imageDatas = SaveAllCameraImage();
 
                 var response = await AppData.ApiServer.parkingProcessService.CreateAlarmAsync("", this.lane.Id, "", AbnormalCode.OpenBarrierByKeyboard, imageDatas, true,
                                                           "", "", "", "");
                 if (response != null)
                 {
-                    if (response.images != null)
-                    {
-                        foreach (KeyValuePair<EmParkingImageType, ImageData> item in response.images)
-                        {
-                            AppData.ApiServer.parkingProcessService.SaveEventImage(item.Value.bucket, item.Value.objectKey, item.Key, imageDatas[item.Key]);
-                        }
-                    }
+                    BaseLane.SaveImage(response.images, imageDatas);
                 }
             }
         }

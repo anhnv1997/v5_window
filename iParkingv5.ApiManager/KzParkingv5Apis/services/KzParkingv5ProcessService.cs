@@ -45,7 +45,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             return false;
         }
         public async Task<EventInData> PostCheckInAsync(
-            string _laneId, string _plateNumber, Identity? identity, Dictionary<EmParkingImageType, List<byte>> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null, string _note = "")
+            string _laneId, string _plateNumber, Identity? identity, Dictionary<EmParkingImageType, List<List<byte>>> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null, string _note = "")
         {
             if (identity == null)
             {
@@ -58,7 +58,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         }
 
         public async Task<EventInData> PostCheckInByIdentityAsync(string _laneId, string _plateNumber, Identity? identity,
-                                                                         Dictionary<EmParkingImageType, List<byte>> imageDatas, bool isForce = false,
+                                                                         Dictionary<EmParkingImageType, List<List<byte>>> imageDatas, bool isForce = false,
                                                                          RegisteredVehicle? registeredVehicle = null, string _note = "")
         {
             server = server.StandardlizeServerName();
@@ -78,7 +78,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                 force = isForce
             };
 
-            foreach (KeyValuePair<EmParkingImageType, List<byte>> kvp in imageDatas)
+            foreach (KeyValuePair<EmParkingImageType, List<List<byte>>> kvp in imageDatas)
             {
                 if (kvp.Value.Count > 0)
                 {
@@ -153,7 +153,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             //return null;
         }
         public async Task<EventInData> PostCheckInByPlateAsync(string _laneId, string _plateNumber, Identity? identity,
-                                                                      Dictionary<EmParkingImageType, List<byte>> imageDatas, bool isForce = false,
+                                                                      Dictionary<EmParkingImageType, List<List<byte>>> imageDatas, bool isForce = false,
                                                                       RegisteredVehicle? registeredVehicle = null,
                                                                       string _note = "")
         {
@@ -175,7 +175,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                 force = isForce
             };
 
-            foreach (KeyValuePair<EmParkingImageType, List<byte>> kvp in imageDatas)
+            foreach (KeyValuePair<EmParkingImageType, List<List<byte>>> kvp in imageDatas)
             {
                 if (kvp.Value.Count > 0)
                 {
@@ -244,7 +244,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 
         #region EVENT-OUT
         public async Task<AddEventOutResponse> PostCheckOutAsync(string _laneId, string _plateNumber, Identity? identitiy,
-                                                                 Dictionary<EmParkingImageType, List<byte>> imageDatas, bool isForce)
+                                                                 Dictionary<EmParkingImageType, List<List<byte>>> imageDatas, bool isForce)
         {
             if (identitiy == null)
             {
@@ -256,7 +256,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             }
         }
         public async Task<AddEventOutResponse> PostCheckOutByIdentityAsync(string _laneId, string _plateNumber, Identity? identity,
-                                                                           Dictionary<EmParkingImageType, List<byte>> imageDatas, bool isForce = false)
+                                                                           Dictionary<EmParkingImageType, List<List<byte>>> imageDatas, bool isForce = false)
         {
 
             server = server.StandardlizeServerName();
@@ -276,7 +276,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                 force = isForce
             };
 
-            foreach (KeyValuePair<EmParkingImageType, List<byte>> kvp in imageDatas)
+            foreach (KeyValuePair<EmParkingImageType, List<List<byte>>> kvp in imageDatas)
             {
                 if (kvp.Value.Count > 0)
                 {
@@ -344,7 +344,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             //return null;
         }
         public async Task<AddEventOutResponse> PostCheckOutByPlateAsync(string _laneId, string _plateNumber, Identity? identity,
-                                                                        Dictionary<EmParkingImageType, List<byte>> imageDatas, bool isForce = false, RegisteredVehicle? registeredVehicle = null)
+                                                                        Dictionary<EmParkingImageType, List<List<byte>>> imageDatas, bool isForce = false, RegisteredVehicle? registeredVehicle = null)
         {
             server = server.StandardlizeServerName();
             string apiUrl = server + "event-out";
@@ -363,7 +363,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                 force = isForce
             };
 
-            foreach (KeyValuePair<EmParkingImageType, List<byte>> kvp in imageDatas)
+            foreach (KeyValuePair<EmParkingImageType, List<List<byte>>> kvp in imageDatas)
             {
                 if (kvp.Value.Count > 0)
                 {
@@ -486,7 +486,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 
         #region ALARM
         public async Task<AbnormalEvent> CreateAlarmAsync(string identityCode, string _laneId, string plate, AbnormalCode abnormalCode,
-                                                Dictionary<EmParkingImageType, List<byte>> imageDatas, bool isLaneIn,
+                                                Dictionary<EmParkingImageType, List<List<byte>>> imageDatas, bool isLaneIn,
                                                 string _identityGroupId, string customerId,
                                                 string registerVehicleId, string description)
         {
@@ -509,7 +509,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                 Description = description,
             };
 
-            foreach (KeyValuePair<EmParkingImageType, List<byte>> kvp in imageDatas)
+            foreach (KeyValuePair<EmParkingImageType, List<List<byte>>> kvp in imageDatas)
             {
                 if (kvp.Value.Count > 0)
                 {

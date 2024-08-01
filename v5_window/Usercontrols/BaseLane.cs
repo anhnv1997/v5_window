@@ -7,6 +7,7 @@ using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
 using iParkingv5.Objects.Datas.Device_service;
 using iParkingv5.Objects.Datas.parking_service;
+using iParkingv5.Objects.EventDatas;
 using iParkingv5.Objects.Events;
 using iParkingv5_window.Forms.DataForms;
 using Kztek.Tool;
@@ -16,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static iParkingv5.Objects.Enums.ParkingImageType;
 
 namespace iParkingv5_window.Usercontrols
 {
@@ -214,7 +216,7 @@ namespace iParkingv5_window.Usercontrols
         public static void GetPlate(string laneId, out Image? vehicleImg, out string plate, out Image? lprImage, ucCameraView? ucCameraView, List<Kztek.Cameras.Camera> camDuPhongs, bool isCar)
         {
             Rectangle? config = null;
-           if (File.Exists(PathManagement.laneCameraConfigPath(laneId, ucCameraView?._Camera.ID)))
+            if (File.Exists(PathManagement.laneCameraConfigPath(laneId, ucCameraView?._Camera.ID)))
             {
                 CameraDetectRegion? cameraDetectRegion = NewtonSoftHelper<CameraDetectRegion>.DeserializeObjectFromPath(PathManagement.laneCameraConfigPath(laneId, ucCameraView._Camera.ID));
                 if (cameraDetectRegion != null)
@@ -227,7 +229,7 @@ namespace iParkingv5_window.Usercontrols
                         Height = cameraDetectRegion.Height
                     };
                 }
-            } 
+            }
             vehicleImg = ucCameraView?.GetFullCurrentImage();
             plate = StaticPool.LprDetect.GetPlateNumber(vehicleImg, isCar, config, out lprImage);
             if (string.IsNullOrEmpty(plate))
@@ -258,6 +260,17 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
         }
-    
+        public static void SaveImage(Dictionary<EmParkingImageType, List<ImageData>>? imagesInfo, Dictionary<EmParkingImageType, List<List<byte>>> imageDatas)
+        {
+            if (imagesInfo == null) return;
+            foreach (KeyValuePair<EmParkingImageType, List<ImageData>> item in imagesInfo)
+            {
+                for (int i = 0; i < item.Value.Count; i++)
+                {
+                    var imgInfo = item.Value[i];
+                    AppData.ApiServer.parkingProcessService.SaveEventImage(imgInfo.bucket, imgInfo.objectKey, imgInfo.type, imageDatas[item.Key][i]);
+                }
+            }
+        }
     }
 }

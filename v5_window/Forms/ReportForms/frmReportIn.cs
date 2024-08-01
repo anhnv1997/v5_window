@@ -220,11 +220,11 @@ namespace iParkingv5_window.Forms.ReportForms
         {
             try
             {
-                var imageDatas = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<EmParkingImageType, ImageData>>(dgvData.CurrentRow?.Cells[col_file_keys].Value.ToString()!)!;
+                var imageDatas = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<EmParkingImageType, List<ImageData>>>(dgvData.CurrentRow?.Cells[col_file_keys].Value.ToString()!)!;
 
-                ImageData? displayOverviewInImage = imageDatas.ContainsKey(EmParkingImageType.Overview) ? imageDatas[EmParkingImageType.Overview] : null;
-                ImageData? vehicleInImage = imageDatas.ContainsKey(EmParkingImageType.Vehicle) ? imageDatas[EmParkingImageType.Vehicle] : null;
-                ImageData? lprCutImahe = imageDatas.ContainsKey(EmParkingImageType.Plate) ? imageDatas[EmParkingImageType.Plate] : null;
+                ImageData? displayOverviewInImage = imageDatas.ContainsKey(EmParkingImageType.Overview) ? imageDatas[EmParkingImageType.Overview][0] : null;
+                ImageData? vehicleInImage = imageDatas.ContainsKey(EmParkingImageType.Vehicle) ? imageDatas[EmParkingImageType.Vehicle][0] : null;
+                ImageData? lprCutImahe = imageDatas.ContainsKey(EmParkingImageType.Plate) ? imageDatas[EmParkingImageType.Plate][0] : null;
 
                 ShowImage(displayOverviewInImage, picOverviewImageIn);
                 ShowImage(vehicleInImage, picVehicleImageIn);

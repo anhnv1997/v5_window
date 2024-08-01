@@ -16,13 +16,13 @@ namespace iParkingv5_window.Forms.DataForms
         private string detectedPlate;
         private string identityIdIn;
         private string laneId;
-        private Dictionary<EmParkingImageType, ImageData> imageDatas;
+        private Dictionary<EmParkingImageType, List<ImageData>> imageDatas;
         private string datetimeIn;
         private long charge = 0;
         public string updatePlate;
         #region Forms
         public frmConfirmOut(string detectedPlate, string errorMessage, string plateIn, string identityIdIn,
-                            string laneId, Dictionary<EmParkingImageType, ImageData> fileKeys, DateTime? datetimeIn, bool isDisplayQuestion = true, long charge = 0)
+                            string laneId, Dictionary<EmParkingImageType, List<ImageData>> fileKeys, DateTime? datetimeIn, bool isDisplayQuestion = true, long charge = 0)
         {
             InitializeComponent();
             this.Text = "Xác nhận xe ra khỏi bãi";
@@ -139,22 +139,22 @@ namespace iParkingv5_window.Forms.DataForms
                 if (this.imageDatas?.Count >= 2)
                 {
                     List<Task> tasks = new List<Task>();
-                    foreach (KeyValuePair<EmParkingImageType, ImageData> item in this.imageDatas)
+                    foreach (KeyValuePair<EmParkingImageType, List<ImageData>> item in this.imageDatas)
                     {
                         if (item.Key == EmParkingImageType.Overview)
                         {
-                            tasks.Add(ShowImage(this.imageDatas[item.Key], picOverview));
+                            tasks.Add(ShowImage(this.imageDatas[item.Key][0], picOverview));
                         }
                         else if (item.Key == EmParkingImageType.Vehicle)
                         {
-                            tasks.Add(ShowImage(this.imageDatas[item.Key], picVehicle));
+                            tasks.Add(ShowImage(this.imageDatas[item.Key][0], picVehicle));
                         }
                     }
                     await Task.WhenAll(tasks);
                 }
                 else if (this.imageDatas?.Count > 0)
                 {
-                    await ShowImage(this.imageDatas[0], picOverview);
+                    await ShowImage(this.imageDatas[0][0], picOverview);
                     this.Invoke(() =>
                     {
                         picOverview.Image = defaultImg;

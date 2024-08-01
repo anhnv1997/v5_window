@@ -212,63 +212,63 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
 
         public async void WorkerThread()
         {
-            while (!stopEvent.WaitOne(0, true))
-            {
-                try
-                {
-                    string comport = this.ControllerInfo.Comport;
-                    int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
-                    string getEventCmd = KZTEK_CMD.GetEventCMD();
-                    this.IsBusy = true;
-                    string response = string.Empty;
-                    await Task.Run(() =>
-                    {
-                        response = UdpTools.ExecuteCommand(comport, baudrate, getEventCmd, 500, UdpTools.STX, Encoding.ASCII);
-                    });
-                    this.IsBusy = false;
-                    // Trang thai thiet bij
-                    this.ControllerInfo.IsConnect = response != "";
-                    //GetEvent?/LenCard=4/Card=7C19F640/Input=1/ArrayInput=X/Com=Com1/StateCardDispenserCom1=Y/StateCardDispenserCom2=Z/
+            //while (!stopEvent.WaitOne(0, true))
+            //{
+            //    try
+            //    {
+            //        string comport = this.ControllerInfo.Comport;
+            //        int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
+            //        string getEventCmd = KZTEK_CMD.GetEventCMD();
+            //        this.IsBusy = true;
+            //        string response = string.Empty;
+            //        await Task.Run(() =>
+            //        {
+            //            response = UdpTools.ExecuteCommand(comport, baudrate, getEventCmd, 500, UdpTools.STX, Encoding.ASCII);
+            //        });
+            //        this.IsBusy = false;
+            //        // Trang thai thiet bij
+            //        this.ControllerInfo.IsConnect = response != "";
+            //        //GetEvent?/LenCard=4/Card=7C19F640/Input=1/ArrayInput=X/Com=Com1/StateCardDispenserCom1=Y/StateCardDispenserCom2=Z/
 
-                    if (response != "" && (response.Contains("GetEvent?/")) && !response.Contains("NotEvent"))
-                    {
-                        string[] data = response.Split('/');
-                        Dictionary<string, string> map = GetEventContent(data);
+            //        if (response != "" && (response.Contains("GetEvent?/")) && !response.Contains("NotEvent"))
+            //        {
+            //            string[] data = response.Split('/');
+            //            Dictionary<string, string> map = GetEventContent(data);
 
-                        string eventType = map.ContainsKey("input") ? map["input"] : "";
-                        if (string.IsNullOrEmpty(eventType))
-                        {
-                            DeleteCardEvent();
-                        }
-                        MT166EventType _eventType = (MT166EventType)int.Parse(eventType);
-                        bool isCardEvent = _eventType == MT166EventType.Reader1 || _eventType == MT166EventType.Reader2 ||
-                                           _eventType == MT166EventType.Button1 || _eventType == MT166EventType.Button2;
+            //            string eventType = map.ContainsKey("input") ? map["input"] : "";
+            //            if (string.IsNullOrEmpty(eventType))
+            //            {
+            //                DeleteCardEvent();
+            //            }
+            //            MT166EventType _eventType = (MT166EventType)int.Parse(eventType);
+            //            bool isCardEvent = _eventType == MT166EventType.Reader1 || _eventType == MT166EventType.Reader2 ||
+            //                               _eventType == MT166EventType.Button1 || _eventType == MT166EventType.Button2;
 
-                        bool isLoopEvent = _eventType == MT166EventType.CardbeTaken ||
-                                           _eventType == MT166EventType.Loop1 || _eventType == MT166EventType.Loop2 ||
-                                           _eventType == MT166EventType.Loop3 || _eventType == MT166EventType.Loop4;
+            //            bool isLoopEvent = _eventType == MT166EventType.CardbeTaken ||
+            //                               _eventType == MT166EventType.Loop1 || _eventType == MT166EventType.Loop2 ||
+            //                               _eventType == MT166EventType.Loop3 || _eventType == MT166EventType.Loop4;
 
-                        bool isExitEvent = _eventType == MT166EventType.Exit1 || _eventType == MT166EventType.Exit2;
-                        if (isCardEvent)
-                        {
-                            CallCardEvent(this.ControllerInfo, map);
-                        }
-                        else if (isCardEvent)
-                        {
-                            CallInputEvent(this.ControllerInfo, map);
-                        }
-                        else if (isExitEvent)
-                        {
-                            string inputport = _eventType == MT166EventType.Exit1 ? "1" : "2";
-                            CallExitEvent(this.ControllerInfo, inputport);
-                        }
-                    }
-                    await Task.Delay(300);
-                }
-                catch (Exception ex)
-                {
-                }
-            }
+            //            bool isExitEvent = _eventType == MT166EventType.Exit1 || _eventType == MT166EventType.Exit2;
+            //            if (isCardEvent)
+            //            {
+            //                CallCardEvent(this.ControllerInfo, map);
+            //            }
+            //            else if (isCardEvent)
+            //            {
+            //                CallInputEvent(this.ControllerInfo, map);
+            //            }
+            //            else if (isExitEvent)
+            //            {
+            //                string inputport = _eventType == MT166EventType.Exit1 ? "1" : "2";
+            //                CallExitEvent(this.ControllerInfo, inputport);
+            //            }
+            //        }
+            //        await Task.Delay(300);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //    }
+            //}
         }
 
         private void CallInputEvent(Bdk controller, Dictionary<string, string> map)
@@ -372,41 +372,41 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
         }
 
 
-        public bool SetStateWorkCardDispenser() { }
-        public bool GetStateWorkCardDispenser() { }
-        public bool DispenseCard() { }
-        public bool SetAudio() { }
-        public bool CollectCard() { }
-        public bool RejectCard() { }
-        public bool SetDelayRelay() { }
-        public bool GetModeExternalReader() { }
-        public bool GetModeKey() { }
-        public bool GetModeAutoCollectCard() { }
-        public bool SetTimeOutAutoCollectCard() { }
-        public bool GetTimeOutAutoCollectCard() { }
-        public bool SetKeyA(string key)
-        {
+        //public bool SetStateWorkCardDispenser() { }
+        //public bool GetStateWorkCardDispenser() { }
+        //public bool DispenseCard() { }
+        //public bool SetAudio() { }
+        //public bool CollectCard() { }
+        //public bool RejectCard() { }
+        //public bool SetDelayRelay() { }
+        //public bool GetModeExternalReader() { }
+        //public bool GetModeKey() { }
+        //public bool GetModeAutoCollectCard() { }
+        //public bool SetTimeOutAutoCollectCard() { }
+        //public bool GetTimeOutAutoCollectCard() { }
+        //public bool SetKeyA(string key)
+        //{
 
-        }
-        public bool SetWiegandMode(int mode)
-        {
+        //}
+        //public bool SetWiegandMode(int mode)
+        //{
 
-        }
-        public bool GetWiegandMode()
-        {
+        //}
+        //public bool GetWiegandMode()
+        //{
 
-        }
-        public bool GetModeButton()
-        {
+        //}
+        //public bool GetModeButton()
+        //{
 
-        }
-        public bool GetModeLoop()
-        {
+        //}
+        //public bool GetModeLoop()
+        //{
 
-        }
-        public bool SetPauseDispenseCard()
-        {
+        //}
+        //public bool SetPauseDispenseCard()
+        //{
 
-        }
+        //}
     }
 }

@@ -28,13 +28,13 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             {
                 targetId = eventOut.Id,
                 targetType = InvoiceTargetType.EventOut,
-                amount = eventOut.chargeDetail.Amount,
+                amount = eventOut.charge.Amount,
 
                 details = new List<PaymentDetail>()
                 {
-                    new PaymentDetail(){purpose = EmPaymentPurpose.ParkingDay, quantity = eventOut.chargeDetail.Day, amount = eventOut.chargeDetail.DayAmount, price = eventOut.chargeDetail.DayPrice },
-                    new PaymentDetail(){purpose = EmPaymentPurpose.ParkingNight, quantity = eventOut.chargeDetail.Night, amount = eventOut.chargeDetail.NightAmount, price = eventOut.chargeDetail.NightPrice },
-                    new PaymentDetail(){purpose = EmPaymentPurpose.ParkingNormalCharge, quantity = 1, amount =eventOut.chargeDetail.FullDayAmount, price =eventOut.chargeDetail.FullDayPrice },
+                    new PaymentDetail(){purpose = EmPaymentPurpose.ParkingDay, quantity = eventOut.charge.Day, amount = eventOut.charge.DayAmount, price = eventOut.charge.DayPrice },
+                    new PaymentDetail(){purpose = EmPaymentPurpose.ParkingNight, quantity = eventOut.charge.Night, amount = eventOut.charge.NightAmount, price = eventOut.charge.NightPrice },
+                    new PaymentDetail(){purpose = EmPaymentPurpose.ParkingNormalCharge, quantity = 1, amount =eventOut.charge.FullDayAmount, price =eventOut.charge.FullDayPrice },
                 },
             };
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);

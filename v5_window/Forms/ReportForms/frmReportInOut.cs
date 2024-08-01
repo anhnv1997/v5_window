@@ -298,16 +298,16 @@ namespace iParkingv5_window.Forms.ReportForms
         {
             try
             {
-                var imageOutDatas = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<EmParkingImageType, ImageData>>(dgvData.CurrentRow?.Cells[col_file_keys_out].Value.ToString()!)!;
-                ImageData? displayOverviewOutImage = imageOutDatas.ContainsKey(EmParkingImageType.Overview) ? imageOutDatas[EmParkingImageType.Overview] : null;
-                ImageData? vehicleOutImage = imageOutDatas.ContainsKey(EmParkingImageType.Vehicle) ? imageOutDatas[EmParkingImageType.Vehicle] : null;
+                var imageOutDatas = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<EmParkingImageType, List<ImageData>>>(dgvData.CurrentRow?.Cells[col_file_keys_out].Value.ToString()!)!;
+                ImageData? displayOverviewOutImage = imageOutDatas.ContainsKey(EmParkingImageType.Overview) ? imageOutDatas[EmParkingImageType.Overview][0] : null;
+                ImageData? vehicleOutImage = imageOutDatas.ContainsKey(EmParkingImageType.Vehicle) ? imageOutDatas[EmParkingImageType.Vehicle][0] : null;
 
                 var task1 = ShowImage(displayOverviewOutImage, picOverviewImageOut);
                 var task2 = ShowImage(vehicleOutImage, picVehicleImageOut);
 
-                var imageInDatas = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<EmParkingImageType, ImageData>>(dgvData.CurrentRow?.Cells[col_file_keys_in].Value.ToString()!)!;
-                ImageData? displayOverviewInImage = imageInDatas.ContainsKey(EmParkingImageType.Overview) ? imageInDatas[EmParkingImageType.Overview] : null;
-                ImageData? vehicleInImage = imageInDatas.ContainsKey(EmParkingImageType.Vehicle) ? imageInDatas[EmParkingImageType.Vehicle] : null;
+                var imageInDatas = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<EmParkingImageType, List<ImageData>>>(dgvData.CurrentRow?.Cells[col_file_keys_in].Value.ToString()!)!;
+                ImageData? displayOverviewInImage = imageInDatas.ContainsKey(EmParkingImageType.Overview) ? imageInDatas[EmParkingImageType.Overview][0] : null;
+                ImageData? vehicleInImage = imageInDatas.ContainsKey(EmParkingImageType.Vehicle) ? imageInDatas[EmParkingImageType.Vehicle][0] : null;
 
 
                 var task3 = ShowImage(displayOverviewInImage, picOverviewImageIn);

@@ -38,7 +38,6 @@ namespace iParkingv5.Auth
             chbIsRemember = new CheckBox();
             txtUsername = new TextBox();
             txtPassword = new TextBox();
-            timerAutoConnect = new System.Windows.Forms.Timer(components);
             lblStatus = new Label();
             panelMain = new Panel();
             lblLoginTitle = new Label();
@@ -101,11 +100,6 @@ namespace iParkingv5.Auth
             txtPassword.PasswordChar = '*';
             txtPassword.Size = new Size(0, 29);
             txtPassword.TabIndex = 4;
-            // 
-            // timerAutoConnect
-            // 
-            timerAutoConnect.Interval = 1000;
-            timerAutoConnect.Tick += timerAutoConnect_Tick;
             // 
             // lblStatus
             // 
@@ -212,7 +206,6 @@ namespace iParkingv5.Auth
         private CheckBox chbIsRemember;
         private TextBox txtUsername;
         private TextBox txtPassword;
-        private System.Windows.Forms.Timer timerAutoConnect;
         private Label lblStatus;
         private LblCancel btnCancel1;
         private BtnLogin btnLogin;
