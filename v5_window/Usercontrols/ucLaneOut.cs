@@ -902,8 +902,12 @@ namespace iParkingv5_window.Usercontrols
             {
                 if (weight == 0)
                 {
-                    MessageBox.Show("Khối lượng cân = 0, vui lòng quẹt lại thẻ", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
+                    bool isContinue = MessageBox.Show("Khối lượng cân = 0, bạn có muốn cho xe ra khỏi bãi", "Thông báo",
+                                                    MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
+                    if (!isContinue)
+                    {
+                        return;
+                    }
                 }
             }
             AddEventOutResponse? eventOut = await AppData.ApiServer.PostCheckOutAsync(lane.id, plateNumber, identity, imageKeys, false, weight);
@@ -1479,10 +1483,16 @@ namespace iParkingv5_window.Usercontrols
                             return;
                         }
                         int weight = int.Parse(lblScaleInfo.Text);
+
                         if (weight == 0)
                         {
-                            MessageBox.Show("Khối lượng cân = 0, vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            return;
+                            bool isConfitm = MessageBox.Show("Khối lượng cân = 0, bạn có muốn in phiếu cân", "Thông báo",
+                                    MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+                                    == DialogResult.Yes;
+                            if (!isConfitm)
+                            {
+                                return;
+                            }
                         }
                         this.WeighingActionDetail = await KzScaleApiHelper.CreateScaleEvent(lastEvent.PlateNumber ?? "", lastEvent.eventIn.Id ?? "",
                                                                                             weight, weightFormId,
@@ -1555,8 +1565,13 @@ namespace iParkingv5_window.Usercontrols
                     int weight = int.Parse(lblScaleInfo.Text);
                     if (weight == 0)
                     {
-                        MessageBox.Show("Khối lượng cân = 0, vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
+                        bool isConfitm = MessageBox.Show("Khối lượng cân = 0, bạn có muốn in phiếu thu", "Thông báo",
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+                                == DialogResult.Yes;
+                        if (!isConfitm)
+                        {
+                            return;
+                        }
                     }
                     this.WeighingActionDetail = await KzScaleApiHelper.CreateScaleEvent(lastEvent.PlateNumber ?? "", lastEvent.eventIn.Id ?? "",
                                                                                         weight, weightFormId,
@@ -1612,8 +1627,13 @@ namespace iParkingv5_window.Usercontrols
                     int weight = int.Parse(lblScaleInfo.Text);
                     if (weight == 0)
                     {
-                        MessageBox.Show("Khối lượng cân = 0, vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
+                        bool isConfitm = MessageBox.Show("Khối lượng cân = 0, bạn có muốn in hóa đơn", "Thông báo",
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+                                == DialogResult.Yes;
+                        if (!isConfitm)
+                        {
+                            return;
+                        }
                     }
                     this.WeighingActionDetail = await KzScaleApiHelper.CreateScaleEvent(lastEvent.PlateNumber ?? "", lastEvent.eventIn.Id ?? "",
                                                                                         weight, weightFormId,

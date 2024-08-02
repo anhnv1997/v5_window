@@ -1790,7 +1790,7 @@ namespace iParkingv5_window.Usercontrols
                 if (string.IsNullOrEmpty(plateNumber))
                 {
                     isAlarm = true;
-                    bool isConfirm = MessageBox.Show("Không nhận diện được biển số, bạn có muốn cho xe vào bãi?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
+                    bool isConfirm = MessageBox.Show("Không nhận diện được biển số, bạn có muốn tiếp tục cho xe vào?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
                     if (!isConfirm)
                     {
                         LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, specailName: "confirm_in", mo_ta_them: "Không xác nhận cho xe vào bãi: " + identity.Code);
@@ -1809,8 +1809,11 @@ namespace iParkingv5_window.Usercontrols
             {
                 if (weight == 0)
                 {
-                    MessageBox.Show("Khối lượng cân = 0, vui lòng quẹt lại thẻ", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
+                    bool isContinue = MessageBox.Show("Khối lượng cân = 0, bạn có muốn cho xe vào bãi", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
+                    if (!isContinue)
+                    {
+                        return;
+                    }
                 }
             }
             eventIn = await AppData.ApiServer.PostCheckInAsync(weight, lane.id, plateNumber, identity, imageKeys, false, null, note);
@@ -2147,8 +2150,13 @@ namespace iParkingv5_window.Usercontrols
                     int weight = int.Parse(lblScaleInfo.Text);
                     if (weight == 0)
                     {
-                        MessageBox.Show("Khối lượng cân = 0, vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
+                        bool isConfitm = MessageBox.Show("Khối lượng cân = 0, bạn có muốn in phiếu cân", "Thông báo",
+                                                        MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+                                            == DialogResult.Yes;
+                        if (!isConfitm)
+                        {
+                            return;
+                        }
                     }
                     this.WeighingActionDetail = await KzScaleApiHelper.CreateScaleEvent(lastEvent.PlateNumber ?? "", lastEvent.Id ?? "",
                                                                                         weight, weightFormId,
@@ -2206,8 +2214,13 @@ namespace iParkingv5_window.Usercontrols
                     int weight = int.Parse(lblScaleInfo.Text);
                     if (weight == 0)
                     {
-                        MessageBox.Show("Khối lượng cân = 0, vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
+                        bool isConfitm = MessageBox.Show("Khối lượng cân = 0, bạn có muốn in phiếu thu", "Thông báo",
+                                                            MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+                                                            == DialogResult.Yes;
+                        if (!isConfitm)
+                        {
+                            return;
+                        }
                     }
                     this.WeighingActionDetail = await KzScaleApiHelper.CreateScaleEvent(lastEvent.PlateNumber ?? "", lastEvent.Id ?? "",
                                                                                        weight, weightFormId,
@@ -2259,8 +2272,13 @@ namespace iParkingv5_window.Usercontrols
                     int weight = int.Parse(lblScaleInfo.Text);
                     if (weight == 0)
                     {
-                        MessageBox.Show("Khối lượng cân = 0, vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
+                        bool isConfitm = MessageBox.Show("Khối lượng cân = 0, bạn có muốn in hóa đơn", "Thông báo",
+                                                            MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+                                                            == DialogResult.Yes;
+                        if (!isConfitm)
+                        {
+                            return;
+                        }
                     }
                     this.WeighingActionDetail = await KzScaleApiHelper.CreateScaleEvent(lastEvent.PlateNumber ?? "", lastEvent.Id ?? "",
                                                                                         weight, weightFormId,
