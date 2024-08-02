@@ -897,7 +897,15 @@ namespace iParkingv5_window.Usercontrols
                                                         CardEventArgs ce, ControllerInLane? controllerInLane, Image? overviewImg, Image? vehicleImg, Image? lprImage, string imageKey)
         {
             bool isAlarm = false;
-            int weight = isScale ? ScaleValue : 0;
+            int weight = isScale ? int.Parse(lblScaleInfo.Text) : 0;
+            if (isScale)
+            {
+                if (weight == 0)
+                {
+                    MessageBox.Show("Khối lượng cân = 0, vui lòng quẹt lại thẻ", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+            }
             AddEventOutResponse? eventOut = await AppData.ApiServer.PostCheckOutAsync(lane.id, plateNumber, identity, imageKeys, false, weight);
             if (eventOut == null)
             {
@@ -1102,7 +1110,12 @@ namespace iParkingv5_window.Usercontrols
 
         CheckOutWithForce:
             {
-                int weight = isScale ? ScaleValue : 0;
+                int weight = int.Parse(lblScaleInfo.Text);
+                if (weight == 0)
+                {
+                    MessageBox.Show("Khối lượng cân = 0, vui lòng quẹt lại thẻ", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
                 eventOut = await AppData.ApiServer.PostCheckOutAsync(lane.id, plateNumber, identity, imageKeys, true, weight);
                 if (eventOut == null)
                 {
@@ -1465,8 +1478,14 @@ namespace iParkingv5_window.Usercontrols
                             MessageBox.Show("Hãy chọn loại hàng", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             return;
                         }
+                        int weight = int.Parse(lblScaleInfo.Text);
+                        if (weight == 0)
+                        {
+                            MessageBox.Show("Khối lượng cân = 0, vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
                         this.WeighingActionDetail = await KzScaleApiHelper.CreateScaleEvent(lastEvent.PlateNumber ?? "", lastEvent.eventIn.Id ?? "",
-                                                                                            this.ScaleValue, weightFormId,
+                                                                                            weight, weightFormId,
                                                                                             StaticPool.userId, StaticPool.user_name, lastImageKeys, "", this.lane.id);
                     }
                 }
@@ -1533,8 +1552,14 @@ namespace iParkingv5_window.Usercontrols
                         MessageBox.Show("Hãy chọn loại hàng", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     }
+                    int weight = int.Parse(lblScaleInfo.Text);
+                    if (weight == 0)
+                    {
+                        MessageBox.Show("Khối lượng cân = 0, vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
                     this.WeighingActionDetail = await KzScaleApiHelper.CreateScaleEvent(lastEvent.PlateNumber ?? "", lastEvent.eventIn.Id ?? "",
-                                                                                        this.ScaleValue, weightFormId,
+                                                                                        weight, weightFormId,
                                                                                         StaticPool.userId, StaticPool.user_name, lastImageKeys, "", this.lane.id);
                 }
             }
@@ -1584,8 +1609,14 @@ namespace iParkingv5_window.Usercontrols
                         MessageBox.Show("Hãy chọn loại hàng", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     }
+                    int weight = int.Parse(lblScaleInfo.Text);
+                    if (weight == 0)
+                    {
+                        MessageBox.Show("Khối lượng cân = 0, vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
                     this.WeighingActionDetail = await KzScaleApiHelper.CreateScaleEvent(lastEvent.PlateNumber ?? "", lastEvent.eventIn.Id ?? "",
-                                                                                        this.ScaleValue, weightFormId,
+                                                                                        weight, weightFormId,
                                                                                         StaticPool.userId, StaticPool.user_name, lastImageKeys, "", this.lane.id);
                 }
             }

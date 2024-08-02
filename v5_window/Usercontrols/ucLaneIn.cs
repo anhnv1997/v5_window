@@ -1804,7 +1804,15 @@ namespace iParkingv5_window.Usercontrols
             {
                 note = txtNote.Text;
             }));
-            int weight = isScale ? ScaleValue : 0;
+            int weight = isScale ? int.Parse(lblScaleInfo.Text) : 0;
+            if (isScale)
+            {
+                if (weight == 0)
+                {
+                    MessageBox.Show("Khối lượng cân = 0, vui lòng quẹt lại thẻ", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+            }
             eventIn = await AppData.ApiServer.PostCheckInAsync(weight, lane.id, plateNumber, identity, imageKeys, false, null, note);
             if (eventIn == null)
             {
@@ -2136,8 +2144,14 @@ namespace iParkingv5_window.Usercontrols
                         MessageBox.Show("Hãy chọn loại hàng", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     }
+                    int weight = int.Parse(lblScaleInfo.Text);
+                    if (weight == 0)
+                    {
+                        MessageBox.Show("Khối lượng cân = 0, vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
                     this.WeighingActionDetail = await KzScaleApiHelper.CreateScaleEvent(lastEvent.PlateNumber ?? "", lastEvent.Id ?? "",
-                                                                                        this.ScaleValue, weightFormId,
+                                                                                        weight, weightFormId,
                                                                                         StaticPool.userId, StaticPool.user_name, lastImageKeys, "", this.lane.id);
                 }
             }
@@ -2189,8 +2203,14 @@ namespace iParkingv5_window.Usercontrols
                         MessageBox.Show("Hãy chọn loại hàng", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     }
+                    int weight = int.Parse(lblScaleInfo.Text);
+                    if (weight == 0)
+                    {
+                        MessageBox.Show("Khối lượng cân = 0, vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
                     this.WeighingActionDetail = await KzScaleApiHelper.CreateScaleEvent(lastEvent.PlateNumber ?? "", lastEvent.Id ?? "",
-                                                                                        this.ScaleValue, weightFormId,
+                                                                                       weight, weightFormId,
                                                                                         StaticPool.userId, StaticPool.user_name, lastImageKeys, "", this.lane.id);
                 }
             }
@@ -2236,8 +2256,14 @@ namespace iParkingv5_window.Usercontrols
                         MessageBox.Show("Hãy chọn loại hàng", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     }
+                    int weight = int.Parse(lblScaleInfo.Text);
+                    if (weight == 0)
+                    {
+                        MessageBox.Show("Khối lượng cân = 0, vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
                     this.WeighingActionDetail = await KzScaleApiHelper.CreateScaleEvent(lastEvent.PlateNumber ?? "", lastEvent.Id ?? "",
-                                                                                        this.ScaleValue, weightFormId,
+                                                                                        weight, weightFormId,
                                                                                         StaticPool.userId, StaticPool.user_name, lastImageKeys, "", this.lane.id);
                 }
             }
