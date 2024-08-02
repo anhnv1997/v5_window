@@ -36,6 +36,7 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
 
         private Thread thread = null;
         private ManualResetEvent stopEvent = null;
+
         public bool Running
         {
             get
@@ -51,6 +52,7 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
                 return false;
             }
         }
+
         public override void DeleteCardEvent()
         {
             string comport = this.ControllerInfo.Comport;

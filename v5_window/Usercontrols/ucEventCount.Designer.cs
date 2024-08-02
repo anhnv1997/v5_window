@@ -117,7 +117,7 @@
             // 
             // timerUpdateCount
             // 
-            timerUpdateCount.Interval = 1000;
+            timerUpdateCount.Interval = 10000;
             timerUpdateCount.Tick += timerUpdateCount_Tick;
             // 
             // tableLayoutPanel2

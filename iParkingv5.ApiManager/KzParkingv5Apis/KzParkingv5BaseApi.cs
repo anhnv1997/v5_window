@@ -39,7 +39,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             server = server.StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.SearchObjectDataRoute(objectType);
 
-            var filter = Filter.CreateFilter(new FilterModel());
+            var filter = Filter.CreateFilter(new FilterModel(), _pageIndex: 0, _pageSize: -1);
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
                 { "Authorization","Bearer " + token  }

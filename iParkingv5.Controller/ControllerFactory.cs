@@ -3,6 +3,7 @@ using iParkingv5.Controller.Dahua;
 using iParkingv5.Controller.Ingress;
 using iParkingv5.Controller.KztekDevices.KZE02NETControllerv2;
 using iParkingv5.Controller.KztekDevices.KZE16AccessControl;
+using iParkingv5.Controller.KztekDevices.MT166_CardDispenser;
 using iParkingv5.Controller.ZktecoDevices.PULL;
 using iParkingv6.Objects.Datas;
 using System;
@@ -21,12 +22,13 @@ namespace iParkingv5.Controller
             {
                 EmControllerType.IDTECK => null,
                 EmControllerType.KZE02_NET => new KzE02Netv2() { ControllerInfo = bdk },
-                EmControllerType.KZE16_NET => new KzE16Net() { ControllerInfo = bdk},
-                EmControllerType.MT166 => null,
+                EmControllerType.KZE16_NET => new KzE16Net() { ControllerInfo = bdk },
+                EmControllerType.MT166 => new MT166_CardDispenser() { ControllerInfo = bdk },
                 EmControllerType.INGRESSUS => new ZktecoPull() { ControllerInfo = bdk },
                 EmControllerType.E02_NET => new AopuController() { ControllerInfo = bdk },
                 EmControllerType.SC200 => new SC200Devices.SC200() { ControllerInfo = bdk },
                 EmControllerType.Dahua => new DahuaAccessControl(bdk.Id) { ControllerInfo = bdk },
+                EmControllerType.MT166_v8 => new MT166_CardDispenserv8() { ControllerInfo = bdk },
                 _ => null,
             };
         }
@@ -41,6 +43,7 @@ namespace iParkingv5.Controller
             E02_NET = 5,
             SC200 = 6,
             Dahua = 7,
+            MT166_v8 = 8,
         }
     }
 }

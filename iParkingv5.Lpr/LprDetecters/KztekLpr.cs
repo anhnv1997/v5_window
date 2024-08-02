@@ -64,7 +64,6 @@ namespace iParkingv5.LprDetecter.LprDetecters
 
             ReturnResult:
                 {
-                    //plateNumber = "XETEST";
                     onLprDetectCompleteEvent?.Invoke(this, new Events.Events.LprDetectEventArgs()
                     {
                         LprImage = lprImage,

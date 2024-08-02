@@ -90,6 +90,7 @@ namespace iParkingv5_window.Forms.DataForms
             this.Load += FrmMain_Load;
             this.Shown += FrmMain_Shown;
             lblServerName.Text = Environment.MachineName;
+            controllerEventInitQueueName = "queue.ControllerEvent";
             controllerEventInitQueueName = controllerEventInitQueueName + " - " + StaticPool.selectedComputer.IpAddress + StaticPool.selectedComputer.Id;
             this.activeLanes = activeLanes;
 
@@ -311,7 +312,7 @@ namespace iParkingv5_window.Forms.DataForms
                                         };
                         LogHelper.Log(EmLogType.WARN, EmObjectLogType.System, configPath);
                         e.PreferCard = CardFactory.StandardlizedCardNumber(e.PreferCard, config);
-                        while(e.PreferCard.Length < 8)
+                        while (e.PreferCard.Length < 8)
                         {
                             e.PreferCard = "0" + e.PreferCard;
                         }
@@ -493,14 +494,21 @@ namespace iParkingv5_window.Forms.DataForms
                 factory.Password = StaticPool.serverConfig.RabbitMqPassword;
                 conn = factory.CreateConnection();
                 channel = conn.CreateModel();
-
+                CreateRequireExchange();
                 CreateRequiredQueue();
                 MonitorControllerEvent();
             });
         }
+
+        private void CreateRequireExchange()
+        {
+            channel.ExchangeDeclare("integrations", "topic");
+        }
+
         public void CreateRequiredQueue()
         {
             channel.QueueDeclare(controllerEventInitQueueName, true, false, false, null);
+            channel.QueueBind(controllerEventInitQueueName, "integrations", "integration.application.event.transaction");
         }
         public void MonitorControllerEvent()
         {
@@ -512,18 +520,33 @@ namespace iParkingv5_window.Forms.DataForms
 
         private void ControllerEventConsumer_Received(object? sender, BasicDeliverEventArgs e)
         {
-            string payLoad = Encoding.ASCII.GetString(e.Body.ToArray());
-            CardEventArgs ce = Newtonsoft.Json.JsonConvert.DeserializeObject<CardEventArgs>(payLoad)!;
-            this.Invoke(new Action(() =>
+            try
             {
-                lblLoadingStatus.Text = $"Nhận sự kiện quẹt thẻ READER: {ce.ReaderIndex}, CARD: {ce.PreferCard} từ bộ điều khiển " + ce.DeviceName;
-                lblLoadingStatus.Refresh();
-
-                foreach (iLane iLane in lanes)
+                string payLoad = Encoding.ASCII.GetString(e.Body.ToArray());
+                CardEventArgs ce = Newtonsoft.Json.JsonConvert.DeserializeObject<CardEventArgs>(payLoad)!;
+                foreach (var item in controllers)
                 {
-                    iLane.OnNewEvent(ce);
+                    if (item.ControllerInfo.Code == ce.DeviceId)
+                    {
+                        ce.DeviceId = item.ControllerInfo.Id;
+                        break;
+                    }
                 }
-            }));
+
+                this.Invoke(new Action(() =>
+                {
+                    lblLoadingStatus.Text = $"Nhận sự kiện quẹt thẻ READER: {ce.ReaderIndex}, CARD: {ce.PreferCard} từ bộ điều khiển " + ce.DeviceName;
+                    lblLoadingStatus.Refresh();
+
+                    foreach (iLane iLane in lanes)
+                    {
+                        iLane.OnNewEvent(ce);
+                    }
+                }));
+            }
+            catch (Exception ex)
+            {
+            }
         }
 
         #endregion End Private Function

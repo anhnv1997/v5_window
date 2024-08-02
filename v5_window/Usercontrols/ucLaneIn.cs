@@ -666,7 +666,7 @@ namespace iParkingv5_window.Usercontrols
             ucLastEventInfos.Add(ucTop1Event);
             ucLastEventInfos.Add(ucTop2Event);
             ucLastEventInfos.Add(ucTop3Event);
-            var top3Event = (await AppData.ApiServer.reportingService.GetEventIns("", startTime, endTime, "", "", this.lane.Id, "", 1, 3)).data;
+            var top3Event = (await AppData.ApiServer.reportingService.GetEventIns("", startTime, endTime, "", "", this.lane.Id, "", 0, 3)).data;
             if (top3Event != null)
             {
                 for (int i = 0; i < top3Event.Count; i++)

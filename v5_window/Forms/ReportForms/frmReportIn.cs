@@ -170,7 +170,7 @@ namespace iParkingv5_window.Forms.ReportForms
                 string identityGroupId = ((ListItem)cbIdentityGroupType.SelectedItem)?.Value ?? "";
                 string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
                 string user = string.IsNullOrEmpty(((ListItem)cbUser.SelectedItem)?.Value) ? "" : cbUser.Text;
-                var report = await AppData.ApiServer.reportingService.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user, 1, Filter.PAGE_SIZE);
+                var report = await AppData.ApiServer.reportingService.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user, 0, Filter.PAGE_SIZE);
                 var eventInReports = report.data;
                 if (eventInReports == null)
                 {
@@ -310,7 +310,7 @@ namespace iParkingv5_window.Forms.ReportForms
                 string user = string.IsNullOrEmpty(((ListItem)cbUser.SelectedItem)?.Value) ? "" : cbUser.Text;
 
                 Application.DoEvents();
-                var report = await AppData.ApiServer.reportingService.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user, pageIndex: pageIndex, pageSize: Filter.PAGE_SIZE);
+                var report = await AppData.ApiServer.reportingService.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user, pageIndex: pageIndex - 1, pageSize: Filter.PAGE_SIZE);
                 var eventInData = report.data;
 
                 totalPages = report.TotalPage;

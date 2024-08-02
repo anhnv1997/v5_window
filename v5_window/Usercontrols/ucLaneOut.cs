@@ -1002,13 +1002,31 @@ namespace iParkingv5_window.Usercontrols
                         switch (item.Key)
                         {
                             case EmParkingImageType.Overview:
-                                picOverviewImageIn.Load(imageUrl);
+                                try
+                                {
+                                    picOverviewImageIn.LoadAsync(imageUrl);
+                                }
+                                catch (Exception)
+                                {
+                                }
                                 break;
                             case EmParkingImageType.Vehicle:
-                                picVehicleImageIn.Load(imageUrl);
+                                try
+                                {
+                                    picVehicleImageIn.LoadAsync(imageUrl);
+                                }
+                                catch (Exception)
+                                {
+                                }
                                 break;
                             case EmParkingImageType.Plate:
-                                picLprImageIn.Load(imageUrl);
+                                try
+                                {
+                                    picLprImageIn.LoadAsync(imageUrl);
+                                }
+                                catch (Exception)
+                                {
+                                }
                                 break;
                             default:
                                 break;
@@ -1118,8 +1136,6 @@ namespace iParkingv5_window.Usercontrols
             }
         }
         #endregion END EVENT
-
-
 
         #region CONTROLS IN FORM
 
