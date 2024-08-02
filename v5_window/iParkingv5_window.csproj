@@ -91,10 +91,13 @@
       <HintPath>..\..\..\..\..\..\4..Library Reference\CameraLib\AForge.VideoEx.dll</HintPath>
     </Reference>
     <Reference Include="Kztek.Security">
-      <HintPath>..\..\..\..\..\..\..\BaseLib\KztekKey_net6\Kztek.Security.dll</HintPath>
+      <HintPath>..\..\..\..\..\KeyLib\Kztek.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Kztek.Utilities">
+      <HintPath>..\..\..\..\..\KeyLib\Kztek.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="KztekKeyRegister">
-      <HintPath>..\..\..\..\..\..\..\BaseLib\KztekKey_net6\KztekKeyRegister.dll</HintPath>
+      <HintPath>..\..\..\..\..\KeyLib\KztekKeyRegister.dll</HintPath>
     </Reference>
     <Reference Include="SayMoney">
       <HintPath>..\packages\SayMoney.dll</HintPath>
