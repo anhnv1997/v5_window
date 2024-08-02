@@ -88,6 +88,7 @@ namespace iParkingv5_window.Usercontrols
             btnCarLprDetect.Visible = false;
             btnMotorLprDetect.Visible = false;
             btnSave.Visible = false;
+            btnClearConfig.Visible = false;
         }
         private void btnLiveview_Click(object? sender, EventArgs e)
         {
@@ -100,6 +101,8 @@ namespace iParkingv5_window.Usercontrols
             btnCarLprDetect.Visible = true;
             btnMotorLprDetect.Visible = true;
             btnSave.Visible = true;
+            btnClearConfig.Visible = true;
+
             camView!.Start();
 
             if (camView != null && camView.videoSourcePlayer != null)
@@ -206,6 +209,24 @@ namespace iParkingv5_window.Usercontrols
             }
 
         }
+        private void btnClearConfig_Click(object sender, EventArgs e)
+        {
+            string configPath = PathManagement.laneCameraConfigPath(laneId, this.currentCamera!.Id);
+            try
+            {
+                if (File.Exists(configPath))
+                {
+                    File.Delete(configPath);
+                }
+                this.config = null;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Xóa cấu hình không thành công, vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+        }
+
         #endregion End Controls In Form
 
         #region Private Function

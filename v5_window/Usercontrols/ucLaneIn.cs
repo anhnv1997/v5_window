@@ -15,10 +15,7 @@ using iParkingv5_window.Helpers;
 using iParkingv6.Objects.Datas;
 using Kztek.Tool;
 using Kztek.Tools;
-using KztekObject.Cards;
 using System.Data;
-using System.Globalization;
-using System.Text.RegularExpressions;
 using static iParkingv5.Objects.Configs.LaneDirectionConfig;
 using static iParkingv5.Objects.Enums.ParkingImageType;
 using static iParkingv5.Objects.Enums.PrintHelpers;
@@ -442,8 +439,6 @@ namespace iParkingv5_window.Usercontrols
             }
         }
 
-
-
         /// <summary>
         /// Sự kiện xảy ra khi người dùng quẹt thẻ trên đầu đọc, hoặc đầu đọc xa phát hiện thẻ
         /// </summary>
@@ -461,10 +456,6 @@ namespace iParkingv5_window.Usercontrols
             }
 
             ClearView();
-            //Danh sách biến sử dụng
-            Image? overviewImg = null;
-            Image? vehicleImg = null;
-
             lblResult.UpdateResultMessage("Đang kiểm tra thông tin sự kiện quẹt thẻ..." + ce.PreferCard, Color.DarkBlue);
 
             #region Kiểm tra thông tin định danh
@@ -477,7 +468,7 @@ namespace iParkingv5_window.Usercontrols
 
             //Cần gọi GET by ID để lấy thông tin phương tiện đăng ký
             identity = (await AppData.ApiServer.parkingDataService.GetIdentityByIdAsync(identity.Id)).Item1;
-            if (identity == null)
+            if (identity == null || string.IsNullOrEmpty(identity.IdentityGroupId))
             {
                 lblResult.UpdateResultMessage("Không đọc được thông tin định danh, vui lòng thử lại", Color.DarkRed);
                 return;
@@ -486,7 +477,7 @@ namespace iParkingv5_window.Usercontrols
 
             #region Kiểm tra thông tin nhóm định danh
             IdentityGroup? identityGroup = (await AppData.ApiServer.parkingDataService.GetIdentityGroupByIdAsync(identity.IdentityGroupId.ToString()))?.Item1;
-            if (identityGroup == null || identityGroup.Id == Guid.Empty)
+            if (identityGroup == null || identityGroup.Id == Guid.Empty || string.IsNullOrEmpty(identity.Id))
             {
                 lblResult.UpdateResultMessage("Không đọc được thông tin nhóm định danh, vui lòng thử lại", Color.DarkRed);
                 return;
@@ -501,33 +492,43 @@ namespace iParkingv5_window.Usercontrols
                 lblResult.UpdateResultMessage("Thông tin loại phương tiện không hợp lệ, vui lòng sử dụng thẻ khác", Color.DarkRed);
                 return;
             }
-
             #endregion End kiểm tra thông tin loại phương tiện
 
+            Image? overviewImg = null;
+            Image? vehicleImg = null;
             Image? lprImage = GetPlate(ce, ref overviewImg, ref vehicleImg, vehicleBaseType, lblResult, txtPlate, picOverviewImage, picVehicleImage, picLprImage);
 
             //Đọc thông tin loại phương tiện
             lblResult.UpdateResultMessage("Đang check in..." + ce.PreferCard, Color.DarkBlue);
-            var imageData = new Dictionary<EmParkingImageType, List<List<byte>>>
+            try
             {
-                { EmParkingImageType.Overview, new List<List<byte>>(){ overviewImg.ImageToByteArray() } },
-                { EmParkingImageType.Vehicle,new List<List<byte>>(){ vehicleImg.ImageToByteArray() } },
-                { EmParkingImageType.Plate, new List<List<byte>>(){ lprImage.ImageToByteArray() } }
-            };
+                var imageData = new Dictionary<EmParkingImageType, List<List<byte>>>
+                {
+                    { EmParkingImageType.Overview, new List<List<byte>>(){ overviewImg.ImageToByteArray() } },
+                    { EmParkingImageType.Vehicle,new List<List<byte>>(){ vehicleImg.ImageToByteArray() } },
+                    { EmParkingImageType.Plate, new List<List<byte>>(){ lprImage.ImageToByteArray() } }
+                };
 
-            bool isMonthCard = identityGroup.Type == IdentityGroupType.Monthly;
-            if (isMonthCard)
-            {
-                await ExcecuteMonthCardEventIn(identity, identityGroup, vehicleBaseType, ce.PlateNumber, imageData,
-                                               ce, controllerInLane,
-                                               overviewImg, vehicleImg, lprImage);
+                bool isMonthCard = identityGroup.Type == IdentityGroupType.Monthly;
+                if (isMonthCard)
+                {
+                    await ExcecuteMonthCardEventIn(identity, identityGroup, vehicleBaseType, ce.PlateNumber, imageData,
+                                                   ce, controllerInLane,
+                                                   overviewImg, vehicleImg, lprImage);
+                }
+                else
+                {
+                    await ExcecuteNonMonthCardEventIn(identity, identityGroup, vehicleBaseType, ce.PlateNumber, imageData,
+                                                      ce, controllerInLane,
+                                                      overviewImg, vehicleImg, lprImage);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                await ExcecuteNonMonthCardEventIn(identity, identityGroup, vehicleBaseType, ce.PlateNumber, imageData,
-                                                  ce, controllerInLane,
-                                                  overviewImg, vehicleImg, lprImage);
+                lblResult.UpdateResultMessage("Gặp lỗi trong quá trình xử lý, vui lòng thử lại", Color.DarkRed);
+                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
             }
+
         }
 
         /// <summary>
@@ -563,7 +564,6 @@ namespace iParkingv5_window.Usercontrols
         #endregion End EVENT
 
         #region Private Function
-
         private async Task CreateUI()
         {
             this.Dock = DockStyle.Fill;
@@ -826,7 +826,8 @@ namespace iParkingv5_window.Usercontrols
         #endregion End Private Function
 
         #region Xử lý sự kiện thẻ
-        private async Task ExcecuteMonthCardEventIn(Identity identity, IdentityGroup identityGroup, VehicleBaseType vehicleType, string plateNumber,
+        private async Task ExcecuteMonthCardEventIn(Identity identity, IdentityGroup identityGroup,
+                                                    VehicleBaseType vehicleType, string plateNumber,
                                                     Dictionary<EmParkingImageType, List<List<byte>>> imageDatas,
                                                     CardEventArgs ce, ControllerInLane? controllerInLane,
                                                     Image? overviewImg, Image? vehicleImg, Image? lprImage)
@@ -964,7 +965,8 @@ namespace iParkingv5_window.Usercontrols
         }
 
         private async Task ExcecuteNonMonthCardEventIn(Identity identity, IdentityGroup identityGroup,
-                                                       VehicleBaseType vehicleType, string plateNumber, Dictionary<EmParkingImageType, List<List<byte>>> imageKeys,
+                                                       VehicleBaseType vehicleType, string plateNumber,
+                                                       Dictionary<EmParkingImageType, List<List<byte>>> imageKeys,
                                                        CardEventArgs ce, ControllerInLane? controllerInLane,
                                                        Image? overviewImg, Image? vehicleImg, Image? lprImage)
         {
@@ -981,6 +983,7 @@ namespace iParkingv5_window.Usercontrols
                     if (!isConfirm)
                     {
                         ClearView();
+                        lblResult.UpdateResultMessage(StaticPool.oemConfig.AppName, Color.DarkBlue);
                         return;
                     }
                 }

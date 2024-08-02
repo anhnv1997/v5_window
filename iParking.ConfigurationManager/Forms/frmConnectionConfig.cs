@@ -19,6 +19,7 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
         ucDatabaseConnection ucDatabaseConnection;
         ucScaleConfig ucScaleConfig;
         ucThirdParty ucThirdParty;
+        ucOEM ucOEM;
         #endregion End Properties
 
         #region Forms
@@ -36,16 +37,40 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             AddTabLprConfig();
             //AddTabScaleConfig();
             AddTabThirdParty();
+            AddTabOEM();
 
             this.Size = new Size(Properties.Settings.Default.prefer_width, Properties.Settings.Default.prefer_height);
             this.SizeChanged += FrmConnectionConfig_SizeChanged;
         }
+
         private void FrmConnectionConfig_SizeChanged(object? sender, EventArgs e)
         {
             Properties.Settings.Default.prefer_width = this.Size.Width;
             Properties.Settings.Default.prefer_height = this.Size.Height;
             Properties.Settings.Default.Save();
         }
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            bool isEnableDevelopeMode = (keyData & Keys.Control) == Keys.Control &&
+                                 (keyData & Keys.Shift) == Keys.Shift &&
+                                 (keyData & Keys.KeyCode) == Keys.E;
+            bool isDisEnableDevelopeMode = (keyData & Keys.Control) == Keys.Control &&
+                                (keyData & Keys.Shift) == Keys.Shift &&
+                                (keyData & Keys.KeyCode) == Keys.D;
+            if (isEnableDevelopeMode)
+            {
+                ucAppOptions.DisplayDevelopMode(true);
+                return true;
+            }
+            else if (isDisEnableDevelopeMode)
+            {
+                ucAppOptions.DisplayDevelopMode(false);
+                return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         #endregion End Forms
 
         #region Controls In Form
@@ -58,6 +83,7 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             SaveDatabaseConfig();
             //SaveScaleConfig();
             SaveThirdPartyConfig();
+            SaveOEMConfig();
             MessageBox.Show("Lưu cấu hình thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion End Controls In Form
@@ -170,6 +196,22 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             tabThirdParty.AutoScroll = true;
             ucThirdParty.Dock = DockStyle.None;
         }
+        private void AddTabOEM()
+        {
+            TabPage tabOEM = new TabPage();
+            tabOEM.Text = "OEM";
+            tabControl1.TabPages.Add(tabOEM);
+            tabOEM.BackColor = SystemColors.ButtonHighlight;
+
+            OEMConfig? oemConfig = NewtonSoftHelper<OEMConfig>.DeserializeObjectFromPath(PathManagement.oemConfigPath) ?? new OEMConfig();
+
+            ucOEM = new ucOEM(oemConfig);
+
+            tabOEM.Controls.Add(ucOEM);
+            ucOEM.Dock = DockStyle.Fill;
+            tabOEM.AutoScroll = true;
+            ucOEM.Dock = DockStyle.None;
+        }
 
         private void SaveEInvoiceConfig()
         {
@@ -224,6 +266,10 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
         private void SaveThirdPartyConfig()
         {
             NewtonSoftHelper<ThirdPartyConfig>.SaveConfig(ucThirdParty.GetServerConfig(), PathManagement.thirtPartyConfigPath);
+        }
+        private void SaveOEMConfig()
+        {
+            NewtonSoftHelper<OEMConfig>.SaveConfig(ucOEM.GetConfig(), PathManagement.oemConfigPath);
         }
         #endregion End Private Function
 

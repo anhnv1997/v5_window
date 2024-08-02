@@ -41,7 +41,7 @@ namespace v5MonitorApp.UserControls
             toolTip1.SetToolTip(this, this.Computer.Name + " -OK" + "\r\n Kích đúp chuột phải để mở tính năng bổ sung");
             lblResult1.Message = this.Computer.Name;
             lblResult1.Text = "";
-            lblResult1.MessageColor = Color.DarkGreen;
+            lblResult1.MessageBackColor = Color.DarkGreen;
             lblResult1.Refresh();
             this.DoubleClick += UcPCMonitor_DoubleClick;
         }
@@ -134,7 +134,7 @@ namespace v5MonitorApp.UserControls
                         IsNormal = false,
                         Message = "Mất Kết Nối Thiết Bị " + errorMessage,
                     });
-                    lblResult1.MessageColor = Color.DarkRed;
+                    lblResult1.MessageBackColor = Color.DarkRed;
                     lblResult1.Refresh();
                 }
             }));
@@ -158,7 +158,7 @@ namespace v5MonitorApp.UserControls
                         Message = "",
                     });
                     this.BackgroundImage = Properties.Resources.pc_info_64;
-                    lblResult1.MessageColor = Color.DarkGreen;
+                    lblResult1.MessageBackColor = Color.DarkGreen;
                     lblResult1.Refresh();
                 }
             }));

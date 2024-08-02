@@ -32,6 +32,7 @@ namespace iParkingv5.Objects
         public static string userId = string.Empty;
         public static string user_name = string.Empty;
         public static AppOption appOption = new AppOption();
+        public static OEMConfig oemConfig = new OEMConfig();
         public static EInvoiceConfig eInvoiceConfig = new EInvoiceConfig();
         public static LprConfig lprConfig = new LprConfig();
         public static ILpr LprDetect;

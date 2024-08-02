@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             groupBox2 = new GroupBox();
+            chbIsCheckKey = new CheckBox();
             chbIsIntergratedScaleStation = new CheckBox();
             numRetakePhotoDelayTime = new NumericUpDown();
             numRetakePhotoTurn = new NumericUpDown();
@@ -58,6 +59,7 @@
             // groupBox2
             // 
             groupBox2.AutoSize = true;
+            groupBox2.Controls.Add(chbIsCheckKey);
             groupBox2.Controls.Add(chbIsIntergratedScaleStation);
             groupBox2.Controls.Add(numRetakePhotoDelayTime);
             groupBox2.Controls.Add(numRetakePhotoTurn);
@@ -83,15 +85,27 @@
             groupBox2.Margin = new Padding(4, 3, 4, 3);
             groupBox2.Name = "groupBox2";
             groupBox2.Padding = new Padding(4, 3, 4, 3);
-            groupBox2.Size = new Size(734, 405);
+            groupBox2.Size = new Size(734, 434);
             groupBox2.TabIndex = 5;
             groupBox2.TabStop = false;
             groupBox2.Text = "Tùy chọn";
             // 
+            // chbIsCheckKey
+            // 
+            chbIsCheckKey.AutoSize = true;
+            chbIsCheckKey.Location = new Point(246, 380);
+            chbIsCheckKey.Margin = new Padding(4);
+            chbIsCheckKey.Name = "chbIsCheckKey";
+            chbIsCheckKey.Size = new Size(115, 25);
+            chbIsCheckKey.TabIndex = 10;
+            chbIsCheckKey.Text = "Kiểm tra key";
+            chbIsCheckKey.UseVisualStyleBackColor = true;
+            chbIsCheckKey.Visible = false;
+            // 
             // chbIsIntergratedScaleStation
             // 
             chbIsIntergratedScaleStation.AutoSize = true;
-            chbIsIntergratedScaleStation.Location = new Point(246, 351);
+            chbIsIntergratedScaleStation.Location = new Point(246, 347);
             chbIsIntergratedScaleStation.Margin = new Padding(4);
             chbIsIntergratedScaleStation.Name = "chbIsIntergratedScaleStation";
             chbIsIntergratedScaleStation.Size = new Size(183, 25);
@@ -164,7 +178,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(10, 252);
+            label3.Location = new Point(6, 251);
             label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
             label3.Size = new Size(94, 21);
@@ -275,7 +289,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(10, 62);
+            label1.Location = new Point(6, 62);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Size = new Size(166, 21);
@@ -301,7 +315,7 @@
             Font = new Font("Segoe UI", 12F);
             Margin = new Padding(4, 3, 4, 3);
             Name = "ucAppOptions";
-            Size = new Size(734, 501);
+            Size = new Size(734, 556);
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoDelayTime).EndInit();
@@ -338,5 +352,6 @@
         private TextBox txtUpdatePath;
         private CheckBox chbIsAllowEditPlateOut;
         private CheckBox chbIsIntergratedScaleStation;
+        private CheckBox chbIsCheckKey;
     }
 }

@@ -43,6 +43,7 @@ namespace iParkingv5_window.Usercontrols
             picCutVehicleImage = new MovablePictureBox();
             picLprImage = new MovablePictureBox();
             lblDetectPlate = new Label();
+            btnClearConfig = new Button();
             panel2.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picCutVehicleImage).BeginInit();
@@ -84,17 +85,17 @@ namespace iParkingv5_window.Usercontrols
             btnLiveview.Location = new Point(464, 8);
             btnLiveview.Margin = new Padding(4, 3, 4, 3);
             btnLiveview.Name = "btnLiveview";
-            btnLiveview.Size = new Size(108, 29);
+            btnLiveview.Size = new Size(167, 29);
             btnLiveview.TabIndex = 3;
             btnLiveview.Text = "Live view";
             btnLiveview.UseVisualStyleBackColor = true;
             // 
             // btnCarLprDetect
             // 
-            btnCarLprDetect.Location = new Point(580, 8);
+            btnCarLprDetect.Location = new Point(639, 8);
             btnCarLprDetect.Margin = new Padding(4, 3, 4, 3);
             btnCarLprDetect.Name = "btnCarLprDetect";
-            btnCarLprDetect.Size = new Size(167, 29);
+            btnCarLprDetect.Size = new Size(157, 29);
             btnCarLprDetect.TabIndex = 3;
             btnCarLprDetect.Text = "Đọc biển số ô tô";
             btnCarLprDetect.UseVisualStyleBackColor = true;
@@ -102,10 +103,10 @@ namespace iParkingv5_window.Usercontrols
             // 
             // btnDraw
             // 
-            btnDraw.Location = new Point(752, 8);
+            btnDraw.Location = new Point(464, 43);
             btnDraw.Margin = new Padding(4, 3, 4, 3);
             btnDraw.Name = "btnDraw";
-            btnDraw.Size = new Size(201, 29);
+            btnDraw.Size = new Size(167, 29);
             btnDraw.TabIndex = 3;
             btnDraw.Text = "Vẽ vùng nhận diện";
             btnDraw.UseVisualStyleBackColor = true;
@@ -114,6 +115,7 @@ namespace iParkingv5_window.Usercontrols
             // panel2
             // 
             panel2.Controls.Add(cbCamera);
+            panel2.Controls.Add(btnClearConfig);
             panel2.Controls.Add(btnSave);
             panel2.Controls.Add(btnDraw);
             panel2.Controls.Add(label1);
@@ -129,10 +131,10 @@ namespace iParkingv5_window.Usercontrols
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(752, 45);
+            btnSave.Location = new Point(804, 8);
             btnSave.Margin = new Padding(4, 3, 4, 3);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(201, 29);
+            btnSave.Size = new Size(144, 29);
             btnSave.TabIndex = 3;
             btnSave.Text = "Lưu cấu hình";
             btnSave.UseVisualStyleBackColor = true;
@@ -141,10 +143,10 @@ namespace iParkingv5_window.Usercontrols
             // 
             // btnMotorLprDetect
             // 
-            btnMotorLprDetect.Location = new Point(580, 43);
+            btnMotorLprDetect.Location = new Point(639, 43);
             btnMotorLprDetect.Margin = new Padding(4, 3, 4, 3);
             btnMotorLprDetect.Name = "btnMotorLprDetect";
-            btnMotorLprDetect.Size = new Size(167, 29);
+            btnMotorLprDetect.Size = new Size(157, 29);
             btnMotorLprDetect.TabIndex = 3;
             btnMotorLprDetect.Text = "Đọc biển số xe máy";
             btnMotorLprDetect.UseVisualStyleBackColor = true;
@@ -202,6 +204,18 @@ namespace iParkingv5_window.Usercontrols
             lblDetectPlate.Text = "_";
             lblDetectPlate.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // btnClearConfig
+            // 
+            btnClearConfig.Location = new Point(804, 43);
+            btnClearConfig.Margin = new Padding(4, 3, 4, 3);
+            btnClearConfig.Name = "btnClearConfig";
+            btnClearConfig.Size = new Size(144, 29);
+            btnClearConfig.TabIndex = 3;
+            btnClearConfig.Text = "Xóa cấu hình";
+            btnClearConfig.UseVisualStyleBackColor = true;
+            btnClearConfig.Visible = false;
+            btnClearConfig.Click += btnClearConfig_Click;
+            // 
             // ucCameraConfig
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -237,5 +251,6 @@ namespace iParkingv5_window.Usercontrols
         private Label lblDetectPlate;
         private Button btnSave;
         private Button btnMotorLprDetect;
+        private Button btnClearConfig;
     }
 }

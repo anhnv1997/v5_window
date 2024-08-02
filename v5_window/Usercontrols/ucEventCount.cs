@@ -12,7 +12,62 @@ namespace iParkingv5_window.Usercontrols
         }
         private void UcEventCount_Load(object? sender, EventArgs e)
         {
+            CreateUI();
+
             timerUpdateCount.Enabled = true;
+        }
+
+        private void CreateUI()
+        {
+            lblVehicleInTitle.Text = "";
+            lblVehicleOutDayTitle.Text = "";
+            lblCurrentVehicleInParkTitle.Text = "";
+
+            lblVehicleInTitle.Message = "Xe Vào   ";
+            lblVehicleOutDayTitle.Message = "Xe Ra    ";
+            lblCurrentVehicleInParkTitle.Message = "Trong Bãi";
+
+            lblVehicleInTitle.MessageForeColor = Color.Black;
+            lblVehicleOutDayTitle.MessageForeColor = Color.Black;
+            lblCurrentVehicleInParkTitle.MessageForeColor = Color.Black;
+
+            lblVehicleInTitle.MessageBackColor = Color.White;
+            lblVehicleOutDayTitle.MessageBackColor = Color.White;
+            lblCurrentVehicleInParkTitle.MessageBackColor = Color.White;
+
+            lblVehicleInTitle.FontName = "Segoe UI";
+            lblVehicleOutDayTitle.FontName = "Segoe UI";
+            lblCurrentVehicleInParkTitle.FontName = "Segoe UI";
+
+            lblVehicleInTitle.MaxFontSize = lblVehicleOutDayTitle.MaxFontSize = lblCurrentVehicleInParkTitle.MaxFontSize =
+                    Math.Min(Math.Min(lblVehicleInTitle.CurrentFontSize, lblVehicleOutDayTitle.CurrentFontSize), lblCurrentVehicleInParkTitle.CurrentFontSize);
+
+            lblCurrentVehicleInPark.Text = "";
+            lblVehicleIn.Text = "";
+            lblVehicleOutDay.Text = "";
+
+            lblCurrentVehicleInPark.Message = "0";
+            lblVehicleIn.Message = "0";
+            lblVehicleOutDay.Message = "0";
+
+            lblCurrentVehicleInPark.MessageBackColor = Color.White;
+            lblVehicleIn.MessageBackColor = Color.White;
+            lblVehicleOutDay.MessageBackColor = Color.White;
+
+            lblCurrentVehicleInPark.MessageForeColor = Color.DarkBlue;
+            lblVehicleIn.MessageForeColor = Color.DarkGreen;
+            lblVehicleOutDay.MessageForeColor = Color.DarkRed;
+
+            lblVehicleIn.FontName = "Digital-7";
+            lblCurrentVehicleInPark.FontName = "Digital-7";
+            lblVehicleOutDay.FontName = "Digital-7";
+            this.SizeChanged += UcEventCount_SizeChanged;
+        }
+
+        private void UcEventCount_SizeChanged(object? sender, EventArgs e)
+        {
+            lblVehicleInTitle.MaxFontSize = lblVehicleOutDayTitle.MaxFontSize = lblCurrentVehicleInParkTitle.MaxFontSize =
+                    Math.Min(Math.Min(lblVehicleInTitle.CurrentFontSize, lblVehicleOutDayTitle.CurrentFontSize), lblCurrentVehicleInParkTitle.CurrentFontSize);
         }
         #endregion End Forms
 
@@ -27,9 +82,13 @@ namespace iParkingv5_window.Usercontrols
                 int vehicleInDay = eventCountDetail.totalVehicleIn;
                 int vehicleOutDay = eventCountDetail.totalEventOut;
 
-                lblCurrentVehicleInPark.Text = totalVehicleInPark.ToString();
-                lblVehicleIn.Text = vehicleInDay.ToString();
-                lblVehicleOutDay.Text = vehicleOutDay.ToString();
+                lblCurrentVehicleInPark.Message = totalVehicleInPark.ToString();
+                lblVehicleIn.Message = vehicleInDay.ToString();
+                lblVehicleOutDay.Message = vehicleOutDay.ToString();
+
+                lblVehicleInTitle.MaxFontSize = lblVehicleOutDayTitle.MaxFontSize = lblCurrentVehicleInParkTitle.MaxFontSize =
+                    Math.Min(Math.Min(lblVehicleInTitle.CurrentFontSize, lblVehicleOutDayTitle.CurrentFontSize), lblCurrentVehicleInParkTitle.CurrentFontSize);
+
             }
             catch (Exception)
             {
@@ -40,10 +99,5 @@ namespace iParkingv5_window.Usercontrols
             }
         }
         #endregion End Timer
-
-        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
     }
 }

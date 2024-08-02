@@ -513,7 +513,6 @@ namespace iParkingv5_window.Forms.DataForms
         public void MonitorControllerEvent()
         {
             controllerEventConsumer = new EventingBasicConsumer(channel);
-
             monitoringTask.Add(channel.BasicConsume(controllerEventInitQueueName, true, controllerEventConsumer));
             controllerEventConsumer.Received += ControllerEventConsumer_Received;
         }

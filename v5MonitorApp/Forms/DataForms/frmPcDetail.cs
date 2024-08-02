@@ -27,7 +27,7 @@ namespace v5MonitorApp.Forms.DataForms
             InitializeComponent();
             this.Computer = computer;
             lblResult1.Message = this.Computer.IpAddress;
-            lblResult1.MessageColor = Color.Black;
+            lblResult1.MessageBackColor = Color.Black;
             lblResult1.Text = "";
 
             toolTipBtnCheckVersion.SetToolTip(btnGetVersion, "Bấm để lấy thông tin phiên bản phần mềm đang sử dụng");
@@ -217,7 +217,7 @@ namespace v5MonitorApp.Forms.DataForms
             this.Invoke(new Action(() =>
             {
                 lblResult1.Message = this.Computer.IpAddress + " - Mất kết nối";
-                lblResult1.MessageColor = Color.DarkRed;
+                lblResult1.MessageBackColor = Color.DarkRed;
                 lblResult1.Refresh();
             }));
         }
@@ -226,7 +226,7 @@ namespace v5MonitorApp.Forms.DataForms
             this.Invoke(new Action(() =>
             {
                 lblResult1.Message = this.Computer.IpAddress;
-                lblResult1.MessageColor = Color.DarkGreen;
+                lblResult1.MessageBackColor = Color.DarkGreen;
                 lblResult1.Refresh();
             }));
         }

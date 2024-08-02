@@ -123,7 +123,7 @@ namespace iParkingv5_window.Usercontrols
         {
             pictureBox.BeginInvoke(new Action(() =>
             {
-                pictureBox.Image = img;
+                pictureBox.Image = img == null ? pictureBox.ErrorImage : img;
                 pictureBox.Refresh();
             }));
         }

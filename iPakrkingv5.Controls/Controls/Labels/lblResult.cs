@@ -8,6 +8,7 @@ namespace iPakrkingv5.Controls.Controls.Labels
 {
     public class lblResult : Label
     {
+        #region Properties
         private string message = string.Empty;
         public string Message
         {
@@ -17,7 +18,7 @@ namespace iPakrkingv5.Controls.Controls.Labels
                 this.Refresh();
             }
         }
-        public Color MessageColor
+        public Color MessageBackColor
         {
             set
             {
@@ -25,6 +26,42 @@ namespace iPakrkingv5.Controls.Controls.Labels
                 this.Refresh();
             }
         }
+
+        private Color messageForeColor = Color.White;
+        public Color MessageForeColor
+        {
+            set
+            {
+                this.messageForeColor = value;
+                this.Refresh();
+            }
+        }
+
+        private string fontName = "Segoe UI";
+        public string FontName
+        {
+            set
+            {
+                this.fontName = value;
+                this.Refresh();
+            }
+        }
+
+
+        private int maxFontSize = -1;
+        public int MaxFontSize
+        {
+            set
+            {
+                this.maxFontSize = value;
+                this.Refresh();
+            }
+        }
+
+        public int CurrentFontSize = 0;
+        #endregion End Properties
+
+        #region Controls
         public lblResult() : base()
         {
             this.Paint += LblResult_Paint;
@@ -33,9 +70,9 @@ namespace iPakrkingv5.Controls.Controls.Labels
         private void LblResult_Paint(object? sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            using (Font font = new Font("Segoe UI", 10, FontStyle.Bold))
+            using (Font font = new Font(this.fontName, 10, FontStyle.Bold))
             {
-                DrawTextInCenter(g, this.message.ToUpper(), font, Color.White);
+                DrawTextInCenter(g, this.message.ToUpper(), font, this.messageForeColor);
             }
 
         }
@@ -69,15 +106,32 @@ namespace iPakrkingv5.Controls.Controls.Labels
             // Adjust the font size based on the scaling factor
             fontSize *= scale;
 
+            fontSize = maxFontSize <= 0 ? fontSize : (fontSize < maxFontSize ? fontSize : maxFontSize);
+            this.CurrentFontSize = (int)fontSize;
+
             // Create a new font with the adjusted font size
             Font adjustedFont = new Font(font.FontFamily, fontSize, font.Style);
 
             // Recalculate the size of the text with the adjusted font size
             textSize = g.MeasureString(text, adjustedFont);
 
+            float textX = 0;
+            float textY = 0;
+            textY = centerY - (textSize.Height / 2);
+            if (this.TextAlign == ContentAlignment.MiddleCenter)
+            {
+                textX = centerX - (textSize.Width / 2);
+            }
+            else if (this.TextAlign == ContentAlignment.MiddleRight)
+            {
+                textX = this.Width - textSize.Width;
+            }
+            else
+            {
+                textX = 0;
+            }
             // Calculate the position to draw the text so it is centered
-            float textX = centerX - (textSize.Width / 2);
-            float textY = centerY - (textSize.Height / 2);
+
 
             // Draw the text
             using (SolidBrush brush = new SolidBrush(color))
@@ -88,6 +142,17 @@ namespace iPakrkingv5.Controls.Controls.Labels
             // Dispose of the adjusted font
             adjustedFont.Dispose();
         }
+        #endregion End Controls
+
+        #region Private Function
+
+        #endregion End Private Functin
+
+        #region Public Function
+
+        #endregion
+
+
 
     }
 }

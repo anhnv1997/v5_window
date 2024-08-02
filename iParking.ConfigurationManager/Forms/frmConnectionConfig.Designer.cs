@@ -78,6 +78,7 @@
             Controls.Add(panel1);
             Font = new Font("Segoe UI", 12F);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            KeyPreview = true;
             Margin = new Padding(4, 3, 4, 3);
             Name = "frmConnectionConfig";
             StartPosition = FormStartPosition.CenterScreen;

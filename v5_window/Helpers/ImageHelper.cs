@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kztek.Tools;
+using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -58,11 +59,18 @@ namespace iParkingv5_window.Helpers
             {
                 return new List<byte>();
             }
-            //var resizeImg = ResizeImage(imageIn, 720, 480);
             using (var ms = new MemoryStream())
             {
-                imageIn.Save(ms, ImageFormat.Png);
-                return ms.ToArray().ToList();
+                try
+                {
+                    imageIn.Save(ms, ImageFormat.Png);
+                    return ms.ToArray().ToList();
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
+                    return new List<byte>();
+                }
             }
         }
     }

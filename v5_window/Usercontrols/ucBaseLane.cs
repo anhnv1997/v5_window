@@ -231,12 +231,15 @@ namespace iParkingv5_window.Usercontrols
                 switch (ie.InputType)
                 {
                     case InputTupe.EmInputType.Loop:
-                        if (StaticPool.appOption.LoopDelay > 0)
+                        if (lane.loop)
                         {
-                            await Task.Delay(StaticPool.appOption.LoopDelay);
-                            lbl.UpdateResultMessage($"Nhận sự kiên Loop {ie.InputIndex}, chờ {StaticPool.appOption.LoopDelay} ms ", Color.DarkBlue);
+                            if (StaticPool.appOption.LoopDelay > 0)
+                            {
+                                await Task.Delay(StaticPool.appOption.LoopDelay);
+                                lbl.UpdateResultMessage($"Nhận sự kiên Loop {ie.InputIndex}, chờ {StaticPool.appOption.LoopDelay} ms ", Color.DarkBlue);
+                            }
+                            await ExcecuteLoopEvent(ie);
                         }
-                        await ExcecuteLoopEvent(ie);
                         break;
                     case InputTupe.EmInputType.Exit:
                         await ExcecuteExitEvent(ie);
@@ -262,7 +265,6 @@ namespace iParkingv5_window.Usercontrols
 
         }
 
-
         public Image? GetPlate(CardEventArgs ce, ref Image? overviewImg, ref Image? vehicleImg, VehicleBaseType vehicleBaseType,
                                 lblResult lblResult, TextBox txtPlate, MovablePictureBox picOverview, MovablePictureBox picVehicle, MovablePictureBox picLpr)
         {
@@ -282,6 +284,7 @@ namespace iParkingv5_window.Usercontrols
                     break;
             }
             ce.PlateNumber = plate;
+
             lblResult.UpdateResultMessage("Hiển thị hình ảnh sự kiện...", Color.DarkBlue);
             BaseLane.ShowImage(picOverview, overviewImg);
             BaseLane.ShowImage(picVehicle, vehicleImg);

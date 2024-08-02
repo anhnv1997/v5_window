@@ -24,5 +24,6 @@ namespace iParkingv5.Objects.Configs
         public string CheckForUpdatePath { get; set; } = "";
         public bool IsAllowEditPlateOut { get; set; } = false;
         public bool IsIntergratedScaleStation { get; set; } = false;
+        public bool IsCheckKey { get; set; } = true;
     }
 }

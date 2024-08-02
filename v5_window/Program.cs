@@ -10,6 +10,7 @@ using iParkingv5.Auth;
 using iParkingv5.FeeTest;
 using iParkingv5_window.Forms.SystemForms;
 using Kztek.Helper;
+using KztekKeyRegister;
 
 namespace v6_window
 {
@@ -27,61 +28,61 @@ namespace v6_window
 
         StartApp:
             {
-                const string appName = "IP_DA_V5_LU";
+                const string appName = "IP_DA_V5_WD";
                 PathManagement.baseBath = LogHelper.SaveLogFolder = Application.StartupPath;
                 LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Khởi chạy ứng dụng");
                 using (Mutex mutex = new Mutex(true, appName, out bool ownmutex))
                 {
                     if (ownmutex)
                     {
-                        //return;
-                        //if (Environment.MachineName.ToUpper() != "VIETANHPC")
-                        //{
-                        //    var frmLicenseValidatorForm = new LicenseValidatorForm();
-                        //    frmLicenseValidatorForm.Init(appCode);
-                        //    try
-                        //    {
-                        //        if (frmLicenseValidatorForm.LoadSavedLicense() == null)
-                        //        {
-                        //            bool isOpenActiveForm = MessageBox.Show("Ứng dụng chưa được kích hoạt, bạn có muốn kích hoạt phần mềm?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
+                        LoadSystemConfig();
+                        if (StaticPool.appOption.IsCheckKey)
+                        {
+                            var frmLicenseValidatorForm = new LicenseValidatorForm();
+                            frmLicenseValidatorForm.Init(appName);
+                            try
+                            {
+                                if (frmLicenseValidatorForm.LoadSavedLicense() == null)
+                                {
+                                    bool isOpenActiveForm = MessageBox.Show("Ứng dụng chưa được kích hoạt, bạn có muốn kích hoạt phần mềm?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
 
-                        //            if (isOpenActiveForm)
-                        //            {
-                        //                frmLicenseValidatorForm.ShowActivateForm();
-                        //            }
-                        //            else
-                        //            {
-                        //                Application.Exit();
-                        //                return;
-                        //            }
-                        //        }
-                        //    }
-                        //    catch (Exception ex)
-                        //    {
-                        //        bool isOpenActiveForm = MessageBox.Show("Ứng dụng chưa được kích hoạt, bạn có muốn kích hoạt phần mềm?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
+                                    if (isOpenActiveForm)
+                                    {
+                                        frmLicenseValidatorForm.ShowActivateForm();
+                                    }
+                                    else
+                                    {
+                                        Application.Exit();
+                                        return;
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                bool isOpenActiveForm = MessageBox.Show("Ứng dụng chưa được kích hoạt, bạn có muốn kích hoạt phần mềm?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
 
-                        //        if (isOpenActiveForm)
-                        //        {
-                        //            frmLicenseValidatorForm.ShowActivateForm();
-                        //            if (!frmLicenseValidatorForm.LicenseActivated)
-                        //            {
-                        //                MessageBox.Show("Kích hoạt không thành công " + ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        //                Application.Exit();
-                        //                return;
-                        //            }
-                        //        }
-                        //        else
-                        //        {
-                        //            Application.Exit();
-                        //            return;
-                        //        }
-                        //    }
-                        //}
+                                if (isOpenActiveForm)
+                                {
+                                    frmLicenseValidatorForm.ShowActivateForm();
+                                    if (!frmLicenseValidatorForm.LicenseActivated)
+                                    {
+                                        MessageBox.Show("Kích hoạt không thành công " + ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        Application.Exit();
+                                        return;
+                                    }
+                                }
+                                else
+                                {
+                                    Application.Exit();
+                                    return;
+                                }
+                            }
+                        }
+
                         //DahuaAccessControl.Init();
 
                         bool? y = null;
                         bool x = y ??= true;
-                        LoadSystemConfig();
                         CheckForUpdate();
                         LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Mở giao diện đăng nhập hệ thống");
                         Application.Run(new frmLogin(AppData.ApiServer, KzParkingv5BaseApi.server, OpenLoadingPage));
@@ -144,6 +145,7 @@ namespace v6_window
 
             try
             {
+                StaticPool.oemConfig = NewtonSoftHelper<OEMConfig>.DeserializeObjectFromPath(PathManagement.oemConfigPath) ?? new OEMConfig();
                 StaticPool.appOption = NewtonSoftHelper<AppOption>.DeserializeObjectFromPath(PathManagement.appOptionConfigPath) ?? new AppOption();
                 StaticPool.eInvoiceConfig = NewtonSoftHelper<EInvoiceConfig>.DeserializeObjectFromPath(PathManagement.einvoiceConfigPath) ?? new EInvoiceConfig();
                 StaticPool.lprConfig = NewtonSoftHelper<LprConfig>.DeserializeObjectFromPath(PathManagement.lprConfigPath) ?? new LprConfig();

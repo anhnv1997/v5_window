@@ -43,7 +43,7 @@
             // txtServerUrl
             // 
             txtServerUrl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtServerUrl.Location = new Point(143, 29);
+            txtServerUrl.Location = new Point(140, 17);
             txtServerUrl.Margin = new Padding(4, 3, 4, 3);
             txtServerUrl.Name = "txtServerUrl";
             txtServerUrl.Size = new Size(477, 29);
@@ -63,7 +63,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(6, 32);
+            label3.Location = new Point(3, 20);
             label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
             label3.Size = new Size(55, 21);
@@ -89,12 +89,12 @@
             groupBox2.Size = new Size(625, 287);
             groupBox2.TabIndex = 7;
             groupBox2.TabStop = false;
-            groupBox2.Text = "Thông tin thiết bị cân";
+            groupBox2.Text = "OEM";
             // 
             // chbIsUse
             // 
             chbIsUse.AutoSize = true;
-            chbIsUse.Location = new Point(143, 133);
+            chbIsUse.Location = new Point(140, 121);
             chbIsUse.Margin = new Padding(4, 3, 4, 3);
             chbIsUse.Name = "chbIsUse";
             chbIsUse.Size = new Size(87, 25);
@@ -105,7 +105,7 @@
             // txtPassword
             // 
             txtPassword.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtPassword.Location = new Point(143, 98);
+            txtPassword.Location = new Point(140, 86);
             txtPassword.Margin = new Padding(4, 3, 4, 3);
             txtPassword.Name = "txtPassword";
             txtPassword.PasswordChar = '*';
@@ -116,7 +116,7 @@
             // txtUsername
             // 
             txtUsername.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtUsername.Location = new Point(143, 64);
+            txtUsername.Location = new Point(140, 52);
             txtUsername.Margin = new Padding(4, 3, 4, 3);
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(477, 29);
@@ -125,7 +125,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(6, 102);
+            label2.Location = new Point(3, 90);
             label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
             label2.Size = new Size(75, 21);
@@ -135,7 +135,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(6, 67);
+            label1.Location = new Point(3, 55);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Size = new Size(111, 21);

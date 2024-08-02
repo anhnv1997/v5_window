@@ -29,11 +29,14 @@ namespace iParking.ConfigurationManager.UserControls
                 txtUpdatePath.Text = appOption.CheckForUpdatePath;
                 chbIsAllowEditPlateOut.Checked = appOption.IsAllowEditPlateOut;
                 chbIsIntergratedScaleStation.Checked = appOption.IsIntergratedScaleStation;
+                chbIsCheckKey.Checked = appOption.IsCheckKey;
             }
             txtWaitSwipeCardTime.TextChanged += TxtWaitSwipeCardTime_TextChanged;
             txtAllowOpenBarrieTime.TextChanged += TxtAllowOpenBarrieTime_TextChanged;
-
-
+        }
+        public void DisplayDevelopMode(bool isDisplay)
+        {
+            chbIsCheckKey.Visible = isDisplay;
         }
         #endregion End Forms
 
@@ -69,6 +72,7 @@ namespace iParking.ConfigurationManager.UserControls
                 CheckForUpdatePath = txtUpdatePath.Text,
                 IsAllowEditPlateOut = chbIsAllowEditPlateOut.Checked,
                 IsIntergratedScaleStation = chbIsIntergratedScaleStation.Checked,
+                IsCheckKey = chbIsCheckKey.Checked,
             };
         }
         #endregion End Public Function
