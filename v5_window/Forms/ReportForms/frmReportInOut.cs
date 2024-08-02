@@ -579,7 +579,7 @@ namespace iParkingv5_window.Forms.ReportForms
             }
             FrmReportInOut_SizeChanged(null, null);
         }
-        private async Task DisplayEventOutData(List<EventOutData> eventOutData)
+        private async Task DisplayEventOutData(List<EventOutReport> eventOutData)
         {
             try
             {
@@ -594,33 +594,33 @@ namespace iParkingv5_window.Forms.ReportForms
                         row.CreateCells(dgvData);
                     }));
                     int i = 0;
-                    DateTime? timeIn = item.eventIn.DatetimeIn == null ? null : item.eventIn.DatetimeIn.Value;
-                    string moneyStr = TextFormatingTool.GetMoneyFormat(item.charge.ToString());
+                    DateTime? timeIn = item.EventIn.DateTimeIn == null ? null : item.EventIn.DateTimeIn.Value;
+                    string moneyStr = TextFormatingTool.GetMoneyFormat(item.Charge.ToString());
 
                     row.Cells[dgvData.Columns[col_event_out_id].Index].Value = item.Id;
-                    row.Cells[dgvData.Columns[col_event_in_id].Index].Value = item.eventIn.Id;
+                    row.Cells[dgvData.Columns[col_event_in_id].Index].Value = item.EventIn.Id;
                     row.Cells[dgvData.Columns[col_invoice_pending_id].Index].Value = "";
                     row.Cells[dgvData.Columns[col_invoice_id].Index].Value = "";
-                    row.Cells[dgvData.Columns[col_file_keys_in].Index].Value = item.eventIn.images == null ? "[]" : Newtonsoft.Json.JsonConvert.SerializeObject(item.eventIn.images);
+                    row.Cells[dgvData.Columns[col_file_keys_in].Index].Value = item.EventIn.images == null ? "[]" : Newtonsoft.Json.JsonConvert.SerializeObject(item.EventIn.images);
                     row.Cells[dgvData.Columns[col_file_keys_out].Index].Value = item.images == null ? "[]" : Newtonsoft.Json.JsonConvert.SerializeObject(item.images);
                     row.Cells[dgvData.Columns[col_index].Index].Value = rows.Count + 1;
-                    row.Cells[dgvData.Columns[col_plate_in].Index].Value = item.eventIn.PlateNumber;
+                    row.Cells[dgvData.Columns[col_plate_in].Index].Value = item.EventIn.PlateNumber;
                     row.Cells[dgvData.Columns[col_plate_out].Index].Value = item.PlateNumber;
                     row.Cells[dgvData.Columns[col_time_in].Index].Value = timeIn.ToVNTime();
                     row.Cells[dgvData.Columns[col_time_out].Index].Value = item.DatetimeOut.ToVNTime();
-                    row.Cells[dgvData.Columns[col_parking_time].Index].Value = item.DatetimeOut!.Value - item.eventIn.DatetimeIn!.Value;
+                    row.Cells[dgvData.Columns[col_parking_time].Index].Value = item.DatetimeOut!.Value - item.EventIn.DateTimeIn!.Value;
                     row.Cells[dgvData.Columns[col_identity_group_name].Index].Value = item.IdentityGroup.Name;
                     row.Cells[dgvData.Columns[col_parking_fee].Index].Value = moneyStr.Substring(0, moneyStr.Length - 1);
                     row.Cells[dgvData.Columns[col_identity_code].Index].Value = item.Identity.Code;
-                    row.Cells[dgvData.Columns[col_user_in].Index].Value = item.eventIn.createdBy;
-                    row.Cells[dgvData.Columns[col_user_out].Index].Value = item.createdBy;
+                    row.Cells[dgvData.Columns[col_user_in].Index].Value = item.EventIn.CreatedBy;
+                    row.Cells[dgvData.Columns[col_user_out].Index].Value = item.CreatedBy;
                     row.Cells[dgvData.Columns[col_invoice_template].Index].Value = "";
                     row.Cells[dgvData.Columns[col_invoice_no].Index].Value = "";
-                    row.Cells[dgvData.Columns[col_lane_in_name].Index].Value = item.eventIn.Lane.name;
+                    row.Cells[dgvData.Columns[col_lane_in_name].Index].Value = item.EventIn.Lane.name;
                     row.Cells[dgvData.Columns[col_lane_out_name].Index].Value = item.Lane.name;
-                    row.Cells[dgvData.Columns[col_note].Index].Value = item.eventIn.note;
+                    row.Cells[dgvData.Columns[col_note].Index].Value = item.EventIn.Note;
                     rows.Add(row);
-                    total += item.charge;
+                    total += item.Charge;
                 }
                 this.Invoke(new Action(() =>
                 {

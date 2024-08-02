@@ -6,6 +6,6 @@ namespace iParkingv5.ApiManager.interfaces
 {
     public interface iPaymentService
     {
-        Task<PaymentTransaction> CreatePaymentTransaction(AddEventOutResponse eventOut);
+        Task<PaymentTransaction> CreatePaymentTransaction(EventOutData eventOut);
     }
 }

@@ -31,25 +31,35 @@ namespace iParkingv5_window.Forms.DataForms
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConfirmOut));
             lblMessage = new Label();
             panelAction = new Panel();
+            lblGuide = new Label();
             btnCancel1 = new LblCancel();
             btnOk = new BtnOk();
-            dgvEventInData = new DataGridView();
-            Column1 = new DataGridViewTextBoxColumn();
-            Column2 = new DataGridViewTextBoxColumn();
             panel1 = new Panel();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            lblIdentityGroup = new Label();
+            lblVehicleType = new Label();
+            label6 = new Label();
+            label5 = new Label();
+            label7 = new Label();
+            txtPlateOut = new TextBox();
+            label3 = new Label();
+            label2 = new Label();
+            label1 = new Label();
+            label4 = new Label();
+            lblTimeOut = new Label();
+            lblTimeIn = new Label();
+            lblPlateIn = new Label();
+            lblIdentityCode = new Label();
             panelEventPic = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
             picOverview = new MovablePictureBox();
             picVehicle = new MovablePictureBox();
-            lblGuide = new Label();
             panelAction.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvEventInData).BeginInit();
             panel1.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
             panelEventPic.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picOverview).BeginInit();
@@ -78,6 +88,18 @@ namespace iParkingv5_window.Forms.DataForms
             panelAction.Size = new Size(945, 62);
             panelAction.TabIndex = 1;
             // 
+            // lblGuide
+            // 
+            lblGuide.Dock = DockStyle.Left;
+            lblGuide.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblGuide.ForeColor = Color.FromArgb(255, 128, 0);
+            lblGuide.Location = new Point(0, 0);
+            lblGuide.Name = "lblGuide";
+            lblGuide.Size = new Size(624, 62);
+            lblGuide.TabIndex = 4;
+            lblGuide.Text = "Vui lòng kiểm tra và nhập biển số phương tiện vào ô biển số ra.\r\nNhấn Enter để xác nhận, Esc để hủy.";
+            lblGuide.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // btnCancel1
             // 
             btnCancel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
@@ -87,7 +109,7 @@ namespace iParkingv5_window.Forms.DataForms
             btnCancel1.Location = new Point(865, 14);
             btnCancel1.Name = "btnCancel1";
             btnCancel1.Size = new Size(57, 30);
-            btnCancel1.TabIndex = 3;
+            btnCancel1.TabIndex = 2;
             btnCancel1.Text = "Đóng";
             // 
             // btnOk
@@ -99,61 +121,205 @@ namespace iParkingv5_window.Forms.DataForms
             btnOk.Location = new Point(784, 14);
             btnOk.Name = "btnOk";
             btnOk.Size = new Size(83, 30);
-            btnOk.TabIndex = 2;
+            btnOk.TabIndex = 1;
             btnOk.Text = "Xác nhận";
-            // 
-            // dgvEventInData
-            // 
-            dgvEventInData.AllowUserToAddRows = false;
-            dgvEventInData.AllowUserToDeleteRows = false;
-            dgvEventInData.AllowUserToResizeColumns = false;
-            dgvEventInData.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(192, 255, 255);
-            dgvEventInData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            dgvEventInData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            dgvEventInData.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            dgvEventInData.BackgroundColor = SystemColors.Control;
-            dgvEventInData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvEventInData.ColumnHeadersVisible = false;
-            dgvEventInData.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2 });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11.25F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.Padding = new Padding(3);
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dgvEventInData.DefaultCellStyle = dataGridViewCellStyle2;
-            dgvEventInData.Dock = DockStyle.Fill;
-            dgvEventInData.Location = new Point(0, 0);
-            dgvEventInData.Name = "dgvEventInData";
-            dgvEventInData.RowHeadersVisible = false;
-            dgvEventInData.RowTemplate.Height = 29;
-            dgvEventInData.Size = new Size(624, 365);
-            dgvEventInData.TabIndex = 2;
-            // 
-            // Column1
-            // 
-            Column1.HeaderText = "Header";
-            Column1.Name = "Column1";
-            Column1.Width = 5;
-            // 
-            // Column2
-            // 
-            Column2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Column2.HeaderText = "Content";
-            Column2.Name = "Column2";
             // 
             // panel1
             // 
-            panel1.Controls.Add(dgvEventInData);
+            panel1.Controls.Add(tableLayoutPanel2);
             panel1.Controls.Add(panelEventPic);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 58);
             panel1.Name = "panel1";
             panel1.Size = new Size(945, 365);
             panel1.TabIndex = 3;
+            // 
+            // tableLayoutPanel2
+            // 
+            tableLayoutPanel2.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
+            tableLayoutPanel2.ColumnCount = 2;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.91667F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 77.08333F));
+            tableLayoutPanel2.Controls.Add(lblIdentityGroup, 1, 5);
+            tableLayoutPanel2.Controls.Add(lblVehicleType, 1, 6);
+            tableLayoutPanel2.Controls.Add(label6, 0, 6);
+            tableLayoutPanel2.Controls.Add(label5, 0, 5);
+            tableLayoutPanel2.Controls.Add(label7, 0, 0);
+            tableLayoutPanel2.Controls.Add(txtPlateOut, 1, 0);
+            tableLayoutPanel2.Controls.Add(label3, 0, 4);
+            tableLayoutPanel2.Controls.Add(label2, 0, 3);
+            tableLayoutPanel2.Controls.Add(label1, 0, 2);
+            tableLayoutPanel2.Controls.Add(label4, 0, 1);
+            tableLayoutPanel2.Controls.Add(lblTimeOut, 1, 3);
+            tableLayoutPanel2.Controls.Add(lblTimeIn, 1, 2);
+            tableLayoutPanel2.Controls.Add(lblPlateIn, 1, 1);
+            tableLayoutPanel2.Controls.Add(lblIdentityCode, 1, 4);
+            tableLayoutPanel2.Dock = DockStyle.Fill;
+            tableLayoutPanel2.Font = new Font("Segoe UI", 12F);
+            tableLayoutPanel2.Location = new Point(0, 0);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 7;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 17.3076916F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 14.5604391F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 13.5135145F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 13.5135145F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 13.5135145F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 13.5135145F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 13.5135145F));
+            tableLayoutPanel2.Size = new Size(624, 365);
+            tableLayoutPanel2.TabIndex = 4;
+            // 
+            // lblIdentityGroup
+            // 
+            lblIdentityGroup.Dock = DockStyle.Fill;
+            lblIdentityGroup.Font = new Font("Segoe UI", 12F);
+            lblIdentityGroup.Location = new Point(147, 264);
+            lblIdentityGroup.Name = "lblIdentityGroup";
+            lblIdentityGroup.Size = new Size(473, 48);
+            lblIdentityGroup.TabIndex = 13;
+            lblIdentityGroup.Text = "_";
+            lblIdentityGroup.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // lblVehicleType
+            // 
+            lblVehicleType.Dock = DockStyle.Fill;
+            lblVehicleType.Font = new Font("Segoe UI", 12F);
+            lblVehicleType.Location = new Point(147, 313);
+            lblVehicleType.Name = "lblVehicleType";
+            lblVehicleType.Size = new Size(473, 51);
+            lblVehicleType.TabIndex = 12;
+            lblVehicleType.Text = "_";
+            lblVehicleType.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // label6
+            // 
+            label6.Dock = DockStyle.Fill;
+            label6.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label6.Location = new Point(4, 313);
+            label6.Name = "label6";
+            label6.Size = new Size(136, 51);
+            label6.TabIndex = 4;
+            label6.Text = "Loại Xe";
+            label6.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // label5
+            // 
+            label5.Dock = DockStyle.Fill;
+            label5.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label5.Location = new Point(4, 264);
+            label5.Name = "label5";
+            label5.Size = new Size(136, 48);
+            label5.TabIndex = 3;
+            label5.Text = "Nhóm";
+            label5.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // label7
+            // 
+            label7.Dock = DockStyle.Fill;
+            label7.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label7.Location = new Point(4, 1);
+            label7.Name = "label7";
+            label7.Size = new Size(136, 62);
+            label7.TabIndex = 5;
+            label7.Text = "Biển Số Ra";
+            label7.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // txtPlateOut
+            // 
+            txtPlateOut.Dock = DockStyle.Bottom;
+            txtPlateOut.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
+            txtPlateOut.Location = new Point(147, 13);
+            txtPlateOut.Name = "txtPlateOut";
+            txtPlateOut.Size = new Size(473, 47);
+            txtPlateOut.TabIndex = 0;
+            // 
+            // label3
+            // 
+            label3.Dock = DockStyle.Fill;
+            label3.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label3.Location = new Point(4, 215);
+            label3.Name = "label3";
+            label3.Size = new Size(136, 48);
+            label3.TabIndex = 1;
+            label3.Text = "Mã Định Danh";
+            label3.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // label2
+            // 
+            label2.Dock = DockStyle.Fill;
+            label2.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label2.Location = new Point(4, 166);
+            label2.Name = "label2";
+            label2.Size = new Size(136, 48);
+            label2.TabIndex = 0;
+            label2.Text = "Giờ ra";
+            label2.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // label1
+            // 
+            label1.Dock = DockStyle.Fill;
+            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label1.Location = new Point(4, 117);
+            label1.Name = "label1";
+            label1.Size = new Size(136, 48);
+            label1.TabIndex = 0;
+            label1.Text = "Giờ Vào";
+            label1.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // label4
+            // 
+            label4.Dock = DockStyle.Fill;
+            label4.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label4.Location = new Point(4, 64);
+            label4.Name = "label4";
+            label4.Size = new Size(136, 52);
+            label4.TabIndex = 2;
+            label4.Text = "Biển Số Vào";
+            label4.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // lblTimeOut
+            // 
+            lblTimeOut.Dock = DockStyle.Fill;
+            lblTimeOut.Font = new Font("Segoe UI", 12F);
+            lblTimeOut.Location = new Point(147, 166);
+            lblTimeOut.Name = "lblTimeOut";
+            lblTimeOut.Size = new Size(473, 48);
+            lblTimeOut.TabIndex = 8;
+            lblTimeOut.Text = "_";
+            lblTimeOut.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // lblTimeIn
+            // 
+            lblTimeIn.Dock = DockStyle.Fill;
+            lblTimeIn.Font = new Font("Segoe UI", 12F);
+            lblTimeIn.Location = new Point(147, 117);
+            lblTimeIn.Name = "lblTimeIn";
+            lblTimeIn.Size = new Size(473, 48);
+            lblTimeIn.TabIndex = 7;
+            lblTimeIn.Text = "_";
+            lblTimeIn.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // lblPlateIn
+            // 
+            lblPlateIn.Dock = DockStyle.Fill;
+            lblPlateIn.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblPlateIn.Location = new Point(147, 64);
+            lblPlateIn.Name = "lblPlateIn";
+            lblPlateIn.Size = new Size(473, 52);
+            lblPlateIn.TabIndex = 10;
+            lblPlateIn.Text = "_";
+            lblPlateIn.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // lblIdentityCode
+            // 
+            lblIdentityCode.Dock = DockStyle.Fill;
+            lblIdentityCode.Font = new Font("Segoe UI", 12F);
+            lblIdentityCode.Location = new Point(147, 215);
+            lblIdentityCode.Name = "lblIdentityCode";
+            lblIdentityCode.Size = new Size(473, 48);
+            lblIdentityCode.TabIndex = 9;
+            lblIdentityCode.Text = "_";
+            lblIdentityCode.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // panelEventPic
             // 
@@ -199,18 +365,6 @@ namespace iParkingv5_window.Forms.DataForms
             picVehicle.TabIndex = 0;
             picVehicle.TabStop = false;
             // 
-            // lblGuide
-            // 
-            lblGuide.Dock = DockStyle.Left;
-            lblGuide.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lblGuide.ForeColor = Color.FromArgb(255, 128, 0);
-            lblGuide.Location = new Point(0, 0);
-            lblGuide.Name = "lblGuide";
-            lblGuide.Size = new Size(624, 62);
-            lblGuide.TabIndex = 4;
-            lblGuide.Text = "Vui lòng kiểm tra và nhập biển số phương tiện  vào ô biển số ra";
-            lblGuide.TextAlign = ContentAlignment.MiddleLeft;
-            // 
             // frmConfirmOut
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -223,15 +377,18 @@ namespace iParkingv5_window.Forms.DataForms
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.Fixed3D;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            KeyPreview = true;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "frmConfirmOut";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Xác nhận thông tin";
+            KeyDown += frmConfirmOut_KeyDown;
             panelAction.ResumeLayout(false);
             panelAction.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvEventInData).EndInit();
             panel1.ResumeLayout(false);
+            tableLayoutPanel2.ResumeLayout(false);
+            tableLayoutPanel2.PerformLayout();
             panelEventPic.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picOverview).EndInit();
@@ -245,14 +402,26 @@ namespace iParkingv5_window.Forms.DataForms
         private Panel panelAction;
         private BtnOk btnOk;
         private LblCancel btnCancel1;
-        private DataGridView dgvEventInData;
         private Panel panel1;
         private Panel panelEventPic;
         private TableLayoutPanel tableLayoutPanel1;
         private MovablePictureBox picOverview;
         private MovablePictureBox picVehicle;
-        private DataGridViewTextBoxColumn Column1;
-        private DataGridViewTextBoxColumn Column2;
         private Label lblGuide;
+        private TableLayoutPanel tableLayoutPanel2;
+        private Label label6;
+        private Label label4;
+        private Label label3;
+        private Label label2;
+        private Label label1;
+        private Label label7;
+        private Label lblVehicleType;
+        private Label lblPlateIn;
+        private Label lblIdentityCode;
+        private Label lblTimeOut;
+        private Label lblTimeIn;
+        private Label label5;
+        private TextBox txtPlateOut;
+        private Label lblIdentityGroup;
     }
 }

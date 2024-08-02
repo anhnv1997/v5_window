@@ -89,7 +89,7 @@
             groupBox2.Size = new Size(625, 287);
             groupBox2.TabIndex = 7;
             groupBox2.TabStop = false;
-            groupBox2.Text = "OEM";
+            groupBox2.Text = "Third Party";
             // 
             // chbIsUse
             // 

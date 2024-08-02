@@ -123,8 +123,15 @@ namespace iParkingv5_window.Usercontrols
         {
             pictureBox.BeginInvoke(new Action(() =>
             {
-                pictureBox.Image = img == null ? pictureBox.ErrorImage : img;
-                pictureBox.Refresh();
+                try
+                {
+                    Bitmap? bmp = img == null ? null : new Bitmap(img);
+                    pictureBox.Image = bmp == null ? pictureBox.ErrorImage : bmp;
+                    pictureBox.Refresh();
+                }
+                catch (Exception ex)
+                {
+                }
             }));
         }
         public static void UpdateResultMessage(this lblResult lblResult, string message, Color backColor)

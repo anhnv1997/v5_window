@@ -7,7 +7,7 @@ using static iParkingv5.Objects.Enums.ParkingImageType;
 
 namespace iParkingv5.Objects.EventDatas
 {
-    public class AddEventOutResponse
+    public class AddEventOutResponse1
     {
         public string invoiceId { get; set; }
         public bool OpenBarrier { get; set; }

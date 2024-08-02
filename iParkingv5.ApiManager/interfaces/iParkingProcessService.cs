@@ -4,20 +4,21 @@ using static iParkingv5.Objects.Enums.ParkingImageType;
 using System.Threading.Tasks;
 using iParkingv5.Objects.Datas.parking_service;
 using iParkingv5.Objects.EventDatas;
+using System;
 
 namespace iParkingv5.ApiManager.interfaces
 {
     public interface iParkingProcessService
     {
-        Task<EventInData> PostCheckInAsync(
+        Task<Tuple<EventInData, BaseErrorData>> PostCheckInAsync(
     string _laneId, string _plateNumber, Identity identity, Dictionary<EmParkingImageType, List<List<byte>>> images,
     bool isForce = false, RegisteredVehicle registeredVehicle = null, string note = "");
         Task<bool> UpdateEventInPlateAsync(string eventId, string newPlate, string oldPlate);
 
 
         Task<bool> UpdateEventOutPlate(string eventId, string newPlate, string oldPlate);
-        Task<AddEventOutResponse> PostCheckOutAsync(string _laneId, string _plateNumber, Identity identitiy, Dictionary<EmParkingImageType, List<List<byte>>> images, bool isForce);
-        Task<bool> CommitOutAsync(AddEventOutResponse eventOut);
+        Task<Tuple<EventOutData, BaseErrorData>> PostCheckOutAsync(string _laneId, string _plateNumber, Identity identitiy, Dictionary<EmParkingImageType, List<List<byte>>> images, bool isForce);
+        Task<bool> CommitOutAsync(EventOutData eventOut);
         Task<bool> CancelCheckOut(string eventOutId);
 
         Task<AbnormalEvent> CreateAlarmAsync(string identityCode, string laneId, string plate, AbnormalCode abnormalCode,

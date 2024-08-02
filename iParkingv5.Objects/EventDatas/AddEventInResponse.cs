@@ -6,53 +6,6 @@ using System.Text;
 
 namespace iParkingv5.Objects.EventDatas
 {
-    public class AddEventInResponse
-    {
-        public string Id { get; set; }
-        public string PlateNumber { get; set; }
-        public bool OpenBarrier { get; set; }
-        public Identity identity { get; set; }
-        public IdentityGroup identityGroup { get; set; }
-        public List<string> fileKeys { get; set; }
-        public string createdUtc { get; set; }
-        public Lane lane { get; set; }
-        public DateTime? DatetimeIn
-        {
-            get
-            {
-                try
-                {
-                    if (string.IsNullOrEmpty(createdUtc))
-                    {
-                        return null;
-                    }
-                    if (createdUtc.Contains("T"))
-                    {
-                        return DateTime.ParseExact(createdUtc.Substring(0, "yyyy-MM-ddTHH:mm:ss".Length), "yyyy-MM-ddTHH:mm:ss", null).AddHours(7);
-                    }
-                    else
-                    {
-                        return DateTime.Parse(createdUtc).AddHours(7);
-                    }
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-        }
-        public long charge { get; set; }
-
-        public bool IsSuccess { get; set; } = true;
-        public string message { get; set; } = string.Empty;
-        public string errorCode { get; set; } = string.Empty;
-        public string detailCode { get; set; } = string.Empty;
-        public List<ErrorDescription> fields { get; set; } = null;
-        public string Note { get; set; }
-        public string thirdPartyNote { get; set; }
-        //public RegisteredVehicle registeredVehicle { get; set; }
-        //public Customer customer { get; set; }
-    }
     public class ErrorDescription
     {
         public string name { get; set; }
@@ -103,7 +56,7 @@ namespace iParkingv5.Objects.EventDatas
                     return "Xe chưa được phép ra".ToUpper();
                 }
             }
-            return name + " - " + errorCode;
+            return  name + " - " + errorCode;
         }
     }
 }

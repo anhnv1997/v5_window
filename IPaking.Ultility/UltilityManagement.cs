@@ -9,7 +9,11 @@
 
         public static string ToVNTime(this DateTime? time)
         {
-            return time?.ToString(fullDayFormat) ??"";
+            return time?.ToString(fullDayFormat) ?? "";
+        }
+        public static string ToVNTime(this DateTime time)
+        {
+            return time.ToString(fullDayFormat) ?? "";
         }
     }
 }

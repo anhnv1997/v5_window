@@ -89,7 +89,11 @@ namespace iParkingv5_window.Forms.DataForms
             InitializeComponent();
             this.Load += FrmMain_Load;
             this.Shown += FrmMain_Shown;
+
             lblServerName.Text = Environment.MachineName;
+            lblCompanyName.Text = StaticPool.oemConfig.CompanyName;
+            this.Text = StaticPool.oemConfig.AppName;
+
             controllerEventInitQueueName = "queue.ControllerEvent";
             controllerEventInitQueueName = controllerEventInitQueueName + " - " + StaticPool.selectedComputer.IpAddress + StaticPool.selectedComputer.Id;
             this.activeLanes = activeLanes;
@@ -111,7 +115,7 @@ namespace iParkingv5_window.Forms.DataForms
             {
                 tsmiActiveLanesConfig.Visible = false;
             }
-            lblSoftwareName.Text = this.Text + " - " + Assembly.GetExecutingAssembly().GetName().Version!.ToString();
+            lblSoftwareName.Text = StaticPool.oemConfig.AppName + " - " + Assembly.GetExecutingAssembly().GetName().Version!.ToString();
             lblSoftwareName.Width = lblSoftwareName.PreferredSize.Width;
             this.FormClosing += frmMain_FormClosing;
         }

@@ -20,7 +20,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
     public class KzParkingv5ReportingService : iReportingService
     {
 
-        public async Task<Report<EventInData>> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
+        public async Task<Report<EventInReport>> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
                                     string identityGroupId, string vehicleTypeId, string laneId, string user,
                                     int pageIndex = 1, int pageSize = 100)
         {
@@ -66,32 +66,32 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventInData>>>.GetBaseResponse(response.Item1);
+                var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventInReport>>>.GetBaseResponse(response.Item1);
                 if (baseResponse != null)
                 {
-                    Report<EventInData> report = new Report<EventInData>()
+                    Report<EventInReport> report = new Report<EventInReport>()
                     {
                         TotalPage = baseResponse.totalPage,
                         TotalCount = baseResponse.totalCount,
-                        data = baseResponse.data ?? new List<EventInData>(),
+                        data = baseResponse.data ?? new List<EventInReport>(),
                     };
                     return report;
                 }
-                return new Report<EventInData>()
+                return new Report<EventInReport>()
                 {
                     TotalPage = 0,
                     TotalCount = 0,
-                    data = new List<EventInData>(),
+                    data = new List<EventInReport>(),
                 };
             }
-            return new Report<EventInData>()
+            return new Report<EventInReport>()
             {
                 TotalPage = 0,
                 TotalCount = 0,
-                data = new List<EventInData>(),
+                data = new List<EventInReport>(),
             };
         }
-        public async Task<Report<EventOutData>> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000)
+        public async Task<Report<EventOutReport>> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000)
         {
             server = server.StandardlizeServerName();
             string apiUrl = server + "event-out/search";
@@ -132,29 +132,29 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventOutData>>>.GetBaseResponse(response.Item1);
+                var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventOutReport>>>.GetBaseResponse(response.Item1);
                 if (baseResponse != null)
                 {
-                    Report<EventOutData> report = new Report<EventOutData>()
+                    Report<EventOutReport> report = new Report<EventOutReport>()
                     {
                         TotalPage = baseResponse.totalPage,
                         TotalCount = baseResponse.totalCount,
-                        data = baseResponse.data ?? new List<EventOutData>(),
+                        data = baseResponse.data ?? new List<EventOutReport>(),
                     };
                     return report;
                 }
-                return new Report<EventOutData>()
+                return new Report<EventOutReport>()
                 {
                     TotalPage = 0,
                     TotalCount = 0,
-                    data = new List<EventOutData>(),
+                    data = new List<EventOutReport>(),
                 };
             }
-            return new Report<EventOutData>()
+            return new Report<EventOutReport>()
             {
                 TotalPage = 0,
                 TotalCount = 0,
-                data = new List<EventOutData>(),
+                data = new List<EventOutReport>(),
             };
         }
 

@@ -53,17 +53,45 @@ namespace iParkingv5_window.Helpers
             return null;
         }
 
+        public static async Task<List<byte>> ImageToByteArrayAsync(this Image? imageIn)
+        {
+            if (imageIn == null)
+            {
+                return new List<byte>();
+            }
+            return await Task.Run(() =>
+            {
+                Bitmap? bmp = new Bitmap(imageIn);
+
+                using (var ms = new MemoryStream())
+                {
+                    try
+                    {
+                        bmp.Save(ms, ImageFormat.Png);
+                        return ms.ToArray().ToList();
+                    }
+                    catch (Exception ex)
+                    {
+                        LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
+                        return new List<byte>();
+                    }
+                }
+            });
+        }
+
         public static List<byte> ImageToByteArray(this Image? imageIn)
         {
             if (imageIn == null)
             {
                 return new List<byte>();
             }
+            Bitmap? bmp = new Bitmap(imageIn);
+
             using (var ms = new MemoryStream())
             {
                 try
                 {
-                    imageIn.Save(ms, ImageFormat.Png);
+                    bmp.Save(ms, ImageFormat.Png);
                     return ms.ToArray().ToList();
                 }
                 catch (Exception ex)

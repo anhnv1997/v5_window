@@ -507,7 +507,7 @@ namespace iParkingv5_window.Forms.ReportForms
             panelData.Refresh();
         }
 
-        private void DisplayEventInData(List<EventInData> eventInReports)
+        private void DisplayEventInData(List<EventInReport> eventInReports)
         {
             try
             {
@@ -529,10 +529,10 @@ namespace iParkingv5_window.Forms.ReportForms
                     row.Cells[dgvData.Columns[col_register_vehicle_id].Index].Value = item.vehicle?.Id;
                     row.Cells[dgvData.Columns[col_index].Index].Value = (rows.Count + 1).ToString();
                     row.Cells[dgvData.Columns[col_plate].Index].Value = item.PlateNumber;
-                    row.Cells[dgvData.Columns[col_time_in].Index].Value = item.DatetimeIn.ToVNTime();
-                    row.Cells[dgvData.Columns[col_note].Index].Value = item.note;
+                    row.Cells[dgvData.Columns[col_time_in].Index].Value = item.DateTimeIn.ToVNTime();
+                    row.Cells[dgvData.Columns[col_note].Index].Value = item.Note;
                     row.Cells[dgvData.Columns[col_identity_group_name].Index].Value = GetIdentityGroupName(item.IdentityGroup.Id);
-                    row.Cells[dgvData.Columns[col_user].Index].Value = item.createdBy;
+                    row.Cells[dgvData.Columns[col_user].Index].Value = item.CreatedBy;
                     row.Cells[dgvData.Columns[col_lane_in_name].Index].Value = item.Lane.name;
                     row.Cells[dgvData.Columns[col_identity_name].Index].Value = item.Identity.Name;
                     row.Cells[dgvData.Columns[col_identity_code].Index].Value = item.Identity.Code;

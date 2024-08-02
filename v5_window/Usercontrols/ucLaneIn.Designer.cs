@@ -68,6 +68,7 @@ namespace iParkingv5_window.Usercontrols
             tableLayoutPanel3 = new TableLayoutPanel();
             label4 = new Label();
             label5 = new Label();
+            timerRefreshUI = new System.Windows.Forms.Timer(components);
             panelCameras.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainerMain).BeginInit();
             splitContainerMain.Panel1.SuspendLayout();
@@ -700,6 +701,11 @@ namespace iParkingv5_window.Usercontrols
             label5.TabIndex = 0;
             label5.Text = "GHI CHÚ DỊCH VỤ HẠ TẦNG";
             // 
+            // timerRefreshUI
+            // 
+            timerRefreshUI.Interval = 1000;
+            timerRefreshUI.Tick += timerRefreshUI_Tick;
+            // 
             // ucLaneIn
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -810,5 +816,6 @@ namespace iParkingv5_window.Usercontrols
         private Panel panelLpr;
         private Panel panelEventInfo;
         private SplitContainer splitContainerCamera;
+        private System.Windows.Forms.Timer timerRefreshUI;
     }
 }

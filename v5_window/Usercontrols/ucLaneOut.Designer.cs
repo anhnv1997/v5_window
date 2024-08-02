@@ -80,6 +80,7 @@ namespace iParkingv5_window.Usercontrols
             btnPrintTicket = new Button();
             btnOpenBarrie = new Button();
             toolTipPrint = new ToolTip(components);
+            timerRefreshUI = new System.Windows.Forms.Timer(components);
             panelCameras.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainerMain).BeginInit();
             splitContainerMain.Panel1.SuspendLayout();
@@ -872,7 +873,6 @@ namespace iParkingv5_window.Usercontrols
             btnPrintEInvoiceTicket.Text = "In vé xe \r\nInternet";
             btnPrintEInvoiceTicket.TextImageRelation = TextImageRelation.ImageAboveText;
             btnPrintEInvoiceTicket.UseVisualStyleBackColor = false;
-            btnPrintEInvoiceTicket.Click += btnPrintEInvoiceTicket_Click;
             // 
             // btnPrintTicket
             // 
@@ -902,6 +902,11 @@ namespace iParkingv5_window.Usercontrols
             btnOpenBarrie.TextImageRelation = TextImageRelation.ImageAboveText;
             btnOpenBarrie.UseVisualStyleBackColor = false;
             btnOpenBarrie.Click += btnOpenBarrie_Click;
+            // 
+            // timerRefreshUI
+            // 
+            timerRefreshUI.Interval = 1000;
+            timerRefreshUI.Tick += timerRefreshUI_Tick;
             // 
             // ucLaneOut
             // 
@@ -1028,5 +1033,6 @@ namespace iParkingv5_window.Usercontrols
         private Label label5;
         private Label label6;
         private SplitContainer splitContainerCamera;
+        private System.Windows.Forms.Timer timerRefreshUI;
     }
 }

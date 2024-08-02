@@ -16,7 +16,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 {
     public class KzParkingv5PaymentService : iPaymentService
     {
-        public async Task<PaymentTransaction> CreatePaymentTransaction(AddEventOutResponse eventOut)
+        public async Task<PaymentTransaction> CreatePaymentTransaction(EventOutData eventOut)
         {
             server = server.StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.PaymentTransaction);
@@ -28,7 +28,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             {
                 targetId = eventOut.Id,
                 targetType = InvoiceTargetType.EventOut,
-                amount = eventOut.charge,
+                amount = eventOut.Charge,
 
                 //details = new List<PaymentDetail>()
                 //{

@@ -8,37 +8,21 @@ using static iParkingv5.Objects.Enums.ParkingImageType;
 
 namespace iParkingv5.Objects.EventDatas
 {
-    public class EventInData
+    public class EventInData : BaseEventData
     {
-        public string Id { get; set; }
-        public string PlateNumber { get; set; }
-        public string note { get; set; }
-        public string createdBy { get; set; }
-        public string createdUtc { get; set; }
-        public Lane Lane { get; set; }
-        public Identity Identity { get; set; }
-        public Identity IdentityGroup { get; set; }
-        public bool OpenBarrier { get; set; }
-        public List<ErrorDescription> fields { get; set; } = null;
-        public bool IsSuccess { get; set; } = true;
-        public string message { get; set; } = string.Empty;
-        public string errorCode { get; set; } = string.Empty;
-        public string detailCode { get; set; } = string.Empty;
-        public int Charge { get; set; } = 0;
-        public Dictionary<EmParkingImageType, List<ImageData>> images { get; set; }
-        public DateTime? DatetimeIn
+        public DateTime? DateTimeIn
         {
             get
             {
                 try
                 {
-                    if (createdUtc.Contains("T"))
+                    if (CreatedUtc.Contains("T"))
                     {
-                        return DateTime.ParseExact(createdUtc.Substring(0, "yyyy-MM-ddTHH:mm:ss".Length), "yyyy-MM-ddTHH:mm:ss", null).AddHours(7);
+                        return DateTime.ParseExact(CreatedUtc.Substring(0, "yyyy-MM-ddTHH:mm:ss".Length), "yyyy-MM-ddTHH:mm:ss", null).AddHours(7);
                     }
                     else
                     {
-                        return DateTime.Parse(createdUtc).AddHours(7);
+                        return DateTime.Parse(CreatedUtc).AddHours(7);
                     }
                 }
                 catch
@@ -47,8 +31,6 @@ namespace iParkingv5.Objects.EventDatas
                 }
             }
         }
-        public RegisteredVehicle? vehicle { get; set; }
-        public Customer? customer { get; set; }
+        public long Charge { get; set; }
     }
-
 }

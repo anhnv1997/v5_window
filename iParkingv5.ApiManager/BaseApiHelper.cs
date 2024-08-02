@@ -166,6 +166,7 @@ namespace iParkingv6.ApiManager
                         request.AddHeader(item.Key, item.Value);
                     }
                 }
+
                 if (requiredParams != null)
                 {
                     foreach (KeyValuePair<string, string> kvp in requiredParams)
@@ -173,6 +174,7 @@ namespace iParkingv6.ApiManager
                         request.AddQueryParameter(kvp.Key, kvp.Value);
                     }
                 }
+
                 string a = Newtonsoft.Json.JsonConvert.SerializeObject(data);
                 var response = await client.ExecuteAsync(request);
                 if (response.StatusCode == HttpStatusCode.Unauthorized)
@@ -224,18 +226,18 @@ namespace iParkingv6.ApiManager
                     var logResponse = response;
                     logResponse.Request = null;
                     LogHelper.Log(logType: LogHelper.EmLogType.ERROR,
-                    doi_tuong_tac_dong: LogHelper.EmObjectLogType.Api,
-                    hanh_dong: method.ToString(),
-                    noi_dung_hanh_dong: $"Gửi {apiUrl} lần {i + 1}",
-                    mo_ta_them: TextFormatingTool.BeautyJson(dataSend),
-                                  obj: logResponse);
+                                  doi_tuong_tac_dong: LogHelper.EmObjectLogType.Api,
+                                  hanh_dong: method.ToString(),
+                                  noi_dung_hanh_dong: $"Gửi {apiUrl} lần {i + 1}",
+                                  mo_ta_them: TextFormatingTool.BeautyJson(dataSend), obj: logResponse);
                     if (string.IsNullOrEmpty(response.Content))
                     {
+                        errorMessage = "Empty Response";
                         continue;
                     }
                     else
                     {
-                        return Tuple.Create<string, string>(response.Content, string.Empty);
+                        return Tuple.Create<string, string>(response.Content, "Error");
                     }
                 }
 

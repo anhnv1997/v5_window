@@ -6,7 +6,7 @@ using iParkingv5.Objects.EventDatas;
 using Kztek.Tool.TextFormatingTools;
 using static iParkingv5.Objects.Enums.ParkingImageType;
 using static iParkingv5.Objects.Enums.VehicleType;
-
+using IPaking.Ultility;
 namespace iParkingv5_window.Forms.DataForms
 {
     public partial class frmConfirmOut : Form
@@ -17,15 +17,27 @@ namespace iParkingv5_window.Forms.DataForms
         private string identityIdIn;
         private string laneId;
         private Dictionary<EmParkingImageType, List<ImageData>> imageDatas;
-        private string datetimeIn;
+        private DateTime datetimeIn;
         private long charge = 0;
         public string updatePlate;
+
+
+        public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
+
+        private List<string>? eventInFileKeys;
+        private DateTime dateTime;
+
         #region Forms
         public frmConfirmOut(string detectedPlate, string errorMessage, string plateIn, string identityIdIn,
-                            string laneId, Dictionary<EmParkingImageType, List<ImageData>> fileKeys, DateTime? datetimeIn, bool isDisplayQuestion = true, long charge = 0)
+                            string laneId, Dictionary<EmParkingImageType, List<ImageData>> fileKeys, DateTime datetimeIn, bool isDisplayQuestion = true, long charge = 0)
         {
             InitializeComponent();
             this.Text = "Xác nhận xe ra khỏi bãi";
+            if (errorMessage == "Bạn có xác nhận mở barrie?")
+            {
+                txtPlateOut.TabIndex = 3;
+                txtPlateOut.Enabled = false;
+            }
             if (isDisplayQuestion)
             {
                 lblMessage.Text = errorMessage + "\r\nBạn có xác nhận cho xe ra khỏi bãi?";
@@ -41,11 +53,10 @@ namespace iParkingv5_window.Forms.DataForms
             this.identityIdIn = identityIdIn;
             this.laneId = laneId;
             this.imageDatas = fileKeys;
-            this.datetimeIn = datetimeIn?.ToString() ?? "";
+            this.datetimeIn = datetimeIn;
             this.charge = charge;
             this.updatePlate = detectedPlate;
-            btnOk.Focus();
-            //this.Size = new Size(lblMessage.Width, lblMessage.Height + panelAction.Height + 100);
+            txtPlateOut.Focus();
             this.Load += FrmConfirm_Load;
         }
 
@@ -66,75 +77,58 @@ namespace iParkingv5_window.Forms.DataForms
             this.Visible = false;
 
             ShowInfo(this.detectedPlate, this.laneId, this.datetimeIn, this.plateIn, this.identityIdIn);
-            this.ActiveControl = btnOk;
+            this.ActiveControl = txtPlateOut;
         }
+        private void frmConfirmOut_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Return)
+            {
+                BtnOk_Click(null, EventArgs.Empty);
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                BtnCancel1_Click(null, EventArgs.Empty);
+            }
+        }
+        #endregion End Forms
 
+        #region Controls In Form
         private void BtnOk_Click(object? sender, EventArgs e)
         {
-            updatePlate = dgvEventInData.Rows[4].Cells[1].Value.ToString().ToUpper().Replace("-", "").Replace(".", "");
+            updatePlate = txtPlateOut.Text;
             this.DialogResult = DialogResult.OK;
         }
-
         private void BtnCancel1_Click(object? sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
         }
-        #endregion End Forms
-        public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
+        #endregion
 
-        private List<string>? eventInFileKeys;
-        private DateTime dateTime;
-
-        public async void ShowInfo(string detectedPlate, string laneIdIn, string datetimeIn, string plateIn, string identityIdIn)
+        public async void ShowInfo(string detectedPlate, string laneIdIn, DateTime datetimeIn, string plateIn, string identityIdIn)
         {
             try
             {
                 this.SuspendLayout();
                 this.updatePlate = detectedPlate;
-                //Lane? laneIn = await KzParkingApiHelper.GetLaneByIdAsync(laneIdIn);
                 Lane? laneIn = (await AppData.ApiServer.deviceService.GetLaneByIdAsync(laneIdIn)).Item1;
-                //Identity? identityIn = await KzParkingApiHelper.GetIdentityById(identityIdIn);
                 Identity? identityIn = (await AppData.ApiServer.parkingDataService.GetIdentityByIdAsync(identityIdIn)).Item1;
                 IdentityGroup? identityGroupIn = null;
                 VehicleBaseType vehicleTypeIn = VehicleBaseType.Car;
                 if (identityIn != null)
                 {
-                    //identityGroupIn = await KzParkingApiHelper.GetIdentityGroupByIdAsync(identityIn.IdentityGroupId.ToString());
                     identityGroupIn = (await AppData.ApiServer.parkingDataService.GetIdentityGroupByIdAsync(identityIn.IdentityGroupId.ToString())).Item1;
                     vehicleTypeIn = identityGroupIn.VehicleType;
-                    //if (identityGroupIn != null)
-                    //{
-                    //    //vehicleTypeIn = await KzParkingApiHelper.GetVehicleTypeById(identityGroupIn.VehicleTypeId.ToString());
-                    //    //vehicleTypeIn = (await  AppData.ApiServer.GetVehicleTypeByIdAsync(identityGroupIn.VehicleType.Id.ToString())).Item1;
-                    //}
                 }
 
-                dgvEventInData?.Invoke(new Action(() =>
+                this.Invoke(new Action(() =>
                 {
-                    dgvEventInData.Rows.Clear();
-                    dgvEventInData.Rows.Add("Thời gian vào", datetimeIn);
-                    dgvEventInData.Rows.Add("Thời gian ra", DateTime.Now.ToString());
-                    dgvEventInData.Rows.Add("Mã định danh", identityIn?.Code);
-                    dgvEventInData.Rows.Add("Biển số vào", plateIn);
-                    dgvEventInData.Rows.Add("Biển số Ra", detectedPlate);
-                    if (identityGroupIn != null)
-                    {
-                        dgvEventInData.Rows.Add("Nhóm", identityGroupIn.Name);
-                        dgvEventInData.Rows[dgvEventInData.RowCount - 1].DefaultCellStyle.Font = new Font(dgvEventInData.DefaultCellStyle.Font.Name, dgvEventInData.DefaultCellStyle.Font.Size * 2);
-                        dgvEventInData.Rows[dgvEventInData.RowCount - 1].DefaultCellStyle.ForeColor = Color.Red;
-                    }
-                    if (vehicleTypeIn != null)
-                    {
-                        dgvEventInData.Rows.Add("Loại phương tiện", VehicleType.GetDisplayStr(vehicleTypeIn));
-                    }
-
-                    if (this.charge > 0)
-                    {
-                        dgvEventInData.Rows.Add("Phí gửi xe", TextFormatingTool.GetMoneyFormat(this.charge.ToString()));
-                    }
-                    dgvEventInData.Rows[dgvEventInData.RowCount - 1].DefaultCellStyle.Font = new Font(dgvEventInData.DefaultCellStyle.Font.Name, dgvEventInData.DefaultCellStyle.Font.Size * 2);
-                    dgvEventInData.Rows[dgvEventInData.RowCount - 1].DefaultCellStyle.ForeColor = Color.Red;
-
+                    lblTimeIn.Text = datetimeIn.ToVNTime();
+                    lblTimeOut.Text = DateTime.Now.ToVNTime();
+                    lblIdentityCode.Text = identityIn?.Name ?? "";
+                    txtPlateOut.Text = detectedPlate;
+                    lblPlateIn.Text = plateIn;
+                    lblIdentityGroup.Text = identityGroupIn?.Name ?? "";
+                    lblVehicleType.Text = VehicleType.GetDisplayStr(vehicleTypeIn);
                 }));
                 if (this.imageDatas?.Count >= 2)
                 {
