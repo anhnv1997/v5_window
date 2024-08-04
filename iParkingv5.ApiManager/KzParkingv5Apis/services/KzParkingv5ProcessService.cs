@@ -45,20 +45,20 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             return false;
         }
         public async Task<Tuple<EventInData, BaseErrorData>> PostCheckInAsync(
-            string _laneId, string _plateNumber, Identity? identity, Dictionary<EmParkingImageType, List<List<byte>>> imageKeys, bool isForce = false, RegisteredVehicle? registeredVehicle = null, string _note = "")
+            string _laneId, string _plateNumber, Identity? identity, List<EmParkingImageType> validImageTypes, bool isForce = false, RegisteredVehicle? registeredVehicle = null, string _note = "")
         {
             if (identity == null)
             {
-                return await PostCheckInByPlateAsync(_laneId, _plateNumber, identity, imageKeys, isForce, registeredVehicle, _note);
+                return await PostCheckInByPlateAsync(_laneId, _plateNumber, identity, validImageTypes, isForce, registeredVehicle, _note);
             }
             else
             {
-                return await PostCheckInByIdentityAsync(_laneId, _plateNumber, identity, imageKeys, isForce, registeredVehicle, _note);
+                return await PostCheckInByIdentityAsync(_laneId, _plateNumber, identity, validImageTypes, isForce, registeredVehicle, _note);
             }
         }
 
         public async Task<Tuple<EventInData, BaseErrorData>> PostCheckInByIdentityAsync(string _laneId, string _plateNumber, Identity? identity,
-                                                                         Dictionary<EmParkingImageType, List<List<byte>>> imageDatas, bool isForce = false,
+                                                                         List<EmParkingImageType> validImageTypes, bool isForce = false,
                                                                          RegisteredVehicle? registeredVehicle = null, string _note = "")
         {
             server = server.StandardlizeServerName();
@@ -78,12 +78,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                 force = isForce
             };
 
-            foreach (KeyValuePair<EmParkingImageType, List<List<byte>>> kvp in imageDatas)
+            foreach (var item in validImageTypes)
             {
-                if (kvp.Value.Count > 0)
-                {
-                    data.imageTypes.Add((int)kvp.Key);
-                }
+                data.imageTypes.Add((int)item);
             }
 
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
@@ -93,7 +90,6 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             {
                 return null;
             }
-
             try
             {
                 BaseErrorData errorData = null;
@@ -115,9 +111,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             return null;
         }
         public async Task<Tuple<EventInData, BaseErrorData>> PostCheckInByPlateAsync(string _laneId, string _plateNumber, Identity? identity,
-                                                                      Dictionary<EmParkingImageType, List<List<byte>>> imageDatas, bool isForce = false,
-                                                                      RegisteredVehicle? registeredVehicle = null,
-                                                                      string _note = "")
+                                                                      List<EmParkingImageType> validImageTypes, bool isForce = false,
+                                                                      RegisteredVehicle? registeredVehicle = null, string _note = "")
         {
 
             server = server.StandardlizeServerName();
@@ -137,12 +132,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                 force = isForce
             };
 
-            foreach (KeyValuePair<EmParkingImageType, List<List<byte>>> kvp in imageDatas)
+            foreach (var item in validImageTypes)
             {
-                if (kvp.Value.Count > 0)
-                {
-                    data.imageTypes.Add((int)kvp.Key);
-                }
+                data.imageTypes.Add((int)item);
             }
 
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
@@ -177,19 +169,19 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 
         #region EVENT-OUT
         public async Task<Tuple<EventOutData, BaseErrorData>> PostCheckOutAsync(string _laneId, string _plateNumber, Identity? identitiy,
-                                                                 Dictionary<EmParkingImageType, List<List<byte>>> imageDatas, bool isForce)
+                                                                  List<EmParkingImageType> validImageTypes, bool isForce)
         {
             if (identitiy == null)
             {
-                return await PostCheckOutByPlateAsync(_laneId, _plateNumber, identitiy, imageDatas, isForce);
+                return await PostCheckOutByPlateAsync(_laneId, _plateNumber, identitiy, validImageTypes, isForce);
             }
             else
             {
-                return await PostCheckOutByIdentityAsync(_laneId, _plateNumber, identitiy, imageDatas, isForce);
+                return await PostCheckOutByIdentityAsync(_laneId, _plateNumber, identitiy, validImageTypes, isForce);
             }
         }
         public async Task<Tuple<EventOutData, BaseErrorData>> PostCheckOutByIdentityAsync(string _laneId, string _plateNumber, Identity? identity,
-                                                                           Dictionary<EmParkingImageType, List<List<byte>>> imageDatas, bool isForce = false)
+                                                                          List<EmParkingImageType> validImageTypes, bool isForce = false)
         {
             server = server.StandardlizeServerName();
             string apiUrl = server + "event-out";
@@ -208,12 +200,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                 force = isForce
             };
 
-            foreach (KeyValuePair<EmParkingImageType, List<List<byte>>> kvp in imageDatas)
+            foreach (var item in validImageTypes)
             {
-                if (kvp.Value.Count > 0)
-                {
-                    data.imageTypes.Add((int)kvp.Key);
-                }
+                data.imageTypes.Add((int)item);
             }
 
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
@@ -245,7 +234,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             return null;
         }
         public async Task<Tuple<EventOutData, BaseErrorData>> PostCheckOutByPlateAsync(string _laneId, string _plateNumber, Identity? identity,
-                                                                        Dictionary<EmParkingImageType, List<List<byte>>> imageDatas, bool isForce = false, RegisteredVehicle? registeredVehicle = null)
+                                                                        List<EmParkingImageType> validImageTypes, bool isForce = false, RegisteredVehicle? registeredVehicle = null)
         {
             server = server.StandardlizeServerName();
             string apiUrl = server + "event-out";
@@ -264,12 +253,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                 force = isForce
             };
 
-            foreach (KeyValuePair<EmParkingImageType, List<List<byte>>> kvp in imageDatas)
+            foreach (var item in validImageTypes)
             {
-                if (kvp.Value.Count > 0)
-                {
-                    data.imageTypes.Add((int)kvp.Key);
-                }
+                data.imageTypes.Add((int)item);
             }
 
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);

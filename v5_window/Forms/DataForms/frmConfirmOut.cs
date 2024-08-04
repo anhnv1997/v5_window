@@ -14,8 +14,8 @@ namespace iParkingv5_window.Forms.DataForms
         //Thông tin sự kiện vào
         private string plateIn;
         private string detectedPlate;
-        private string identityIdIn;
-        private string laneId;
+        private string identityNameIn;
+        private string identityGroupName;
         private Dictionary<EmParkingImageType, List<ImageData>> imageDatas;
         private DateTime datetimeIn;
         private long charge = 0;
@@ -28,8 +28,8 @@ namespace iParkingv5_window.Forms.DataForms
         private DateTime dateTime;
 
         #region Forms
-        public frmConfirmOut(string detectedPlate, string errorMessage, string plateIn, string identityIdIn,
-                            string laneId, Dictionary<EmParkingImageType, List<ImageData>> fileKeys, DateTime datetimeIn, bool isDisplayQuestion = true, long charge = 0)
+        public frmConfirmOut(string detectedPlate, string errorMessage, string plateIn, string identityNameIn, string identityGroupName,
+                            Dictionary<EmParkingImageType, List<ImageData>> fileKeys, DateTime datetimeIn, bool isDisplayQuestion = true, long charge = 0)
         {
             InitializeComponent();
             this.Text = "Xác nhận xe ra khỏi bãi";
@@ -48,15 +48,17 @@ namespace iParkingv5_window.Forms.DataForms
             }
             lblMessage.Size = lblMessage.PreferredSize;
 
+            lblMessage.Padding = new Padding(StaticPool.baseSize);
+            lblMessage.Height = lblMessage.PreferredSize.Height;
+
             this.detectedPlate = detectedPlate;
             this.plateIn = plateIn;
-            this.identityIdIn = identityIdIn;
-            this.laneId = laneId;
+            this.identityNameIn = identityNameIn;
+            this.identityGroupName = identityGroupName;
             this.imageDatas = fileKeys;
             this.datetimeIn = datetimeIn;
             this.charge = charge;
             this.updatePlate = detectedPlate;
-            txtPlateOut.Focus();
             this.Load += FrmConfirm_Load;
         }
 
@@ -65,18 +67,13 @@ namespace iParkingv5_window.Forms.DataForms
             btnCancel1.InitControl(BtnCancel1_Click);
             btnOk.InitControl(BtnOk_Click);
 
-            lblMessage.Padding = new Padding(StaticPool.baseSize);
-            lblMessage.Height = lblMessage.PreferredSize.Height;
-
             panelAction.Height = btnCancel1.Height + StaticPool.baseSize * 3;
             btnCancel1.Location = new Point(panelAction.Width - btnCancel1.Width - StaticPool.baseSize * 2,
                                             StaticPool.baseSize);
             btnOk.Location = new Point(btnCancel1.Location.X - btnOk.Width - StaticPool.baseSize,
                                        StaticPool.baseSize);
 
-            this.Visible = false;
-
-            ShowInfo(this.detectedPlate, this.laneId, this.datetimeIn, this.plateIn, this.identityIdIn);
+            ShowInfo(this.detectedPlate, this.datetimeIn, this.plateIn, this.identityNameIn);
             this.ActiveControl = txtPlateOut;
         }
         private void frmConfirmOut_KeyDown(object sender, KeyEventArgs e)
@@ -104,65 +101,39 @@ namespace iParkingv5_window.Forms.DataForms
         }
         #endregion
 
-        public async void ShowInfo(string detectedPlate, string laneIdIn, DateTime datetimeIn, string plateIn, string identityIdIn)
+        public async void ShowInfo(string detectedPlate, DateTime datetimeIn, string plateIn, string identityInName)
         {
             try
             {
                 this.SuspendLayout();
                 this.updatePlate = detectedPlate;
-                Lane? laneIn = (await AppData.ApiServer.deviceService.GetLaneByIdAsync(laneIdIn)).Item1;
-                Identity? identityIn = (await AppData.ApiServer.parkingDataService.GetIdentityByIdAsync(identityIdIn)).Item1;
-                IdentityGroup? identityGroupIn = null;
                 VehicleBaseType vehicleTypeIn = VehicleBaseType.Car;
-                if (identityIn != null)
-                {
-                    identityGroupIn = (await AppData.ApiServer.parkingDataService.GetIdentityGroupByIdAsync(identityIn.IdentityGroupId.ToString())).Item1;
-                    vehicleTypeIn = identityGroupIn.VehicleType;
-                }
 
                 this.Invoke(new Action(() =>
                 {
                     lblTimeIn.Text = datetimeIn.ToVNTime();
                     lblTimeOut.Text = DateTime.Now.ToVNTime();
-                    lblIdentityCode.Text = identityIn?.Name ?? "";
+                    lblIdentityCode.Text = identityNameIn;
                     txtPlateOut.Text = detectedPlate;
                     lblPlateIn.Text = plateIn;
-                    lblIdentityGroup.Text = identityGroupIn?.Name ?? "";
+                    lblIdentityGroup.Text = identityGroupName;
                     lblVehicleType.Text = VehicleType.GetDisplayStr(vehicleTypeIn);
                 }));
-                if (this.imageDatas?.Count >= 2)
-                {
-                    List<Task> tasks = new List<Task>();
-                    foreach (KeyValuePair<EmParkingImageType, List<ImageData>> item in this.imageDatas)
-                    {
-                        if (item.Key == EmParkingImageType.Overview)
-                        {
-                            tasks.Add(ShowImage(this.imageDatas[item.Key][0], picOverview));
-                        }
-                        else if (item.Key == EmParkingImageType.Vehicle)
-                        {
-                            tasks.Add(ShowImage(this.imageDatas[item.Key][0], picVehicle));
-                        }
-                    }
-                    await Task.WhenAll(tasks);
-                }
-                else if (this.imageDatas?.Count > 0)
-                {
-                    await ShowImage(this.imageDatas[0][0], picOverview);
-                    this.Invoke(() =>
-                    {
-                        picOverview.Image = defaultImg;
-                    });
-                }
-                else
-                {
-                    this.Invoke(() =>
-                    {
-                        picOverview.Image = defaultImg;
-                        picVehicle.Image = defaultImg;
-                    });
-                }
 
+
+                List<Task> tasks = new List<Task>();
+                foreach (KeyValuePair<EmParkingImageType, List<ImageData>> item in this.imageDatas)
+                {
+                    if (item.Key == EmParkingImageType.Overview)
+                    {
+                        tasks.Add(ShowImage(this.imageDatas[item.Key][0], picOverview));
+                    }
+                    else if (item.Key == EmParkingImageType.Vehicle)
+                    {
+                        tasks.Add(ShowImage(this.imageDatas[item.Key][0], picVehicle));
+                    }
+                }
+                await Task.WhenAll(tasks);
                 this.BringToFront();
                 this.ResumeLayout();
             }
@@ -190,5 +161,12 @@ namespace iParkingv5_window.Forms.DataForms
             }
         }
 
+        private void btnCopy_Click(object sender, EventArgs e)
+        {
+            txtPlateOut.Text = lblPlateIn.Text;
+            this.ActiveControl = txtPlateOut;
+            txtPlateOut.SelectionStart = txtPlateOut.Text.Length;
+            txtPlateOut.SelectionLength = 0;
+        }
     }
 }

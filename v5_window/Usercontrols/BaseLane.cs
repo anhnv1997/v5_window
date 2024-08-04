@@ -119,21 +119,6 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
         }
-        public static void ShowImage(MovablePictureBox pictureBox, Image? img)
-        {
-            pictureBox.BeginInvoke(new Action(() =>
-            {
-                try
-                {
-                    Bitmap? bmp = img == null ? null : new Bitmap(img);
-                    pictureBox.Image = bmp == null ? pictureBox.ErrorImage : bmp;
-                    pictureBox.Refresh();
-                }
-                catch (Exception ex)
-                {
-                }
-            }));
-        }
         public static void UpdateResultMessage(this lblResult lblResult, string message, Color backColor)
         {
             lblResult.Invoke(() =>
@@ -267,7 +252,8 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
         }
-        public static void SaveImage(Dictionary<EmParkingImageType, List<ImageData>>? imagesInfo, Dictionary<EmParkingImageType, List<List<byte>>> imageDatas)
+        public static void SaveImage(Dictionary<EmParkingImageType, List<ImageData>>? imagesInfo,
+                                     Dictionary<EmParkingImageType, List<List<byte>>> imageDatas)
         {
             if (imagesInfo == null) return;
             foreach (KeyValuePair<EmParkingImageType, List<ImageData>> item in imagesInfo)
@@ -279,5 +265,70 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
         }
+        public static List<EmParkingImageType> GetValidImageType(Image? overviewImg, Image? vehicleImg, Image? lprImage)
+        {
+            List<EmParkingImageType> validImageTypes = new List<EmParkingImageType>();
+            if (overviewImg != null)
+            {
+                validImageTypes.Add(EmParkingImageType.Overview);
+            }
+            if (vehicleImg != null)
+            {
+                validImageTypes.Add(EmParkingImageType.Vehicle);
+            }
+            if (lprImage != null)
+            {
+                validImageTypes.Add(EmParkingImageType.Plate);
+            }
+
+            return validImageTypes;
+        }
+
+        public static void ShowImage(MovablePictureBox pictureBox, Image? img)
+        {
+            pictureBox.BeginInvoke(new Action(() =>
+            {
+                try
+                {
+                    Bitmap? bmp = img == null ? null : new Bitmap(img.Clone() as Image);
+                    pictureBox.Image = bmp == null ? pictureBox.ErrorImage : bmp;
+                    pictureBox.Refresh();
+                }
+                catch (Exception ex)
+                {
+                }
+            }));
+        }
+        public static async Task ShowImageAsync(this MovablePictureBox pictureBox, ImageData? imageData)
+        {
+            if (imageData == null)
+            {
+                pictureBox.Invoke(new Action(() =>
+                {
+                    pictureBox.Image = pictureBox.ErrorImage;
+                }));
+                return;
+            }
+            string imageUrl = await AppData.ApiServer.parkingProcessService.GetImageUrl(imageData!.bucket, imageData.objectKey);
+            pictureBox.BeginInvoke(new Action(() =>
+            {
+
+
+                if (string.IsNullOrEmpty(imageUrl))
+                {
+                    pictureBox.Image = pictureBox.ErrorImage;
+                    return;
+                }
+                try
+                {
+                    pictureBox.LoadAsync(imageUrl);
+                }
+                catch (Exception ex)
+                {
+                    pictureBox.Image = pictureBox.ErrorImage;
+                }
+            }));
+        }
+
     }
 }

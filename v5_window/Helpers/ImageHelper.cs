@@ -55,14 +55,17 @@ namespace iParkingv5_window.Helpers
 
         public static async Task<List<byte>> ImageToByteArrayAsync(this Image? imageIn)
         {
-            if (imageIn == null)
+            Image? cloneImg = imageIn == null ? null : (Image)imageIn.Clone();
+
+            if (cloneImg == null)
             {
                 return new List<byte>();
             }
             return await Task.Run(() =>
             {
-                Bitmap? bmp = new Bitmap(imageIn);
 
+                Bitmap? bmp = new Bitmap(cloneImg);
+                cloneImg.Dispose();
                 using (var ms = new MemoryStream())
                 {
                     try
