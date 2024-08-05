@@ -91,6 +91,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                 data = new List<EventInReport>(),
             };
         }
+
         public async Task<Report<EventOutReport>> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000)
         {
             server = server.StandardlizeServerName();
@@ -99,7 +100,6 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             {
                 { "Authorization","Bearer " + token  }
             };
-
 
             List<FilterModel> filterModels = new List<FilterModel>()
                         {
@@ -253,82 +253,96 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         /// <returns></returns>
         public async Task<SumaryCountEvent> SummaryEventAsync()
         {
-            return new SumaryCountEvent();
             server = server.StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.GetBySqlCmd;
+
+            DateTime minTime = new DateTime(2000, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
             DateTime startTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
             DateTime endTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
-            //Gửi API
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-            {
-                { "Authorization","Bearer " + token  }
-            };
-            string vehicleInParkCmd = string.Empty;
-            vehicleInParkCmd += "SELECT Count(id) FROM index_event_in ";
-            vehicleInParkCmd += $"WHERE (status != 'Exited' and status is not null) ";
-            var data = new
-            {
-                query = vehicleInParkCmd
-            };
-            int vehicleInPark = await GetRecordCountByCmd(apiUrl, headers, data);
 
-            string vehicleGotInInDayCmd = string.Empty;
-            vehicleGotInInDayCmd += "SELECT Count(id) FROM index_event_in ";
-            vehicleGotInInDayCmd += $"WHERE (createdutc Between '{startTime.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.000Z}' AND '{endTime.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.000Z}') ";
-            data = new
-            {
-                query = vehicleGotInInDayCmd
-            };
-            int vehicleGotInIn = await GetRecordCountByCmd(apiUrl, headers, data);
+            var dataOut = await GetEventOuts("", startTime, endTime, "", "", "", "", 0, 1);
+            var dataIn = await GetEventIns("", startTime, endTime, "", "", "", "", 0, 1);
+            var dataInAndOut = await GetEventInAndOuts("", startTime, endTime, "", "", "", "", 0, 1);
+            var dataInPark = await GetEventIns("", minTime, endTime, "", "", "", "", 0, 1);
 
-            string vehicleGotOutInDayCmdc = string.Empty;
-            vehicleGotOutInDayCmdc += "SELECT Count(id) FROM index_event_out ";
-            vehicleGotOutInDayCmdc += $"WHERE (createdutc Between '{startTime.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.000Z}' AND '{endTime.ToUniversalTime():yyyy-MM-ddTHH:mm:ss.000Z}') ";
-            data = new
-            {
-                query = vehicleGotOutInDayCmdc
-            };
-            int vehicleGotOutInDay = await GetRecordCountByCmd(apiUrl, headers, data);
+            int vehicleInPark = dataInPark.TotalCount;
+            int vehicleGotIn = dataIn.TotalCount + dataInAndOut.TotalCount;
+            int vehicleGotOut = dataOut.TotalCount;
 
             return new SumaryCountEvent()
             {
                 countAllEventIn = vehicleInPark,
-                totalEventOut = vehicleGotOutInDay,
-                totalVehicleIn = vehicleGotInIn,
+                totalEventOut = vehicleGotOut,
+                totalVehicleIn = vehicleGotIn,
             };
         }
 
-        private async Task<int> GetRecordCountByCmd(string apiUrl, Dictionary<string, string> headers, object data)
+
+        public async Task<Report<EventOutReport>> GetEventInAndOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000)
         {
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
+            server = server.StandardlizeServerName();
+            string apiUrl = server + "event-out/search";
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+
+            List<FilterModel> filterModels = new List<FilterModel>()
+                        {
+                            new FilterModel("createdUtc", EmPageSearchType.DATETIME, startTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), EmOperation._gte),
+                            new FilterModel("eventIn.createdUtc", EmPageSearchType.DATETIME, startTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), EmOperation._gte),
+                            new FilterModel("createdUtc", EmPageSearchType.DATETIME, endTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"),  EmOperation._lte),
+                            new FilterModel("eventIn.createdUtc", EmPageSearchType.DATETIME, endTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"),  EmOperation._lte),
+                            new FilterModel("createdBy", EmPageSearchType.TEXT, user,  EmOperation._contains),
+                        };
+            if (!string.IsNullOrEmpty(laneId))
+            {
+                filterModels.Add(new FilterModel("lane.id", EmPageSearchType.GUID, laneId, EmOperation._in));
+            }
+            if (!string.IsNullOrEmpty(identityGroupId))
+            {
+                filterModels.Add(new FilterModel("identityGroup.id", EmPageSearchType.GUID, identityGroupId, EmOperation._in));
+            }
+            if (!string.IsNullOrEmpty(vehicleTypeId))
+            {
+                filterModels.Add(new FilterModel("identityGroup.vehicleType", EmPageSearchType.TEXT, vehicleTypeId.ToUpper(), EmOperation._eq));
+            }
+            var filter1 = Filter.CreateFilterItem(filterModels, EmMainOperation.and);
+            var filter2 = Filter.CreateFilterItem(new List<FilterModel>()
+                        {
+                            new FilterModel("plateNumber", "TEXT", keyword, "contains"),
+                            new FilterModel("identity.code", "TEXT", keyword, "contains"),
+                            new FilterModel("identity.name", "TEXT", keyword, "contains"),
+                        }, EmMainOperation.or);
+            var filter = Filter.CreateFilter(new List<Dictionary<string, List<FilterModel>>>() { filter1, filter2 },
+                                            pageIndex: pageIndex,
+                                            pageSize: pageSize);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                // Deserialize JSON to JObject
-                JObject jsonObject = JObject.Parse(response.Item1);
-
-                // Extract columns and rows from JSON
-                JArray columns = (JArray)jsonObject["columns"];
-                JArray rows = (JArray)jsonObject["rows"];
-
-                if (rows != null)
+                var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventOutReport>>>.GetBaseResponse(response.Item1);
+                if (baseResponse != null)
                 {
-                    if (rows.Count > 0)
+                    Report<EventOutReport> report = new Report<EventOutReport>()
                     {
-                        try
-                        {
-                            string temp = rows[0].ToString();
-                            object[] rowData = rows[0].ToObject<object[]>();
-                            return int.Parse(rowData[0].ToString());
-                        }
-                        catch (Exception)
-                        {
-                            return 0;
-                        }
-                    }
-                    return 0;
+                        TotalPage = baseResponse.totalPage,
+                        TotalCount = baseResponse.totalCount,
+                        data = baseResponse.data ?? new List<EventOutReport>(),
+                    };
+                    return report;
                 }
+                return new Report<EventOutReport>()
+                {
+                    TotalPage = 0,
+                    TotalCount = 0,
+                    data = new List<EventOutReport>(),
+                };
             }
-            return 0;
+            return new Report<EventOutReport>()
+            {
+                TotalPage = 0,
+                TotalCount = 0,
+                data = new List<EventOutReport>(),
+            };
         }
     }
 }

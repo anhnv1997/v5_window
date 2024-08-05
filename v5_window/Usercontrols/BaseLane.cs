@@ -252,7 +252,7 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
         }
-        public static void SaveImage(Dictionary<EmParkingImageType, List<ImageData>>? imagesInfo,
+        public static async Task SaveImage(Dictionary<EmParkingImageType, List<ImageData>>? imagesInfo,
                                      Dictionary<EmParkingImageType, List<List<byte>>> imageDatas)
         {
             if (imagesInfo == null) return;
@@ -261,7 +261,7 @@ namespace iParkingv5_window.Usercontrols
                 for (int i = 0; i < item.Value.Count; i++)
                 {
                     var imgInfo = item.Value[i];
-                    AppData.ApiServer.parkingProcessService.SaveEventImage(imgInfo.bucket, imgInfo.objectKey, imgInfo.type, imageDatas[item.Key][i]);
+                    await AppData.ApiServer.parkingProcessService.SaveEventImage(imgInfo.bucket, imgInfo.objectKey, imgInfo.type, imageDatas[item.Key][i]);
                 }
             }
         }
@@ -300,6 +300,37 @@ namespace iParkingv5_window.Usercontrols
             }));
         }
         public static async Task ShowImageAsync(this MovablePictureBox pictureBox, ImageData? imageData)
+        {
+            if (imageData == null)
+            {
+                pictureBox.Invoke(new Action(() =>
+                {
+                    pictureBox.Image = pictureBox.ErrorImage;
+                }));
+                return;
+            }
+            string imageUrl = await AppData.ApiServer.parkingProcessService.GetImageUrl(imageData!.bucket, imageData.objectKey);
+            pictureBox.BeginInvoke(new Action(() =>
+            {
+
+
+                if (string.IsNullOrEmpty(imageUrl))
+                {
+                    pictureBox.Image = pictureBox.ErrorImage;
+                    return;
+                }
+                try
+                {
+                    pictureBox.LoadAsync(imageUrl);
+                }
+                catch (Exception ex)
+                {
+                    pictureBox.Image = pictureBox.ErrorImage;
+                }
+            }));
+        }
+
+        public static async Task ShowImageAsync(this PictureBox pictureBox, ImageData? imageData)
         {
             if (imageData == null)
             {

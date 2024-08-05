@@ -125,7 +125,6 @@ namespace iParkingv5_window.Forms.DataForms
         }
         public static bool isNeedToRestart = true;
 
-
         private void FrmMain_Shown(object? sender, EventArgs e)
         {
             //foreach (var item in lanes)
@@ -185,7 +184,6 @@ namespace iParkingv5_window.Forms.DataForms
         private void frmMain_FormClosing(object? sender, FormClosingEventArgs e)
         {
             FormClosing -= frmMain_FormClosing;
-
 
             this.Invoke(new Action(() =>
             {

@@ -1047,23 +1047,23 @@ namespace iParkingv5_window.Usercontrols
                     BaseLane.SaveImage(response.images, imageDatas);
                 }
             }
-            //this.Invoke(new Action(() =>
-            //{
-            //    for (int i = ucLastEventInfos.Count - 1; i > 0; i--)
-            //    {
-            //        string customerId = ucLastEventInfos[i - 1].CustomerId;
-            //        string registerVehicleId = ucLastEventInfos[i - 1].RegisterVehicleId;
-            //        string laneId = ucLastEventInfos[i - 1].LaneId;
-            //        string identityId = ucLastEventInfos[i - 1].IdentityId;
-            //        ucLastEventInfos[i].UpdateEventInfo(ucLastEventInfos[i - 1].eventId, ucLastEventInfos[i - 1].plateNumber,
-            //                                            ucLastEventInfos[i - 1].vehicleGroupId, ucLastEventInfos[i - 1].IdentityGroupId,
-            //                                            ucLastEventInfos[i - 1].datetimeIn, ucLastEventInfos[i - 1].picDirs,
-            //                                            customerId, registerVehicleId, laneId, identityId, false);
-            //    }
-            //    ucLastEventInfos[0].UpdateEventInfo(lastEvent.Id, detectedPlate, identityGroup?.Id.ToString() ?? "",
-            //                                        identityGroup?.Id.ToString() ?? "", eventTime, eventOut.fileKeys,
-            //                                        "", "", this.lane.Id, identity?.Id, false);
-            //}));
+            this.Invoke(new Action(() =>
+            {
+                for (int i = ucLastEventInfos.Count - 1; i > 0; i--)
+                {
+                    string customerId = ucLastEventInfos[i - 1].CustomerId;
+                    string registerVehicleId = ucLastEventInfos[i - 1].RegisterVehicleId;
+                    string laneId = ucLastEventInfos[i - 1].LaneId;
+                    string identityId = ucLastEventInfos[i - 1].IdentityId;
+                    ucLastEventInfos[i].UpdateEventInfo(ucLastEventInfos[i - 1].eventId, ucLastEventInfos[i - 1].plateNumber,
+                                                        ucLastEventInfos[i - 1].vehicleGroupId, ucLastEventInfos[i - 1].IdentityGroupId,
+                                                        ucLastEventInfos[i - 1].datetimeIn, ucLastEventInfos[i - 1].picDirs,
+                                                        customerId, registerVehicleId, laneId, identityId, false);
+                }
+                ucLastEventInfos[0].UpdateEventInfo(lastEvent.Id, detectedPlate, identityGroup?.Id.ToString() ?? "",
+                                                    identityGroup?.Id.ToString() ?? "", eventTime, eventOut.images,
+                                                    "", "", this.lane.Id, identity?.Id, false, vehicleImg);
+            }));
 
             if ((eventOut?.Charge ?? 0) > 0)
             {
@@ -1494,18 +1494,6 @@ namespace iParkingv5_window.Usercontrols
             panelTop3Event.Name = "panel9";
             panelTop3Event.Size = new Size(539, 123);
             panelTop3Event.TabIndex = 8;
-
-            // 
-            // label2
-            // 
-            //label2.Dock = DockStyle.Top;
-            //label2.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            //label2.Location = new Point(0, 0);
-            //label2.Name = "label2";
-            //label2.Size = new Size(539, 36);
-            //label2.TabIndex = 7;
-            //label2.Text = "Các lượt xe vào gần đây";
-            //label2.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // ucEventCount1
             // 
@@ -1561,6 +1549,30 @@ namespace iParkingv5_window.Usercontrols
                                                         0, 0, 0);
             DateTime endTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,
                                             23, 59, 59);
+            var top3EventReport = await AppData.ApiServer.reportingService.GetEventOuts("", startTime, endTime, "", "", this.lane.Id, "", 0, 3);
+            var top3Event = top3EventReport?.data ?? null;
+            if (top3Event != null)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (top3Event.Count <= i)
+                    {
+                        break;
+                    }
+                    string id = top3Event[i].Id.ToString() ?? "";
+                    string plateNumber = top3Event[i].PlateNumber.ToString() ?? "";
+                    string vehicleGroupId = "";
+                    string cardGroupId = top3Event[i].IdentityGroup.Id.ToString() ?? "";
+                    DateTime dateTimeIn = top3Event[i].EventIn.DateTimeIn!.Value;
+                    string customerId = "";
+                    string registerVehicleId = "";
+                    string laneId = this.lane.Id;
+                    string identityId = top3Event[i].Identity.Id.ToString() ?? "";
+                    ucLastEventInfos[i].UpdateEventInfo(id, plateNumber, vehicleGroupId, cardGroupId, dateTimeIn, top3Event[i].images,
+                                                        customerId, registerVehicleId, laneId, identityId, false);
+
+                }
+            }
             await Task.Delay(1000);
         }
 
@@ -1775,8 +1787,8 @@ namespace iParkingv5_window.Usercontrols
             if (isConfirmSendEinvoie)
             {
                 InvoiceResponse? invoiceDto = await AppData.ApiServer.invoiceService.CreateEinvoice(eventOut.Charge, eventOut.EventIn.PlateNumber,
-                                                                            eventOut.EventIn.DateTimeIn ?? DateTime.Now, eventOut.DatetimeOut ?? DateTime.Now,
-                                                                            eventOut.Id, true, identityGroupName);
+                                                                                                    eventOut.EventIn.DateTimeIn ?? DateTime.Now, eventOut.DatetimeOut ?? DateTime.Now,
+                                                                                                    eventOut.Id, true, identityGroupName);
                 if (invoiceDto != null)
                 {
                     return invoiceDto?.id ?? "";

@@ -678,12 +678,11 @@ namespace iParkingv5_window.Usercontrols
                     string cardGroupId = top3Event[i].IdentityGroup.Id;
                     DateTime dateTimeIn = top3Event[i].DateTimeIn.Value;
 
-                    List<string> picDirs = new List<string>();
                     string customerId = "";// top3Event.Rows[i]["customerid"].ToString() ?? "";
                     string registerVehicleId = "";// top3Event.Rows[i]["vehicleid"].ToString() ?? "";
                     string laneId = top3Event[i].Lane.Id;
                     string identityId = top3Event[i].Identity.Id;
-                    ucLastEventInfos[i].UpdateEventInfo(id, plateNumber, vehicleGroupId, cardGroupId, dateTimeIn, picDirs,
+                    ucLastEventInfos[i].UpdateEventInfo(id, plateNumber, vehicleGroupId, cardGroupId, dateTimeIn, top3Event[i].images,
                                                         customerId, registerVehicleId, laneId, identityId, true);
                 }
             }
@@ -1106,6 +1105,24 @@ namespace iParkingv5_window.Usercontrols
                     BaseLane.SaveImage(response.images, imageDatas);
                 }
             }
+
+            this.Invoke(new Action(() =>
+            {
+                for (int i = ucLastEventInfos.Count - 1; i > 0; i--)
+                {
+                    string customerId = ucLastEventInfos[i - 1].CustomerId;
+                    string registerVehicleId = ucLastEventInfos[i - 1].RegisterVehicleId;
+                    string laneId = ucLastEventInfos[i - 1].LaneId;
+                    string identityId = ucLastEventInfos[i - 1].IdentityId;
+                    ucLastEventInfos[i].UpdateEventInfo(ucLastEventInfos[i - 1].eventId, ucLastEventInfos[i - 1].plateNumber,
+                                                        ucLastEventInfos[i - 1].vehicleGroupId, ucLastEventInfos[i - 1].IdentityGroupId,
+                                                        ucLastEventInfos[i - 1].datetimeIn, ucLastEventInfos[i - 1].picDirs,
+                                                        customerId, registerVehicleId, laneId, identityId, true);
+                }
+                ucLastEventInfos[0].UpdateEventInfo(eventIn.Id, detectPlate, "",
+                                                    identityGroup?.Id.ToString() ?? "", eventTime, eventIn.images,
+                                                     "", "", this.lane.Id, identity?.Id, true, vehicleImg);
+            }));
         }
         #endregion End xử lý sự kiện thẻ
 

@@ -1,6 +1,9 @@
-﻿using iParkingv5_window.Forms.DataForms;
+﻿using iPakrkingv5.Controls;
+using iParkingv5.Objects.EventDatas;
+using iParkingv5_window.Forms.DataForms;
 using Kztek.Helper;
 using Kztek.Tools;
+using static iParkingv5.Objects.Enums.ParkingImageType;
 
 namespace iParkingv5_window.Usercontrols
 {
@@ -18,7 +21,7 @@ namespace iParkingv5_window.Usercontrols
         public string IdentityId { get; set; } = string.Empty;
 
         public DateTime datetimeIn = DateTime.Now;
-        public List<string> picDirs = new List<string>();
+        public Dictionary<EmParkingImageType, List<ImageData>> picDirs = new Dictionary<EmParkingImageType, List<ImageData>>();
         public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
         private bool isEventIn = false;
         #endregion End Properties
@@ -28,7 +31,7 @@ namespace iParkingv5_window.Usercontrols
         {
             InitializeComponent();
             this.DoubleBuffered = true;
-            picVehicle.Image = defaultImg;
+            picVehicle.Image = picVehicle.ErrorImage = defaultImg;
             pictureBox1.Visible = isDisplayArrow;
             this.Load += UcLastEventInfo_Load;
             this.SizeChanged += UcLastEventInfo_SizeChanged;
@@ -36,7 +39,6 @@ namespace iParkingv5_window.Usercontrols
 
         private void UcLastEventInfo_SizeChanged(object? sender, EventArgs e)
         {
-            //this.Width = this.Height;
             this.Width = pictureBox1.Visible ? this.Height + pictureBox1.Width : this.Height;
         }
 
@@ -50,10 +52,9 @@ namespace iParkingv5_window.Usercontrols
             this.Width = pictureBox1.Visible ? this.Width : this.Width - pictureBox1.Width;
         }
         public async void UpdateEventInfo(string eventId, string plateNumber, string vehicleGroupId,
-                                          string identityGroupId, DateTime datetimeIn, List<string> picDirs,
-                                          string customerId, string registerVehicleId, string laneId, string identityId, bool isEventIn)
+                                          string identityGroupId, DateTime datetimeIn, Dictionary<EmParkingImageType, List<ImageData>> picDirs,
+                                          string customerId, string registerVehicleId, string laneId, string identityId, bool isEventIn, Image? displayImage = null)
         {
-            return;
             try
             {
                 this.isEventIn = isEventIn;
@@ -72,16 +73,22 @@ namespace iParkingv5_window.Usercontrols
                     this.picDirs = picDirs;
 
                 }));
-
-                if (this.picDirs.Count > 0)
+                if (displayImage != null)
                 {
-                    string displayPath = await MinioHelper.GetImage(this.picDirs[0]);
-                    if (!string.IsNullOrEmpty(displayPath))
+                    picVehicle.Image = displayImage;
+                }
+                else
+                {
+                    string displayPath = "";
+                    ImageData? overviewData = picDirs.ContainsKey(EmParkingImageType.Overview) ? picDirs[EmParkingImageType.Overview][0] : null;
+                    ImageData? vehicleData = picDirs.ContainsKey(EmParkingImageType.Vehicle) ? picDirs[EmParkingImageType.Vehicle][0] : null;
+                    if (vehicleData != null)
                     {
-                        this.Invoke(new Action(() =>
-                        {
-                            picVehicle.LoadAsync(displayPath);
-                        }));
+                        picVehicle.ShowImageAsync(vehicleData);
+                    }
+                    else
+                    {
+                        picVehicle.ShowImageAsync(overviewData);
                     }
                 }
                 this.ResumeLayout();
@@ -100,14 +107,11 @@ namespace iParkingv5_window.Usercontrols
                 return;
             }
             LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Xem sk " + this.eventId);
-            //if (this.isEventIn)
+            var frm = new frmEventInDetail(this.eventId, plateNumber, vehicleGroupId, IdentityGroupId, datetimeIn, this.picDirs,
+                                           CustomerId, RegisterVehicleId, this.LaneId, this.IdentityId, this.isEventIn);
+            if (frm.ShowDialog() == DialogResult.OK)
             {
-                var frm = new frmEventInDetail(this.eventId, plateNumber, vehicleGroupId, IdentityGroupId, datetimeIn, picDirs,
-                                               CustomerId, RegisterVehicleId, this.LaneId, this.IdentityId, this.isEventIn);
-                if (frm.ShowDialog() == DialogResult.OK)
-                {
-                    this.plateNumber = frm.updatePlate;
-                }
+                this.plateNumber = frm.updatePlate;
             }
         }
         #endregion End Controls In Form

@@ -7,10 +7,10 @@ using Kztek.Tool;
 using Kztek.Tools;
 using System.Diagnostics;
 using iParkingv5.Auth;
-using iParkingv5.FeeTest;
 using iParkingv5_window.Forms.SystemForms;
 using Kztek.Helper;
 using KztekKeyRegister;
+using iParkingv5_window;
 
 namespace v6_window
 {
@@ -82,7 +82,7 @@ namespace v6_window
                         //DahuaAccessControl.Init();
 
                         CheckForUpdate();
-                        if (StaticPool.appOption.IsIntergratedEInvoice)
+                        if (!StaticPool.appOption.IsIntergratedEInvoice)
                         {
                             AppData.ApiServer.invoiceService = null;
                         }

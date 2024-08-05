@@ -1,6 +1,9 @@
 ﻿using iParkingv5.ApiManager.KzScaleApis;
 using iParkingv5.Objects.Enums;
+using iParkingv5.Objects.EventDatas;
+using iParkingv5_window.Usercontrols;
 using Kztek.Helper;
+using static iParkingv5.Objects.Enums.ParkingImageType;
 
 namespace iParkingv5_window.Forms.DataForms
 {
@@ -12,7 +15,7 @@ namespace iParkingv5_window.Forms.DataForms
         private string VehicleGroupId = string.Empty;
         private string cardGroupId = string.Empty;
         private DateTime datetimeIn = DateTime.MinValue;
-        private List<string> picDirs = new List<string>();
+        private Dictionary<EmParkingImageType, List<ImageData>> picDirs = new Dictionary<EmParkingImageType, List<ImageData>>();
         private string customerId, registerVehicleId, laneId, identityId;
         public string updatePlate = "";
         public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
@@ -21,7 +24,7 @@ namespace iParkingv5_window.Forms.DataForms
 
         #region Forms
         public frmEventInDetail(string eventInId, string plateNumber, string vehicleGroupId,
-                                string cardGroupId, DateTime dateTimeIn, List<string> picDirs,
+                                string cardGroupId, DateTime dateTimeIn, Dictionary<EmParkingImageType, List<ImageData>> picDirs,
                                 string customerId, string registerVehicleId, string laneId, string identityId, bool isEventIn = false)
         {
             InitializeComponent();
@@ -62,30 +65,14 @@ namespace iParkingv5_window.Forms.DataForms
 
             try
             {
-                if (this.picDirs.Count >= 2)
-                {
-                    string displayOverviewInPath = await MinioHelper.GetImage(this.picDirs[0]);
-                    string vehicleInPath = await MinioHelper.GetImage(this.picDirs[1]);
-                    Task task1 = ShowImage(this.picDirs[0], picOverviewImageIn);
-                    Task task2 = ShowImage(this.picDirs[1], picVehicleImageIn);
-                    await Task.WhenAll(task1, task2);
-                }
-                else if (this.picDirs.Count > 0)
-                {
-                    await ShowImage(this.picDirs[0], picOverviewImageIn);
-                    this.Invoke((Delegate)(() =>
-                    {
-                        picVehicleImageIn.Image = defaultImg;
-                    }));
-                }
-                else
-                {
-                    this.Invoke((Delegate)(() =>
-                    {
-                        picOverviewImageIn.Image = defaultImg;
-                        picVehicleImageIn.Image = defaultImg;
-                    }));
-                }
+                ImageData? overviewImgData = this.picDirs.ContainsKey(EmParkingImageType.Overview) ?
+                                                this.picDirs[EmParkingImageType.Overview][0] : null;
+                ImageData? vehicleImgData = this.picDirs.ContainsKey(EmParkingImageType.Vehicle) ?
+                                                this.picDirs[EmParkingImageType.Vehicle][0] : null;
+                ImageData? lprImgData = this.picDirs.ContainsKey(EmParkingImageType.Plate) ?
+                                                this.picDirs[EmParkingImageType.Plate][0] : null;
+                picOverviewImageIn.ShowImageAsync(overviewImgData);
+                picVehicleImageIn.ShowImageAsync(vehicleImgData);
             }
             catch (Exception)
             {
