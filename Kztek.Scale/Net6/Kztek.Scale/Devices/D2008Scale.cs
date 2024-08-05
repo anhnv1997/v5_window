@@ -254,7 +254,12 @@ namespace Kztek.Scale_net6.Devices
                         }
                         else
                         {
-                            scaleEventArgs.Gross = 0;
+                            if (ErrorEvent != null)
+                            {
+                                ErrorEvent(this, "CONVERT SCALE ERROR: " + dataReceived);
+                            }
+
+                            //scaleEventArgs.Gross = 0;
                         }
                         ScaleEvent(this, scaleEventArgs);
                     }

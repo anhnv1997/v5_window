@@ -218,6 +218,7 @@ namespace iParkingv5_window.Forms.DataForms
                         {
                             LogHelper.Log(EmLogType.INFOR, EmObjectLogType.System, "start connect");
                             scaleController.ScaleEvent += ScaleController_ScaleEvent;
+                            scaleController.ErrorEvent += ScaleController_ErrorEvent;
                             scaleController.PollingStart();
                         }
                         else
@@ -245,6 +246,12 @@ namespace iParkingv5_window.Forms.DataForms
                 tsmiScaleReport.Visible = false;
             }
         }
+
+        private void ScaleController_ErrorEvent(object sender, string errorString)
+        {
+            LogHelper.Log(EmLogType.INFOR, EmObjectLogType.System, "Scale Error" +errorString);
+        }
+
         private void LoadThirdPartyConfig()
         {
             if (File.Exists(PathManagement.thirtPartyConfigPath))
