@@ -204,9 +204,9 @@ namespace iParkingv5_window.Forms.DataForms
             {
                 string content = File.ReadAllText(PathManagement.scaleConfigPath);
                 var scaleConfig = Newtonsoft.Json.JsonConvert.DeserializeObject<ScaleConfig>(content);//  NewtonSoftHelper<ScaleConfig>.DeserializeObjectFromPath(PathManagement.scaleConfigPath) ?? ScaleConfig.CreateDefaultConfig();
-                if (scaleConfig!=null)
+                if (scaleConfig != null)
                 {
-                    LogHelper.Log(EmLogType.INFOR, EmObjectLogType.System, "Kết nối đầu cân COM:  " +scaleConfig.Comport);
+                    LogHelper.Log(EmLogType.INFOR, EmObjectLogType.System, "Kết nối đầu cân COM:  " + scaleConfig.Comport);
                     isScale = scaleConfig.IsUseScaleDevice;
                     KzScaleApiHelper.server = scaleConfig.ScaleServer;
                     try
@@ -218,6 +218,7 @@ namespace iParkingv5_window.Forms.DataForms
                         {
                             LogHelper.Log(EmLogType.INFOR, EmObjectLogType.System, "start connect");
                             scaleController.ScaleEvent += ScaleController_ScaleEvent;
+                            scaleController.ErrorEvent += ScaleController_ErrorEvent;
                             scaleController.PollingStart();
                         }
                         else
@@ -245,6 +246,12 @@ namespace iParkingv5_window.Forms.DataForms
                 tsmiScaleReport.Visible = false;
             }
         }
+
+        private void ScaleController_ErrorEvent(object sender, string errorString)
+        {
+            LogHelper.Log(EmLogType.ERROR, EmObjectLogType.System, "Lỗi cân: " + errorString);
+        }
+
         private void LoadThirdPartyConfig()
         {
             if (File.Exists(PathManagement.thirtPartyConfigPath))
@@ -476,7 +483,7 @@ namespace iParkingv5_window.Forms.DataForms
                 lblLoadingStatus.Refresh();
                 LaneDisplayConfig? laneDisplayConfig = GetLaneDisplayConfigByLaneId(lane);
                 iLane iLane = LaneFactory.CreateLane(lane, laneDisplayConfig, isDisplayLastEvent, isScale);
-                iLane.OnChangeLaneEvent += ILane_OnChangeLaneEvent; 
+                iLane.OnChangeLaneEvent += ILane_OnChangeLaneEvent;
                 lanes.Add(iLane);
                 ucViewGrid1.UpdateSelectLocation(iLane as Control);
                 ((Control)iLane).Dock = DockStyle.Fill;
