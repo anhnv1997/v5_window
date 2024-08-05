@@ -56,6 +56,8 @@ namespace iParkingv5_window.Forms.DataForms
             var registerVehicle = await KzParkingApiHelper.GetRegisteredVehicleById(this.registerVehicleId);
             VehicleType vehicleType = await KzParkingApiHelper.GetVehicleTypeById(identityGroup?.VehicleTypeId.ToString());
 
+            this.Text = this.isEventIn ? "Thông tin sự kiện vào" : "Thông tin sự kiện ra";
+            lblTitle.Text = this.isEventIn ? "Thông tin sự kiện vào" : "Thông tin sự kiện ra";
             txtPlate.Text = this.PlateNumber;
             lblLaneName.Text = lane?.name;
             lblTimeIn.Text = this.datetimeIn.ToString("dd/MM/yyyy HH:mm:ss");
@@ -96,6 +98,80 @@ namespace iParkingv5_window.Forms.DataForms
             }
             catch (Exception)
             {
+            }
+        }
+
+        private void picOverviewImageIn_DoubleClick(object sender, EventArgs e)
+        {
+            if (picOverviewImageIn.Image != null)
+            {
+                Form frm = new Form();
+                PictureBox pictureBox = new PictureBox();
+                frm.Controls.Add(pictureBox);
+                pictureBox.Dock = DockStyle.Fill;
+                pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                pictureBox.Image = picOverviewImageIn.Image;
+
+                // Thiết lập kích thước của form mới
+                frm.Width = picOverviewImageIn.Image.Width + 40;  // Thêm một chút để tránh bị cắt
+                frm.Height = picOverviewImageIn.Image.Height + 40;
+
+                // Giới hạn kích thước form nếu quá lớn so với màn hình
+                int maxWidth = Screen.PrimaryScreen.WorkingArea.Width - 100;
+                int maxHeight = Screen.PrimaryScreen.WorkingArea.Height - 100;
+
+                if (frm.Width > maxWidth)
+                {
+                    frm.Width = maxWidth;
+                }
+                if (frm.Height > maxHeight)
+                {
+                    frm.Height = maxHeight;
+                }
+
+                // Thiết lập vị trí của form ở giữa màn hình
+                frm.StartPosition = FormStartPosition.CenterScreen;
+
+                frm.FormBorderStyle = FormBorderStyle.SizableToolWindow;
+
+                frm.Show();
+            }
+        }
+
+        private void picVehicleImageIn_DoubleClick(object sender, EventArgs e)
+        {
+            if (picVehicleImageIn.Image != null)
+            {
+                Form frm = new Form();
+                PictureBox pictureBox = new PictureBox();
+                frm.Controls.Add(pictureBox);
+                pictureBox.Dock = DockStyle.Fill;
+                pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                pictureBox.Image = picVehicleImageIn.Image;
+
+                // Thiết lập kích thước của form mới
+                frm.Width = picVehicleImageIn.Image.Width + 40;  // Thêm một chút để tránh bị cắt
+                frm.Height = picVehicleImageIn.Image.Height + 40;
+
+                // Giới hạn kích thước form nếu quá lớn so với màn hình
+                int maxWidth = Screen.PrimaryScreen.WorkingArea.Width - 100;
+                int maxHeight = Screen.PrimaryScreen.WorkingArea.Height - 100;
+
+                if (frm.Width > maxWidth)
+                {
+                    frm.Width = maxWidth;
+                }
+                if (frm.Height > maxHeight)
+                {
+                    frm.Height = maxHeight;
+                }
+
+                // Thiết lập vị trí của form ở giữa màn hình
+                frm.StartPosition = FormStartPosition.CenterScreen;
+
+                frm.FormBorderStyle = FormBorderStyle.SizableToolWindow;
+
+                frm.Show();
             }
         }
         #endregion End Forms

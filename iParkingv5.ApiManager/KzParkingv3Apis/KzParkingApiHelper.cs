@@ -11,6 +11,7 @@ using Kztek.Tool;
 using iParkingv5.Objects.Enums;
 using Newtonsoft.Json;
 using iParkingv5.Objects;
+using System.Text.RegularExpressions;
 
 namespace iParkingv6.ApiManager.KzParkingv3Apis
 {
@@ -675,7 +676,7 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
             return null;
         }
         #endregion
-
+       
         #region -- EVENT IN
         public static async Task<KzBaseResponseData<AddEventInResponse>> PostCheckInAsync(string _laneId, string _plateNumber, Identity? identity, List<string> imageKeys, bool isForce = false)
         {
@@ -879,6 +880,7 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
         #region -- EVENT OUT
         public static async Task<KzBaseResponseData<AddEventOutResponse>> PostCheckOutAsync(string _laneId, string _plateNumber, Identity? identitiy, List<string> imageKeys, bool isForce)
         {
+
             StandardlizeServerName();
             string apiUrl = server + KzApiUrlManagement.EmObjectType.EventOut.CreateRoute();
             //Gửi API
@@ -901,7 +903,10 @@ namespace iParkingv6.ApiManager.KzParkingv3Apis
                 data.fileKeys.Add(item);
             }
             string a = JsonConvert.SerializeObject(data);
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", $"bắt đầu checkout api data = {data}");
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", $" checkout response = {JsonConvert.SerializeObject(response)}");
+
             if (!string.IsNullOrEmpty(response.Item1))
             {
                 KzBaseResponseData<AddEventOutResponse> addEventOutResponse = NewtonSoftHelper<KzBaseResponseData<AddEventOutResponse>>.GetBaseResponse(response.Item1);

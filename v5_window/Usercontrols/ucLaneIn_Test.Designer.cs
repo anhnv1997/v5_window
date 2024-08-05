@@ -1,6 +1,6 @@
 ﻿namespace iParkingv5_window.Usercontrols
 {
-    partial class ucLaneIn
+    partial class ucLaneIn_Test
     {
 
 
@@ -16,9 +16,14 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucLaneIn));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucLaneIn_Test));
             this.lblLaneName = new System.Windows.Forms.Label();
             this.panelCameras = new System.Windows.Forms.Panel();
+            this.panelLastEvent = new System.Windows.Forms.Panel();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.ucEventCount1 = new iParkingv5_window.Usercontrols.ucEventCount();
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -28,16 +33,11 @@
             this.picOverviewImage = new iParkingv5_window.Usercontrols.MovablePictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.splitterCamera = new System.Windows.Forms.Splitter();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.ucEventCount1 = new iParkingv5_window.Usercontrols.ucEventCount();
-            this.panelLastEvent = new System.Windows.Forms.Panel();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
             this.lblResult = new iPakrkingv5.Controls.Controls.Labels.lblResult();
             this.splitContainerEventContent = new System.Windows.Forms.SplitContainer();
             this.panelDetectPlate = new System.Windows.Forms.Panel();
-            this.picLprImage = new iParkingv5_window.Usercontrols.MovablePictureBox();
             this.txtPlate = new System.Windows.Forms.TextBox();
+            this.picLprImage = new iParkingv5_window.Usercontrols.MovablePictureBox();
             this.dgvEventContent = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -59,7 +59,12 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.splitContainerAll = new System.Windows.Forms.SplitContainer();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.panelLastEvent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
             this.splitContainerMain.Panel1.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
@@ -70,11 +75,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.picVehicleImage)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picOverviewImage)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            this.panelLastEvent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerEventContent)).BeginInit();
             this.splitContainerEventContent.Panel1.SuspendLayout();
             this.splitContainerEventContent.Panel2.SuspendLayout();
@@ -90,10 +90,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.picOpenBarrie)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.tableLayoutPanel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerAll)).BeginInit();
-            this.splitContainerAll.Panel1.SuspendLayout();
-            this.splitContainerAll.Panel2.SuspendLayout();
-            this.splitContainerAll.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblLaneName
@@ -105,7 +105,7 @@
             this.lblLaneName.Location = new System.Drawing.Point(0, 0);
             this.lblLaneName.Margin = new System.Windows.Forms.Padding(0);
             this.lblLaneName.Name = "lblLaneName";
-            this.lblLaneName.Size = new System.Drawing.Size(865, 22);
+            this.lblLaneName.Size = new System.Drawing.Size(669, 22);
             this.lblLaneName.TabIndex = 0;
             this.lblLaneName.Text = "label1";
             this.lblLaneName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -120,6 +120,65 @@
             this.panelCameras.Size = new System.Drawing.Size(211, 312);
             this.panelCameras.TabIndex = 3;
             // 
+            // panelLastEvent
+            // 
+            this.panelLastEvent.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.panelLastEvent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelLastEvent.Controls.Add(this.panel9);
+            this.panelLastEvent.Controls.Add(this.label2);
+            this.panelLastEvent.Location = new System.Drawing.Point(0, 0);
+            this.panelLastEvent.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panelLastEvent.Name = "panelLastEvent";
+            this.panelLastEvent.Size = new System.Drawing.Size(497, 193);
+            this.panelLastEvent.TabIndex = 9;
+            // 
+            // panel9
+            // 
+            this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel9.Location = new System.Drawing.Point(0, 27);
+            this.panel9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(495, 164);
+            this.panel9.TabIndex = 8;
+            // 
+            // label2
+            // 
+            this.label2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
+            this.label2.ForeColor = System.Drawing.Color.Navy;
+            this.label2.Location = new System.Drawing.Point(0, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(495, 27);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Các lượt xe vào gần đây";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 26);
+            this.splitContainer2.Name = "splitContainer2";
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.ucEventCount1);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.panelLastEvent);
+            this.splitContainer2.Size = new System.Drawing.Size(746, 193);
+            this.splitContainer2.SplitterDistance = 245;
+            this.splitContainer2.TabIndex = 3;
+            // 
+            // ucEventCount1
+            // 
+            this.ucEventCount1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucEventCount1.Location = new System.Drawing.Point(0, 0);
+            this.ucEventCount1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ucEventCount1.Name = "ucEventCount1";
+            this.ucEventCount1.Size = new System.Drawing.Size(245, 193);
+            this.ucEventCount1.TabIndex = 0;
+            // 
             // splitContainerMain
             // 
             this.splitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -133,14 +192,12 @@
             this.splitContainerMain.Panel1.Controls.Add(this.tableLayoutPanel1);
             this.splitContainerMain.Panel1.Controls.Add(this.splitterCamera);
             this.splitContainerMain.Panel1.Controls.Add(this.panelCameras);
-            this.splitContainerMain.Panel1MinSize = 0;
             // 
             // splitContainerMain.Panel2
             // 
-            this.splitContainerMain.Panel2.Controls.Add(this.splitContainer1);
+            this.splitContainerMain.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainerMain.Panel2.Controls.Add(this.lblResult);
-            this.splitContainerMain.Panel2MinSize = 0;
-            this.splitContainerMain.Size = new System.Drawing.Size(721, 534);
+            this.splitContainerMain.Size = new System.Drawing.Size(746, 534);
             this.splitContainerMain.SplitterDistance = 312;
             this.splitContainerMain.SplitterWidth = 3;
             this.splitContainerMain.TabIndex = 4;
@@ -160,7 +217,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 15F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(507, 312);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(532, 312);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
             // tableLayoutPanel2
@@ -176,7 +233,7 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(497, 272);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(522, 272);
             this.tableLayoutPanel2.TabIndex = 3;
             // 
             // panel2
@@ -187,7 +244,7 @@
             this.panel2.Location = new System.Drawing.Point(3, 138);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(491, 132);
+            this.panel2.Size = new System.Drawing.Size(516, 132);
             this.panel2.TabIndex = 0;
             // 
             // picVehicleImage
@@ -198,7 +255,7 @@
             this.picVehicleImage.Location = new System.Drawing.Point(0, 0);
             this.picVehicleImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.picVehicleImage.Name = "picVehicleImage";
-            this.picVehicleImage.Size = new System.Drawing.Size(491, 132);
+            this.picVehicleImage.Size = new System.Drawing.Size(516, 132);
             this.picVehicleImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picVehicleImage.TabIndex = 5;
             this.picVehicleImage.TabStop = false;
@@ -211,7 +268,7 @@
             this.panel3.Location = new System.Drawing.Point(3, 2);
             this.panel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(491, 132);
+            this.panel3.Size = new System.Drawing.Size(516, 132);
             this.panel3.TabIndex = 1;
             // 
             // picOverviewImage
@@ -222,7 +279,7 @@
             this.picOverviewImage.Location = new System.Drawing.Point(0, 0);
             this.picOverviewImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.picOverviewImage.Name = "picOverviewImage";
-            this.picOverviewImage.Size = new System.Drawing.Size(491, 132);
+            this.picOverviewImage.Size = new System.Drawing.Size(516, 132);
             this.picOverviewImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picOverviewImage.TabIndex = 5;
             this.picOverviewImage.TabStop = false;
@@ -234,9 +291,9 @@
             this.label1.ForeColor = System.Drawing.Color.Green;
             this.label1.Location = new System.Drawing.Point(5, 2);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(497, 30);
+            this.label1.Size = new System.Drawing.Size(522, 30);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Ảnh Vào";
+            this.label1.Text = "Ảnh Vào 123";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // splitterCamera
@@ -248,70 +305,6 @@
             this.splitterCamera.TabIndex = 4;
             this.splitterCamera.TabStop = false;
             // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 26);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.ucEventCount1);
-            this.splitContainer1.Panel1MinSize = 0;
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.panelLastEvent);
-            this.splitContainer1.Panel2MinSize = 0;
-            this.splitContainer1.Size = new System.Drawing.Size(721, 193);
-            this.splitContainer1.SplitterDistance = 208;
-            this.splitContainer1.TabIndex = 8;
-            this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
-            // 
-            // ucEventCount1
-            // 
-            this.ucEventCount1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucEventCount1.Location = new System.Drawing.Point(0, 0);
-            this.ucEventCount1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ucEventCount1.Name = "ucEventCount1";
-            this.ucEventCount1.Size = new System.Drawing.Size(208, 193);
-            this.ucEventCount1.TabIndex = 0;
-            // 
-            // panelLastEvent
-            // 
-            this.panelLastEvent.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.panelLastEvent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelLastEvent.Controls.Add(this.panel9);
-            this.panelLastEvent.Controls.Add(this.label2);
-            this.panelLastEvent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelLastEvent.Location = new System.Drawing.Point(0, 0);
-            this.panelLastEvent.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panelLastEvent.Name = "panelLastEvent";
-            this.panelLastEvent.Size = new System.Drawing.Size(509, 193);
-            this.panelLastEvent.TabIndex = 10;
-            // 
-            // panel9
-            // 
-            this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel9.Location = new System.Drawing.Point(0, 27);
-            this.panel9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(507, 164);
-            this.panel9.TabIndex = 8;
-            this.panel9.SizeChanged += new System.EventHandler(this.panel9_SizeChanged);
-            // 
-            // label2
-            // 
-            this.label2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
-            this.label2.ForeColor = System.Drawing.Color.Navy;
-            this.label2.Location = new System.Drawing.Point(0, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(507, 27);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Các lượt xe vào gần đây";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // lblResult
             // 
             this.lblResult.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
@@ -320,7 +313,7 @@
             this.lblResult.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.lblResult.Location = new System.Drawing.Point(0, 0);
             this.lblResult.Name = "lblResult";
-            this.lblResult.Size = new System.Drawing.Size(721, 26);
+            this.lblResult.Size = new System.Drawing.Size(746, 26);
             this.lblResult.TabIndex = 1;
             this.lblResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -336,39 +329,25 @@
             // splitContainerEventContent.Panel1
             // 
             this.splitContainerEventContent.Panel1.Controls.Add(this.panelDetectPlate);
-            this.splitContainerEventContent.Panel1MinSize = 0;
             // 
             // splitContainerEventContent.Panel2
             // 
             this.splitContainerEventContent.Panel2.Controls.Add(this.dgvEventContent);
-            this.splitContainerEventContent.Panel2MinSize = 0;
-            this.splitContainerEventContent.Size = new System.Drawing.Size(232, 534);
-            this.splitContainerEventContent.SplitterDistance = 250;
-            this.splitContainerEventContent.SplitterWidth = 10;
+            this.splitContainerEventContent.Size = new System.Drawing.Size(211, 534);
+            this.splitContainerEventContent.SplitterDistance = 287;
+            this.splitContainerEventContent.SplitterWidth = 8;
             this.splitContainerEventContent.TabIndex = 0;
             // 
             // panelDetectPlate
             // 
-            this.panelDetectPlate.Controls.Add(this.picLprImage);
             this.panelDetectPlate.Controls.Add(this.txtPlate);
+            this.panelDetectPlate.Controls.Add(this.picLprImage);
             this.panelDetectPlate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelDetectPlate.Location = new System.Drawing.Point(0, 0);
             this.panelDetectPlate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelDetectPlate.Name = "panelDetectPlate";
-            this.panelDetectPlate.Size = new System.Drawing.Size(232, 250);
+            this.panelDetectPlate.Size = new System.Drawing.Size(211, 287);
             this.panelDetectPlate.TabIndex = 4;
-            // 
-            // picLprImage
-            // 
-            this.picLprImage.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.picLprImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picLprImage.Location = new System.Drawing.Point(0, 32);
-            this.picLprImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.picLprImage.Name = "picLprImage";
-            this.picLprImage.Size = new System.Drawing.Size(232, 218);
-            this.picLprImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picLprImage.TabIndex = 4;
-            this.picLprImage.TabStop = false;
             // 
             // txtPlate
             // 
@@ -378,9 +357,21 @@
             this.txtPlate.Location = new System.Drawing.Point(0, 0);
             this.txtPlate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtPlate.Name = "txtPlate";
-            this.txtPlate.Size = new System.Drawing.Size(232, 32);
+            this.txtPlate.Size = new System.Drawing.Size(211, 32);
             this.txtPlate.TabIndex = 0;
             this.txtPlate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // picLprImage
+            // 
+            this.picLprImage.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.picLprImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picLprImage.Location = new System.Drawing.Point(0, 0);
+            this.picLprImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.picLprImage.Name = "picLprImage";
+            this.picLprImage.Size = new System.Drawing.Size(211, 287);
+            this.picLprImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picLprImage.TabIndex = 4;
+            this.picLprImage.TabStop = false;
             // 
             // dgvEventContent
             // 
@@ -404,7 +395,7 @@
             this.dgvEventContent.ReadOnly = true;
             this.dgvEventContent.RowHeadersVisible = false;
             this.dgvEventContent.RowTemplate.Height = 29;
-            this.dgvEventContent.Size = new System.Drawing.Size(232, 274);
+            this.dgvEventContent.Size = new System.Drawing.Size(211, 239);
             this.dgvEventContent.TabIndex = 0;
             // 
             // Column1
@@ -445,6 +436,7 @@
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.DarkGreen;
+            this.panel5.Controls.Add(this.lblLaneName);
             this.panel5.Controls.Add(this.btnTestCard);
             this.panel5.Controls.Add(this.picRetakePhoto);
             this.panel5.Controls.Add(this.panel8);
@@ -452,7 +444,6 @@
             this.panel5.Controls.Add(this.panel6);
             this.panel5.Controls.Add(this.picOpenBarrie);
             this.panel5.Controls.Add(this.panel1);
-            this.panel5.Controls.Add(this.lblLaneName);
             this.panel5.Controls.Add(this.picSetting);
             this.panel5.Controls.Add(this.panel7);
             this.panel5.Controls.Add(this.pictureBox2);
@@ -620,35 +611,38 @@
             this.label5.TabIndex = 0;
             this.label5.Text = "GHI CHÚ DỊCH VỤ HẠ TẦNG";
             // 
-            // splitContainerAll
+            // splitContainer1
             // 
-            this.splitContainerAll.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerAll.Location = new System.Drawing.Point(0, 22);
-            this.splitContainerAll.Name = "splitContainerAll";
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 22);
+            this.splitContainer1.Name = "splitContainer1";
             // 
-            // splitContainerAll.Panel1
+            // splitContainer1.Panel1
             // 
-            this.splitContainerAll.Panel1.Controls.Add(this.splitContainerMain);
-            this.splitContainerAll.Panel1MinSize = 0;
+            this.splitContainer1.Panel1.Controls.Add(this.splitContainerMain);
             // 
-            // splitContainerAll.Panel2
+            // splitContainer1.Panel2
             // 
-            this.splitContainerAll.Panel2.Controls.Add(this.splitContainerEventContent);
-            this.splitContainerAll.Panel2MinSize = 0;
-            this.splitContainerAll.Size = new System.Drawing.Size(957, 534);
-            this.splitContainerAll.SplitterDistance = 721;
-            this.splitContainerAll.TabIndex = 8;
+            this.splitContainer1.Panel2.Controls.Add(this.splitContainerEventContent);
+            this.splitContainer1.Size = new System.Drawing.Size(961, 534);
+            this.splitContainer1.SplitterDistance = 746;
+            this.splitContainer1.TabIndex = 8;
             // 
-            // ucLaneIn
+            // ucLaneIn_Test
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.splitContainerAll);
             this.Controls.Add(this.splitterEventInfoWithCamera);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.panel5);
             this.Margin = new System.Windows.Forms.Padding(0);
-            this.Name = "ucLaneIn";
+            this.Name = "ucLaneIn_Test";
             this.Size = new System.Drawing.Size(961, 556);
+            this.panelLastEvent.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
             this.splitContainerMain.Panel1.ResumeLayout(false);
             this.splitContainerMain.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).EndInit();
@@ -659,11 +653,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.picVehicleImage)).EndInit();
             this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picOverviewImage)).EndInit();
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            this.panelLastEvent.ResumeLayout(false);
             this.splitContainerEventContent.Panel1.ResumeLayout(false);
             this.splitContainerEventContent.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerEventContent)).EndInit();
@@ -681,10 +670,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
-            this.splitContainerAll.Panel1.ResumeLayout(false);
-            this.splitContainerAll.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerAll)).EndInit();
-            this.splitContainerAll.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -735,8 +724,8 @@
         private Label label4;
         private Label label5;
         private PictureBox btnTestCard;
+        private SplitContainer splitContainer2;
         private SplitContainer splitContainer1;
-        private SplitContainer splitContainerAll;
         private ucEventCount ucEventCount1;
         private Panel panelLastEvent;
         private Panel panel9;

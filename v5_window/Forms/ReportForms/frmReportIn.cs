@@ -61,6 +61,8 @@ namespace iParkingv5_window.Forms.ReportForms
             await CreateUI();
             this.ActiveControl = btnSearch;
             panelData.ToggleDoubleBuffered(true);
+
+            btnWriteInOut.Visible = this.isAllowSelect;
             if (this.isAllowSelect)
             {
                 dgvData.CellDoubleClick += DgvData_CellDoubleClick;
@@ -113,14 +115,31 @@ namespace iParkingv5_window.Forms.ReportForms
             tablePic.Location = new Point(panelData.Width - tablePic.Width - TextManagement.ROOT_SIZE * 2,
                                           dgvData.Location.Y);
 
-            lblTotalEvents.Location = new Point(btnSearch.Location.X + btnSearch.Width + TextManagement.ROOT_SIZE,
-                                               btnSearch.Location.Y - lblTotalEvents.Height + btnSearch.Height);
+            lblTotalEvents.Location = new Point(btnWriteInOut.Location.X + btnWriteInOut.Width + TextManagement.ROOT_SIZE,
+                                               btnWriteInOut.Location.Y - lblTotalEvents.Height + btnWriteInOut.Height);
             ucPages1.Width = panelData.Width - TextManagement.ROOT_SIZE * 4;
             ucPages1.Location = new Point(dgvData.Location.X, dgvData.Location.Y + dgvData.Height + TextManagement.ROOT_SIZE);
         }
         #endregion End Forms
         public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
 
+        private async void btnWriteInOut_Click(object? sender, EventArgs e)
+        {
+            if (dgvData.CurrentRow == null)
+            {
+                MessageBox.Show("Mời chọn phương tiện", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DialogResult result = MessageBox.Show("Xác nhận ghi xe ra?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                this.selectedIdentityId = dgvData.CurrentRow.Cells[1].Value?.ToString() ?? "";
+                this.selectedPlateNumber = dgvData.CurrentRow.Cells[2].Value?.ToString() ?? "";
+
+                this.DialogResult = DialogResult.OK;
+            }
+        }
         #region Controls In Form
         private async void btnSearch_Click(object? sender, EventArgs e)
         {
@@ -222,19 +241,21 @@ namespace iParkingv5_window.Forms.ReportForms
                         continue;
                     }
                 }
-
-                string identityId = dgvData.Rows[e.RowIndex].Cells[1].Value?.ToString() ?? "";
-                string plateNumber = dgvData.Rows[e.RowIndex].Cells[2].Value?.ToString() ?? "";
-                string datetimeIn = dgvData.Rows[e.RowIndex].Cells[3].Value?.ToString() ?? "";
-                string laneID = dgvData.Rows[e.RowIndex].Cells[4].Value?.ToString() ?? "";
-                string createdById = dgvData.Rows[e.RowIndex].Cells[5].Value?.ToString() ?? "";
-                string customerId = dgvData.Rows[e.RowIndex].Cells[7].Value?.ToString() ?? "";
-                string registerVehicleId = dgvData.Rows[e.RowIndex].Cells[8].Value?.ToString() ?? "";
+                //string identityId = dgvData.Rows[e.RowIndex].Cells[1].Value?.ToString() ?? "";
+                string identityId = dgvData.CurrentRow.Cells[1]?.Value?.ToString() ?? string.Empty;
+                string plateNumber = dgvData.CurrentRow.Cells[2].Value?.ToString() ?? "";
+                string datetimeIn = dgvData.CurrentRow.Cells[3].Value?.ToString() ?? "";
+                string laneID = dgvData.CurrentRow.Cells[4].Value?.ToString() ?? "";
+                string createdById = dgvData.CurrentRow.Cells[5].Value?.ToString() ?? "";
+                string customerId = dgvData.CurrentRow.Cells[7].Value?.ToString() ?? "";
+                string registerVehicleId = dgvData.CurrentRow.Cells[8].Value?.ToString() ?? "";
                 ucEventInInfo1.ShowInfo(new Point((this.Width - ucEventInInfo1.Width) / 2, (this.Height - ucEventInInfo1.Height) / 2), laneID, datetimeIn, plateNumber, identityId, createdById, customerId, registerVehicleId);
                 this.ActiveControl = ucEventInInfo1;
                 panelData.ResumeLayout();
             }
         }
+
+
         private void DgvData_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1)
@@ -324,6 +345,7 @@ namespace iParkingv5_window.Forms.ReportForms
             btnCancel.InitControl(btnCancel_Click);
             btnExportExcel.InitControl(btnExportExcel_Click);
             btnSearch.InitControl(btnSearch_Click);
+            btnWriteInOut.InitControl(btnWriteInOut_Click);
             panelData.ToggleDoubleBuffered(true);
 
             lblTitle.Text = "Danh Sách Xe Đang Trong Bãi";
@@ -354,6 +376,14 @@ namespace iParkingv5_window.Forms.ReportForms
 
             btnSearch.Location = new Point(cbLane.Location.X + cbLane.Width + TextManagement.ROOT_SIZE,
                                           cbLane.Location.Y + cbLane.Height - btnSearch.Height);
+
+            btnWriteInOut.Location = new Point(btnSearch.Location.X + btnSearch.Width + TextManagement.ROOT_SIZE,
+                                          btnSearch.Location.Y + btnSearch.Height - btnWriteInOut.Height);
+            btnWriteInOut.Text = "Ghi ra";
+
+            lblTotalEvents.Location = new Point(btnWriteInOut.Location.X + btnWriteInOut.Width + TextManagement.ROOT_SIZE,
+                                                btnWriteInOut.Location.Y - lblTotalEvents.Height + btnWriteInOut.Height);
+
             btnCancel.Location = new Point(panelData.Width - btnCancel.Width - TextManagement.ROOT_SIZE * 2,
                                            panelData.Height - btnCancel.Height - TextManagement.ROOT_SIZE * 2);
             btnExportExcel.Location = new Point(btnCancel.Location.X - btnExportExcel.Width - TextManagement.ROOT_SIZE,
@@ -380,8 +410,7 @@ namespace iParkingv5_window.Forms.ReportForms
             tablePic.Location = new Point(panelData.Width - tablePic.Width - TextManagement.ROOT_SIZE * 2,
                                           dgvData.Location.Y);
 
-            lblTotalEvents.Location = new Point(btnSearch.Location.X + btnSearch.Width + TextManagement.ROOT_SIZE,
-                                                btnSearch.Location.Y - lblTotalEvents.Height + btnSearch.Height);
+            
 
             cbVehicleType.DisplayMember = cbIdentityGroupType.DisplayMember = cbLane.DisplayMember = "Name";
             cbVehicleType.ValueMember = cbIdentityGroupType.ValueMember = cbLane.ValueMember = "Value";
@@ -430,8 +459,8 @@ namespace iParkingv5_window.Forms.ReportForms
             tablePic.Location = new Point(panelData.Width - tablePic.Width - TextManagement.ROOT_SIZE * 2,
                                           dgvData.Location.Y);
 
-            lblTotalEvents.Location = new Point(btnSearch.Location.X + btnSearch.Width + TextManagement.ROOT_SIZE,
-                                               btnSearch.Location.Y - lblTotalEvents.Height + btnSearch.Height);
+            lblTotalEvents.Location = new Point(btnWriteInOut.Location.X + btnWriteInOut.Width + TextManagement.ROOT_SIZE,
+                                               btnWriteInOut.Location.Y - lblTotalEvents.Height + btnWriteInOut.Height);
             ucPages1.Width = panelData.Width - TextManagement.ROOT_SIZE * 4;
             ucPages1.Location = new Point(dgvData.Location.X, dgvData.Location.Y + dgvData.Height + TextManagement.ROOT_SIZE);
             panelData.Refresh();
@@ -604,5 +633,10 @@ namespace iParkingv5_window.Forms.ReportForms
             return customer == null ? "" : customer.Name + " / " + customer.PhoneNumber;
         }
         #endregion End Private Function
+
+        private void btnSearch_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -31,269 +31,305 @@ namespace iParkingv5_CustomerRegister.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSearchPlateNumber));
-            panelData = new Panel();
-            ucLoading1 = new ucLoading();
-            lblTitle = new Label();
-            btnCancel1 = new LblCancel();
-            btnOk1 = new BtnOk();
-            btnSearch = new BtnSearch();
-            ucNotify1 = new ucNotify();
-            lblKeyword = new Label();
-            txtKeyword = new TextBox();
-            dgvData = new DataGridView();
-            Column2 = new DataGridViewTextBoxColumn();
-            Column3 = new DataGridViewTextBoxColumn();
-            Column8 = new DataGridViewTextBoxColumn();
-            Column5 = new DataGridViewTextBoxColumn();
-            Column6 = new DataGridViewTextBoxColumn();
-            Column11 = new DataGridViewTextBoxColumn();
-            Column10 = new DataGridViewTextBoxColumn();
-            Column12 = new DataGridViewTextBoxColumn();
-            Column1 = new DataGridViewTextBoxColumn();
-            Column4 = new DataGridViewTextBoxColumn();
-            Column7 = new DataGridViewTextBoxColumn();
-            Column9 = new DataGridViewTextBoxColumn();
-            panelData.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvData).BeginInit();
-            SuspendLayout();
+            this.panelData = new System.Windows.Forms.Panel();
+            this.ucLoading1 = new iPakrkingv5.Controls.Usercontrols.BuildControls.ucLoading();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.btnCancel1 = new iPakrkingv5.Controls.Controls.Buttons.LblCancel();
+            this.btnOk1 = new iPakrkingv5.Controls.Controls.Buttons.BtnOk();
+            this.btnSearch = new iPakrkingv5.Controls.Controls.Buttons.BtnSearch();
+            this.ucNotify1 = new iPakrkingv5.Controls.Usercontrols.BuildControls.ucNotify();
+            this.lblKeyword = new System.Windows.Forms.Label();
+            this.txtKeyword = new System.Windows.Forms.TextBox();
+            this.dgvData = new System.Windows.Forms.DataGridView();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnWriteInOut = new iPakrkingv5.Controls.Controls.Buttons.BtnWriteInOut();
+            this.panelData.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
+            this.SuspendLayout();
             // 
             // panelData
             // 
-            panelData.Controls.Add(ucLoading1);
-            panelData.Controls.Add(lblTitle);
-            panelData.Controls.Add(btnCancel1);
-            panelData.Controls.Add(btnOk1);
-            panelData.Controls.Add(btnSearch);
-            panelData.Controls.Add(ucNotify1);
-            panelData.Controls.Add(lblKeyword);
-            panelData.Controls.Add(txtKeyword);
-            panelData.Controls.Add(dgvData);
-            panelData.Dock = DockStyle.Fill;
-            panelData.Location = new Point(0, 0);
-            panelData.Name = "panelData";
-            panelData.Size = new Size(894, 496);
-            panelData.TabIndex = 0;
+            this.panelData.Controls.Add(this.btnWriteInOut);
+            this.panelData.Controls.Add(this.ucLoading1);
+            this.panelData.Controls.Add(this.lblTitle);
+            this.panelData.Controls.Add(this.btnCancel1);
+            this.panelData.Controls.Add(this.btnOk1);
+            this.panelData.Controls.Add(this.btnSearch);
+            this.panelData.Controls.Add(this.ucNotify1);
+            this.panelData.Controls.Add(this.lblKeyword);
+            this.panelData.Controls.Add(this.txtKeyword);
+            this.panelData.Controls.Add(this.dgvData);
+            this.panelData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelData.Location = new System.Drawing.Point(0, 0);
+            this.panelData.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panelData.Name = "panelData";
+            this.panelData.Size = new System.Drawing.Size(782, 372);
+            this.panelData.TabIndex = 0;
             // 
             // ucLoading1
             // 
-            ucLoading1.BackColor = Color.FromArgb(255, 224, 192);
-            ucLoading1.Language = IPaking.Ultility.TextManagement.EmLanguage.Vietnamese;
-            ucLoading1.Location = new Point(27, 316);
-            ucLoading1.Message = "Preparing to download";
-            ucLoading1.Name = "ucLoading1";
-            ucLoading1.Size = new Size(392, 188);
-            ucLoading1.TabIndex = 28;
+            this.ucLoading1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.ucLoading1.Language = IPaking.Ultility.TextManagement.EmLanguage.Vietnamese;
+            this.ucLoading1.Location = new System.Drawing.Point(24, 237);
+            this.ucLoading1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ucLoading1.Message = "Preparing to download";
+            this.ucLoading1.Name = "ucLoading1";
+            this.ucLoading1.Size = new System.Drawing.Size(343, 141);
+            this.ucLoading1.TabIndex = 28;
             // 
             // lblTitle
             // 
-            lblTitle.AutoSize = true;
-            lblTitle.BackColor = Color.Transparent;
-            lblTitle.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
-            lblTitle.Location = new Point(83, 35);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(367, 45);
-            lblTitle.TabIndex = 26;
-            lblTitle.Text = "Danh sách phương tiện";
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.Location = new System.Drawing.Point(73, 26);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(367, 45);
+            this.lblTitle.TabIndex = 26;
+            this.lblTitle.Text = "Danh sách phương tiện";
             // 
             // btnCancel1
             // 
-            btnCancel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnCancel1.AutoSize = true;
-            btnCancel1.Location = new Point(552, 355);
-            btnCancel1.Name = "btnCancel1";
-            btnCancel1.Size = new Size(88, 30);
-            btnCancel1.TabIndex = 4;
-            btnCancel1.Text = "Đóng";
+            this.btnCancel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel1.AutoSize = true;
+            this.btnCancel1.Location = new System.Drawing.Point(483, 263);
+            this.btnCancel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCancel1.Name = "btnCancel1";
+            this.btnCancel1.Size = new System.Drawing.Size(77, 25);
+            this.btnCancel1.TabIndex = 4;
+            this.btnCancel1.Text = "Đóng";
             // 
             // btnOk1
             // 
-            btnOk1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnOk1.AutoSize = true;
-            btnOk1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            btnOk1.Location = new Point(490, 355);
-            btnOk1.Name = "btnOk1";
-            btnOk1.Size = new Size(64, 30);
-            btnOk1.TabIndex = 3;
+            this.btnOk1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOk1.AutoSize = true;
+            this.btnOk1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.btnOk1.Location = new System.Drawing.Point(429, 266);
+            this.btnOk1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnOk1.Name = "btnOk1";
+            this.btnOk1.Size = new System.Drawing.Size(56, 22);
+            this.btnOk1.TabIndex = 3;
             // 
-            // lblSearch
+            // btnSearch
             // 
-            btnSearch.AutoSize = true;
-            btnSearch.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            btnSearch.Location = new Point(560, 98);
-            btnSearch.Name = "lblSearch";
-            btnSearch.Size = new Size(91, 30);
-            btnSearch.TabIndex = 1;
-            btnSearch.Text = "lblSearch1";
+            this.btnSearch.AutoSize = true;
+            this.btnSearch.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.btnSearch.Location = new System.Drawing.Point(490, 74);
+            this.btnSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(91, 30);
+            this.btnSearch.TabIndex = 1;
+            this.btnSearch.Text = "lblSearch1";
             // 
             // ucNotify1
             // 
-            ucNotify1.BackColor = Color.FromArgb(255, 224, 192);
-            ucNotify1.Location = new Point(579, 96);
-            ucNotify1.MaximumSize = new Size(333, 356);
-            ucNotify1.Message = "Nội dung thông báo";
-            ucNotify1.MinimumSize = new Size(333, 356);
-            ucNotify1.Name = "ucNotify1";
-            ucNotify1.NotiType = ucNotify.EmNotiType.Information;
-            ucNotify1.Size = new Size(333, 356);
-            ucNotify1.TabIndex = 27;
+            this.ucNotify1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.ucNotify1.Location = new System.Drawing.Point(507, 72);
+            this.ucNotify1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ucNotify1.MaximumSize = new System.Drawing.Size(291, 267);
+            this.ucNotify1.Message = "Nội dung thông báo";
+            this.ucNotify1.MinimumSize = new System.Drawing.Size(291, 267);
+            this.ucNotify1.Name = "ucNotify1";
+            this.ucNotify1.NotiType = iPakrkingv5.Controls.Usercontrols.BuildControls.ucNotify.EmNotiType.Information;
+            this.ucNotify1.Size = new System.Drawing.Size(291, 267);
+            this.ucNotify1.TabIndex = 27;
             // 
             // lblKeyword
             // 
-            lblKeyword.AutoSize = true;
-            lblKeyword.BackColor = Color.Transparent;
-            lblKeyword.Location = new Point(83, 105);
-            lblKeyword.Name = "lblKeyword";
-            lblKeyword.Size = new Size(62, 20);
-            lblKeyword.TabIndex = 20;
-            lblKeyword.Text = "Từ khóa";
+            this.lblKeyword.AutoSize = true;
+            this.lblKeyword.BackColor = System.Drawing.Color.Transparent;
+            this.lblKeyword.Location = new System.Drawing.Point(73, 79);
+            this.lblKeyword.Name = "lblKeyword";
+            this.lblKeyword.Size = new System.Drawing.Size(49, 15);
+            this.lblKeyword.TabIndex = 20;
+            this.lblKeyword.Text = "Từ khóa";
             // 
             // txtKeyword
             // 
-            txtKeyword.Location = new Point(170, 98);
-            txtKeyword.Name = "txtKeyword";
-            txtKeyword.PlaceholderText = "Tên/Biển số xe";
-            txtKeyword.Size = new Size(365, 27);
-            txtKeyword.TabIndex = 0;
+            this.txtKeyword.Location = new System.Drawing.Point(149, 74);
+            this.txtKeyword.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtKeyword.Name = "txtKeyword";
+            this.txtKeyword.PlaceholderText = "Tên/Biển số xe";
+            this.txtKeyword.Size = new System.Drawing.Size(320, 23);
+            this.txtKeyword.TabIndex = 0;
             // 
             // dgvData
             // 
-            dgvData.AllowUserToAddRows = false;
-            dgvData.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(192, 255, 255);
-            dgvData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            dgvData.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dgvData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            dgvData.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            dgvData.BackgroundColor = SystemColors.Control;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle2.Padding = new Padding(3);
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            dgvData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvData.Columns.AddRange(new DataGridViewColumn[] { Column2, Column3, Column8, Column5, Column6, Column11, Column10, Column12, Column1, Column4, Column7, Column9 });
-            dgvData.Location = new Point(170, 143);
-            dgvData.Name = "dgvData";
-            dgvData.ReadOnly = true;
-            dgvData.RowHeadersVisible = false;
-            dataGridViewCellStyle3.Padding = new Padding(3);
-            dgvData.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            dgvData.RowTemplate.Height = 29;
-            dgvData.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvData.Size = new Size(457, 193);
-            dgvData.TabIndex = 2;
+            this.dgvData.AllowUserToAddRows = false;
+            this.dgvData.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.dgvData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvData.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvData.BackgroundColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column2,
+            this.Column3,
+            this.Column8,
+            this.Column5,
+            this.Column6,
+            this.Column11,
+            this.Column10,
+            this.Column12,
+            this.Column1,
+            this.Column4,
+            this.Column7,
+            this.Column9});
+            this.dgvData.Location = new System.Drawing.Point(149, 107);
+            this.dgvData.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dgvData.Name = "dgvData";
+            this.dgvData.ReadOnly = true;
+            this.dgvData.RowHeadersVisible = false;
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(3);
+            this.dgvData.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvData.RowTemplate.Height = 29;
+            this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvData.Size = new System.Drawing.Size(400, 145);
+            this.dgvData.TabIndex = 2;
             // 
             // Column2
             // 
-            Column2.HeaderText = "STT";
-            Column2.Name = "Column2";
-            Column2.ReadOnly = true;
-            Column2.Width = 76;
+            this.Column2.HeaderText = "STT";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.Width = 76;
             // 
             // Column3
             // 
-            Column3.HeaderText = "Tên";
-            Column3.Name = "Column3";
-            Column3.ReadOnly = true;
-            Column3.Width = 74;
+            this.Column3.HeaderText = "Tên";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.Width = 74;
             // 
             // Column8
             // 
-            Column8.HeaderText = "Biển số xe";
-            Column8.Name = "Column8";
-            Column8.ReadOnly = true;
-            Column8.Width = 133;
+            this.Column8.HeaderText = "Biển số xe";
+            this.Column8.Name = "Column8";
+            this.Column8.ReadOnly = true;
+            this.Column8.Width = 133;
             // 
             // Column5
             // 
-            Column5.HeaderText = "Loại phương tiện";
-            Column5.Name = "Column5";
-            Column5.ReadOnly = true;
-            Column5.Width = 196;
+            this.Column5.HeaderText = "Loại phương tiện";
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            this.Column5.Width = 196;
             // 
             // Column6
             // 
-            Column6.HeaderText = "Khách hàng";
-            Column6.Name = "Column6";
-            Column6.ReadOnly = true;
-            Column6.Width = 146;
+            this.Column6.HeaderText = "Khách hàng";
+            this.Column6.Name = "Column6";
+            this.Column6.ReadOnly = true;
+            this.Column6.Width = 146;
             // 
             // Column11
             // 
-            Column11.HeaderText = "Mã khách hàng";
-            Column11.Name = "Column11";
-            Column11.ReadOnly = true;
-            Column11.Width = 178;
+            this.Column11.HeaderText = "Mã khách hàng";
+            this.Column11.Name = "Column11";
+            this.Column11.ReadOnly = true;
+            this.Column11.Width = 178;
             // 
             // Column10
             // 
-            Column10.HeaderText = "Nhóm khách hàng";
-            Column10.Name = "Column10";
-            Column10.ReadOnly = true;
-            Column10.Width = 205;
+            this.Column10.HeaderText = "Nhóm khách hàng";
+            this.Column10.Name = "Column10";
+            this.Column10.ReadOnly = true;
+            this.Column10.Width = 205;
             // 
             // Column12
             // 
-            Column12.HeaderText = "Hạn sử dụng";
-            Column12.Name = "Column12";
-            Column12.ReadOnly = true;
-            Column12.Width = 159;
+            this.Column12.HeaderText = "Hạn sử dụng";
+            this.Column12.Name = "Column12";
+            this.Column12.ReadOnly = true;
+            this.Column12.Width = 159;
             // 
             // Column1
             // 
-            Column1.HeaderText = "vehicleId";
-            Column1.Name = "Column1";
-            Column1.ReadOnly = true;
-            Column1.Visible = false;
-            Column1.Width = 121;
+            this.Column1.HeaderText = "vehicleId";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Visible = false;
+            this.Column1.Width = 121;
             // 
             // Column4
             // 
-            Column4.HeaderText = "vehicleTypeId";
-            Column4.Name = "Column4";
-            Column4.ReadOnly = true;
-            Column4.Visible = false;
-            Column4.Width = 163;
+            this.Column4.HeaderText = "vehicleTypeId";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.Visible = false;
+            this.Column4.Width = 163;
             // 
             // Column7
             // 
-            Column7.HeaderText = "customerId";
-            Column7.Name = "Column7";
-            Column7.ReadOnly = true;
-            Column7.Visible = false;
-            Column7.Width = 144;
+            this.Column7.HeaderText = "customerId";
+            this.Column7.Name = "Column7";
+            this.Column7.ReadOnly = true;
+            this.Column7.Visible = false;
+            this.Column7.Width = 144;
             // 
             // Column9
             // 
-            Column9.HeaderText = "customerGroupId";
-            Column9.Name = "Column9";
-            Column9.ReadOnly = true;
-            Column9.Visible = false;
-            Column9.Width = 202;
+            this.Column9.HeaderText = "customerGroupId";
+            this.Column9.Name = "Column9";
+            this.Column9.ReadOnly = true;
+            this.Column9.Visible = false;
+            this.Column9.Width = 202;
+            // 
+            // btnWriteInOut
+            // 
+            this.btnWriteInOut.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnWriteInOut.Location = new System.Drawing.Point(623, 79);
+            this.btnWriteInOut.Name = "btnWriteInOut";
+            this.btnWriteInOut.Size = new System.Drawing.Size(93, 32);
+            this.btnWriteInOut.TabIndex = 29;
+            this.btnWriteInOut.Text = "btnWriteInOut1";
+            this.btnWriteInOut.UseVisualStyleBackColor = true;
             // 
             // frmSearchPlateNumber
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(894, 496);
-            Controls.Add(panelData);
-            DoubleBuffered = true;
-            Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "frmSearchPlateNumber";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "Tìm kiếm biển số xe";
-            panelData.ResumeLayout(false);
-            panelData.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvData).EndInit();
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(782, 372);
+            this.Controls.Add(this.panelData);
+            this.DoubleBuffered = true;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Name = "frmSearchPlateNumber";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Tìm kiếm biển số xe";
+            this.panelData.ResumeLayout(false);
+            this.panelData.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
@@ -320,5 +356,6 @@ namespace iParkingv5_CustomerRegister.Forms
         private DataGridViewTextBoxColumn Column4;
         private DataGridViewTextBoxColumn Column7;
         private DataGridViewTextBoxColumn Column9;
+        private BtnWriteInOut btnWriteInOut;
     }
 }

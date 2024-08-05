@@ -27,7 +27,7 @@ using static iParkingv6.ApiManager.KzParkingv3Apis.KzParkingApiHelper;
 
 namespace iParkingv5_window.Usercontrols
 {
-    public partial class ucLaneIn : UserControl, iLane, IDisposable
+    public partial class ucLaneIn_Test : UserControl, iLane, IDisposable
     {
         public bool isScale { get; set; }
         public int ScaleValue { get; set; }
@@ -73,7 +73,7 @@ namespace iParkingv5_window.Usercontrols
         #endregion END PROPERTIES
 
         #region FORMS
-        public ucLaneIn(Lane lane, LaneDisplayConfig? laneDisplayConfig, bool isDisplayLastEvent, bool isScale)
+        public ucLaneIn_Test(Lane lane, LaneDisplayConfig? laneDisplayConfig, bool isDisplayLastEvent, bool isScale)
         {
             InitializeComponent();
 
@@ -92,6 +92,8 @@ namespace iParkingv5_window.Usercontrols
             {
                 case LaneDirectionConfig.EmDisplayDirection.Vertical:
                     this.isTopToBottom = true;
+                    splitterEventInfoWithCamera.Dock = DockStyle.Bottom;
+                    //panelEventData.Dock = DockStyle.Bottom;
                     break;
                 case LaneDirectionConfig.EmDisplayDirection.HorizontalLeftToRight:
                     this.isTopToBottom = false;
@@ -100,7 +102,6 @@ namespace iParkingv5_window.Usercontrols
                 case LaneDirectionConfig.EmDisplayDirection.HorizontalRightToLeft:
                     this.isTopToBottom = false;
                     this.isLeftToRight = false;
-
                     break;
                 default:
                     break;
@@ -112,11 +113,6 @@ namespace iParkingv5_window.Usercontrols
             {
                 panelCameras.Dock = DockStyle.Top;
                 splitterCamera.Dock = DockStyle.Top;
-                panelCameras.Height = 200;
-
-                splitContainerAll.Orientation = Orientation.Horizontal;
-                splitContainerEventContent.Orientation = Orientation.Vertical;
-                splitContainer1.Panel1Collapsed = true;
             }
             else
             {
@@ -124,27 +120,17 @@ namespace iParkingv5_window.Usercontrols
                 {
                     panelCameras.Dock = DockStyle.Left;
                     splitterCamera.Dock = DockStyle.Left;
-                    panelCameras.Width = 200;
 
                     splitContainerEventContent.Panel1.Controls.Add(panelDetectPlate);
                     splitContainerEventContent.Panel2.Controls.Add(dgvEventContent);
-                    splitContainerEventContent.Orientation = Orientation.Vertical;
-                    splitContainerAll.Orientation = Orientation.Horizontal;
-
-
                 }
                 else
                 {
                     panelCameras.Dock = DockStyle.Right;
                     splitterCamera.Dock = DockStyle.Right;
-                    panelCameras.Width = 200;
 
                     splitContainerEventContent.Panel1.Controls.Add(dgvEventContent);
                     splitContainerEventContent.Panel2.Controls.Add(panelDetectPlate);
-                    splitContainerEventContent.Orientation = Orientation.Vertical;
-
-                    splitContainerAll.Orientation = Orientation.Horizontal;
-
                 }
             }
 
@@ -152,10 +138,6 @@ namespace iParkingv5_window.Usercontrols
         }
         private async void UcLaneIn_Load(object? sender, EventArgs e)
         {
-            // Bỏ hiện view
-            ucEventCount1.Visible = false;
-            panelLastEvent.Visible = false;
-
             GetShortcutConfig();
             LoadCamera();
             this.Dock = DockStyle.Top;
@@ -245,15 +227,13 @@ namespace iParkingv5_window.Usercontrols
             ucTop3Event = new ucLastEventInfo(false);
             ucTop2Event = new ucLastEventInfo(true);
             ucTop1Event = new ucLastEventInfo(true);
-            ucTop3Event.Size = new Size(100, 0);
-            ucTop2Event.Size = new Size(100, 0);
-            ucTop1Event.Size = new Size(100, 0);
+            ucTop3Event.Size = new Size(311, 0);
+            ucTop2Event.Size = new Size(250, 0);
+            ucTop1Event.Size = new Size(250, 0);
 
             panel9.Controls.Add(ucTop3Event);
             panel9.Controls.Add(ucTop2Event);
             panel9.Controls.Add(ucTop1Event);
-
-
             // 
             // ucTop3Event
             // 
@@ -288,7 +268,6 @@ namespace iParkingv5_window.Usercontrols
             ucLastEventInfos.Add(ucTop1Event);
             ucLastEventInfos.Add(ucTop2Event);
             ucLastEventInfos.Add(ucTop3Event);
-
             Tuple<List<EventInReport>, int, int> top3Event = await KzParkingApiHelper.GetEventIns("", startTime, endTime, "", "", this.lane.id, 1, 3);
             if (top3Event!.Item1 != null)
             {
@@ -313,6 +292,7 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
             splitContainerMain.BringToFront();
+
             this.ActiveControl = splitContainerMain;
         }
 
@@ -325,13 +305,13 @@ namespace iParkingv5_window.Usercontrols
         }
         private void SplitContainerEventContent_SizeChanged(object? sender, EventArgs e)
         {
-            //onControlSizeChangeEvent?.Invoke(this, new ControlSizeChangedEventArgs()
-            //{
-            //    Type = 1,
-            //    NewX = this.splitContainerMain.Location.X,
-            //    NewY = this.splitContainerMain.Location.Y,
-            //    NewDistance = this.splitContainerMain.SplitterDistance
-            //});
+            onControlSizeChangeEvent?.Invoke(this, new ControlSizeChangedEventArgs()
+            {
+                Type = 1,
+                NewX = this.splitContainerMain.Location.X,
+                NewY = this.splitContainerMain.Location.Y,
+                NewDistance = this.splitContainerMain.SplitterDistance
+            });
         }
         private void UcLaneIn_SizeChanged(object? sender, EventArgs e)
         {
@@ -589,10 +569,6 @@ namespace iParkingv5_window.Usercontrols
                         panelCameras.Dock = DockStyle.Top;
                         splitterCamera.Dock = DockStyle.Top;
                         panelCameras.Height = 200;
-
-                        splitContainerAll.Orientation = Orientation.Horizontal;
-                        splitContainerEventContent.Orientation = Orientation.Vertical;
-                        splitContainer1.Panel1Collapsed = true;
                     }
                     break;
                 case LaneDirectionConfig.EmDisplayDirection.HorizontalLeftToRight:
@@ -606,8 +582,6 @@ namespace iParkingv5_window.Usercontrols
                         splitterCamera.Dock = DockStyle.Left;
                         splitContainerEventContent.Panel1.Controls.Add(splitContainerEventContent.Panel2.Controls[0]);
                         splitContainerEventContent.Panel2.Controls.Add(splitContainerEventContent.Panel1.Controls[0]);
-                        splitContainerEventContent.Orientation = Orientation.Vertical;
-
                     }
                     break;
                 case LaneDirectionConfig.EmDisplayDirection.HorizontalRightToLeft:
@@ -621,8 +595,6 @@ namespace iParkingv5_window.Usercontrols
                         splitterCamera.Dock = DockStyle.Right;
                         splitContainerEventContent.Panel1.Controls.Add(splitContainerEventContent.Panel2.Controls[0]);
                         splitContainerEventContent.Panel2.Controls.Add(splitContainerEventContent.Panel1.Controls[0]);
-                        splitContainerEventContent.Orientation = Orientation.Vertical;
-
                     }
                     break;
                 default:
@@ -776,15 +748,6 @@ namespace iParkingv5_window.Usercontrols
             this.SuspendLayout();
             if (this.laneDisplayConfig == null) return;
 
-
-            /// Lưu ý Gán Distance cho Split cha trước -> 
-            try
-            {
-                this.splitContainerAll.SplitterDistance = this.laneDisplayConfig.splitAllPosition;
-            }
-            catch (Exception)
-            {
-            }
             try
             {
                 this.splitContainerMain.SplitterDistance = this.laneDisplayConfig.splitContainerMain;
@@ -792,6 +755,7 @@ namespace iParkingv5_window.Usercontrols
             catch (Exception)
             {
             }
+
             try
             {
                 this.splitContainerEventContent.SplitterDistance = this.laneDisplayConfig.splitContainerEventContent;
@@ -799,6 +763,7 @@ namespace iParkingv5_window.Usercontrols
             catch (Exception)
             {
             }
+
             try
             {
                 this.splitterCamera.SplitPosition = this.laneDisplayConfig.SplitterCameraPosition;
@@ -831,7 +796,6 @@ namespace iParkingv5_window.Usercontrols
                 DisplayIndex = 1,
                 splitContainerEventContent = this.splitContainerEventContent.SplitterDistance,
                 splitContainerMain = this.splitContainerMain.SplitterDistance,
-                splitAllPosition = this.splitContainerAll.SplitterDistance,
                 SplitterCameraPosition = this.splitterCamera.SplitPosition,
                 splitEventInfoWithCameraPosition = this.splitterEventInfoWithCamera.SplitPosition,
             };
@@ -1143,21 +1107,16 @@ namespace iParkingv5_window.Usercontrols
         /// <returns></returns>
         public async Task ExcecuteCardEvent(CardEventArgs ce)
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "*********Bắt đầu sự kiện CardEvent");
-
             AddEventInResponse? eventIn = null;
             if (!this.CheckNewCardEvent(this.lane, ce, out ControllerInLane? controllerInLane, out int thoiGianCho))
             {
                 // Fix cung
                 if (thoiGianCho > 0)
                 {
-                    lblResult.UpdateResultMessage($"Đang trong thời gian chờ, vui lòng quẹt lại sau {thoiGianCho}s", Color.DarkBlue);
+                    //lblResult.UpdateResultMessage($"Đang trong thời gian chờ, vui lòng quẹt lại sau {thoiGianCho}s", Color.DarkBlue);
                 }
                 return;
             }
-
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "CheckNewCard return hoàn tất");
-
             ClearView();
             //Danh sách biến sử dụng
             Image? overviewImg = null;
@@ -1210,7 +1169,6 @@ namespace iParkingv5_window.Usercontrols
 
             //Nếu là sự kiện thẻ thì đọc biển số,
             //còn nếu là sự kiện loop chuyển qua quẹt thẻ thì hiển thị thông tin biển số đã đọc trước đó chứ không đọc lại tránh tốn lượt nhận dạng
-
             Image? lprImage = GetPlate(ce, ref overviewImg, ref vehicleImg, vehicleBaseType);
             //Đọc thông tin loại phương tiện
             lblResult.UpdateResultMessage("Đang check in..." + ce.PreferCard, Color.DarkBlue);
@@ -1675,8 +1633,6 @@ namespace iParkingv5_window.Usercontrols
                                                     CardEventArgs ce, ControllerInLane? controllerInLane,
                                                     Image? overviewImg, Image? vehicleImg, Image? lprImage, string imageKey)
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Bắt đầu thẻ tháng");
-
             bool isAlarm = false;
             if (identity.RegisteredVehicles == null)
             {
@@ -1811,7 +1767,7 @@ namespace iParkingv5_window.Usercontrols
         CheckInWithForce:
             {
                 var responseWithForce = await PostCheckInAsync(lane.id, plateNumber, identity, imageKeys, true);
-
+                
                 if (responseWithForce == null)
                 {
                     goto LOI_HE_THONG;
@@ -1858,7 +1814,6 @@ namespace iParkingv5_window.Usercontrols
                                                        CardEventArgs ce, ControllerInLane? controllerInLane,
                                                        Image? overviewImg, Image? vehicleImg, Image? lprImage, string imageKey)
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Bắt đầu thẻ lượt");
 
             string errorMessage = string.Empty;
             AddEventInResponse? eventIn = null;
@@ -2227,24 +2182,6 @@ namespace iParkingv5_window.Usercontrols
                 EventTime = DateTime.Now
             };
             _ = OnNewEvent(ie);
-        }
-
-        private void splitContainer1_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-
-        }
-
-        private void panel9_SizeChanged(object sender, EventArgs e)
-        {
-            if (ucTop3Event != null)
-            {
-                int width = (panel9.Width) / 3;
-                ucTop3Event.Width = width;
-                ucTop2Event.Width = width;
-                ucTop1Event.Width = width;
-            }
-
-
         }
     }
 }

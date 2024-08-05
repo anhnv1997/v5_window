@@ -63,6 +63,9 @@
     <Reference Include="AForge.Vision">
       <HintPath>..\packages\Camera_LPR\AForge.Vision.dll</HintPath>
     </Reference>
+    <Reference Include="Aopu_Controller">
+      <HintPath>C:\Users\PC_Kien\Desktop\Aopu_Controller.dll</HintPath>
+    </Reference>
     <Reference Include="IPGS.Ultility">
       <HintPath>..\packages\IPGS.Ultility.dll</HintPath>
     </Reference>
@@ -120,6 +123,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Update="Usercontrols\ucLaneIn_Test.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Usercontrols\ucLaneOut_Test.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Usercontrols\ucLaneOut.cs">
       <SubType>UserControl</SubType>

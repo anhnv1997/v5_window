@@ -345,7 +345,7 @@ namespace iParkingv5_window.Forms.DataForms
             for (int i = 0; i < table.Controls.Count; i++)
             {
                 var item = table.Controls[i];
-                if (item is ucLaneIn)
+                if (item is ucLaneIn || item is ucLaneIn_Test)
                 {
                     table.ColumnStyles[i] = new ColumnStyle(SizeType.Percent, 40);
                 }
@@ -558,11 +558,23 @@ namespace iParkingv5_window.Forms.DataForms
                     parent.Controls.Remove((ucLaneIn)_ilane);
                     ((ucLaneIn)_ilane).Dispose();
                 }
+                else if (_ilane is ucLaneIn_Test)
+                {
+                    parent = ((ucLaneIn_Test)_ilane).Parent;
+                    parent.Controls.Remove((ucLaneIn_Test)_ilane);
+                    ((ucLaneIn_Test)_ilane).Dispose();
+                }
                 else if (_ilane is ucLaneOut)
                 {
                     parent = ((ucLaneOut)_ilane).Parent;
                     parent.Controls.Remove((ucLaneOut)_ilane);
                     ((ucLaneOut)_ilane).Dispose();
+                }
+                else if (_ilane is ucLaneOut_Test)
+                {
+                    parent = ((ucLaneOut_Test)_ilane).Parent;
+                    parent.Controls.Remove((ucLaneOut_Test)_ilane);
+                    ((ucLaneOut_Test)_ilane).Dispose();
                 }
 
                 Lane? removeLane = null;
@@ -616,7 +628,7 @@ namespace iParkingv5_window.Forms.DataForms
                 for (int i = 0; i < table.Controls.Count; i++)
                 {
                     var item = table.Controls[i];
-                    if (item is ucLaneIn)
+                    if (item is ucLaneIn || item is ucLaneIn_Test)
                     {
                         table.ColumnStyles[i] = new ColumnStyle(SizeType.Percent, 40);
                     }

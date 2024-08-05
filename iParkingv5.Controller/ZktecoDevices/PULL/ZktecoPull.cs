@@ -447,6 +447,8 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
                 //e.PreferCard = a + ":" + b;
                 e.PreferCard = a.ToString("00000") + ":" + b.ToString("00000");
             }
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, $"BDK zktecoPull cardNumber = {e.PreferCard}");
+
             e.ReaderIndex = Regex.IsMatch(readerIndex, @"^\d+$") ? Convert.ToInt32(readerIndex) + 1 : -1;
             OnCardEvent(e);
         }

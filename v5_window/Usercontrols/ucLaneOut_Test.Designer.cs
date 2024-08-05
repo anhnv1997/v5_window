@@ -2,7 +2,7 @@
 
 namespace iParkingv5_window.Usercontrols
 {
-    partial class ucLaneOut
+    partial class ucLaneOut_Test
     {
         #region Component Designer generated code
 
@@ -16,7 +16,7 @@ namespace iParkingv5_window.Usercontrols
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucLaneOut));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucLaneOut_Test));
             this.lblLaneName = new System.Windows.Forms.Label();
             this.panelCameras = new System.Windows.Forms.Panel();
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
@@ -32,12 +32,12 @@ namespace iParkingv5_window.Usercontrols
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.splitterCamera = new System.Windows.Forms.Splitter();
-            this.lblResult = new iPakrkingv5.Controls.Controls.Labels.lblResult();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.ucEventCount1 = new iParkingv5_window.Usercontrols.ucEventCount();
             this.panelLastEvent = new System.Windows.Forms.Panel();
             this.panel11 = new System.Windows.Forms.Panel();
-            this.lblTitleLastVehicle = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblResult = new iPakrkingv5.Controls.Controls.Labels.lblResult();
             this.splitContainerEventContent = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel14 = new System.Windows.Forms.Panel();
@@ -66,7 +66,7 @@ namespace iParkingv5_window.Usercontrols
             this.toolTip3 = new System.Windows.Forms.ToolTip(this.components);
             this.splitterEventInfoWithCamera = new System.Windows.Forms.Splitter();
             this.toolTipPrint = new System.Windows.Forms.ToolTip(this.components);
-            this.splitContainerAll = new System.Windows.Forms.SplitContainer();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
             this.splitContainerMain.Panel1.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
@@ -80,10 +80,10 @@ namespace iParkingv5_window.Usercontrols
             ((System.ComponentModel.ISupportInitialize)(this.picOverviewImageOut)).BeginInit();
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picOverviewImageIn)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
             this.panelLastEvent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerEventContent)).BeginInit();
             this.splitContainerEventContent.Panel1.SuspendLayout();
@@ -102,10 +102,10 @@ namespace iParkingv5_window.Usercontrols
             ((System.ComponentModel.ISupportInitialize)(this.picPrint)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSetting)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerAll)).BeginInit();
-            this.splitContainerAll.Panel1.SuspendLayout();
-            this.splitContainerAll.Panel2.SuspendLayout();
-            this.splitContainerAll.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblLaneName
@@ -148,9 +148,9 @@ namespace iParkingv5_window.Usercontrols
             // 
             // splitContainerMain.Panel2
             // 
-            this.splitContainerMain.Panel2.Controls.Add(this.splitContainer1);
+            this.splitContainerMain.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainerMain.Panel2.Controls.Add(this.lblResult);
-            this.splitContainerMain.Size = new System.Drawing.Size(803, 458);
+            this.splitContainerMain.Size = new System.Drawing.Size(948, 458);
             this.splitContainerMain.SplitterDistance = 319;
             this.splitContainerMain.SplitterWidth = 3;
             this.splitContainerMain.TabIndex = 4;
@@ -175,7 +175,7 @@ namespace iParkingv5_window.Usercontrols
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(589, 319);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(734, 319);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
             // panel3
@@ -186,7 +186,7 @@ namespace iParkingv5_window.Usercontrols
             this.panel3.Location = new System.Drawing.Point(5, 179);
             this.panel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(285, 136);
+            this.panel3.Size = new System.Drawing.Size(358, 136);
             this.panel3.TabIndex = 1;
             // 
             // picVehicleImageIn
@@ -196,7 +196,7 @@ namespace iParkingv5_window.Usercontrols
             this.picVehicleImageIn.Location = new System.Drawing.Point(0, 0);
             this.picVehicleImageIn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.picVehicleImageIn.Name = "picVehicleImageIn";
-            this.picVehicleImageIn.Size = new System.Drawing.Size(285, 136);
+            this.picVehicleImageIn.Size = new System.Drawing.Size(358, 136);
             this.picVehicleImageIn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picVehicleImageIn.TabIndex = 5;
             this.picVehicleImageIn.TabStop = false;
@@ -206,10 +206,10 @@ namespace iParkingv5_window.Usercontrols
             this.panel2.BackColor = System.Drawing.SystemColors.Control;
             this.panel2.Controls.Add(this.picVehicleImageOut);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(298, 179);
+            this.panel2.Location = new System.Drawing.Point(371, 179);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(286, 136);
+            this.panel2.Size = new System.Drawing.Size(358, 136);
             this.panel2.TabIndex = 0;
             // 
             // picVehicleImageOut
@@ -219,7 +219,7 @@ namespace iParkingv5_window.Usercontrols
             this.picVehicleImageOut.Location = new System.Drawing.Point(0, 0);
             this.picVehicleImageOut.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.picVehicleImageOut.Name = "picVehicleImageOut";
-            this.picVehicleImageOut.Size = new System.Drawing.Size(286, 136);
+            this.picVehicleImageOut.Size = new System.Drawing.Size(358, 136);
             this.picVehicleImageOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picVehicleImageOut.TabIndex = 5;
             this.picVehicleImageOut.TabStop = false;
@@ -229,10 +229,10 @@ namespace iParkingv5_window.Usercontrols
             this.panel6.BackColor = System.Drawing.SystemColors.Control;
             this.panel6.Controls.Add(this.picOverviewImageOut);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(298, 37);
+            this.panel6.Location = new System.Drawing.Point(371, 37);
             this.panel6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(286, 136);
+            this.panel6.Size = new System.Drawing.Size(358, 136);
             this.panel6.TabIndex = 3;
             // 
             // picOverviewImageOut
@@ -242,7 +242,7 @@ namespace iParkingv5_window.Usercontrols
             this.picOverviewImageOut.Location = new System.Drawing.Point(0, 0);
             this.picOverviewImageOut.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.picOverviewImageOut.Name = "picOverviewImageOut";
-            this.picOverviewImageOut.Size = new System.Drawing.Size(286, 136);
+            this.picOverviewImageOut.Size = new System.Drawing.Size(358, 136);
             this.picOverviewImageOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picOverviewImageOut.TabIndex = 5;
             this.picOverviewImageOut.TabStop = false;
@@ -255,7 +255,7 @@ namespace iParkingv5_window.Usercontrols
             this.panel5.Location = new System.Drawing.Point(5, 37);
             this.panel5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(285, 136);
+            this.panel5.Size = new System.Drawing.Size(358, 136);
             this.panel5.TabIndex = 2;
             // 
             // picOverviewImageIn
@@ -265,7 +265,7 @@ namespace iParkingv5_window.Usercontrols
             this.picOverviewImageIn.Location = new System.Drawing.Point(0, 0);
             this.picOverviewImageIn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.picOverviewImageIn.Name = "picOverviewImageIn";
-            this.picOverviewImageIn.Size = new System.Drawing.Size(285, 136);
+            this.picOverviewImageIn.Size = new System.Drawing.Size(358, 136);
             this.picOverviewImageIn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picOverviewImageIn.TabIndex = 5;
             this.picOverviewImageIn.TabStop = false;
@@ -277,7 +277,7 @@ namespace iParkingv5_window.Usercontrols
             this.label1.ForeColor = System.Drawing.Color.Green;
             this.label1.Location = new System.Drawing.Point(5, 2);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(285, 31);
+            this.label1.Size = new System.Drawing.Size(358, 31);
             this.label1.TabIndex = 4;
             this.label1.Text = "Ảnh Vào";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -287,9 +287,9 @@ namespace iParkingv5_window.Usercontrols
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 11.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))));
             this.label2.ForeColor = System.Drawing.Color.Maroon;
-            this.label2.Location = new System.Drawing.Point(298, 2);
+            this.label2.Location = new System.Drawing.Point(371, 2);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(286, 31);
+            this.label2.Size = new System.Drawing.Size(358, 31);
             this.label2.TabIndex = 5;
             this.label2.Text = "Ảnh Ra";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -303,34 +303,22 @@ namespace iParkingv5_window.Usercontrols
             this.splitterCamera.TabIndex = 4;
             this.splitterCamera.TabStop = false;
             // 
-            // lblResult
+            // splitContainer2
             // 
-            this.lblResult.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.lblResult.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblResult.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblResult.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblResult.Location = new System.Drawing.Point(0, 0);
-            this.lblResult.Name = "lblResult";
-            this.lblResult.Size = new System.Drawing.Size(803, 47);
-            this.lblResult.TabIndex = 1;
-            this.lblResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 26);
+            this.splitContainer2.Name = "splitContainer2";
             // 
-            // splitContainer1
+            // splitContainer2.Panel1
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 47);
-            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer2.Panel1.Controls.Add(this.ucEventCount1);
             // 
-            // splitContainer1.Panel1
+            // splitContainer2.Panel2
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.ucEventCount1);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.panelLastEvent);
-            this.splitContainer1.Size = new System.Drawing.Size(803, 89);
-            this.splitContainer1.SplitterDistance = 170;
-            this.splitContainer1.TabIndex = 2;
+            this.splitContainer2.Panel2.Controls.Add(this.panelLastEvent);
+            this.splitContainer2.Size = new System.Drawing.Size(948, 110);
+            this.splitContainer2.SplitterDistance = 211;
+            this.splitContainer2.TabIndex = 9;
             // 
             // ucEventCount1
             // 
@@ -338,7 +326,7 @@ namespace iParkingv5_window.Usercontrols
             this.ucEventCount1.Location = new System.Drawing.Point(0, 0);
             this.ucEventCount1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ucEventCount1.Name = "ucEventCount1";
-            this.ucEventCount1.Size = new System.Drawing.Size(170, 89);
+            this.ucEventCount1.Size = new System.Drawing.Size(211, 110);
             this.ucEventCount1.TabIndex = 2;
             // 
             // panelLastEvent
@@ -346,12 +334,12 @@ namespace iParkingv5_window.Usercontrols
             this.panelLastEvent.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.panelLastEvent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelLastEvent.Controls.Add(this.panel11);
-            this.panelLastEvent.Controls.Add(this.lblTitleLastVehicle);
+            this.panelLastEvent.Controls.Add(this.label3);
             this.panelLastEvent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelLastEvent.Location = new System.Drawing.Point(0, 0);
             this.panelLastEvent.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelLastEvent.Name = "panelLastEvent";
-            this.panelLastEvent.Size = new System.Drawing.Size(629, 89);
+            this.panelLastEvent.Size = new System.Drawing.Size(733, 110);
             this.panelLastEvent.TabIndex = 8;
             // 
             // panel11
@@ -360,25 +348,35 @@ namespace iParkingv5_window.Usercontrols
             this.panel11.Location = new System.Drawing.Point(0, 27);
             this.panel11.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(627, 60);
+            this.panel11.Size = new System.Drawing.Size(731, 81);
             this.panel11.TabIndex = 8;
-            this.panel11.SizeChanged += new System.EventHandler(this.panel11_SizeChanged);
             // 
-            // lblTitleLastVehicle
+            // label3
             // 
-            this.lblTitleLastVehicle.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblTitleLastVehicle.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
-            this.lblTitleLastVehicle.ForeColor = System.Drawing.Color.Navy;
-            this.lblTitleLastVehicle.Location = new System.Drawing.Point(0, 0);
-            this.lblTitleLastVehicle.Name = "lblTitleLastVehicle";
-            this.lblTitleLastVehicle.Size = new System.Drawing.Size(627, 27);
-            this.lblTitleLastVehicle.TabIndex = 7;
-            this.lblTitleLastVehicle.Text = "Các lượt xe vào gần đây";
-            this.lblTitleLastVehicle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
+            this.label3.ForeColor = System.Drawing.Color.Navy;
+            this.label3.Location = new System.Drawing.Point(0, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(731, 27);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Các lượt xe vào gần đây";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblResult
+            // 
+            this.lblResult.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.lblResult.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblResult.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            this.lblResult.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lblResult.Location = new System.Drawing.Point(0, 0);
+            this.lblResult.Name = "lblResult";
+            this.lblResult.Size = new System.Drawing.Size(948, 26);
+            this.lblResult.TabIndex = 1;
+            this.lblResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // splitContainerEventContent
             // 
-            this.splitContainerEventContent.BackColor = System.Drawing.Color.White;
             this.splitContainerEventContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainerEventContent.Location = new System.Drawing.Point(0, 0);
             this.splitContainerEventContent.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -393,9 +391,9 @@ namespace iParkingv5_window.Usercontrols
             // 
             this.splitContainerEventContent.Panel2.AutoScroll = true;
             this.splitContainerEventContent.Panel2.Controls.Add(this.dgvEventContent);
-            this.splitContainerEventContent.Size = new System.Drawing.Size(376, 458);
-            this.splitContainerEventContent.SplitterDistance = 258;
-            this.splitContainerEventContent.SplitterWidth = 8;
+            this.splitContainerEventContent.Size = new System.Drawing.Size(231, 458);
+            this.splitContainerEventContent.SplitterDistance = 178;
+            this.splitContainerEventContent.SplitterWidth = 3;
             this.splitContainerEventContent.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -411,7 +409,7 @@ namespace iParkingv5_window.Usercontrols
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(376, 258);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(231, 178);
             this.tableLayoutPanel2.TabIndex = 5;
             // 
             // panel14
@@ -419,10 +417,10 @@ namespace iParkingv5_window.Usercontrols
             this.panel14.Controls.Add(this.picLprImage);
             this.panel14.Controls.Add(this.txtPlate);
             this.panel14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel14.Location = new System.Drawing.Point(191, 2);
+            this.panel14.Location = new System.Drawing.Point(118, 2);
             this.panel14.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel14.Name = "panel14";
-            this.panel14.Size = new System.Drawing.Size(182, 254);
+            this.panel14.Size = new System.Drawing.Size(110, 174);
             this.panel14.TabIndex = 0;
             // 
             // picLprImage
@@ -432,7 +430,7 @@ namespace iParkingv5_window.Usercontrols
             this.picLprImage.Location = new System.Drawing.Point(0, 32);
             this.picLprImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.picLprImage.Name = "picLprImage";
-            this.picLprImage.Size = new System.Drawing.Size(182, 222);
+            this.picLprImage.Size = new System.Drawing.Size(110, 142);
             this.picLprImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picLprImage.TabIndex = 4;
             this.picLprImage.TabStop = false;
@@ -445,7 +443,7 @@ namespace iParkingv5_window.Usercontrols
             this.txtPlate.Location = new System.Drawing.Point(0, 0);
             this.txtPlate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtPlate.Name = "txtPlate";
-            this.txtPlate.Size = new System.Drawing.Size(182, 32);
+            this.txtPlate.Size = new System.Drawing.Size(110, 32);
             this.txtPlate.TabIndex = 0;
             this.txtPlate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -457,7 +455,7 @@ namespace iParkingv5_window.Usercontrols
             this.panel15.Location = new System.Drawing.Point(3, 2);
             this.panel15.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel15.Name = "panel15";
-            this.panel15.Size = new System.Drawing.Size(182, 254);
+            this.panel15.Size = new System.Drawing.Size(109, 174);
             this.panel15.TabIndex = 1;
             // 
             // picLprImageIn
@@ -467,7 +465,7 @@ namespace iParkingv5_window.Usercontrols
             this.picLprImageIn.Location = new System.Drawing.Point(0, 24);
             this.picLprImageIn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.picLprImageIn.Name = "picLprImageIn";
-            this.picLprImageIn.Size = new System.Drawing.Size(182, 230);
+            this.picLprImageIn.Size = new System.Drawing.Size(109, 150);
             this.picLprImageIn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picLprImageIn.TabIndex = 1;
             this.picLprImageIn.TabStop = false;
@@ -478,7 +476,7 @@ namespace iParkingv5_window.Usercontrols
             this.lblPlateIn.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblPlateIn.Location = new System.Drawing.Point(0, 0);
             this.lblPlateIn.Name = "lblPlateIn";
-            this.lblPlateIn.Size = new System.Drawing.Size(182, 24);
+            this.lblPlateIn.Size = new System.Drawing.Size(109, 24);
             this.lblPlateIn.TabIndex = 0;
             this.lblPlateIn.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -504,7 +502,7 @@ namespace iParkingv5_window.Usercontrols
             this.dgvEventContent.ReadOnly = true;
             this.dgvEventContent.RowHeadersVisible = false;
             this.dgvEventContent.RowTemplate.Height = 29;
-            this.dgvEventContent.Size = new System.Drawing.Size(376, 192);
+            this.dgvEventContent.Size = new System.Drawing.Size(231, 277);
             this.dgvEventContent.TabIndex = 1;
             // 
             // Column1
@@ -692,32 +690,32 @@ namespace iParkingv5_window.Usercontrols
             this.splitterEventInfoWithCamera.TabIndex = 6;
             this.splitterEventInfoWithCamera.TabStop = false;
             // 
-            // splitContainerAll
+            // splitContainer1
             // 
-            this.splitContainerAll.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerAll.Location = new System.Drawing.Point(0, 22);
-            this.splitContainerAll.Name = "splitContainerAll";
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 22);
+            this.splitContainer1.Name = "splitContainer1";
             // 
-            // splitContainerAll.Panel1
+            // splitContainer1.Panel1
             // 
-            this.splitContainerAll.Panel1.Controls.Add(this.splitContainerMain);
+            this.splitContainer1.Panel1.Controls.Add(this.splitContainerMain);
             // 
-            // splitContainerAll.Panel2
+            // splitContainer1.Panel2
             // 
-            this.splitContainerAll.Panel2.Controls.Add(this.splitContainerEventContent);
-            this.splitContainerAll.Size = new System.Drawing.Size(1183, 458);
-            this.splitContainerAll.SplitterDistance = 803;
-            this.splitContainerAll.TabIndex = 7;
+            this.splitContainer1.Panel2.Controls.Add(this.splitContainerEventContent);
+            this.splitContainer1.Size = new System.Drawing.Size(1183, 458);
+            this.splitContainer1.SplitterDistance = 948;
+            this.splitContainer1.TabIndex = 7;
             // 
-            // ucLaneOut
+            // ucLaneOut_Test
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.splitContainerAll);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.splitterEventInfoWithCamera);
             this.Controls.Add(this.panel4);
             this.Margin = new System.Windows.Forms.Padding(0);
-            this.Name = "ucLaneOut";
+            this.Name = "ucLaneOut_Test";
             this.Size = new System.Drawing.Size(1187, 480);
             this.splitContainerMain.Panel1.ResumeLayout(false);
             this.splitContainerMain.Panel2.ResumeLayout(false);
@@ -732,10 +730,10 @@ namespace iParkingv5_window.Usercontrols
             ((System.ComponentModel.ISupportInitialize)(this.picOverviewImageOut)).EndInit();
             this.panel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picOverviewImageIn)).EndInit();
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
             this.panelLastEvent.ResumeLayout(false);
             this.splitContainerEventContent.Panel1.ResumeLayout(false);
             this.splitContainerEventContent.Panel2.ResumeLayout(false);
@@ -755,10 +753,10 @@ namespace iParkingv5_window.Usercontrols
             ((System.ComponentModel.ISupportInitialize)(this.picPrint)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSetting)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            this.splitContainerAll.Panel1.ResumeLayout(false);
-            this.splitContainerAll.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerAll)).EndInit();
-            this.splitContainerAll.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -806,14 +804,14 @@ namespace iParkingv5_window.Usercontrols
         private ucEventCount ucEventCount1;
         private Panel panelLastEvent;
         private Panel panel11;
-        private Label lblTitleLastVehicle;
+        private Label label3;
         private TableLayoutPanel tableLayoutPanel2;
         private Panel panel14;
         private Panel panel15;
         private MovablePictureBox picLprImageIn;
         private Label lblPlateIn;
         private ToolTip toolTipPrint;
+        private SplitContainer splitContainer2;
         private SplitContainer splitContainer1;
-        private SplitContainer splitContainerAll;
     }
 }

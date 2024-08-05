@@ -33,6 +33,9 @@
     <Compile Update="Controls\Buttons\BtnPrint.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="Controls\Buttons\BtnWriteInOut.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="Controls\Buttons\BtnSearch.cs">
       <SubType>Component</SubType>
     </Compile>

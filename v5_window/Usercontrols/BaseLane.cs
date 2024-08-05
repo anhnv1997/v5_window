@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace iParkingv5_window.Usercontrols
@@ -151,34 +152,36 @@ namespace iParkingv5_window.Usercontrols
 
         public static async Task OpenBarrieByControllerId(string controllerId, ControllerInLane? controllerInLane)
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, 
-                $"Ra lệnh mở barrier: controllerID = {controllerId}," +
-                $" controllerInLane = {Newtonsoft.Json.JsonConvert.SerializeObject(controllerInLane)}, " +
-                $"frmMain.controllers = {Newtonsoft.Json.JsonConvert.SerializeObject(frmMain.controllers)}");
+            // Hiện tại bộ InGressus đang bị StopEvent khi chạy vào Log -> Tạm thời comment log
+
+            //LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, 
+            //    $"Ra lệnh mở barrier: controllerID = {controllerId}," +
+            //    $" controllerInLane = {Newtonsoft.Json.JsonConvert.SerializeObject(controllerInLane)}, " +
+            //    $"frmMain.controllers = {Newtonsoft.Json.JsonConvert.SerializeObject(frmMain.controllers)}");
 
             foreach (IController item in frmMain.controllers)
             {
-                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, 
-                    $"controllerID = {item.ControllerInfo.Id}",
-                    obj: item);
+                //LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, 
+                    //$"controllerID = {item.ControllerInfo.Id}",
+                    //obj: item);
 
                 if (item.ControllerInfo.Id.ToLower() == controllerId.ToLower())
                 {
-                    LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, $"ID = ID {Newtonsoft.Json.JsonConvert.SerializeObject(controllerInLane?.barriers)}");
+                    //LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, $"ID = ID {Newtonsoft.Json.JsonConvert.SerializeObject(controllerInLane?.barriers)}");
 
                     for (int i = 0; i < controllerInLane?.barriers.Length; i++)
                     {
                         bool isOpenSuccess = false;
-                        LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Ra lệnh mở barrier lần 1");
+                        //LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Ra lệnh mở barrier lần 1");
 
                         if (!await item.OpenDoor(100, controllerInLane.barriers[i]))
                         {
-                            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Ra lệnh mở barrier lần 2");
+                            //LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Ra lệnh mở barrier lần 2");
 
                             isOpenSuccess = await item.OpenDoor(100, controllerInLane.barriers[i]);
                             if (!isOpenSuccess)
                             {
-                                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Mở barrier thất bại");
+                                //LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Mở barrier thất bại");
 
                             }
                         }
@@ -187,7 +190,7 @@ namespace iParkingv5_window.Usercontrols
                         }
                         if (isOpenSuccess)
                         {
-                            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Mở barrier thành công");
+                            //LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Mở barrier thành công");
                         }
                     }
                     break;
@@ -283,6 +286,39 @@ namespace iParkingv5_window.Usercontrols
                     }
                 }
             }
+
+            if(plate != "")
+            {
+                plate = StandardlizePlateNumber(plate);
+            }
+        }
+        public static string StandardlizePlateNumber(this string plateNumber)
+        {
+            string output = string.Empty;
+            Regex regex = new Regex("[a-zA-Z0-9;]");
+
+            for (int i = 0; i < plateNumber.Length; i++)
+            {
+                string plateNumberItem = plateNumber[i].ToString();
+                if (regex.IsMatch(plateNumberItem))
+                {
+                    output += plateNumberItem;
+                }
+            }
+
+            // Chỉ lấy 9 ký tự đầu tiên
+            if (output.Length > 9)
+            {
+                output = output.Substring(0, 9);
+            }
+
+            // Nếu ký tự cuối cùng là chữ cái, thì loại bỏ nó
+            if (output.Length > 0 && char.IsLetter(output[^1]))
+            {
+                output = output.Substring(0, output.Length - 1);
+            }
+
+            return output;
         }
     }
 }

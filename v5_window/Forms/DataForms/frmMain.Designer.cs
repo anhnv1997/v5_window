@@ -147,7 +147,6 @@
             this.đăngKýToolStripMenuItem.Name = "đăngKýToolStripMenuItem";
             this.đăngKýToolStripMenuItem.Size = new System.Drawing.Size(79, 25);
             this.đăngKýToolStripMenuItem.Text = "Đăng ký";
-            this.đăngKýToolStripMenuItem.Visible = false;
             // 
             // btnRegisterCar
             // 
@@ -245,6 +244,7 @@
             this.lblCompanyName.TabIndex = 3;
             this.lblCompanyName.Text = "http://kztek.net";
             this.lblCompanyName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblCompanyName.Visible = false;
             // 
             // lblTime
             // 
@@ -286,6 +286,7 @@
             // 
             this.timerUpdateTime.Enabled = true;
             this.timerUpdateTime.Interval = 1000;
+            this.timerUpdateTime.Tick += new System.EventHandler(this.timerUpdateTime_Tick);
             // 
             // panelDevelopeMode
             // 
@@ -344,6 +345,7 @@
             // 
             this.timerUpdateControllerConnection.Enabled = true;
             this.timerUpdateControllerConnection.Interval = 1000;
+            this.timerUpdateControllerConnection.Tick += new System.EventHandler(this.timerUpdateControllerConnection_Tick);
             // 
             // frmMain
             // 

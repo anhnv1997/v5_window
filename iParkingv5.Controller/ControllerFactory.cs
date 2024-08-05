@@ -1,4 +1,4 @@
-﻿//using iParkingv5.Controller.Aopu;
+﻿using iParkingv5.Controller.Aopu;
 using iParkingv5.Controller.Dahua;
 using iParkingv5.Controller.Ingress;
 using iParkingv5.Controller.KztekDevices.KZE02NETControllerv2;
@@ -24,9 +24,9 @@ namespace iParkingv5.Controller
                 EmControllerType.KZE16_NET => new KzE16Net() { ControllerInfo = bdk },
                 EmControllerType.MT166 => null,
                 EmControllerType.INGRESSUS => new ZktecoPull() { ControllerInfo = bdk },
-                //EmControllerType.E02_NET => new AopuController() { ControllerInfo = bdk },
+                EmControllerType.E02_NET => new AopuController() { ControllerInfo = bdk },
                 EmControllerType.SC200 => new SC200Devices.SC200() { ControllerInfo = bdk },
-                EmControllerType.Dahua => new DahuaAccessControl() { ControllerInfo = bdk },
+                //EmControllerType.Dahua => new DahuaAccessControl(bdk.Id) { ControllerInfo = bdk },
                 _ => null,
             };
         }

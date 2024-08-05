@@ -172,3 +172,4 @@ F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\bin\x64\Debug\
 F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\Sdcb.PaddleOCR.Models.LocalV4.dll
 F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\NXT.Net6.LPR_AI.pdb
 F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\DarknetYolo.pdb
+F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\Aopu_Controller.dll

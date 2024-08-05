@@ -20,6 +20,7 @@ namespace iParkingv5_window.Usercontrols
         public List<string> picDirs = new List<string>();
         public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
         private bool isEventIn = false;
+
         #endregion End Properties
 
         #region Forms

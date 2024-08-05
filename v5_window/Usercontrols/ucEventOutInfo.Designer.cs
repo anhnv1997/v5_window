@@ -30,403 +30,408 @@ namespace iParkingv5_window.Usercontrols
         /// </summary>
         private void InitializeComponent()
         {
-            lblIdentityNameIn = new Label();
-            lblIdentityCodeIn = new Label();
-            lblIdentityGroupIn = new Label();
-            lblLaneNameOut = new Label();
-            lblTimeIn = new Label();
-            lblPlateNumberIn = new Label();
-            lblVehilceTypeIn = new Label();
-            lblEventOutTitle = new Label();
-            lblCancel1 = new LblCancel();
-            lblIdentityNameTitle = new Label();
-            lblLaneNameTitle = new Label();
-            lblIdentityCodeTitle = new Label();
-            lblTimeInTitle = new Label();
-            lblIdentityGroupTitle = new Label();
-            lblPlateNumberTitle = new Label();
-            lblVehilceTypeTitle = new Label();
-            lblIdentityNameOut = new Label();
-            lblLaneNameIn = new Label();
-            lblIdentityCodeOut = new Label();
-            lblTimeOut = new Label();
-            lblIdentityGroupOut = new Label();
-            lblPlateNumberOut = new Label();
-            lblVehilceTypeOut = new Label();
-            dgvData = new TableLayoutPanel();
-            panel1 = new Panel();
-            panel2 = new Panel();
-            lblEventInTitle = new Label();
-            panel3 = new Panel();
-            lblDescriptionTitle = new Label();
-            dgvData.SuspendLayout();
-            panel1.SuspendLayout();
-            panel2.SuspendLayout();
-            panel3.SuspendLayout();
-            SuspendLayout();
+            this.lblIdentityNameIn = new System.Windows.Forms.Label();
+            this.lblIdentityCodeIn = new System.Windows.Forms.Label();
+            this.lblIdentityGroupIn = new System.Windows.Forms.Label();
+            this.lblLaneNameOut = new System.Windows.Forms.Label();
+            this.lblTimeIn = new System.Windows.Forms.Label();
+            this.lblPlateNumberIn = new System.Windows.Forms.Label();
+            this.lblVehilceTypeIn = new System.Windows.Forms.Label();
+            this.lblEventOutTitle = new System.Windows.Forms.Label();
+            this.lblCancel1 = new iPakrkingv5.Controls.Controls.Buttons.LblCancel();
+            this.lblIdentityNameTitle = new System.Windows.Forms.Label();
+            this.lblLaneNameTitle = new System.Windows.Forms.Label();
+            this.lblIdentityCodeTitle = new System.Windows.Forms.Label();
+            this.lblTimeInTitle = new System.Windows.Forms.Label();
+            this.lblIdentityGroupTitle = new System.Windows.Forms.Label();
+            this.lblPlateNumberTitle = new System.Windows.Forms.Label();
+            this.lblVehilceTypeTitle = new System.Windows.Forms.Label();
+            this.lblIdentityNameOut = new System.Windows.Forms.Label();
+            this.lblLaneNameIn = new System.Windows.Forms.Label();
+            this.lblIdentityCodeOut = new System.Windows.Forms.Label();
+            this.lblTimeOut = new System.Windows.Forms.Label();
+            this.lblIdentityGroupOut = new System.Windows.Forms.Label();
+            this.lblPlateNumberOut = new System.Windows.Forms.Label();
+            this.lblVehilceTypeOut = new System.Windows.Forms.Label();
+            this.dgvData = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.lblEventInTitle = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.lblDescriptionTitle = new System.Windows.Forms.Label();
+            this.dgvData.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.SuspendLayout();
             // 
             // lblIdentityNameIn
             // 
-            lblIdentityNameIn.AutoSize = true;
-            lblIdentityNameIn.BackColor = Color.Transparent;
-            lblIdentityNameIn.Location = new Point(14, 187);
-            lblIdentityNameIn.Name = "lblIdentityNameIn";
-            lblIdentityNameIn.Size = new Size(17, 20);
-            lblIdentityNameIn.TabIndex = 1;
-            lblIdentityNameIn.Text = "E";
-            lblIdentityNameIn.TextAlign = ContentAlignment.MiddleRight;
+            this.lblIdentityNameIn.AutoSize = true;
+            this.lblIdentityNameIn.BackColor = System.Drawing.Color.Transparent;
+            this.lblIdentityNameIn.Location = new System.Drawing.Point(12, 140);
+            this.lblIdentityNameIn.Name = "lblIdentityNameIn";
+            this.lblIdentityNameIn.Size = new System.Drawing.Size(13, 15);
+            this.lblIdentityNameIn.TabIndex = 1;
+            this.lblIdentityNameIn.Text = "E";
+            this.lblIdentityNameIn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblIdentityCodeIn
             // 
-            lblIdentityCodeIn.AutoSize = true;
-            lblIdentityCodeIn.BackColor = Color.Transparent;
-            lblIdentityCodeIn.Location = new Point(14, 218);
-            lblIdentityCodeIn.Name = "lblIdentityCodeIn";
-            lblIdentityCodeIn.Size = new Size(16, 20);
-            lblIdentityCodeIn.TabIndex = 2;
-            lblIdentityCodeIn.Text = "F";
-            lblIdentityCodeIn.TextAlign = ContentAlignment.MiddleRight;
+            this.lblIdentityCodeIn.AutoSize = true;
+            this.lblIdentityCodeIn.BackColor = System.Drawing.Color.Transparent;
+            this.lblIdentityCodeIn.Location = new System.Drawing.Point(12, 164);
+            this.lblIdentityCodeIn.Name = "lblIdentityCodeIn";
+            this.lblIdentityCodeIn.Size = new System.Drawing.Size(13, 15);
+            this.lblIdentityCodeIn.TabIndex = 2;
+            this.lblIdentityCodeIn.Text = "F";
+            this.lblIdentityCodeIn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblIdentityGroupIn
             // 
-            lblIdentityGroupIn.AutoSize = true;
-            lblIdentityGroupIn.BackColor = Color.Transparent;
-            lblIdentityGroupIn.Location = new Point(14, 255);
-            lblIdentityGroupIn.Name = "lblIdentityGroupIn";
-            lblIdentityGroupIn.Size = new Size(19, 20);
-            lblIdentityGroupIn.TabIndex = 3;
-            lblIdentityGroupIn.Text = "G";
-            lblIdentityGroupIn.TextAlign = ContentAlignment.MiddleRight;
+            this.lblIdentityGroupIn.AutoSize = true;
+            this.lblIdentityGroupIn.BackColor = System.Drawing.Color.Transparent;
+            this.lblIdentityGroupIn.Location = new System.Drawing.Point(12, 191);
+            this.lblIdentityGroupIn.Name = "lblIdentityGroupIn";
+            this.lblIdentityGroupIn.Size = new System.Drawing.Size(15, 15);
+            this.lblIdentityGroupIn.TabIndex = 3;
+            this.lblIdentityGroupIn.Text = "G";
+            this.lblIdentityGroupIn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblLaneNameOut
             // 
-            lblLaneNameOut.AutoSize = true;
-            lblLaneNameOut.BackColor = Color.Transparent;
-            lblLaneNameOut.Location = new Point(3, 58);
-            lblLaneNameOut.Name = "lblLaneNameOut";
-            lblLaneNameOut.Size = new Size(20, 20);
-            lblLaneNameOut.TabIndex = 1;
-            lblLaneNameOut.Text = "H";
-            lblLaneNameOut.TextAlign = ContentAlignment.MiddleRight;
+            this.lblLaneNameOut.AutoSize = true;
+            this.lblLaneNameOut.BackColor = System.Drawing.Color.Transparent;
+            this.lblLaneNameOut.Location = new System.Drawing.Point(3, 44);
+            this.lblLaneNameOut.Name = "lblLaneNameOut";
+            this.lblLaneNameOut.Size = new System.Drawing.Size(16, 15);
+            this.lblLaneNameOut.TabIndex = 1;
+            this.lblLaneNameOut.Text = "H";
+            this.lblLaneNameOut.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblTimeIn
             // 
-            lblTimeIn.AutoSize = true;
-            lblTimeIn.BackColor = Color.Transparent;
-            lblTimeIn.Location = new Point(14, 89);
-            lblTimeIn.Name = "lblTimeIn";
-            lblTimeIn.Size = new Size(18, 20);
-            lblTimeIn.TabIndex = 2;
-            lblTimeIn.Text = "B";
-            lblTimeIn.TextAlign = ContentAlignment.MiddleRight;
+            this.lblTimeIn.AutoSize = true;
+            this.lblTimeIn.BackColor = System.Drawing.Color.Transparent;
+            this.lblTimeIn.Location = new System.Drawing.Point(12, 67);
+            this.lblTimeIn.Name = "lblTimeIn";
+            this.lblTimeIn.Size = new System.Drawing.Size(14, 15);
+            this.lblTimeIn.TabIndex = 2;
+            this.lblTimeIn.Text = "B";
+            this.lblTimeIn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblPlateNumberIn
             // 
-            lblPlateNumberIn.AutoSize = true;
-            lblPlateNumberIn.BackColor = Color.Transparent;
-            lblPlateNumberIn.Location = new Point(14, 122);
-            lblPlateNumberIn.Name = "lblPlateNumberIn";
-            lblPlateNumberIn.Size = new Size(18, 20);
-            lblPlateNumberIn.TabIndex = 3;
-            lblPlateNumberIn.Text = "C";
-            lblPlateNumberIn.TextAlign = ContentAlignment.MiddleRight;
+            this.lblPlateNumberIn.AutoSize = true;
+            this.lblPlateNumberIn.BackColor = System.Drawing.Color.Transparent;
+            this.lblPlateNumberIn.Location = new System.Drawing.Point(12, 92);
+            this.lblPlateNumberIn.Name = "lblPlateNumberIn";
+            this.lblPlateNumberIn.Size = new System.Drawing.Size(15, 15);
+            this.lblPlateNumberIn.TabIndex = 3;
+            this.lblPlateNumberIn.Text = "C";
+            this.lblPlateNumberIn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblVehilceTypeIn
             // 
-            lblVehilceTypeIn.AutoSize = true;
-            lblVehilceTypeIn.BackColor = Color.Transparent;
-            lblVehilceTypeIn.Location = new Point(14, 154);
-            lblVehilceTypeIn.Name = "lblVehilceTypeIn";
-            lblVehilceTypeIn.Size = new Size(20, 20);
-            lblVehilceTypeIn.TabIndex = 3;
-            lblVehilceTypeIn.Text = "D";
-            lblVehilceTypeIn.TextAlign = ContentAlignment.MiddleRight;
+            this.lblVehilceTypeIn.AutoSize = true;
+            this.lblVehilceTypeIn.BackColor = System.Drawing.Color.Transparent;
+            this.lblVehilceTypeIn.Location = new System.Drawing.Point(12, 116);
+            this.lblVehilceTypeIn.Name = "lblVehilceTypeIn";
+            this.lblVehilceTypeIn.Size = new System.Drawing.Size(15, 15);
+            this.lblVehilceTypeIn.TabIndex = 3;
+            this.lblVehilceTypeIn.Text = "D";
+            this.lblVehilceTypeIn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblEventOutTitle
             // 
-            lblEventOutTitle.AutoSize = true;
-            lblEventOutTitle.BackColor = Color.Transparent;
-            lblEventOutTitle.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
-            lblEventOutTitle.Location = new Point(0, 0);
-            lblEventOutTitle.Name = "lblEventOutTitle";
-            lblEventOutTitle.Size = new Size(205, 45);
-            lblEventOutTitle.TabIndex = 4;
-            lblEventOutTitle.Text = "Thông tin ra";
+            this.lblEventOutTitle.AutoSize = true;
+            this.lblEventOutTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblEventOutTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
+            this.lblEventOutTitle.Location = new System.Drawing.Point(0, 0);
+            this.lblEventOutTitle.Name = "lblEventOutTitle";
+            this.lblEventOutTitle.Size = new System.Drawing.Size(205, 45);
+            this.lblEventOutTitle.TabIndex = 4;
+            this.lblEventOutTitle.Text = "Thông tin ra";
             // 
             // lblCancel1
             // 
-            lblCancel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            lblCancel1.AutoSize = true;
-            lblCancel1.Location = new Point(671, 443);
-            lblCancel1.Name = "lblCancel1";
-            lblCancel1.Size = new Size(88, 30);
-            lblCancel1.TabIndex = 5;
-            lblCancel1.Text = "lblCancel1";
+            this.lblCancel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblCancel1.AutoSize = true;
+            this.lblCancel1.Location = new System.Drawing.Point(684, 304);
+            this.lblCancel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.lblCancel1.Name = "lblCancel1";
+            this.lblCancel1.Size = new System.Drawing.Size(77, 25);
+            this.lblCancel1.TabIndex = 5;
+            this.lblCancel1.Text = "lblCancel1";
             // 
             // lblIdentityNameTitle
             // 
-            lblIdentityNameTitle.AutoSize = true;
-            lblIdentityNameTitle.BackColor = Color.Transparent;
-            lblIdentityNameTitle.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblIdentityNameTitle.Location = new Point(3, 187);
-            lblIdentityNameTitle.Name = "lblIdentityNameTitle";
-            lblIdentityNameTitle.Size = new Size(108, 20);
-            lblIdentityNameTitle.TabIndex = 0;
-            lblIdentityNameTitle.Text = "Tên định danh";
+            this.lblIdentityNameTitle.AutoSize = true;
+            this.lblIdentityNameTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblIdentityNameTitle.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.lblIdentityNameTitle.Location = new System.Drawing.Point(3, 140);
+            this.lblIdentityNameTitle.Name = "lblIdentityNameTitle";
+            this.lblIdentityNameTitle.Size = new System.Drawing.Size(108, 20);
+            this.lblIdentityNameTitle.TabIndex = 0;
+            this.lblIdentityNameTitle.Text = "Tên định danh";
             // 
             // lblLaneNameTitle
             // 
-            lblLaneNameTitle.AutoSize = true;
-            lblLaneNameTitle.BackColor = Color.Transparent;
-            lblLaneNameTitle.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblLaneNameTitle.Location = new Point(3, 58);
-            lblLaneNameTitle.Name = "lblLaneNameTitle";
-            lblLaneNameTitle.Size = new Size(59, 20);
-            lblLaneNameTitle.TabIndex = 0;
-            lblLaneNameTitle.Text = "Tên làn";
+            this.lblLaneNameTitle.AutoSize = true;
+            this.lblLaneNameTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblLaneNameTitle.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.lblLaneNameTitle.Location = new System.Drawing.Point(3, 44);
+            this.lblLaneNameTitle.Name = "lblLaneNameTitle";
+            this.lblLaneNameTitle.Size = new System.Drawing.Size(59, 20);
+            this.lblLaneNameTitle.TabIndex = 0;
+            this.lblLaneNameTitle.Text = "Tên làn";
             // 
             // lblIdentityCodeTitle
             // 
-            lblIdentityCodeTitle.AutoSize = true;
-            lblIdentityCodeTitle.BackColor = Color.Transparent;
-            lblIdentityCodeTitle.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblIdentityCodeTitle.Location = new Point(3, 218);
-            lblIdentityCodeTitle.Name = "lblIdentityCodeTitle";
-            lblIdentityCodeTitle.Size = new Size(105, 20);
-            lblIdentityCodeTitle.TabIndex = 0;
-            lblIdentityCodeTitle.Text = "Mã định danh";
+            this.lblIdentityCodeTitle.AutoSize = true;
+            this.lblIdentityCodeTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblIdentityCodeTitle.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.lblIdentityCodeTitle.Location = new System.Drawing.Point(3, 164);
+            this.lblIdentityCodeTitle.Name = "lblIdentityCodeTitle";
+            this.lblIdentityCodeTitle.Size = new System.Drawing.Size(105, 20);
+            this.lblIdentityCodeTitle.TabIndex = 0;
+            this.lblIdentityCodeTitle.Text = "Mã định danh";
             // 
             // lblTimeInTitle
             // 
-            lblTimeInTitle.AutoSize = true;
-            lblTimeInTitle.BackColor = Color.Transparent;
-            lblTimeInTitle.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblTimeInTitle.Location = new Point(3, 89);
-            lblTimeInTitle.Name = "lblTimeInTitle";
-            lblTimeInTitle.Size = new Size(62, 20);
-            lblTimeInTitle.TabIndex = 0;
-            lblTimeInTitle.Text = "Giờ vào";
+            this.lblTimeInTitle.AutoSize = true;
+            this.lblTimeInTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblTimeInTitle.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.lblTimeInTitle.Location = new System.Drawing.Point(3, 67);
+            this.lblTimeInTitle.Name = "lblTimeInTitle";
+            this.lblTimeInTitle.Size = new System.Drawing.Size(62, 20);
+            this.lblTimeInTitle.TabIndex = 0;
+            this.lblTimeInTitle.Text = "Giờ vào";
             // 
             // lblIdentityGroupTitle
             // 
-            lblIdentityGroupTitle.AutoSize = true;
-            lblIdentityGroupTitle.BackColor = Color.Transparent;
-            lblIdentityGroupTitle.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblIdentityGroupTitle.Location = new Point(3, 255);
-            lblIdentityGroupTitle.Name = "lblIdentityGroupTitle";
-            lblIdentityGroupTitle.Size = new Size(127, 20);
-            lblIdentityGroupTitle.TabIndex = 0;
-            lblIdentityGroupTitle.Text = "Nhóm định danh";
+            this.lblIdentityGroupTitle.AutoSize = true;
+            this.lblIdentityGroupTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblIdentityGroupTitle.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.lblIdentityGroupTitle.Location = new System.Drawing.Point(3, 191);
+            this.lblIdentityGroupTitle.Name = "lblIdentityGroupTitle";
+            this.lblIdentityGroupTitle.Size = new System.Drawing.Size(127, 20);
+            this.lblIdentityGroupTitle.TabIndex = 0;
+            this.lblIdentityGroupTitle.Text = "Nhóm định danh";
             // 
             // lblPlateNumberTitle
             // 
-            lblPlateNumberTitle.AutoSize = true;
-            lblPlateNumberTitle.BackColor = Color.Transparent;
-            lblPlateNumberTitle.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblPlateNumberTitle.Location = new Point(3, 122);
-            lblPlateNumberTitle.Name = "lblPlateNumberTitle";
-            lblPlateNumberTitle.Size = new Size(80, 20);
-            lblPlateNumberTitle.TabIndex = 0;
-            lblPlateNumberTitle.Text = "Biến số xe";
+            this.lblPlateNumberTitle.AutoSize = true;
+            this.lblPlateNumberTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblPlateNumberTitle.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.lblPlateNumberTitle.Location = new System.Drawing.Point(3, 92);
+            this.lblPlateNumberTitle.Name = "lblPlateNumberTitle";
+            this.lblPlateNumberTitle.Size = new System.Drawing.Size(80, 20);
+            this.lblPlateNumberTitle.TabIndex = 0;
+            this.lblPlateNumberTitle.Text = "Biến số xe";
             // 
             // lblVehilceTypeTitle
             // 
-            lblVehilceTypeTitle.AutoSize = true;
-            lblVehilceTypeTitle.BackColor = Color.Transparent;
-            lblVehilceTypeTitle.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblVehilceTypeTitle.Location = new Point(3, 154);
-            lblVehilceTypeTitle.Name = "lblVehilceTypeTitle";
-            lblVehilceTypeTitle.Size = new Size(58, 20);
-            lblVehilceTypeTitle.TabIndex = 0;
-            lblVehilceTypeTitle.Text = "Loại xe";
+            this.lblVehilceTypeTitle.AutoSize = true;
+            this.lblVehilceTypeTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblVehilceTypeTitle.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
+            this.lblVehilceTypeTitle.Location = new System.Drawing.Point(3, 116);
+            this.lblVehilceTypeTitle.Name = "lblVehilceTypeTitle";
+            this.lblVehilceTypeTitle.Size = new System.Drawing.Size(58, 20);
+            this.lblVehilceTypeTitle.TabIndex = 0;
+            this.lblVehilceTypeTitle.Text = "Loại xe";
             // 
             // lblIdentityNameOut
             // 
-            lblIdentityNameOut.AutoSize = true;
-            lblIdentityNameOut.BackColor = Color.Transparent;
-            lblIdentityNameOut.Location = new Point(3, 197);
-            lblIdentityNameOut.Name = "lblIdentityNameOut";
-            lblIdentityNameOut.Size = new Size(17, 20);
-            lblIdentityNameOut.TabIndex = 1;
-            lblIdentityNameOut.Text = "4";
-            lblIdentityNameOut.TextAlign = ContentAlignment.MiddleRight;
+            this.lblIdentityNameOut.AutoSize = true;
+            this.lblIdentityNameOut.BackColor = System.Drawing.Color.Transparent;
+            this.lblIdentityNameOut.Location = new System.Drawing.Point(3, 148);
+            this.lblIdentityNameOut.Name = "lblIdentityNameOut";
+            this.lblIdentityNameOut.Size = new System.Drawing.Size(13, 15);
+            this.lblIdentityNameOut.TabIndex = 1;
+            this.lblIdentityNameOut.Text = "4";
+            this.lblIdentityNameOut.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblLaneNameIn
             // 
-            lblLaneNameIn.AutoSize = true;
-            lblLaneNameIn.BackColor = Color.Transparent;
-            lblLaneNameIn.Location = new Point(14, 45);
-            lblLaneNameIn.Name = "lblLaneNameIn";
-            lblLaneNameIn.Size = new Size(19, 20);
-            lblLaneNameIn.TabIndex = 1;
-            lblLaneNameIn.Text = "A";
-            lblLaneNameIn.TextAlign = ContentAlignment.MiddleRight;
+            this.lblLaneNameIn.AutoSize = true;
+            this.lblLaneNameIn.BackColor = System.Drawing.Color.Transparent;
+            this.lblLaneNameIn.Location = new System.Drawing.Point(12, 34);
+            this.lblLaneNameIn.Name = "lblLaneNameIn";
+            this.lblLaneNameIn.Size = new System.Drawing.Size(15, 15);
+            this.lblLaneNameIn.TabIndex = 1;
+            this.lblLaneNameIn.Text = "A";
+            this.lblLaneNameIn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblIdentityCodeOut
             // 
-            lblIdentityCodeOut.AutoSize = true;
-            lblIdentityCodeOut.BackColor = Color.Transparent;
-            lblIdentityCodeOut.Location = new Point(3, 228);
-            lblIdentityCodeOut.Name = "lblIdentityCodeOut";
-            lblIdentityCodeOut.Size = new Size(17, 20);
-            lblIdentityCodeOut.TabIndex = 2;
-            lblIdentityCodeOut.Text = "5";
-            lblIdentityCodeOut.TextAlign = ContentAlignment.MiddleRight;
+            this.lblIdentityCodeOut.AutoSize = true;
+            this.lblIdentityCodeOut.BackColor = System.Drawing.Color.Transparent;
+            this.lblIdentityCodeOut.Location = new System.Drawing.Point(3, 171);
+            this.lblIdentityCodeOut.Name = "lblIdentityCodeOut";
+            this.lblIdentityCodeOut.Size = new System.Drawing.Size(13, 15);
+            this.lblIdentityCodeOut.TabIndex = 2;
+            this.lblIdentityCodeOut.Text = "5";
+            this.lblIdentityCodeOut.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblTimeOut
             // 
-            lblTimeOut.AutoSize = true;
-            lblTimeOut.BackColor = Color.Transparent;
-            lblTimeOut.Location = new Point(3, 99);
-            lblTimeOut.Name = "lblTimeOut";
-            lblTimeOut.Size = new Size(17, 20);
-            lblTimeOut.TabIndex = 2;
-            lblTimeOut.Text = "1";
-            lblTimeOut.TextAlign = ContentAlignment.MiddleRight;
+            this.lblTimeOut.AutoSize = true;
+            this.lblTimeOut.BackColor = System.Drawing.Color.Transparent;
+            this.lblTimeOut.Location = new System.Drawing.Point(3, 74);
+            this.lblTimeOut.Name = "lblTimeOut";
+            this.lblTimeOut.Size = new System.Drawing.Size(13, 15);
+            this.lblTimeOut.TabIndex = 2;
+            this.lblTimeOut.Text = "1";
+            this.lblTimeOut.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblIdentityGroupOut
             // 
-            lblIdentityGroupOut.AutoSize = true;
-            lblIdentityGroupOut.BackColor = Color.Transparent;
-            lblIdentityGroupOut.Location = new Point(3, 265);
-            lblIdentityGroupOut.Name = "lblIdentityGroupOut";
-            lblIdentityGroupOut.Size = new Size(17, 20);
-            lblIdentityGroupOut.TabIndex = 3;
-            lblIdentityGroupOut.Text = "6";
-            lblIdentityGroupOut.TextAlign = ContentAlignment.MiddleRight;
+            this.lblIdentityGroupOut.AutoSize = true;
+            this.lblIdentityGroupOut.BackColor = System.Drawing.Color.Transparent;
+            this.lblIdentityGroupOut.Location = new System.Drawing.Point(3, 199);
+            this.lblIdentityGroupOut.Name = "lblIdentityGroupOut";
+            this.lblIdentityGroupOut.Size = new System.Drawing.Size(13, 15);
+            this.lblIdentityGroupOut.TabIndex = 3;
+            this.lblIdentityGroupOut.Text = "6";
+            this.lblIdentityGroupOut.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblPlateNumberOut
             // 
-            lblPlateNumberOut.AutoSize = true;
-            lblPlateNumberOut.BackColor = Color.Transparent;
-            lblPlateNumberOut.Location = new Point(3, 132);
-            lblPlateNumberOut.Name = "lblPlateNumberOut";
-            lblPlateNumberOut.Size = new Size(17, 20);
-            lblPlateNumberOut.TabIndex = 3;
-            lblPlateNumberOut.Text = "2";
-            lblPlateNumberOut.TextAlign = ContentAlignment.MiddleRight;
+            this.lblPlateNumberOut.AutoSize = true;
+            this.lblPlateNumberOut.BackColor = System.Drawing.Color.Transparent;
+            this.lblPlateNumberOut.Location = new System.Drawing.Point(3, 99);
+            this.lblPlateNumberOut.Name = "lblPlateNumberOut";
+            this.lblPlateNumberOut.Size = new System.Drawing.Size(13, 15);
+            this.lblPlateNumberOut.TabIndex = 3;
+            this.lblPlateNumberOut.Text = "2";
+            this.lblPlateNumberOut.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblVehilceTypeOut
             // 
-            lblVehilceTypeOut.AutoSize = true;
-            lblVehilceTypeOut.BackColor = Color.Transparent;
-            lblVehilceTypeOut.Location = new Point(3, 164);
-            lblVehilceTypeOut.Name = "lblVehilceTypeOut";
-            lblVehilceTypeOut.Size = new Size(17, 20);
-            lblVehilceTypeOut.TabIndex = 3;
-            lblVehilceTypeOut.Text = "3";
-            lblVehilceTypeOut.TextAlign = ContentAlignment.MiddleRight;
+            this.lblVehilceTypeOut.AutoSize = true;
+            this.lblVehilceTypeOut.BackColor = System.Drawing.Color.Transparent;
+            this.lblVehilceTypeOut.Location = new System.Drawing.Point(3, 123);
+            this.lblVehilceTypeOut.Name = "lblVehilceTypeOut";
+            this.lblVehilceTypeOut.Size = new System.Drawing.Size(13, 15);
+            this.lblVehilceTypeOut.TabIndex = 3;
+            this.lblVehilceTypeOut.Text = "3";
+            this.lblVehilceTypeOut.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // dgvData
             // 
-            dgvData.CellBorderStyle = TableLayoutPanelCellBorderStyle.Inset;
-            dgvData.ColumnCount = 3;
-            dgvData.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 150F));
-            dgvData.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            dgvData.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            dgvData.Controls.Add(panel1, 2, 0);
-            dgvData.Controls.Add(panel2, 1, 0);
-            dgvData.Controls.Add(panel3, 0, 0);
-            dgvData.Dock = DockStyle.Top;
-            dgvData.Location = new Point(0, 0);
-            dgvData.Margin = new Padding(0);
-            dgvData.Name = "dgvData";
-            dgvData.RowCount = 1;
-            dgvData.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            dgvData.Size = new Size(762, 355);
-            dgvData.TabIndex = 6;
+            this.dgvData.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
+            this.dgvData.ColumnCount = 3;
+            this.dgvData.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 131F));
+            this.dgvData.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.dgvData.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.dgvData.Controls.Add(this.panel1, 2, 0);
+            this.dgvData.Controls.Add(this.panel2, 1, 0);
+            this.dgvData.Controls.Add(this.panel3, 0, 0);
+            this.dgvData.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dgvData.Location = new System.Drawing.Point(0, 0);
+            this.dgvData.Margin = new System.Windows.Forms.Padding(0);
+            this.dgvData.Name = "dgvData";
+            this.dgvData.RowCount = 1;
+            this.dgvData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.dgvData.Size = new System.Drawing.Size(764, 266);
+            this.dgvData.TabIndex = 6;
             // 
             // panel1
             // 
-            panel1.Controls.Add(lblEventOutTitle);
-            panel1.Controls.Add(lblLaneNameOut);
-            panel1.Controls.Add(lblVehilceTypeOut);
-            panel1.Controls.Add(lblTimeOut);
-            panel1.Controls.Add(lblIdentityCodeOut);
-            panel1.Controls.Add(lblPlateNumberOut);
-            panel1.Controls.Add(lblIdentityNameOut);
-            panel1.Controls.Add(lblIdentityGroupOut);
-            panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(458, 2);
-            panel1.Margin = new Padding(0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(302, 351);
-            panel1.TabIndex = 0;
+            this.panel1.Controls.Add(this.lblEventOutTitle);
+            this.panel1.Controls.Add(this.lblLaneNameOut);
+            this.panel1.Controls.Add(this.lblVehilceTypeOut);
+            this.panel1.Controls.Add(this.lblTimeOut);
+            this.panel1.Controls.Add(this.lblIdentityCodeOut);
+            this.panel1.Controls.Add(this.lblPlateNumberOut);
+            this.panel1.Controls.Add(this.lblIdentityNameOut);
+            this.panel1.Controls.Add(this.lblIdentityGroupOut);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(449, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(313, 262);
+            this.panel1.TabIndex = 0;
             // 
             // panel2
             // 
-            panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel2.Controls.Add(lblEventInTitle);
-            panel2.Controls.Add(lblVehilceTypeIn);
-            panel2.Controls.Add(lblPlateNumberIn);
-            panel2.Controls.Add(lblIdentityGroupIn);
-            panel2.Controls.Add(lblTimeIn);
-            panel2.Controls.Add(lblIdentityCodeIn);
-            panel2.Controls.Add(lblIdentityNameIn);
-            panel2.Controls.Add(lblLaneNameIn);
-            panel2.Location = new Point(154, 2);
-            panel2.Margin = new Padding(0);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(302, 351);
-            panel2.TabIndex = 1;
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.lblEventInTitle);
+            this.panel2.Controls.Add(this.lblVehilceTypeIn);
+            this.panel2.Controls.Add(this.lblPlateNumberIn);
+            this.panel2.Controls.Add(this.lblIdentityGroupIn);
+            this.panel2.Controls.Add(this.lblTimeIn);
+            this.panel2.Controls.Add(this.lblIdentityCodeIn);
+            this.panel2.Controls.Add(this.lblIdentityNameIn);
+            this.panel2.Controls.Add(this.lblLaneNameIn);
+            this.panel2.Location = new System.Drawing.Point(135, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(312, 262);
+            this.panel2.TabIndex = 1;
             // 
             // lblEventInTitle
             // 
-            lblEventInTitle.AutoSize = true;
-            lblEventInTitle.BackColor = Color.Transparent;
-            lblEventInTitle.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
-            lblEventInTitle.Location = new Point(0, 0);
-            lblEventInTitle.Name = "lblEventInTitle";
-            lblEventInTitle.Size = new Size(229, 45);
-            lblEventInTitle.TabIndex = 4;
-            lblEventInTitle.Text = "Thông tin vào";
+            this.lblEventInTitle.AutoSize = true;
+            this.lblEventInTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblEventInTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
+            this.lblEventInTitle.Location = new System.Drawing.Point(0, 0);
+            this.lblEventInTitle.Name = "lblEventInTitle";
+            this.lblEventInTitle.Size = new System.Drawing.Size(229, 45);
+            this.lblEventInTitle.TabIndex = 4;
+            this.lblEventInTitle.Text = "Thông tin vào";
             // 
             // panel3
             // 
-            panel3.Controls.Add(lblDescriptionTitle);
-            panel3.Controls.Add(lblLaneNameTitle);
-            panel3.Controls.Add(lblIdentityNameTitle);
-            panel3.Controls.Add(lblVehilceTypeTitle);
-            panel3.Controls.Add(lblPlateNumberTitle);
-            panel3.Controls.Add(lblIdentityCodeTitle);
-            panel3.Controls.Add(lblIdentityGroupTitle);
-            panel3.Controls.Add(lblTimeInTitle);
-            panel3.Dock = DockStyle.Fill;
-            panel3.Location = new Point(2, 2);
-            panel3.Margin = new Padding(0);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(150, 351);
-            panel3.TabIndex = 0;
+            this.panel3.Controls.Add(this.lblDescriptionTitle);
+            this.panel3.Controls.Add(this.lblLaneNameTitle);
+            this.panel3.Controls.Add(this.lblIdentityNameTitle);
+            this.panel3.Controls.Add(this.lblVehilceTypeTitle);
+            this.panel3.Controls.Add(this.lblPlateNumberTitle);
+            this.panel3.Controls.Add(this.lblIdentityCodeTitle);
+            this.panel3.Controls.Add(this.lblIdentityGroupTitle);
+            this.panel3.Controls.Add(this.lblTimeInTitle);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(2, 2);
+            this.panel3.Margin = new System.Windows.Forms.Padding(0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(131, 262);
+            this.panel3.TabIndex = 0;
             // 
             // lblDescriptionTitle
             // 
-            lblDescriptionTitle.AutoSize = true;
-            lblDescriptionTitle.BackColor = Color.Transparent;
-            lblDescriptionTitle.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
-            lblDescriptionTitle.Location = new Point(3, 0);
-            lblDescriptionTitle.Name = "lblDescriptionTitle";
-            lblDescriptionTitle.Size = new Size(109, 45);
-            lblDescriptionTitle.TabIndex = 4;
-            lblDescriptionTitle.Text = "Mô tả";
+            this.lblDescriptionTitle.AutoSize = true;
+            this.lblDescriptionTitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblDescriptionTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
+            this.lblDescriptionTitle.Location = new System.Drawing.Point(3, 0);
+            this.lblDescriptionTitle.Name = "lblDescriptionTitle";
+            this.lblDescriptionTitle.Size = new System.Drawing.Size(109, 45);
+            this.lblDescriptionTitle.TabIndex = 4;
+            this.lblDescriptionTitle.Text = "Mô tả";
             // 
             // ucEventOutInfo
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(255, 224, 192);
-            Controls.Add(dgvData);
-            Controls.Add(lblCancel1);
-            Name = "ucEventOutInfo";
-            Size = new Size(762, 615);
-            dgvData.ResumeLayout(false);
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
-            panel3.ResumeLayout(false);
-            panel3.PerformLayout();
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.Controls.Add(this.dgvData);
+            this.Controls.Add(this.lblCancel1);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Name = "ucEventOutInfo";
+            this.Size = new System.Drawing.Size(764, 436);
+            this.dgvData.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion

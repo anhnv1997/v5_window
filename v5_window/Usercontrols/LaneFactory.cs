@@ -18,6 +18,7 @@ namespace iParkingv5_window.Usercontrols
                 case EmLaneDirection.IN:
                     return new ucLaneIn(lane, laneDisplayConfig, isDisplayLastEvent, isScale);
                 case EmLaneDirection.OUT:
+                    // Fix cung
                     return new ucLaneOut(lane, laneDisplayConfig, isDisplayLastEvent, isScale);
                 default:
                     throw new Exception("Thông tin làn không hợp lệ, hãy kiểm tra lại thông tin thiết lập!");

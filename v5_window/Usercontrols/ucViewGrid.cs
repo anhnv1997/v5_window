@@ -51,16 +51,17 @@ namespace iParkingv5_window.Usercontrols
             this.Controls.Clear();
             table = new TableLayoutPanel();
             table.Dock = DockStyle.Fill;
+
             table.ColumnCount = column;
             table.RowCount = row;
             table.Padding = new Padding(3);
             for (int i = 0; i < column; i++)
             {
-                table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100 / column));
+                table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f / column));
             }
             for (int i = 0; i < row; i++)
             {
-                table.RowStyles.Add(new RowStyle(SizeType.Percent, 100 / row));
+                table.RowStyles.Add(new RowStyle(SizeType.Percent, 100f / row));
             }
             table.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             table.MouseDown += Table_MouseDown;

@@ -61,6 +61,7 @@ namespace iParkingv5_CustomerRegister.Forms
             btnSearch.InitControl(BtnSearch_Click);
             btnOk1.InitControl(BtnOk1_Click);
             btnCancel1.InitControl(BtnCancel1_Click);
+            btnWriteInOut.InitControl(btnWriteInOut_Click);
 
             lblTitle.Location = new Point(StaticPool.baseSize * 2, StaticPool.baseSize * 2);
             lblKeyword.Location = new Point(lblTitle.Location.X, lblTitle.Location.Y + lblTitle.Height + StaticPool.baseSize);
@@ -69,6 +70,8 @@ namespace iParkingv5_CustomerRegister.Forms
                                             lblKeyword.Location.Y + (lblKeyword.Height - txtKeyword.Height) / 2);
             btnSearch.Location = new Point(txtKeyword.Location.X + txtKeyword.Width + StaticPool.baseSize,
                                            txtKeyword.Location.Y + (txtKeyword.Height - btnSearch.Height) / 2);
+            btnWriteInOut.Location = new Point(btnSearch.Location.X + btnSearch.Width + StaticPool.baseSize,
+                                           btnSearch.Location.Y + (btnSearch.Height - btnWriteInOut.Height) / 2);
 
             btnCancel1.Location = new Point(panelData.Width - btnCancel1.Width - StaticPool.baseSize * 2,
                                            panelData.Height - btnCancel1.Height - StaticPool.baseSize * 2);
@@ -204,7 +207,20 @@ namespace iParkingv5_CustomerRegister.Forms
                 item.Enabled = true;
             }
         }
+        private void btnWriteInOut_Click(object? sender, EventArgs e)
+        {
+            if (dgvData.CurrentRow == null)
+            {
+                MessageBox.Show("Mời chọn phương tiện", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+            DialogResult result = MessageBox.Show("Xác nhận ghi xe vào bãi?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                ChooseVehicle();
+            }
+        }
         private void BtnCancel1_Click(object? sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;

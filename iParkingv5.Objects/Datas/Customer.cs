@@ -8,12 +8,12 @@ namespace iParkingv6.Objects.Datas
 {
     public class Customer
     {
-        public string Id { get; set; }
-        public string Code { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public string IdNumber { get; set; }
-        public string PhoneNumber { get; set; }
+        public string Id { get; set; } = "";
+        public string Code { get; set; } = "";
+        public string Name { get; set; } = "";
+        public string Address { get; set; } = "";
+        public string IdNumber { get; set; } = "";
+        public string PhoneNumber { get; set; } = "";
         public object Email { get; set; }
         [JsonIgnore]
         public DateTime DateOfBirth { get; set; } = DateTime.MinValue;

@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <Reference Include="Aopu_Controller">
-      <HintPath>..\packages\Aopu_Controller.dll</HintPath>
+      <HintPath>C:\Users\PC_Kien\Desktop\Aopu_Controller.dll</HintPath>
     </Reference>
     <Reference Include="DahuaLib">
       <HintPath>..\packages\DahuaLib.dll</HintPath>
