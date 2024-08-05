@@ -1,4 +1,5 @@
-﻿using IPaking.Ultility;
+﻿using DocumentFormat.OpenXml.Vml;
+using IPaking.Ultility;
 using iParkingv5.Controller;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
@@ -17,6 +18,7 @@ using Kztek.Tool;
 using Kztek.Tools;
 using System.Data;
 using System.Drawing.Imaging;
+using System.Windows.Forms;
 using static iParkingv5.Objects.Configs.LaneDirectionConfig;
 using static iParkingv5.Objects.Enums.ParkingImageType;
 using static iParkingv5.Objects.Enums.PrintHelpers;
@@ -1282,149 +1284,191 @@ namespace iParkingv5_window.Usercontrols
             frmSelectCard frmSelectCard = new frmSelectCard("Danh sách thẻ");
 
             if (frmSelectCard.ShowDialog() != DialogResult.OK) return;
-            string identityId = frmSelectCard.SelectIdentityId;
-
-
-            var identityResponse = await AppData.ApiServer.parkingDataService.GetIdentityByIdAsync(identityId);
-            if (identityResponse == null)
+            //await OnNewEvent(new CardEventArgs()
+            //{
+            //    PreferCard = frmSelectCard.SelectIdentity,
+            //    DeviceId = this.lane.controlUnits[0].controlUnitId,
+            //    ReaderIndex = 1,
+            //});
+            foreach (ControllerInLane controllerInLane in lane.controlUnits)
             {
-                return;
-            }
-            Identity identity
-            RegisteredVehicle? registeredVehicle = (await AppData.ApiServer.parkingDataService.GetRegistedVehilceByPlateAsync(selectedPlate)).Item1;
-            if (registeredVehicle == null)
-            {
-                return;
-            }
-            Image? vehicleImg = null;
-            Image? overviewImg = ucOverView?.GetFullCurrentImage();
-            Customer? customer = null;
-            EventInData? eventIn = null;
-            string errorMessage = string.Empty;
-
-            string customerId = registeredVehicle.CustomerId;
-
-            VehicleBaseType vehicleType = registeredVehicle.vehicleType;
-
-            switch (vehicleType)
-            {
-                case VehicleBaseType.Car:
-                    vehicleImg = ucCarLpr?.GetFullCurrentImage();
-                    break;
-                case VehicleBaseType.Bike:
-                case VehicleBaseType.MotorBike:
-                    vehicleImg = ucMotoLpr?.GetFullCurrentImage();
-                    break;
-                default:
-                    break;
-            }
-            if (!string.IsNullOrEmpty(customerId))
-            {
-                customer = (await AppData.ApiServer.parkingDataService.GetCustomerByIdAsync(customerId)).Item1;
-            }
-
-            ClearView();
-            //Hiển thị thông tin hình ảnh phương tiện
-            BaseLane.ShowImage(picVehicleImage, vehicleImg);
-            BaseLane.ShowImage(picOverviewImage, overviewImg);
-            List<EmParkingImageType> validImageTypes = BaseLane.GetValidImageType(overviewImg, vehicleImg, null);
-            var eventInResponse = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, selectedPlate, null, validImageTypes, true, null, "");
-            if (eventInResponse == null)
-            {
-                goto LOI_HE_THONG;
-            }
-            eventIn = eventInResponse.Item1;
-            var errorData = eventInResponse.Item2;
-
-            if (errorData != null)
-            {
-                if (errorData.fields == null)
+                if (controllerInLane.readers.Length == 0)
                 {
-                    goto LOI_HE_THONG;
+                    continue;
                 }
-                errorMessage = errorData.fields.Count > 0 ? (errorData.fields[0].ToString() ?? "") : errorData.detailCode;
-                if (errorMessage != "Biển số không hợp lệ".ToUpper())
+
+                CardEventArgs ce = new()
                 {
-                    goto SU_KIEN_LOI;
-                }
-            }
-            else
-            {
-                if (eventIn.OpenBarrier)
-                {
-                    foreach (var controllerInLane in this.lane.controlUnits)
-                    {
-                        if (controllerInLane.barriers.Length > 0)
-                        {
-                            foreach (IController item in frmMain.controllers)
-                            {
-                                if (item.ControllerInfo.Id.ToLower() == controllerInLane.controlUnitId.ToLower())
-                                {
-                                    for (int i = 0; i < controllerInLane?.barriers.Length; i++)
-                                    {
-                                        bool isOpenSuccess = false;
-                                        if (!await item.OpenDoor(100, controllerInLane.barriers[i]))
-                                        {
-                                            isOpenSuccess = await item.OpenDoor(100, controllerInLane.barriers[i]);
-                                            if (!isOpenSuccess)
-                                            {
-                                            }
-                                        }
-                                        else
-                                        {
-                                        }
-                                        if (isOpenSuccess)
-                                        {
-                                        }
-                                    }
-                                    break;
-                                }
-                            }
-
-                        }
-                    }
-
-                }
-                goto SU_KIEN_HOP_LE;
-            }
-
-        LOI_HE_THONG:
-            {
-                ExcecuteSystemErrorCheckIn();
-                return;
-            }
-        SU_KIEN_LOI:
-            {
-                ExcecuteUnvalidEvent(null, null, vehicleType, selectedPlate, DateTime.Now, errorMessage, null, "");
-                return;
-            }
-        SU_KIEN_HOP_LE:
-            {
-
-                await ExcecuteValidEvent(null, null, vehicleType, selectedPlate, DateTime.Now, overviewImg, vehicleImg, null, eventIn, false);
-                var task1 = overviewImg.ImageToByteArrayAsync();
-                var task2 = vehicleImg.ImageToByteArrayAsync();
-                await Task.WhenAll(task1, task2);
-
-                var imageDatas = new Dictionary<EmParkingImageType, List<List<byte>>>
-                {
-                    { EmParkingImageType.Overview, new List<List<byte>>(){ task1.Result } },
-                    { EmParkingImageType.Vehicle,new List<List<byte>>(){ task2.Result } },
+                    EventTime = DateTime.Now,
+                    DeviceId = controllerInLane.controlUnitId,
+                    ReaderIndex = controllerInLane.readers[0],
+                    AllCardFormats = new List<string>() { frmSelectCard.SelectIdentity },
+                    PreferCard = frmSelectCard.SelectIdentity
                 };
 
+                await OnNewEvent(ce);
+                //Lưu sự kiện cảnh báo
                 if (lastEvent != null)
                 {
-                    var identity = (await AppData.ApiServer.parkingDataService.GetIdentityByIdAsync(eventIn.Identity.Id)).Item1;
-                    var response = await AppData.ApiServer.parkingProcessService.CreateAlarmAsync(identity.Code, this.lane.Id, lastEvent.PlateNumber, AbnormalCode.ManualEvent,
-                                                          imageDatas, true,
-                                                          identity?.IdentityGroupId, "", "", "");
+                    var imageDatas = SaveAllCameraImage();
+
+                    var response = await AppData.ApiServer.parkingProcessService.CreateAlarmAsync(lastEvent.Identity?.Code, this.lane.Id, lastEvent.PlateNumber, AbnormalCode.ManualEvent,
+                                                                 imageDatas, false,
+                                                                 lastEvent?.IdentityGroup?.Id.ToString() ?? "", "", "", "");
                     if (response != null)
                     {
                         BaseLane.SaveImage(response.images, imageDatas);
                     }
                 }
-                return;
+                break;
             }
+
+            //if (lastEvent != null)
+            //{
+            //    var imageDatas = SaveAllCameraImage();
+            //    var identity = (await AppData.ApiServer.parkingDataService.GetIdentityByIdAsync(lastEvent.Identity.Id)).Item1;
+            //    var response = await AppData.ApiServer.parkingProcessService.CreateAlarmAsync(identity.Code, this.lane.Id, lastEvent.PlateNumber, AbnormalCode.ManualEvent,
+            //                                          imageDatas, true,
+            //                                          identity?.IdentityGroupId, "", "", "");
+            //    if (response != null)
+            //    {
+            //        BaseLane.SaveImage(response.images, imageDatas);
+            //    }
+            //}
+            //    RegisteredVehicle? registeredVehicle = (await AppData.ApiServer.parkingDataService.GetRegistedVehilceByPlateAsync(selectedPlate)).Item1;
+            //    if (registeredVehicle == null)
+            //    {
+            //        return;
+            //    }
+            //    Image? vehicleImg = null;
+            //    Image? overviewImg = ucOverView?.GetFullCurrentImage();
+            //    Customer? customer = null;
+            //    EventInData? eventIn = null;
+            //    string errorMessage = string.Empty;
+
+            //    string customerId = registeredVehicle.CustomerId;
+
+            //    VehicleBaseType vehicleType = registeredVehicle.vehicleType;
+
+            //    switch (vehicleType)
+            //    {
+            //        case VehicleBaseType.Car:
+            //            vehicleImg = ucCarLpr?.GetFullCurrentImage();
+            //            break;
+            //        case VehicleBaseType.Bike:
+            //        case VehicleBaseType.MotorBike:
+            //            vehicleImg = ucMotoLpr?.GetFullCurrentImage();
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //    if (!string.IsNullOrEmpty(customerId))
+            //    {
+            //        customer = (await AppData.ApiServer.parkingDataService.GetCustomerByIdAsync(customerId)).Item1;
+            //    }
+
+            //    ClearView();
+            //    //Hiển thị thông tin hình ảnh phương tiện
+            //    BaseLane.ShowImage(picVehicleImage, vehicleImg);
+            //    BaseLane.ShowImage(picOverviewImage, overviewImg);
+            //    List<EmParkingImageType> validImageTypes = BaseLane.GetValidImageType(overviewImg, vehicleImg, null);
+            //    var eventInResponse = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, selectedPlate, null, validImageTypes, true, null, "");
+            //    if (eventInResponse == null)
+            //    {
+            //        goto LOI_HE_THONG;
+            //    }
+            //    eventIn = eventInResponse.Item1;
+            //    var errorData = eventInResponse.Item2;
+
+            //    if (errorData != null)
+            //    {
+            //        if (errorData.fields == null)
+            //        {
+            //            goto LOI_HE_THONG;
+            //        }
+            //        errorMessage = errorData.fields.Count > 0 ? (errorData.fields[0].ToString() ?? "") : errorData.detailCode;
+            //        if (errorMessage != "Biển số không hợp lệ".ToUpper())
+            //        {
+            //            goto SU_KIEN_LOI;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (eventIn.OpenBarrier)
+            //        {
+            //            foreach (var controllerInLane in this.lane.controlUnits)
+            //            {
+            //                if (controllerInLane.barriers.Length > 0)
+            //                {
+            //                    foreach (IController item in frmMain.controllers)
+            //                    {
+            //                        if (item.ControllerInfo.Id.ToLower() == controllerInLane.controlUnitId.ToLower())
+            //                        {
+            //                            for (int i = 0; i < controllerInLane?.barriers.Length; i++)
+            //                            {
+            //                                bool isOpenSuccess = false;
+            //                                if (!await item.OpenDoor(100, controllerInLane.barriers[i]))
+            //                                {
+            //                                    isOpenSuccess = await item.OpenDoor(100, controllerInLane.barriers[i]);
+            //                                    if (!isOpenSuccess)
+            //                                    {
+            //                                    }
+            //                                }
+            //                                else
+            //                                {
+            //                                }
+            //                                if (isOpenSuccess)
+            //                                {
+            //                                }
+            //                            }
+            //                            break;
+            //                        }
+            //                    }
+
+            //                }
+            //            }
+
+            //        }
+            //        goto SU_KIEN_HOP_LE;
+            //    }
+
+            //LOI_HE_THONG:
+            //    {
+            //        ExcecuteSystemErrorCheckIn();
+            //        return;
+            //    }
+            //SU_KIEN_LOI:
+            //    {
+            //        ExcecuteUnvalidEvent(null, null, vehicleType, selectedPlate, DateTime.Now, errorMessage, null, "");
+            //        return;
+            //    }
+            //SU_KIEN_HOP_LE:
+            //    {
+
+            //        await ExcecuteValidEvent(null, null, vehicleType, selectedPlate, DateTime.Now, overviewImg, vehicleImg, null, eventIn, false);
+            //        var task1 = overviewImg.ImageToByteArrayAsync();
+            //        var task2 = vehicleImg.ImageToByteArrayAsync();
+            //        await Task.WhenAll(task1, task2);
+
+            //        var imageDatas = new Dictionary<EmParkingImageType, List<List<byte>>>
+            //        {
+            //            { EmParkingImageType.Overview, new List<List<byte>>(){ task1.Result } },
+            //            { EmParkingImageType.Vehicle,new List<List<byte>>(){ task2.Result } },
+            //        };
+
+            //        if (lastEvent != null)
+            //        {
+            //            var identity = (await AppData.ApiServer.parkingDataService.GetIdentityByIdAsync(eventIn.Identity.Id)).Item1;
+            //            var response = await AppData.ApiServer.parkingProcessService.CreateAlarmAsync(identity.Code, this.lane.Id, lastEvent.PlateNumber, AbnormalCode.ManualEvent,
+            //                                                  imageDatas, true,
+            //                                                  identity?.IdentityGroupId, "", "", "");
+            //            if (response != null)
+            //            {
+            //                BaseLane.SaveImage(response.images, imageDatas);
+            //            }
+            //        }
+            //        return;
+            //    }
         }
 
         /// <summary>

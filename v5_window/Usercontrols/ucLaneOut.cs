@@ -1258,6 +1258,7 @@ namespace iParkingv5_window.Usercontrols
                                 BaseLane.SaveImage(response.images, imageDatas);
                             }
                         }
+                        break;
                     }
 
                 }

@@ -3,5 +3,7 @@ public enum IdentityType
     Card,
     QrCode,
     FingerPrint,
-    FaceId
+    FaceId,
+    PlateNumber,
+    QR_1Times
 }
