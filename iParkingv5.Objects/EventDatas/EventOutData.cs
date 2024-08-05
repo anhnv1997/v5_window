@@ -32,5 +32,6 @@ namespace iParkingv5.Objects.EventDatas
             }
         }
         public long Charge { get; set; }
+        public string InvoiceId { get; set; }
     }
 }

@@ -66,6 +66,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         {
             public int TotalPage { get; set; }
             public int TotalCount { get; set; }
+            public long Revenue { get; set; }
             public List<T> data { get; set; }
         }
 

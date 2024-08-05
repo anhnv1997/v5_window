@@ -81,9 +81,11 @@ namespace v6_window
 
                         //DahuaAccessControl.Init();
 
-                        bool? y = null;
-                        bool x = y ??= true;
                         CheckForUpdate();
+                        if (StaticPool.appOption.IsIntergratedEInvoice)
+                        {
+                            AppData.ApiServer.invoiceService = null;
+                        }
                         LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Mở giao diện đăng nhập hệ thống");
                         Application.Run(new frmLogin(AppData.ApiServer, KzParkingv5BaseApi.server, OpenLoadingPage));
                     }

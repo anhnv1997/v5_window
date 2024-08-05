@@ -1,4 +1,4 @@
-namespace iParkingv5.Reporting
+namespace iParkingv5.Printer
 {
     public partial class Form1 : Form
     {

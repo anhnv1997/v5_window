@@ -983,6 +983,45 @@
           "bin/placeholder/iParkingv5.Objects.dll": {}
         }
       },
+      "iParkingv5.Printer/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "IPaking.Ultility": "1.0.0.2",
+          "Kztek.Tool": "1.0.0.2",
+          "iParkingv5.Objects": "6.0.0.1"
+        },
+        "compile": {
+          "bin/placeholder/iParkingv5.Printer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/iParkingv5.Printer.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WindowsForms"
+        ]
+      },
+      "iParkingv5.Reporting/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Kztek.Helper": "1.0.0",
+          "Kztek.Tool": "1.0.0.2",
+          "iPakrkingv5.Controls": "1.0.0.1",
+          "iParkingv5.ApiManager": "6.0.0.1",
+          "iParkingv5.Objects": "6.0.0.1",
+          "iParkingv5.Printer": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/iParkingv5.Reporting.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/iParkingv5.Reporting.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WindowsForms"
+        ]
+      },
       "Kztek.Cameras/1.0.0.2": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
@@ -2584,6 +2623,16 @@
       "path": "../iParkingv5.Objects/iParkingv5.Objects.csproj",
       "msbuildProject": "../iParkingv5.Objects/iParkingv5.Objects.csproj"
     },
+    "iParkingv5.Printer/1.0.0": {
+      "type": "project",
+      "path": "../iParkingv5.Printer/iParkingv5.Printer.csproj",
+      "msbuildProject": "../iParkingv5.Printer/iParkingv5.Printer.csproj"
+    },
+    "iParkingv5.Reporting/1.0.0": {
+      "type": "project",
+      "path": "../iParkingv5.Reporting/iParkingv5.Reporting.csproj",
+      "msbuildProject": "../iParkingv5.Reporting/iParkingv5.Reporting.csproj"
+    },
     "Kztek.Cameras/1.0.0.2": {
       "type": "project",
       "path": "../../../../../../../BaseLib/Kztek.Cameras/Kztek.Cameras.csproj",
@@ -2632,7 +2681,9 @@
       "iParkingv5.FeeTest >= 1.0.0",
       "iParkingv5.LedDisplay >= 1.0.0.1",
       "iParkingv5.Lpr >= 1.0.0.1",
-      "iParkingv5.Objects >= 6.0.0.1"
+      "iParkingv5.Objects >= 6.0.0.1",
+      "iParkingv5.Printer >= 1.0.0",
+      "iParkingv5.Reporting >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -2703,6 +2754,12 @@
             },
             "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj": {
               "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj"
+            },
+            "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Printer\\iParkingv5.Printer.csproj": {
+              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Printer\\iParkingv5.Printer.csproj"
+            },
+            "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Reporting\\iParkingv5.Reporting.csproj": {
+              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Reporting\\iParkingv5.Reporting.csproj"
             },
             "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Helper\\Kztek.Helper.csproj": {
               "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Helper\\Kztek.Helper.csproj"

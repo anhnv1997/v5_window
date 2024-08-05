@@ -1,4 +1,5 @@
-﻿using iParkingv5.ApiManager.KzParkingv5Apis;
+﻿using iParkingv5.ApiManager.interfaces;
+using iParkingv5.ApiManager.KzParkingv5Apis;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,10 +17,12 @@ namespace iParkingv5_window.Forms
         public string UpdatePlate { get => txtNewPlate.Text; }
         private string eventId;
         private bool isEventIn;
-        public frmEditPlate(string currentPlate, string eventId, bool isEVentIn)
+        private iParkingApi ApiServer;
+        public frmEditPlate(string currentPlate, string eventId, bool isEVentIn, iParkingApi ApiServer)
         {
             InitializeComponent();
             lblCurrentPlate.Text = currentPlate;
+            this.ApiServer = ApiServer;
             this.eventId = eventId;
             this.isEventIn = isEVentIn;
         }
@@ -30,9 +33,9 @@ namespace iParkingv5_window.Forms
             {
                 txtNewPlate.Text = txtNewPlate.Text.ToUpper();
 
-                bool isUpdateSuccess = isEventIn?
-                            await AppData.ApiServer.parkingProcessService.UpdateEventInPlateAsync(this.eventId, txtNewPlate.Text, lblCurrentPlate.Text):
-                            await AppData.ApiServer.parkingProcessService.UpdateEventOutPlate(this.eventId, txtNewPlate.Text, lblCurrentPlate.Text) 
+                bool isUpdateSuccess = isEventIn ?
+                            await ApiServer.parkingProcessService.UpdateEventInPlateAsync(this.eventId, txtNewPlate.Text, lblCurrentPlate.Text) :
+                            await ApiServer.parkingProcessService.UpdateEventOutPlate(this.eventId, txtNewPlate.Text, lblCurrentPlate.Text)
                             ;
                 if (isUpdateSuccess)
                 {
@@ -56,8 +59,8 @@ namespace iParkingv5_window.Forms
         {
             txtNewPlate.Text = txtNewPlate.Text.ToUpper();
             bool isUpdateSuccess = isEventIn ?
-                            await AppData.ApiServer.parkingProcessService.UpdateEventInPlateAsync(this.eventId, txtNewPlate.Text.ToUpper(), lblCurrentPlate.Text) :
-                            await AppData.ApiServer.parkingProcessService.UpdateEventOutPlate(this.eventId, txtNewPlate.Text.ToUpper(), lblCurrentPlate.Text)
+                            await ApiServer.parkingProcessService.UpdateEventInPlateAsync(this.eventId, txtNewPlate.Text.ToUpper(), lblCurrentPlate.Text) :
+                            await ApiServer.parkingProcessService.UpdateEventOutPlate(this.eventId, txtNewPlate.Text.ToUpper(), lblCurrentPlate.Text)
                             ;
             if (isUpdateSuccess)
             {

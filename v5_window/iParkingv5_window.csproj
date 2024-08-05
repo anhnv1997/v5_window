@@ -48,6 +48,8 @@
     <ProjectReference Include="..\iParkingv5.LedDisplay\iParkingv5.LedDisplay.csproj" />
     <ProjectReference Include="..\iParkingv5.Lpr\iParkingv5.Lpr.csproj" />
     <ProjectReference Include="..\iParkingv5.Objects\iParkingv5.Objects.csproj" />
+    <ProjectReference Include="..\iParkingv5.Printer\iParkingv5.Printer.csproj" />
+    <ProjectReference Include="..\iParkingv5.Reporting\iParkingv5.Reporting.csproj" />
     <ProjectReference Include="..\Kztek.Helper\Kztek.Helper.csproj" />
     <ProjectReference Include="..\Kztek.Scale\Net6\Kztek.Scale\Kztek.Scale_net6.csproj" />
   </ItemGroup>

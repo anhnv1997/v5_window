@@ -50,6 +50,7 @@
             label5 = new Label();
             label1 = new Label();
             label2 = new Label();
+            chbIsUseInvoice = new CheckBox();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoDelayTime).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoTurn).BeginInit();
@@ -60,6 +61,7 @@
             // 
             groupBox2.AutoSize = true;
             groupBox2.Controls.Add(chbIsCheckKey);
+            groupBox2.Controls.Add(chbIsUseInvoice);
             groupBox2.Controls.Add(chbIsIntergratedScaleStation);
             groupBox2.Controls.Add(numRetakePhotoDelayTime);
             groupBox2.Controls.Add(numRetakePhotoTurn);
@@ -85,7 +87,7 @@
             groupBox2.Margin = new Padding(4, 3, 4, 3);
             groupBox2.Name = "groupBox2";
             groupBox2.Padding = new Padding(4, 3, 4, 3);
-            groupBox2.Size = new Size(734, 434);
+            groupBox2.Size = new Size(734, 463);
             groupBox2.TabIndex = 5;
             groupBox2.TabStop = false;
             groupBox2.Text = "Tùy chọn";
@@ -93,7 +95,7 @@
             // chbIsCheckKey
             // 
             chbIsCheckKey.AutoSize = true;
-            chbIsCheckKey.Location = new Point(246, 380);
+            chbIsCheckKey.Location = new Point(246, 409);
             chbIsCheckKey.Margin = new Padding(4);
             chbIsCheckKey.Name = "chbIsCheckKey";
             chbIsCheckKey.Size = new Size(115, 25);
@@ -306,6 +308,17 @@
             label2.TabIndex = 2;
             label2.Text = "Thời gian cho phép mở barrie";
             // 
+            // chbIsUseInvoice
+            // 
+            chbIsUseInvoice.AutoSize = true;
+            chbIsUseInvoice.Location = new Point(246, 376);
+            chbIsUseInvoice.Margin = new Padding(4);
+            chbIsUseInvoice.Name = "chbIsUseInvoice";
+            chbIsUseInvoice.Size = new Size(203, 25);
+            chbIsUseInvoice.TabIndex = 9;
+            chbIsUseInvoice.Text = "Tích hợp hóa đơn điện tử";
+            chbIsUseInvoice.UseVisualStyleBackColor = true;
+            // 
             // ucAppOptions
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -353,5 +366,6 @@
         private CheckBox chbIsAllowEditPlateOut;
         private CheckBox chbIsIntergratedScaleStation;
         private CheckBox chbIsCheckKey;
+        private CheckBox chbIsUseInvoice;
     }
 }

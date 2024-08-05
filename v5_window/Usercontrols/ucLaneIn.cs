@@ -581,7 +581,7 @@ namespace iParkingv5_window.Usercontrols
             }
             toolTip1.SetToolTip(picOpenBarrie, "Mở Barrie " + string.Join(",", controllserShortcut));
             toolTip2.SetToolTip(picRetakePhoto, "Chụp Lại " + ((Keys)laneInShortcutConfig?.ReSnapshotKey).ToString());
-            toolTip3.SetToolTip(picWriteIn, "Ghi Vé Vào " + ((Keys)laneInShortcutConfig?.WriteIn).ToString()); 
+            toolTip3.SetToolTip(picWriteIn, "Ghi Vé Vào " + ((Keys)laneInShortcutConfig?.WriteIn).ToString());
 
             picLprImage.Image = picLprImage.InitialImage = picLprImage.ErrorImage = defaultImg;
             picOverviewImage.Image = picOverviewImage.InitialImage = picOverviewImage.ErrorImage = defaultImg;
@@ -1279,10 +1279,18 @@ namespace iParkingv5_window.Usercontrols
         /// <param name="e"></param>
         private async void BtnWriteIn_Click(object sender, EventArgs e)
         {
-            frmSearchPlateNumber frmSearchPlateNumber = new frmSearchPlateNumber();
+            frmSelectCard frmSelectCard = new frmSelectCard("Danh sách thẻ");
 
-            if (frmSearchPlateNumber.ShowDialog() != DialogResult.OK) return;
-            string selectedPlate = frmSearchPlateNumber.selectedVehiclePlate;
+            if (frmSelectCard.ShowDialog() != DialogResult.OK) return;
+            string identityId = frmSelectCard.SelectIdentityId;
+
+
+            var identityResponse = await AppData.ApiServer.parkingDataService.GetIdentityByIdAsync(identityId);
+            if (identityResponse == null)
+            {
+                return;
+            }
+            Identity identity
             RegisteredVehicle? registeredVehicle = (await AppData.ApiServer.parkingDataService.GetRegistedVehilceByPlateAsync(selectedPlate)).Item1;
             if (registeredVehicle == null)
             {

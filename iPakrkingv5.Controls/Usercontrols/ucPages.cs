@@ -67,8 +67,10 @@ namespace iPakrkingv5.Controls.Usercontrols
             currentPage = 0;
             panelPages.AutoScroll = true;
             this.Height = panelPages.Height;
-            this.ResumeLayout();
-            panelPages.ResumeLayout();
+            panelPages.ResumeLayout(false);
+            panelPages.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
         }
         private void LblPageIndex_Click(object? sender, EventArgs e)
         {

@@ -7,6 +7,8 @@ using iParkingv5.Objects.Configs;
 using iParkingv5.Objects.Datas.Device_service;
 using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.Events;
+using iParkingv5.Printer;
+using iParkingv5.Reporting;
 using iParkingv5_window.Forms.ReportForms;
 using iParkingv5_window.Forms.SystemForms;
 using iParkingv5_window.Usercontrols;
@@ -89,6 +91,8 @@ namespace iParkingv5_window.Forms.DataForms
             InitializeComponent();
             this.Load += FrmMain_Load;
             this.Shown += FrmMain_Shown;
+
+            AppData.printer = PrinterFactory.CreatePrinter((EmPrintTemplate)StaticPool.appOption.PrintTemplate);
 
             lblServerName.Text = Environment.MachineName;
             lblCompanyName.Text = StaticPool.oemConfig.CompanyName;
@@ -225,11 +229,11 @@ namespace iParkingv5_window.Forms.DataForms
         }
         private void tsmiReportIn_Click(object sender, EventArgs e)
         {
-            new frmReportIn().Show(this);
+            new frmReportIn(Image.FromFile(defaultImagePath), AppData.ApiServer).Show(this);
         }
         private void tsmiReportInOut_Click(object sender, EventArgs e)
         {
-            new frmReportInOut().Show(this);
+            new frmReportInOut(AppData.ApiServer, Image.FromFile(defaultImagePath), AppData.printer).Show(this);
         }
         private void tsmiReport_MouseEnter(object sender, EventArgs e)
         {
@@ -525,6 +529,7 @@ namespace iParkingv5_window.Forms.DataForms
         {
             try
             {
+                LogHelper.Log(EmLogType.INFOR, EmObjectLogType.System, specailName: "RabbitMQ", obj: e.Body.ToString());
                 string payLoad = Encoding.ASCII.GetString(e.Body.ToArray());
                 CardEventArgs ce = Newtonsoft.Json.JsonConvert.DeserializeObject<CardEventArgs>(payLoad)!;
                 foreach (var item in controllers)

@@ -1,4 +1,7 @@
-namespace iParkingv5.Reporting
+using IPaking.Ultility;
+using Kztek.Tools;
+
+namespace iParkingv5.Printer
 {
     internal static class Program
     {
@@ -11,6 +14,8 @@ namespace iParkingv5.Reporting
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+            PathManagement.baseBath = LogHelper.SaveLogFolder = Application.StartupPath;
+            Application.Run(new Form1());
         }
     }
 }

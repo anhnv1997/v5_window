@@ -1,4 +1,5 @@
-﻿using iParkingv5.ApiManager.KzParkingv5Apis;
+﻿using iParkingv5.ApiManager.interfaces;
+using iParkingv5.ApiManager.KzParkingv5Apis;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,9 +17,11 @@ namespace iParkingv5_window.Forms
         public string newNote { get => txtNewNote.Text; }
         private string eventId;
         private bool isEventIn;
-        public frmEditNote(string currentNote, string eventId, bool isEventIn)
+        private iParkingApi ApiServer;
+        public frmEditNote(string currentNote, string eventId, bool isEventIn, iParkingApi ApiServer)
         {
             InitializeComponent();
+            this.ApiServer = ApiServer;
             lblCurrentNote.Text = currentNote;
             this.eventId = eventId;
             this.isEventIn = isEventIn;
@@ -28,7 +31,7 @@ namespace iParkingv5_window.Forms
         {
             if (e.KeyCode == Keys.Enter)
             {
-                bool isUpdateSuccess = await AppData.ApiServer.parkingProcessService.UpdateBSXNote(txtNewNote.Text, this.eventId, this.isEventIn);
+                bool isUpdateSuccess = await ApiServer.parkingProcessService.UpdateBSXNote(txtNewNote.Text, this.eventId, this.isEventIn);
                 if (isUpdateSuccess)
                 {
                     MessageBox.Show("Cập nhật ghi chú thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -49,7 +52,7 @@ namespace iParkingv5_window.Forms
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            bool isUpdateSuccess = await AppData.ApiServer.parkingProcessService.UpdateBSXNote(txtNewNote.Text, this.eventId, this.isEventIn);
+            bool isUpdateSuccess = await ApiServer.parkingProcessService.UpdateBSXNote(txtNewNote.Text, this.eventId, this.isEventIn);
             if (isUpdateSuccess)
             {
                 MessageBox.Show("Cập nhật ghi chú thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -65,7 +68,7 @@ namespace iParkingv5_window.Forms
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.DialogResult= DialogResult.Cancel;
+            this.DialogResult = DialogResult.Cancel;
         }
     }
 }

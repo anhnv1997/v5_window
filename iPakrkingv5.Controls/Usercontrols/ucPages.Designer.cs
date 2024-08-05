@@ -36,19 +36,22 @@
             panelPages.AutoScroll = true;
             panelPages.Dock = DockStyle.Fill;
             panelPages.Location = new Point(0, 0);
+            panelPages.Margin = new Padding(4, 3, 4, 3);
             panelPages.Name = "panelPages";
-            panelPages.Size = new Size(667, 48);
+            panelPages.Size = new Size(693, 43);
             panelPages.TabIndex = 0;
             // 
             // ucPages
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Transparent;
             BorderStyle = BorderStyle.Fixed3D;
             Controls.Add(panelPages);
+            Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            Margin = new Padding(4, 3, 4, 3);
             Name = "ucPages";
-            Size = new Size(667, 48);
+            Size = new Size(693, 43);
             ResumeLayout(false);
         }
 

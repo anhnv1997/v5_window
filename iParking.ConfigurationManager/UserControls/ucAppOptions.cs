@@ -30,6 +30,7 @@ namespace iParking.ConfigurationManager.UserControls
                 chbIsAllowEditPlateOut.Checked = appOption.IsAllowEditPlateOut;
                 chbIsIntergratedScaleStation.Checked = appOption.IsIntergratedScaleStation;
                 chbIsCheckKey.Checked = appOption.IsCheckKey;
+                chbIsUseInvoice.Checked = appOption.IsIntergratedEInvoice;
             }
             txtWaitSwipeCardTime.TextChanged += TxtWaitSwipeCardTime_TextChanged;
             txtAllowOpenBarrieTime.TextChanged += TxtAllowOpenBarrieTime_TextChanged;
@@ -73,6 +74,7 @@ namespace iParking.ConfigurationManager.UserControls
                 IsAllowEditPlateOut = chbIsAllowEditPlateOut.Checked,
                 IsIntergratedScaleStation = chbIsIntergratedScaleStation.Checked,
                 IsCheckKey = chbIsCheckKey.Checked,
+                IsIntergratedEInvoice = chbIsUseInvoice.Checked,
             };
         }
         #endregion End Public Function

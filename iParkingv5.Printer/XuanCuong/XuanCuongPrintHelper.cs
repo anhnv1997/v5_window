@@ -2,12 +2,17 @@
 using iParkingv5.Objects;
 using iParkingv5.Objects.Datas.weighing_service;
 using Kztek.Tool.TextFormatingTools;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using static iParkingv5.Objects.Enums.PrintHelpers;
 
-namespace iParkingv5_window.Helpers
+namespace iParkingv5.Printer
 {
-    public static class PrintHelper
+    public class XuanCuongPrintHelper
     {
         #region PUBLIC FUNCTION
         public static string GetPrintScaleInvoiceOfflineContent(WeighingActionDetail weighingActionDetail, string plateNumber, string companyTaxCode = "", string address = "",
@@ -109,7 +114,6 @@ namespace iParkingv5_window.Helpers
             else
             {
                 formattedTime = string.Format("{0} giờ {1} phút {2} giây", ParkingTime.Hours, ParkingTime.Minutes, ParkingTime.Seconds);
-                //formattedTime = string.Format("{0:hh\\:mm\\:ss}", ParkingTime);
             }
 
             baseContent = baseContent.Replace("$parking_time", formattedTime);
