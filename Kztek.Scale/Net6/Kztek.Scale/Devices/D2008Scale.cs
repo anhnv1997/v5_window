@@ -254,11 +254,7 @@ namespace Kztek.Scale_net6.Devices
                         }
                         else
                         {
-                            if (ErrorEvent != null)
-                            {
-                                ErrorEvent(this, "Lỗi Parse số cân: " +  dataReceived);
-                            }
-                            //scaleEventArgs.Gross = 0;
+                            scaleEventArgs.Gross = 0;
                         }
                         ScaleEvent(this, scaleEventArgs);
                     }

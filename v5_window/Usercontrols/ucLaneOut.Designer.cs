@@ -13,19 +13,23 @@ namespace iParkingv5_window.Usercontrols
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucLaneOut));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucLaneOut));
             lblLaneName = new Label();
             panelCameras = new Panel();
             label4 = new Label();
             splitContainerMain = new SplitContainer();
             tableLayoutPanel1 = new TableLayoutPanel();
             panel3 = new Panel();
+            picVehicleImageIn = new MovablePictureBox();
             panel2 = new Panel();
+            picVehicleImageOut = new MovablePictureBox();
             panel6 = new Panel();
+            picOverviewImageOut = new MovablePictureBox();
             panel5 = new Panel();
+            picOverviewImageIn = new MovablePictureBox();
             label1 = new Label();
             label2 = new Label();
             splitterCamera = new Splitter();
@@ -60,8 +64,10 @@ namespace iParkingv5_window.Usercontrols
             panelLpr = new Panel();
             tableLayoutPanel2 = new TableLayoutPanel();
             panel14 = new Panel();
+            picLprImage = new MovablePictureBox();
             label19 = new Label();
             panel15 = new Panel();
+            picLprImageIn = new MovablePictureBox();
             label18 = new Label();
             tableLayoutPanel3 = new TableLayoutPanel();
             panel13 = new Panel();
@@ -111,6 +117,14 @@ namespace iParkingv5_window.Usercontrols
             splitContainerMain.Panel2.SuspendLayout();
             splitContainerMain.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
+            panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picVehicleImageIn).BeginInit();
+            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picVehicleImageOut).BeginInit();
+            panel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picOverviewImageOut).BeginInit();
+            panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picOverviewImageIn).BeginInit();
             panelLastEvent.SuspendLayout();
             panel18.SuspendLayout();
             panelNote.SuspendLayout();
@@ -127,7 +141,9 @@ namespace iParkingv5_window.Usercontrols
             panelLpr.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             panel14.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picLprImage).BeginInit();
             panel15.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picLprImageIn).BeginInit();
             tableLayoutPanel3.SuspendLayout();
             panel13.SuspendLayout();
             panel16.SuspendLayout();
@@ -238,6 +254,7 @@ namespace iParkingv5_window.Usercontrols
             // panel3
             // 
             panel3.BackColor = SystemColors.Control;
+            panel3.Controls.Add(picVehicleImageIn);
             panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(2, 258);
             panel3.Margin = new Padding(0);
@@ -245,9 +262,24 @@ namespace iParkingv5_window.Usercontrols
             panel3.Size = new Size(305, 216);
             panel3.TabIndex = 1;
             // 
+            // picVehicleImageIn
+            // 
+            picVehicleImageIn.BackColor = Color.WhiteSmoke;
+            picVehicleImageIn.Dock = DockStyle.Fill;
+            picVehicleImageIn.Image = Properties.Resources.defaultWhite;
+            picVehicleImageIn.Location = new Point(0, 0);
+            picVehicleImageIn.Margin = new Padding(0);
+            picVehicleImageIn.Name = "picVehicleImageIn";
+            picVehicleImageIn.Size = new Size(305, 216);
+            picVehicleImageIn.SizeMode = PictureBoxSizeMode.StretchImage;
+            picVehicleImageIn.TabIndex = 5;
+            picVehicleImageIn.TabStop = false;
+            picVehicleImageIn.LoadCompleted += Pic_LoadCompleted;
+            // 
             // panel2
             // 
             panel2.BackColor = SystemColors.Control;
+            panel2.Controls.Add(picVehicleImageOut);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(309, 258);
             panel2.Margin = new Padding(0);
@@ -255,9 +287,24 @@ namespace iParkingv5_window.Usercontrols
             panel2.Size = new Size(306, 216);
             panel2.TabIndex = 0;
             // 
+            // picVehicleImageOut
+            // 
+            picVehicleImageOut.BackColor = Color.WhiteSmoke;
+            picVehicleImageOut.Dock = DockStyle.Fill;
+            picVehicleImageOut.Image = Properties.Resources.defaultWhite;
+            picVehicleImageOut.Location = new Point(0, 0);
+            picVehicleImageOut.Margin = new Padding(0);
+            picVehicleImageOut.Name = "picVehicleImageOut";
+            picVehicleImageOut.Size = new Size(306, 216);
+            picVehicleImageOut.SizeMode = PictureBoxSizeMode.StretchImage;
+            picVehicleImageOut.TabIndex = 5;
+            picVehicleImageOut.TabStop = false;
+            picVehicleImageOut.LoadCompleted += Pic_LoadCompleted;
+            // 
             // panel6
             // 
             panel6.BackColor = SystemColors.Control;
+            panel6.Controls.Add(picOverviewImageOut);
             panel6.Dock = DockStyle.Fill;
             panel6.Location = new Point(309, 40);
             panel6.Margin = new Padding(0);
@@ -265,15 +312,44 @@ namespace iParkingv5_window.Usercontrols
             panel6.Size = new Size(306, 216);
             panel6.TabIndex = 3;
             // 
+            // picOverviewImageOut
+            // 
+            picOverviewImageOut.BackColor = Color.WhiteSmoke;
+            picOverviewImageOut.Dock = DockStyle.Fill;
+            picOverviewImageOut.Image = Properties.Resources.defaultWhite;
+            picOverviewImageOut.Location = new Point(0, 0);
+            picOverviewImageOut.Margin = new Padding(0);
+            picOverviewImageOut.Name = "picOverviewImageOut";
+            picOverviewImageOut.Size = new Size(306, 216);
+            picOverviewImageOut.SizeMode = PictureBoxSizeMode.StretchImage;
+            picOverviewImageOut.TabIndex = 5;
+            picOverviewImageOut.TabStop = false;
+            picOverviewImageOut.LoadCompleted += Pic_LoadCompleted;
+            // 
             // panel5
             // 
             panel5.BackColor = SystemColors.Control;
+            panel5.Controls.Add(picOverviewImageIn);
             panel5.Dock = DockStyle.Fill;
             panel5.Location = new Point(2, 40);
             panel5.Margin = new Padding(0);
             panel5.Name = "panel5";
             panel5.Size = new Size(305, 216);
             panel5.TabIndex = 2;
+            // 
+            // picOverviewImageIn
+            // 
+            picOverviewImageIn.BackColor = Color.WhiteSmoke;
+            picOverviewImageIn.Dock = DockStyle.Fill;
+            picOverviewImageIn.Image = (Image)resources.GetObject("picOverviewImageIn.Image");
+            picOverviewImageIn.Location = new Point(0, 0);
+            picOverviewImageIn.Margin = new Padding(0);
+            picOverviewImageIn.Name = "picOverviewImageIn";
+            picOverviewImageIn.Size = new Size(305, 216);
+            picOverviewImageIn.SizeMode = PictureBoxSizeMode.StretchImage;
+            picOverviewImageIn.TabIndex = 5;
+            picOverviewImageIn.TabStop = false;
+            picOverviewImageIn.LoadCompleted += Pic_LoadCompleted;
             // 
             // label1
             // 
@@ -692,6 +768,7 @@ namespace iParkingv5_window.Usercontrols
             // 
             // panel14
             // 
+            panel14.Controls.Add(picLprImage);
             panel14.Controls.Add(label19);
             panel14.Dock = DockStyle.Fill;
             panel14.Location = new Point(236, 0);
@@ -699,6 +776,21 @@ namespace iParkingv5_window.Usercontrols
             panel14.Name = "panel14";
             panel14.Size = new Size(236, 132);
             panel14.TabIndex = 0;
+            // 
+            // picLprImage
+            // 
+            picLprImage.BackColor = Color.WhiteSmoke;
+            picLprImage.BorderStyle = BorderStyle.FixedSingle;
+            picLprImage.Dock = DockStyle.Fill;
+            picLprImage.Image = (Image)resources.GetObject("picLprImage.Image");
+            picLprImage.Location = new Point(0, 21);
+            picLprImage.Margin = new Padding(0);
+            picLprImage.Name = "picLprImage";
+            picLprImage.Size = new Size(236, 111);
+            picLprImage.SizeMode = PictureBoxSizeMode.StretchImage;
+            picLprImage.TabIndex = 4;
+            picLprImage.TabStop = false;
+            picLprImage.LoadCompleted += Pic_LoadCompleted;
             // 
             // label19
             // 
@@ -715,6 +807,7 @@ namespace iParkingv5_window.Usercontrols
             // 
             // panel15
             // 
+            panel15.Controls.Add(picLprImageIn);
             panel15.Controls.Add(label18);
             panel15.Dock = DockStyle.Fill;
             panel15.Location = new Point(0, 0);
@@ -722,6 +815,21 @@ namespace iParkingv5_window.Usercontrols
             panel15.Name = "panel15";
             panel15.Size = new Size(236, 132);
             panel15.TabIndex = 1;
+            // 
+            // picLprImageIn
+            // 
+            picLprImageIn.BackColor = Color.WhiteSmoke;
+            picLprImageIn.BorderStyle = BorderStyle.FixedSingle;
+            picLprImageIn.Dock = DockStyle.Fill;
+            picLprImageIn.Image = Properties.Resources.defaultWhite;
+            picLprImageIn.Location = new Point(0, 21);
+            picLprImageIn.Margin = new Padding(0);
+            picLprImageIn.Name = "picLprImageIn";
+            picLprImageIn.Size = new Size(236, 111);
+            picLprImageIn.SizeMode = PictureBoxSizeMode.StretchImage;
+            picLprImageIn.TabIndex = 1;
+            picLprImageIn.TabStop = false;
+            picLprImageIn.LoadCompleted += Pic_LoadCompleted;
             // 
             // label18
             // 
@@ -1253,6 +1361,14 @@ namespace iParkingv5_window.Usercontrols
             ((System.ComponentModel.ISupportInitialize)splitContainerMain).EndInit();
             splitContainerMain.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
+            panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)picVehicleImageIn).EndInit();
+            panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)picVehicleImageOut).EndInit();
+            panel6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)picOverviewImageOut).EndInit();
+            panel5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)picOverviewImageIn).EndInit();
             panelLastEvent.ResumeLayout(false);
             panel18.ResumeLayout(false);
             panelNote.ResumeLayout(false);
@@ -1271,8 +1387,10 @@ namespace iParkingv5_window.Usercontrols
             tableLayoutPanel2.ResumeLayout(false);
             panel14.ResumeLayout(false);
             panel14.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picLprImage).EndInit();
             panel15.ResumeLayout(false);
             panel15.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picLprImageIn).EndInit();
             tableLayoutPanel3.ResumeLayout(false);
             panel13.ResumeLayout(false);
             panel13.PerformLayout();
