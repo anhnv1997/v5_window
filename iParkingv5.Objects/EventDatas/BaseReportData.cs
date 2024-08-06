@@ -17,7 +17,7 @@ namespace iParkingv5.Objects.EventDatas
         public string CreatedUtc { get; set; }
 
         public Identity Identity { get; set; }
-        public Identity IdentityGroup { get; set; }
+        public IdentityGroup IdentityGroup { get; set; }
         public Dictionary<EmParkingImageType, List<ImageData>> images { get; set; }
 
         public bool OpenBarrier { get; set; }

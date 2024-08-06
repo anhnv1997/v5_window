@@ -14,6 +14,7 @@ using iParkingv5.Objects.Datas.reporting_service;
 using RestSharp;
 using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5BaseApi;
 using iParkingv5.Objects.EventDatas;
+using Microsoft.Extensions.Logging;
 
 namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 {
@@ -22,7 +23,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 
         public async Task<Report<EventInReport>> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
                                     string identityGroupId, string vehicleTypeId, string laneId, string user,
-                                    int pageIndex = 1, int pageSize = 100)
+                                    int pageIndex = 1, int pageSize = 100, string eventInId = "")
         {
             server = server.StandardlizeServerName();
             string apiUrl = server + "event-in/search";
@@ -39,6 +40,10 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                             new FilterModel("createdBy", EmPageSearchType.TEXT, user,  EmOperation._contains),
                             new FilterModel("status", EmPageSearchType.TEXT, "parking",  EmOperation._eq),
                         };
+            if (!string.IsNullOrEmpty(eventInId))
+            {
+                filterModels.Add(new FilterModel("id", EmPageSearchType.GUID, eventInId, EmOperation._in));
+            }
             if (!string.IsNullOrEmpty(laneId))
             {
                 filterModels.Add(new FilterModel("lane.id", EmPageSearchType.GUID, laneId, EmOperation._in));
@@ -92,7 +97,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             };
         }
 
-        public async Task<Report<EventOutReport>> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000)
+        public async Task<Report<EventOutReport>> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId,
+                                                               string vehicleTypeId, string laneId, string user,
+                                                               int pageIndex = 1, int pageSize = 10000, string eventId = "")
         {
             server = server.StandardlizeServerName();
             string apiUrl = server + "event-out/search";
@@ -107,6 +114,10 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                             new FilterModel("createdUtc", EmPageSearchType.DATETIME, endTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"),  EmOperation._lte),
                             new FilterModel("createdBy", EmPageSearchType.TEXT, user,  EmOperation._contains),
                         };
+            if (!string.IsNullOrEmpty(eventId))
+            {
+                filterModels.Add(new FilterModel("id", EmPageSearchType.GUID, eventId, EmOperation._in));
+            }
             if (!string.IsNullOrEmpty(laneId))
             {
                 filterModels.Add(new FilterModel("lane.id", EmPageSearchType.GUID, laneId, EmOperation._in));
@@ -275,7 +286,6 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                 totalVehicleIn = vehicleGotIn,
             };
         }
-
 
         public async Task<Report<EventOutReport>> GetEventInAndOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000)
         {

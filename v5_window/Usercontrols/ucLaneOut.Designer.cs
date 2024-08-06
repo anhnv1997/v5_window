@@ -34,10 +34,11 @@ namespace iParkingv5_window.Usercontrols
             splitContainerCamera = new SplitContainer();
             lblResult = new lblResult();
             panelLastEvent = new Panel();
+            splitContainerLastEvent = new SplitContainer();
+            ucEventCount1 = new ucEventCount();
             panel19 = new Panel();
             panelTop3Event = new Panel();
             label3 = new Label();
-            ucEventCount1 = new ucEventCount();
             dgvEventContent = new DataGridView();
             Column1 = new DataGridViewTextBoxColumn();
             Column2 = new DataGridViewTextBoxColumn();
@@ -96,6 +97,10 @@ namespace iParkingv5_window.Usercontrols
             splitContainerCamera.Panel1.SuspendLayout();
             splitContainerCamera.SuspendLayout();
             panelLastEvent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainerLastEvent).BeginInit();
+            splitContainerLastEvent.Panel1.SuspendLayout();
+            splitContainerLastEvent.Panel2.SuspendLayout();
+            splitContainerLastEvent.SuspendLayout();
             panel19.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEventContent).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitContainerEventContent).BeginInit();
@@ -182,7 +187,6 @@ namespace iParkingv5_window.Usercontrols
             // splitContainerMain.Panel2
             // 
             splitContainerMain.Panel2.Controls.Add(panelLastEvent);
-            splitContainerMain.Panel2.Controls.Add(ucEventCount1);
             splitContainerMain.Size = new Size(892, 746);
             splitContainerMain.SplitterDistance = 520;
             splitContainerMain.SplitterWidth = 2;
@@ -351,13 +355,43 @@ namespace iParkingv5_window.Usercontrols
             // 
             panelLastEvent.BackColor = SystemColors.ButtonHighlight;
             panelLastEvent.BorderStyle = BorderStyle.FixedSingle;
-            panelLastEvent.Controls.Add(panel19);
+            panelLastEvent.Controls.Add(splitContainerLastEvent);
             panelLastEvent.Dock = DockStyle.Fill;
-            panelLastEvent.Location = new Point(356, 0);
+            panelLastEvent.Location = new Point(0, 0);
             panelLastEvent.Margin = new Padding(4, 3, 4, 3);
             panelLastEvent.Name = "panelLastEvent";
-            panelLastEvent.Size = new Size(536, 224);
+            panelLastEvent.Size = new Size(892, 224);
             panelLastEvent.TabIndex = 8;
+            // 
+            // splitContainerLastEvent
+            // 
+            splitContainerLastEvent.Dock = DockStyle.Fill;
+            splitContainerLastEvent.Location = new Point(0, 0);
+            splitContainerLastEvent.Margin = new Padding(0);
+            splitContainerLastEvent.Name = "splitContainerLastEvent";
+            // 
+            // splitContainerLastEvent.Panel1
+            // 
+            splitContainerLastEvent.Panel1.Controls.Add(ucEventCount1);
+            // 
+            // splitContainerLastEvent.Panel2
+            // 
+            splitContainerLastEvent.Panel2.Controls.Add(panel19);
+            splitContainerLastEvent.Size = new Size(890, 222);
+            splitContainerLastEvent.SplitterDistance = 281;
+            splitContainerLastEvent.TabIndex = 12;
+            // 
+            // ucEventCount1
+            // 
+            ucEventCount1.BackColor = SystemColors.ButtonHighlight;
+            ucEventCount1.BorderStyle = BorderStyle.FixedSingle;
+            ucEventCount1.Dock = DockStyle.Fill;
+            ucEventCount1.Font = new Font("Segoe UI", 12F);
+            ucEventCount1.Location = new Point(0, 0);
+            ucEventCount1.Margin = new Padding(4, 3, 4, 3);
+            ucEventCount1.Name = "ucEventCount1";
+            ucEventCount1.Size = new Size(281, 222);
+            ucEventCount1.TabIndex = 2;
             // 
             // panel19
             // 
@@ -367,7 +401,7 @@ namespace iParkingv5_window.Usercontrols
             panel19.Location = new Point(0, 0);
             panel19.MinimumSize = new Size(423, 0);
             panel19.Name = "panel19";
-            panel19.Size = new Size(534, 222);
+            panel19.Size = new Size(605, 222);
             panel19.TabIndex = 11;
             // 
             // panelTop3Event
@@ -377,7 +411,7 @@ namespace iParkingv5_window.Usercontrols
             panelTop3Event.Location = new Point(0, 35);
             panelTop3Event.Margin = new Padding(0);
             panelTop3Event.Name = "panelTop3Event";
-            panelTop3Event.Size = new Size(534, 187);
+            panelTop3Event.Size = new Size(605, 187);
             panelTop3Event.TabIndex = 8;
             // 
             // label3
@@ -389,22 +423,10 @@ namespace iParkingv5_window.Usercontrols
             label3.Location = new Point(0, 0);
             label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
-            label3.Size = new Size(534, 35);
+            label3.Size = new Size(605, 35);
             label3.TabIndex = 7;
             label3.Text = "Các lượt xe ra gần đây";
             label3.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // ucEventCount1
-            // 
-            ucEventCount1.BackColor = SystemColors.ButtonHighlight;
-            ucEventCount1.BorderStyle = BorderStyle.FixedSingle;
-            ucEventCount1.Dock = DockStyle.Left;
-            ucEventCount1.Font = new Font("Segoe UI", 12F);
-            ucEventCount1.Location = new Point(0, 0);
-            ucEventCount1.Margin = new Padding(4, 3, 4, 3);
-            ucEventCount1.Name = "ucEventCount1";
-            ucEventCount1.Size = new Size(356, 224);
-            ucEventCount1.TabIndex = 2;
             // 
             // dgvEventContent
             // 
@@ -936,6 +958,10 @@ namespace iParkingv5_window.Usercontrols
             ((System.ComponentModel.ISupportInitialize)splitContainerCamera).EndInit();
             splitContainerCamera.ResumeLayout(false);
             panelLastEvent.ResumeLayout(false);
+            splitContainerLastEvent.Panel1.ResumeLayout(false);
+            splitContainerLastEvent.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainerLastEvent).EndInit();
+            splitContainerLastEvent.ResumeLayout(false);
             panel19.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvEventContent).EndInit();
             splitContainerEventContent.Panel1.ResumeLayout(false);
@@ -1034,5 +1060,6 @@ namespace iParkingv5_window.Usercontrols
         private Label label6;
         private SplitContainer splitContainerCamera;
         private System.Windows.Forms.Timer timerRefreshUI;
+        private SplitContainer splitContainerLastEvent;
     }
 }

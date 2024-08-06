@@ -32,5 +32,20 @@ namespace iParkingv5.Objects.EventDatas
             }
         }
         public long Charge { get; set; }
+        public EventInData(EventInReport reportData)
+        {
+            this.Id = reportData.Id;
+            this.PlateNumber = reportData.PlateNumber;
+            this.Note = reportData.Note;
+            this.CreatedBy = reportData.CreatedBy;
+            this.CreatedUtc = reportData.CreatedUtc;
+            this.Identity = reportData.Identity;
+            this.IdentityGroup = reportData.IdentityGroup;
+            this.images = reportData.images;
+            this.OpenBarrier = reportData.OpenBarrier;
+            this.vehicle = reportData.vehicle;
+            this.customer = reportData.customer;
+            this.OpenBarrier = reportData.OpenBarrier;
+        }
     }
 }

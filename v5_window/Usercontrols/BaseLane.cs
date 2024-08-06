@@ -312,8 +312,6 @@ namespace iParkingv5_window.Usercontrols
             string imageUrl = await AppData.ApiServer.parkingProcessService.GetImageUrl(imageData!.bucket, imageData.objectKey);
             pictureBox.BeginInvoke(new Action(() =>
             {
-
-
                 if (string.IsNullOrEmpty(imageUrl))
                 {
                     pictureBox.Image = pictureBox.ErrorImage;

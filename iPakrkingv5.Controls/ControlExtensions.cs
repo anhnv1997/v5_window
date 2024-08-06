@@ -82,5 +82,15 @@ namespace iPakrkingv5.Controls
                 setControl.Location = new Point(rootXControl.Location.X, rootYControl.Location.Y);
             }
         }
+
+        #region Tooltip
+        public static void DrawTooltip(this DrawToolTipEventArgs e, string text)
+        {
+            Font customFont = new Font("Arial", 16, FontStyle.Bold);
+            e.DrawBackground();
+            e.DrawBorder();
+            e.Graphics.DrawString(text, customFont, Brushes.Black, new PointF(2, 2));
+        }
+        #endregion
     }
 }

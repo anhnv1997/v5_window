@@ -47,9 +47,10 @@
             // 
             // tableLayoutPanel2
             // 
+            tableLayoutPanel2.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             tableLayoutPanel2.ColumnCount = 2;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 134F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70F));
             tableLayoutPanel2.Controls.Add(lblCurrentVehicleInParkTitle, 0, 2);
             tableLayoutPanel2.Controls.Add(lblVehicleOutDayTitle, 0, 1);
             tableLayoutPanel2.Controls.Add(lblVehicleIn, 1, 0);
@@ -69,9 +70,9 @@
             // lblCurrentVehicleInParkTitle
             // 
             lblCurrentVehicleInParkTitle.Dock = DockStyle.Fill;
-            lblCurrentVehicleInParkTitle.Location = new Point(3, 136);
+            lblCurrentVehicleInParkTitle.Location = new Point(4, 135);
             lblCurrentVehicleInParkTitle.Name = "lblCurrentVehicleInParkTitle";
-            lblCurrentVehicleInParkTitle.Size = new Size(128, 69);
+            lblCurrentVehicleInParkTitle.Size = new Size(99, 69);
             lblCurrentVehicleInParkTitle.TabIndex = 8;
             lblCurrentVehicleInParkTitle.Text = "Trong bãi";
             lblCurrentVehicleInParkTitle.TextAlign = ContentAlignment.MiddleLeft;
@@ -79,9 +80,9 @@
             // lblVehicleOutDayTitle
             // 
             lblVehicleOutDayTitle.Dock = DockStyle.Fill;
-            lblVehicleOutDayTitle.Location = new Point(3, 68);
+            lblVehicleOutDayTitle.Location = new Point(4, 68);
             lblVehicleOutDayTitle.Name = "lblVehicleOutDayTitle";
-            lblVehicleOutDayTitle.Size = new Size(128, 68);
+            lblVehicleOutDayTitle.Size = new Size(99, 66);
             lblVehicleOutDayTitle.TabIndex = 7;
             lblVehicleOutDayTitle.Text = "Xe ra";
             lblVehicleOutDayTitle.TextAlign = ContentAlignment.MiddleLeft;
@@ -89,9 +90,9 @@
             // lblVehicleIn
             // 
             lblVehicleIn.Dock = DockStyle.Fill;
-            lblVehicleIn.Location = new Point(137, 0);
+            lblVehicleIn.Location = new Point(110, 1);
             lblVehicleIn.Name = "lblVehicleIn";
-            lblVehicleIn.Size = new Size(215, 68);
+            lblVehicleIn.Size = new Size(241, 66);
             lblVehicleIn.TabIndex = 3;
             lblVehicleIn.TextAlign = ContentAlignment.MiddleRight;
             // 
@@ -99,27 +100,27 @@
             // 
             lblVehicleOutDay.Dock = DockStyle.Fill;
             lblVehicleOutDay.Font = new Font("Digital-7", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblVehicleOutDay.Location = new Point(137, 68);
+            lblVehicleOutDay.Location = new Point(110, 68);
             lblVehicleOutDay.Name = "lblVehicleOutDay";
-            lblVehicleOutDay.Size = new Size(215, 68);
+            lblVehicleOutDay.Size = new Size(241, 66);
             lblVehicleOutDay.TabIndex = 4;
             lblVehicleOutDay.TextAlign = ContentAlignment.MiddleRight;
             // 
             // lblCurrentVehicleInPark
             // 
             lblCurrentVehicleInPark.Dock = DockStyle.Fill;
-            lblCurrentVehicleInPark.Location = new Point(137, 136);
+            lblCurrentVehicleInPark.Location = new Point(110, 135);
             lblCurrentVehicleInPark.Name = "lblCurrentVehicleInPark";
-            lblCurrentVehicleInPark.Size = new Size(215, 69);
+            lblCurrentVehicleInPark.Size = new Size(241, 69);
             lblCurrentVehicleInPark.TabIndex = 5;
             lblCurrentVehicleInPark.TextAlign = ContentAlignment.MiddleRight;
             // 
             // lblVehicleInTitle
             // 
             lblVehicleInTitle.Dock = DockStyle.Fill;
-            lblVehicleInTitle.Location = new Point(3, 0);
+            lblVehicleInTitle.Location = new Point(4, 1);
             lblVehicleInTitle.Name = "lblVehicleInTitle";
-            lblVehicleInTitle.Size = new Size(128, 68);
+            lblVehicleInTitle.Size = new Size(99, 66);
             lblVehicleInTitle.TabIndex = 6;
             lblVehicleInTitle.Text = "Xe vào";
             lblVehicleInTitle.TextAlign = ContentAlignment.MiddleLeft;

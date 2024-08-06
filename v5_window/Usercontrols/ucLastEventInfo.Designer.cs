@@ -41,10 +41,10 @@
             picVehicle.BorderStyle = BorderStyle.FixedSingle;
             picVehicle.Dock = DockStyle.Fill;
             picVehicle.Image = Properties.Resources.defaultImage;
-            picVehicle.Location = new Point(0, 0);
+            picVehicle.Location = new Point(3, 3);
             picVehicle.Margin = new Padding(4, 3, 4, 3);
             picVehicle.Name = "picVehicle";
-            picVehicle.Size = new Size(162, 168);
+            picVehicle.Size = new Size(156, 162);
             picVehicle.SizeMode = PictureBoxSizeMode.StretchImage;
             picVehicle.TabIndex = 0;
             picVehicle.TabStop = false;
@@ -54,10 +54,10 @@
             // 
             pictureBox1.Dock = DockStyle.Right;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(162, 0);
+            pictureBox1.Location = new Point(159, 3);
             pictureBox1.Margin = new Padding(0);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(64, 168);
+            pictureBox1.Size = new Size(64, 162);
             pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
@@ -72,6 +72,7 @@
             Font = new Font("Segoe UI", 12F);
             Margin = new Padding(0);
             Name = "ucLastEventInfo";
+            Padding = new Padding(3);
             Size = new Size(226, 168);
             ((System.ComponentModel.ISupportInitialize)picVehicle).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

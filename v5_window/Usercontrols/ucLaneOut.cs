@@ -15,8 +15,8 @@ using iParkingv5.Printer;
 using iParkingv5.Reporting;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv5_window.Forms.ReportForms;
-using iParkingv5_window.Helpers;
 using iParkingv6.Objects.Datas;
+using Kztek.Helper;
 using Kztek.Tool;
 using Kztek.Tool.TextFormatingTools;
 using Kztek.Tools;
@@ -1055,14 +1055,9 @@ namespace iParkingv5_window.Usercontrols
                     string registerVehicleId = ucLastEventInfos[i - 1].RegisterVehicleId;
                     string laneId = ucLastEventInfos[i - 1].LaneId;
                     string identityId = ucLastEventInfos[i - 1].IdentityId;
-                    ucLastEventInfos[i].UpdateEventInfo(ucLastEventInfos[i - 1].eventId, ucLastEventInfos[i - 1].plateNumber,
-                                                        ucLastEventInfos[i - 1].vehicleGroupId, ucLastEventInfos[i - 1].IdentityGroupId,
-                                                        ucLastEventInfos[i - 1].datetimeIn, ucLastEventInfos[i - 1].picDirs,
-                                                        customerId, registerVehicleId, laneId, identityId, false);
+                    ucLastEventInfos[i].UpdateEventInfo(ucLastEventInfos[i - 1].eventId, ucLastEventInfos[i - 1].picDirs);
                 }
-                ucLastEventInfos[0].UpdateEventInfo(lastEvent.Id, detectedPlate, identityGroup?.Id.ToString() ?? "",
-                                                    identityGroup?.Id.ToString() ?? "", eventTime, eventOut.images,
-                                                    "", "", this.lane.Id, identity?.Id, false, vehicleImg);
+                ucLastEventInfos[0].UpdateEventInfo(lastEvent.Id, eventOut.images, vehicleImg);
             }));
 
             if ((eventOut?.Charge ?? 0) > 0)
@@ -1106,7 +1101,77 @@ namespace iParkingv5_window.Usercontrols
         #endregion END EVENT
 
         #region CONTROLS IN FORM
+        private async void UcTop1Event_onChoosen(object sender, string eventId)
+        {
+            try
+            {
+                timerRefreshUI.Enabled = false;
+                time_refresh = 0;
+                if (string.IsNullOrEmpty(eventId))
+                {
+                    ClearView();
+                    return;
+                }
+                DateTime now = DateTime.Now;
+                DateTime startTime = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
+                DateTime endTime = new DateTime(now.Year, now.Month, now.Day, 23, 59, 59);
+                var report = await AppData.ApiServer.reportingService.GetEventOuts("", startTime, endTime, "", "", "", "", 0, 1, eventId);
+                if (report == null)
+                {
+                    ClearView();
+                    return;
+                }
+                if (report.data.Count == 0)
+                {
+                    ClearView();
+                    return;
+                }
+                var eventInfo = report.data[0];
+                lastEvent = new EventOutData(eventInfo);
+                DisplayEventOutInfo(eventInfo.EventIn.DateTimeIn ?? DateTime.Now, eventInfo.DatetimeOut ?? DateTime.Now, eventInfo.PlateNumber,
+                                    eventInfo.Identity, eventInfo.IdentityGroup, eventInfo.IdentityGroup.VehicleType, eventInfo.vehicle, eventInfo.Charge, eventInfo.customer);
+                if (eventInfo.EventIn.images != null)
+                {
+                    ImageData? overviewImgData = eventInfo.EventIn.images.ContainsKey(EmParkingImageType.Overview) ?
+                                                            eventInfo.EventIn.images[EmParkingImageType.Overview][0] : null;
+                    ImageData? vehicleImgData = eventInfo.EventIn.images.ContainsKey(EmParkingImageType.Vehicle) ?
+                                                            eventInfo.EventIn.images[EmParkingImageType.Vehicle][0] : null;
+                    ImageData? lprImgData = eventInfo.EventIn.images.ContainsKey(EmParkingImageType.Plate) ?
+                                                           eventInfo.EventIn.images[EmParkingImageType.Plate][0] : null;
+                    picOverviewImageIn.ShowImageAsync(overviewImgData);
+                    picVehicleImageIn.ShowImageAsync(vehicleImgData);
+                    picLprImageIn.ShowImageAsync(lprImgData);
+                }
+                if (eventInfo.images != null)
+                {
+                    ImageData? overviewOutImgData = eventInfo.images.ContainsKey(EmParkingImageType.Overview) ?
+                                                            eventInfo.images[EmParkingImageType.Overview][0] : null;
+                    ImageData? vehicleImgOutData = eventInfo.images.ContainsKey(EmParkingImageType.Vehicle) ?
+                                                            eventInfo.images[EmParkingImageType.Vehicle][0] : null;
+                    ImageData? lprImgOutData = eventInfo.images.ContainsKey(EmParkingImageType.Plate) ?
+                                                           eventInfo.images[EmParkingImageType.Plate][0] : null;
+                    picOverviewImageOut.ShowImageAsync(overviewOutImgData);
+                    picVehicleImageOut.ShowImageAsync(vehicleImgOutData);
+                    picLprImage.ShowImageAsync(lprImgOutData);
+                }
+                this.Invoke(new Action(() =>
+                {
+                    lblPlateIn.Text = eventInfo.EventIn.PlateNumber;
+                    txtPlate.Text = eventInfo.PlateNumber;
+                }));
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                if (StaticPool.oemConfig.IsAutoReturnToDefault)
+                {
+                    timerRefreshUI.Enabled = true;
+                }
+            }
 
+        }
         #region ACTION
         /// <summary>
         /// Mở giao diện cấu hỉnh làn
@@ -1497,7 +1562,6 @@ namespace iParkingv5_window.Usercontrols
             // 
             // ucEventCount1
             // 
-            ucEventCount1.Dock = DockStyle.Left;
             ucEventCount1.Location = new Point(0, 0);
             ucEventCount1.Name = "ucEventCount1";
             ucEventCount1.Size = new Size(250, 161);
@@ -1542,7 +1606,11 @@ namespace iParkingv5_window.Usercontrols
             ucLastEventInfos.Add(ucTop1Event);
             ucLastEventInfos.Add(ucTop2Event);
             ucLastEventInfos.Add(ucTop3Event);
+            ucTop1Event.onChoosen += UcTop1Event_onChoosen;
+            ucTop2Event.onChoosen += UcTop1Event_onChoosen;
+            ucTop3Event.onChoosen += UcTop1Event_onChoosen;
         }
+
         private async Task ShowTop3Events()
         {
             DateTime startTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,
@@ -1568,8 +1636,7 @@ namespace iParkingv5_window.Usercontrols
                     string registerVehicleId = "";
                     string laneId = this.lane.Id;
                     string identityId = top3Event[i].Identity.Id.ToString() ?? "";
-                    ucLastEventInfos[i].UpdateEventInfo(id, plateNumber, vehicleGroupId, cardGroupId, dateTimeIn, top3Event[i].images,
-                                                        customerId, registerVehicleId, laneId, identityId, false);
+                    ucLastEventInfos[i].UpdateEventInfo(id, top3Event[i].images);
 
                 }
             }
@@ -1639,6 +1706,7 @@ namespace iParkingv5_window.Usercontrols
         {
             this.Invoke(new Action(() =>
             {
+                lastEvent = null;
                 dgvEventContent.Rows.Clear();
 
                 picOverviewImageIn.Image = picVehicleImageIn.Image =
@@ -1840,6 +1908,17 @@ namespace iParkingv5_window.Usercontrols
             }
             try
             {
+                if (this.laneDisplayConfig.splitLastEventPosition > 0)
+                {
+                    this.splitContainerLastEvent.SplitterDistance = this.laneDisplayConfig.splitLastEventPosition;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.Form, "DisplayUIConfig", "splitterEventInfoWithCamera-SplitPosition", ex);
+            }
+            try
+            {
                 if (this.laneDisplayConfig.splitContainerCameraPosition > 0)
                 {
                     this.splitContainerCamera.SplitterDistance = this.laneDisplayConfig.splitContainerCameraPosition;
@@ -1898,6 +1977,7 @@ namespace iParkingv5_window.Usercontrols
                 SplitterCameraPosition = this.splitterCamera.SplitPosition,
                 splitEventInfoWithCameraPosition = this.splitterEventInfoWithCamera.SplitPosition,
                 splitContainerCameraPosition = this.splitContainerCamera.SplitterDistance,
+                splitLastEventPosition = this.splitContainerLastEvent.SplitterDistance,
             };
         }
 

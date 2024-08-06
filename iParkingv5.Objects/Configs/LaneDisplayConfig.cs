@@ -13,5 +13,6 @@ namespace iParkingv5.Objects.Configs
         public int splitContainerEventContent { get; set; }
         public int splitEventInfoWithCameraPosition { get; set; }
         public int splitContainerCameraPosition { get; set; }
+        public int splitLastEventPosition { get; set; }
     }
 }

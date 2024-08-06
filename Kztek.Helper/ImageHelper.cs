@@ -1,12 +1,7 @@
 ﻿using Kztek.Tools;
-using System;
-using System.Collections.Generic;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace iParkingv5_window.Helpers
+namespace Kztek.Helper
 {
     public static class ImageHelper
     {

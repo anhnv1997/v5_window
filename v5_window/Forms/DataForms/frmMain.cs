@@ -592,6 +592,7 @@ namespace iParkingv5_window.Forms.DataForms
                             laneDisplayConfig.SplitterCameraPosition = temp.SplitterCameraPosition;
                             laneDisplayConfig.splitEventInfoWithCameraPosition = temp.splitEventInfoWithCameraPosition;
                             laneDisplayConfig.splitContainerCameraPosition = temp.splitContainerCameraPosition;
+                            laneDisplayConfig.splitLastEventPosition = temp.splitLastEventPosition;
                         }
                     }
                 }

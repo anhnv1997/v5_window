@@ -24,9 +24,11 @@ namespace iParkingv5_window.Usercontrols
         public Dictionary<EmParkingImageType, List<ImageData>> picDirs = new Dictionary<EmParkingImageType, List<ImageData>>();
         public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
         private bool isEventIn = false;
+        public delegate void OnChoosen(object sender, string eventId);
+        public event OnChoosen? onChoosen;
         #endregion End Properties
 
-        #region Forms
+        #region Forms0
         public ucLastEventInfo(bool isDisplayArrow = true)
         {
             InitializeComponent();
@@ -49,11 +51,25 @@ namespace iParkingv5_window.Usercontrols
             {
                 item.Click += UcLastEventInfo_Click;
             }
+            this.MouseEnter += UcLastEventInfo_MouseEnter;
+            this.MouseLeave += UcLastEventInfo_MouseLeave;
+            
+            picVehicle.MouseEnter += UcLastEventInfo_MouseEnter;
+            picVehicle.MouseLeave += UcLastEventInfo_MouseLeave;
             this.Width = pictureBox1.Visible ? this.Width : this.Width - pictureBox1.Width;
         }
-        public async void UpdateEventInfo(string eventId, string plateNumber, string vehicleGroupId,
-                                          string identityGroupId, DateTime datetimeIn, Dictionary<EmParkingImageType, List<ImageData>> picDirs,
-                                          string customerId, string registerVehicleId, string laneId, string identityId, bool isEventIn, Image? displayImage = null)
+
+        private void UcLastEventInfo_MouseLeave(object? sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Default;
+        }
+
+        private void UcLastEventInfo_MouseEnter(object? sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Hand;
+        }
+
+        public async void UpdateEventInfo(string eventId, Dictionary<EmParkingImageType, List<ImageData>> picDirs, Image? displayImage = null)
         {
             try
             {
@@ -62,14 +78,6 @@ namespace iParkingv5_window.Usercontrols
                 {
                     this.SuspendLayout();
                     this.eventId = eventId;
-                    this.plateNumber = plateNumber;
-                    this.vehicleGroupId = vehicleGroupId;
-                    this.IdentityGroupId = identityGroupId;
-                    this.datetimeIn = datetimeIn;
-                    this.CustomerId = customerId;
-                    this.RegisterVehicleId = registerVehicleId;
-                    this.LaneId = laneId;
-                    this.IdentityId = identityId;
                     this.picDirs = picDirs;
 
                 }));
@@ -102,17 +110,18 @@ namespace iParkingv5_window.Usercontrols
         #region Controls In Form
         private void UcLastEventInfo_Click(object? sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(this.eventId))
-            {
-                return;
-            }
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Xem sk " + this.eventId);
-            var frm = new frmEventInDetail(this.eventId, plateNumber, vehicleGroupId, IdentityGroupId, datetimeIn, this.picDirs,
-                                           CustomerId, RegisterVehicleId, this.LaneId, this.IdentityId, this.isEventIn);
-            if (frm.ShowDialog() == DialogResult.OK)
-            {
-                this.plateNumber = frm.updatePlate;
-            }
+            this.onChoosen?.Invoke(this, this.eventId);
+            //if (string.IsNullOrEmpty(this.eventId))
+            //{
+            //    return;
+            //}
+            //LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Xem sk " + this.eventId);
+            //var frm = new frmEventInDetail(this.eventId, plateNumber, vehicleGroupId, IdentityGroupId, datetimeIn, this.picDirs,
+            //                               CustomerId, RegisterVehicleId, this.LaneId, this.IdentityId, this.isEventIn);
+            //if (frm.ShowDialog() == DialogResult.OK)
+            //{
+            //    this.plateNumber = frm.updatePlate;
+            //}
         }
         #endregion End Controls In Form
 
