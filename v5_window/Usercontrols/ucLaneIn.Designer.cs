@@ -320,7 +320,7 @@ namespace iParkingv5_window.Usercontrols
             // 
             // splitContainerLastEvent
             // 
-            splitContainerLastEvent.BackColor = Color.FromArgb(255, 192, 192);
+            splitContainerLastEvent.BackColor = SystemColors.ButtonHighlight;
             splitContainerLastEvent.Dock = DockStyle.Fill;
             splitContainerLastEvent.Location = new Point(0, 0);
             splitContainerLastEvent.Margin = new Padding(0);

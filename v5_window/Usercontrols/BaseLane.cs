@@ -121,7 +121,8 @@ namespace iParkingv5_window.Usercontrols
         }
         public static void UpdateResultMessage(this lblResult lblResult, string message, Color backColor)
         {
-            lblResult.Invoke(() =>
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, noi_dung_hanh_dong: message);
+            lblResult.BeginInvoke(() =>
             {
                 lblResult.Message = message;
                 lblResult.BackColor = backColor;
@@ -286,7 +287,7 @@ namespace iParkingv5_window.Usercontrols
 
         public static void ShowImage(MovablePictureBox pictureBox, Image? img)
         {
-            pictureBox.BeginInvoke(new Action(() =>
+            pictureBox.Invoke(new Action(() =>
             {
                 try
                 {
@@ -296,6 +297,7 @@ namespace iParkingv5_window.Usercontrols
                 }
                 catch (Exception ex)
                 {
+                    pictureBox.Image = pictureBox.ErrorImage;
                 }
             }));
         }

@@ -62,7 +62,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                                                                          RegisteredVehicle? registeredVehicle = null, string _note = "")
         {
             server = server.StandardlizeServerName();
-            string apiUrl = server + "event-in";
+            string apiUrl = $"{server}event-in";
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
              {
@@ -116,7 +116,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         {
 
             server = server.StandardlizeServerName();
-            string apiUrl = server + "event-in";
+            string apiUrl = $"{server}event-in";
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
              {
@@ -126,7 +126,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             {
                 laneId = _laneId,
                 identityCode = _plateNumber,
-                identityType = identity.Type,
+                identityType = IdentityType.PlateNumber,
                 plateNumber = _plateNumber,
                 imageTypes = new List<int>(),
                 force = isForce
@@ -184,7 +184,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                                                                           List<EmParkingImageType> validImageTypes, bool isForce = false)
         {
             server = server.StandardlizeServerName();
-            string apiUrl = server + "event-out";
+            string apiUrl = $"{server}event-out";
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
              {
@@ -237,7 +237,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                                                                         List<EmParkingImageType> validImageTypes, bool isForce = false, RegisteredVehicle? registeredVehicle = null)
         {
             server = server.StandardlizeServerName();
-            string apiUrl = server + "event-out";
+            string apiUrl = $"{server}event-out";
             //Gửi API
             Dictionary<string, string> headers = new Dictionary<string, string>()
              {
@@ -247,7 +247,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             {
                 laneId = _laneId,
                 identityCode = _plateNumber,
-                identityType = identity.Type,
+                identityType = IdentityType.PlateNumber,
                 plateNumber = _plateNumber,
                 imageTypes = new List<int>(),
                 force = isForce

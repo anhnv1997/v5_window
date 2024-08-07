@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            timerUpdateCount = new System.Windows.Forms.Timer(components);
             tableLayoutPanel2 = new TableLayoutPanel();
             lblCurrentVehicleInParkTitle = new iPakrkingv5.Controls.Controls.Labels.lblResult();
             lblVehicleOutDayTitle = new iPakrkingv5.Controls.Controls.Labels.lblResult();
@@ -37,20 +36,16 @@
             lblVehicleOutDay = new iPakrkingv5.Controls.Controls.Labels.lblResult();
             lblCurrentVehicleInPark = new iPakrkingv5.Controls.Controls.Labels.lblResult();
             lblVehicleInTitle = new iPakrkingv5.Controls.Controls.Labels.lblResult();
+            timerUpdateCount = new System.Windows.Forms.Timer(components);
             tableLayoutPanel2.SuspendLayout();
             SuspendLayout();
-            // 
-            // timerUpdateCount
-            // 
-            timerUpdateCount.Interval = 10000;
-            timerUpdateCount.Tick += timerUpdateCount_Tick;
             // 
             // tableLayoutPanel2
             // 
             tableLayoutPanel2.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             tableLayoutPanel2.ColumnCount = 2;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 70F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel2.Controls.Add(lblCurrentVehicleInParkTitle, 0, 2);
             tableLayoutPanel2.Controls.Add(lblVehicleOutDayTitle, 0, 1);
             tableLayoutPanel2.Controls.Add(lblVehicleIn, 1, 0);
@@ -72,7 +67,7 @@
             lblCurrentVehicleInParkTitle.Dock = DockStyle.Fill;
             lblCurrentVehicleInParkTitle.Location = new Point(4, 135);
             lblCurrentVehicleInParkTitle.Name = "lblCurrentVehicleInParkTitle";
-            lblCurrentVehicleInParkTitle.Size = new Size(99, 69);
+            lblCurrentVehicleInParkTitle.Size = new Size(170, 69);
             lblCurrentVehicleInParkTitle.TabIndex = 8;
             lblCurrentVehicleInParkTitle.Text = "Trong bãi";
             lblCurrentVehicleInParkTitle.TextAlign = ContentAlignment.MiddleLeft;
@@ -82,7 +77,7 @@
             lblVehicleOutDayTitle.Dock = DockStyle.Fill;
             lblVehicleOutDayTitle.Location = new Point(4, 68);
             lblVehicleOutDayTitle.Name = "lblVehicleOutDayTitle";
-            lblVehicleOutDayTitle.Size = new Size(99, 66);
+            lblVehicleOutDayTitle.Size = new Size(170, 66);
             lblVehicleOutDayTitle.TabIndex = 7;
             lblVehicleOutDayTitle.Text = "Xe ra";
             lblVehicleOutDayTitle.TextAlign = ContentAlignment.MiddleLeft;
@@ -90,9 +85,9 @@
             // lblVehicleIn
             // 
             lblVehicleIn.Dock = DockStyle.Fill;
-            lblVehicleIn.Location = new Point(110, 1);
+            lblVehicleIn.Location = new Point(181, 1);
             lblVehicleIn.Name = "lblVehicleIn";
-            lblVehicleIn.Size = new Size(241, 66);
+            lblVehicleIn.Size = new Size(170, 66);
             lblVehicleIn.TabIndex = 3;
             lblVehicleIn.TextAlign = ContentAlignment.MiddleRight;
             // 
@@ -100,18 +95,18 @@
             // 
             lblVehicleOutDay.Dock = DockStyle.Fill;
             lblVehicleOutDay.Font = new Font("Digital-7", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblVehicleOutDay.Location = new Point(110, 68);
+            lblVehicleOutDay.Location = new Point(181, 68);
             lblVehicleOutDay.Name = "lblVehicleOutDay";
-            lblVehicleOutDay.Size = new Size(241, 66);
+            lblVehicleOutDay.Size = new Size(170, 66);
             lblVehicleOutDay.TabIndex = 4;
             lblVehicleOutDay.TextAlign = ContentAlignment.MiddleRight;
             // 
             // lblCurrentVehicleInPark
             // 
             lblCurrentVehicleInPark.Dock = DockStyle.Fill;
-            lblCurrentVehicleInPark.Location = new Point(110, 135);
+            lblCurrentVehicleInPark.Location = new Point(181, 135);
             lblCurrentVehicleInPark.Name = "lblCurrentVehicleInPark";
-            lblCurrentVehicleInPark.Size = new Size(241, 69);
+            lblCurrentVehicleInPark.Size = new Size(170, 69);
             lblCurrentVehicleInPark.TabIndex = 5;
             lblCurrentVehicleInPark.TextAlign = ContentAlignment.MiddleRight;
             // 
@@ -120,10 +115,16 @@
             lblVehicleInTitle.Dock = DockStyle.Fill;
             lblVehicleInTitle.Location = new Point(4, 1);
             lblVehicleInTitle.Name = "lblVehicleInTitle";
-            lblVehicleInTitle.Size = new Size(99, 66);
+            lblVehicleInTitle.Size = new Size(170, 66);
             lblVehicleInTitle.TabIndex = 6;
             lblVehicleInTitle.Text = "Xe vào";
             lblVehicleInTitle.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // timerUpdateCount
+            // 
+            timerUpdateCount.Enabled = true;
+            timerUpdateCount.Interval = 10000;
+            timerUpdateCount.Tick += timerUpdateCount_Tick;
             // 
             // ucEventCount
             // 
@@ -139,7 +140,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.Timer timerUpdateCount;
         private TableLayoutPanel tableLayoutPanel2;
         private iPakrkingv5.Controls.Controls.Labels.lblResult lblVehicleIn;
         private iPakrkingv5.Controls.Controls.Labels.lblResult lblVehicleOutDay;
@@ -147,5 +147,6 @@
         private iPakrkingv5.Controls.Controls.Labels.lblResult lblCurrentVehicleInParkTitle;
         private iPakrkingv5.Controls.Controls.Labels.lblResult lblVehicleOutDayTitle;
         private iPakrkingv5.Controls.Controls.Labels.lblResult lblVehicleInTitle;
+        private System.Windows.Forms.Timer timerUpdateCount;
     }
 }

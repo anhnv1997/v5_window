@@ -10,11 +10,22 @@ namespace iParkingv5_window.Usercontrols
             InitializeComponent();
             this.Load += UcEventCount_Load;
         }
-        private void UcEventCount_Load(object? sender, EventArgs e)
+        private async void UcEventCount_Load(object? sender, EventArgs e)
         {
             CreateUI();
 
-            timerUpdateCount.Enabled = true;
+            var eventCountDetail = await AppData.ApiServer.reportingService.SummaryEventAsync();
+            int totalVehicleInPark = eventCountDetail.countAllEventIn;
+            int vehicleInDay = eventCountDetail.totalVehicleIn;
+            int vehicleOutDay = eventCountDetail.totalEventOut;
+
+            lblCurrentVehicleInPark.Message = totalVehicleInPark.ToString();
+            lblVehicleIn.Message = vehicleInDay.ToString();
+            lblVehicleOutDay.Message = vehicleOutDay.ToString();
+
+            lblVehicleInTitle.MaxFontSize = lblVehicleOutDayTitle.MaxFontSize = lblCurrentVehicleInParkTitle.MaxFontSize =
+                Math.Min(Math.Min(lblVehicleInTitle.CurrentFontSize, lblVehicleOutDayTitle.CurrentFontSize), lblCurrentVehicleInParkTitle.CurrentFontSize);
+
         }
 
         private void CreateUI()
@@ -72,7 +83,7 @@ namespace iParkingv5_window.Usercontrols
         #endregion End Forms
 
         #region Timer
-        private async void timerUpdateCount_Tick(object sender, EventArgs e)
+        private async void timerUpdateCount_Tick(object? sender, EventArgs e)
         {
             try
             {
@@ -85,6 +96,9 @@ namespace iParkingv5_window.Usercontrols
                 lblCurrentVehicleInPark.Message = totalVehicleInPark.ToString();
                 lblVehicleIn.Message = vehicleInDay.ToString();
                 lblVehicleOutDay.Message = vehicleOutDay.ToString();
+                lblVehicleInTitle.Message = "Xe Vào   ";
+                lblVehicleOutDayTitle.Message = "Xe Ra    ";
+                lblCurrentVehicleInParkTitle.Message = "Trong Bãi";
 
                 lblVehicleInTitle.MaxFontSize = lblVehicleOutDayTitle.MaxFontSize = lblCurrentVehicleInParkTitle.MaxFontSize =
                     Math.Min(Math.Min(lblVehicleInTitle.CurrentFontSize, lblVehicleOutDayTitle.CurrentFontSize), lblCurrentVehicleInParkTitle.CurrentFontSize);
@@ -97,6 +111,11 @@ namespace iParkingv5_window.Usercontrols
             {
                 timerUpdateCount.Enabled = true;
             }
+        }
+        public void Stop()
+        {
+            timerUpdateCount.Tick -= timerUpdateCount_Tick;
+            timerUpdateCount.Enabled = false;
         }
         #endregion End Timer
     }

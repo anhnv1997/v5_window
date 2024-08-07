@@ -246,7 +246,7 @@ namespace iParkingv5_window.Forms.DataForms
             label3.Name = "label3";
             label3.Size = new Size(136, 48);
             label3.TabIndex = 1;
-            label3.Text = "Mã Định Danh";
+            label3.Text = "Tên Định Danh";
             label3.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label2

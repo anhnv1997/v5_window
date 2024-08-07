@@ -32,6 +32,11 @@ namespace iParkingv5.Objects.EventDatas
             }
         }
         public long Charge { get; set; }
+        public EventInData()
+        {
+
+        }
+
         public EventInData(EventInReport reportData)
         {
             this.Id = reportData.Id;

@@ -65,6 +65,7 @@ namespace iParkingv5.Auth
             options = new OidcClientOptions
             {
                 Authority = url.Replace(":5000", ":3000"),//"http://192.168.21.13:3000",// 
+                //Authority = "http://103.127.207.247:3000",// 
                 ClientId = clientId,
                 Scope = "openid role-data user-data parking-data offline_access device-data invoice-data project-data payment-data tenant-data warehouse-data",
                 RedirectUri = "http://localhost/winforms.client",

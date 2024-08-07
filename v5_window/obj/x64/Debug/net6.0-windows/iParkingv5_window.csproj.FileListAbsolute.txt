@@ -361,7 +361,6 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\D
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.DataForms.frmSelectVehicle.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.DataForms.frmSetShortCutKey.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.DataForms.frmTestLedDisplay.resources
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.ReportForms.frmReportAlarms.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.SystemForms.frmLoading.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.SystemForms.frmSelectLaneMode.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Properties.Resources.resources
@@ -380,12 +379,9 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\D
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Usercontrols.ucLaneInShortcutConfig.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Usercontrols.ShortcutConfiguration.ucLaneOutShortcutConfig.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Usercontrols.ucShortcutConfig.resources
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Usercontrols.ucAlarmInfo.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Usercontrols.ucBaseLane.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Usercontrols.ucCameraView.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Usercontrols.ucEventCount.resources
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Usercontrols.ucEventInInfo.resources
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Usercontrols.ucEventOutInfo.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Usercontrols.ucLaneIn.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Usercontrols.ucLaneOut.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Usercontrols.ucLastEventInfo.resources

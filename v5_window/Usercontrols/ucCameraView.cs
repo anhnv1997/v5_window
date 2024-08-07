@@ -152,8 +152,11 @@ namespace iParkingv5_window.Usercontrols
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            this._Camera.videoSourcePlayer.Stop();
-            this._Camera.Stop();
+            if (this._Camera != null)
+            {
+                this._Camera.videoSourcePlayer?.Stop();
+                this._Camera.Stop();
+            }
             if (disposing && (components != null))
             {
                 components.Dispose();

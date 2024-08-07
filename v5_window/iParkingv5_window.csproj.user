@@ -70,13 +70,7 @@
     <Compile Update="Usercontrols\LedConfiguration\ucLedDisplaySetting.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="Forms\ReportForms\frmReportAlarms.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Usercontrols\CameraConfiguration\ucCameraConfig.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Usercontrols\ucAlarmInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Usercontrols\ucBaseLane.cs">
@@ -92,12 +86,6 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Usercontrols\ucEventCount.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Usercontrols\ucEventInInfo.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Usercontrols\ucEventOutInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Usercontrols\ucLastEventInfo.cs">

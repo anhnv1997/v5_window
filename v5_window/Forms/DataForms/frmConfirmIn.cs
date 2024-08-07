@@ -1,4 +1,8 @@
-﻿using iParkingv5.Objects;
+﻿using IPaking.Ultility;
+using iParkingv5.Objects;
+using iParkingv5.Objects.Datas;
+using iParkingv5.Objects.Datas.parking_service;
+using iParkingv5.Objects.Enums;
 
 namespace iParkingv5_window.Forms.DataForms
 {
@@ -7,28 +11,22 @@ namespace iParkingv5_window.Forms.DataForms
         //private iPakrkingv5.Controls.Controls.Buttons.LblCancel btnCancel1;
         //private iPakrkingv5.Controls.Controls.Buttons.BtnOk btnOk;
         public string updatePlate;
-        public frmConfirmIn(string message, string identityCode, string identityName, string identityGroupName,
-                            string customer, string plateNumber, string address, Image vehicleImage, Image overviewImage, string detectedPlate)
+        public frmConfirmIn(string message, Identity identity, IdentityGroup identityGroup, Customer? customer, RegisteredVehicle? vehicle,
+                            string plateNumber, Image vehicleImage, Image overviewImage)
         {
             InitializeComponent();
-            this.Text = "Xác nhận xe ra khỏi bãi";
+            this.Text = "Xác nhận thông tin";
             lblMessage.Text = message;
-            lblMessage.Size = lblMessage.PreferredSize;
+            lblMessage.Height = lblMessage.PreferredHeight;
             updatePlate = plateNumber;
 
-            dgvEventInData.Rows.Clear();
-            dgvEventInData.Rows.Add("Mã định danh", identityCode);
-            dgvEventInData.Rows.Add("Tên định danh", identityName);
-            dgvEventInData.Rows.Add("Nhóm định danh", identityGroupName);
-            dgvEventInData.Rows[dgvEventInData.RowCount - 1].DefaultCellStyle.Font = new Font(dgvEventInData.DefaultCellStyle.Font.Name, dgvEventInData.DefaultCellStyle.Font.Size * 2);
-            dgvEventInData.Rows[dgvEventInData.RowCount - 1].DefaultCellStyle.ForeColor = Color.Red; dgvEventInData.Rows.Add("Khách hàng", customer);
-            dgvEventInData.Rows.Add("Địa chỉ", address);
-            dgvEventInData.Rows.Add("Biển số đăng ký", plateNumber);
-            dgvEventInData.Rows[dgvEventInData.RowCount - 1].DefaultCellStyle.Font = new Font(dgvEventInData.DefaultCellStyle.Font.Name, dgvEventInData.DefaultCellStyle.Font.Size * 2);
-            dgvEventInData.Rows[dgvEventInData.RowCount - 1].DefaultCellStyle.ForeColor = Color.Red;
-            dgvEventInData.Rows.Add("Biển số nhận dạng", detectedPlate);
-            dgvEventInData.Rows[dgvEventInData.RowCount - 1].DefaultCellStyle.Font = new Font(dgvEventInData.DefaultCellStyle.Font.Name, dgvEventInData.DefaultCellStyle.Font.Size * 2);
-            dgvEventInData.Rows[dgvEventInData.RowCount - 1].DefaultCellStyle.ForeColor = Color.Red;
+            txtDetectPlate.Text = plateNumber;
+            lblRegisterPlate.Text = vehicle?.PlateNumber ?? "";
+            lblTimeIn.Text = DateTime.Now.ToVNTime();
+            lblIdentityCode.Text = identity?.Name ?? "";
+            lblIdentityGroup.Text = identityGroup?.Name ?? "";
+            lblVehicleType.Text = VehicleType.GetDisplayStr(identityGroup?.VehicleType ?? 0);
+
             picOverview.Image = overviewImage;
             picVehicle.Image = vehicleImage;
             this.Load += FrmConfirm_Load;
@@ -36,9 +34,6 @@ namespace iParkingv5_window.Forms.DataForms
 
         private void FrmConfirm_Load(object? sender, EventArgs e)
         {
-            //btnOk = new iPakrkingv5.Controls.Controls.Buttons.BtnOk();
-            //btnCancel1 = new iPakrkingv5.Controls.Controls.Buttons.LblCancel();
-
             lblCancel1.InitControl(BtnCancel1_Click);
             btnOk1.InitControl(BtnOk_Click);
 
@@ -55,20 +50,36 @@ namespace iParkingv5_window.Forms.DataForms
             this.ActiveControl = btnOk1;
         }
 
+        #region Controls In Form
         private void BtnOk_Click(object? sender, EventArgs e)
         {
-            updatePlate = dgvEventInData.Rows[6].Cells[1].Value.ToString();
+            updatePlate = txtDetectPlate.Text;
             this.DialogResult = DialogResult.OK;
         }
-
         private void BtnCancel1_Click(object? sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
         }
+        #endregion
 
-        private void panelAction_Paint(object sender, PaintEventArgs e)
+        private void btnCopy_Click(object sender, EventArgs e)
         {
+            txtDetectPlate.Text = lblRegisterPlate.Text;
+            this.ActiveControl = txtDetectPlate;
+            txtDetectPlate.SelectionStart = txtDetectPlate.Text.Length;
+            txtDetectPlate.SelectionLength = 0;
+        }
 
+        private void frmConfirmIn_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Return)
+            {
+                BtnOk_Click(null, EventArgs.Empty);
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                BtnCancel1_Click(null, EventArgs.Empty);
+            }
         }
     }
 }

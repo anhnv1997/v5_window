@@ -21,5 +21,6 @@ namespace iParkingv5_window.Usercontrols
         LaneDisplayConfig SaveUIConfig();
         void GetShortcutConfig();
         void DisplayUIConfig();
+        void DispayUI();
     }
 }

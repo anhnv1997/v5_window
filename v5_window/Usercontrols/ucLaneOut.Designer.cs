@@ -71,12 +71,12 @@ namespace iParkingv5_window.Usercontrols
             picSetting = new PictureBox();
             panel7 = new Panel();
             pictureBox2 = new PictureBox();
-            toolTip1 = new ToolTip(components);
-            toolTip2 = new ToolTip(components);
-            toolTip3 = new ToolTip(components);
+            toolTipOpenBarrie = new ToolTip(components);
+            toolTipReTakePhoto = new ToolTip(components);
+            toolTipWriteOut = new ToolTip(components);
             splitterEventInfoWithCamera = new Splitter();
             panelEventData = new Panel();
-            panel17 = new Panel();
+            panelActions = new Panel();
             btnPrintEInvoiceTicket = new Button();
             btnPrintTicket = new Button();
             btnOpenBarrie = new Button();
@@ -125,7 +125,7 @@ namespace iParkingv5_window.Usercontrols
             ((System.ComponentModel.ISupportInitialize)picSetting).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panelEventData.SuspendLayout();
-            panel17.SuspendLayout();
+            panelActions.SuspendLayout();
             SuspendLayout();
             // 
             // lblLaneName
@@ -860,7 +860,7 @@ namespace iParkingv5_window.Usercontrols
             // panelEventData
             // 
             panelEventData.Controls.Add(splitContainerEventContent);
-            panelEventData.Controls.Add(panel17);
+            panelEventData.Controls.Add(panelActions);
             panelEventData.Dock = DockStyle.Right;
             panelEventData.Location = new Point(892, 22);
             panelEventData.Margin = new Padding(4, 3, 4, 3);
@@ -868,19 +868,19 @@ namespace iParkingv5_window.Usercontrols
             panelEventData.Size = new Size(474, 746);
             panelEventData.TabIndex = 7;
             // 
-            // panel17
+            // panelActions
             // 
-            panel17.Controls.Add(btnPrintEInvoiceTicket);
-            panel17.Controls.Add(btnPrintTicket);
-            panel17.Controls.Add(btnOpenBarrie);
-            panel17.Dock = DockStyle.Bottom;
-            panel17.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            panel17.Location = new Point(0, 688);
-            panel17.Margin = new Padding(0);
-            panel17.Name = "panel17";
-            panel17.Size = new Size(474, 58);
-            panel17.TabIndex = 5;
-            panel17.Visible = false;
+            panelActions.Controls.Add(btnPrintEInvoiceTicket);
+            panelActions.Controls.Add(btnPrintTicket);
+            panelActions.Controls.Add(btnOpenBarrie);
+            panelActions.Dock = DockStyle.Bottom;
+            panelActions.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            panelActions.Location = new Point(0, 688);
+            panelActions.Margin = new Padding(0);
+            panelActions.Name = "panelActions";
+            panelActions.Size = new Size(474, 58);
+            panelActions.TabIndex = 5;
+            panelActions.Visible = false;
             // 
             // btnPrintEInvoiceTicket
             // 
@@ -990,8 +990,8 @@ namespace iParkingv5_window.Usercontrols
             ((System.ComponentModel.ISupportInitialize)picSetting).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             panelEventData.ResumeLayout(false);
-            panel17.ResumeLayout(false);
-            panel17.PerformLayout();
+            panelActions.ResumeLayout(false);
+            panelActions.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -1014,9 +1014,9 @@ namespace iParkingv5_window.Usercontrols
         private PictureBox picSetting;
         private PictureBox pictureBox2;
         private Panel panel7;
-        private ToolTip toolTip1;
-        private ToolTip toolTip2;
-        private ToolTip toolTip3;
+        private ToolTip toolTipOpenBarrie;
+        private ToolTip toolTipReTakePhoto;
+        private ToolTip toolTipWriteOut;
         private PictureBox picWriteOut;
         private Panel panel8;
         private PictureBox picOpenBarrie;
@@ -1049,7 +1049,7 @@ namespace iParkingv5_window.Usercontrols
         private Label label22;
         private Label label23;
         private TextBox lblPlateIn;
-        private Panel panel17;
+        private Panel panelActions;
         private Button btnPrintEInvoiceTicket;
         private Panel panel19;
         private Label label4;

@@ -34,6 +34,13 @@ namespace iParkingv5.Objects.EventDatas
                     return "Biển Số Không Hợp Lệ".ToUpper();
                 }
             }
+            if (name.ToUpper() == "PlateNumber".ToUpper())
+            {
+                if (errorCode == "ERROR.ENTITY.VALIDATION.FIELD_NOT_MATCH_WITH_REGISTERED_VEHICLE")
+                {
+                    return "Biển Số Không Hợp Lệ".ToUpper();
+                }
+            }
             else if (name.ToUpper() == "IdentityGroup".ToUpper())
             {
                 if (errorCode == "ERROR.ENTITY.VALIDATION.FIELD_NOT_HAVE_PERMISSION_TO_USE_THIS_LANE")

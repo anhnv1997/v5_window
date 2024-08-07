@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,9 @@ namespace iPakrkingv5.Controls.Controls.Labels
     {
         #region Properties
         private string message = string.Empty;
+        // Expose properties to design mode
+        [Category("Custom Message")]
+        [Description("Sets the text of the Label")]
         public string Message
         {
             set
@@ -18,6 +22,9 @@ namespace iPakrkingv5.Controls.Controls.Labels
                 this.Refresh();
             }
         }
+
+        [Category("Custom Back Color")]
+        [Description("Sets the back color of the Label")]
         public Color MessageBackColor
         {
             set

@@ -53,12 +53,6 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
 
         #endregion
 
-
-
-
-
-
-
         #region PARKING - PROCESS
         #region Event In
 

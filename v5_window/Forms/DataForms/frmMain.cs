@@ -9,7 +9,6 @@ using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.Events;
 using iParkingv5.Printer;
 using iParkingv5.Reporting;
-using iParkingv5_window.Forms.ReportForms;
 using iParkingv5_window.Forms.SystemForms;
 using iParkingv5_window.Usercontrols;
 using iParkingv6.Objects.Datas;
@@ -149,6 +148,7 @@ namespace iParkingv5_window.Forms.DataForms
                 LoadThirdPartyConfig();
 
                 InitLaneView();
+
                 await ConnectToRabbitMQ();
                 await StartControllers();
                 lblSoftwareName.Width = lblSoftwareName.PreferredWidth;
@@ -223,7 +223,7 @@ namespace iParkingv5_window.Forms.DataForms
         }
         private void tsmiAlarmReport_Click(object sender, EventArgs e)
         {
-            new frmReportAlarms().Show(this);
+            //new frmReportAlarms().Show(this);
         }
         private void tsmiReportIn_Click(object sender, EventArgs e)
         {
@@ -400,6 +400,10 @@ namespace iParkingv5_window.Forms.DataForms
                 }
             }
             ucViewGrid1.ResumeLayout();
+            foreach (var item in lanes)
+            {
+                item.DispayUI();
+            }
         }
 
         private void ILane_onControlSizeChangeEvent(object sender, ControlSizeChangedEventArgs type)
@@ -715,6 +719,10 @@ namespace iParkingv5_window.Forms.DataForms
                     //((iLane)item).DisplayUIConfig();
                 }
                 ucViewGrid1.ResumeLayout();
+                foreach (var item in lanes)
+                {
+                    item.DispayUI();
+                }
                 GC.Collect();
             }
         }

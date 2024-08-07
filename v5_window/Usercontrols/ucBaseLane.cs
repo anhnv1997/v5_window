@@ -2,6 +2,7 @@
 using iPakrkingv5.Controls.Usercontrols;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
+using iParkingv5.Objects.Datas;
 using iParkingv5.Objects.Datas.Device_service;
 using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.Events;
@@ -22,6 +23,11 @@ namespace iParkingv5_window.Usercontrols
 {
     public partial class ucBaseLane : UserControl
     {
+        public Color ProcessColor = Color.DarkBlue;
+        public Color ErrorColor = Color.DarkRed;
+        public Color WarningColor = Color.DarkOrange;
+        public Color SuccessColor = Color.DarkGreen;
+
         public event OnChangeLaneEvent? OnChangeLaneEvent;
         public event OnControlSizeChanged? onControlSizeChangeEvent;
 
@@ -56,13 +62,14 @@ namespace iParkingv5_window.Usercontrols
         public LaneDirectionConfig laneDirection = new LaneDirectionConfig();
 
         public int printCount = 0;
+        public int time_refresh = 0;
+
         public List<ucLastEventInfo> ucLastEventInfos = new List<ucLastEventInfo>();
 
         public ucBaseLane()
         {
             InitializeComponent();
         }
-
         public void LoadCamera(Panel panelCameras)
         {
             if (lane.cameras == null)
@@ -88,64 +95,41 @@ namespace iParkingv5_window.Usercontrols
             }
 
             Kztek.Cameras.Camera? mainOverviewCamera = GetCameraConfig(CameraPurposeType.EmCameraPurposeType.MainOverView, cameras);
+            Kztek.Cameras.Camera? motorLprCamera = GetCameraConfig(CameraPurposeType.EmCameraPurposeType.MotorLPR, cameras);
+            Kztek.Cameras.Camera? carLprCamera = GetCameraConfig(CameraPurposeType.EmCameraPurposeType.CarLPR, cameras);
+
             if (mainOverviewCamera != null)
             {
-                mainOverviewCamera.Name += "-OVERVIEW";
                 ucOverView = new ucCameraView();
-                ucOverView.StartViewer(mainOverviewCamera, CameraErrorFunc);
-                if (panelCameras.Controls.Count > 0)
-                {
-                    Control lastControl = panelCameras.Controls[panelCameras.Controls.Count - 1];
-                    Point location = new Point(lastControl.Location.X, lastControl.Location.Y + lastControl.Height + 10);
-                    panelCameras.Controls.Add(ucOverView);
-                    ucOverView.Location = location;
-                }
-                else
-                {
-                    panelCameras.Controls.Add(ucOverView);
-                    ucOverView.Location = new Point(0);
-                }
+                AddCamera(panelCameras, mainOverviewCamera, ucOverView);
             }
-
-            Kztek.Cameras.Camera? motorLprCamera = GetCameraConfig(CameraPurposeType.EmCameraPurposeType.MotorLPR, cameras);
             if (motorLprCamera != null)
             {
-                motorLprCamera.Name += "-MOTOLPR";
                 ucMotoLpr = new ucCameraView();
-                ucMotoLpr.StartViewer(motorLprCamera, CameraErrorFunc);
-                if (panelCameras.Controls.Count > 0)
-                {
-                    Control lastControl = panelCameras.Controls[panelCameras.Controls.Count - 1];
-                    Point location = new Point(lastControl.Location.X, lastControl.Location.Y + lastControl.Height + 10);
-                    panelCameras.Controls.Add(ucMotoLpr);
-                    ucMotoLpr.Location = location;
-                }
-                else
-                {
-                    panelCameras.Controls.Add(ucMotoLpr);
-                    ucMotoLpr.Location = new Point(0);
-                }
+                AddCamera(panelCameras, motorLprCamera, ucMotoLpr);
             }
-
-
-            Kztek.Cameras.Camera? carLprCamera = GetCameraConfig(CameraPurposeType.EmCameraPurposeType.CarLPR, cameras);
             if (carLprCamera != null)
             {
-                carLprCamera.Name += "-CARLPR";
                 ucCarLpr = new ucCameraView();
-                ucCarLpr.StartViewer(carLprCamera, CameraErrorFunc);
-                if (panelCameras.Controls.Count > 0)
-                {
-                    Control lastControl = panelCameras.Controls[panelCameras.Controls.Count - 1];
-                    Point location = new Point(lastControl.Location.X, lastControl.Location.Y + lastControl.Height + 10);
-                    panelCameras.Controls.Add(ucCarLpr);
-                    ucCarLpr.Location = location;
-                }
-                else
-                {
-                    panelCameras.Controls.Add(ucCarLpr);
-                    ucCarLpr.Location = new Point(0);
-                }
+                AddCamera(panelCameras, carLprCamera, ucCarLpr);
+            }
+        }
+
+        private void AddCamera(Panel panel, Kztek.Cameras.Camera cam, ucCameraView uc)
+        {
+            cam.Name += "-OVERVIEW";
+            uc.StartViewer(cam, CameraErrorFunc);
+            if (panel.Controls.Count > 0)
+            {
+                Control lastControl = panel.Controls[panel.Controls.Count - 1];
+                Point location = new Point(lastControl.Location.X, lastControl.Location.Y + lastControl.Height + 10);
+                panel.Controls.Add(uc);
+                uc.Location = location;
+            }
+            else
+            {
+                panel.Controls.Add(uc);
+                uc.Location = new Point(0);
             }
         }
 
@@ -266,13 +250,10 @@ namespace iParkingv5_window.Usercontrols
         }
 
         public Image? GetPlate(CardEventArgs ce, ref Image? overviewImg, ref Image? vehicleImg, VehicleBaseType vehicleBaseType,
-                                lblResult lblResult, TextBox txtPlate, 
+                                lblResult lblResult, TextBox txtPlate,
                                 MovablePictureBox picOverview, MovablePictureBox picVehicle, MovablePictureBox picLpr)
         {
             Image? lprImage = null;
-            lblResult.UpdateResultMessage("Lấy hình ảnh sự kiện...", Color.DarkBlue);
-            overviewImg = ucOverView?.GetFullCurrentImage();
-
             lblResult.UpdateResultMessage("Đọc biển số...", Color.DarkBlue);
             string plate = string.Empty;
             switch (vehicleBaseType)
@@ -299,6 +280,59 @@ namespace iParkingv5_window.Usercontrols
             return lprImage;
         }
 
+        public async Task<LoopLprResult> LoopLprDetection()
+        {
+            LoopLprResult lprResult = new LoopLprResult();
+            int retry = 0;
 
+            while (retry < StaticPool.appOption.RetakePhotoTimes)
+            {
+                (Image? vehicleImg, string plate, Image? lprImage) = TryGetPlateAsync();
+                lprResult.LprImage = lprImage;
+                lprResult.VehicleImage = vehicleImg;
+                lprResult.PlateNumber = plate ?? "";
+                lprResult.PlateNumber = lprResult.PlateNumber.Trim();
+                if (!string.IsNullOrEmpty(plate))
+                {
+                    var registeredVehicle = await AppData.ApiServer.parkingDataService.GetRegistedVehilceByPlateAsync(plate);
+                    if (registeredVehicle.Item1 != null)
+                    {
+                        lprResult.Vehicle = registeredVehicle.Item1;
+                        return lprResult;
+                    }
+                }
+
+                retry++;
+                await Task.Delay(StaticPool.appOption.RetakePhotoDelay);
+            }
+
+            return lprResult;
+        }
+        private (Image?, string, Image?) TryGetPlateAsync()
+        {
+            Image? vehicleImg = null;
+            string plate = "";
+            Image? lprImage = null;
+
+            if (ucCarLpr != null)
+            {
+                BaseLane.GetPlate(this.lane.Id, out Image? carImage, out plate, out lprImage, ucCarLpr, camBienSoOTODuPhongs, true);
+                if (string.IsNullOrEmpty(plate))
+                {
+                    BaseLane.GetPlate(this.lane.Id, out Image? motorImage, out plate, out lprImage, ucMotoLpr, camBienSoXeMayDuPhongs, false);
+                    vehicleImg = string.IsNullOrEmpty(plate) ? carImage : motorImage;
+                }
+                else
+                {
+                    vehicleImg = carImage;
+                }
+            }
+            else
+            {
+                BaseLane.GetPlate(this.lane.Id, out vehicleImg, out plate, out lprImage, ucMotoLpr, camBienSoXeMayDuPhongs, false);
+            }
+
+            return (vehicleImg, plate, lprImage);
+        }
     }
 }
