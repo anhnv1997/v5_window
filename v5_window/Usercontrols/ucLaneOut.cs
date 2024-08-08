@@ -123,7 +123,7 @@ namespace iParkingv5_window.Usercontrols
             {
             }
             SetDisplayDirection();
-            DisplayUIConfig();
+            LoadSavedUIConfig();
             panelLastEvent.SizeChanged += PanelLastEvent_SizeChanged;
             PanelLastEvent_SizeChanged(null, EventArgs.Empty);
         }
@@ -974,9 +974,8 @@ namespace iParkingv5_window.Usercontrols
                         if (identity.Vehicles.Count == 1)
                         {
                             string message = $"{errorMessage}\r\nBạn có muốn cho xe ra khỏi bãi";
-                            var customer = (await AppData.ApiServer.parkingDataService.GetCustomerByIdAsync(identity.Vehicles[0].CustomerId)).Item1;
                             frmConfirmIn frmConfirmIn = new frmConfirmIn(message, identity, identityGroup,
-                                                                         customer, identity.Vehicles[0], plateNumber, vehicleImg, overviewImg);
+                                                                         identity.Vehicles[0].customer, identity.Vehicles[0], plateNumber, vehicleImg, overviewImg);
                             isConfirm = frmConfirmIn.ShowDialog()
                                                     == DialogResult.OK;
                             plateNumber = identity.Vehicles[0].PlateNumber;
@@ -1068,27 +1067,13 @@ namespace iParkingv5_window.Usercontrols
                                               Image? lprImage, EventOutData eventOut,
                                               RegisteredVehicle? registeredVehicle, bool isAlarm)
         {
-
-
-            if (eventOut.EventIn.images != null)
-            {
-                ImageData? overviewImgData = eventOut.EventIn.images.ContainsKey(EmParkingImageType.Overview) ?
-                                                        eventOut.EventIn.images[EmParkingImageType.Overview][0] : null;
-                ImageData? vehicleImgData = eventOut.EventIn.images.ContainsKey(EmParkingImageType.Vehicle) ?
-                                                        eventOut.EventIn.images[EmParkingImageType.Vehicle][0] : null;
-                ImageData? lprImgData = eventOut.EventIn.images.ContainsKey(EmParkingImageType.Plate) ?
-                                                       eventOut.EventIn.images[EmParkingImageType.Plate][0] : null;
-                picOverviewImageIn.ShowImageAsync(overviewImgData);
-                picVehicleImageIn.ShowImageAsync(vehicleImgData);
-                picLprImageIn.ShowImageAsync(lprImgData);
-            }
+            ShowEventInData(eventOut);
 
             string resultText = eventOut.Charge > 0 ? "Thu tiền" : "Hẹn gặp lại";
             lblResult.UpdateResultMessage(resultText, SuccessColor);
 
             DisplayEventOutInfo(eventOut.EventIn?.DateTimeIn, eventTime, detectedPlate, identity, identityGroup, vehicleType,
                                 eventOut.vehicle, (long)eventOut.Charge, eventOut.customer, null, "", "");
-            ShowEventInData(eventOut);
             BaseLane.DisplayLed(detectedPlate, eventTime, identity, identityGroup, "Hẹn gặp lại", this.lane.Id, eventOut.Charge.ToString());
             lastEvent = eventOut;
 
@@ -1195,9 +1180,7 @@ namespace iParkingv5_window.Usercontrols
                     return;
                 }
                 var eventInfo = report.data[0];
-                lastEvent = new EventOutData(eventInfo);
-                DisplayEventOutInfo(eventInfo.EventIn.DateTimeIn ?? DateTime.Now, eventInfo.DatetimeOut ?? DateTime.Now, eventInfo.PlateNumber,
-                                    eventInfo.Identity, eventInfo.IdentityGroup, eventInfo.IdentityGroup.VehicleType, eventInfo.vehicle, eventInfo.Charge, eventInfo.customer);
+
                 if (eventInfo.EventIn.images != null)
                 {
                     ImageData? overviewImgData = eventInfo.EventIn.images.ContainsKey(EmParkingImageType.Overview) ?
@@ -1222,6 +1205,11 @@ namespace iParkingv5_window.Usercontrols
                     picVehicleImageOut.ShowImageAsync(vehicleImgOutData);
                     picLprImage.ShowImageAsync(lprImgOutData);
                 }
+
+                lastEvent = new EventOutData(eventInfo);
+                DisplayEventOutInfo(eventInfo.EventIn.DateTimeIn ?? DateTime.Now, eventInfo.DatetimeOut ?? DateTime.Now, eventInfo.PlateNumber,
+                                    eventInfo.Identity, eventInfo.IdentityGroup, eventInfo.IdentityGroup.VehicleType, eventInfo.vehicle, eventInfo.Charge, eventInfo.customer);
+                
                 this.Invoke(new Action(() =>
                 {
                     lblPlateIn.Text = eventInfo.EventIn.PlateNumber;
@@ -1912,7 +1900,7 @@ namespace iParkingv5_window.Usercontrols
         /// <summary>
         /// Hiển thị giao diện như lần cuối cùng sử dụng
         /// </summary>
-        public void DisplayUIConfig()
+        public void LoadSavedUIConfig()
         {
             if (this.laneDisplayConfig == null)
             {

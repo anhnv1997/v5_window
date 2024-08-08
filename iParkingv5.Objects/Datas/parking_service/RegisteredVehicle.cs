@@ -17,6 +17,10 @@ namespace iParkingv5.Objects.Datas
         public string CustomerId { get; set; }
         public string ExpireUtc { get; set; }
 
+        /// <summary>
+        /// Chỉ có thông tin khi thực hiện các API GetById
+        /// </summary>
+        public Customer customer { get; set; }
         public bool Enabled { get; set; }
         public bool Deleted { get; set; }
         public List<string> IdentityIds { get; set; }

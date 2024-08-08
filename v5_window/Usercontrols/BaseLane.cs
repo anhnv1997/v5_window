@@ -121,6 +121,10 @@ namespace iParkingv5_window.Usercontrols
         }
         public static void UpdateResultMessage(this lblResult lblResult, string message, Color backColor)
         {
+            if (backColor == Color.DarkBlue)
+            {
+                return;
+            }
             LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, noi_dung_hanh_dong: message);
             lblResult.BeginInvoke(() =>
             {
@@ -306,7 +310,7 @@ namespace iParkingv5_window.Usercontrols
                 {
                     Bitmap? bmp = img == null ? null : new Bitmap(img.Clone() as Image);
                     pictureBox.Image = bmp == null ? pictureBox.ErrorImage : bmp;
-                    pictureBox.Refresh();
+                    //pictureBox.Refresh();
                 }
                 catch (Exception ex)
                 {

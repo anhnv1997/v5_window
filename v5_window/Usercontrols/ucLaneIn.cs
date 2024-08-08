@@ -117,7 +117,6 @@ namespace iParkingv5_window.Usercontrols
             }
         }
 
-
         /// <summary>
         /// Có sự kiện từ bộ điều khiển hoặc người dùng
         /// </summary>
@@ -375,9 +374,8 @@ namespace iParkingv5_window.Usercontrols
                 if (identity.Vehicles.Count == 1)
                 {
                     string message = "Không nhận diện được biển số, bạn có muốn cho xe vào bãi?";
-                    var customer = (await AppData.ApiServer.parkingDataService.GetCustomerByIdAsync(identity.Vehicles[0].CustomerId)).Item1;
-                    frmConfirmIn frmConfirmIn = new frmConfirmIn(message, identity, identityGroup, customer, identity.Vehicles[0],
-                                                                             plateNumber, vehicleImg, overviewImg);
+                    frmConfirmIn frmConfirmIn = new frmConfirmIn(message, identity, identityGroup, identity.Vehicles[0].customer,
+                                                                 identity.Vehicles[0], plateNumber, vehicleImg, overviewImg);
                     isConfirm = frmConfirmIn.ShowDialog() == DialogResult.OK;
                     if (isConfirm)
                     {
@@ -416,9 +414,7 @@ namespace iParkingv5_window.Usercontrols
                 if (identity.Vehicles.Count == 1)
                 {
                     string message = "Biển số không khớp với biển số đăng ký" + "\r\nBạn có muốn cho xe vào bãi?";
-                    var customer = (await AppData.ApiServer.parkingDataService.GetCustomerByIdAsync(identity.Vehicles[0].CustomerId)).Item1;
-
-                    frmConfirmIn frmConfirmIn = new frmConfirmIn(message, identity, identityGroup, customer, identity.Vehicles[0],
+                    frmConfirmIn frmConfirmIn = new frmConfirmIn(message, identity, identityGroup, identity.Vehicles[0].customer, identity.Vehicles[0],
                                                                  plateNumber, vehicleImg, overviewImg);
                     isConfirm = frmConfirmIn.ShowDialog() == DialogResult.OK;
                     plateNumber = identity.Vehicles[0].PlateNumber;
@@ -463,7 +459,6 @@ namespace iParkingv5_window.Usercontrols
             await ExcecuteValidEvent(identity, identityGroup, vehicleType, ce.PlateNumber, ce.EventTime,
                                       overviewImg, vehicleImg, lprImage, eventIn, isAlarm);
         }
-
 
         private async Task ExcecuteNonMonthCardEventIn(Identity identity, IdentityGroup identityGroup,
                                                        VehicleBaseType vehicleType, string plateNumber,
@@ -541,7 +536,6 @@ namespace iParkingv5_window.Usercontrols
             lblResult.UpdateResultMessage(errorMessage, ErrorColor);
             DisplayEventInfo(eventTime, detectPlate, identity, identityGroup, vehicleType, customer, null);
         }
-
         private async Task ExcecuteValidEvent(Identity? identity, IdentityGroup? identityGroup,
                                               VehicleBaseType vehicleType, string detectPlate,
                                               DateTime eventTime, Image? overviewImg,
@@ -669,8 +663,7 @@ namespace iParkingv5_window.Usercontrols
                 }
                 var eventInfo = report.data[0];
                 lastEvent = new EventInData(eventInfo);
-                DisplayEventInfo(eventInfo.DateTimeIn ?? DateTime.Now, eventInfo.PlateNumber, eventInfo.Identity, eventInfo.IdentityGroup,
-                                 eventInfo.IdentityGroup.VehicleType, eventInfo.customer, eventInfo.vehicle, null);
+              
                 if (eventInfo.images != null)
                 {
                     ImageData? overviewImgData = eventInfo.images.ContainsKey(EmParkingImageType.Overview) ?
@@ -679,10 +672,19 @@ namespace iParkingv5_window.Usercontrols
                                                             eventInfo.images[EmParkingImageType.Vehicle][0] : null;
                     ImageData? lprImgData = eventInfo.images.ContainsKey(EmParkingImageType.Plate) ?
                                                            eventInfo.images[EmParkingImageType.Plate][0] : null;
-                    _ = picOverviewImage.ShowImageAsync(overviewImgData);
-                    _ = picVehicleImage.ShowImageAsync(vehicleImgData);
-                    _ = picLprImage.ShowImageAsync(lprImgData);
+
+                    var overviewInTask = AppData.ApiServer.parkingProcessService.GetImageUrl(overviewImgData?.bucket ?? "", overviewImgData?.objectKey ?? "");
+                    var vehicleInTask = AppData.ApiServer.parkingProcessService.GetImageUrl(vehicleImgData?.bucket ?? "", vehicleImgData?.objectKey ?? "");
+                    var lprInTask = AppData.ApiServer.parkingProcessService.GetImageUrl(lprImgData?.bucket ?? "", lprImgData?.objectKey ?? "");
+
+                    await Task.WhenAll(overviewInTask, vehicleInTask, lprInTask);
+
+                    picLprImage.ShowImageUrlAsync(lprInTask.Result);
+                    picVehicleImage.ShowImageUrlAsync(vehicleInTask.Result);
+                    picOverviewImage.ShowImageUrlAsync(overviewInTask.Result);
                 }
+                DisplayEventInfo(eventInfo.DateTimeIn ?? DateTime.Now, eventInfo.PlateNumber, eventInfo.Identity, eventInfo.IdentityGroup,
+                               eventInfo.IdentityGroup.VehicleType, eventInfo.customer, eventInfo.vehicle, null);
                 this.Invoke(new Action(() =>
                 {
                     txtPlate.Text = eventInfo.PlateNumber;
@@ -1263,7 +1265,7 @@ namespace iParkingv5_window.Usercontrols
             }
             else if ((int)key == laneInShortcutConfig.WriteIn)
             {
-                btnWriteIn.PerformClick();
+                BtnWriteIn_Click(null, EventArgs.Empty);
             }
             else if ((int)key == laneInShortcutConfig.ReSnapshotKey)
             {
@@ -1485,22 +1487,16 @@ namespace iParkingv5_window.Usercontrols
             this.Invoke(new Action(() =>
             {
                 dgvEventContent.Rows.Clear();
-                dgvEventContent.Refresh();
 
                 picOverviewImage.Image = defaultImg;
-                picOverviewImage.Refresh();
 
                 picLprImage.Image = defaultImg;
-                picLprImage.Refresh();
 
                 picVehicleImage.Image = defaultImg;
-                picVehicleImage.Refresh();
 
                 txtPlate.Text = string.Empty;
-                txtPlate.Refresh();
 
                 lblResult.UpdateResultMessage(StaticPool.oemConfig.AppName, SuccessColor);
-                lblResult.Refresh();
             }));
         }
         #endregion End PROCESS
@@ -1529,10 +1525,7 @@ namespace iParkingv5_window.Usercontrols
             RegisterUIEvent();
 
             SetUserDisplayConfig();
-            DisplayUIConfig();
-
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            LoadSavedUIConfig();
 
             try
             {
@@ -1557,21 +1550,18 @@ namespace iParkingv5_window.Usercontrols
         /// <summary>
         /// Hiển thị giao diện như lần cuối cùng sử dụng
         /// </summary>
-        public void DisplayUIConfig()
+        public void LoadSavedUIConfig()
         {
-            //this.SuspendLayout();
-
             if (this.laneDisplayConfig == null) return;
+
             try
             {
                 if (this.splitContainerMain.Panel2Collapsed)
                 {
                     this.splitContainerMain.Height = this.laneDisplayConfig.splitContainerMain;
-                    this.Refresh();
                 }
                 else
                 {
-
                     this.splitContainerMain.SplitterDistance = this.laneDisplayConfig.splitContainerMain;
                 }
             }
@@ -1588,6 +1578,7 @@ namespace iParkingv5_window.Usercontrols
             {
                 LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.Form, "DisplayUIConfig", "splitterEventInfoWithCamera-SplitPosition", ex);
             }
+
             try
             {
                 this.splitContainerLastEvent.SplitterDistance = this.laneDisplayConfig.splitLastEventPosition;
@@ -1609,8 +1600,6 @@ namespace iParkingv5_window.Usercontrols
                 LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.Form, "DisplayUIConfig", "splitterEventInfoWithCamera-SplitPosition", ex);
             }
 
-
-
             try
             {
                 this.splitContainerEventContent.SplitterDistance = this.laneDisplayConfig.splitContainerEventContent;
@@ -1630,7 +1619,6 @@ namespace iParkingv5_window.Usercontrols
             }
 
             AllowDesignRealtime(false);
-            //this.ResumeLayout();
         }
 
         /// <summary>

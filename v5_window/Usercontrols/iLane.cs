@@ -19,7 +19,7 @@ namespace iParkingv5_window.Usercontrols
         void OnKeyPress(Keys keys);
         LaneDisplayConfig GetCurrentUIConfig();
         void GetShortcutConfig();
-        void DisplayUIConfig();
+        void LoadSavedUIConfig();
         void DispayUI();
     }
 }

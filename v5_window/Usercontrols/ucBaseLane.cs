@@ -281,7 +281,7 @@ namespace iParkingv5_window.Usercontrols
             BaseLane.ShowImage(picVehicle, vehicleImg);
             BaseLane.ShowImage(picLpr, lprImage);
 
-            txtPlate.Invoke(new Action(() =>
+            txtPlate.BeginInvoke(new Action(() =>
             {
                 txtPlate.Text = ce.PlateNumber;
                 txtPlate.Refresh();
