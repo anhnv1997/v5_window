@@ -70,7 +70,7 @@
           }
         }
       },
-      "OpenCvSharp4/4.9.0.20240103": {
+      "OpenCvSharp4/4.10.0.20240616": {
         "type": "package",
         "dependencies": {
           "System.Memory": "4.5.5",
@@ -225,7 +225,7 @@
           }
         }
       },
-      "System.Drawing.Common/8.0.1": {
+      "System.Drawing.Common/8.0.7": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/System.Drawing.Common.dll": {
@@ -409,8 +409,8 @@
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
           "Newtonsoft.Json": "13.0.3",
-          "OpenCvSharp4": "4.9.0.20240103",
-          "System.Drawing.Common": "8.0.1"
+          "OpenCvSharp4": "4.10.0.20240616",
+          "System.Drawing.Common": "8.0.7"
         },
         "compile": {
           "bin/placeholder/iParkingv5.Lpr.dll": {}
@@ -568,10 +568,10 @@
         "packageIcon.png"
       ]
     },
-    "OpenCvSharp4/4.9.0.20240103": {
-      "sha512": "+BJMqToSH3dl+5SUF2YaPI+1eY/o/aTtvCQsY3qgcE4YS8qvPNS7MObzzVy4avYrBmcEEFnCvNF+1VbFnQjU9w==",
+    "OpenCvSharp4/4.10.0.20240616": {
+      "sha512": "+iaFSUq0Cp+B9s1sUqDwB3PvQ5HdWWvRE50WsAw1PL8smD3VZNbe0P786E4Yfu7LHM7jeqkulOwjk2CoihsZeg==",
       "type": "package",
-      "path": "opencvsharp4/4.9.0.20240103",
+      "path": "opencvsharp4/4.10.0.20240616",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -583,7 +583,7 @@
         "lib/netstandard2.0/OpenCvSharp.xml",
         "lib/netstandard2.1/OpenCvSharp.dll",
         "lib/netstandard2.1/OpenCvSharp.xml",
-        "opencvsharp4.4.9.0.20240103.nupkg.sha512",
+        "opencvsharp4.4.10.0.20240616.nupkg.sha512",
         "opencvsharp4.nuspec"
       ]
     },
@@ -863,10 +863,10 @@
         "version.txt"
       ]
     },
-    "System.Drawing.Common/8.0.1": {
-      "sha512": "x0rAZECxIGx/YVjN28YRdpqka0+H7YMN9741FUDzipXPDzesd60gef/LI0ZCOcYSDsacTLTHvMAvxHG+TjbNNQ==",
+    "System.Drawing.Common/8.0.7": {
+      "sha512": "DoeBae0gZvxs3mtfoub6F1k28fSkFPzmhFuvblplKMnLYKmTMVy0j4Yxahh96KM532JzHGDxhJn1VpMKSB1pyg==",
       "type": "package",
-      "path": "system.drawing.common/8.0.1",
+      "path": "system.drawing.common/8.0.7",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -898,7 +898,7 @@
         "lib/xamarinmac20/_._",
         "lib/xamarintvos10/_._",
         "lib/xamarinwatchos10/_._",
-        "system.drawing.common.8.0.1.nupkg.sha512",
+        "system.drawing.common.8.0.7.nupkg.sha512",
         "system.drawing.common.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -1329,7 +1329,6 @@
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "C:\\Program Files\\dotnet\\library-packs": {},
-        "C:\\Users\\Admin\\OneDrive\\Desktop\\vosk-api-master\\vosk-api-master\\csharp\\nuget\\lib\\netstandard2.0": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

@@ -99,5 +99,32 @@ namespace Kztek.Helper
                 }
             }
         }
+        public static Image Base64ToImage(string base64String)
+        {
+            // Convert base 64 string to byte[]
+            byte[] imageBytes = Convert.FromBase64String(base64String);
+            // Convert byte[] to Image
+            using (var ms = new MemoryStream(imageBytes, 0, imageBytes.Length))
+            {
+                Image image = Image.FromStream(ms, true);
+                return image;
+            }
+        }
+        public static string ImageToBase64(string imagePath)
+        {
+            string base64String = string.Empty;
+            if (File.Exists(imagePath))
+            {
+                using (var imageStream = new FileStream(imagePath, FileMode.Open))
+                {
+                    var buffer = new byte[imageStream.Length];
+                    imageStream.Read(buffer, 0, (int)imageStream.Length);
+                    base64String = Convert.ToBase64String(buffer);
+                }
+            }
+            return base64String;
+        }
+
+
     }
 }

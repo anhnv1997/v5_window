@@ -76,7 +76,6 @@ namespace iParkingv5_window.Forms.DataForms
         }
         #endregion End FORMS
 
-
         #region CONTROLS IN FORM
         private void BtnOk_Click(object? sender, EventArgs e)
         {
@@ -111,8 +110,6 @@ namespace iParkingv5_window.Forms.DataForms
                 }
             }
         }
-
-
         private void StopTimer()
         {
             autoReturnTime = 0;

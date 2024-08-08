@@ -400,7 +400,7 @@ namespace iParkingv5_window.Usercontrols
             btnRegister.TabIndex = 0;
             btnRegister.Text = "Đăng ký";
             btnRegister.UseVisualStyleBackColor = true;
-            btnRegister.Click += btnRegister_Click_1;
+            btnRegister.Click += btnRegister_Click;
             // 
             // btnPrintQR
             // 

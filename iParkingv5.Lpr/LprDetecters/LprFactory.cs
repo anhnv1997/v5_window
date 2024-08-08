@@ -1,11 +1,6 @@
 ﻿using iParkingv5.Lpr.LprDetecters.AmericalLprs;
 using iParkingv5.Lpr.Objects;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static iParkingv5.LprDetecter.Events.Events;
 using static iParkingv5.LprDetecter.Objects.LprDetecter;
 

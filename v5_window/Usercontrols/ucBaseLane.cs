@@ -1,11 +1,15 @@
 ﻿using iPakrkingv5.Controls.Controls.Labels;
 using iPakrkingv5.Controls.Usercontrols;
+using iParkingv5.Controller;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
 using iParkingv5.Objects.Datas;
 using iParkingv5.Objects.Datas.Device_service;
+using iParkingv5.Objects.Datas.parking_service;
 using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.Events;
+using iParkingv5_CustomerRegister.Forms;
+using iParkingv5_window.Forms.DataForms;
 using iParkingv6.Objects.Datas;
 using Kztek.Tools;
 using System;
@@ -17,12 +21,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static iParkingv5.Objects.Enums.ParkingImageType;
 using static iParkingv5.Objects.Enums.VehicleType;
 
 namespace iParkingv5_window.Usercontrols
 {
     public partial class ucBaseLane : UserControl
     {
+        public List<string> allowAlarmMessage = new List<string>()
+        {
+            "Biển số không hợp lệ".ToUpper(),
+        };
         public Color ProcessColor = Color.DarkBlue;
         public Color ErrorColor = Color.DarkRed;
         public Color WarningColor = Color.DarkOrange;
@@ -59,7 +68,7 @@ namespace iParkingv5_window.Usercontrols
         public List<CardEventArgs> lastCardEventDatas { get; set; } = new List<CardEventArgs>();
         public List<InputEventArgs> lastInputEventDatas { get; set; } = new List<InputEventArgs>();
 
-        public LaneDirectionConfig laneDirection = new LaneDirectionConfig();
+        public LaneDirectionConfig laneDirectionConfig = new LaneDirectionConfig();
 
         public int printCount = 0;
         public int time_refresh = 0;
@@ -334,5 +343,50 @@ namespace iParkingv5_window.Usercontrols
 
             return (vehicleImg, plate, lprImage);
         }
+
+        public async Task OpenAllBarrie()
+        {
+            foreach (var item in this.lane.controlUnits)
+            {
+                foreach (IController controller in frmMain.controllers)
+                {
+                    if (controller.ControllerInfo.Id.ToLower() == item.controlUnitId.ToLower())
+                    {
+                        for (int i = 0; i < item?.barriers.Length; i++)
+                        {
+                            if (!await controller.OpenDoor(100, item.barriers[i]))
+                            {
+                                bool isOpenSuccess = await controller.OpenDoor(100, item.barriers[i]);
+                                if (!isOpenSuccess)
+                                {
+                                    LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.Controller, controller.ControllerInfo.Comport, "Mở barrie thủ công thất bại");
+                                }
+                            }
+                            else
+                            {
+                                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.Controller, controller.ControllerInfo.Comport, "Mở barrie thủ công thất bại");
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        public async Task SaveManualAbnormalEvent(string plateNumber, Identity? identity, IdentityGroup? identityGroup,
+                                                  Dictionary<EmParkingImageType, List<List<byte>>> imageDatas, bool isLaneIn,
+                                                  string customerId = "", string vehicleId = "", string description = "",
+                                                  AbnormalCode abnormalCode = AbnormalCode.OpenBarrierByKeyboard)
+        {
+            string identityCode = identity?.Code ?? "";
+            string identityGroupId = identityGroup == null ? "" : identityGroup.Id.ToString();
+            var response = await AppData.ApiServer.parkingProcessService.CreateAlarmAsync(
+                                                    identityCode, this.lane.Id, plateNumber, abnormalCode,
+                                                    imageDatas, isLaneIn, identityGroupId, customerId, vehicleId, description);
+            if (response != null)
+            {
+                await BaseLane.SaveImage(response.images, imageDatas);
+            }
+        }
+
     }
 }

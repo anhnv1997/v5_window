@@ -91,6 +91,39 @@ namespace iPakrkingv5.Controls
             e.DrawBorder();
             e.Graphics.DrawString(text, customFont, Brushes.Black, new PointF(2, 2));
         }
+
+        public static void SetupToolTip(this ToolTip toolTip, Control control, string baseText, Func<string> additionalTextProvider)
+        {
+            toolTip.SetToolTip(control, $"{baseText} {additionalTextProvider()}");
+            toolTip.OwnerDraw = true;
+            toolTip.Draw += (sender, e) =>
+            {
+                Font customFont = new Font("Arial", 16, FontStyle.Bold);
+                e.DrawBackground();
+                e.DrawBorder();
+                e.Graphics.DrawString($"{baseText} {additionalTextProvider()}", customFont, Brushes.Black, new PointF(2, 2));
+            };
+            toolTip.Popup += (sender, e) =>
+            {
+                e.ToolTipSize = TextRenderer.MeasureText($"{baseText} {additionalTextProvider()}", new Font("Segoe UI", 16, FontStyle.Bold));
+            };
+        }
+        public static void SetupToolTip(this ToolTip toolTip, Control control, string baseText, string additionalText)
+        {
+            toolTip.SetToolTip(control, $"{baseText} {additionalText}");
+            toolTip.OwnerDraw = true;
+            toolTip.Draw += (sender, e) =>
+            {
+                Font customFont = new Font("Arial", 16, FontStyle.Bold);
+                e.DrawBackground();
+                e.DrawBorder();
+                e.Graphics.DrawString($"{baseText} {additionalText}", customFont, Brushes.Black, new PointF(2, 2));
+            };
+            toolTip.Popup += (sender, e) =>
+            {
+                e.ToolTipSize = TextRenderer.MeasureText($"{baseText} {additionalText}", new Font("Segoe UI", 16, FontStyle.Bold));
+            };
+        }
         #endregion
     }
 }

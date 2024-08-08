@@ -5,6 +5,9 @@ using System.Text;
 
 namespace iParkingv5.Objects.Configs
 {
+    /// <summary>
+    /// Thông tin hướng hiển thị trên phần giao diện
+    /// </summary>
     public class LaneDirectionConfig
     {
         public enum EmDisplayDirection

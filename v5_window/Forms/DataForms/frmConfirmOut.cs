@@ -11,7 +11,7 @@ namespace iParkingv5_window.Forms.DataForms
 {
     public partial class frmConfirmOut : Form
     {
-        //Thông tin sự kiện vào
+        #region PROPERTIES
         private string plateIn;
         private string detectedPlate;
         private string identityNameIn;
@@ -21,11 +21,12 @@ namespace iParkingv5_window.Forms.DataForms
         private long charge = 0;
         public string updatePlate;
 
-
         public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
 
         private List<string>? eventInFileKeys;
         private DateTime dateTime;
+        private int autoReturnTime = 0;
+        #endregion End PROPERTIES
 
         #region Forms
         public frmConfirmOut(string detectedPlate, string errorMessage, string plateIn, string identityNameIn, string identityGroupName,
@@ -59,9 +60,9 @@ namespace iParkingv5_window.Forms.DataForms
             this.datetimeIn = datetimeIn;
             this.charge = charge;
             this.updatePlate = detectedPlate;
+            this.FormClosing += FrmConfirmOut_FormClosing;
             this.Load += FrmConfirm_Load;
         }
-
         private void FrmConfirm_Load(object? sender, EventArgs e)
         {
             btnCancel1.InitControl(BtnCancel1_Click);
@@ -72,9 +73,14 @@ namespace iParkingv5_window.Forms.DataForms
                                             StaticPool.baseSize);
             btnOk.Location = new Point(btnCancel1.Location.X - btnOk.Width - StaticPool.baseSize,
                                        StaticPool.baseSize);
-
+            if (StaticPool.appOption.AutoRejectDialogTime > 0)
+            {
+                lblTimer.Visible = true;
+                lblTimer.BringToFront();
+                lblTimer.Text = "";
+                timerAutoConfirm.Enabled = true;
+            }
             ShowInfo(this.detectedPlate, this.datetimeIn, this.plateIn, this.identityNameIn);
-            this.ActiveControl = txtPlateOut;
         }
         private void frmConfirmOut_KeyDown(object sender, KeyEventArgs e)
         {
@@ -87,9 +93,20 @@ namespace iParkingv5_window.Forms.DataForms
                 BtnCancel1_Click(null, EventArgs.Empty);
             }
         }
+        private void FrmConfirmOut_FormClosing(object? sender, FormClosingEventArgs e)
+        {
+            StopTimer();
+        }
         #endregion End Forms
 
-        #region Controls In Form
+        #region CONTROLS IN FORM
+        private void btnCopy_Click(object sender, EventArgs e)
+        {
+            txtPlateOut.Text = lblPlateIn.Text;
+            this.ActiveControl = txtPlateOut;
+            txtPlateOut.SelectionStart = txtPlateOut.Text.Length;
+            txtPlateOut.SelectionLength = 0;
+        }
         private void BtnOk_Click(object? sender, EventArgs e)
         {
             updatePlate = txtPlateOut.Text;
@@ -99,8 +116,62 @@ namespace iParkingv5_window.Forms.DataForms
         {
             this.DialogResult = DialogResult.Cancel;
         }
-        #endregion
+        #endregion End CONTROLS IN FORM
 
+        #region TIMER
+        private void timerAutoConfirm_Tick(object? sender, EventArgs e)
+        {
+            if (autoReturnTime < StaticPool.appOption.AutoRejectDialogTime)
+            {
+                string message = StaticPool.appOption.AutoRejectDialogResult ? "Xác nhận" : "Đóng";
+                int remainingTime = StaticPool.appOption.AutoRejectDialogTime - autoReturnTime;
+                lblTimer.Text = $"Tự động {message} sau {remainingTime}s!";
+                autoReturnTime++;
+            }
+            else
+            {
+                StopTimer();
+                if (StaticPool.appOption.AutoRejectDialogResult)
+                {
+                    BtnOk_Click(null, EventArgs.Empty);
+                }
+                else
+                {
+                    BtnCancel1_Click(null, EventArgs.Empty);
+                }
+            }
+        }
+        private void StopTimer()
+        {
+            autoReturnTime = 0;
+            timerAutoConfirm.Tick -= timerAutoConfirm_Tick;
+            timerAutoConfirm.Enabled = false;
+        }
+        #endregion End TIMER
+
+        #region PRIVATE FUNCTION
+        private async Task ShowImage(ImageData? imageData, PictureBox pic)
+        {
+            try
+            {
+                if (imageData == null)
+                {
+                    pic.Image = defaultImg;
+                }
+                else
+                {
+                    string imageUrl = await AppData.ApiServer.parkingProcessService.GetImageUrl(imageData.bucket, imageData.objectKey);
+                    pic.LoadAsync(imageUrl);
+                }
+            }
+            catch (Exception)
+            {
+                pic.Image = defaultImg;
+            }
+        }
+        #endregion End PRIVATE FUNCTION
+
+        #region PUBLIC FUNCTION
         public async void ShowInfo(string detectedPlate, DateTime datetimeIn, string plateIn, string identityInName)
         {
             try
@@ -141,32 +212,7 @@ namespace iParkingv5_window.Forms.DataForms
             {
             }
         }
-        private async Task ShowImage(ImageData? imageData, PictureBox pic)
-        {
-            try
-            {
-                if (imageData == null)
-                {
-                    pic.Image = defaultImg;
-                }
-                else
-                {
-                    string imageUrl = await AppData.ApiServer.parkingProcessService.GetImageUrl(imageData.bucket, imageData.objectKey);
-                    pic.LoadAsync(imageUrl);
-                }
-            }
-            catch (Exception)
-            {
-                pic.Image = defaultImg;
-            }
-        }
+        #endregion End PUBLIC FUNCTION
 
-        private void btnCopy_Click(object sender, EventArgs e)
-        {
-            txtPlateOut.Text = lblPlateIn.Text;
-            this.ActiveControl = txtPlateOut;
-            txtPlateOut.SelectionStart = txtPlateOut.Text.Length;
-            txtPlateOut.SelectionLength = 0;
-        }
     }
 }

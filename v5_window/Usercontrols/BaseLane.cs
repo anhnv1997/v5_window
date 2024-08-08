@@ -253,18 +253,31 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
         }
+
+        /// <summary>
+        /// Lưu hình ảnh lên server
+        /// </summary>
+        /// <param name="imagesInfo"></param>
+        /// <param name="imageDatas"></param>
+        /// <returns></returns>
         public static async Task SaveImage(Dictionary<EmParkingImageType, List<ImageData>>? imagesInfo,
                                      Dictionary<EmParkingImageType, List<List<byte>>> imageDatas)
         {
             if (imagesInfo == null) return;
+            List<Task> tasks = new List<Task>();
             foreach (KeyValuePair<EmParkingImageType, List<ImageData>> item in imagesInfo)
             {
                 for (int i = 0; i < item.Value.Count; i++)
                 {
                     var imgInfo = item.Value[i];
-                    await AppData.ApiServer.parkingProcessService.SaveEventImage(imgInfo.bucket, imgInfo.objectKey, imgInfo.type, imageDatas[item.Key][i]);
+                    tasks.Add(AppData.ApiServer.parkingProcessService.SaveEventImage(imgInfo.bucket, imgInfo.objectKey, imgInfo.type, imageDatas[item.Key][i]));
                 }
             }
+            if (tasks.Count == 0)
+            {
+                return;
+            }
+            await Task.WhenAll(tasks);
         }
         public static List<EmParkingImageType> GetValidImageType(Image? overviewImg, Image? vehicleImg, Image? lprImage)
         {

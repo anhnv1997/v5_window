@@ -4,6 +4,9 @@ using System.Text;
 
 namespace iParkingv5.Objects.Configs
 {
+    /// <summary>
+    /// Thông tin kích thước hiển thị trên giao diện
+    /// </summary>
     public class LaneDisplayConfig
     {
         public string LaneId { get; set; }

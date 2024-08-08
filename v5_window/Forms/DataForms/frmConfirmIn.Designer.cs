@@ -30,6 +30,7 @@ namespace iParkingv5_window.Forms.DataForms
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConfirmIn));
             panel1 = new Panel();
             tableLayoutPanel2 = new TableLayoutPanel();
@@ -56,7 +57,8 @@ namespace iParkingv5_window.Forms.DataForms
             lblGuide = new Label();
             lblCancel1 = new iPakrkingv5.Controls.Controls.Buttons.LblCancel();
             btnOk1 = new iPakrkingv5.Controls.Controls.Buttons.BtnOk();
-            label2 = new Label();
+            lblTimer = new Label();
+            timerAutoConfirm = new System.Windows.Forms.Timer(components);
             panel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             panel2.SuspendLayout();
@@ -372,18 +374,23 @@ namespace iParkingv5_window.Forms.DataForms
             btnOk1.TabIndex = 4;
             btnOk1.Text = "Xác nhận";
             // 
-            // label2
+            // lblTimer
             // 
-            label2.AutoSize = true;
-            label2.Dock = DockStyle.Bottom;
-            label2.Font = new Font("Segoe UI", 12F, FontStyle.Italic);
-            label2.ForeColor = Color.FromArgb(255, 128, 0);
-            label2.Location = new Point(0, 344);
-            label2.Name = "label2";
-            label2.Padding = new Padding(0, 3, 0, 3);
-            label2.Size = new Size(204, 27);
-            label2.TabIndex = 7;
-            label2.Text = "Tự động xác nhận/đóng sau";
+            lblTimer.AutoSize = true;
+            lblTimer.Dock = DockStyle.Bottom;
+            lblTimer.Font = new Font("Segoe UI", 12F, FontStyle.Italic);
+            lblTimer.ForeColor = Color.FromArgb(255, 128, 0);
+            lblTimer.Location = new Point(0, 344);
+            lblTimer.Name = "lblTimer";
+            lblTimer.Padding = new Padding(0, 3, 0, 3);
+            lblTimer.Size = new Size(204, 27);
+            lblTimer.TabIndex = 7;
+            lblTimer.Text = "Tự động xác nhận/đóng sau";
+            // 
+            // timerAutoConfirm
+            // 
+            timerAutoConfirm.Interval = 1000;
+            timerAutoConfirm.Tick += timerAutoConfirm_Tick;
             // 
             // frmConfirmIn
             // 
@@ -391,7 +398,7 @@ namespace iParkingv5_window.Forms.DataForms
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(883, 417);
             Controls.Add(panel1);
-            Controls.Add(label2);
+            Controls.Add(lblTimer);
             Controls.Add(lblMessage);
             Controls.Add(panelAction);
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -443,6 +450,7 @@ namespace iParkingv5_window.Forms.DataForms
         private Label lblRegisterPlate;
         private Button btnCopy;
         private Label lblGuide;
-        private Label label2;
+        private Label lblTimer;
+        private System.Windows.Forms.Timer timerAutoConfirm;
     }
 }

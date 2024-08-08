@@ -193,7 +193,7 @@ namespace iParkingv5_window.Forms.DataForms
 
                 for (int i = 0; i < lanes.Count; i++)
                 {
-                    LaneDisplayConfig displayConfig = lanes[i].SaveUIConfig();
+                    LaneDisplayConfig displayConfig = lanes[i].GetCurrentUIConfig();
                     displayConfig.DisplayIndex = i;
                     laneDisplayConfigs.Add(displayConfig);
                 }
@@ -378,12 +378,14 @@ namespace iParkingv5_window.Forms.DataForms
                 lblLoadingStatus.Text = "Khởi tạo làn: " + lane.name;
                 lblLoadingStatus.Refresh();
                 LaneDisplayConfig? laneDisplayConfig = GetLaneDisplayConfigByLaneId(lane);
-                iLane iLane = LaneFactory.CreateLane(lane, laneDisplayConfig);
+                string configPath = PathManagement.appLaneDirectionConfigPath(lane.Id);
+                var laneDirectionConfig = NewtonSoftHelper<LaneDirectionConfig>.DeserializeObjectFromPath(configPath) ?? LaneDirectionConfig.CreateDefault();
+
+                iLane iLane = LaneFactory.CreateLane(lane, laneDisplayConfig, laneDirectionConfig);
                 iLane.OnChangeLaneEvent += ILane_OnChangeLaneEvent;
                 lanes.Add(iLane);
                 ucViewGrid1.UpdateSelectLocation(iLane as Control);
                 ((Control)iLane).Dock = DockStyle.Fill;
-                iLane.onControlSizeChangeEvent += ILane_onControlSizeChangeEvent;
                 ucViewGrid1.Refresh();
             }
             TableLayoutPanel table = (ucViewGrid1.Controls[0] as TableLayoutPanel)!;
@@ -584,7 +586,7 @@ namespace iParkingv5_window.Forms.DataForms
             {
                 foreach (var item in lanes)
                 {
-                    var temp = item.SaveUIConfig();
+                    var temp = item.GetCurrentUIConfig();
                     if (laneDisplayConfigs != null)
                     {
                         foreach (var laneDisplayConfig in laneDisplayConfigs)
@@ -616,7 +618,7 @@ namespace iParkingv5_window.Forms.DataForms
             catch (Exception ex)
             {
             }
-           
+
             frmSelectLaneMode frm = new frmSelectLaneMode()
             {
                 Owner = this.Owner,
@@ -694,7 +696,10 @@ namespace iParkingv5_window.Forms.DataForms
                     lblLoadingStatus.Refresh();
                     LoadAppDisplayConfig();
                     LaneDisplayConfig? laneDisplayConfig = GetLaneDisplayConfigByLaneId(updateLane);
-                    iLane iLane = LaneFactory.CreateLane(updateLane, laneDisplayConfig);
+                    string configPath = PathManagement.appLaneDirectionConfigPath(updateLane.Id);
+                    var laneDirectionConfig = NewtonSoftHelper<LaneDirectionConfig>.DeserializeObjectFromPath(configPath) ?? LaneDirectionConfig.CreateDefault();
+
+                    iLane iLane = LaneFactory.CreateLane(updateLane, laneDisplayConfig, laneDirectionConfig);
                     iLane.OnChangeLaneEvent += ILane_OnChangeLaneEvent;
                     for (int i = 0; i < lanes.Count; i++)
                     {
@@ -706,7 +711,6 @@ namespace iParkingv5_window.Forms.DataForms
                     parent.Controls.Add(iLane as Control);
                     //ucViewGrid1.UpdateSelectLocation(iLane as Control);
                     ((Control)iLane).Dock = DockStyle.Fill;
-                    iLane.onControlSizeChangeEvent += ILane_onControlSizeChangeEvent;
                     ucViewGrid1.Refresh();
                 }
 

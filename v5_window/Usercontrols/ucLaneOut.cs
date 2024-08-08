@@ -43,7 +43,7 @@ namespace iParkingv5_window.Usercontrols
         DateTime lastTime = DateTime.Now;
 
         #region FORMS
-        public ucLaneOut(Lane lane, LaneDisplayConfig? laneDisplayConfig)
+        public ucLaneOut(Lane lane, LaneDisplayConfig? laneDisplayConfig, LaneDirectionConfig laneDirectionConfig)
         {
             InitializeComponent();
 
@@ -52,24 +52,22 @@ namespace iParkingv5_window.Usercontrols
             lblLaneName.Text = lane.name;
             lblLaneName.BackColor = ErrorColor;
             this.lane = lane;
-
-            laneDirection = NewtonSoftHelper<LaneDirectionConfig>.DeserializeObjectFromPath(
-                                                       PathManagement.appLaneDirectionConfigPath(this.lane.Id)) ?? LaneDirectionConfig.CreateDefault();
-            splitContainerMain.Panel2Collapsed = laneDirection.IsDisplayLastEvent ? false : true;
-            panelLastEvent.Visible = laneDirection.IsDisplayLastEvent;
-
             this.laneDisplayConfig = laneDisplayConfig;
+            this.laneDirectionConfig = laneDirectionConfig;
+
+            splitContainerMain.Panel2Collapsed = !laneDirectionConfig.IsDisplayLastEvent;
+            panelLastEvent.Visible = laneDirectionConfig.IsDisplayLastEvent;
+
             txtPlate.Enabled = StaticPool.appOption.IsAllowEditPlateOut;
-            //this.Load += UcLaneOut_Load;
         }
         public void DispayUI()
         {
+            lblResult.UpdateResultMessage(StaticPool.oemConfig.AppName, SuccessColor);
+
             GetShortcutConfig();
             LoadCamera(panelCameras);
             lblResult.Padding = new Padding(StaticPool.baseSize);
             panelCameras.SizeChanged += PanelCameras_SizeChanged;
-            splitContainerEventContent.SizeChanged += SplitContainerEventContent_SizeChanged;
-            splitContainerMain.MouseDoubleClick += SplitContainerEventContent_MouseDoubleClick;
             lblResult.UpdateResultMessage(StaticPool.oemConfig.AppName, SuccessColor);
 
             List<string> controllserShortcut = new List<string>();
@@ -84,10 +82,10 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
 
-            SetupToolTip(toolTipOpenBarrie, picOpenBarrie, "Mở Barrie", string.Join(",", controllserShortcut));
-            SetupToolTip(toolTipReTakePhoto, picRetakePhoto, "Chụp Lại", () => ((Keys)laneOutShortcutConfig?.ReSnapshotKey).ToString());
-            SetupToolTip(toolTipWriteOut, picWriteOut, "Ghi Vé Ra", () => ((Keys)laneOutShortcutConfig?.WriteOut).ToString());
-            SetupToolTip(toolTipPrint, picPrint, "In Vé Xe", () => ((Keys)laneOutShortcutConfig?.PrintKey).ToString());
+            toolTipOpenBarrie.SetupToolTip(picOpenBarrie, "Mở Barrie", string.Join(",", controllserShortcut));
+            toolTipReTakePhoto.SetupToolTip(picRetakePhoto, "Chụp Lại", () => ((Keys)laneOutShortcutConfig?.ReSnapshotKey).ToString());
+            toolTipWriteOut.SetupToolTip(picWriteOut, "Ghi Vé Ra", () => ((Keys)laneOutShortcutConfig?.WriteOut).ToString());
+            toolTipPrint.SetupToolTip(picPrint, "In Vé Xe", () => ((Keys)laneOutShortcutConfig?.PrintKey).ToString());
 
 
             picRetakePhoto.MouseEnter += PicRetakePhoto_MouseHover;
@@ -219,7 +217,7 @@ namespace iParkingv5_window.Usercontrols
                             //Đảo làn
                             this.Invoke(new Action(() =>
                             {
-                                var config = SaveUIConfig();
+                                var config = GetCurrentUIConfig();
                                 NewtonSoftHelper<LaneDisplayConfig>.SaveConfig(config, PathManagement.appDisplayConfigPath(this.lane.Id));
                             }));
                             lblResult.UpdateResultMessage("Ra Lệnh Đảo Làn", ProcessColor);
@@ -538,28 +536,12 @@ namespace iParkingv5_window.Usercontrols
         /// <returns></returns>
         public override async Task ExcecuteExitEvent(InputEventArgs ie)
         {
-            lblResult.UpdateResultMessage("Đang kiểm trang thông tin sự kiện exit..." + ie.InputIndex, ProcessColor);
-            //--Chưa có sự kiện vào hoặc thời gian từ lúc có sự kiện đến khi bấm mở barrie quá 5s thì lưu sự kiện cảnh báo
-            if (lastEvent == null)
+            string plateNumber = lastEvent?.PlateNumber ?? "";
+            var imageData = GetAllCameraImage();
+            bool isOverAllowTime = ((DateTime.Now - lastEvent?.DatetimeOut)?.TotalSeconds ?? -1) >= StaticPool.appOption.AllowBarrieDelayOpenTime;
+            if (lastEvent == null || isOverAllowTime)
             {
-                var imageDatas = SaveAllCameraImage();
-                var response = await AppData.ApiServer.parkingProcessService.CreateAlarmAsync("", this.lane.Id, "", AbnormalCode.OpenBarrierByButton, imageDatas, false, "", "", "", "");
-                if (response != null)
-                {
-                    BaseLane.SaveImage(response.images, imageDatas);
-                }
-
-            }
-            else if ((DateTime.Now - lastEvent.DatetimeOut)?.TotalSeconds >= StaticPool.appOption.AllowBarrieDelayOpenTime)
-            {
-                var imageDatas = SaveAllCameraImage();
-                var response = await AppData.ApiServer.parkingProcessService.CreateAlarmAsync(lastEvent.Identity?.Code, this.lane.Id, lastEvent.PlateNumber, AbnormalCode.OpenBarrierByButton,
-                                                             imageDatas, false,
-                                                             lastEvent?.IdentityGroup?.Id.ToString() ?? "", "", "", "");
-                if (response != null)
-                {
-                    BaseLane.SaveImage(response.images, imageDatas);
-                }
+                await SaveManualAbnormalEvent(plateNumber, lastEvent?.Identity, lastEvent?.IdentityGroup, imageData, true, abnormalCode: AbnormalCode.OpenBarrierByButton);
             }
         }
 
@@ -1165,7 +1147,7 @@ namespace iParkingv5_window.Usercontrols
             //--Chưa có sự kiện vào hoặc thời gian từ lúc có sự kiện đến khi bấm mở barrie quá 5s thì lưu sự kiện cảnh báo
             if (lastEvent == null)
             {
-                var imageDatas = SaveAllCameraImage();
+                var imageDatas = GetAllCameraImage();
                 var response = await AppData.ApiServer.parkingProcessService.CreateAlarmAsync("", this.lane.Id, "", AbnormalCode.OpenBarrierByKeyboard, imageDatas, false, "", "", "", "");
                 if (response != null)
                 {
@@ -1174,7 +1156,7 @@ namespace iParkingv5_window.Usercontrols
             }
             else if ((DateTime.Now - lastEvent.DatetimeOut)?.TotalSeconds >= StaticPool.appOption.AllowBarrieDelayOpenTime)
             {
-                var imageDatas = SaveAllCameraImage();
+                var imageDatas = GetAllCameraImage();
                 var response = await AppData.ApiServer.parkingProcessService.CreateAlarmAsync(lastEvent.Identity?.Code, this.lane.Id, lastEvent.PlateNumber, AbnormalCode.OpenBarrierByKeyboard,
                                                            imageDatas, false,
                                                            lastEvent?.IdentityGroup?.Id.ToString() ?? "", "", "", "");
@@ -1281,9 +1263,9 @@ namespace iParkingv5_window.Usercontrols
                                                       PathManagement.appLaneDirectionConfigPath(this.lane.Id)) ?? LaneDirectionConfig.CreateDefault();
 
             bool isChangeDisplayConfig = false;
-            if (!laneDirection.IsSameConfig(newConfig))
+            if (!laneDirectionConfig.IsSameConfig(newConfig))
             {
-                laneDirection = newConfig;
+                laneDirectionConfig = newConfig;
                 UpdateLaneGUI();
             }
         }
@@ -1326,45 +1308,13 @@ namespace iParkingv5_window.Usercontrols
         private async void btnOpenBarrie_Click(object sender, EventArgs e)
         {
             FocusOnTitle();
-            foreach (var item in this.lane.controlUnits)
+            await OpenAllBarrie();
+            if (lastEvent == null ||
+                (DateTime.Now - lastEvent.DatetimeOut)?.TotalSeconds >= StaticPool.appOption.AllowBarrieDelayOpenTime)
             {
-                foreach (IController _item in frmMain.controllers)
-                {
-                    if (_item.ControllerInfo.Id.ToLower() == item.controlUnitId.ToLower())
-                    {
-                        for (int i = 0; i < item?.barriers.Length; i++)
-                        {
-                            bool isOpenSuccess = false;
-                            if (!await _item.OpenDoor(100, item.barriers[i]))
-                            {
-                                isOpenSuccess = await _item.OpenDoor(100, item.barriers[i]);
-                            }
-                        }
-                        break;
-                    }
-                }
-            }
-
-            if (lastEvent == null)
-            {
-                var imageDatas = SaveAllCameraImage();
-                var response = await AppData.ApiServer.parkingProcessService.CreateAlarmAsync("", this.lane.Id, "", AbnormalCode.OpenBarrierByKeyboard, imageDatas, false, "", "", "", "");
-                if (response != null)
-                {
-                    BaseLane.SaveImage(response.images, imageDatas);
-                }
-            }
-            else if ((DateTime.Now - lastEvent.DatetimeOut)?.TotalSeconds >= StaticPool.appOption.AllowBarrieDelayOpenTime)
-            {
-                var imageDatas = SaveAllCameraImage();
-
-                var response = await AppData.ApiServer.parkingProcessService.CreateAlarmAsync(lastEvent.Identity?.Code, this.lane.Id, lastEvent.PlateNumber, AbnormalCode.OpenBarrierByKeyboard,
-                                                            imageDatas, false,
-                                                            lastEvent?.IdentityGroup?.Id.ToString() ?? "", "", "", "");
-                if (response != null)
-                {
-                    BaseLane.SaveImage(response.images, imageDatas);
-                }
+                var imageDatas = GetAllCameraImage();
+                string plateNumber = lastEvent?.PlateNumber ?? "";
+                await SaveManualAbnormalEvent(plateNumber, lastEvent?.Identity, lastEvent?.IdentityGroup, imageDatas, false);
             }
         }
 
@@ -1403,7 +1353,7 @@ namespace iParkingv5_window.Usercontrols
                         //Lưu sự kiện cảnh báo
                         if (lastEvent != null)
                         {
-                            var imageDatas = SaveAllCameraImage();
+                            var imageDatas = GetAllCameraImage();
 
                             var response = await AppData.ApiServer.parkingProcessService.CreateAlarmAsync(lastEvent.Identity?.Code, this.lane.Id, lastEvent.PlateNumber, AbnormalCode.ManualEvent,
                                                                          imageDatas, false,
@@ -1477,17 +1427,17 @@ namespace iParkingv5_window.Usercontrols
             int displayRegionHeight = panelCameras.Height - label4.Height - marginHeight;
             foreach (ucCameraView item in panelCameras.Controls.OfType<ucCameraView>())
             {
-                if (laneDirection.cameraDirection == LaneDirectionConfig.EmCameraDirection.Vertical)
+                if (laneDirectionConfig.cameraDirection == LaneDirectionConfig.EmCameraDirection.Vertical)
                 {
                     int newWidth = panelCameras.Width - panelCameras.Margin.Left - panelCameras.Margin.Right -
                                                         panelCameras.Padding.Left - panelCameras.Padding.Right
                                                     - /*item.Margin.Left - item.Margin.Right -*/ item.Padding.Left - item.Padding.Right;
-                    item.ChangeByWidth(new Size(newWidth, (displayRegionHeight) / count), this.laneDirection.cameraResolutionDisplay);
+                    item.ChangeByWidth(new Size(newWidth, (displayRegionHeight) / count), this.laneDirectionConfig.cameraResolutionDisplay);
                 }
                 else
                 {
                     item.ChangeByHeight(new Size((panelCameras.Width - panelCameras.Margin.Left - panelCameras.Margin.Right - panelCameras.Padding.Left - panelCameras.Padding.Right
-                                                /*- item.Margin.Left - item.Margin.Right*/ - item.Padding.Left - item.Padding.Right) / count, panelCameras.Height - 50), this.laneDirection.cameraResolutionDisplay);
+                                                /*- item.Margin.Left - item.Margin.Right*/ - item.Padding.Left - item.Padding.Right) / count, panelCameras.Height - 50), this.laneDirectionConfig.cameraResolutionDisplay);
                 }
             }
             for (int i = 0; i < panelCameras.Controls.OfType<ucCameraView>().ToList().Count; i++)
@@ -1501,7 +1451,7 @@ namespace iParkingv5_window.Usercontrols
                 else
                 {
                     Control lastControl = panelCameras.Controls.OfType<ucCameraView>().ToList()[i - 1];
-                    if (laneDirection.cameraDirection == LaneDirectionConfig.EmCameraDirection.Vertical)
+                    if (laneDirectionConfig.cameraDirection == LaneDirectionConfig.EmCameraDirection.Vertical)
                     {
                         Point location = new Point(lastControl.Location.X, lastControl.Location.Y + lastControl.Height + marginHeight);
                         panelCameras.Controls.OfType<ucCameraView>().ToList()[i].Location = location;
@@ -1544,37 +1494,6 @@ namespace iParkingv5_window.Usercontrols
         }
         #endregion END EFFECT
 
-        #region OTHER
-        /// <summary>
-        /// Tự động chỉnh kích thước theo kích thước lưu trong frmMain
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SplitContainerEventContent_MouseDoubleClick(object? sender, MouseEventArgs e)
-        {
-            if (frmMain.splitContainerMainLocation != null)
-            {
-                splitContainerMain.SplitterDistance = frmMain.splitContainerMainLocation.NewDistance;
-            }
-        }
-        /// <summary>
-        /// Sử dụng để cập nhật giá trị khoảng cách vào frmMain để các làn khác có thể kéo cùng kích thước bằng cách nhấn double click <seealso cref="SplitContainerEventContent_MouseDoubleClick"/>
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SplitContainerEventContent_SizeChanged(object? sender, EventArgs e)
-        {
-            onControlSizeChangeEventInvoke(this, new ControlSizeChangedEventArgs()
-            {
-                Type = 1,
-                NewX = this.splitContainerMain.Location.X,
-                NewY = this.splitContainerMain.Location.Y,
-                NewDistance = this.splitContainerMain.SplitterDistance
-            });
-        }
-
-        #endregion END OTHER
-
         #endregion END CONTROLS IN FORM
 
         #region Timer
@@ -1592,7 +1511,7 @@ namespace iParkingv5_window.Usercontrols
         #region PRIVATE FUNCTION
         private void SetDisplayDirection()
         {
-            switch (laneDirection.displayDirection)
+            switch (laneDirectionConfig.displayDirection)
             {
                 case LaneDirectionConfig.EmDisplayDirection.Vertical:
                     splitterEventInfoWithCamera.Dock = DockStyle.Bottom;
@@ -1613,7 +1532,7 @@ namespace iParkingv5_window.Usercontrols
                     break;
             }
 
-            switch (laneDirection.cameraPicDirection)
+            switch (laneDirectionConfig.cameraPicDirection)
             {
                 case LaneDirectionConfig.EmCameraPicFunction.Vertical:
                     splitterCamera.Dock = DockStyle.Top;
@@ -1634,7 +1553,7 @@ namespace iParkingv5_window.Usercontrols
                 default:
                     break;
             }
-            switch (laneDirection.eventDirection)
+            switch (laneDirectionConfig.eventDirection)
             {
                 case EmEventDirection.Vertical:
                     splitContainerEventContent.Orientation = Orientation.Horizontal;
@@ -1656,8 +1575,8 @@ namespace iParkingv5_window.Usercontrols
                 default:
                     break;
             }
-            splitContainerMain.Panel2Collapsed = laneDirection.IsDisplayLastEvent ? false : true;
-            panelLastEvent.Visible = laneDirection.IsDisplayLastEvent;
+            splitContainerMain.Panel2Collapsed = laneDirectionConfig.IsDisplayLastEvent ? false : true;
+            panelLastEvent.Visible = laneDirectionConfig.IsDisplayLastEvent;
             PanelCameras_SizeChanged(null, null);
         }
 
@@ -1759,9 +1678,9 @@ namespace iParkingv5_window.Usercontrols
         }
         private void UpdateLaneGUI()
         {
-            laneDirection = NewtonSoftHelper<LaneDirectionConfig>.DeserializeObjectFromPath(
+            laneDirectionConfig = NewtonSoftHelper<LaneDirectionConfig>.DeserializeObjectFromPath(
                                                                    PathManagement.appLaneDirectionConfigPath(this.lane.Id)) ?? LaneDirectionConfig.CreateDefault();
-            splitContainerMain.Panel2Collapsed = laneDirection.IsDisplayLastEvent ? false : true;
+            splitContainerMain.Panel2Collapsed = laneDirectionConfig.IsDisplayLastEvent ? false : true;
             SetDisplayDirection();
             //switch (laneDirection.displayDirection)
             //{
@@ -1814,7 +1733,7 @@ namespace iParkingv5_window.Usercontrols
 
                 lblPlateIn.Text = txtPlate.Text = string.Empty;
 
-                lblResult.UpdateResultMessage(StaticPool.oemConfig.AppName, ProcessColor);
+                lblResult.UpdateResultMessage(StaticPool.oemConfig.AppName, SuccessColor);
                 FocusOnTitle();
             }));
         }
@@ -1845,7 +1764,7 @@ namespace iParkingv5_window.Usercontrols
 
         }
 
-        private Dictionary<EmParkingImageType, List<List<byte>>> SaveAllCameraImage()
+        private Dictionary<EmParkingImageType, List<List<byte>>> GetAllCameraImage()
         {
             var imageData = new Dictionary<EmParkingImageType, List<List<byte>>>();
             //--Lưu hình ảnh sự kiện
@@ -1881,11 +1800,11 @@ namespace iParkingv5_window.Usercontrols
         private void DisplayEventOutInfo(DateTime? timeIn, DateTime timeOut, string plateNumber, Identity identity, IdentityGroup? identityGroup, VehicleBaseType vehicle,
                                          RegisteredVehicle? registerVehicle, long fee, Customer? customer, WeighingDetail? weighingDetail = null, string thirdPartyNote = "", string note = "")
         {
-            laneDirection = NewtonSoftHelper<LaneDirectionConfig>.DeserializeObjectFromPath(
+            laneDirectionConfig = NewtonSoftHelper<LaneDirectionConfig>.DeserializeObjectFromPath(
                                                      PathManagement.appLaneDirectionConfigPath(this.lane.Id)) ?? LaneDirectionConfig.CreateDefault();
             dgvEventContent!.Invoke(new Action(() =>
             {
-                dgvEventContent.Columns[0].Visible = laneDirection.IsDisplayTitle;
+                dgvEventContent.Columns[0].Visible = laneDirectionConfig.IsDisplayTitle;
 
                 dgvEventContent.Rows.Clear();
 
@@ -2068,7 +1987,7 @@ namespace iParkingv5_window.Usercontrols
         /// Lấy thông tin hiển thị hiện tại để lưu lại
         /// </summary>
         /// <returns></returns>
-        public LaneDisplayConfig SaveUIConfig()
+        public LaneDisplayConfig GetCurrentUIConfig()
         {
             AllowDesignRealtime(true);
             return new LaneDisplayConfig()
@@ -2139,39 +2058,5 @@ namespace iParkingv5_window.Usercontrols
         }
 
         #endregion END PUBLIC FUNCTION
-
-
-        private void SetupToolTip(ToolTip toolTip, Control control, string baseText, Func<string> additionalTextProvider)
-        {
-            toolTip.SetToolTip(control, $"{baseText} {additionalTextProvider()}");
-            toolTip.OwnerDraw = true;
-            toolTip.Draw += (sender, e) =>
-            {
-                Font customFont = new Font("Arial", 16, FontStyle.Bold);
-                e.DrawBackground();
-                e.DrawBorder();
-                e.Graphics.DrawString($"{baseText} {additionalTextProvider()}", customFont, Brushes.Black, new PointF(2, 2));
-            };
-            toolTip.Popup += (sender, e) =>
-            {
-                e.ToolTipSize = TextRenderer.MeasureText($"{baseText} {additionalTextProvider()}", new Font("Segoe UI", 16, FontStyle.Bold));
-            };
-        }
-        private void SetupToolTip(ToolTip toolTip, Control control, string baseText, string additionalText)
-        {
-            toolTip.SetToolTip(control, $"{baseText} {additionalText}");
-            toolTip.OwnerDraw = true;
-            toolTip.Draw += (sender, e) =>
-            {
-                Font customFont = new Font("Arial", 16, FontStyle.Bold);
-                e.DrawBackground();
-                e.DrawBorder();
-                e.Graphics.DrawString($"{baseText} {additionalText}", customFont, Brushes.Black, new PointF(2, 2));
-            };
-            toolTip.Popup += (sender, e) =>
-            {
-                e.ToolTipSize = TextRenderer.MeasureText($"{baseText} {additionalText}", new Font("Segoe UI", 16, FontStyle.Bold));
-            };
-        }
     }
 }

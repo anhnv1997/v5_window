@@ -61,6 +61,8 @@ namespace iParkingv5_window.Forms.DataForms
             picOverview = new MovablePictureBox();
             picVehicle = new MovablePictureBox();
             toolTip1 = new ToolTip(components);
+            lblTimer = new Label();
+            timerAutoConfirm = new System.Windows.Forms.Timer(components);
             panelAction.SuspendLayout();
             panel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
@@ -136,7 +138,7 @@ namespace iParkingv5_window.Forms.DataForms
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 58);
             panel1.Name = "panel1";
-            panel1.Size = new Size(945, 365);
+            panel1.Size = new Size(945, 338);
             panel1.TabIndex = 3;
             // 
             // tableLayoutPanel2
@@ -171,16 +173,16 @@ namespace iParkingv5_window.Forms.DataForms
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 13.5135145F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 13.5135145F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 13.5135145F));
-            tableLayoutPanel2.Size = new Size(624, 365);
+            tableLayoutPanel2.Size = new Size(624, 338);
             tableLayoutPanel2.TabIndex = 4;
             // 
             // lblIdentityGroup
             // 
             lblIdentityGroup.Dock = DockStyle.Fill;
             lblIdentityGroup.Font = new Font("Segoe UI", 12F);
-            lblIdentityGroup.Location = new Point(147, 264);
+            lblIdentityGroup.Location = new Point(147, 243);
             lblIdentityGroup.Name = "lblIdentityGroup";
-            lblIdentityGroup.Size = new Size(473, 48);
+            lblIdentityGroup.Size = new Size(473, 44);
             lblIdentityGroup.TabIndex = 13;
             lblIdentityGroup.Text = "_";
             lblIdentityGroup.TextAlign = ContentAlignment.MiddleLeft;
@@ -189,9 +191,9 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             lblVehicleType.Dock = DockStyle.Fill;
             lblVehicleType.Font = new Font("Segoe UI", 12F);
-            lblVehicleType.Location = new Point(147, 313);
+            lblVehicleType.Location = new Point(147, 288);
             lblVehicleType.Name = "lblVehicleType";
-            lblVehicleType.Size = new Size(473, 51);
+            lblVehicleType.Size = new Size(473, 49);
             lblVehicleType.TabIndex = 12;
             lblVehicleType.Text = "_";
             lblVehicleType.TextAlign = ContentAlignment.MiddleLeft;
@@ -200,9 +202,9 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             label6.Dock = DockStyle.Fill;
             label6.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label6.Location = new Point(4, 313);
+            label6.Location = new Point(4, 288);
             label6.Name = "label6";
-            label6.Size = new Size(136, 51);
+            label6.Size = new Size(136, 49);
             label6.TabIndex = 4;
             label6.Text = "Loại Xe";
             label6.TextAlign = ContentAlignment.MiddleLeft;
@@ -211,9 +213,9 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             label5.Dock = DockStyle.Fill;
             label5.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label5.Location = new Point(4, 264);
+            label5.Location = new Point(4, 243);
             label5.Name = "label5";
-            label5.Size = new Size(136, 48);
+            label5.Size = new Size(136, 44);
             label5.TabIndex = 3;
             label5.Text = "Nhóm";
             label5.TextAlign = ContentAlignment.MiddleLeft;
@@ -224,7 +226,7 @@ namespace iParkingv5_window.Forms.DataForms
             label7.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             label7.Location = new Point(4, 1);
             label7.Name = "label7";
-            label7.Size = new Size(136, 62);
+            label7.Size = new Size(136, 57);
             label7.TabIndex = 5;
             label7.Text = "Biển Số Ra";
             label7.TextAlign = ContentAlignment.MiddleLeft;
@@ -233,7 +235,7 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             txtPlateOut.Dock = DockStyle.Bottom;
             txtPlateOut.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
-            txtPlateOut.Location = new Point(147, 13);
+            txtPlateOut.Location = new Point(147, 8);
             txtPlateOut.Name = "txtPlateOut";
             txtPlateOut.Size = new Size(473, 47);
             txtPlateOut.TabIndex = 0;
@@ -242,9 +244,9 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             label3.Dock = DockStyle.Fill;
             label3.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label3.Location = new Point(4, 215);
+            label3.Location = new Point(4, 198);
             label3.Name = "label3";
-            label3.Size = new Size(136, 48);
+            label3.Size = new Size(136, 44);
             label3.TabIndex = 1;
             label3.Text = "Tên Định Danh";
             label3.TextAlign = ContentAlignment.MiddleLeft;
@@ -253,9 +255,9 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             label2.Dock = DockStyle.Fill;
             label2.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label2.Location = new Point(4, 166);
+            label2.Location = new Point(4, 153);
             label2.Name = "label2";
-            label2.Size = new Size(136, 48);
+            label2.Size = new Size(136, 44);
             label2.TabIndex = 0;
             label2.Text = "Giờ ra";
             label2.TextAlign = ContentAlignment.MiddleLeft;
@@ -264,9 +266,9 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             label1.Dock = DockStyle.Fill;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label1.Location = new Point(4, 117);
+            label1.Location = new Point(4, 108);
             label1.Name = "label1";
-            label1.Size = new Size(136, 48);
+            label1.Size = new Size(136, 44);
             label1.TabIndex = 0;
             label1.Text = "Giờ Vào";
             label1.TextAlign = ContentAlignment.MiddleLeft;
@@ -275,9 +277,9 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             label4.Dock = DockStyle.Fill;
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label4.Location = new Point(4, 64);
+            label4.Location = new Point(4, 59);
             label4.Name = "label4";
-            label4.Size = new Size(136, 52);
+            label4.Size = new Size(136, 48);
             label4.TabIndex = 2;
             label4.Text = "Biển Số Vào";
             label4.TextAlign = ContentAlignment.MiddleLeft;
@@ -286,9 +288,9 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             lblTimeOut.Dock = DockStyle.Fill;
             lblTimeOut.Font = new Font("Segoe UI", 12F);
-            lblTimeOut.Location = new Point(147, 166);
+            lblTimeOut.Location = new Point(147, 153);
             lblTimeOut.Name = "lblTimeOut";
-            lblTimeOut.Size = new Size(473, 48);
+            lblTimeOut.Size = new Size(473, 44);
             lblTimeOut.TabIndex = 8;
             lblTimeOut.Text = "_";
             lblTimeOut.TextAlign = ContentAlignment.MiddleLeft;
@@ -297,9 +299,9 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             lblTimeIn.Dock = DockStyle.Fill;
             lblTimeIn.Font = new Font("Segoe UI", 12F);
-            lblTimeIn.Location = new Point(147, 117);
+            lblTimeIn.Location = new Point(147, 108);
             lblTimeIn.Name = "lblTimeIn";
-            lblTimeIn.Size = new Size(473, 48);
+            lblTimeIn.Size = new Size(473, 44);
             lblTimeIn.TabIndex = 7;
             lblTimeIn.Text = "_";
             lblTimeIn.TextAlign = ContentAlignment.MiddleLeft;
@@ -308,9 +310,9 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             lblIdentityCode.Dock = DockStyle.Fill;
             lblIdentityCode.Font = new Font("Segoe UI", 12F);
-            lblIdentityCode.Location = new Point(147, 215);
+            lblIdentityCode.Location = new Point(147, 198);
             lblIdentityCode.Name = "lblIdentityCode";
-            lblIdentityCode.Size = new Size(473, 48);
+            lblIdentityCode.Size = new Size(473, 44);
             lblIdentityCode.TabIndex = 9;
             lblIdentityCode.Text = "_";
             lblIdentityCode.TextAlign = ContentAlignment.MiddleLeft;
@@ -320,10 +322,10 @@ namespace iParkingv5_window.Forms.DataForms
             panel2.Controls.Add(lblPlateIn);
             panel2.Controls.Add(btnCopy);
             panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(144, 64);
+            panel2.Location = new Point(144, 59);
             panel2.Margin = new Padding(0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(479, 52);
+            panel2.Size = new Size(479, 48);
             panel2.TabIndex = 14;
             // 
             // lblPlateIn
@@ -332,7 +334,7 @@ namespace iParkingv5_window.Forms.DataForms
             lblPlateIn.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             lblPlateIn.Location = new Point(0, 0);
             lblPlateIn.Name = "lblPlateIn";
-            lblPlateIn.Size = new Size(432, 52);
+            lblPlateIn.Size = new Size(432, 48);
             lblPlateIn.TabIndex = 10;
             lblPlateIn.Text = "_";
             lblPlateIn.TextAlign = ContentAlignment.MiddleLeft;
@@ -344,7 +346,7 @@ namespace iParkingv5_window.Forms.DataForms
             btnCopy.Image = Properties.Resources.icons8_copy_24px;
             btnCopy.Location = new Point(432, 0);
             btnCopy.Name = "btnCopy";
-            btnCopy.Size = new Size(47, 52);
+            btnCopy.Size = new Size(47, 48);
             btnCopy.TabIndex = 11;
             toolTip1.SetToolTip(btnCopy, "Bấm để chỉnh sửa biển số ra giống biển số vào");
             btnCopy.UseVisualStyleBackColor = true;
@@ -356,7 +358,7 @@ namespace iParkingv5_window.Forms.DataForms
             panelEventPic.Dock = DockStyle.Right;
             panelEventPic.Location = new Point(624, 0);
             panelEventPic.Name = "panelEventPic";
-            panelEventPic.Size = new Size(321, 365);
+            panelEventPic.Size = new Size(321, 338);
             panelEventPic.TabIndex = 3;
             // 
             // tableLayoutPanel1
@@ -371,7 +373,7 @@ namespace iParkingv5_window.Forms.DataForms
             tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(321, 365);
+            tableLayoutPanel1.Size = new Size(321, 338);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // picOverview
@@ -379,7 +381,7 @@ namespace iParkingv5_window.Forms.DataForms
             picOverview.Dock = DockStyle.Fill;
             picOverview.Location = new Point(3, 3);
             picOverview.Name = "picOverview";
-            picOverview.Size = new Size(315, 176);
+            picOverview.Size = new Size(315, 163);
             picOverview.SizeMode = PictureBoxSizeMode.Zoom;
             picOverview.TabIndex = 0;
             picOverview.TabStop = false;
@@ -388,9 +390,9 @@ namespace iParkingv5_window.Forms.DataForms
             // picVehicle
             // 
             picVehicle.Dock = DockStyle.Fill;
-            picVehicle.Location = new Point(3, 185);
+            picVehicle.Location = new Point(3, 172);
             picVehicle.Name = "picVehicle";
-            picVehicle.Size = new Size(315, 177);
+            picVehicle.Size = new Size(315, 163);
             picVehicle.SizeMode = PictureBoxSizeMode.Zoom;
             picVehicle.TabIndex = 0;
             picVehicle.TabStop = false;
@@ -400,6 +402,24 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             toolTip1.IsBalloon = true;
             // 
+            // lblTimer
+            // 
+            lblTimer.AutoSize = true;
+            lblTimer.Dock = DockStyle.Bottom;
+            lblTimer.Font = new Font("Segoe UI", 12F, FontStyle.Italic);
+            lblTimer.ForeColor = Color.FromArgb(255, 128, 0);
+            lblTimer.Location = new Point(0, 396);
+            lblTimer.Name = "lblTimer";
+            lblTimer.Padding = new Padding(0, 3, 0, 3);
+            lblTimer.Size = new Size(204, 27);
+            lblTimer.TabIndex = 8;
+            lblTimer.Text = "Tự động xác nhận/đóng sau";
+            // 
+            // timerAutoConfirm
+            // 
+            timerAutoConfirm.Interval = 1000;
+            timerAutoConfirm.Tick += timerAutoConfirm_Tick;
+            // 
             // frmConfirmOut
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -407,6 +427,7 @@ namespace iParkingv5_window.Forms.DataForms
             AutoSize = true;
             ClientSize = new Size(945, 485);
             Controls.Add(panel1);
+            Controls.Add(lblTimer);
             Controls.Add(lblMessage);
             Controls.Add(panelAction);
             DoubleBuffered = true;
@@ -431,6 +452,7 @@ namespace iParkingv5_window.Forms.DataForms
             ((System.ComponentModel.ISupportInitialize)picOverview).EndInit();
             ((System.ComponentModel.ISupportInitialize)picVehicle).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -463,5 +485,7 @@ namespace iParkingv5_window.Forms.DataForms
         private Panel panel2;
         private Button btnCopy;
         private ToolTip toolTip1;
+        private Label lblTimer;
+        private System.Windows.Forms.Timer timerAutoConfirm;
     }
 }
