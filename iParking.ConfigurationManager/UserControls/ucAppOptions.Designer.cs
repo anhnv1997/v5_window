@@ -30,6 +30,7 @@
         {
             groupBox2 = new GroupBox();
             chbIsCheckKey = new CheckBox();
+            chbIsUseInvoice = new CheckBox();
             chbIsIntergratedScaleStation = new CheckBox();
             numRetakePhotoDelayTime = new NumericUpDown();
             numRetakePhotoTurn = new NumericUpDown();
@@ -39,21 +40,26 @@
             label10 = new Label();
             label3 = new Label();
             label11 = new Label();
+            numAutoReturnDialogTime = new NumericUpDown();
             numLoopDelay = new NumericUpDown();
+            label14 = new Label();
             label9 = new Label();
+            label13 = new Label();
             label8 = new Label();
             label7 = new Label();
+            cbAutoReturnDialogResult = new ComboBox();
             cbPrintTemplate = new ComboBox();
             txtUpdatePath = new TextBox();
             txtWaitSwipeCardTime = new TextBox();
+            label15 = new Label();
             txtAllowOpenBarrieTime = new TextBox();
             label5 = new Label();
             label1 = new Label();
             label2 = new Label();
-            chbIsUseInvoice = new CheckBox();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoDelayTime).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoTurn).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numAutoReturnDialogTime).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numLoopDelay).BeginInit();
             SuspendLayout();
             // 
@@ -71,13 +77,18 @@
             groupBox2.Controls.Add(label10);
             groupBox2.Controls.Add(label3);
             groupBox2.Controls.Add(label11);
+            groupBox2.Controls.Add(numAutoReturnDialogTime);
             groupBox2.Controls.Add(numLoopDelay);
+            groupBox2.Controls.Add(label14);
             groupBox2.Controls.Add(label9);
+            groupBox2.Controls.Add(label13);
             groupBox2.Controls.Add(label8);
             groupBox2.Controls.Add(label7);
+            groupBox2.Controls.Add(cbAutoReturnDialogResult);
             groupBox2.Controls.Add(cbPrintTemplate);
             groupBox2.Controls.Add(txtUpdatePath);
             groupBox2.Controls.Add(txtWaitSwipeCardTime);
+            groupBox2.Controls.Add(label15);
             groupBox2.Controls.Add(txtAllowOpenBarrieTime);
             groupBox2.Controls.Add(label5);
             groupBox2.Controls.Add(label1);
@@ -87,7 +98,7 @@
             groupBox2.Margin = new Padding(4, 3, 4, 3);
             groupBox2.Name = "groupBox2";
             groupBox2.Padding = new Padding(4, 3, 4, 3);
-            groupBox2.Size = new Size(734, 463);
+            groupBox2.Size = new Size(734, 530);
             groupBox2.TabIndex = 5;
             groupBox2.TabStop = false;
             groupBox2.Text = "Tùy chọn";
@@ -95,23 +106,34 @@
             // chbIsCheckKey
             // 
             chbIsCheckKey.AutoSize = true;
-            chbIsCheckKey.Location = new Point(246, 409);
+            chbIsCheckKey.Location = new Point(246, 476);
             chbIsCheckKey.Margin = new Padding(4);
             chbIsCheckKey.Name = "chbIsCheckKey";
             chbIsCheckKey.Size = new Size(115, 25);
-            chbIsCheckKey.TabIndex = 10;
+            chbIsCheckKey.TabIndex = 13;
             chbIsCheckKey.Text = "Kiểm tra key";
             chbIsCheckKey.UseVisualStyleBackColor = true;
             chbIsCheckKey.Visible = false;
             // 
+            // chbIsUseInvoice
+            // 
+            chbIsUseInvoice.AutoSize = true;
+            chbIsUseInvoice.Location = new Point(246, 443);
+            chbIsUseInvoice.Margin = new Padding(4);
+            chbIsUseInvoice.Name = "chbIsUseInvoice";
+            chbIsUseInvoice.Size = new Size(203, 25);
+            chbIsUseInvoice.TabIndex = 12;
+            chbIsUseInvoice.Text = "Tích hợp hóa đơn điện tử";
+            chbIsUseInvoice.UseVisualStyleBackColor = true;
+            // 
             // chbIsIntergratedScaleStation
             // 
             chbIsIntergratedScaleStation.AutoSize = true;
-            chbIsIntergratedScaleStation.Location = new Point(246, 347);
+            chbIsIntergratedScaleStation.Location = new Point(246, 414);
             chbIsIntergratedScaleStation.Margin = new Padding(4);
             chbIsIntergratedScaleStation.Name = "chbIsIntergratedScaleStation";
             chbIsIntergratedScaleStation.Size = new Size(183, 25);
-            chbIsIntergratedScaleStation.TabIndex = 9;
+            chbIsIntergratedScaleStation.TabIndex = 11;
             chbIsIntergratedScaleStation.Text = "Tích hợp hệ thống cân";
             chbIsIntergratedScaleStation.UseVisualStyleBackColor = true;
             // 
@@ -123,7 +145,7 @@
             numRetakePhotoDelayTime.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numRetakePhotoDelayTime.Name = "numRetakePhotoDelayTime";
             numRetakePhotoDelayTime.Size = new Size(429, 29);
-            numRetakePhotoDelayTime.TabIndex = 6;
+            numRetakePhotoDelayTime.TabIndex = 5;
             // 
             // numRetakePhotoTurn
             // 
@@ -133,7 +155,7 @@
             numRetakePhotoTurn.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numRetakePhotoTurn.Name = "numRetakePhotoTurn";
             numRetakePhotoTurn.Size = new Size(429, 29);
-            numRetakePhotoTurn.TabIndex = 6;
+            numRetakePhotoTurn.TabIndex = 4;
             // 
             // label12
             // 
@@ -148,22 +170,22 @@
             // chbIsAllowEditPlateOut
             // 
             chbIsAllowEditPlateOut.AutoSize = true;
-            chbIsAllowEditPlateOut.Location = new Point(246, 318);
+            chbIsAllowEditPlateOut.Location = new Point(246, 385);
             chbIsAllowEditPlateOut.Margin = new Padding(4, 3, 4, 3);
             chbIsAllowEditPlateOut.Name = "chbIsAllowEditPlateOut";
             chbIsAllowEditPlateOut.Size = new Size(196, 25);
-            chbIsAllowEditPlateOut.TabIndex = 8;
+            chbIsAllowEditPlateOut.TabIndex = 10;
             chbIsAllowEditPlateOut.Text = "Cho phép sửa biển số ra";
             chbIsAllowEditPlateOut.UseVisualStyleBackColor = true;
             // 
             // chbIsSaveLog
             // 
             chbIsSaveLog.AutoSize = true;
-            chbIsSaveLog.Location = new Point(246, 286);
+            chbIsSaveLog.Location = new Point(246, 353);
             chbIsSaveLog.Margin = new Padding(4, 3, 4, 3);
             chbIsSaveLog.Name = "chbIsSaveLog";
             chbIsSaveLog.Size = new Size(147, 25);
-            chbIsSaveLog.TabIndex = 8;
+            chbIsSaveLog.TabIndex = 9;
             chbIsSaveLog.Text = "Lưu log hệ thống";
             chbIsSaveLog.UseVisualStyleBackColor = true;
             // 
@@ -197,6 +219,16 @@
             label11.TabIndex = 7;
             label11.Text = "Delay chụp hình";
             // 
+            // numAutoReturnDialogTime
+            // 
+            numAutoReturnDialogTime.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            numAutoReturnDialogTime.Location = new Point(246, 283);
+            numAutoReturnDialogTime.Margin = new Padding(4, 3, 4, 3);
+            numAutoReturnDialogTime.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            numAutoReturnDialogTime.Name = "numAutoReturnDialogTime";
+            numAutoReturnDialogTime.Size = new Size(429, 29);
+            numAutoReturnDialogTime.TabIndex = 7;
+            // 
             // numLoopDelay
             // 
             numLoopDelay.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -205,7 +237,17 @@
             numLoopDelay.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numLoopDelay.Name = "numLoopDelay";
             numLoopDelay.Size = new Size(429, 29);
-            numLoopDelay.TabIndex = 6;
+            numLoopDelay.TabIndex = 3;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(693, 285);
+            label14.Margin = new Padding(4, 0, 4, 0);
+            label14.Name = "label14";
+            label14.Size = new Size(17, 21);
+            label14.TabIndex = 7;
+            label14.Text = "s";
             // 
             // label9
             // 
@@ -216,6 +258,16 @@
             label9.Size = new Size(146, 21);
             label9.TabIndex = 7;
             label9.Text = "Số lần chụp lại hình";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(6, 285);
+            label13.Margin = new Padding(4, 0, 4, 0);
+            label13.Name = "label13";
+            label13.Size = new Size(202, 21);
+            label13.TabIndex = 7;
+            label13.Text = "Tự động đóng cảnh báo sau";
             // 
             // label8
             // 
@@ -237,6 +289,18 @@
             label7.TabIndex = 7;
             label7.Text = "Loop Delay";
             // 
+            // cbAutoReturnDialogResult
+            // 
+            cbAutoReturnDialogResult.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            cbAutoReturnDialogResult.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbAutoReturnDialogResult.FormattingEnabled = true;
+            cbAutoReturnDialogResult.Items.AddRange(new object[] { "Xác nhận", "Không xác nhận" });
+            cbAutoReturnDialogResult.Location = new Point(246, 318);
+            cbAutoReturnDialogResult.Margin = new Padding(4, 3, 4, 3);
+            cbAutoReturnDialogResult.Name = "cbAutoReturnDialogResult";
+            cbAutoReturnDialogResult.Size = new Size(478, 29);
+            cbAutoReturnDialogResult.TabIndex = 8;
+            // 
             // cbPrintTemplate
             // 
             cbPrintTemplate.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -256,7 +320,7 @@
             txtUpdatePath.Name = "txtUpdatePath";
             txtUpdatePath.PlaceholderText = "Đường dẫn chứa file update";
             txtUpdatePath.Size = new Size(478, 29);
-            txtUpdatePath.TabIndex = 7;
+            txtUpdatePath.TabIndex = 6;
             // 
             // txtWaitSwipeCardTime
             // 
@@ -267,6 +331,16 @@
             txtWaitSwipeCardTime.PlaceholderText = "Thời gian giữa 2 lần quẹt thẻ liên tiếp (s)";
             txtWaitSwipeCardTime.Size = new Size(481, 29);
             txtWaitSwipeCardTime.TabIndex = 1;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Location = new Point(6, 322);
+            label15.Margin = new Padding(4, 0, 4, 0);
+            label15.Name = "label15";
+            label15.Size = new Size(160, 21);
+            label15.TabIndex = 2;
+            label15.Text = "Kết quả tự động đóng";
             // 
             // txtAllowOpenBarrieTime
             // 
@@ -308,17 +382,6 @@
             label2.TabIndex = 2;
             label2.Text = "Thời gian cho phép mở barrie";
             // 
-            // chbIsUseInvoice
-            // 
-            chbIsUseInvoice.AutoSize = true;
-            chbIsUseInvoice.Location = new Point(246, 376);
-            chbIsUseInvoice.Margin = new Padding(4);
-            chbIsUseInvoice.Name = "chbIsUseInvoice";
-            chbIsUseInvoice.Size = new Size(203, 25);
-            chbIsUseInvoice.TabIndex = 9;
-            chbIsUseInvoice.Text = "Tích hợp hóa đơn điện tử";
-            chbIsUseInvoice.UseVisualStyleBackColor = true;
-            // 
             // ucAppOptions
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -333,6 +396,7 @@
             groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoDelayTime).EndInit();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoTurn).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numAutoReturnDialogTime).EndInit();
             ((System.ComponentModel.ISupportInitialize)numLoopDelay).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -367,5 +431,10 @@
         private CheckBox chbIsIntergratedScaleStation;
         private CheckBox chbIsCheckKey;
         private CheckBox chbIsUseInvoice;
+        private NumericUpDown numAutoReturnDialogTime;
+        private Label label14;
+        private Label label13;
+        private ComboBox cbAutoReturnDialogResult;
+        private Label label15;
     }
 }

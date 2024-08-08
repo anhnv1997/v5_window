@@ -580,37 +580,43 @@ namespace iParkingv5_window.Forms.DataForms
         private async void tsmiActiveLanesConfig_Click(object sender, EventArgs e)
         {
             FormClosing -= frmMain_FormClosing;
-
-            foreach (var item in lanes)
+            try
             {
-                var temp = item.SaveUIConfig();
-                if (laneDisplayConfigs != null)
+                foreach (var item in lanes)
                 {
-                    foreach (var laneDisplayConfig in laneDisplayConfigs)
+                    var temp = item.SaveUIConfig();
+                    if (laneDisplayConfigs != null)
                     {
-                        if (laneDisplayConfig.LaneId == item.lane.Id)
+                        foreach (var laneDisplayConfig in laneDisplayConfigs)
                         {
-                            laneDisplayConfig.DisplayIndex = temp.DisplayIndex;
-                            laneDisplayConfig.splitContainerEventContent = temp.splitContainerEventContent;
-                            laneDisplayConfig.splitContainerMain = temp.splitContainerMain;
-                            laneDisplayConfig.SplitterCameraPosition = temp.SplitterCameraPosition;
-                            laneDisplayConfig.splitEventInfoWithCameraPosition = temp.splitEventInfoWithCameraPosition;
-                            laneDisplayConfig.splitContainerCameraPosition = temp.splitContainerCameraPosition;
-                            laneDisplayConfig.splitLastEventPosition = temp.splitLastEventPosition;
+                            if (laneDisplayConfig.LaneId == item.lane.Id)
+                            {
+                                laneDisplayConfig.DisplayIndex = temp.DisplayIndex;
+                                laneDisplayConfig.splitContainerEventContent = temp.splitContainerEventContent;
+                                laneDisplayConfig.splitContainerMain = temp.splitContainerMain;
+                                laneDisplayConfig.SplitterCameraPosition = temp.SplitterCameraPosition;
+                                laneDisplayConfig.splitEventInfoWithCameraPosition = temp.splitEventInfoWithCameraPosition;
+                                laneDisplayConfig.splitContainerCameraPosition = temp.splitContainerCameraPosition;
+                                laneDisplayConfig.splitLastEventPosition = temp.splitLastEventPosition;
+                            }
                         }
                     }
+
+
                 }
+                SaveUIConfig();
 
-
+                foreach (var item in controllers)
+                {
+                    item.PollingStop();
+                    await item.DisconnectAsync();
+                }
+                controllers.Clear();
             }
-            SaveUIConfig();
-
-            foreach (var item in controllers)
+            catch (Exception ex)
             {
-                item.PollingStop();
-                await item.DisconnectAsync();
             }
-            controllers.Clear();
+           
             frmSelectLaneMode frm = new frmSelectLaneMode()
             {
                 Owner = this.Owner,

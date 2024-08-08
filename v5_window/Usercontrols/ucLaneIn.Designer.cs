@@ -38,6 +38,9 @@ namespace iParkingv5_window.Usercontrols
             ucEventCount1 = new ucEventCount();
             panelLastEvent = new Panel();
             panelNearestEvent = new Panel();
+            panelThirdParty = new TableLayoutPanel();
+            btnRegister = new Button();
+            btnPrintQR = new Button();
             label2 = new Label();
             splitContainerEventContent = new SplitContainer();
             panelLpr = new Panel();
@@ -61,15 +64,16 @@ namespace iParkingv5_window.Usercontrols
             panel1 = new Panel();
             panel7 = new Panel();
             pictureBox2 = new PictureBox();
-            toolTip1 = new ToolTip(components);
-            toolTip2 = new ToolTip(components);
-            toolTip3 = new ToolTip(components);
+            toolTipOpenBarrie = new ToolTip(components);
+            toolTipReTakePhoto = new ToolTip(components);
+            toolTipWriteIn = new ToolTip(components);
             splitterEventInfoWithCamera = new Splitter();
             panelEventData = new Panel();
             tableLayoutPanel3 = new TableLayoutPanel();
             label4 = new Label();
             label5 = new Label();
             timerRefreshUI = new System.Windows.Forms.Timer(components);
+            toolTipSetting = new ToolTip(components);
             panelCameras.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainerMain).BeginInit();
             splitContainerMain.Panel1.SuspendLayout();
@@ -90,6 +94,8 @@ namespace iParkingv5_window.Usercontrols
             splitContainerLastEvent.Panel2.SuspendLayout();
             splitContainerLastEvent.SuspendLayout();
             panelLastEvent.SuspendLayout();
+            panelNearestEvent.SuspendLayout();
+            panelThirdParty.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainerEventContent).BeginInit();
             splitContainerEventContent.Panel1.SuspendLayout();
             splitContainerEventContent.Panel2.SuspendLayout();
@@ -127,7 +133,6 @@ namespace iParkingv5_window.Usercontrols
             // panelCameras
             // 
             panelCameras.BackColor = Color.White;
-            panelCameras.BorderStyle = BorderStyle.FixedSingle;
             panelCameras.Controls.Add(label15);
             panelCameras.Dock = DockStyle.Fill;
             panelCameras.Location = new Point(0, 0);
@@ -143,7 +148,7 @@ namespace iParkingv5_window.Usercontrols
             label15.ForeColor = Color.Green;
             label15.Location = new Point(0, 0);
             label15.Name = "label15";
-            label15.Size = new Size(314, 37);
+            label15.Size = new Size(316, 37);
             label15.TabIndex = 3;
             label15.Text = "CAM LỐI VÀO";
             label15.TextAlign = ContentAlignment.MiddleCenter;
@@ -363,12 +368,50 @@ namespace iParkingv5_window.Usercontrols
             // 
             // panelNearestEvent
             // 
+            panelNearestEvent.Controls.Add(panelThirdParty);
             panelNearestEvent.Dock = DockStyle.Fill;
             panelNearestEvent.Location = new Point(0, 27);
             panelNearestEvent.Margin = new Padding(0);
             panelNearestEvent.Name = "panelNearestEvent";
             panelNearestEvent.Size = new Size(416, 250);
             panelNearestEvent.TabIndex = 8;
+            // 
+            // panelThirdParty
+            // 
+            panelThirdParty.ColumnCount = 1;
+            panelThirdParty.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            panelThirdParty.Controls.Add(btnRegister, 0, 0);
+            panelThirdParty.Controls.Add(btnPrintQR, 0, 1);
+            panelThirdParty.Dock = DockStyle.Right;
+            panelThirdParty.Location = new Point(216, 0);
+            panelThirdParty.Name = "panelThirdParty";
+            panelThirdParty.RowCount = 2;
+            panelThirdParty.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            panelThirdParty.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            panelThirdParty.Size = new Size(200, 250);
+            panelThirdParty.TabIndex = 0;
+            // 
+            // btnRegister
+            // 
+            btnRegister.Dock = DockStyle.Fill;
+            btnRegister.Location = new Point(3, 3);
+            btnRegister.Name = "btnRegister";
+            btnRegister.Size = new Size(194, 119);
+            btnRegister.TabIndex = 0;
+            btnRegister.Text = "Đăng ký";
+            btnRegister.UseVisualStyleBackColor = true;
+            btnRegister.Click += btnRegister_Click_1;
+            // 
+            // btnPrintQR
+            // 
+            btnPrintQR.Dock = DockStyle.Fill;
+            btnPrintQR.Location = new Point(3, 128);
+            btnPrintQR.Name = "btnPrintQR";
+            btnPrintQR.Size = new Size(194, 119);
+            btnPrintQR.TabIndex = 0;
+            btnPrintQR.Text = "In QR";
+            btnPrintQR.UseVisualStyleBackColor = true;
+            btnPrintQR.Click += btnPrintQR_Click;
             // 
             // label2
             // 
@@ -462,10 +505,11 @@ namespace iParkingv5_window.Usercontrols
             // 
             // txtPlate
             // 
-            txtPlate.BackColor = SystemColors.HighlightText;
+            txtPlate.BackColor = SystemColors.ButtonHighlight;
             txtPlate.BorderStyle = BorderStyle.None;
             txtPlate.Dock = DockStyle.Bottom;
             txtPlate.Font = new Font("Segoe UI", 36F, FontStyle.Bold);
+            txtPlate.ForeColor = Color.Black;
             txtPlate.Location = new Point(0, 32);
             txtPlate.Margin = new Padding(0);
             txtPlate.Name = "txtPlate";
@@ -761,6 +805,8 @@ namespace iParkingv5_window.Usercontrols
             ((System.ComponentModel.ISupportInitialize)splitContainerLastEvent).EndInit();
             splitContainerLastEvent.ResumeLayout(false);
             panelLastEvent.ResumeLayout(false);
+            panelNearestEvent.ResumeLayout(false);
+            panelThirdParty.ResumeLayout(false);
             splitContainerEventContent.Panel1.ResumeLayout(false);
             splitContainerEventContent.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainerEventContent).EndInit();
@@ -812,9 +858,9 @@ namespace iParkingv5_window.Usercontrols
         private Button btnOpenBarrie;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
-        private ToolTip toolTip1;
-        private ToolTip toolTip2;
-        private ToolTip toolTip3;
+        private ToolTip toolTipOpenBarrie;
+        private ToolTip toolTipReTakePhoto;
+        private ToolTip toolTipWriteIn;
         private PictureBox picRetakePhoto;
         private Panel panel8;
         private PictureBox picWriteIn;
@@ -845,5 +891,9 @@ namespace iParkingv5_window.Usercontrols
         private SplitContainer splitContainerCamera;
         private System.Windows.Forms.Timer timerRefreshUI;
         private SplitContainer splitContainerLastEvent;
+        private ToolTip toolTipSetting;
+        private TableLayoutPanel panelThirdParty;
+        private Button btnRegister;
+        private Button btnPrintQR;
     }
 }

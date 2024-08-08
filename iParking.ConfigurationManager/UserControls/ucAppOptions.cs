@@ -16,7 +16,7 @@ namespace iParking.ConfigurationManager.UserControls
             InitializeComponent();
             this.appOption = appOption;
             LoadPrintTemplate();
-
+            numAutoReturnDialogTime.ValueChanged += NumAutoReturnDialogTime_ValueChanged;
             if (this.appOption != null)
             {
                 txtAllowOpenBarrieTime.Text = appOption!.AllowBarrieDelayOpenTime.ToString();
@@ -31,10 +31,25 @@ namespace iParking.ConfigurationManager.UserControls
                 chbIsIntergratedScaleStation.Checked = appOption.IsIntergratedScaleStation;
                 chbIsCheckKey.Checked = appOption.IsCheckKey;
                 chbIsUseInvoice.Checked = appOption.IsIntergratedEInvoice;
+                numAutoReturnDialogTime.Value = appOption.AutoRejectDialogTime;
+                cbAutoReturnDialogResult.SelectedIndex = appOption.AutoRejectDialogResult ? 0 : 1;
             }
             txtWaitSwipeCardTime.TextChanged += TxtWaitSwipeCardTime_TextChanged;
             txtAllowOpenBarrieTime.TextChanged += TxtAllowOpenBarrieTime_TextChanged;
         }
+
+        private void NumAutoReturnDialogTime_ValueChanged(object? sender, EventArgs e)
+        {
+            if (numAutoReturnDialogTime.Value <= 0)
+            {
+                cbAutoReturnDialogResult.Enabled = false;
+            }
+            else
+            {
+                cbAutoReturnDialogResult.Enabled = true;
+            }
+        }
+
         public void DisplayDevelopMode(bool isDisplay)
         {
             chbIsCheckKey.Visible = isDisplay;
@@ -75,6 +90,8 @@ namespace iParking.ConfigurationManager.UserControls
                 IsIntergratedScaleStation = chbIsIntergratedScaleStation.Checked,
                 IsCheckKey = chbIsCheckKey.Checked,
                 IsIntergratedEInvoice = chbIsUseInvoice.Checked,
+                AutoRejectDialogResult = cbAutoReturnDialogResult.SelectedIndex == 0 ? true : false,
+                AutoRejectDialogTime = (int)numAutoReturnDialogTime.Value,
             };
         }
         #endregion End Public Function

@@ -141,6 +141,15 @@ namespace iParkingv5_window.Usercontrols
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
+            foreach (var cam in this.camBienSoOTODuPhongs)
+            {
+                cam?.Stop();
+            }
+            foreach (var cam in this.camBienSoXeMayDuPhongs)
+            {
+                cam?.Stop();
+            }
+            ucEventCount1.Stop();
             if (disposing && (components != null))
             {
                 components.Dispose();
@@ -399,7 +408,10 @@ namespace iParkingv5_window.Usercontrols
                     }
                     else
                     {
-                        bool isConfirm = MessageBox.Show(errorMessage, "Thông báo", MessageBoxButtons.YesNo) == DialogResult.Yes;
+                        frmConfirm frmConfirm = new frmConfirm(errorMessage);
+                        bool isConfirm = frmConfirm.ShowDialog() == DialogResult.OK;
+                        frmConfirm.Dispose();
+
                         if (isConfirm)
                         {
                             goto CheckOutWithForce;
@@ -486,7 +498,7 @@ namespace iParkingv5_window.Usercontrols
                         bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
                         if (!isConfirm)
                         {
-                            lblResult.UpdateResultMessage("Không xác nhận mở barrie",ProcessColor);
+                            lblResult.UpdateResultMessage("Không xác nhận mở barrie", ProcessColor);
                             return;
                         }
                         else
@@ -730,7 +742,7 @@ namespace iParkingv5_window.Usercontrols
                 }
                 else
                 {
-                    lblResult.UpdateResultMessage("Không xác nhận sự kiện ra",ProcessColor);
+                    lblResult.UpdateResultMessage("Không xác nhận sự kiện ra", ProcessColor);
                     ClearView();
                     return;
                 }
@@ -753,7 +765,7 @@ namespace iParkingv5_window.Usercontrols
                     bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
                     if (!isConfirm)
                     {
-                        lblResult.UpdateResultMessage("Không xác nhận mở barrie",ProcessColor);
+                        lblResult.UpdateResultMessage("Không xác nhận mở barrie", ProcessColor);
                         return;
                     }
                     else
@@ -811,7 +823,7 @@ namespace iParkingv5_window.Usercontrols
                         bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
                         if (!isConfirm)
                         {
-                            lblResult.UpdateResultMessage("Không xác nhận mở barrie",ProcessColor);
+                            lblResult.UpdateResultMessage("Không xác nhận mở barrie", ProcessColor);
                             return;
                         }
                         else
@@ -872,9 +884,11 @@ namespace iParkingv5_window.Usercontrols
             {
                 if (identity.Vehicles.Count == 1)
                 {
+                    string message = "Không nhận diện được biển số, bạn có muốn cho xe ra khỏi bãi?";
+                    frmConfirm frmConfirm = new frmConfirm(message);
+                    bool isConfirm = frmConfirm.ShowDialog() == DialogResult.OK;
+                    frmConfirm.Dispose();
 
-                    bool isConfirm = MessageBox.Show("Không nhận diện được biển số, bạn có muốn cho xe ra khỏi bãi?", "Thông báo",
-                                                     MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
                     if (isConfirm)
                     {
                         isAlarm = true;
@@ -941,7 +955,7 @@ namespace iParkingv5_window.Usercontrols
                         bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
                         if (!isConfirm)
                         {
-                            lblResult.UpdateResultMessage("Không xác nhận mở barrie",ProcessColor);
+                            lblResult.UpdateResultMessage("Không xác nhận mở barrie", ProcessColor);
                             return;
                         }
                         else
@@ -1023,7 +1037,7 @@ namespace iParkingv5_window.Usercontrols
                         bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
                         if (!isConfirm)
                         {
-                            lblResult.UpdateResultMessage("Không xác nhận mở barrie",ProcessColor);
+                            lblResult.UpdateResultMessage("Không xác nhận mở barrie", ProcessColor);
                             return;
                         }
                         else
@@ -1284,7 +1298,11 @@ namespace iParkingv5_window.Usercontrols
             string printTemplatePath = PathManagement.appPrintTemplateConfigPath(((EmPrintTemplate)StaticPool.appOption.PrintTemplate).ToString());
             if (File.Exists(printTemplatePath))
             {
-                bool isConfirm = MessageBox.Show("Bạn có muốn in phiếu thu?", "In hóa đơn", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
+                string message = "Bạn có muốn in phiếu thu?";
+                frmConfirm frmConfirm = new frmConfirm(message);
+                bool isConfirm = frmConfirm.ShowDialog() == DialogResult.OK;
+                frmConfirm.Dispose();
+
                 if (!isConfirm)
                 {
                     return;
@@ -1932,7 +1950,11 @@ namespace iParkingv5_window.Usercontrols
             {
                 return "";
             }
-            bool isConfirmSendEinvoie = MessageBox.Show($"Bạn có muốn gửi hóa đơn ({TextFormatingTool.GetMoneyFormat(eventOut.Charge.ToString())}) không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
+            string message = $"Bạn có muốn gửi hóa đơn ({TextFormatingTool.GetMoneyFormat(eventOut.Charge.ToString())}) không?";
+            frmConfirm frmConfirm = new frmConfirm(message);
+            bool isConfirmSendEinvoie = frmConfirm.ShowDialog() == DialogResult.OK;
+            frmConfirm.Dispose();
+
             if (isConfirmSendEinvoie)
             {
                 InvoiceResponse? invoiceDto = await AppData.ApiServer.invoiceService.CreateEinvoice(eventOut.Charge, eventOut.EventIn.PlateNumber,

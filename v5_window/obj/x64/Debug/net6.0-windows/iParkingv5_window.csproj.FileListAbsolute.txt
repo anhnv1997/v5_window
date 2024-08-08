@@ -409,3 +409,11 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\D
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.Printer.deps.json
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.Printer.runtimeconfig.json
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.Printer.exe
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.ThirdPartyForms.OfficeHausForms.frmAddVisitor.resources
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Sdcb.PaddleOCR.xml
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Emgu.CV.Platform.NetStandard.xml
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Sdcb.PaddleOCR.Models.Local.xml
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Sdcb.PaddleInference.xml
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Emgu.CV.Bitmap.xml
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Sdcb.PaddleOCR.Models.LocalV4.xml
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.DataForms.frmConfirm.resources

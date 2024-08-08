@@ -133,3 +133,9 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\obj\x64\Debug\net6.0-windows\iParkingv5.Controller.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\obj\x64\Debug\net6.0-windows\iParkingv5.Controller.genruntimeconfig.cache
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\obj\x64\Debug\net6.0-windows\ref\iParkingv5.Controller.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\Sdcb.PaddleOCR.xml
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\Emgu.CV.Platform.NetStandard.xml
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\Sdcb.PaddleOCR.Models.Local.xml
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\Sdcb.PaddleInference.xml
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\Emgu.CV.Bitmap.xml
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\Sdcb.PaddleOCR.Models.LocalV4.xml
