@@ -83,26 +83,50 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="AForge">
+      <HintPath>..\packages\CameraLib\GeneralCam\AForge.dll</HintPath>
+    </Reference>
     <Reference Include="AForge.Imaging">
-      <HintPath>..\..\..\..\..\..\4..Library Reference\CameraLib\AForge.Imaging.dll</HintPath>
+      <HintPath>..\packages\CameraLib\GeneralCam\AForge.Imaging.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Video.DirectShowEx">
-      <HintPath>..\..\..\..\..\..\4..Library Reference\CameraLib\AForge.Video.DirectShowEx.dll</HintPath>
+      <HintPath>..\packages\CameraLib\GeneralCam\AForge.Video.DirectShowEx.dll</HintPath>
     </Reference>
     <Reference Include="AForge.VideoEx">
-      <HintPath>..\..\..\..\..\..\4..Library Reference\CameraLib\AForge.VideoEx.dll</HintPath>
+      <HintPath>..\packages\CameraLib\GeneralCam\AForge.VideoEx.dll</HintPath>
     </Reference>
     <Reference Include="Kztek.Security">
-      <HintPath>..\..\..\..\..\KeyLib\Kztek.Security.dll</HintPath>
+      <HintPath>..\packages\KeyLib\Kztek.Security.dll</HintPath>
     </Reference>
     <Reference Include="Kztek.Utilities">
-      <HintPath>..\..\..\..\..\KeyLib\Kztek.Utilities.dll</HintPath>
+      <HintPath>..\packages\KeyLib\Kztek.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="KztekKeyRegister">
-      <HintPath>..\..\..\..\..\KeyLib\KztekKeyRegister.dll</HintPath>
+      <HintPath>..\packages\KeyLib\KztekKeyRegister.dll</HintPath>
+    </Reference>
+    <Reference Include="NXT.Net6.LPR_AI">
+      <HintPath>..\packages\LprLib\LPR_09082024\NXT.Net6.LPR_AI.dll</HintPath>
     </Reference>
     <Reference Include="SayMoney">
-      <HintPath>..\packages\SayMoney.dll</HintPath>
+      <HintPath>..\packages\Extension\SayMoney.dll</HintPath>
+    </Reference>
+    <Reference Include="Sdcb.PaddleInference">
+      <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleInference.dll</HintPath>
+    </Reference>
+    <Reference Include="Sdcb.PaddleOCR">
+      <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleOCR.dll</HintPath>
+    </Reference>
+    <Reference Include="Sdcb.PaddleOCR.Models.Local">
+      <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.Local.dll</HintPath>
+    </Reference>
+    <Reference Include="Sdcb.PaddleOCR.Models.LocalV3">
+      <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.LocalV3.dll</HintPath>
+    </Reference>
+    <Reference Include="Sdcb.PaddleOCR.Models.LocalV4">
+      <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.LocalV4.dll</HintPath>
+    </Reference>
+    <Reference Include="Sdcb.PaddleOCR.Models.Shared">
+      <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.Shared.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

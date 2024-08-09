@@ -53,13 +53,10 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManag
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\NXT.Net6.LPR_AI.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\DarknetYolo.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Sdcb.PaddleOCR.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Emgu.CV.Platform.NetStandard.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Sdcb.PaddleOCR.Models.Local.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Sdcb.PaddleInference.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Emgu.CV.Bitmap.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Sdcb.PaddleOCR.Models.Shared.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Sdcb.PaddleOCR.Models.LocalV3.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Sdcb.PaddleOCR.Models.LocalV4.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Kztek.Tool.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\iParkingv5.Objects.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\iParkingv5.Lpr.pdb
@@ -75,8 +72,7 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManag
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\obj\x64\Debug\netstandard2.1\iParkingv5.ApiManager.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\obj\x64\Debug\netstandard2.1\iParkingv5.ApiManager.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Sdcb.PaddleOCR.xml
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Emgu.CV.Platform.NetStandard.xml
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Sdcb.PaddleOCR.Models.Local.xml
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Sdcb.PaddleInference.xml
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Emgu.CV.Bitmap.xml
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Sdcb.PaddleOCR.Models.LocalV4.xml
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Emgu.CV.dll

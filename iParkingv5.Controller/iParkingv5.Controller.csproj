@@ -22,16 +22,13 @@
 
   <ItemGroup>
     <Reference Include="Aopu_Controller">
-      <HintPath>..\packages\Aopu_Controller.dll</HintPath>
+      <HintPath>..\packages\ControllerLib\Aopu\Aopu_Controller.dll</HintPath>
     </Reference>
     <Reference Include="DahuaLib">
-      <HintPath>..\packages\DahuaLib.dll</HintPath>
+      <HintPath>..\packages\CameraLib\Dahua\DahuaLib.dll</HintPath>
     </Reference>
     <Reference Include="Ingressus">
-      <HintPath>..\packages\Ingressus.dll</HintPath>
-    </Reference>
-    <Reference Include="Interop.AccessTcp">
-      <HintPath>..\packages\Interop.AccessTcp.dll</HintPath>
+      <HintPath>..\packages\ControllerLib\Ingressus\Ingressus.dll</HintPath>
     </Reference>
   </ItemGroup>
 
