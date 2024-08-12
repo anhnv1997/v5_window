@@ -369,6 +369,7 @@ namespace iParkingv5_window.Usercontrols
             EventInData? eventIn = null;
             if (string.IsNullOrEmpty(plateNumber) && identityGroup.PlateNumberValidation != (int)EmPlateCompareRule.UnCheck)
             {
+                isAlarm = true;
                 bool isConfirm = false;
                 if (identity.Vehicles.Count == 1)
                 {
@@ -487,6 +488,7 @@ namespace iParkingv5_window.Usercontrols
             var checkInOutResponse = CheckEventInReponse(eventInResponse, null, vehicleType, plateNumber, false);
             if (!checkInOutResponse.IsValidEvent)
             {
+                isAlarm = true;
                 if (checkInOutResponse.IsContinueExcecute)
                 {
                     frmConfirm frmConfirm = new frmConfirm(checkInOutResponse.ErrorMessage);

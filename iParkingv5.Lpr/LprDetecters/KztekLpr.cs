@@ -48,6 +48,7 @@ namespace iParkingv5.LprDetecter.LprDetecters
                 }
                 else
                 {
+
                     motorANPR!.Analyze(ref lPRObject_Result);
 
                     plateNumber = lPRObject_Result.plateNumber;

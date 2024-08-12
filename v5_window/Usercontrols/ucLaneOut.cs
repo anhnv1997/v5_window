@@ -211,8 +211,8 @@ namespace iParkingv5_window.Usercontrols
                 ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
                                                       where _controllerInLane.controlUnitId == ie.DeviceId
                                                       select _controllerInLane).FirstOrDefault();
-                BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
-                AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
+                _ = BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
+                _ = AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
             }
             else
             {
@@ -220,7 +220,7 @@ namespace iParkingv5_window.Usercontrols
                                                                 eventOut.EventIn.PlateNumber ?? "",
                                                                 eventOut.EventIn?.Identity?.Name ?? "",
                                                                 eventOut.EventIn?.IdentityGroup?.Name ?? "",
-                                                                eventOut.EventIn?.images,
+                                                                eventOut.EventIn?.images ?? new Dictionary<EmParkingImageType, List<ImageData>>(),
                                                                 eventOut.EventIn?.DateTimeIn ?? DateTime.Now, false, eventOut.Charge);
                 bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
                 if (!isConfirm)
@@ -234,8 +234,8 @@ namespace iParkingv5_window.Usercontrols
                     ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
                                                           where _controllerInLane.controlUnitId == ie.DeviceId
                                                           select _controllerInLane).FirstOrDefault();
-                    BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
-                    AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
+                    _ = BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
+                    _ = AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
                 }
             }
 
@@ -384,175 +384,99 @@ namespace iParkingv5_window.Usercontrols
         {
             EventOutData? eventOut = null;
             List<EmParkingImageType> validImageTypes = BaseLane.GetValidImageType(overviewImg, vehicleImg, lprImage);
+            EventInData? eventIn = null;
 
             bool isAlarm = false;
             var eventOutResponse = await AppData.ApiServer.parkingProcessService.PostCheckOutAsync(lane.Id, plateNumber, identity, validImageTypes, false);
-            if (eventOutResponse == null)
+            var checkInOutResponse = CheckEventOutReponse(eventOutResponse, null, vehicleType, plateNumber, false);
+            if (!checkInOutResponse.IsValidEvent)
             {
-                goto LOI_HE_THONG;
-            }
-            eventOut = eventOutResponse.Item1;
-            var errorData = eventOutResponse.Item2;
-
-            EventInData? eventIn = null;
-
-            string errorMessage;
-            if (errorData != null)
-            {
-                if (errorData.fields == null || errorData.Payload == null)
+                isAlarm = true;
+                if (!checkInOutResponse.IsContinueExcecute)
                 {
-                    goto LOI_HE_THONG;
+                    return;
                 }
-
-                errorMessage = errorData.fields.Count > 0 ? (errorData.fields[0].ToString() ?? "") : errorData.detailCode;
-                if (errorData.Payload is not null)
+                else
                 {
-                    string data = errorData.Payload.ContainsKey("EventIn") ? errorData.Payload["EventIn"].ToString() : "";
-                    eventIn = Newtonsoft.Json.JsonConvert.DeserializeObject<EventInData>(data);
-                }
-                if (eventIn == null)
-                {
-                    goto SU_KIEN_LOI;
-                }
-
-                if (errorMessage != "Biển số vào ra không khớp".ToUpper())
-                {
-                    goto SU_KIEN_LOI;
-                }
-
-
-                frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, errorMessage, eventIn.PlateNumber ?? "",
+                    if (checkInOutResponse.ErrorData?.Payload is not null)
+                    {
+                        string data = checkInOutResponse.ErrorData.Payload.ContainsKey("EventIn") ? checkInOutResponse.ErrorData.Payload["EventIn"].ToString() : "";
+                        if (!string.IsNullOrEmpty(data))
+                        {
+                            eventIn = Newtonsoft.Json.JsonConvert.DeserializeObject<EventInData>(data);
+                        }
+                    }
+                    if (eventIn == null)
+                    {
+                        ExcecuteSystemErrorCheckOut();
+                        return;
+                    }
+                    bool isConfirm = false;
+                    frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, checkInOutResponse.ErrorMessage, eventIn.PlateNumber ?? "",
                                                                 eventIn.Identity?.Name ?? "",
                                                                 eventIn.IdentityGroup?.Name ?? "",
                                                                 eventIn.images, eventIn.DateTimeIn ?? DateTime.Now,
-                                                                true, eventIn?.Charge ?? 0);
-                if (frmConfirmOut.ShowDialog() == DialogResult.OK)
-                {
-                    if (plateNumber.ToUpper() != frmConfirmOut.updatePlate.ToUpper())
+                                                                true, eventIn.Charge);
+                    if (frmConfirmOut.ShowDialog() == DialogResult.OK)
                     {
-                        LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, specailName: "LPR_EDIT_OUT",
-                                      mo_ta_them: "Sửa biển số khi quẹt thẻ EventInId: " + eventIn.Id +
-                                                  "\r\nOld Plate: " + plateNumber +
-                                                  " => New Plate: " + frmConfirmOut.updatePlate);
+                        if (plateNumber.ToUpper() != frmConfirmOut.updatePlate.ToUpper())
+                        {
+                            LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, specailName: "LPR_EDIT_OUT",
+                                          mo_ta_them: "Sửa biển số khi quẹt thẻ EventInId: " + eventIn.Id +
+                                                      "\r\nOld Plate: " + plateNumber +
+                                                      " => New Plate: " + frmConfirmOut.updatePlate);
+                        }
+                        plateNumber = frmConfirmOut.updatePlate.ToUpper();
+                        isConfirm = true;
                     }
-                    plateNumber = frmConfirmOut.updatePlate.ToUpper();
-                    goto CheckOutWithForce;
+                    if (!isConfirm)
+                    {
+                        lblResult.UpdateResultMessage("Không xác nhận sự kiện ra", ProcessColor);
+                        ClearView();
+                        return;
+                    }
+                    eventOutResponse = await AppData.ApiServer.parkingProcessService.PostCheckOutAsync(lane.Id, plateNumber, identity,
+                                                                                                       validImageTypes, true);
+                    checkInOutResponse = CheckEventOutReponse(eventOutResponse, null, vehicleType, plateNumber, true);
+                    if (!checkInOutResponse.IsValidEvent)
+                        return;
                 }
-                else
-                {
-                    lblResult.UpdateResultMessage("Không xác nhận sự kiện ra", ProcessColor);
-                    ClearView();
-                    return;
-                }
+            }
+
+            eventOut = eventOutResponse.Item1!;
+            eventIn = eventOut.EventIn!;
+
+            if (eventOut.OpenBarrier)
+            {
+                _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
+                _ = AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
             }
             else
             {
-                eventIn = eventOut.EventIn;
-                if (eventOut.OpenBarrier)
+                frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, "Bạn có xác nhận mở barrie?",
+                                                                eventIn.PlateNumber ?? "",
+                                                                eventIn.Identity?.Name ?? "",
+                                                                eventIn.IdentityGroup?.Name ?? "",
+                                                                eventIn.images ?? new Dictionary<EmParkingImageType, List<ImageData>>(),
+                                                                eventIn.DateTimeIn ?? DateTime.Now, false, eventOut.Charge);
+                bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
+                if (!isConfirm)
                 {
+                    lblResult.UpdateResultMessage("Không xác nhận mở barrie", ProcessColor);
+                    return;
+                }
+                else
+                {
+                    plateNumber = frmConfirmOut.updatePlate.ToUpper();
                     _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
+                    eventOut.PlateNumber = plateNumber;
                     _ = AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
                 }
-                else
-                {
-                    frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, "Bạn có xác nhận mở barrie?", eventIn.PlateNumber ?? "",
-                                                                    eventIn.Identity?.Name ?? "",
-                                                                    eventIn.IdentityGroup?.Name ?? "",
-                                                                    eventIn.images, eventIn.DateTimeIn ?? DateTime.Now,
-                                                                    false, eventOut.Charge);
-                    bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
-                    if (!isConfirm)
-                    {
-                        lblResult.UpdateResultMessage("Không xác nhận mở barrie", ProcessColor);
-                        return;
-                    }
-                    else
-                    {
-                        plateNumber = frmConfirmOut.updatePlate.ToUpper();
-                        eventOut.PlateNumber = plateNumber;
-                        BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
-                        AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
-                    }
-                }
-                goto SU_KIEN_HOP_LE;
             }
 
-        CheckOutWithForce:
-            {
-                eventOutResponse = await AppData.ApiServer.parkingProcessService.PostCheckOutAsync(lane.Id, plateNumber, identity, validImageTypes, true);
-                if (eventOutResponse == null)
-                {
-                    goto LOI_HE_THONG;
-                }
-                eventOut = eventOutResponse.Item1;
-                errorData = eventOutResponse.Item2;
-
-
-                if (errorData != null)
-                {
-                    if (errorData.fields == null || errorData.fields.Count == 0)
-                    {
-                        goto LOI_HE_THONG;
-                    }
-
-                    errorMessage = errorData.fields[0].ToString();
-                    goto SU_KIEN_LOI;
-                }
-                else
-                {
-                    eventIn = eventOut.EventIn;
-                    if (eventOut.OpenBarrier)
-                    {
-                        _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
-                        _ = AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
-                    }
-                    else
-                    {
-                        if (eventIn == null)
-                        {
-                            goto LOI_HE_THONG;
-                        }
-                        frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, "Bạn có xác nhận mở barrie?",
-                                                                        eventIn.PlateNumber ?? "",
-                                                                        eventIn.Identity?.Name ?? "",
-                                                                        eventIn.IdentityGroup?.Name ?? "",
-                                                                        eventIn?.images ?? new Dictionary<EmParkingImageType, List<ImageData>>(),
-                                                                        eventIn.DateTimeIn ?? DateTime.Now, false, eventOut.Charge);
-                        bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
-                        if (!isConfirm)
-                        {
-                            lblResult.UpdateResultMessage("Không xác nhận mở barrie", ProcessColor);
-                            return;
-                        }
-                        else
-                        {
-                            plateNumber = frmConfirmOut.updatePlate.ToUpper();
-                            _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
-                            eventOut.PlateNumber = plateNumber;
-                            _ = AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
-                        }
-                    }
-                    goto SU_KIEN_HOP_LE;
-                }
-            }
-
-        LOI_HE_THONG:
-            {
-                ExcecuteSystemErrorCheckOut();
-                return;
-            }
-        SU_KIEN_LOI:
-            {
-                ExcecuteUnvalidEvent(identity, vehicleType, ce.PlateNumber, ce.EventTime, eventOut, errorMessage);
-                return;
-            }
-        SU_KIEN_HOP_LE:
-            {
-                await ExcecuteValidEvent(identity, identityGroup, vehicleType, plateNumber,
-                                         ce.EventTime, overviewImg, vehicleImg, lprImage,
-                                         eventOut, eventOut.vehicle, isAlarm);
-                return;
-            }
+            await ExcecuteValidEvent(identity, identityGroup, vehicleType, plateNumber,
+                                     ce.EventTime, overviewImg, vehicleImg, lprImage,
+                                     eventOut, eventOut.vehicle, isAlarm);
         }
 
         private async Task ExcecuteMonthCardEventOut(Identity identity, IdentityGroup identityGroup, VehicleBaseType vehicleType,
@@ -574,206 +498,111 @@ namespace iParkingv5_window.Usercontrols
 
             EventOutData? eventOut = null;
             string errorMessage = string.Empty;
-            if (identityGroup.PlateNumberValidation == (int)EmPlateCompareRule.UnCheck)
+
+            if (string.IsNullOrEmpty(plateNumber) && identityGroup.PlateNumberValidation != (int)EmPlateCompareRule.UnCheck)
             {
-                goto CheckOutNormal;
-            }
-            if (string.IsNullOrEmpty(plateNumber))
-            {
+                bool isConfirm = false;
                 if (identity.Vehicles.Count == 1)
                 {
                     string message = "Không nhận diện được biển số, bạn có muốn cho xe ra khỏi bãi?";
                     frmConfirm frmConfirm = new frmConfirm(message);
-                    bool isConfirm = frmConfirm.ShowDialog() == DialogResult.OK;
+                    isConfirm = frmConfirm.ShowDialog() == DialogResult.OK;
                     frmConfirm.Dispose();
 
                     if (isConfirm)
                     {
                         isAlarm = true;
                         plateNumber = identity.Vehicles[0].PlateNumber;
-                        goto CheckOutWithForce;
                     }
-                    else
+                }
+                else
+                {
+                    var frmSelectVehicle = new frmSelectVehicle(identity.Vehicles);
+                    isConfirm = frmSelectVehicle.ShowDialog() == DialogResult.OK;
+                    if (frmSelectVehicle.ShowDialog() == DialogResult.OK)
                     {
-                        ClearView();
-                        return;
+                        isAlarm = true;
+                        plateNumber = frmSelectVehicle.selectedPlate;
                     }
+                }
+                if (!isConfirm)
+                {
+                    ClearView();
+                    return;
+                }
+            }
+
+            var eventOutResponse = await AppData.ApiServer.parkingProcessService.PostCheckOutAsync(lane.Id, ce.PlateNumber, identity,
+                                                                                                    validImageTypes, false);
+            var checkInOutResponse = CheckEventOutReponse(eventOutResponse, null, vehicleType, plateNumber, false);
+            if (!checkInOutResponse.IsValidEvent)
+            {
+                isAlarm = true;
+                if (!checkInOutResponse.IsContinueExcecute)
+                {
+                    return;
+                }
+                bool isConfirm = false;
+
+                if (identity.Vehicles.Count == 1)
+                {
+                    string message = $"{errorMessage}\r\nBạn có muốn cho xe ra khỏi bãi";
+                    frmConfirmIn frmConfirmIn = new frmConfirmIn(message, identity, identityGroup,
+                                                                 identity.Vehicles[0].customer, identity.Vehicles[0],
+                                                                 plateNumber, vehicleImg, overviewImg);
+                    isConfirm = frmConfirmIn.ShowDialog() == DialogResult.OK;
+                    plateNumber = identity.Vehicles[0].PlateNumber;
                 }
                 else
                 {
                     var frmSelectVehicle = new frmSelectVehicle(identity.Vehicles);
                     if (frmSelectVehicle.ShowDialog() == DialogResult.OK)
                     {
-                        isAlarm = true;
+                        isConfirm = true;
                         plateNumber = frmSelectVehicle.selectedPlate;
-                        goto CheckOutWithForce;
-                    }
-                    else
-                    {
-                        ClearView();
-                        return;
                     }
                 }
+
+                if (!isConfirm)
+                {
+                    return;
+                }
+                eventOutResponse = await AppData.ApiServer.parkingProcessService.PostCheckOutAsync(lane.Id, ce.PlateNumber, identity,
+                                                                                                   validImageTypes, true);
+                checkInOutResponse = CheckEventOutReponse(eventOutResponse, null, vehicleType, plateNumber, true);
+                if (!checkInOutResponse.IsValidEvent)
+                    return;
+            }
+            eventOut = eventOutResponse.Item1!;
+            if (eventOut.OpenBarrier)
+            {
+                _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
+                _ = AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
             }
             else
             {
-                goto CheckOutNormal;
-            }
-
-        CheckOutWithForce:
-            {
-                var eventOutResponse = await AppData.ApiServer.parkingProcessService.PostCheckOutAsync(lane.Id, plateNumber, identity, validImageTypes, true);
-                if (eventOutResponse == null)
+                frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, "Bạn có xác nhận mở barrie?",
+                                                                eventOut.EventIn?.PlateNumber ?? "",
+                                                                eventOut.EventIn?.Identity?.Name ?? "",
+                                                                eventOut.EventIn?.IdentityGroup?.Name ?? "",
+                                                                eventOut.EventIn?.images ?? new Dictionary<EmParkingImageType, List<ImageData>>(),
+                                                                eventOut.EventIn?.DateTimeIn ?? DateTime.Now, false, eventOut.Charge);
+                bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
+                if (!isConfirm)
                 {
-                    goto LOI_HE_THONG;
-                }
-                eventOut = eventOutResponse.Item1;
-                var errorData = eventOutResponse.Item2;
-                if (errorData != null)
-                {
-                    if (errorData.fields == null || errorData.fields.Count == 0)
-                    {
-                        goto LOI_HE_THONG;
-                    }
-                    else
-                    {
-                        errorMessage = errorData.fields[0].ToString();
-                        goto SU_KIEN_LOI;
-
-                    }
+                    lblResult.UpdateResultMessage("Không xác nhận mở barrie", ProcessColor);
+                    return;
                 }
                 else
                 {
-                    if (eventOut.OpenBarrier)
-                    {
-                        _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
-                        _ = AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
-                    }
-                    else
-                    {
-                        frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, "Bạn có xác nhận mở barrie?",
-                                                                        eventOut.EventIn?.PlateNumber ?? "",
-                                                                        eventOut.EventIn?.Identity?.Name ?? "",
-                                                                        eventOut.EventIn?.IdentityGroup?.Name ?? "",
-                                                                        eventOut.EventIn?.images ?? new Dictionary<EmParkingImageType, List<ImageData>>(),
-                                                                        eventOut.EventIn?.DateTimeIn ?? DateTime.Now, false,
-                                                                        eventOut.Charge);
-                        bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
-                        if (!isConfirm)
-                        {
-                            lblResult.UpdateResultMessage("Không xác nhận mở barrie", ProcessColor);
-                            return;
-                        }
-                        else
-                        {
-                            plateNumber = frmConfirmOut.updatePlate.ToUpper();
-                            eventOut.PlateNumber = plateNumber;
-                            _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
-                            _ = AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
-                        }
-                    }
-                    goto SU_KIEN_HOP_LE;
+                    _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
+                    eventOut.PlateNumber = plateNumber;
+                    _ = AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
                 }
             }
-
-        CheckOutNormal:
-            {
-                var eventOutResponse = await AppData.ApiServer.parkingProcessService.PostCheckOutAsync(lane.Id, ce.PlateNumber, identity, validImageTypes, false);
-                if (eventOutResponse == null)
-                {
-                    goto LOI_HE_THONG;
-                }
-                eventOut = eventOutResponse.Item1;
-                var errorData = eventOutResponse.Item2;
-                if (errorData != null)
-                {
-                    errorMessage = errorData.fields.Count > 0 ? (errorData.fields[0].ToString() ?? "") : errorData.detailCode;
-                    if (errorMessage != "Biển số không hợp lệ".ToUpper() && errorMessage != "BIỂN SỐ VÀO RA KHÔNG KHỚP".ToUpper())
-                    {
-                        goto SU_KIEN_LOI;
-                    }
-                    else
-                    {
-                        bool isConfirm = false;
-                        if (identity.Vehicles.Count == 1)
-                        {
-                            string message = $"{errorMessage}\r\nBạn có muốn cho xe ra khỏi bãi";
-                            frmConfirmIn frmConfirmIn = new frmConfirmIn(message, identity, identityGroup,
-                                                                         identity.Vehicles[0].customer, identity.Vehicles[0],
-                                                                         plateNumber, vehicleImg, overviewImg);
-                            isConfirm = frmConfirmIn.ShowDialog()
-                                                    == DialogResult.OK;
-                            plateNumber = identity.Vehicles[0].PlateNumber;
-                        }
-                        else
-                        {
-                            var frmSelectVehicle = new frmSelectVehicle(identity.Vehicles);
-                            if (frmSelectVehicle.ShowDialog() == DialogResult.OK)
-                            {
-                                isConfirm = true;
-                                plateNumber = frmSelectVehicle.selectedPlate;
-                            }
-                        }
-                        if (isConfirm)
-                        {
-                            goto CheckOutWithForce;
-                        }
-                        else
-                        {
-                            ClearView();
-                            return;
-                        }
-                    }
-                }
-                else
-                {
-                    if (eventOut.OpenBarrier)
-                    {
-                        _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
-                        _ = AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
-                    }
-                    else
-                    {
-                        frmConfirmOut frmConfirmOut = new frmConfirmOut(plateNumber, "Bạn có xác nhận mở barrie?",
-                                                                        eventOut.EventIn?.PlateNumber ?? "",
-                                                                        eventOut.EventIn?.Identity?.Name ?? "",
-                                                                        eventOut.EventIn?.IdentityGroup?.Name ?? "",
-                                                                        eventOut.EventIn?.images ?? new Dictionary<EmParkingImageType, List<ImageData>>(),
-                                                                        eventOut.EventIn?.DateTimeIn ?? DateTime.Now, false, eventOut.Charge);
-                        bool isConfirm = frmConfirmOut.ShowDialog() == DialogResult.OK;
-                        if (!isConfirm)
-                        {
-                            lblResult.UpdateResultMessage("Không xác nhận mở barrie", ProcessColor);
-                            return;
-                        }
-                        else
-                        {
-                            _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
-                            eventOut.PlateNumber = plateNumber;
-                            _ = AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
-                        }
-                    }
-                    goto SU_KIEN_HOP_LE;
-                }
-            }
-
-        LOI_HE_THONG:
-            {
-                ExcecuteSystemErrorCheckOut();
-                return;
-            }
-        SU_KIEN_LOI:
-            {
-                ExcecuteUnvalidEvent(identity, vehicleType, ce.PlateNumber, ce.EventTime, eventOut, errorMessage);
-                return;
-            }
-        SU_KIEN_HOP_LE:
-            {
-                await ExcecuteValidEvent(identity, identityGroup, vehicleType, plateNumber,
+            await ExcecuteValidEvent(identity, identityGroup, vehicleType, plateNumber,
                                          ce.EventTime, overviewImg, vehicleImg, lprImage,
                                          eventOut, eventOut.vehicle, isAlarm);
-                return;
-            }
         }
 
         private void ExcecuteSystemErrorCheckOut()
@@ -1576,8 +1405,8 @@ namespace iParkingv5_window.Usercontrols
         /// </summary>
         /// <returns></returns>
         private CheckEventOutResponse CheckEventOutReponse(Tuple<EventOutData, BaseErrorData> eventOutReponse, Customer? customer,
-                                                      VehicleBaseType vehicleBaseType, string plateNumber,
-                                                      bool isForce)
+                                                          VehicleBaseType vehicleBaseType, string plateNumber,
+                                                          bool isForce)
         {
             CheckEventOutResponse checkInOutResponse = new CheckEventOutResponse()
             {

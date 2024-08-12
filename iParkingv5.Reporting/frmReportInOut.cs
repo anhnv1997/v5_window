@@ -293,13 +293,14 @@ namespace iParkingv5.Reporting
                 var imageOutDatas = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<EmParkingImageType, List<ImageData>>>(dgvData.CurrentRow?.Cells[col_file_keys_out].Value.ToString()!)!;
                 ImageData? displayOverviewOutImage = imageOutDatas.ContainsKey(EmParkingImageType.Overview) ? imageOutDatas[EmParkingImageType.Overview][0] : null;
                 ImageData? vehicleOutImage = imageOutDatas.ContainsKey(EmParkingImageType.Vehicle) ? imageOutDatas[EmParkingImageType.Vehicle][0] : null;
+               
                 var imageInDatas = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<EmParkingImageType, List<ImageData>>>(dgvData.CurrentRow?.Cells[col_file_keys_in].Value.ToString()!)!;
                 ImageData? displayOverviewInImage = imageInDatas.ContainsKey(EmParkingImageType.Overview) ? imageInDatas[EmParkingImageType.Overview][0] : null;
                 ImageData? vehicleInImage = imageInDatas.ContainsKey(EmParkingImageType.Vehicle) ? imageInDatas[EmParkingImageType.Vehicle][0] : null;
 
 
-                var overviewOutTask = ApiServer.parkingProcessService.GetImageUrl(displayOverviewInImage?.bucket ?? "", displayOverviewInImage?.objectKey ?? "");
-                var vehicleOutTask = ApiServer.parkingProcessService.GetImageUrl(vehicleInImage?.bucket ?? "", vehicleInImage?.objectKey ?? "");
+                var overviewOutTask = ApiServer.parkingProcessService.GetImageUrl(displayOverviewOutImage?.bucket ?? "", displayOverviewOutImage?.objectKey ?? "");
+                var vehicleOutTask = ApiServer.parkingProcessService.GetImageUrl(vehicleOutImage?.bucket ?? "", vehicleOutImage?.objectKey ?? "");
                 var overviewInTask = ApiServer.parkingProcessService.GetImageUrl(displayOverviewInImage?.bucket ?? "", displayOverviewInImage?.objectKey ?? "");
                 var vehicleInTask = ApiServer.parkingProcessService.GetImageUrl(vehicleInImage?.bucket ?? "", vehicleInImage?.objectKey ?? "");
 

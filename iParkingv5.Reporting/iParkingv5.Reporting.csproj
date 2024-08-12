@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <Reference Include="SayMoney">
-      <HintPath>..\packages\SayMoney.dll</HintPath>
+      <HintPath>..\packages\Extension\SayMoney.dll</HintPath>
     </Reference>
   </ItemGroup>
 
