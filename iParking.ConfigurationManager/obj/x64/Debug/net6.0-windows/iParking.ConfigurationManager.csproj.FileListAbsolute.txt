@@ -141,6 +141,7 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.Configurat
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\NXT.Net6.LPR_AI.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\DarknetYolo.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\Sdcb.PaddleOCR.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\Emgu.CV.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\Sdcb.PaddleOCR.Models.Local.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\Sdcb.PaddleInference.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\Emgu.CV.Bitmap.dll
@@ -160,6 +161,7 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.Configurat
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\iParking.ConfigurationManager.UserControls.ucDatabaseConnection.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\iParking.ConfigurationManager.UserControls.ucEinvoiceConfig.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\iParking.ConfigurationManager.UserControls.ucLprConnection.resources
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\iParking.ConfigurationManager.UserControls.ucOEM.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\iParking.ConfigurationManager.UserControls.ucScaleConfig.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\iParking.ConfigurationManager.UserControls.ucServerConfig.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\iParking.ConfigurationManager.UserControls.ucThirdParty.resources
@@ -175,9 +177,3 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.Configurat
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\iParking.ConfigurationManager.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\iParking.ConfigurationManager.genruntimeconfig.cache
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\ref\iParking.ConfigurationManager.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\iParking.ConfigurationManager.UserControls.ucOEM.resources
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\Sdcb.PaddleOCR.xml
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\Sdcb.PaddleOCR.Models.Local.xml
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\Sdcb.PaddleInference.xml
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\Emgu.CV.Bitmap.xml
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\Emgu.CV.dll

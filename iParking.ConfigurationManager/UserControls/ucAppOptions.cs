@@ -33,6 +33,7 @@ namespace iParking.ConfigurationManager.UserControls
                 chbIsUseInvoice.Checked = appOption.IsIntergratedEInvoice;
                 numAutoReturnDialogTime.Value = appOption.AutoRejectDialogTime;
                 cbAutoReturnDialogResult.SelectedIndex = appOption.AutoRejectDialogResult ? 0 : 1;
+                chbDisplayCustomer.Checked = appOption.IsDisplayCustomerInfo;
             }
             txtWaitSwipeCardTime.TextChanged += TxtWaitSwipeCardTime_TextChanged;
             txtAllowOpenBarrieTime.TextChanged += TxtAllowOpenBarrieTime_TextChanged;
@@ -92,6 +93,7 @@ namespace iParking.ConfigurationManager.UserControls
                 IsIntergratedEInvoice = chbIsUseInvoice.Checked,
                 AutoRejectDialogResult = cbAutoReturnDialogResult.SelectedIndex == 0 ? true : false,
                 AutoRejectDialogTime = (int)numAutoReturnDialogTime.Value,
+                IsDisplayCustomerInfo = chbDisplayCustomer.Checked,
             };
         }
         #endregion End Public Function

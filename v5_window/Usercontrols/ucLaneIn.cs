@@ -1,4 +1,5 @@
-﻿using IPaking.Ultility;
+﻿using DocumentFormat.OpenXml.VariantTypes;
+using IPaking.Ultility;
 using iPakrkingv5.Controls;
 using iPakrkingv5.Controls.Controls.Labels;
 using iParkingv5.ApiManager.KzParkingv5Apis.services;
@@ -13,7 +14,9 @@ using iParkingv5.Objects.Datas.weighing_service;
 using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.EventDatas;
 using iParkingv5.Objects.Events;
+using iParkingv5.Printer.OfficeHaus;
 using iParkingv5_window.Forms.DataForms;
+using iParkingv5_window.Forms.SystemForms;
 using iParkingv5_window.Forms.ThirdPartyForms.OfficeHausForms;
 using iParkingv5_window.Usercontrols.ShortcutConfiguration;
 using iParkingv6.Objects.Datas;
@@ -47,7 +50,6 @@ namespace iParkingv5_window.Usercontrols
         #endregion End EVENT
 
         #region OTHER
-        private bool isInRegisterMode = false;
         public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
         #endregion End OTHER
 
@@ -126,11 +128,6 @@ namespace iParkingv5_window.Usercontrols
         {
             StopTimeRefreshUI();
             await semaphoreSlimOnNewEvent.WaitAsync();
-            if (isInRegisterMode)
-            {
-                semaphoreSlimOnNewEvent.Release();
-                return;
-            }
             lastEvent = null;
             try
             {
@@ -224,7 +221,7 @@ namespace iParkingv5_window.Usercontrols
                 ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
                                                       where _controllerInLane.controlUnitId == ie.DeviceId
                                                       select _controllerInLane).FirstOrDefault();
-                await BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
+                BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
             }
             else
             {
@@ -234,7 +231,7 @@ namespace iParkingv5_window.Usercontrols
                     ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
                                                           where _controllerInLane.controlUnitId == ie.DeviceId
                                                           select _controllerInLane).FirstOrDefault();
-                    await BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
+                    BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
                 }
             }
 
@@ -402,7 +399,6 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
 
-
             var eventInResponse = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plateNumber, identity, validImageTypes, false, null, "");
             var checkInOutResponse = CheckEventInReponse(eventInResponse, null, vehicleType, plateNumber, false);
             if (!checkInOutResponse.IsValidEvent)
@@ -419,7 +415,7 @@ namespace iParkingv5_window.Usercontrols
                     frmConfirmIn frmConfirmIn = new frmConfirmIn(message, identity, identityGroup, identity.Vehicles[0].customer, identity.Vehicles[0],
                                                                  plateNumber, vehicleImg, overviewImg);
                     isConfirm = frmConfirmIn.ShowDialog() == DialogResult.OK;
-                    plateNumber = identity.Vehicles[0].PlateNumber;
+                    plateNumber = frmConfirmIn.updatePlate;
                 }
                 else
                 {
@@ -436,7 +432,7 @@ namespace iParkingv5_window.Usercontrols
                 {
                     return;
                 }
-
+                eventInResponse = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plateNumber, identity, validImageTypes, true, null, "");
                 checkInOutResponse = CheckEventInReponse(eventInResponse, null, vehicleType, plateNumber, true);
                 if (!checkInOutResponse.IsValidEvent)
                     return;
@@ -445,7 +441,7 @@ namespace iParkingv5_window.Usercontrols
             eventIn = checkInOutResponse.eventIn!;
             if (eventIn.OpenBarrier)
             {
-                await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
+                BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
             }
             else
             {
@@ -455,7 +451,7 @@ namespace iParkingv5_window.Usercontrols
                 bool isOpenBarrie = frmConfirm.ShowDialog() == DialogResult.OK;
                 if (isOpenBarrie)
                 {
-                    await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
+                    BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
                 }
             }
             await ExcecuteValidEvent(identity, identityGroup, vehicleType, ce.PlateNumber, ce.EventTime,
@@ -500,6 +496,7 @@ namespace iParkingv5_window.Usercontrols
                     {
                         return;
                     }
+                    eventInResponse = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plateNumber, identity, validImageTypes, true, null, "");
                     checkInOutResponse = CheckEventInReponse(eventInResponse, null, vehicleType, plateNumber, true);
                     if (!checkInOutResponse.IsValidEvent)
                         return;
@@ -513,7 +510,7 @@ namespace iParkingv5_window.Usercontrols
             eventIn = checkInOutResponse.eventIn!;
             if (eventIn.OpenBarrier)
             {
-                await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
+                BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
             }
             else
             {
@@ -521,7 +518,7 @@ namespace iParkingv5_window.Usercontrols
                 bool isOpenBarrie = frmConfirm.ShowDialog() == DialogResult.OK;
                 if (isOpenBarrie)
                 {
-                    await BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
+                    BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
                 }
             }
             await ExcecuteValidEvent(identity, identityGroup, vehicleType, ce.PlateNumber, ce.EventTime,
@@ -588,18 +585,21 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
 
-            this.Invoke(new Action(() =>
+            if (this.laneDirectionConfig.IsDisplayLastEvent)
             {
-                for (int i = ucLastEventInfos.Count - 1; i > 0; i--)
+                this.Invoke(new Action(() =>
                 {
-                    string customerId = ucLastEventInfos[i - 1].CustomerId;
-                    string registerVehicleId = ucLastEventInfos[i - 1].RegisterVehicleId;
-                    string laneId = ucLastEventInfos[i - 1].LaneId;
-                    string identityId = ucLastEventInfos[i - 1].IdentityId;
-                    ucLastEventInfos[i].UpdateEventInfo(ucLastEventInfos[i - 1].eventId, ucLastEventInfos[i - 1].picDirs);
-                }
-                ucLastEventInfos[0].UpdateEventInfo(eventIn.Id, eventIn.images, vehicleImg);
-            }));
+                    for (int i = ucLastEventInfos.Count - 1; i > 0; i--)
+                    {
+                        string customerId = ucLastEventInfos[i - 1].CustomerId;
+                        string registerVehicleId = ucLastEventInfos[i - 1].RegisterVehicleId;
+                        string laneId = ucLastEventInfos[i - 1].LaneId;
+                        string identityId = ucLastEventInfos[i - 1].IdentityId;
+                        ucLastEventInfos[i].UpdateEventInfo(ucLastEventInfos[i - 1].eventId, ucLastEventInfos[i - 1].picDirs);
+                    }
+                    ucLastEventInfos[0].UpdateEventInfo(eventIn.Id, eventIn.images, lprImage ?? vehicleImg);
+                }));
+            }
         }
         #endregion End xử lý sự kiện thẻ
 
@@ -628,13 +628,16 @@ namespace iParkingv5_window.Usercontrols
         {
             lblResult.UpdateResultMessage("Đang lấy thông tin QR...", ProcessColor);
             var qrData = await ThirdPartyService.GetQRData(lastHausVistor);
-            if (qrData == null)
+            if (qrData == null || string.IsNullOrEmpty(qrData.QrCode))
             {
                 lblResult.UpdateResultMessage("Lấy thông tin không thành công, vui lòng thử lại!", ErrorColor);
             }
             else
             {
+                var printer = new OfficeHausPrinter();
+                string baseContent = File.ReadAllText(PathManagement.hausQRPath());
                 lblResult.UpdateResultMessage("Lấy thông tin thành công.", SuccessColor);
+                printer.printQR(baseContent, qrData.QrCode ?? "");
             }
         }
         #endregion End THIRD - PARTY
@@ -709,6 +712,12 @@ namespace iParkingv5_window.Usercontrols
         /// <param name="e"></param>
         private void picSetting_Click(object? sender, EventArgs e)
         {
+            var frmConfirmPassword = new frmConfirmPassword();
+            if (frmConfirmPassword.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
             List<Camera> cameraList = new List<Camera>();
             foreach (KeyValuePair<CameraPurposeType.EmCameraPurposeType, List<Camera>> item in this.cameras)
             {
@@ -770,8 +779,8 @@ namespace iParkingv5_window.Usercontrols
                                                                  imageDatas, false,
                                                                  lastEvent?.IdentityGroup?.Id.ToString() ?? "", "", "", "");
                     await BaseLane.SaveImage(response?.images ?? null, imageDatas);
+                    break;
                 }
-                break;
             }
         }
 
@@ -926,14 +935,25 @@ namespace iParkingv5_window.Usercontrols
         #region PRIVATE FUNCTION
 
         #region LOADING
-        private async Task CreateBaseUI()
+        private async void CreateBaseUI()
         {
             lblResult.Padding = new Padding(StaticPool.baseSize);
             lblResult.UpdateResultMessage(StaticPool.oemConfig.AppName, SuccessColor);
             CreateToolTip();
             SetDefaultImage();
-            CreatePanelTop3Event();
-            await DisplayTop3EventInfo();
+            if (StaticPool.appOption.PrintTemplate != (int)EmPrintTemplate.OfficeHaus)
+            {
+                panelThirdParty.Visible = false;
+            }
+            if (this.laneDirectionConfig.IsDisplayLastEvent)
+            {
+                CreatePanelTop3Event();
+                await DisplayTop3EventInfo();
+            }
+            else
+            {
+                ucEventCount1.Stop();
+            }
         }
         private void CreateToolTip()
         {
@@ -1056,7 +1076,6 @@ namespace iParkingv5_window.Usercontrols
             }
             picSettings.Clear();
         }
-
         private void SetUserDisplayConfig()
         {
             panelCameras.SizeChanged -= PanelCameras_SizeChanged;
@@ -1274,22 +1293,6 @@ namespace iParkingv5_window.Usercontrols
                 BtnReTakePhoto_Click(null, EventArgs.Empty);
             }
         }
-
-        private void ReverseLane()
-        {
-            if (string.IsNullOrEmpty(this.lane.reverseLaneId?.ToString()))
-            {
-                lblResult.UpdateResultMessage("Không có cấu hình làn đảo", ProcessColor);
-                return;
-            }
-            var config = GetCurrentUIConfig();
-            NewtonSoftHelper<LaneDisplayConfig>.SaveConfig(config, PathManagement.appDisplayConfigPath(this.lane.Id));
-            lblResult.UpdateResultMessage("Ra Lệnh Đảo Làn", ProcessColor);
-            OnChangeLaneEventInvoke(this);
-            this.Dispose();
-            return;
-        }
-
         private async Task ExitPlateOnUI()
         {
             FocusOnTitle();
@@ -1310,6 +1313,21 @@ namespace iParkingv5_window.Usercontrols
                 lblResult.UpdateResultMessage("Cập nhật lỗi, vui lòng thử lại", ProcessColor);
             }
         }
+        private void ReverseLane()
+        {
+            if (string.IsNullOrEmpty(this.lane.reverseLaneId?.ToString()))
+            {
+                lblResult.UpdateResultMessage("Không có cấu hình làn đảo", ProcessColor);
+                return;
+            }
+            var config = GetCurrentUIConfig();
+            NewtonSoftHelper<LaneDisplayConfig>.SaveConfig(config, PathManagement.appDisplayConfigPath(this.lane.Id));
+            lblResult.UpdateResultMessage("Ra Lệnh Đảo Làn", ProcessColor);
+            OnChangeLaneEventInvoke(this);
+            this.Dispose();
+            return;
+        }
+
         #endregion End KEY PREVIEW
 
         #region PROCESS - OK
@@ -1467,10 +1485,14 @@ namespace iParkingv5_window.Usercontrols
                 dgvEventContent.Rows.Clear();
                 dgvEventContent.Rows.Add("Giờ Vào", eventTime.ToString("dd/MM/yyyy HH:mm:ss"));
                 dgvEventContent.Rows.Add("Vé Xe", identity?.Name + " - " + identity?.Code);
-                if (customer != null)
+                if (StaticPool.appOption.IsDisplayCustomerInfo)
                 {
-                    dgvEventContent.Rows.Add("Khách hàng", customer.Name + " / " + customer.Address);
-                    dgvEventContent.Rows.Add("SĐT", customer.PhoneNumber);
+                    if (customer != null)
+                    {
+                        dgvEventContent.Rows.Add("Nhóm khách hàng", customer.CustomerGroupName);
+                        dgvEventContent.Rows.Add("Khách hàng", customer.Name + " / " + customer.Address);
+                        dgvEventContent.Rows.Add("SĐT", customer.PhoneNumber);
+                    }
                 }
                 if (registeredVehicle != null)
                 {
@@ -1488,12 +1510,14 @@ namespace iParkingv5_window.Usercontrols
         {
             this.Invoke(new Action(() =>
             {
+                FocusOnTitle();
+
+                lastEvent = null;
+
                 dgvEventContent.Rows.Clear();
 
                 picOverviewImage.Image = defaultImg;
-
                 picLprImage.Image = defaultImg;
-
                 picVehicleImage.Image = defaultImg;
 
                 txtPlate.Text = string.Empty;
@@ -1516,8 +1540,8 @@ namespace iParkingv5_window.Usercontrols
             lblLaneName.Text = lane.name;
             lblLaneName.BackColor = SuccessColor;
 
-            panelDisplayLastEvent.Visible = laneDirectionConfig.IsDisplayLastEvent;
             splitContainerMain.Panel2Collapsed = !laneDirectionConfig.IsDisplayLastEvent;
+            panelDisplayLastEvent.Visible = laneDirectionConfig.IsDisplayLastEvent;
             panelLastEvent.Visible = laneDirectionConfig.IsDisplayLastEvent;
 
             GetShortcutConfig();
@@ -1642,6 +1666,6 @@ namespace iParkingv5_window.Usercontrols
                 splitLastEventPosition = this.splitContainerLastEvent.SplitterDistance,
             };
         }
-        #endregion END PUBLIC FUNCTION
+        #endregion ENd PUBLIC FUNCTION
     }
 }

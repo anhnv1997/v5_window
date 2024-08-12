@@ -38,6 +38,11 @@
             tsmiReportIn = new ToolStripMenuItem();
             tsmiReportInOut = new ToolStripMenuItem();
             tsmiAlarmReport = new ToolStripMenuItem();
+            chứcNăngToolStripMenuItem = new ToolStripMenuItem();
+            btnRegister = new ToolStripMenuItem();
+            btnPrintQR = new ToolStripMenuItem();
+            tsmiRegister = new ToolStripMenuItem();
+            inQRToolStripMenuItem = new ToolStripMenuItem();
             panelMain = new Panel();
             ucViewGrid1 = new Usercontrols.ucViewGrid();
             panelAppStatus = new Panel();
@@ -66,7 +71,7 @@
             // menuStrip1
             // 
             menuStrip1.Font = new Font("Segoe UI", 12F);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { miSystem, miReport });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { miSystem, miReport, chứcNăngToolStripMenuItem, tsmiRegister, inQRToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(5, 2, 0, 2);
@@ -129,6 +134,44 @@
             tsmiAlarmReport.Text = "Sự kiện cảnh báo";
             tsmiAlarmReport.Visible = false;
             tsmiAlarmReport.Click += tsmiAlarmReport_Click;
+            // 
+            // chứcNăngToolStripMenuItem
+            // 
+            chứcNăngToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { btnRegister, btnPrintQR });
+            chứcNăngToolStripMenuItem.Name = "chứcNăngToolStripMenuItem";
+            chứcNăngToolStripMenuItem.Size = new Size(96, 25);
+            chứcNăngToolStripMenuItem.Text = "Chức năng";
+            chứcNăngToolStripMenuItem.Visible = false;
+            // 
+            // btnRegister
+            // 
+            btnRegister.Image = (Image)resources.GetObject("btnRegister.Image");
+            btnRegister.Name = "btnRegister";
+            btnRegister.Size = new Size(180, 26);
+            btnRegister.Text = "Đăng ký";
+            btnRegister.Click += btnRegister_Click;
+            // 
+            // btnPrintQR
+            // 
+            btnPrintQR.Image = (Image)resources.GetObject("btnPrintQR.Image");
+            btnPrintQR.Name = "btnPrintQR";
+            btnPrintQR.Size = new Size(180, 26);
+            btnPrintQR.Text = "In QR";
+            btnPrintQR.Click += btnPrintQR_Click;
+            // 
+            // tsmiRegister
+            // 
+            tsmiRegister.Name = "tsmiRegister";
+            tsmiRegister.Size = new Size(79, 25);
+            tsmiRegister.Text = "Đăng Ký";
+            tsmiRegister.Click += btnRegister_Click;
+            // 
+            // inQRToolStripMenuItem
+            // 
+            inQRToolStripMenuItem.Name = "inQRToolStripMenuItem";
+            inQRToolStripMenuItem.Size = new Size(61, 25);
+            inQRToolStripMenuItem.Text = "In QR";
+            inQRToolStripMenuItem.Click += btnPrintQR_Click;
             // 
             // panelMain
             // 
@@ -385,5 +428,10 @@
         private System.Windows.Forms.Timer timerRestartSockerServer;
         private System.Windows.Forms.Timer timerClearLog;
         private Label lblUserNaem;
+        private ToolStripMenuItem chứcNăngToolStripMenuItem;
+        private ToolStripMenuItem btnRegister;
+        private ToolStripMenuItem btnPrintQR;
+        private ToolStripMenuItem tsmiRegister;
+        private ToolStripMenuItem inQRToolStripMenuItem;
     }
 }

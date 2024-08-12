@@ -39,6 +39,7 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\NXT.Net6.LPR_AI.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\DarknetYolo.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\Sdcb.PaddleOCR.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\Emgu.CV.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\Sdcb.PaddleOCR.Models.Local.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\Sdcb.PaddleInference.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\Emgu.CV.Bitmap.dll
@@ -55,8 +56,3 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\obj\x64\Debug\netstandard2.1\iParking.402F126B.Up2Date
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\obj\x64\Debug\netstandard2.1\iParkingv5.Objects.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\obj\x64\Debug\netstandard2.1\iParkingv5.Objects.pdb
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\Sdcb.PaddleOCR.xml
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\Sdcb.PaddleOCR.Models.Local.xml
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\Sdcb.PaddleInference.xml
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\Emgu.CV.Bitmap.xml
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\Emgu.CV.dll

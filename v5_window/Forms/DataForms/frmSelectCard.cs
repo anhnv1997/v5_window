@@ -36,7 +36,7 @@ namespace iParkingv5_window.Forms.DataForms
         {
             if (e.KeyCode == Keys.Enter)
             {
-                BtnSearch_Click(null, null);
+                BtnSearch_Click(null, EventArgs.Empty);
             }
         }
         private void FrmSelectCard_Load(object? sender, EventArgs e)
@@ -65,38 +65,16 @@ namespace iParkingv5_window.Forms.DataForms
             dgvData.Location = new Point(lblTittle.Location.X, btnSearch.Location.Y + btnSearch.Height + StaticPool.baseSize);
             dgvData.Width = panelData.Width - StaticPool.baseSize * 4;
             dgvData.Height = btnCancel.Location.Y - StaticPool.baseSize - dgvData.Location.Y;
-            ucNotify1.OnSelectResultEvent += UcNotify1_OnSelectResultEvent;
+
+            lblGuide.Location = new Point(StaticPool.baseSize * 2, btnSelectCard.Location.Y + (btnSelectCard.Height - lblGuide.Height) / 2);
+            lblGuide.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             this.ActiveControl = btnSearch;
         }
         #endregion END FORMS
 
         #region CONTROLS IN FORM
-        private async void BtnSearch_Click(object sender, EventArgs e)
+        private async void BtnSearch_Click(object? sender, EventArgs e)
         {
-            panelData.SuspendLayout();
-            panelData.BackColor = Color.FromArgb((int)(0.37 * 255), 42, 47, 48);
-            foreach (Control item in panelData.Controls)
-            {
-                if (item is ucLoading)
-                {
-                    continue;
-                }
-                else if (item is ucNotify)
-                {
-                    continue;
-                }
-                else if (item is IDesignControl)
-                {
-                    ((IDesignControl)item).EnableWaitMode();
-                }
-                else if (!ControlExtensions.IsSupportsTransparency(item))
-                {
-                    item.Enabled = false;
-                    continue;
-                }
-            }
-            ucLoading1.Show("Đang tải thông tin định danh", frmMain.language);
-            panelData.ResumeLayout();
             dgvData.Rows.Clear();
             dgvData.Refresh();
 
@@ -106,13 +84,11 @@ namespace iParkingv5_window.Forms.DataForms
 
             if (!string.IsNullOrEmpty(txtIdentity.Text))
             {
-                //var identityResponse = await KzParkingApiHelper.GetIdentityByCodeAsync(txtIdentity.Text);
                 var identityResponse = await AppData.ApiServer.parkingDataService.GetIdentityByCodeAsync(txtIdentity.Text);
                 Identity? identity = identityResponse.Item1;
                 if (identity == null)
                 {
-                    ucLoading1.HideLoading();
-                    ucNotify1.Show(ucNotify.EmNotiType.Information, "Mã định danh không có trong hệ thống");
+                    MessageBox.Show("Mã định danh không có trong hệ thống", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
                 if (identity != null)
@@ -128,7 +104,6 @@ namespace iParkingv5_window.Forms.DataForms
                     for (int i = 0; i < identities.Count; i++)
                     {
                         dgvData.Rows.Add(i + 1, identities[i].Name, identities[i].Code, identities[i].Type.ToString(), identities[i].Id);
-                        identities[i] = null;
                     }
                     identities.Clear();
                     GC.Collect();
@@ -138,27 +113,13 @@ namespace iParkingv5_window.Forms.DataForms
             {
                 dgvData.CurrentCell = dgvData.Rows[0].Cells[0];
             }
-            ucLoading1.HideLoading();
-            panelData.BackColor = Color.White;
-            foreach (Control item in panelData.Controls)
-            {
-                if (item is ucLoading)
-                {
-                    continue;
-                }
-                else if (item is IDesignControl)
-                {
-                    ((IDesignControl)item).Reset();
-                }
-                item.Enabled = true;
-            }
 
             dgvData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             dgvData.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
             SendMessage(dgvData.Handle, WM_SETREDRAW, true, 0);
             dgvData.Refresh();
         }
-        private void BtnSelectCard_Click(object sender, EventArgs e)
+        private void BtnSelectCard_Click(object? sender, EventArgs e)
         {
             if (dgvData.Rows.Count > 0)
             {
@@ -169,11 +130,11 @@ namespace iParkingv5_window.Forms.DataForms
                 this.DialogResult = DialogResult.Cancel;
             }
         }
-        private void BtnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object? sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
         }
-        private void DgvCard_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void DgvCard_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex != -1)
             {
@@ -190,25 +151,5 @@ namespace iParkingv5_window.Forms.DataForms
             this.DialogResult = DialogResult.OK;
         }
         #endregion END PRIVATE FUNCTION
-        private void UcNotify1_OnSelectResultEvent(DialogResult result)
-        {
-            panelData.BackColor = Color.White;
-            foreach (Control item in panelData.Controls)
-            {
-                if (item is ucLoading)
-                {
-                    continue;
-                }
-                else if (item is ucNotify)
-                {
-                    continue;
-                }
-                else if (item is IDesignControl)
-                {
-                    ((IDesignControl)item).Reset();
-                }
-                item.Enabled = true;
-            }
-        }
     }
 }

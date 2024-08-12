@@ -29,7 +29,7 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
 
             lblConfirmPlateKey.Text = ((Keys)ShortcutConfig.ConfirmPlateKey).ToString();
             lblWriteOutKey.Text = ((Keys)ShortcutConfig.WriteOut).ToString();
-            lblReserveLaneKey.Text = ((Keys)ShortcutConfig.ReserveLane).ToString();
+            lblReserveLaneKey.Text = ((Keys)ShortcutConfig.ReverseLane).ToString();
             lblReSnapshotLaneKey.Text = ((Keys)ShortcutConfig.ReSnapshotKey).ToString();
             lblPrintKey.Text = ((Keys)ShortcutConfig.PrintKey).ToString();
 
@@ -70,8 +70,8 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
             frm.ShowDialog();
             if (frm.DialogResult == DialogResult.OK)
             {
-                ShortcutConfig!.ReserveLane = (int)frm.KeySet;
-                lblReserveLaneKey.Text = ((Keys)ShortcutConfig.ReserveLane).ToString();
+                ShortcutConfig!.ReverseLane = (int)frm.KeySet;
+                lblReserveLaneKey.Text = ((Keys)ShortcutConfig.ReverseLane).ToString();
             }
         }
         private void PicReSnapshot_Click(object? sender, EventArgs e)

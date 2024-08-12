@@ -16,27 +16,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Controls\Buttons\BtnCancel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\Buttons\BtnDelete.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\Buttons\BtnExcel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\Buttons\BtnLogin.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\Buttons\BtnOk.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\Buttons\BtnPrint.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Controls\Buttons\BtnSearch.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Update="Controls\Buttons\BtnCancel.cs" />
+    <Compile Update="Controls\Buttons\BtnDelete.cs" />
+    <Compile Update="Controls\Buttons\BtnExcel.cs" />
+    <Compile Update="Controls\Buttons\BtnLogin.cs" />
+    <Compile Update="Controls\Buttons\BtnOk.cs" />
+    <Compile Update="Controls\Buttons\BtnPrint.cs" />
+    <Compile Update="Controls\Buttons\BtnSearch.cs" />
     <Compile Update="Controls\Buttons\BtnSetting.cs" />
     <Compile Update="Forms\frmViewImage.cs">
       <SubType>Form</SubType>
@@ -51,18 +37,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Update="Usercontrols\BuildControls\ucLoading.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Update="Usercontrols\BuildControls\ucLoading.cs" />
     <Compile Update="Usercontrols\BuildControls\ucNotify.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="Usercontrols\lblPageIndex.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Usercontrols\MovablePictureBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Update="Usercontrols\lblPageIndex.cs" />
+    <Compile Update="Usercontrols\MovablePictureBox.cs" />
     <Compile Update="Usercontrols\ucPages.cs">
       <SubType>UserControl</SubType>
     </Compile>

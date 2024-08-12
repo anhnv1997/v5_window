@@ -64,10 +64,9 @@ namespace iParkingv5.Auth
             KzParkingv5BaseApi.client_id = clientId;
             options = new OidcClientOptions
             {
-                Authority = url.Replace(":5000", ":3000"),//"http://192.168.21.13:3000",// 
-                //Authority = "http://103.127.207.247:3000",// 
+                Authority = url.Replace(":5000", ":3000"),
                 ClientId = clientId,
-                Scope = "openid role-data user-data parking-data offline_access device-data invoice-data project-data payment-data tenant-data warehouse-data",
+                Scope = "openid role-data user-data parking-data offline_access device-data invoice-data project-data payment-data tenant-data",
                 RedirectUri = "http://localhost/winforms.client",
                 Browser = new WinFormsWebView(webView21, this),
                 Policy = new Policy

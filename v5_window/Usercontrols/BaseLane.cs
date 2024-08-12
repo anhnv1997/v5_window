@@ -140,8 +140,6 @@ namespace iParkingv5_window.Usercontrols
 
         public static async Task OpenBarrieByControllerId(string controllerId, ControllerInLane? controllerInLane, iLane iLane)
         {
-            OpenAllBarrie(iLane);
-            return;
             foreach (IController item in frmMain.controllers)
             {
                 if (item.ControllerInfo.Id.ToLower() == controllerId.ToLower())
@@ -360,8 +358,6 @@ namespace iParkingv5_window.Usercontrols
             string imageUrl = await AppData.ApiServer.parkingProcessService.GetImageUrl(imageData!.bucket, imageData.objectKey);
             pictureBox.BeginInvoke(new Action(() =>
             {
-
-
                 if (string.IsNullOrEmpty(imageUrl))
                 {
                     pictureBox.Image = pictureBox.ErrorImage;

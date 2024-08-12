@@ -13,7 +13,19 @@
     <Compile Update="Forms\DataForms\frmEventInDetail.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\DataForms\frmLaneSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\DataForms\frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\DataForms\frmSearchCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\DataForms\frmSearchPlateNumber.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\DataForms\frmSelectCard.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\DataForms\frmSelectVehicle.cs">
@@ -22,13 +34,10 @@
     <Compile Update="Forms\DataForms\frmSetShortCutKey.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\DataForms\frmLaneSetting.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\DataForms\frmSelectCard.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Forms\DataForms\frmTestLedDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\SystemForms\frmConfirmPassword.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\SystemForms\frmLoading.cs">
@@ -43,16 +52,28 @@
     <Compile Update="Usercontrols\CameraConfiguration\frmCameraConfigSet.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Usercontrols\ControllerConfiguration\ucControllerReaderCardFormat.cs">
+    <Compile Update="Usercontrols\CameraConfiguration\ucCameraConfig.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Usercontrols\ControllerConfiguration\ucControllerCardFormat.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="Usercontrols\ControllerConfiguration\ucControllerReaderCardFormat.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Usercontrols\LaneConfiguration\ucLaneDirectionConfig.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="Usercontrols\LedConfiguration\ucLedLineConfig.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Usercontrols\LedConfiguration\ucLedLineConfigItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Usercontrols\Payments\ucPayment.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Usercontrols\LedConfiguration\ucLedDisplaySetting.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Usercontrols\ShortcutConfiguration\ucControllerConfig.cs">
@@ -73,22 +94,10 @@
     <Compile Update="Usercontrols\ShortcutConfiguration\ucShortcutConfig.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="Usercontrols\LedConfiguration\ucLedDisplaySetting.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Usercontrols\CameraConfiguration\ucCameraConfig.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Update="Usercontrols\ucBaseLane.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Usercontrols\ucCameraView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Usercontrols\LedConfiguration\ucLedLineConfig.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="Usercontrols\LedConfiguration\ucLedLineConfigItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Usercontrols\ucEventCount.cs">

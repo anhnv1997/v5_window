@@ -53,7 +53,7 @@ namespace iParkingv5_window.Usercontrols
             }
             this.MouseEnter += UcLastEventInfo_MouseEnter;
             this.MouseLeave += UcLastEventInfo_MouseLeave;
-            
+
             picVehicle.MouseEnter += UcLastEventInfo_MouseEnter;
             picVehicle.MouseLeave += UcLastEventInfo_MouseLeave;
             this.Width = pictureBox1.Visible ? this.Width : this.Width - pictureBox1.Width;
@@ -90,13 +90,38 @@ namespace iParkingv5_window.Usercontrols
                     string displayPath = "";
                     ImageData? overviewData = picDirs.ContainsKey(EmParkingImageType.Overview) ? picDirs[EmParkingImageType.Overview][0] : null;
                     ImageData? vehicleData = picDirs.ContainsKey(EmParkingImageType.Vehicle) ? picDirs[EmParkingImageType.Vehicle][0] : null;
-                    if (vehicleData != null)
+                    ImageData? lprData = picDirs.ContainsKey(EmParkingImageType.Plate) ? picDirs[EmParkingImageType.Plate][0] : null;
+
+                    var overviewTask = AppData.ApiServer.parkingProcessService.GetImageUrl(overviewData?.bucket ?? "", overviewData?.objectKey ?? "");
+                    var vehicleTask = AppData.ApiServer.parkingProcessService.GetImageUrl(vehicleData?.bucket ?? "", vehicleData?.objectKey ?? "");
+                    var lprTask = AppData.ApiServer.parkingProcessService.GetImageUrl(lprData?.bucket ?? "", lprData?.objectKey ?? "");
+
+                    await Task.WhenAll(overviewTask, vehicleTask, lprTask);
+
+                    List<string> validUrls = new List<string>();
+                    if (!string.IsNullOrEmpty(lprTask.Result))
                     {
-                        picVehicle.ShowImageAsync(vehicleData);
+                        validUrls.Add(lprTask.Result);
                     }
-                    else
+                    if (!string.IsNullOrEmpty(vehicleTask.Result))
                     {
-                        picVehicle.ShowImageAsync(overviewData);
+                        validUrls.Add(vehicleTask.Result);
+                    }
+                    if (!string.IsNullOrEmpty(overviewTask.Result))
+                    {
+                        validUrls.Add(overviewTask.Result);
+                    }
+
+                    for (int i = 0; i < validUrls.Count; i++)
+                    {
+                        try
+                        {
+                            picVehicle.LoadAsync(validUrls[i]);
+                            break;
+                        }
+                        catch (Exception)
+                        {
+                        }
                     }
                 }
                 this.ResumeLayout();
@@ -111,20 +136,7 @@ namespace iParkingv5_window.Usercontrols
         private void UcLastEventInfo_Click(object? sender, EventArgs e)
         {
             this.onChoosen?.Invoke(this, this.eventId);
-            //if (string.IsNullOrEmpty(this.eventId))
-            //{
-            //    return;
-            //}
-            //LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Xem sk " + this.eventId);
-            //var frm = new frmEventInDetail(this.eventId, plateNumber, vehicleGroupId, IdentityGroupId, datetimeIn, this.picDirs,
-            //                               CustomerId, RegisterVehicleId, this.LaneId, this.IdentityId, this.isEventIn);
-            //if (frm.ShowDialog() == DialogResult.OK)
-            //{
-            //    this.plateNumber = frm.updatePlate;
-            //}
         }
-        #endregion End Controls In Form
-
         private void picVehicle_LoadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             PictureBox pictureBox = (sender as PictureBox)!;
@@ -133,5 +145,7 @@ namespace iParkingv5_window.Usercontrols
                 pictureBox.Image = defaultImg;
             }
         }
+        #endregion End Controls In Form
+
     }
 }

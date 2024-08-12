@@ -1,15 +1,20 @@
 ﻿using IPaking.Ultility;
 using iPakrkingv5.Controls;
+using iPakrkingv5.Controls.Controls.Labels;
+using iParkingv5.ApiManager.KzParkingv5Apis.services;
 using iParkingv5.ApiManager.XuanCuong;
 using iParkingv5.Controller;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
 using iParkingv5.Objects.Datas.Device_service;
+using iParkingv5.Objects.Datas.ThirtParty.OfficeHaus;
 using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.Events;
 using iParkingv5.Printer;
+using iParkingv5.Printer.OfficeHaus;
 using iParkingv5.Reporting;
 using iParkingv5_window.Forms.SystemForms;
+using iParkingv5_window.Forms.ThirdPartyForms.OfficeHausForms;
 using iParkingv5_window.Usercontrols;
 using iParkingv6.Objects.Datas;
 using Kztek.Scale_net6.Interfaces;
@@ -117,6 +122,11 @@ namespace iParkingv5_window.Forms.DataForms
             else
             {
                 tsmiActiveLanesConfig.Visible = false;
+            }
+            if (StaticPool.appOption.PrintTemplate != (int)EmPrintTemplate.OfficeHaus)
+            {
+                tsmiRegister.Visible = false;
+                inQRToolStripMenuItem.Visible = false;
             }
             lblSoftwareName.Text = StaticPool.oemConfig.AppName + " - " + Assembly.GetExecutingAssembly().GetName().Version!.ToString();
             lblSoftwareName.Width = lblSoftwareName.PreferredSize.Width;
@@ -499,16 +509,24 @@ namespace iParkingv5_window.Forms.DataForms
                 {
                     return;
                 }
-                ConnectionFactory factory = new ConnectionFactory();
-                factory.HostName = StaticPool.serverConfig.RabbitMqUrl;
-                factory.Port = 5672;
-                factory.UserName = StaticPool.serverConfig.RabbitMqUsername;
-                factory.Password = StaticPool.serverConfig.RabbitMqPassword;
-                conn = factory.CreateConnection();
-                channel = conn.CreateModel();
-                CreateRequireExchange();
-                CreateRequiredQueue();
-                MonitorControllerEvent();
+                try
+                {
+                    ConnectionFactory factory = new ConnectionFactory();
+                    factory.HostName = StaticPool.serverConfig.RabbitMqUrl;
+                    factory.Port = 5672;
+                    factory.UserName = StaticPool.serverConfig.RabbitMqUsername;
+                    factory.Password = StaticPool.serverConfig.RabbitMqPassword;
+                    conn = factory.CreateConnection();
+                    channel = conn.CreateModel();
+                    CreateRequireExchange();
+                    CreateRequiredQueue();
+                    MonitorControllerEvent();
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Log(EmLogType.ERROR, EmObjectLogType.System, obj: ex.Message, mo_ta_them: ex);
+                    MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             });
         }
 
@@ -533,28 +551,43 @@ namespace iParkingv5_window.Forms.DataForms
         {
             try
             {
-                LogHelper.Log(EmLogType.INFOR, EmObjectLogType.System, specailName: "RabbitMQ", obj: e.Body.ToString());
                 string payLoad = Encoding.ASCII.GetString(e.Body.ToArray());
+                LogHelper.Log(EmLogType.INFOR, EmObjectLogType.System, specailName: "RabbitMQ", obj: payLoad);
                 CardEventArgs ce = Newtonsoft.Json.JsonConvert.DeserializeObject<CardEventArgs>(payLoad)!;
-                foreach (var item in controllers)
+
+                foreach (var item in lanes)
                 {
-                    if (item.ControllerInfo.Code == ce.DeviceId)
+                    if (item.lane.code == ce.DeviceId)
                     {
-                        ce.DeviceId = item.ControllerInfo.Id;
+                        lblLoadingStatus.Text = $"Nhận sự kiện quẹt thẻ READER: {ce.ReaderIndex}, CARD: {ce.PreferCard} từ bộ điều khiển " + ce.DeviceName;
+                        lblLoadingStatus.Width = lblLoadingStatus.PreferredWidth;
+                        lblLoadingStatus.Refresh();
+                        ce.DeviceId = item.lane.controlUnits[0].controlUnitId;
+                        ce.ReaderIndex = item.lane.controlUnits[0].readers[0];
+                        item.OnNewEvent(ce);
                         break;
                     }
                 }
 
-                this.Invoke(new Action(() =>
-                {
-                    lblLoadingStatus.Text = $"Nhận sự kiện quẹt thẻ READER: {ce.ReaderIndex}, CARD: {ce.PreferCard} từ bộ điều khiển " + ce.DeviceName;
-                    lblLoadingStatus.Refresh();
+                //foreach (var item in controllers)
+                //{
+                //    if (item.ControllerInfo.Code == ce.DeviceId)
+                //    {
+                //        ce.DeviceId = item.ControllerInfo.Id;
+                //        break;
+                //    }
+                //}
 
-                    foreach (iLane iLane in lanes)
-                    {
-                        iLane.OnNewEvent(ce);
-                    }
-                }));
+                //this.Invoke(new Action(() =>
+                //{
+                //    lblLoadingStatus.Text = $"Nhận sự kiện quẹt thẻ READER: {ce.ReaderIndex}, CARD: {ce.PreferCard} từ bộ điều khiển " + ce.DeviceName;
+                //    lblLoadingStatus.Refresh();
+
+                //    foreach (iLane iLane in lanes)
+                //    {
+                //        iLane.OnNewEvent(ce);
+                //    }
+                //}));
             }
             catch (Exception ex)
             {
@@ -758,6 +791,32 @@ namespace iParkingv5_window.Forms.DataForms
         private void menuStrip1_DoubleClick(object sender, EventArgs e)
         {
             panelAppStatus.Visible = !panelAppStatus.Visible;
+        }
+
+        HausVisitor? lastHausVistor = null;
+        private void btnRegister_Click(object? sender, EventArgs e)
+        {
+            var frmAddVisitor = new frmAddVisitor();
+            if (frmAddVisitor.ShowDialog() == DialogResult.OK)
+            {
+                string identityGroupCode = frmAddVisitor.IdentityGroupCode;
+                string plateNumber = frmAddVisitor.PlateNumber;
+                lastHausVistor = frmAddVisitor.lastHausVistor;
+            }
+        }
+        private async void btnPrintQR_Click(object? sender, EventArgs e)
+        {
+            var qrData = await ThirdPartyService.GetQRData(lastHausVistor);
+            if (qrData == null || string.IsNullOrEmpty(qrData.QrCode))
+            {
+                MessageBox.Show("Lấy thông tin không thành công, vui lòng thử lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                var printer = new OfficeHausPrinter();
+                string baseContent = File.ReadAllText(PathManagement.hausQRPath());
+                printer.printQR(baseContent, qrData.QrCode ?? "");
+            }
         }
     }
 }

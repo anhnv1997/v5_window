@@ -47,8 +47,7 @@ namespace iParkingv5_window.Forms.DataForms
             btnCancel = new LblCancel();
             btnSelectCard = new BtnOk();
             panelData = new Panel();
-            ucLoading1 = new Usercontrols.BuildControls.ucLoading();
-            ucNotify1 = new Usercontrols.BuildControls.ucNotify();
+            lblGuide = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvData).BeginInit();
             panelData.SuspendLayout();
             SuspendLayout();
@@ -59,7 +58,7 @@ namespace iParkingv5_window.Forms.DataForms
             lblTittle.BackColor = Color.Transparent;
             lblTittle.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             lblTittle.ForeColor = Color.Black;
-            lblTittle.Location = new Point(12, 9);
+            lblTittle.Location = new Point(10, 7);
             lblTittle.Name = "lblTittle";
             lblTittle.Size = new Size(229, 30);
             lblTittle.TabIndex = 0;
@@ -85,7 +84,8 @@ namespace iParkingv5_window.Forms.DataForms
             dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvData.Columns.AddRange(new DataGridViewColumn[] { Column2, Column3, Column6, Column4, Column1 });
-            dgvData.Location = new Point(15, 87);
+            dgvData.Location = new Point(13, 65);
+            dgvData.Margin = new Padding(3, 2, 3, 2);
             dgvData.Name = "dgvData";
             dgvData.ReadOnly = true;
             dgvData.RowHeadersVisible = false;
@@ -93,7 +93,7 @@ namespace iParkingv5_window.Forms.DataForms
             dgvData.RowsDefaultCellStyle = dataGridViewCellStyle3;
             dgvData.RowTemplate.Height = 29;
             dgvData.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvData.Size = new Size(459, 213);
+            dgvData.Size = new Size(675, 221);
             dgvData.TabIndex = 7;
             dgvData.CellDoubleClick += DgvCard_CellDoubleClick;
             // 
@@ -138,26 +138,28 @@ namespace iParkingv5_window.Forms.DataForms
             btnSearch.AutoSize = true;
             btnSearch.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnSearch.ForeColor = Color.Black;
-            btnSearch.Location = new Point(373, 59);
+            btnSearch.Location = new Point(331, 34);
+            btnSearch.Margin = new Padding(3, 2, 3, 2);
             btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(76, 22);
+            btnSearch.Size = new Size(84, 30);
             btnSearch.TabIndex = 2;
             btnSearch.Text = "Tìm kiếm";
             // 
             // txtIdentity
             // 
-            txtIdentity.Location = new Point(128, 54);
+            txtIdentity.Location = new Point(112, 40);
+            txtIdentity.Margin = new Padding(3, 2, 3, 2);
             txtIdentity.Name = "txtIdentity";
-            txtIdentity.Size = new Size(217, 27);
+            txtIdentity.Size = new Size(190, 23);
             txtIdentity.TabIndex = 1;
             // 
             // lblCardNumber
             // 
             lblCardNumber.AutoSize = true;
             lblCardNumber.BackColor = Color.Transparent;
-            lblCardNumber.Location = new Point(22, 56);
+            lblCardNumber.Location = new Point(19, 42);
             lblCardNumber.Name = "lblCardNumber";
-            lblCardNumber.Size = new Size(100, 20);
+            lblCardNumber.Size = new Size(81, 15);
             lblCardNumber.TabIndex = 0;
             lblCardNumber.Text = "Mã định danh";
             // 
@@ -167,9 +169,10 @@ namespace iParkingv5_window.Forms.DataForms
             btnCancel.AutoSize = true;
             btnCancel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnCancel.ForeColor = Color.Black;
-            btnCancel.Location = new Point(490, 406);
+            btnCancel.Location = new Point(669, 393);
+            btnCancel.Margin = new Padding(3, 2, 3, 2);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(49, 22);
+            btnCancel.Size = new Size(57, 30);
             btnCancel.TabIndex = 5;
             btnCancel.Text = "Đóng";
             // 
@@ -179,16 +182,16 @@ namespace iParkingv5_window.Forms.DataForms
             btnSelectCard.AutoSize = true;
             btnSelectCard.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             btnSelectCard.ForeColor = Color.Black;
-            btnSelectCard.Location = new Point(409, 406);
+            btnSelectCard.Location = new Point(580, 393);
+            btnSelectCard.Margin = new Padding(3, 2, 3, 2);
             btnSelectCard.Name = "btnSelectCard";
-            btnSelectCard.Size = new Size(75, 22);
+            btnSelectCard.Size = new Size(83, 30);
             btnSelectCard.TabIndex = 4;
             btnSelectCard.Text = "Xác nhận";
             // 
             // panelData
             // 
-            panelData.Controls.Add(ucLoading1);
-            panelData.Controls.Add(ucNotify1);
+            panelData.Controls.Add(lblGuide);
             panelData.Controls.Add(lblTittle);
             panelData.Controls.Add(btnCancel);
             panelData.Controls.Add(txtIdentity);
@@ -198,39 +201,30 @@ namespace iParkingv5_window.Forms.DataForms
             panelData.Controls.Add(lblCardNumber);
             panelData.Dock = DockStyle.Fill;
             panelData.Location = new Point(0, 0);
+            panelData.Margin = new Padding(3, 2, 3, 2);
             panelData.Name = "panelData";
-            panelData.Size = new Size(800, 450);
+            panelData.Size = new Size(767, 434);
             panelData.TabIndex = 8;
             // 
-            // ucLoading1
+            // lblGuide
             // 
-            ucLoading1.BackColor = Color.FromArgb(255, 224, 192);
-            ucLoading1.Language = IPaking.Ultility.TextManagement.EmLanguage.Vietnamese;
-            ucLoading1.Location = new Point(485, 80);
-            ucLoading1.Message = "Preparing to download";
-            ucLoading1.Name = "ucLoading1";
-            ucLoading1.Size = new Size(392, 188);
-            ucLoading1.TabIndex = 10;
-            // 
-            // ucNotify1
-            // 
-            ucNotify1.BackColor = Color.White;
-            ucNotify1.Location = new Point(65, 69);
-            ucNotify1.MaximumSize = new Size(333, 356);
-            ucNotify1.Message = "Nội dung thông báo";
-            ucNotify1.MinimumSize = new Size(333, 356);
-            ucNotify1.Name = "ucNotify1";
-            ucNotify1.NotiType = Usercontrols.BuildControls.ucNotify.EmNotiType.Information;
-            ucNotify1.Size = new Size(333, 356);
-            ucNotify1.TabIndex = 9;
+            lblGuide.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblGuide.ForeColor = Color.FromArgb(255, 128, 0);
+            lblGuide.Location = new Point(13, 378);
+            lblGuide.Name = "lblGuide";
+            lblGuide.Size = new Size(430, 45);
+            lblGuide.TabIndex = 8;
+            lblGuide.Text = "Enter để tìm kiếm.\r\nKích đúp chuột hoặc bấm xác nhận để chọn định danh.";
+            lblGuide.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // frmSelectCard
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(767, 434);
             Controls.Add(panelData);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(3, 2, 3, 2);
             Name = "frmSelectCard";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Lựa chọn thẻ";
@@ -256,7 +250,6 @@ namespace iParkingv5_window.Forms.DataForms
         private BtnOk btnSelectCard;
         private BtnSearch btnSearch;
         private Panel panelData;
-        private Usercontrols.BuildControls.ucNotify ucNotify1;
-        private Usercontrols.BuildControls.ucLoading ucLoading1;
+        private Label lblGuide;
     }
 }

@@ -347,7 +347,6 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                                                 string _identityGroupId, string customerId,
                                                 string registerVehicleId, string description)
         {
-
             server = server.StandardlizeServerName();
             string apiUrl = server + "abnormal-event";
             //Gửi API

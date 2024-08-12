@@ -1,6 +1,5 @@
-using iParkingv5.Lpr.Objects;
-using iParkingv5.LprDetecter.LprDetecters;
-using iParkingv5.Objects;
+//using iParkingv5.Lpr.Objects;
+//using iParkingv5.LprDetecter.LprDetecters;
 
 namespace iParkingv5.LprServer
 {
@@ -11,7 +10,7 @@ namespace iParkingv5.LprServer
         {
             InitializeComponent();
             instance = this;
-            CreateKztLPR();
+            //CreateKztLPR();
             try
             {
                 CreateHostBuilder().Build().RunAsync();
@@ -29,26 +28,26 @@ namespace iParkingv5.LprServer
                   webBuilder.UseUrls("http://*:" + 8091);// 
                   webBuilder.UseStartup<Startup>();
               });
-        private void CreateKztLPR()
-        {
-            var lprConfig = new LprConfig()
-            {
-                LPRDetecterType = LprDetecter.Objects.LprDetecter.EmLprDetecter.KztekLpr,
-            };
-            StaticPool.LprDetect = LprFactory.CreateLprDetecter(lprConfig, null);
-            StaticPool.LprDetect?.CreateLpr(lprConfig);
-        }
-        public static void showEvent(string input, string output, string plate)
-        {
-            instance.dgvData.Invoke(new Action(() =>
-            {
-                if (instance.dgvData.Rows.Count > 200)
-                {
-                    instance.dgvData.Rows.RemoveAt(200);
-                }
-                instance.dgvData.Rows.Insert(0,DateTime.Now, plate, input, output);
-            }));
-        }
+        //private void CreateKztLPR()
+        //{
+        //    var lprConfig = new LprConfig()
+        //    {
+        //        LPRDetecterType = LprDetecter.Objects.LprDetecter.EmLprDetecter.KztekLpr,
+        //    };
+        //    StaticPool.LprDetect = LprFactory.CreateLprDetecter(lprConfig, null);
+        //    StaticPool.LprDetect?.CreateLpr(lprConfig);
+        //}
+        //public static void showEvent(string input, string output, string plate)
+        //{
+        //    instance.dgvData.Invoke(new Action(() =>
+        //    {
+        //        if (instance.dgvData.Rows.Count > 200)
+        //        {
+        //            instance.dgvData.Rows.RemoveAt(200);
+        //        }
+        //        instance.dgvData.Rows.Insert(0,DateTime.Now, plate, input, output);
+        //    }));
+        //}
         #endregion
     }
 }

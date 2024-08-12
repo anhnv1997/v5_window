@@ -39,5 +39,10 @@
         public static string colorConfigPath => baseBath + $"/configs/led/colorConfig.txt";
 
         #endregion
+
+        #region Haus
+        public static string hausQRPath() => baseBath + $"/configs/app/print/haus_qr.html";
+        #endregion
+
     }
 }

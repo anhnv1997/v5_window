@@ -28,5 +28,6 @@ namespace iParkingv5.Objects.Configs
         public bool IsCheckKey { get; set; } = true;
         public int AutoRejectDialogTime { get; set; } = 0;
         public bool AutoRejectDialogResult { get; set; } = false;
+        public bool IsDisplayCustomerInfo { get; set; } = false;
     }
 }

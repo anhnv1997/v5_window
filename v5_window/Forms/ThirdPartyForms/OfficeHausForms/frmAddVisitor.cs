@@ -1,14 +1,8 @@
-﻿using iParkingv5.Objects.Databases;
+﻿using iParkingv5.ApiManager.KzParkingv5Apis.services;
+using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.Datas.parking_service;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using iParkingv5.Objects.Datas.ThirtParty.OfficeHaus;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace iParkingv5_window.Forms.ThirdPartyForms.OfficeHausForms
 {
@@ -18,6 +12,8 @@ namespace iParkingv5_window.Forms.ThirdPartyForms.OfficeHausForms
         List<IdentityGroup> identityGroups = new List<IdentityGroup>();
         public string IdentityGroupCode { get; set; } = "";
         public string PlateNumber { get; set; } = "";
+        public HausVisitor? lastHausVistor = null;
+        public static string lastIdentityGroupCode = "";
         #endregion
 
         #region Forms
@@ -52,11 +48,26 @@ namespace iParkingv5_window.Forms.ThirdPartyForms.OfficeHausForms
             this.DialogResult = DialogResult.Cancel;
         }
 
-        private void BtnOk_Click(object? sender, EventArgs e)
+        private async void BtnOk_Click(object? sender, EventArgs e)
         {
+            BtnOk.Enabled = false;
             this.IdentityGroupCode = ((ListItem)cbIdentityGroupType.SelectedItem).Value;
             this.PlateNumber = txtPlateNumber.Text;
-            this.DialogResult = DialogResult.OK;
+            lastIdentityGroupCode = this.IdentityGroupCode;
+
+            lastHausVistor = await ThirdPartyService.AddVisitor(this.IdentityGroupCode, this.PlateNumber);
+            if (lastHausVistor == null || string.IsNullOrEmpty(lastHausVistor.UserId))
+            {
+                BtnOk.Enabled = true;
+                MessageBox.Show("Lưu thông tin không thành công, vui lòng thử lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                BtnOk.Enabled = true;
+                MessageBox.Show("Lưu thông tin thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.DialogResult = DialogResult.OK;
+            }
+
         }
         #endregion End Controls In Form
 
@@ -65,14 +76,6 @@ namespace iParkingv5_window.Forms.ThirdPartyForms.OfficeHausForms
         {
             cbIdentityGroupType.DisplayMember = "Name";
             cbIdentityGroupType.ValueMember = "Value";
-            cbIdentityGroupType.Invoke(new Action(() =>
-            {
-                cbIdentityGroupType.Items.Add(new ListItem()
-                {
-                    Name = "Tất cả",
-                    Value = ""
-                });
-            }));
             identityGroups = identityGroups.OrderBy(x => x.Name).ThenBy(x => x.Name.Length).ToList();
 
             cbIdentityGroupType.Invoke(new Action(() =>
@@ -86,7 +89,18 @@ namespace iParkingv5_window.Forms.ThirdPartyForms.OfficeHausForms
                     };
                     cbIdentityGroupType.Items.Add(identityGroupItem);
                 }
-                cbIdentityGroupType.SelectedIndex = 0;
+
+                foreach (ListItem item in cbIdentityGroupType.Items)
+                {
+                    if (item.Value == lastIdentityGroupCode)
+                    {
+                        cbIdentityGroupType.SelectedItem = item;
+                        break;
+                    }
+                }
+
+                if (cbIdentityGroupType.SelectedIndex < 0)
+                    cbIdentityGroupType.SelectedIndex = 0;
             }));
         }
         #endregion End Private Function

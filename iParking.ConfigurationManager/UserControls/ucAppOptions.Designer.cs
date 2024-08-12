@@ -56,6 +56,7 @@
             label5 = new Label();
             label1 = new Label();
             label2 = new Label();
+            chbDisplayCustomer = new CheckBox();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoDelayTime).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoTurn).BeginInit();
@@ -66,6 +67,7 @@
             // groupBox2
             // 
             groupBox2.AutoSize = true;
+            groupBox2.Controls.Add(chbDisplayCustomer);
             groupBox2.Controls.Add(chbIsCheckKey);
             groupBox2.Controls.Add(chbIsUseInvoice);
             groupBox2.Controls.Add(chbIsIntergratedScaleStation);
@@ -98,7 +100,7 @@
             groupBox2.Margin = new Padding(4, 3, 4, 3);
             groupBox2.Name = "groupBox2";
             groupBox2.Padding = new Padding(4, 3, 4, 3);
-            groupBox2.Size = new Size(734, 530);
+            groupBox2.Size = new Size(734, 561);
             groupBox2.TabIndex = 5;
             groupBox2.TabStop = false;
             groupBox2.Text = "Tùy chọn";
@@ -106,11 +108,11 @@
             // chbIsCheckKey
             // 
             chbIsCheckKey.AutoSize = true;
-            chbIsCheckKey.Location = new Point(246, 476);
+            chbIsCheckKey.Location = new Point(246, 507);
             chbIsCheckKey.Margin = new Padding(4);
             chbIsCheckKey.Name = "chbIsCheckKey";
             chbIsCheckKey.Size = new Size(115, 25);
-            chbIsCheckKey.TabIndex = 13;
+            chbIsCheckKey.TabIndex = 14;
             chbIsCheckKey.Text = "Kiểm tra key";
             chbIsCheckKey.UseVisualStyleBackColor = true;
             chbIsCheckKey.Visible = false;
@@ -382,6 +384,16 @@
             label2.TabIndex = 2;
             label2.Text = "Thời gian cho phép mở barrie";
             // 
+            // chbDisplayCustomer
+            // 
+            chbDisplayCustomer.AutoSize = true;
+            chbDisplayCustomer.Location = new Point(246, 475);
+            chbDisplayCustomer.Name = "chbDisplayCustomer";
+            chbDisplayCustomer.Size = new Size(234, 25);
+            chbDisplayCustomer.TabIndex = 13;
+            chbDisplayCustomer.Text = "Hiển thị thông tin khách hàng";
+            chbDisplayCustomer.UseVisualStyleBackColor = true;
+            // 
             // ucAppOptions
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -436,5 +448,6 @@
         private Label label13;
         private ComboBox cbAutoReturnDialogResult;
         private Label label15;
+        private CheckBox chbDisplayCustomer;
     }
 }
