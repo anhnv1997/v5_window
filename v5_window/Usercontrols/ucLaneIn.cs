@@ -210,6 +210,8 @@ namespace iParkingv5_window.Usercontrols
                 {
                     return;
                 }
+                eventInResponse = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, lprResult.PlateNumber, null, validImageTypes,
+                                                                                                  true, lprResult.Vehicle);
                 checkInOutResponse = CheckEventInReponse(eventInResponse, customer, lprResult.Vehicle.vehicleType, lprResult.PlateNumber, true);
                 //Sau khi force vẫn không thành công, kết thúc quy trình
                 if (!checkInOutResponse.IsValidEvent)
@@ -663,7 +665,7 @@ namespace iParkingv5_window.Usercontrols
                 }
                 var eventInfo = report.data[0];
                 lastEvent = new EventInData(eventInfo);
-              
+
                 if (eventInfo.images != null)
                 {
                     ImageData? overviewImgData = eventInfo.images.ContainsKey(EmParkingImageType.Overview) ?
@@ -1353,11 +1355,11 @@ namespace iParkingv5_window.Usercontrols
         /// <param name="isForce"> <paramref name="isForce"/> Biến xác định là check in normal hay force, nếu force thì tự động dừng lại nếu lỗi</param> <br/>
         /// </summary>
         /// <returns></returns>
-        private CheckInOutResponse CheckEventInReponse(Tuple<EventInData, BaseErrorData> eventInReponse, Customer? customer,
+        private CheckEventInResponse CheckEventInReponse(Tuple<EventInData, BaseErrorData> eventInReponse, Customer? customer,
                                                       VehicleBaseType vehicleBaseType, string plateNumber,
                                                       bool isForce)
         {
-            CheckInOutResponse checkInOutResponse = new CheckInOutResponse()
+            CheckEventInResponse checkInOutResponse = new CheckEventInResponse()
             {
                 IsContinueExcecute = false,
                 IsValidEvent = false,

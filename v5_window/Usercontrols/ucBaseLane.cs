@@ -31,6 +31,7 @@ namespace iParkingv5_window.Usercontrols
         public List<string> allowAlarmMessage = new List<string>()
         {
             "Biển số không hợp lệ".ToUpper(),
+            "BIỂN SỐ VÀO RA KHÔNG KHỚP"
         };
         public Color ProcessColor = Color.DarkBlue;
         public Color ErrorColor = Color.DarkRed;
