@@ -1305,12 +1305,19 @@ namespace iParkingv5_window.Usercontrols
             bool isUpdateSuccess = await AppData.ApiServer.parkingProcessService.UpdateEventInPlateAsync(lastEvent!.Id, newPlate, lastEvent.PlateNumber);
             if (isUpdateSuccess)
             {
-                lblResult.UpdateResultMessage("Ra Lệnh Cập Nhật Biển Số Thành Công", ProcessColor);
-                lastEvent.PlateNumber = newPlate;
+                this.Invoke(new Action(() =>
+                {
+
+                    lblResult.UpdateResultMessage("Ra Lệnh Cập Nhật Biển Số Thành Công", ProcessColor);
+                    lastEvent.PlateNumber = newPlate;
+                }));
             }
             else
             {
-                lblResult.UpdateResultMessage("Cập nhật lỗi, vui lòng thử lại", ProcessColor);
+                this.Invoke(new Action(() =>
+                {
+                    lblResult.UpdateResultMessage("Cập nhật lỗi, vui lòng thử lại", ProcessColor);
+                }));
             }
         }
         private void ReverseLane()

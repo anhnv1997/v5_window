@@ -54,17 +54,18 @@ namespace iParkingv5.Lpr.LprDetecters.AmericalLprs
             }
             Bitmap bitmapCut = detectRegion != null ? CropBitmap((Bitmap)originalImage, (Rectangle)detectRegion!) : (Bitmap)originalImage;
 
-            Bitmap detectBitmap = bitmapCut.Clone(new Rectangle(0, 0, originalImage.Width, originalImage.Height), PixelFormat.Format24bppRgb);
+            //Bitmap detectBitmap = bitmapCut.Clone(new Rectangle(0, 0, originalImage.Width, originalImage.Height), PixelFormat.Format24bppRgb);
 
             MemoryStream ms = new MemoryStream();
-            detectBitmap.Save(ms, ImageFormat.Jpeg);
+            bitmapCut.Save(ms, ImageFormat.Jpeg);
             byte[] bytearray = ms.ToArray();
 
             PlateReaderResult plateReaderResult = Read(lprConfig.Url, bytearray, "");
 
-            licensePlateList = GetBestResult(plateReaderResult, detectBitmap);
+            licensePlateList = GetBestResult(plateReaderResult, bitmapCut);
             if (licensePlateList.Count > 0)
             {
+                lprImage = licensePlateList[0].Bitmap;
                 onLprDetectCompleteEvent?.Invoke(this, new Events.LprDetectEventArgs()
                 {
                     LprImage = licensePlateList[0].Bitmap,

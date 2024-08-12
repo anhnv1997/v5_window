@@ -121,10 +121,6 @@ namespace iParkingv5_window.Usercontrols
         }
         public static void UpdateResultMessage(this lblResult lblResult, string message, Color backColor)
         {
-            if (backColor == Color.DarkBlue)
-            {
-                return;
-            }
             LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, noi_dung_hanh_dong: message);
             lblResult.BeginInvoke(() =>
             {
