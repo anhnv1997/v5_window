@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using static iParkingv5.ApiManager.KzParkingv5Apis.Filter;
 using System.Threading.Tasks;
 using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5BaseApi;
+using Kztek.Tools;
 
 namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 {
@@ -16,14 +17,17 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         #region Vehicle Type
         public async Task<Tuple<VehicleType, string>> GetVehicleTypeByIdAsync(string vehicleTypeId)
         {
-            return await  GetObjectDetailByIdAsync<VehicleType>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.VehicleType, vehicleTypeId);
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingDataService", "Get Vehicle Type By Id", vehicleTypeId);
+            return await GetObjectDetailByIdAsync<VehicleType>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.VehicleType, vehicleTypeId);
         }
         public async Task<Tuple<List<VehicleType>, string>> GetVehicleTypesAsync()
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingDataService", "Get All VehicleType");
             return await GetAllObjectAsync<VehicleType>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.VehicleType);
         }
         public async Task<Tuple<List<VehicleType>, string>> GetVehicleTypesAsync(string keyword)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingDataService", "Get VehicleType By KeyWord");
             return await GetObjectByConditionAsync<VehicleType>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.VehicleType,
                                                         EmPageSearchType.TEXT, EmPageSearchKey.name, keyword, EmOperation._contains);
 
@@ -33,21 +37,25 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         #region Identity
         public async Task<Tuple<Identity, string>> GetIdentityByIdAsync(string id)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingDataService", "Get Identity By Id", id);
             return await GetObjectDetailByIdAsync<Identity>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Identity, id);
         }
         public async Task<Tuple<List<Identity>, string>> GetIdentitiesAsync(string keyword)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingDataService", "Get Identity By KeyWord");
             return await GetObjectByConditionAsync<Identity>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Identity,
                                                         EmPageSearchType.TEXT, EmPageSearchKey.name, keyword, EmOperation._contains);
 
         }
         public async Task<Tuple<Identity, string>> GetIdentityByCodeAsync(string code)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingDataService", "Get Top 1 Identity By Code");
             return await GetTop1ObjectAsync<Identity>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Identity, EmPageSearchType.TEXT,
                                                       EmPageSearchKey.code, code);
         }
         public async Task<Tuple<Identity, string>> CreateIdentityAsync(Identity identity)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingDataService", "Create Identity");
             return await CreateObjectAsync<Identity>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Identity,
                                                               identity);
         }
@@ -56,10 +64,12 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         #region Identity Group
         public async Task<Tuple<IdentityGroup, string>> GetIdentityGroupByIdAsync(string id)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingDataService", "Get IdentityGroup By Id", id);
             return await GetObjectDetailByIdAsync<IdentityGroup>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.IdentityGroup, id);
         }
         public async Task<Tuple<List<IdentityGroup>, string>> GetIdentityGroupsAsync()
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingDataService", "Get All IdentityGroup");
             return await GetAllObjectAsync<IdentityGroup>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.IdentityGroup);
         }
         #endregion End Identity Group
@@ -67,21 +77,25 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         #region Register Vehicle
         public async Task<Tuple<RegisteredVehicle, string>> GetRegistedVehilceByPlateAsync(string plateNumber)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingDataService", "Get Top 1 RegisteredVehicle By PlateNumber");
             return await GetTop1ObjectAsync<RegisteredVehicle>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.RegisteredVehicle, EmPageSearchType.TEXT,
                                                       EmPageSearchKey.plateNumber, plateNumber);
         }
         public async Task<Tuple<RegisteredVehicle, string>> GetRegistedVehilceByIdAsync(string id)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingDataService", "Get RegisteredVehicle By Id", id);
             return await GetObjectDetailByIdAsync<RegisteredVehicle>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.RegisteredVehicle, id);
         }
         public async Task<Tuple<List<RegisteredVehicle>, string>> GetRegisterVehiclesAsync(string keyword)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingDataService", "Get RegisteredVehicle By KeyWord");
             return await GetObjectByConditionAsync<RegisteredVehicle>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.RegisteredVehicle,
                                                             EmPageSearchType.TEXT, EmPageSearchKey.name, keyword, EmOperation._contains);
 
         }
         public async Task<Tuple<RegisteredVehicle, string>> CreateRegisteredVehicle(RegisteredVehicle registeredVehicle)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingDataService", "Create RegisteredVehicle");
             return await CreateObjectAsync<RegisteredVehicle>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.RegisteredVehicle,
                                                               registeredVehicle);
         }
@@ -112,25 +126,30 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         #region Customer
         public async Task<Tuple<Customer, string>> CreateCustomer(Customer customer)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingDataService", "Create Customer");
             return await CreateObjectAsync<Customer>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Customer,
                                                              customer);
         }
         public async Task<Tuple<Customer, string>> GetCustomerByIdAsync(string id)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingDataService", "Get Customer By Id", id);
             return await GetObjectDetailByIdAsync<Customer>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Customer, id);
         }
         public async Task<Tuple<List<Customer>, string>> GetCustomersAsync()
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingDataService", "Get All Customer");
             return await GetAllObjectAsync<Customer>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Customer);
         }
         public async Task<Tuple<List<Customer>, string>> GetCustomersAsync(string keyword)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingDataService", "Get Customer By KeyWord");
             return await GetObjectByConditionAsync<Customer>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.Customer,
                                                             EmPageSearchType.TEXT, EmPageSearchKey.name, keyword, EmOperation._contains);
 
         }
         public async Task<bool> UpdateCustomer(Customer customer)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingDataService", "Update Customer");
             //server = server.StandardlizeServerName();
             //string apiUrl = server + KzApiUrlManagement.EmObjectType.Customer.UpdateRouteById(customer.Id);
 
@@ -149,6 +168,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         }
         public async Task<Tuple<bool, string>> DeleteCustomerById(string customerId)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingDataService", "Delete Customer By Id", customerId);
             //server = server.StandardlizeServerName();
             //string apiUrl = server + KzApiUrlManagement.EmObjectType.Customer.DeleteByIdRoute(customerId);
 
@@ -179,6 +199,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         #region Customer Group
         public async Task<Tuple<List<CustomerGroup>, string>> GetCustomerGroupsAsync()
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingDataService", "Get All Customer Group");
             return await GetAllObjectAsync<CustomerGroup>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.CustomerGroup);
         }
         #endregion End Customer Group

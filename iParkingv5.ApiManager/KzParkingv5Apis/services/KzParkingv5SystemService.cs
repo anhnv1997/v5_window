@@ -19,6 +19,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
     {
         public async Task<SystemConfig> GetSystemConfigAsync()
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "SystemService", "Get System Config");
             server = server.StandardlizeServerName();
             string apiUrl = server + "project/BF195768-4C7F-4F59-A50F-F41AD693BBC0";
 
@@ -29,6 +30,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null,
                                                                   timeOut, Method.Get);
 
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "SystemService", "Get Company Config");
             apiUrl = server + "tenant/" + "00f43ef8-f67b-446a-870a-c219b59c0c4e".ToUpper();
             var response2 = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null,
                                                                timeOut, Method.Get);

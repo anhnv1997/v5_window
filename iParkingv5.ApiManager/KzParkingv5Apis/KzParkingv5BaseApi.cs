@@ -39,13 +39,13 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             server = server.StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.SearchObjectDataRoute(objectType);
 
-            var filter = Filter.CreateFilter(new FilterModel(), _pageIndex: 0, _pageSize: -1);
+            var filter = Filter.CreateFilter(new FilterModel(), false, _pageIndex: 0);
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
                 { "Authorization","Bearer " + token  }
             };
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null,
-                                                                   timeOut, RestSharp.Method.Post);
+                                                                   timeOut, Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
                 KzParkingv5BaseResponse<List<T>> kzBaseResponse =
@@ -79,7 +79,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             server = server.StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.SearchObjectDataRoute(objectType);
 
-            var filter = Filter.CreateFilter(new FilterModel(emPageSearchKey, emPageSearchType, searchValue, EmOperation._eq), 0, 1);
+            var filter = Filter.CreateFilter(new FilterModel(emPageSearchKey, emPageSearchType, searchValue, EmOperation._eq), true,
+                                            _pageIndex: 0, _pageSize: 1);
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
                 { "Authorization","Bearer " + token  }
@@ -119,7 +120,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             server = server.StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.SearchObjectDataRoute(objectType);
 
-            var filter = Filter.CreateFilter(new FilterModel(emPageSearchKey, emPageSearchType, searchValue, operation));
+            var filter = Filter.CreateFilter(new FilterModel(emPageSearchKey, emPageSearchType, searchValue, operation), false);
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
                 { "Authorization","Bearer " + token  }
@@ -199,7 +200,6 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return Tuple.Create<T, string>(null, "Empty Data");
         }
-
         #endregion End ADD
 
         #endregion End Base

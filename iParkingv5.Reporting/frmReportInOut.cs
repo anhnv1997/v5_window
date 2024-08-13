@@ -201,7 +201,7 @@ namespace iParkingv5.Reporting
                 string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
                 string user = string.IsNullOrEmpty(((ListItem)cbUser.SelectedItem)?.Value) ? "" : cbUser.Text;
 
-                var report = await ApiServer.reportingService.GetEventOuts(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user, 0, Filter.PAGE_SIZE);
+                var report = await ApiServer.reportingService.GetEventOuts(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user, true, 0, Filter.PAGE_SIZE);
                 var eventOutData = report.data;
                 totalPages = report.TotalPage;
                 totalEvents = report.TotalCount;
@@ -293,7 +293,7 @@ namespace iParkingv5.Reporting
                 var imageOutDatas = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<EmParkingImageType, List<ImageData>>>(dgvData.CurrentRow?.Cells[col_file_keys_out].Value.ToString()!)!;
                 ImageData? displayOverviewOutImage = imageOutDatas.ContainsKey(EmParkingImageType.Overview) ? imageOutDatas[EmParkingImageType.Overview][0] : null;
                 ImageData? vehicleOutImage = imageOutDatas.ContainsKey(EmParkingImageType.Vehicle) ? imageOutDatas[EmParkingImageType.Vehicle][0] : null;
-               
+
                 var imageInDatas = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<EmParkingImageType, List<ImageData>>>(dgvData.CurrentRow?.Cells[col_file_keys_in].Value.ToString()!)!;
                 ImageData? displayOverviewInImage = imageInDatas.ContainsKey(EmParkingImageType.Overview) ? imageInDatas[EmParkingImageType.Overview][0] : null;
                 ImageData? vehicleInImage = imageInDatas.ContainsKey(EmParkingImageType.Vehicle) ? imageInDatas[EmParkingImageType.Vehicle][0] : null;
@@ -337,7 +337,7 @@ namespace iParkingv5.Reporting
                 string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
                 string user = string.IsNullOrEmpty(((ListItem)cbUser.SelectedItem)?.Value) ? "" : cbUser.Text;
 
-                var report = await ApiServer.reportingService.GetEventOuts(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user, pageIndex - 1, Filter.PAGE_SIZE);
+                var report = await ApiServer.reportingService.GetEventOuts(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user, true, pageIndex - 1, Filter.PAGE_SIZE);
                 var eventOutData = report.data;
 
                 totalPages = report.TotalPage;

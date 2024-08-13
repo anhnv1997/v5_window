@@ -1,17 +1,12 @@
-﻿using iParkingv5.Objects.Datas.user_service;
-using iParkingv5.Objects;
-using iParkingv6.ApiManager;
-using Newtonsoft.Json.Linq;
+﻿using iParkingv6.ApiManager;
 using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using System.Threading;
 using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5BaseApi;
 using iParkingv5.Objects.Datas.ThirtParty.OfficeHaus;
-using iParkingv5.Objects.Datas.invoice_service;
 using Newtonsoft.Json;
+using Kztek.Tools;
 
 namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 {
@@ -19,6 +14,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
     {
         public static async Task<HausVisitor> AddVisitor(string identityGroupCode, string plateNumber)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ThirdPartyService", "Add Visitor", (identityGroupCode, plateNumber));
+
             server = server.StandardlizeServerName();
             string apiUrl = server + "integration/visitor";
 
@@ -51,6 +48,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 
         public static async Task<HausQR> GetQRData(HausVisitor visitor)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ThirdPartyService", "Get QR Data", visitor);
             server = server.StandardlizeServerName();
             string apiUrl = server + "integration/visitor/get-qr";
 

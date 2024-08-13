@@ -662,7 +662,7 @@ namespace iParkingv5_window.Usercontrols
                 DateTime now = DateTime.Now;
                 DateTime startTime = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
                 DateTime endTime = new DateTime(now.Year, now.Month, now.Day, 23, 59, 59);
-                var report = await AppData.ApiServer.reportingService.GetEventIns("", startTime, endTime, "", "", "", "", 0, 1, eventId);
+                var report = await AppData.ApiServer.reportingService.GetEventIns("", startTime, endTime, "", "", "", "", true, 0, 1, eventId);
                 if (report == null || report.data.Count == 0)
                 {
                     ClearView();
@@ -1049,7 +1049,7 @@ namespace iParkingv5_window.Usercontrols
         {
             DateTime startTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
             DateTime endTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
-            var top3Event = (await AppData.ApiServer.reportingService.GetEventIns("", startTime, endTime, "", "", this.lane.Id, "", 0, 3)).data;
+            var top3Event = (await AppData.ApiServer.reportingService.GetEventIns("", startTime, endTime, "", "", this.lane.Id, "", true, 0, 3)).data;
             if (top3Event == null)
             {
                 return;

@@ -13,6 +13,7 @@ using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5ApiHelper;
 using System.Threading.Tasks;
 using System.Threading;
 using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5BaseApi;
+using Kztek.Tools;
 
 namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 {
@@ -21,7 +22,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 
         public async Task<InvoiceResponse> CreateEinvoice(long _price, string plateNumber, DateTime datetimeIn, DateTime datetimeOut, string eventOutId, bool isSendNow = true, string cardGroupName = "")
         {
-            //string url = $"http://14.160.26.45:26868/einvoice?provider=VIETTEL";
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "InvoiceService", "Create Invoice");
             string apiUrl = "";
             server = server.StandardlizeServerName();
             apiUrl = server + "invoice";
@@ -99,7 +100,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 
         public async Task<InvoiceFileInfor> GetInvoiceData(string orderId, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL)
         {
-            // string url = $"http://14.160.26.45:26868/einvoice?provider=65";
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "InvoiceService", "Get Invoice Data By OrderId", orderId);
             server = server.StandardlizeServerName();
             string apiUrl = server + $"invoice/{orderId}/representation";
 
@@ -124,7 +125,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 
         public async Task<List<InvoiceResponse>> GetMultipleInvoiceData(DateTime startTime, DateTime endTime, EmInvoiceProvider provider = EmInvoiceProvider.VIETTEL)
         {
-            //string url = $"http://14.160.26.45:26868/invoice/many";
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "InvoiceService", "Get Multiple Invoice Data By Time", (startTime, endTime));
             server = server.StandardlizeServerName();
             string apiUrl = server + "invoice/search";
 
@@ -138,7 +139,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                 new FilterModel("success", "BOOLEAN", "true", "eq"),
                 new FilterModel("createdUtc", "DATETIME", startTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), "gte"),
                 new FilterModel("createdUtc", "DATETIME", endTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), "lte"),
-            }, EmMainOperation.and, 0, 10000);
+            }, false, EmMainOperation.and, 0, 10000);
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
@@ -150,7 +151,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 
         public async Task<List<InvoiceResponse>> getPendingEInvoice(DateTime startTime, DateTime endTime)
         {
-            //string url = $"http://14.160.26.45:26868/sent-invoice/many";
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "InvoiceService", "Get Pending Invoice Data By Time", (startTime, endTime));
             server = server.StandardlizeServerName();
             string apiUrl = server + "invoice/search";
 
@@ -165,7 +166,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                 new FilterModel("success", "BOOLEAN", "false", "neq"),
                 new FilterModel("createdUtc", "DATETIME", startTime.ToUniversalTime().ToString("2023-MM-ddTHH:mm:ss:0000"), "gte"),
                 new FilterModel("createdUtc", "DATETIME", endTime.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss:0000"), "lte"),
-            }, EmMainOperation.and, 0, 10000);
+            }, false, EmMainOperation.and, 0, 10000);
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
@@ -176,6 +177,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         }
         public async Task<bool> sendPendingEInvoice(string orderId)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "InvoiceService", "Send Pending Invoice By OrderId", orderId);
             server = server.StandardlizeServerName();
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {

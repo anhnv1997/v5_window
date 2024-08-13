@@ -30,7 +30,10 @@ namespace v6_window
             {
                 const string appName = "IP_DA_V5_WD";
                 PathManagement.baseBath = LogHelper.SaveLogFolder = Application.StartupPath;
-                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Khởi chạy ứng dụng");
+
+                LogHelper.CreateConnection();
+                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Application", "Start Program");
+
                 using (Mutex mutex = new Mutex(true, appName, out bool ownmutex))
                 {
                     if (ownmutex)
@@ -38,6 +41,7 @@ namespace v6_window
                         LoadSystemConfig();
                         if (StaticPool.appOption.IsCheckKey)
                         {
+                            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Application", "Check Key Program");
                             var frmLicenseValidatorForm = new LicenseValidatorForm();
                             frmLicenseValidatorForm.Init(appName);
                             try
@@ -91,8 +95,7 @@ namespace v6_window
                     }
                     else
                     {
-                        LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, "Start", "Ứng dụng đã được mở trước đó", "Tắt ứng dụng cũ và kiểm tra lại");
-                        // ứng dụng đã chạy, đóng ứng dụng trước đó và chạy ứng dụng mới
+                        LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, "Application", "Duplicate App Running");
                         Process currentProcess = Process.GetCurrentProcess();
                         foreach (Process process in Process.GetProcessesByName(currentProcess.ProcessName))
                         {
@@ -108,7 +111,7 @@ namespace v6_window
                             }
                             catch (Exception ex)
                             {
-                                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, "Start", "Ứng dụng đã được mở trước đó", "Tắt ứng dụng cũ và kiểm tra lại", obj: ex);
+                                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, "Application", "Duplicate App Running", ex);
                                 goto StartApp;
                             }
                         }
@@ -127,6 +130,7 @@ namespace v6_window
         {
             try
             {
+                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Application", "Load System Config");
                 StaticPool.serverConfig = NewtonSoftHelper<ServerConfig>.DeserializeObjectFromPath(PathManagement.serverConfigPath);
                 if (StaticPool.serverConfig == null)
                 {
@@ -141,26 +145,36 @@ namespace v6_window
             }
             catch (Exception ex)
             {
+                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, "Application", "Load System Config", ex);
                 MessageBox.Show("LoadServer: " + ex.Message + "\r\n" + ex.InnerException?.Message);
             }
 
 
             try
             {
+                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Application", "Load OEM Config");
                 StaticPool.oemConfig = NewtonSoftHelper<OEMConfig>.DeserializeObjectFromPath(PathManagement.oemConfigPath) ?? new OEMConfig();
+
+                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Application", "Load APP Option");
                 StaticPool.appOption = NewtonSoftHelper<AppOption>.DeserializeObjectFromPath(PathManagement.appOptionConfigPath) ?? new AppOption();
+
+                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Application", "Load EInvoice Config");
                 StaticPool.eInvoiceConfig = NewtonSoftHelper<EInvoiceConfig>.DeserializeObjectFromPath(PathManagement.einvoiceConfigPath) ?? new EInvoiceConfig();
+
+                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Application", "Load Lpr Config");
                 StaticPool.lprConfig = NewtonSoftHelper<LprConfig>.DeserializeObjectFromPath(PathManagement.lprConfigPath) ?? new LprConfig();
                 LogHelper.isSaveLog = StaticPool.appOption.IsSaveLog;
             }
             catch (Exception ex)
             {
+                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, "Application", "Load Config", ex);
                 MessageBox.Show("LoadServer2: " + ex.Message + "\r\n" + ex.InnerException?.Message);
             }
 
         }
         private static void CheckForUpdate()
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Application", "Check Update");
             if (string.IsNullOrEmpty(StaticPool.appOption.CheckForUpdatePath)) return;
 
             if (!Directory.Exists(StaticPool.appOption.CheckForUpdatePath)) return;
@@ -168,7 +182,6 @@ namespace v6_window
             try
             {
                 bool isHavingUpdate = false;
-                // Get all files in the specified path and its subdirectories
                 string[] updatefiles = Directory.GetFiles(StaticPool.appOption.CheckForUpdatePath, "*", SearchOption.AllDirectories);
                 List<string> realUpdateFiles = new List<string>();
                 foreach (string file in updatefiles)
@@ -215,19 +228,23 @@ namespace v6_window
 
                         if (currentFilePathVersion != updateFilePathVersion)
                         {
+                            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Application",
+                                          $"Update {fileName} From {currentFilePathVersion} To {updateFilePathVersion}");
                             isHavingUpdate = true;
                             string newFilePath = Path.Combine(Application.StartupPath, fileName + "_bak_" + currentFilePathVersion + "_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm_ss"));
-                            System.IO.File.Move(currentFilePath, newFilePath);
-                            System.IO.File.Copy(updateFilePath, currentFilePath);
-                            while (!System.IO.File.Exists(currentFilePath))
+                            File.Move(currentFilePath, newFilePath);
+                            File.Copy(updateFilePath, currentFilePath);
+                            while (!File.Exists(currentFilePath))
                             {
                                 Thread.Sleep(10);
                             }
                         }
                         else if (updateFilePathVersion == null && currentFilePathVersion == null)
                         {
-                            System.IO.File.Delete(currentFilePath);
-                            System.IO.File.Copy(updateFilePath, currentFilePath);
+                            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Application", $"Copy New {fileName}");
+
+                            File.Delete(currentFilePath);
+                            File.Copy(updateFilePath, currentFilePath);
                         }
                     }
                     //THÊM FILE CHƯA CÓ
@@ -241,7 +258,7 @@ namespace v6_window
                         // Create the directory if it doesn't exist
                         Directory.CreateDirectory(destinationDirectory);
 
-                        System.IO.File.Copy(updateFilePath, Path.Combine(Application.StartupPath, fileName));
+                        File.Copy(updateFilePath, Path.Combine(Application.StartupPath, fileName));
                     }
                 }
 
@@ -257,6 +274,7 @@ namespace v6_window
             }
             catch (Exception ex)
             {
+                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, "Application", "Check Update", ex);
                 MessageBox.Show(ex.Message);
             }
         }

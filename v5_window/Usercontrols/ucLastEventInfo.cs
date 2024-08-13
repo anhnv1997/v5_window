@@ -73,7 +73,6 @@ namespace iParkingv5_window.Usercontrols
         {
             try
             {
-                this.isEventIn = isEventIn;
                 this.Invoke(new Action(() =>
                 {
                     this.SuspendLayout();
@@ -87,7 +86,6 @@ namespace iParkingv5_window.Usercontrols
                 }
                 else
                 {
-                    string displayPath = "";
                     ImageData? overviewData = picDirs.ContainsKey(EmParkingImageType.Overview) ? picDirs[EmParkingImageType.Overview][0] : null;
                     ImageData? vehicleData = picDirs.ContainsKey(EmParkingImageType.Vehicle) ? picDirs[EmParkingImageType.Vehicle][0] : null;
                     ImageData? lprData = picDirs.ContainsKey(EmParkingImageType.Plate) ? picDirs[EmParkingImageType.Plate][0] : null;

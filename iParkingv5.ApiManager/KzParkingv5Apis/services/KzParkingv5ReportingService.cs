@@ -15,16 +15,17 @@ using RestSharp;
 using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5BaseApi;
 using iParkingv5.Objects.EventDatas;
 using Microsoft.Extensions.Logging;
+using Kztek.Tools;
 
 namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 {
     public class KzParkingv5ReportingService : iReportingService
     {
-
         public async Task<Report<EventInReport>> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
-                                    string identityGroupId, string vehicleTypeId, string laneId, string user,
-                                    int pageIndex = 1, int pageSize = 100, string eventInId = "")
+                                    string identityGroupId, string vehicleTypeId, string laneId, string user, bool isPaging,
+                                    int pageIndex = 0, int pageSize = 100, string eventInId = "")
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ReportingService", "Get Event In");
             server = server.StandardlizeServerName();
             string apiUrl = server + "event-in/search";
             Dictionary<string, string> headers = new Dictionary<string, string>()
@@ -63,7 +64,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                                 new FilterModel("identity.code", "TEXT", keyword, "contains"),
                                 new FilterModel("identity.name", "TEXT", keyword, "contains"),
                             }, EmMainOperation.or);
-            var filter = Filter.CreateFilter(new List<Dictionary<string, List<FilterModel>>>() { filter1, filter2 },
+            var filter = Filter.CreateFilter(new List<Dictionary<string, List<FilterModel>>>() { filter1, filter2 }, isPaging,
                                             pageIndex: pageIndex,
                                             pageSize: pageSize);
 
@@ -98,9 +99,10 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         }
 
         public async Task<Report<EventOutReport>> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId,
-                                                               string vehicleTypeId, string laneId, string user,
+                                                               string vehicleTypeId, string laneId, string user, bool isPaging,
                                                                int pageIndex = 1, int pageSize = 10000, string eventId = "")
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ReportingService", "Get Event Out");
             server = server.StandardlizeServerName();
             string apiUrl = server + "event-out/search";
             Dictionary<string, string> headers = new Dictionary<string, string>()
@@ -137,7 +139,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                             new FilterModel("identity.code", "TEXT", keyword, "contains"),
                             new FilterModel("identity.name", "TEXT", keyword, "contains"),
                         }, EmMainOperation.or);
-            var filter = Filter.CreateFilter(new List<Dictionary<string, List<FilterModel>>>() { filter1, filter2 },
+            var filter = Filter.CreateFilter(new List<Dictionary<string, List<FilterModel>>>() { filter1, filter2 }, isPaging,
                                             pageIndex: pageIndex,
                                             pageSize: pageSize);
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, Method.Post);
@@ -171,6 +173,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 
         public async Task<DataTable> GetAlarmReport(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, int pageIndex = 1, int pageSize = 10000)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ReportingService", "Get Alarm");
             server = server.StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.GetBySqlCmd;
             string cmd = string.Empty;
@@ -264,16 +267,17 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         /// <returns></returns>
         public async Task<SumaryCountEvent> SummaryEventAsync()
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ReportingService", "Get Summary");
             server = server.StandardlizeServerName();
 
             DateTime minTime = new DateTime(2000, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
             DateTime startTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
             DateTime endTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
 
-            var dataOut = await GetEventOuts("", startTime, endTime, "", "", "", "", 0, 1);
-            var dataIn = await GetEventIns("", startTime, endTime, "", "", "", "", 0, 1);
-            var dataInAndOut = await GetEventInAndOuts("", startTime, endTime, "", "", "", "", 0, 1);
-            var dataInPark = await GetEventIns("", minTime, endTime, "", "", "", "", 0, 1);
+            var dataOut = await GetEventOuts("", startTime, endTime, "", "", "", "", true, 0, 1);
+            var dataIn = await GetEventIns("", startTime, endTime, "", "", "", "", true, 0, 1);
+            var dataInAndOut = await GetEventInAndOuts("", startTime, endTime, "", "", "", "", true, 0, 1);
+            var dataInPark = await GetEventIns("", minTime, endTime, "", "", "", "", true, 0, 1);
 
             int vehicleInPark = dataInPark.TotalCount;
             int vehicleGotIn = dataIn.TotalCount + dataInAndOut.TotalCount;
@@ -287,7 +291,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             };
         }
 
-        public async Task<Report<EventOutReport>> GetEventInAndOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, int pageIndex = 1, int pageSize = 10000)
+        public async Task<Report<EventOutReport>> GetEventInAndOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, string user, bool isPaging, int pageIndex = 1, int pageSize = 10000)
         {
             server = server.StandardlizeServerName();
             string apiUrl = server + "event-out/search";
@@ -323,7 +327,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                             new FilterModel("identity.code", "TEXT", keyword, "contains"),
                             new FilterModel("identity.name", "TEXT", keyword, "contains"),
                         }, EmMainOperation.or);
-            var filter = Filter.CreateFilter(new List<Dictionary<string, List<FilterModel>>>() { filter1, filter2 },
+            var filter = Filter.CreateFilter(new List<Dictionary<string, List<FilterModel>>>() { filter1, filter2 }, isPaging,
                                             pageIndex: pageIndex,
                                             pageSize: pageSize);
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, Method.Post);

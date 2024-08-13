@@ -20,6 +20,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         #region EVENT-IN
         public async Task<bool> UpdateEventInPlateAsync(string eventId, string newPlate, string oldPlate)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Update Event In Plate",
+                         ("Id: " + eventId, "Old: " + oldPlate, "New: " + newPlate));
             server = server.StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/" + eventId;
             //Gửi API
@@ -47,12 +49,15 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         public async Task<Tuple<EventInData, BaseErrorData>> PostCheckInAsync(
             string _laneId, string _plateNumber, Identity? identity, List<EmParkingImageType> validImageTypes, bool isForce = false, RegisteredVehicle? registeredVehicle = null, string _note = "")
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Start Check In", _laneId);
             if (identity == null)
             {
+                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Check In By Identity", (_laneId, identity));
                 return await PostCheckInByPlateAsync(_laneId, _plateNumber, identity, validImageTypes, isForce, registeredVehicle, _note);
             }
             else
             {
+                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Check In By Plate", (_laneId, _plateNumber));
                 return await PostCheckInByIdentityAsync(_laneId, _plateNumber, identity, validImageTypes, isForce, registeredVehicle, _note);
             }
         }
@@ -171,12 +176,15 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         public async Task<Tuple<EventOutData, BaseErrorData>> PostCheckOutAsync(string _laneId, string _plateNumber, Identity? identitiy,
                                                                   List<EmParkingImageType> validImageTypes, bool isForce)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Start Check Out", _laneId);
             if (identitiy == null)
             {
+                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Check Out By Identity", (_laneId, identitiy));
                 return await PostCheckOutByPlateAsync(_laneId, _plateNumber, identitiy, validImageTypes, isForce);
             }
             else
             {
+                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Check Out By Plate", (_laneId, _plateNumber));
                 return await PostCheckOutByIdentityAsync(_laneId, _plateNumber, identitiy, validImageTypes, isForce);
             }
         }
@@ -289,6 +297,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 
         public async Task<bool> UpdateEventOutPlate(string eventId, string newPlate, string oldPlate)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Update Event In Plate",
+                         ("Id: " + eventId, "Old: " + oldPlate, "New: " + newPlate));
             server = server.StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/" + eventId;
             //Gửi API
@@ -314,6 +324,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         }
         public async Task<bool> CommitOutAsync(EventOutData eventOut)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Commit Out", eventOut);
             server = server.StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/" + eventOut.Id;
             //Gửi API
@@ -347,6 +358,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                                                 string _identityGroupId, string customerId,
                                                 string registerVehicleId, string description)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Create Alarm Event");
             server = server.StandardlizeServerName();
             string apiUrl = server + "abnormal-event";
             //Gửi API
@@ -387,55 +399,12 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                 }
             }
             return null;
-
-            //server = server.StandardlizeServerName();
-
-
-            //var options = new RestClientOptions(server)
-            //{
-            //    MaxTimeout = 10000,
-            //};
-            //var client = new RestClient(options);
-            //var request = new RestRequest("/abnormal-event", Method.Post);
-            //request.AddHeader("Authorization", "Bearer " + token);
-            //request.AlwaysMultipartFormData = true;
-            //request.AddParameter("laneId", _laneId);
-            //request.AddParameter("identityCode", identityCode);
-            //request.AddParameter("identityType", 0);
-            //request.AddParameter("Code", abnormalCode);
-            //request.AddParameter("PlateNumber", plate);
-            //request.AddParameter("Description", description);
-
-            //int i = 0;
-            //foreach (KeyValuePair<EmParkingImageType, List<byte>> kvp in imageDatas)
-            //{
-            //    if (kvp.Value.Count > 0)
-            //    {
-            //        //request.AddFile($"images[{i}].File", kvp.Value.ToArray(), "x.jpg");
-            //        request.AddParameter($"images[{i}].Type", (int)kvp.Key);
-            //        i++;
-            //    }
-            //}
-            //LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Api, mo_ta_them: request.Parameters);
-            //RestResponse response = await client.ExecuteAsync(request);
-            //LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Api, mo_ta_them: response.Content, obj: response.StatusCode);
-            //if (!string.IsNullOrEmpty(response.Content))
-            //{
-            //    try
-            //    {
-            //        AbnormalEvent kzBaseResponse = NewtonSoftHelper<AbnormalEvent>.GetBaseResponse(response.Content);
-            //        return kzBaseResponse != null;
-            //    }
-            //    catch (Exception)
-            //    {
-            //    }
-            //}
-            //return false;
         }
         #endregion
 
         public async Task<bool> SaveEventImage(string bucketName, string objKey, EmParkingImageType objType, List<byte> imageData)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Save Event Image");
             server = server.StandardlizeServerName();
 
             var options = new RestClientOptions(server)
@@ -453,23 +422,11 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Api, mo_ta_them: request.Parameters);
             RestResponse response = await client.ExecuteAsync(request);
             return response.StatusCode == System.Net.HttpStatusCode.Created;
-            //LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Api, mo_ta_them: response.Content, obj: response.StatusCode);
-            //if (!string.IsNullOrEmpty(response.Content))
-            //{
-            //    try
-            //    {
-            //        AddEventOutResponse addEventOutResponse = NewtonSoftHelper<AddEventOutResponse>.GetBaseResponse(response.Content);
-            //        return addEventOutResponse;
-            //    }
-            //    catch (Exception)
-            //    {
-            //    }
-            //}
-            //return null;
         }
 
         public async Task<string> GetImageUrl(string bucketName, string objKey)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Get Display Image Url");
             server = server.StandardlizeServerName();
             string apiUrl = $"{server}s3/presigned-url";
 
@@ -499,6 +456,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         }
         public async Task<string> GetFeeCalculate(string dateTimeIn, string dateTimeOut, string identityGroupID)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Get Fee Calculate");
             server = server.StandardlizeServerName();
             string apiUrl = $"{server}charge/calculate";
 
@@ -529,6 +487,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         }
         public async Task<bool> UpdateBSXNote(string newNote, string eventId, bool isEventIn)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Update Note");
             server = server.StandardlizeServerName();
             string apiUrl = isEventIn ?
                 server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/" + eventId :

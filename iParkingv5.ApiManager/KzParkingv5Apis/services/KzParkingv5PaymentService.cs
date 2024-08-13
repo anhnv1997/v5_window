@@ -5,6 +5,7 @@ using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.EventDatas;
 using iParkingv6.ApiManager;
 using Kztek.Tool;
+using Kztek.Tools;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,6 +19,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
     {
         public async Task<PaymentTransaction> CreatePaymentTransaction(EventOutData eventOut)
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "PaymentService", "Create Payment Transaction For EventOut", eventOut);
             server = server.StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.PaymentTransaction);
             Dictionary<string, string> headers = new Dictionary<string, string>()

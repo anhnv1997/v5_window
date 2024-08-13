@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5BaseApi;
+using Kztek.Tools;
 
 namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 {
@@ -18,6 +19,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         #region USER
         public async Task GetUserInfor()
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "SystemService", "Get User Info");
             server = server.StandardlizeServerName();
             string apiUrl = server + "user/info";
 
@@ -44,6 +46,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 
         public async Task<Tuple<List<User>, string>> GetAllUsers()
         {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "SystemService", "Get All User");
             return await GetAllObjectAsync<User>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.User);
         }
         #endregion

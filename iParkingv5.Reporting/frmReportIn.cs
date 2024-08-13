@@ -178,7 +178,7 @@ namespace iParkingv5.Reporting
                 string identityGroupId = ((ListItem)cbIdentityGroupType.SelectedItem)?.Value ?? "";
                 string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
                 string user = string.IsNullOrEmpty(((ListItem)cbUser.SelectedItem)?.Value) ? "" : cbUser.Text;
-                var report = await ApiServer.reportingService.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user, 0, Filter.PAGE_SIZE);
+                var report = await ApiServer.reportingService.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user, true, 0, Filter.PAGE_SIZE);
                 var eventInReports = report.data;
                 if (eventInReports == null)
                 {
@@ -330,7 +330,7 @@ namespace iParkingv5.Reporting
                 string user = string.IsNullOrEmpty(((ListItem)cbUser.SelectedItem)?.Value) ? "" : cbUser.Text;
 
                 Application.DoEvents();
-                var report = await ApiServer.reportingService.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user, pageIndex: pageIndex - 1, pageSize: Filter.PAGE_SIZE);
+                var report = await ApiServer.reportingService.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user, true, pageIndex: pageIndex - 1, pageSize: Filter.PAGE_SIZE);
                 var eventInData = report.data;
 
                 totalPages = report.TotalPage;
@@ -344,7 +344,7 @@ namespace iParkingv5.Reporting
         }
         private void btnExportExcel_Click(object? sender, EventArgs e)
         {
-            ExcelTools.CreatReportFile(dgvData, "Báo cáo Xe Đang Trong Bãi", new List<string>() {lblTotalEvents.Text });
+            ExcelTools.CreatReportFile(dgvData, "Báo cáo Xe Đang Trong Bãi", new List<string>() { lblTotalEvents.Text });
         }
         private void btnCancel_Click(object? sender, EventArgs e)
         {

@@ -110,65 +110,64 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             return filterData;
         }
 
-        public static string CreateFilter(List<Dictionary<string, List<FilterModel>>> filterItems, EmMainOperation mainOperation = EmMainOperation.and, int pageIndex = 0, int pageSize = PAGE_SIZE)
+        public static string CreateFilter(List<Dictionary<string, List<FilterModel>>> filterItems, bool isPaging,
+                                          EmMainOperation mainOperation = EmMainOperation.and,
+                                          int pageIndex = 0, int pageSize = PAGE_SIZE)
         {
             var filterData = new Dictionary<string, List<Dictionary<string, List<FilterModel>>>>
             {
                 { mainOperation.ToString(), filterItems }
             };
-            pageIndex = pageIndex > 1 ? pageIndex - 1 : 0;
             var temp = new
             {
                 pageIndex = pageIndex,
                 pageSize = pageSize,
-                paging = pageSize < 0 ? false : true,
+                paging = isPaging,
                 filter = Newtonsoft.Json.JsonConvert.SerializeObject(filterData),
-                //sorts = "",
                 fields = new List<object>()
             };
             return Newtonsoft.Json.JsonConvert.SerializeObject(temp);
         }
 
 
-        public static string CreateFilter(List<FilterModel> filterModels, EmMainOperation mainOperation = EmMainOperation.and,
+        public static string CreateFilter(List<FilterModel> filterModels, bool isPaging,
+                                          EmMainOperation mainOperation = EmMainOperation.and,
                                           int pageIndex = 0, int pageSize = PAGE_SIZE)
         {
             var filterData = new Dictionary<string, List<FilterModel>>
             {
                 { mainOperation.ToString(), filterModels }
             };
-            pageIndex = pageIndex > 1 ? pageIndex - 1 : 0;
             var temp = new
             {
                 pageIndex = pageIndex,
                 pageSize = pageSize,
                 filter = filterData.Count == 0 ? null : Newtonsoft.Json.JsonConvert.SerializeObject(filterData),
                 fields = new List<object>(),
-                paging = pageSize < 0 ? false : true
+                paging = isPaging
             };
             return Newtonsoft.Json.JsonConvert.SerializeObject(temp);
         }
 
-        public static string CreateFilter(FilterModel filterModel, EmMainOperation mainOperation = EmMainOperation.and,
+        public static string CreateFilter(FilterModel filterModel, bool isPaging, EmMainOperation mainOperation = EmMainOperation.and,
                                           int _pageIndex = 0, int _pageSize = PAGE_SIZE)
         {
             var filterData = new Dictionary<string, List<FilterModel>>
             {
                 { mainOperation.ToString(), new List<FilterModel>(){ filterModel } }
             };
-            _pageIndex = _pageIndex > 1 ? _pageIndex - 1 : 0;
             var temp = new
             {
                 pageIndex = _pageIndex,
                 pageSize = _pageSize,
-                paging = _pageSize < 0 ? false : true,
+                paging = isPaging,
                 filter = string.IsNullOrEmpty(filterModel.QueryKey) ? null : Newtonsoft.Json.JsonConvert.SerializeObject(filterData),
                 fields = new List<object>()
             };
             return Newtonsoft.Json.JsonConvert.SerializeObject(temp);
         }
         public static string CreateFilter(EmPageSearchKey queryKey, EmPageSearchType pageSearchType,
-                                          EmOperation operation, string searchValue,
+                                          EmOperation operation, string searchValue, bool isPaging,
                                           EmMainOperation mainOperation = EmMainOperation.and,
                                           int _pageIndex = 0, int _pageSize = PAGE_SIZE)
         {
@@ -180,9 +179,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             string _filter = Newtonsoft.Json.JsonConvert.SerializeObject(filterData);
             var temp = new
             {
-                pageIndex = _pageIndex - 1,
+                pageIndex = _pageIndex,
                 pageSize = _pageSize,
-                paging = _pageSize < 0 ? false : true,
+                paging = isPaging,
                 filter = _filter,
                 fields = new List<object>()
             };

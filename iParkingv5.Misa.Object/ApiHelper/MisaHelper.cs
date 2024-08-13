@@ -36,7 +36,7 @@ namespace Misa.Object
                 };
                 string errorMessage = string.Empty;
                 var loginResponseData = BaseApiHelper.GeneralJsonAPI(apiUrl, login, new Dictionary<string, string>(), new Dictionary<string, string>(),
-                                                                           5000, ref error, Method.Post);
+                                                                     5000, ref error, Method.Post);
                 if (string.IsNullOrEmpty(loginResponseData))
                 {
                     return false;
