@@ -250,5 +250,9 @@ namespace iParkingv5_window.Usercontrols
         }
         #endregion End Private Function
 
+        private void btnCarLprDetect_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

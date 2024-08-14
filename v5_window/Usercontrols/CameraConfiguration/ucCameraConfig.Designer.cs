@@ -37,13 +37,13 @@ namespace iParkingv5_window.Usercontrols
             btnCarLprDetect = new Button();
             btnDraw = new Button();
             panel2 = new Panel();
+            btnClearConfig = new Button();
             btnSave = new Button();
             btnMotorLprDetect = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
             picCutVehicleImage = new MovablePictureBox();
             picLprImage = new MovablePictureBox();
             lblDetectPlate = new Label();
-            btnClearConfig = new Button();
             panel2.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picCutVehicleImage).BeginInit();
@@ -100,6 +100,7 @@ namespace iParkingv5_window.Usercontrols
             btnCarLprDetect.Text = "Đọc biển số ô tô";
             btnCarLprDetect.UseVisualStyleBackColor = true;
             btnCarLprDetect.Visible = false;
+            btnCarLprDetect.Click += btnCarLprDetect_Click_1;
             // 
             // btnDraw
             // 
@@ -128,6 +129,18 @@ namespace iParkingv5_window.Usercontrols
             panel2.Name = "panel2";
             panel2.Size = new Size(1002, 84);
             panel2.TabIndex = 4;
+            // 
+            // btnClearConfig
+            // 
+            btnClearConfig.Location = new Point(804, 43);
+            btnClearConfig.Margin = new Padding(4, 3, 4, 3);
+            btnClearConfig.Name = "btnClearConfig";
+            btnClearConfig.Size = new Size(144, 29);
+            btnClearConfig.TabIndex = 3;
+            btnClearConfig.Text = "Xóa cấu hình";
+            btnClearConfig.UseVisualStyleBackColor = true;
+            btnClearConfig.Visible = false;
+            btnClearConfig.Click += btnClearConfig_Click;
             // 
             // btnSave
             // 
@@ -203,18 +216,6 @@ namespace iParkingv5_window.Usercontrols
             lblDetectPlate.TabIndex = 2;
             lblDetectPlate.Text = "_";
             lblDetectPlate.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // btnClearConfig
-            // 
-            btnClearConfig.Location = new Point(804, 43);
-            btnClearConfig.Margin = new Padding(4, 3, 4, 3);
-            btnClearConfig.Name = "btnClearConfig";
-            btnClearConfig.Size = new Size(144, 29);
-            btnClearConfig.TabIndex = 3;
-            btnClearConfig.Text = "Xóa cấu hình";
-            btnClearConfig.UseVisualStyleBackColor = true;
-            btnClearConfig.Visible = false;
-            btnClearConfig.Click += btnClearConfig_Click;
             // 
             // ucCameraConfig
             // 
