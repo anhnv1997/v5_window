@@ -19,7 +19,6 @@ namespace iParkingv5.Objects.Datas.parking
         /// Card: CardNo
         /// </summary>
         public string Name { get; set; }
-        public string Description { get; set; }
 
         /// <summary>
         /// Card: Card number

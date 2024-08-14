@@ -123,5 +123,13 @@ F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-w
 F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Controller\obj\x64\Debug\net6.0-windows\iParkingv5.Controller.csproj.CopyComplete
 F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Controller\obj\x64\Debug\net6.0-windows\iParkingv5.Controller.genruntimeconfig.cache
 F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Controller\obj\x64\Debug\net6.0-windows\ref\iParkingv5.Controller.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\LogFormat\log.html
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\LogFormat\log_item.html
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\LogFormat\style.css
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\RestSharp.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\RestSharp.Authenticators.Digest.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\System.Text.Encodings.Web.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\System.Text.Json.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.Controller\bin\x64\Debug\net6.0-windows\Kztek.Tool.pdb

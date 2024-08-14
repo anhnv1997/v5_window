@@ -1438,65 +1438,6 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
         }
         #endregion END PRIVATE FUNCTION
-        public static async Task<bool> UpdateNoteOut(string eventId, string note1, string note2, string note3)
-        {
-            StandardlizeServerName();
-            string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/" + eventId;
-            //Gửi API
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-                     {
-                         { "Authorization","Bearer " + token  }
-                     };
-            var commitData = new List<CommitData>();
-            commitData.Add(new CommitData()
-            {
-                op = "replace",
-                path = "note",
-                value = new List<string>() { note1, note2, note3 }
-            });
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, commitData, headers, null, timeOut, Method.Patch);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public class UpdateMultiple
-        {
-            public string[] ids { get; set; }
-            public List<CommitData> jsonPatchDocument { get; set; }
-        }
-
-        public static async Task<bool> DisActive(string identityId)
-        {
-            StandardlizeServerName();
-            string apiUrl = server + "Identity";
-            //Gửi API
-            Dictionary<string, string> headers = new Dictionary<string, string>()
-                     {
-                         { "Authorization","Bearer " + token  }
-                     };
-            var updateMultiple = new UpdateMultiple()
-            {
-                ids = new string[] { identityId },
-                jsonPatchDocument = new List<CommitData>()
-                {
-                    new CommitData()
-                    {
-                        op = "replace",
-                        path = "status",
-                        value = "false"
-                    }
-                }
-            };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, updateMultiple, headers, null, timeOut, Method.Patch);
-            if (!string.IsNullOrEmpty(response.Item1))
-            {
-                return true;
-            }
-            return false;
-        }
     }
 }
 
@@ -1504,6 +1445,29 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
 //{
 //    StandardlizeServerName();
 //    string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/" + eventId;
+//    //Gửi API
+//    Dictionary<string, string> headers = new Dictionary<string, string>()
+//             {
+//                 { "Authorization","Bearer " + token  }
+//             };
+//    var commitData = new List<CommitData>();
+//    commitData.Add(new CommitData()
+//    {
+//        op = "replace",
+//        path = "note",
+//        value = new List<string>() { note1, note2, note3 }
+//    });
+//    var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, commitData, headers, null, timeOut, Method.Patch);
+//    if (!string.IsNullOrEmpty(response.Item1))
+//    {
+//        return true;
+//    }
+//    return false;
+//}
+//public static async Task<bool> UpdateNoteOut(string eventId, string note1, string note2, string note3)
+//{
+//    StandardlizeServerName();
+//    string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/" + eventId;
 //    //Gửi API
 //    Dictionary<string, string> headers = new Dictionary<string, string>()
 //             {

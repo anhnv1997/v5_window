@@ -3,6 +3,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Xml;
 using static Misa.Object.CQT_TYPE;
 using static Misa.Object.InvoiceFileDownloadType;
+using ApiHelper;
 using iParkingv6.ApiManager;
 using System.Collections.Generic;
 using System.Linq;

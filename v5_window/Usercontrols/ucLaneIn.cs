@@ -499,31 +499,6 @@ namespace iParkingv5_window.Usercontrols
             }
 
             ClearView();
-            int weight = 0;
-            string weightStr = "";
-            if (weight == 0 && isScale)
-            {
-                await Task.Delay(1000);
-                this.Invoke(new Action(() =>
-                {
-                    weight = int.Parse(lblScaleInfo.Text);
-                    weightStr = lblScaleInfo.Text;
-                }));
-            }
-            if (isScale)
-            {
-                if (weight == 0)
-                {
-                    LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, $"Cảnh báo khối lượng cân = 0 {isScale}; {weightStr}");
-                    bool isContinue = MessageBox.Show("Khối lượng cân = 0, bạn có muốn cho xe vào bãi", "Thông báo",
-                                                      MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
-                    if (!isContinue)
-                    {
-                        return;
-                    }
-                    LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, $"Xác nhận cho xe vào");
-                }
-            }
             //Danh sách biến sử dụng
             Image? overviewImg = null;
             Image? vehicleImg = null;
@@ -611,13 +586,13 @@ namespace iParkingv5_window.Usercontrols
             {
                 await ExcecuteMonthCardEventIn(identity, identityGroup, vehicleBaseType, ce.PlateNumber, imageKeys,
                                                ce, controllerInLane,
-                                               overviewImg, vehicleImg, lprImage, imageKey, optionalImages, weight);
+                                               overviewImg, vehicleImg, lprImage, imageKey, optionalImages);
             }
             else
             {
                 await ExcecuteNonMonthCardEventIn(identity, identityGroup, vehicleBaseType, ce.PlateNumber, imageKeys,
                                                   ce, controllerInLane,
-                                                  overviewImg, vehicleImg, lprImage, imageKey, optionalImages, weight);
+                                                  overviewImg, vehicleImg, lprImage, imageKey, optionalImages);
             }
 
         }
@@ -1664,7 +1639,7 @@ namespace iParkingv5_window.Usercontrols
         #region Xử lý sự kiện thẻ
         private async Task ExcecuteMonthCardEventIn(Identity identity, IdentityGroup identityGroup, VehicleBaseType vehicleType, string plateNumber, List<string> imageKeys,
                                                     CardEventArgs ce, ControllerInLane? controllerInLane,
-                                                    Image? overviewImg, Image? vehicleImg, Image? lprImage, string imageKey, List<Image> optionalImages, int weight)
+                                                    Image? overviewImg, Image? vehicleImg, Image? lprImage, string imageKey, List<Image> optionalImages)
         {
             bool isAlarm = false;
             if (identity.Vehicles == null)
@@ -1701,6 +1676,7 @@ namespace iParkingv5_window.Usercontrols
 
         CheckInNormal:
             {
+                int weight = isScale ? ScaleValue : 0;
                 eventIn = await AppData.ApiServer.PostCheckInAsync(weight, lane.id, plateNumber, identity, imageKeys, false, null, txtNote.Text);
                 if (eventIn == null)
                 {
@@ -1758,6 +1734,7 @@ namespace iParkingv5_window.Usercontrols
 
         CheckInWithForce:
             {
+                int weight = isScale ? ScaleValue : 0;
                 eventIn = await AppData.ApiServer.PostCheckInAsync(weight, lane.id, plateNumber, identity, imageKeys, true, null, txtNote.Text);
                 if (eventIn == null)
                 {
@@ -1801,7 +1778,7 @@ namespace iParkingv5_window.Usercontrols
         private async Task ExcecuteNonMonthCardEventIn(Identity identity, IdentityGroup identityGroup,
                                                        VehicleBaseType vehicleType, string plateNumber, List<string> imageKeys,
                                                        CardEventArgs ce, ControllerInLane? controllerInLane,
-                                                       Image? overviewImg, Image? vehicleImg, Image? lprImage, string imageKey, List<Image> optionalImages, int weight)
+                                                       Image? overviewImg, Image? vehicleImg, Image? lprImage, string imageKey, List<Image> optionalImages)
         {
 
             string errorMessage = string.Empty;
@@ -1823,11 +1800,36 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
             string note = "";
+            int weight = 0;
+            string weightStr = "";
             this.Invoke(new Action(() =>
             {
                 note = txtNote.Text;
                 weight = isScale ? int.Parse(lblScaleInfo.Text) : 0;
             }));
+            if (weight == 0 && isScale)
+            {
+                await Task.Delay(1000);
+                this.Invoke(new Action(() =>
+                {
+                    weight = int.Parse(lblScaleInfo.Text);
+                    weightStr = lblScaleInfo.Text;
+                }));
+            }
+            if (isScale)
+            {
+                if (weight == 0)
+                {
+                    LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, $"Cảnh báo khối lượng cân = 0 {isScale}; {weightStr}");
+                    bool isContinue = MessageBox.Show("Khối lượng cân = 0, bạn có muốn cho xe vào bãi", "Thông báo",
+                                                      MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
+                    if (!isContinue)
+                    {
+                        return;
+                    }
+                    LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, $"Xác nhận cho xe vào");
+                }
+            }
             eventIn = await AppData.ApiServer.PostCheckInAsync(weight, lane.id, plateNumber, identity, imageKeys, false, null, note);
             if (eventIn == null)
             {

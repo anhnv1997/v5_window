@@ -70,4 +70,7 @@ F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\obj\x64\Debug\netstand
 F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\obj\x64\Debug\netstandard2.1\iParkingv5.ApiManager.AssemblyInfo.cs
 F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\obj\x64\Debug\netstandard2.1\iParkingv5.ApiManager.csproj.CoreCompileInputs.cache
 F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\obj\x64\Debug\netstandard2.1\iParkingv5.ApiManager.csproj.CopyComplete
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\LogFormat\log.html
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\LogFormat\log_item.html
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\LogFormat\style.css
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Kztek.Tool.pdb
