@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <Reference Include="SayMoney">
-      <HintPath>..\packages\SayMoney.dll</HintPath>
+      <HintPath>C:\Users\Admin\OneDrive\Desktop\APP_XC_BAK\net6.0-windows\SayMoney.dll</HintPath>
     </Reference>
   </ItemGroup>
 

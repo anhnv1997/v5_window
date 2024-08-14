@@ -786,6 +786,33 @@ namespace iParkingv5_window.Usercontrols
             }
             lastEvent = null;
             ClearView();
+
+            int weight = 0;
+            string weightStr = "";
+            if (weight == 0 && isScale)
+            {
+                await Task.Delay(1000);
+                this.Invoke(new Action(() =>
+                {
+                    weight = int.Parse(lblScaleInfo.Text);
+                    weightStr = lblScaleInfo.Text;
+                }));
+            }
+            if (isScale)
+            {
+                if (weight == 0)
+                {
+                    LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, $"Cảnh báo khối lượng cân = 0 {isScale}; {weightStr}");
+                    bool isContinue = MessageBox.Show("Khối lượng cân = 0, bạn có muốn cho xe vào bãi", "Thông báo",
+                                                      MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
+                    if (!isContinue)
+                    {
+                        return;
+                    }
+                    LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, $"Xác nhận cho xe vào");
+                }
+            }
+
             //Danh sách biến sử dụng
             Image? overviewImg = null;
             Image? vehicleImg = null;
@@ -883,50 +910,27 @@ namespace iParkingv5_window.Usercontrols
             {
                 await ExcecuteMonthCardEventOut(identity, identityGroup, vehicleBaseType, ce.PlateNumber, imageKeys,
                                                ce, controllerInLane,
-                                               overviewImg, vehicleImg, lprImage, imageKey);
+                                               overviewImg, vehicleImg, lprImage, imageKey, weight);
             }
             else
             {
                 await ExcecuteNonMonthCardEventOut(identity, identityGroup, vehicleBaseType, ce.PlateNumber, imageKeys,
                                                   ce, controllerInLane,
-                                                  overviewImg, vehicleImg, lprImage, imageKey);
+                                                  overviewImg, vehicleImg, lprImage, imageKey, weight);
             }
         }
 
         private async Task ExcecuteNonMonthCardEventOut(Identity identity, IdentityGroup identityGroup, VehicleBaseType vehicleType, string plateNumber, List<string> imageKeys,
-                                                        CardEventArgs ce, ControllerInLane? controllerInLane, Image? overviewImg, Image? vehicleImg, Image? lprImage, string imageKey)
+                                                        CardEventArgs ce, ControllerInLane? controllerInLane,
+                                                        Image? overviewImg, Image? vehicleImg, Image? lprImage, string imageKey, int weight)
         {
-            bool isAlarm = false;
-            string weightStr = "";
-            int weight = 0;
-            this.Invoke(new Action(() =>
+            if (identityGroup.Type == IdentityGroupType.Vip)
             {
-                weight = isScale ? int.Parse(lblScaleInfo.Text) : 0;
-            }));
-            if (weight == 0 && isScale)
-            {
-                await Task.Delay(1000);
-                this.Invoke(new Action(() =>
-                {
-                    weight = int.Parse(lblScaleInfo.Text);
-                    weightStr = lblScaleInfo.Text;
-                }));
+                ExcecuteVIPProcess(identity);
+                return;
             }
 
-            if (isScale)
-            {
-                if (weight == 0)
-                {
-                    LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, $"Cảnh báo khối lượng cân = 0 {isScale}; {weightStr}");
-                    bool isContinue = MessageBox.Show("Khối lượng cân = 0, bạn có muốn cho xe ra khỏi bãi", "Thông báo",
-                                                    MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
-                    if (!isContinue)
-                    {
-                        return;
-                    }
-                    LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, $"Xác nhận cho xe ra");
-                }
-            }
+            bool isAlarm = false;
             AddEventOutResponse? eventOut = await AppData.ApiServer.PostCheckOutAsync(lane.id, plateNumber, identity, imageKeys, false, weight);
             if (eventOut == null)
             {
@@ -1092,9 +1096,60 @@ namespace iParkingv5_window.Usercontrols
             }
         }
 
+        private async void ExcecuteVIPProcess(Identity identity)
+        {
+            //Nếu không có thông tin sự kiện trước đó thì lấy thông tin sự kiện ra gần nhất
+            if (lastEvent == null)
+            {
+                DateTime startTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 1, 1, 1);
+                DateTime endTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
+                var data = await AppData.ApiServer.GetEventOuts("", startTime, endTime, "", "", "", "", 0, 1);
+                if (data.data.Count > 0)
+                {
+                    string plateNumber = data.data[0].plateNumber;
+                    string id = data.data[0].id;
+                    string message = $"Bạn có xác nhận sử dụng thẻ  {identity.Name} cho phương tiện {plateNumber}";
+                    bool isUpdate = new frmConfirmSendInvoice(message).ShowDialog() == DialogResult.OK;
+                    if (isUpdate)
+                    {
+                        //Cập nhật note lý do không thu tiền
+                        string currentNote = data.data[0].thirdpartynote ?? "";
+                        string[] currentNoteArray = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(currentNote)!.ToArray();// note.Split(";");
+                        List<string> temp = new List<string>();
+                        for (int i = 0; i < 2; i++)
+                        {
+                            if (currentNoteArray.Length > i)
+                            {
+                                temp.Add(currentNoteArray[i]);
+                            }
+                        }
+                        string note1 = currentNoteArray.Length > 1 ? currentNoteArray[0] : "";
+                        string note2 = identity.Description;
+                        string note3 = currentNoteArray.Length > 2 ? currentNoteArray[2] : "";
+                        bool isSuccess = await KzParkingv5ApiHelper.UpdateNoteOut(id, note1, note2, note3);
+                        if (!isSuccess)
+                        {
+                            MessageBox.Show("Gặp lỗi trong quá trình xử lý, vui lòng thử lại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
+                        //Ngừng kích hoạt thẻ VIP
+                        await KzParkingv5ApiHelper.DisActive(identity.Id);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Không lấy được thông tin sự kiện, vui lòng thử lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+            }
+
+
+
+        }
+
         private async Task ExcecuteMonthCardEventOut(Identity identity, IdentityGroup identityGroup, VehicleBaseType vehicleType,
                                                      string plateNumber, List<string> imageKeys, CardEventArgs ce, ControllerInLane? controllerInLane,
-                                                     Image? overviewImg, Image? vehicleImg, Image? lprImage, string imageKey)
+                                                     Image? overviewImg, Image? vehicleImg, Image? lprImage, string imageKey, int weight)
         {
             bool isAlarm = false;
             if (identity.Vehicles == null)
@@ -1131,12 +1186,6 @@ namespace iParkingv5_window.Usercontrols
 
         CheckOutWithForce:
             {
-                int weight = int.Parse(lblScaleInfo.Text);
-                if (weight == 0)
-                {
-                    MessageBox.Show("Khối lượng cân = 0, vui lòng quẹt lại thẻ", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
                 eventOut = await AppData.ApiServer.PostCheckOutAsync(lane.id, plateNumber, identity, imageKeys, true, weight);
                 if (eventOut == null)
                 {
@@ -1180,7 +1229,6 @@ namespace iParkingv5_window.Usercontrols
 
         CheckOutNormal:
             {
-                int weight = isScale ? ScaleValue : 0;
                 eventOut = await AppData.ApiServer.PostCheckOutAsync(lane.id, ce.PlateNumber, identity, imageKeys, false, weight);
                 if (eventOut == null)
                 {

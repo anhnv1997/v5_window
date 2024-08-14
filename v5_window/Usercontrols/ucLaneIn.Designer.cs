@@ -13,10 +13,10 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucLaneIn));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucLaneIn));
             lblLaneName = new Label();
             panelCameras = new Panel();
             label15 = new Label();
@@ -24,12 +24,8 @@
             tableCamera = new TableLayoutPanel();
             label1 = new Label();
             tablePic = new TableLayoutPanel();
-            picOther2 = new MovablePictureBox();
-            picVehicleImage = new MovablePictureBox();
             panel2 = new Panel();
-            picOther1 = new MovablePictureBox();
             panel3 = new Panel();
-            picOverviewImage = new MovablePictureBox();
             splitterCamera = new Splitter();
             panelAllCameras = new Panel();
             panelOversizeCam = new Panel();
@@ -54,11 +50,9 @@
             label8 = new Label();
             label7 = new Label();
             label2 = new Label();
-            ucEventCount1 = new ucEventCount();
             splitContainerEventContent = new SplitContainer();
             panelLpr = new Panel();
             panel10 = new Panel();
-            picLprImage = new MovablePictureBox();
             label27 = new Label();
             panelDetectPlate = new Panel();
             txtPlate = new TextBox();
@@ -108,12 +102,6 @@
             splitContainerMain.SuspendLayout();
             tableCamera.SuspendLayout();
             tablePic.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picOther2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)picVehicleImage).BeginInit();
-            panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picOther1).BeginInit();
-            panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picOverviewImage).BeginInit();
             panelAllCameras.SuspendLayout();
             panelOversizeCam.SuspendLayout();
             panelDisplayLastEVent.SuspendLayout();
@@ -125,7 +113,6 @@
             splitContainerEventContent.SuspendLayout();
             panelLpr.SuspendLayout();
             panel10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picLprImage).BeginInit();
             panelDetectPlate.SuspendLayout();
             panelEventInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEventContent).BeginInit();
@@ -243,8 +230,6 @@
             tablePic.ColumnCount = 2;
             tablePic.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tablePic.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tablePic.Controls.Add(picOther2, 1, 1);
-            tablePic.Controls.Add(picVehicleImage, 0, 1);
             tablePic.Controls.Add(panel2, 1, 0);
             tablePic.Controls.Add(panel3, 0, 0);
             tablePic.Dock = DockStyle.Fill;
@@ -257,40 +242,9 @@
             tablePic.Size = new Size(546, 355);
             tablePic.TabIndex = 3;
             // 
-            // picOther2
-            // 
-            picOther2.BackColor = Color.WhiteSmoke;
-            picOther2.Dock = DockStyle.Fill;
-            picOther2.ErrorImage = null;
-            picOther2.Image = (Image)resources.GetObject("picOther2.Image");
-            picOther2.Location = new Point(273, 178);
-            picOther2.Margin = new Padding(0);
-            picOther2.Name = "picOther2";
-            picOther2.Size = new Size(272, 176);
-            picOther2.SizeMode = PictureBoxSizeMode.StretchImage;
-            picOther2.TabIndex = 5;
-            picOther2.TabStop = false;
-            picOther2.LoadCompleted += Pic_LoadCompleted;
-            // 
-            // picVehicleImage
-            // 
-            picVehicleImage.BackColor = Color.WhiteSmoke;
-            picVehicleImage.Dock = DockStyle.Fill;
-            picVehicleImage.ErrorImage = null;
-            picVehicleImage.Image = (Image)resources.GetObject("picVehicleImage.Image");
-            picVehicleImage.Location = new Point(1, 178);
-            picVehicleImage.Margin = new Padding(0);
-            picVehicleImage.Name = "picVehicleImage";
-            picVehicleImage.Size = new Size(271, 176);
-            picVehicleImage.SizeMode = PictureBoxSizeMode.StretchImage;
-            picVehicleImage.TabIndex = 5;
-            picVehicleImage.TabStop = false;
-            picVehicleImage.LoadCompleted += Pic_LoadCompleted;
-            // 
             // panel2
             // 
             panel2.BackColor = SystemColors.Control;
-            panel2.Controls.Add(picOther1);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(273, 1);
             panel2.Margin = new Padding(0);
@@ -298,46 +252,15 @@
             panel2.Size = new Size(272, 176);
             panel2.TabIndex = 0;
             // 
-            // picOther1
-            // 
-            picOther1.BackColor = Color.WhiteSmoke;
-            picOther1.Dock = DockStyle.Fill;
-            picOther1.ErrorImage = null;
-            picOther1.Image = (Image)resources.GetObject("picOther1.Image");
-            picOther1.Location = new Point(0, 0);
-            picOther1.Margin = new Padding(0);
-            picOther1.Name = "picOther1";
-            picOther1.Size = new Size(272, 176);
-            picOther1.SizeMode = PictureBoxSizeMode.StretchImage;
-            picOther1.TabIndex = 5;
-            picOther1.TabStop = false;
-            picOther1.LoadCompleted += Pic_LoadCompleted;
-            // 
             // panel3
             // 
             panel3.BackColor = SystemColors.Control;
-            panel3.Controls.Add(picOverviewImage);
             panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(1, 1);
             panel3.Margin = new Padding(0);
             panel3.Name = "panel3";
             panel3.Size = new Size(271, 176);
             panel3.TabIndex = 1;
-            // 
-            // picOverviewImage
-            // 
-            picOverviewImage.BackColor = Color.WhiteSmoke;
-            picOverviewImage.Dock = DockStyle.Fill;
-            picOverviewImage.ErrorImage = null;
-            picOverviewImage.Image = (Image)resources.GetObject("picOverviewImage.Image");
-            picOverviewImage.Location = new Point(0, 0);
-            picOverviewImage.Margin = new Padding(0);
-            picOverviewImage.Name = "picOverviewImage";
-            picOverviewImage.Size = new Size(271, 176);
-            picOverviewImage.SizeMode = PictureBoxSizeMode.StretchImage;
-            picOverviewImage.TabIndex = 5;
-            picOverviewImage.TabStop = false;
-            picOverviewImage.LoadCompleted += Pic_LoadCompleted;
             // 
             // splitterCamera
             // 
@@ -401,7 +324,6 @@
             // panelDisplayLastEVent
             // 
             panelDisplayLastEVent.Controls.Add(panelLastEvent);
-            panelDisplayLastEVent.Controls.Add(ucEventCount1);
             panelDisplayLastEVent.Dock = DockStyle.Fill;
             panelDisplayLastEVent.Font = new Font("Segoe UI", 13F);
             panelDisplayLastEVent.Location = new Point(0, 0);
@@ -418,10 +340,10 @@
             panelLastEvent.Controls.Add(panel9);
             panelLastEvent.Controls.Add(label2);
             panelLastEvent.Dock = DockStyle.Fill;
-            panelLastEvent.Location = new Point(260, 0);
+            panelLastEvent.Location = new Point(0, 0);
             panelLastEvent.Margin = new Padding(3, 2, 3, 2);
             panelLastEvent.Name = "panelLastEvent";
-            panelLastEvent.Size = new Size(609, 278);
+            panelLastEvent.Size = new Size(869, 278);
             panelLastEvent.TabIndex = 7;
             // 
             // panelNearestEvent
@@ -430,7 +352,7 @@
             panelNearestEvent.Location = new Point(0, 27);
             panelNearestEvent.Margin = new Padding(0);
             panelNearestEvent.Name = "panelNearestEvent";
-            panelNearestEvent.Size = new Size(607, 186);
+            panelNearestEvent.Size = new Size(867, 186);
             panelNearestEvent.TabIndex = 8;
             // 
             // panel9
@@ -452,7 +374,7 @@
             panel9.Dock = DockStyle.Bottom;
             panel9.Location = new Point(0, 213);
             panel9.Name = "panel9";
-            panel9.Size = new Size(607, 63);
+            panel9.Size = new Size(867, 63);
             panel9.TabIndex = 9;
             // 
             // label20
@@ -609,21 +531,10 @@
             label2.ForeColor = Color.Navy;
             label2.Location = new Point(0, 0);
             label2.Name = "label2";
-            label2.Size = new Size(607, 27);
+            label2.Size = new Size(867, 27);
             label2.TabIndex = 7;
             label2.Text = "Các lượt xe vào gần đây";
             label2.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // ucEventCount1
-            // 
-            ucEventCount1.BorderStyle = BorderStyle.FixedSingle;
-            ucEventCount1.Dock = DockStyle.Left;
-            ucEventCount1.Font = new Font("Segoe UI", 12F);
-            ucEventCount1.Location = new Point(0, 0);
-            ucEventCount1.Margin = new Padding(3, 2, 3, 2);
-            ucEventCount1.Name = "ucEventCount1";
-            ucEventCount1.Size = new Size(260, 278);
-            ucEventCount1.TabIndex = 7;
             // 
             // splitContainerEventContent
             // 
@@ -658,27 +569,12 @@
             // 
             // panel10
             // 
-            panel10.Controls.Add(picLprImage);
             panel10.Controls.Add(label27);
             panel10.Dock = DockStyle.Fill;
             panel10.Location = new Point(0, 0);
             panel10.Name = "panel10";
             panel10.Size = new Size(467, 153);
             panel10.TabIndex = 0;
-            // 
-            // picLprImage
-            // 
-            picLprImage.BackColor = Color.WhiteSmoke;
-            picLprImage.Dock = DockStyle.Fill;
-            picLprImage.Image = (Image)resources.GetObject("picLprImage.Image");
-            picLprImage.Location = new Point(0, 21);
-            picLprImage.Margin = new Padding(3, 2, 3, 2);
-            picLprImage.Name = "picLprImage";
-            picLprImage.Size = new Size(467, 132);
-            picLprImage.SizeMode = PictureBoxSizeMode.StretchImage;
-            picLprImage.TabIndex = 4;
-            picLprImage.TabStop = false;
-            picLprImage.LoadCompleted += Pic_LoadCompleted;
             // 
             // label27
             // 
@@ -1200,12 +1096,6 @@
             splitContainerMain.ResumeLayout(false);
             tableCamera.ResumeLayout(false);
             tablePic.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)picOther2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)picVehicleImage).EndInit();
-            panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)picOther1).EndInit();
-            panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)picOverviewImage).EndInit();
             panelAllCameras.ResumeLayout(false);
             panelOversizeCam.ResumeLayout(false);
             panelDisplayLastEVent.ResumeLayout(false);
@@ -1219,7 +1109,6 @@
             panelLpr.ResumeLayout(false);
             panel10.ResumeLayout(false);
             panel10.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picLprImage).EndInit();
             panelDetectPlate.ResumeLayout(false);
             panelDetectPlate.PerformLayout();
             panelEventInfo.ResumeLayout(false);

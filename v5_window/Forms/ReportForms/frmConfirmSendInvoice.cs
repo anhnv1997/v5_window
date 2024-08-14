@@ -12,9 +12,10 @@ namespace iParkingv5_window.Forms.ReportForms
 {
     public partial class frmConfirmSendInvoice : Form
     {
-        public frmConfirmSendInvoice()
+        public frmConfirmSendInvoice(string message = "Bạn có muốn gửi hóa đơn?")
         {
             InitializeComponent();
+            label1.Text = message;  
             btnConfirm.Click += BtnConfirm_Click;
             btnCancel.Click += BtnCancel_Click;
             this.ActiveControl = label1;
