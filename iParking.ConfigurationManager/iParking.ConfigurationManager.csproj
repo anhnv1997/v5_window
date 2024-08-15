@@ -38,7 +38,10 @@
 
   <ItemGroup>
     <Reference Include="DahuaLib">
-      <HintPath>..\packages\DahuaLib.dll</HintPath>
+      <HintPath>C:\Users\Admin\OneDrive\Desktop\APP_XC_BAK\net6.0-windows\DahuaLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Kztek.Tool">
+      <HintPath>C:\Users\Admin\OneDrive\Desktop\APP_XC_BAK\net6.0-windows\Kztek.Tool.dll</HintPath>
     </Reference>
   </ItemGroup>
 

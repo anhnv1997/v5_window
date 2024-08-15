@@ -5,7 +5,7 @@
 		<TargetFramework>net6.0-windows</TargetFramework>
 		<Nullable>enable</Nullable>
 		<UseWindowsForms>true</UseWindowsForms>
-		<Version>1.0.3.2</Version>
+		<Version>1.0.3.3</Version>
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
@@ -17,7 +17,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\Kztek.Tool\Kztek.Tool.csproj" />
 		<ProjectReference Include="..\IPaking.Ultility\IPaking.Ultility.csproj" />
 		<ProjectReference Include="..\iPakrkingv5.Controls\iPakrkingv5.Controls.csproj" />
 		<ProjectReference Include="..\iParking.ConfigurationManager\iParking.ConfigurationManager.csproj" />
@@ -31,17 +30,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Reference Include="IPGS.Ultility">
-	    <HintPath>..\packages\IPGS.Ultility.dll</HintPath>
-	  </Reference>
 	  <Reference Include="Kztek.Cameras">
-	    <HintPath>..\packages\Camera_LPR\Kztek.Cameras.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Kztek.LPR">
-	    <HintPath>..\packages\Kztek.LPR.dll</HintPath>
+	    <HintPath>C:\Users\Admin\OneDrive\Desktop\APP_XC_BAK\net6.0-windows\Kztek.Cameras.dll</HintPath>
 	  </Reference>
 	  <Reference Include="Kztek.RtspPlayer">
-	    <HintPath>..\packages\Kztek.RtspPlayer.dll</HintPath>
+	    <HintPath>C:\Users\Admin\OneDrive\Desktop\APP_XC_BAK\net6.0-windows\Kztek.RtspPlayer.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Kztek.Tool">
+	    <HintPath>C:\Users\Admin\OneDrive\Desktop\APP_XC_BAK\net6.0-windows\Kztek.Tool.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 

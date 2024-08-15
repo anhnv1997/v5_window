@@ -173,9 +173,4 @@ F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\obj\x64\Debug\
 F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\ref\iParking.ConfigurationManager.dll
 F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\Ingressus.dll
 F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\Aopu_Controller.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\LogFormat\log.html
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\LogFormat\log_item.html
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\LogFormat\style.css
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\RestSharp.Authenticators.Digest.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\Kztek.Tool.pdb

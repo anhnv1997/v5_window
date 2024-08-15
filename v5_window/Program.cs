@@ -10,7 +10,6 @@ using iParkingv5_window.Forms.SystemForms;
 using iParkingv6.ApiManager.KzParkingv3Apis;
 using Kztek.Tool;
 using Kztek.Tools;
-using KztekKeyRegister;
 using System.Diagnostics;
 using static Kztek.Tools.LogHelper;
 using System.Net.Sockets;

@@ -7,7 +7,7 @@
 		<UseWindowsForms>true</UseWindowsForms>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Platforms>x64;x86</Platforms>
-		<Version>1.1.0.2</Version>
+		<Version>1.1.0.3</Version>
 		<ApplicationIcon>bin\x64\Debug\net6.0-windows\icons8_parking_2.ico</ApplicationIcon>
 		<PackageIcon>icons8_parking_32px.png</PackageIcon>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
@@ -38,7 +38,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\..\..\..\..\BaseLib\Kztek.Cameras\Kztek.Cameras.csproj" />
 		<ProjectReference Include="..\..\..\..\..\..\..\BaseLib\Kztek.RtspPlayer\Kztek.RtspPlayer\Kztek.RtspPlayer.csproj" />
-		<ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\Kztek.Tool\Kztek.Tool.csproj" />
 		<ProjectReference Include="..\IPaking.Ultility\IPaking.Ultility.csproj" />
 		<ProjectReference Include="..\iPakrkingv5.Controls\iPakrkingv5.Controls.csproj" />
 		<ProjectReference Include="..\iParking.ConfigurationManager\iParking.ConfigurationManager.csproj" />
@@ -108,14 +107,11 @@
 		<Reference Include="AForge.VideoEx">
 			<HintPath>..\..\..\..\..\..\4..Library Reference\CameraLib\AForge.VideoEx.dll</HintPath>
 		</Reference>
-		<Reference Include="Kztek.Security">
-			<HintPath>..\..\..\..\..\..\..\BaseLib\KztekKey_net6\Kztek.Security.dll</HintPath>
-		</Reference>
-		<Reference Include="KztekKeyRegister">
-			<HintPath>..\..\..\..\..\..\..\BaseLib\KztekKey_net6\KztekKeyRegister.dll</HintPath>
+		<Reference Include="Kztek.Tool">
+		  <HintPath>C:\Users\Admin\OneDrive\Desktop\APP_XC_BAK\net6.0-windows\Kztek.Tool.dll</HintPath>
 		</Reference>
 		<Reference Include="SayMoney">
-			<HintPath>..\packages\SayMoney.dll</HintPath>
+		  <HintPath>C:\Users\Admin\OneDrive\Desktop\APP_XC_BAK\net6.0-windows\SayMoney.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 </Project>

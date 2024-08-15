@@ -16,10 +16,10 @@
 
   <ItemGroup>
     <Reference Include="DarknetYolo">
-      <HintPath>..\packages\DarknetYolo.dll</HintPath>
+      <HintPath>C:\Users\Admin\OneDrive\Desktop\APP_XC_BAK\net6.0-windows\DarknetYolo.dll</HintPath>
     </Reference>
     <Reference Include="NXT.Net6.LPR_AI">
-      <HintPath>..\packages\NXT.Net6.LPR_AI.dll</HintPath>
+      <HintPath>C:\Users\Admin\OneDrive\Desktop\APP_XC_BAK\net6.0-windows\NXT.Net6.LPR_AI.dll</HintPath>
     </Reference>
   </ItemGroup>
 

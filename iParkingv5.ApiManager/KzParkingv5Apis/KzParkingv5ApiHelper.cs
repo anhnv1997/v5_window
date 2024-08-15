@@ -26,6 +26,7 @@ using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5BaseApi;
 using PaymentTransaction = iParkingv5.Objects.Datas.payments.PaymentTransaction;
 using iParkingv5.ApiManager.KzParkingv5Apis;
 using System.Linq;
+using static OpenCvSharp.ML.DTrees;
 
 namespace iParkingv5.ApiManager.KzParkingv5Apis
 {
@@ -859,6 +860,10 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 try
                 {
                     WarehouseService result = NewtonSoftHelper<WarehouseService>.GetBaseResponse(response.Item1);
+                    if (string.IsNullOrEmpty(result.Id))
+                    {
+                        return null;
+                    }
                     return result;
                 }
                 catch (Exception)
@@ -1438,6 +1443,65 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
         }
         #endregion END PRIVATE FUNCTION
+        public static async Task<bool> UpdateNoteOut(string eventId, string note1, string note2, string note3)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/" + eventId;
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+                     {
+                         { "Authorization","Bearer " + token  }
+                     };
+            var commitData = new List<CommitData>();
+            commitData.Add(new CommitData()
+            {
+                op = "replace",
+                path = "note",
+                value = new List<string>() { note1, note2, note3 }
+            });
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, commitData, headers, null, timeOut, Method.Patch);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public class UpdateData
+        {
+            public string[] ids { get; set; }
+            public List<CommitData> jsonPatchDocument { get; set; }
+        }
+
+        public static async Task<bool> DisActiveIdentity(string identityID)
+        {
+            StandardlizeServerName();
+            string apiUrl = server + "Identity";
+            //Gửi API
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+                     {
+                         { "Authorization","Bearer " + token  }
+                     };
+            var commitData = new List<CommitData>();
+            commitData.Add(new CommitData()
+            {
+                op = "replace",
+                path = "status",
+                value = 1
+            });
+
+            var data = new UpdateData()
+            {
+                ids = new string[] { identityID },
+                jsonPatchDocument = commitData,
+            };
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, Method.Patch);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
 
@@ -1445,29 +1509,6 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
 //{
 //    StandardlizeServerName();
 //    string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/" + eventId;
-//    //Gửi API
-//    Dictionary<string, string> headers = new Dictionary<string, string>()
-//             {
-//                 { "Authorization","Bearer " + token  }
-//             };
-//    var commitData = new List<CommitData>();
-//    commitData.Add(new CommitData()
-//    {
-//        op = "replace",
-//        path = "note",
-//        value = new List<string>() { note1, note2, note3 }
-//    });
-//    var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, commitData, headers, null, timeOut, Method.Patch);
-//    if (!string.IsNullOrEmpty(response.Item1))
-//    {
-//        return true;
-//    }
-//    return false;
-//}
-//public static async Task<bool> UpdateNoteOut(string eventId, string note1, string note2, string note3)
-//{
-//    StandardlizeServerName();
-//    string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/" + eventId;
 //    //Gửi API
 //    Dictionary<string, string> headers = new Dictionary<string, string>()
 //             {

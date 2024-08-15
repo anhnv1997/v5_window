@@ -2,7 +2,6 @@
 using iParkingv5.Objects.Enums;
 using iParkingv6.Objects.Datas;
 using Kztek.Cameras;
-using Kztek.LPR;
 using Kztek.Tools;
 using System;
 using System.Collections.Generic;

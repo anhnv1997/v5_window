@@ -45,7 +45,6 @@
             splitterMain = new SplitContainer();
             panelCameras = new Panel();
             panel1 = new Panel();
-            ucScaleCount2 = new Usercontrols.BuildControls.ucScaleCount();
             label2 = new Label();
             splliterEventList = new SplitContainer();
             splitterCurrentVehicle = new SplitContainer();
@@ -178,7 +177,6 @@
             // 
             // panel1
             // 
-            panel1.Controls.Add(ucScaleCount2);
             panel1.Controls.Add(label2);
             panel1.Dock = DockStyle.Bottom;
             panel1.Location = new Point(0, 534);
@@ -186,15 +184,6 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(415, 139);
             panel1.TabIndex = 0;
-            // 
-            // ucScaleCount2
-            // 
-            ucScaleCount2.Dock = DockStyle.Fill;
-            ucScaleCount2.Location = new Point(0, 31);
-            ucScaleCount2.Margin = new Padding(3, 2, 3, 2);
-            ucScaleCount2.Name = "ucScaleCount2";
-            ucScaleCount2.Size = new Size(415, 108);
-            ucScaleCount2.TabIndex = 1;
             // 
             // label2
             // 
