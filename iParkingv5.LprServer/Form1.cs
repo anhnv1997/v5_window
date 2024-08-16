@@ -1,6 +1,10 @@
 //using iParkingv5.Lpr.Objects;
 //using iParkingv5.LprDetecter.LprDetecters;
 
+using iParkingv5.Lpr.Objects;
+using iParkingv5.LprDetecter.LprDetecters;
+using iParkingv5.Objects;
+
 namespace iParkingv5.LprServer
 {
     public partial class Form1 : Form

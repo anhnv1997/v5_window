@@ -124,7 +124,5 @@ namespace Kztek.Helper
             }
             return base64String;
         }
-
-
-    }
+    }   
 }
