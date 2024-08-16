@@ -8,4 +8,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\Kztek.Tool\Kztek.Tool.csproj" />
+    <ProjectReference Include="..\iParkingv5.Objects\iParkingv5.Objects.csproj" />
+    <ProjectReference Include="..\Kztek.Helper\Kztek.Helper.csproj" />
+  </ItemGroup>
+
 </Project>

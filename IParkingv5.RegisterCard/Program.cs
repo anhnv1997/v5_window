@@ -24,6 +24,7 @@ namespace IParkingv5.RegisterCard
             {
                 const string appName = "IP_DA_V3_WD";
                 PathManagement.baseBath = LogHelper.SaveLogFolder = Application.StartupPath;
+                LogHelper.CreateConnection();
                 LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Khởi chạy ứng dụng");
                 string appCode = "IP_DA_V3_WD";
                 using (Mutex mutex = new Mutex(true, appName, out bool ownmutex))

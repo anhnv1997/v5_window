@@ -593,6 +593,7 @@ namespace iParkingv5_window.Usercontrols
                     {
                         isAlarm = true;
                         plateNumber = identity.Vehicles[0].PlateNumber;
+                        ce.PlateNumber = plateNumber;
                     }
                 }
                 else
@@ -600,10 +601,11 @@ namespace iParkingv5_window.Usercontrols
                     LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, $"{this.lane.name}.Card.{ce.PreferCard}", "Show Select Vehicle Request");
                     var frmSelectVehicle = new frmSelectVehicle(identity.Vehicles);
                     isConfirm = frmSelectVehicle.ShowDialog() == DialogResult.OK;
-                    if (frmSelectVehicle.ShowDialog() == DialogResult.OK)
+                    if (isConfirm)
                     {
                         isAlarm = true;
                         plateNumber = frmSelectVehicle.selectedPlate;
+                        ce.PlateNumber = plateNumber;
                     }
                 }
                 if (!isConfirm)
@@ -640,6 +642,7 @@ namespace iParkingv5_window.Usercontrols
                                                                  plateNumber, vehicleImg, overviewImg);
                     isConfirm = frmConfirmIn.ShowDialog() == DialogResult.OK;
                     plateNumber = identity.Vehicles[0].PlateNumber;
+                    ce.PlateNumber = plateNumber;
                 }
                 else
                 {
@@ -649,6 +652,7 @@ namespace iParkingv5_window.Usercontrols
                     {
                         isConfirm = true;
                         plateNumber = frmSelectVehicle.selectedPlate;
+                        ce.PlateNumber = plateNumber;
                     }
                 }
 

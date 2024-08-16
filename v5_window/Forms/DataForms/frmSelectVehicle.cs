@@ -66,7 +66,11 @@ namespace iParkingv5_window.Forms.DataForms
             {
                 if (item is RadioButton)
                 {
-                    selectedPlate = ((RadioButton)item).Tag.ToString()!;
+                    if (((RadioButton)item).Checked)
+                    {
+
+                        selectedPlate = ((RadioButton)item).Tag.ToString()!;
+                    }
                 }
             }
             this.DialogResult = DialogResult.OK;
