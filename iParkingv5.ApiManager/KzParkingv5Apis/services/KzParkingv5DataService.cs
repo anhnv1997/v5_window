@@ -14,6 +14,15 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
     public class KzParkingv5DataService : iParkingDataService
     {
         #region PARKING - SERVICE
+        public async Task<Tuple<List<ChargeRate>, string>> GetChargeRateAsync()
+        {
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingDataService", "Get All Charge Rate");
+            return await GetAllObjectAsync<ChargeRate>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.ChargeRate);
+        }
+        #region Charge - rate
+
+        #endregion
+
         #region Vehicle Type
         public async Task<Tuple<VehicleType, string>> GetVehicleTypeByIdAsync(string vehicleTypeId)
         {

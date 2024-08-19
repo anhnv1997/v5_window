@@ -33,12 +33,8 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            cbbIdentityGroup = new ComboBox();
             DayIn = new DateTimePicker();
-            label1 = new Label();
-            label2 = new Label();
             label3 = new Label();
-            txtFeeName = new TextBox();
             TimeIn = new DateTimePicker();
             DayOut = new DateTimePicker();
             label4 = new Label();
@@ -48,25 +44,15 @@
             btnClear = new Button();
             txbMoney = new Label();
             label5 = new Label();
+            cbChargeRate = new ComboBox();
+            label2 = new Label();
             STT = new DataGridViewTextBoxColumn();
-            FeeName = new DataGridViewTextBoxColumn();
-            IdentityGroup = new DataGridViewTextBoxColumn();
+            ChargeRate = new DataGridViewTextBoxColumn();
             DateTimeIn = new DataGridViewTextBoxColumn();
             DateTimeOut = new DataGridViewTextBoxColumn();
             Money = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgvShow).BeginInit();
             SuspendLayout();
-            // 
-            // cbbIdentityGroup
-            // 
-            cbbIdentityGroup.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbbIdentityGroup.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cbbIdentityGroup.FormattingEnabled = true;
-            cbbIdentityGroup.Location = new Point(169, 44);
-            cbbIdentityGroup.Margin = new Padding(4);
-            cbbIdentityGroup.Name = "cbbIdentityGroup";
-            cbbIdentityGroup.Size = new Size(463, 38);
-            cbbIdentityGroup.TabIndex = 2;
             // 
             // DayIn
             // 
@@ -74,55 +60,23 @@
             DayIn.CustomFormat = "dd/MM/yyyy";
             DayIn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             DayIn.Format = DateTimePickerFormat.Custom;
-            DayIn.Location = new Point(169, 90);
+            DayIn.Location = new Point(162, 59);
             DayIn.Margin = new Padding(4);
             DayIn.Name = "DayIn";
-            DayIn.Size = new Size(153, 29);
+            DayIn.Size = new Size(220, 29);
             DayIn.TabIndex = 3;
             DayIn.ValueChanged += dateTimePicker1_ValueChanged;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(17, 15);
-            label1.Margin = new Padding(4, 0, 4, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(100, 21);
-            label1.TabIndex = 5;
-            label1.Text = "Tên biểu phí :";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(17, 61);
-            label2.Margin = new Padding(4, 0, 4, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(87, 21);
-            label2.TabIndex = 5;
-            label2.Text = "Nhóm thẻ :";
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(17, 98);
+            label3.Location = new Point(7, 65);
             label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
             label3.Size = new Size(71, 21);
             label3.TabIndex = 5;
             label3.Text = "Giờ vào :";
-            // 
-            // txtFeeName
-            // 
-            txtFeeName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtFeeName.Location = new Point(169, 7);
-            txtFeeName.Margin = new Padding(4);
-            txtFeeName.Name = "txtFeeName";
-            txtFeeName.Size = new Size(461, 29);
-            txtFeeName.TabIndex = 1;
-            txtFeeName.Text = "XuanCuong";
             // 
             // TimeIn
             // 
@@ -130,11 +84,11 @@
             TimeIn.CustomFormat = "HH:mm:ss";
             TimeIn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             TimeIn.Format = DateTimePickerFormat.Custom;
-            TimeIn.Location = new Point(348, 90);
+            TimeIn.Location = new Point(402, 59);
             TimeIn.Margin = new Padding(4);
             TimeIn.Name = "TimeIn";
             TimeIn.ShowUpDown = true;
-            TimeIn.Size = new Size(135, 29);
+            TimeIn.Size = new Size(220, 29);
             TimeIn.TabIndex = 4;
             // 
             // DayOut
@@ -143,10 +97,10 @@
             DayOut.CustomFormat = "dd/MM/yyyy";
             DayOut.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             DayOut.Format = DateTimePickerFormat.Custom;
-            DayOut.Location = new Point(169, 127);
+            DayOut.Location = new Point(162, 96);
             DayOut.Margin = new Padding(4);
             DayOut.Name = "DayOut";
-            DayOut.Size = new Size(153, 29);
+            DayOut.Size = new Size(220, 29);
             DayOut.TabIndex = 5;
             DayOut.ValueChanged += dateTimePicker1_ValueChanged;
             // 
@@ -154,12 +108,13 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(17, 135);
+            label4.Location = new Point(7, 102);
             label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
             label4.Size = new Size(60, 21);
             label4.TabIndex = 5;
             label4.Text = "Giờ ra :";
+            label4.Click += label4_Click;
             // 
             // TimeOut
             // 
@@ -167,17 +122,17 @@
             TimeOut.CustomFormat = "HH:mm:ss";
             TimeOut.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             TimeOut.Format = DateTimePickerFormat.Custom;
-            TimeOut.Location = new Point(348, 127);
+            TimeOut.Location = new Point(402, 96);
             TimeOut.Margin = new Padding(4);
             TimeOut.Name = "TimeOut";
             TimeOut.ShowUpDown = true;
-            TimeOut.Size = new Size(135, 29);
+            TimeOut.Size = new Size(220, 29);
             TimeOut.TabIndex = 6;
             // 
             // btnCalculate
             // 
             btnCalculate.Image = (Image)resources.GetObject("btnCalculate.Image");
-            btnCalculate.Location = new Point(638, 7);
+            btnCalculate.Location = new Point(630, 96);
             btnCalculate.Margin = new Padding(4);
             btnCalculate.Name = "btnCalculate";
             btnCalculate.Size = new Size(150, 75);
@@ -207,7 +162,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvShow.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvShow.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvShow.Columns.AddRange(new DataGridViewColumn[] { STT, FeeName, IdentityGroup, DateTimeIn, DateTimeOut, Money });
+            dgvShow.Columns.AddRange(new DataGridViewColumn[] { STT, ChargeRate, DateTimeIn, DateTimeOut, Money });
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = SystemColors.Window;
             dataGridViewCellStyle4.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
@@ -217,14 +172,14 @@
             dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
             dgvShow.DefaultCellStyle = dataGridViewCellStyle4;
-            dgvShow.Location = new Point(17, 219);
+            dgvShow.Location = new Point(17, 200);
             dgvShow.Margin = new Padding(4);
             dgvShow.Name = "dgvShow";
             dgvShow.ReadOnly = true;
             dgvShow.RowHeadersVisible = false;
             dgvShow.RowTemplate.Height = 25;
             dgvShow.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvShow.Size = new Size(805, 343);
+            dgvShow.Size = new Size(805, 362);
             dgvShow.TabIndex = 11;
             dgvShow.CellClick += dgvShow_CellClick;
             dgvShow.CellMouseDown += dgvShow_CellMouseDown;
@@ -246,9 +201,9 @@
             txbMoney.BackColor = SystemColors.ActiveCaption;
             txbMoney.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             txbMoney.ForeColor = Color.DarkRed;
-            txbMoney.Location = new Point(169, 160);
+            txbMoney.Location = new Point(162, 129);
             txbMoney.Name = "txbMoney";
-            txbMoney.Size = new Size(314, 42);
+            txbMoney.Size = new Size(460, 42);
             txbMoney.TabIndex = 12;
             txbMoney.Text = "0";
             txbMoney.TextAlign = ContentAlignment.MiddleCenter;
@@ -257,12 +212,34 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(17, 173);
+            label5.Location = new Point(7, 142);
             label5.Margin = new Padding(4, 0, 4, 0);
             label5.Name = "label5";
             label5.Size = new Size(84, 21);
             label5.TabIndex = 5;
             label5.Text = "Phí gửi xe :";
+            // 
+            // cbChargeRate
+            // 
+            cbChargeRate.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbChargeRate.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cbChargeRate.FormattingEnabled = true;
+            cbChargeRate.Location = new Point(162, 13);
+            cbChargeRate.Margin = new Padding(4);
+            cbChargeRate.Name = "cbChargeRate";
+            cbChargeRate.Size = new Size(460, 38);
+            cbChargeRate.TabIndex = 2;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 12F);
+            label2.Location = new Point(7, 23);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(98, 21);
+            label2.TabIndex = 5;
+            label2.Text = "Cấu hình phí";
             // 
             // STT
             // 
@@ -271,19 +248,12 @@
             STT.ReadOnly = true;
             STT.Width = 72;
             // 
-            // FeeName
+            // ChargeRate
             // 
-            FeeName.HeaderText = "Biểu phí";
-            FeeName.Name = "FeeName";
-            FeeName.ReadOnly = true;
-            FeeName.Width = 108;
-            // 
-            // IdentityGroup
-            // 
-            IdentityGroup.HeaderText = "Nhóm thẻ";
-            IdentityGroup.Name = "IdentityGroup";
-            IdentityGroup.ReadOnly = true;
-            IdentityGroup.Width = 122;
+            ChargeRate.HeaderText = "Cấu hình phí";
+            ChargeRate.Name = "ChargeRate";
+            ChargeRate.ReadOnly = true;
+            ChargeRate.Width = 142;
             // 
             // DateTimeIn
             // 
@@ -321,12 +291,10 @@
             Controls.Add(TimeIn);
             Controls.Add(label5);
             Controls.Add(label4);
-            Controls.Add(txtFeeName);
             Controls.Add(label3);
             Controls.Add(label2);
-            Controls.Add(label1);
             Controls.Add(DayOut);
-            Controls.Add(cbbIdentityGroup);
+            Controls.Add(cbChargeRate);
             Controls.Add(DayIn);
             Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -341,13 +309,8 @@
         }
 
         #endregion
-
-        private ComboBox cbbIdentityGroup;
         private DateTimePicker DayIn;
-        private Label label1;
-        private Label label2;
         private Label label3;
-        private TextBox txtFeeName;
         private DateTimePicker TimeIn;
         private DateTimePicker DayOut;
         private Label label4;
@@ -357,9 +320,10 @@
         private Button btnClear;
         private Label txbMoney;
         private Label label5;
+        private ComboBox cbChargeRate;
+        private Label label2;
         private DataGridViewTextBoxColumn STT;
-        private DataGridViewTextBoxColumn FeeName;
-        private DataGridViewTextBoxColumn IdentityGroup;
+        private DataGridViewTextBoxColumn ChargeRate;
         private DataGridViewTextBoxColumn DateTimeIn;
         private DataGridViewTextBoxColumn DateTimeOut;
         private DataGridViewTextBoxColumn Money;

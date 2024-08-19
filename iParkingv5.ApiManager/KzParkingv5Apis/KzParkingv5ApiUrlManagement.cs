@@ -20,7 +20,8 @@
             RegisteredVehicle,
             VehicleType,
             AbnormalEvent,
-            PaymentTransaction
+            PaymentTransaction,
+            ChargeRate
         }
 
         #region GET
@@ -67,6 +68,8 @@
                     return "Abnormal-Event";
                 case EmParkingv5ObjectType.PaymentTransaction:
                     return "order/cash";
+                case EmParkingv5ObjectType.ChargeRate:
+                    return "charge-rate";
                 default:
                     return objectType.ToString();
             }

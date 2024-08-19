@@ -454,11 +454,11 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             }
             return "";
         }
-        public async Task<string> GetFeeCalculate(string dateTimeIn, string dateTimeOut, string identityGroupID)
+        public async Task<string> GetFeeCalculate(string dateTimeIn, string dateTimeOut, string feeId)
         {
             LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Get Fee Calculate");
             server = server.StandardlizeServerName();
-            string apiUrl = $"{server}charge/calculate";
+            string apiUrl = $"{server}charge-rate/compute";
 
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
@@ -466,9 +466,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             };
             var data = new
             {
-                dateTimeIn = dateTimeIn,
-                dateTimeOut = dateTimeOut,
-                identityGroupId = identityGroupID,
+                startTimeUtc = dateTimeIn,
+                endTimeUtc = dateTimeOut,
+                id = feeId,
             };
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null,
                                                                   timeOut, Method.Post);

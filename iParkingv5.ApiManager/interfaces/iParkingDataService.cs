@@ -10,6 +10,9 @@ namespace iParkingv5.ApiManager.interfaces
 {
     public interface iParkingDataService
     {
+        #region Charge rate
+        Task<Tuple<List<ChargeRate>, string>> GetChargeRateAsync();
+        #endregion
 
         #region Vehicle Type
         Task<Tuple<VehicleType, string>> GetVehicleTypeByIdAsync(string vehicleTypeId);

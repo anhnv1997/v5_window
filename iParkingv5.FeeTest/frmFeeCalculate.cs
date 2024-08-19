@@ -14,6 +14,7 @@ using iParkingv5.Objects;
 using System.Globalization;
 using iParkingv5.Objects.Datas.parking_service;
 using iParkingv5.ApiManager.interfaces;
+using iParkingv5.Objects.Datas;
 
 namespace iParkingv5.FeeTest
 {
@@ -21,7 +22,7 @@ namespace iParkingv5.FeeTest
     {
         List<FeeTest_Model> LstTest = new List<FeeTest_Model>();
         public static iParkingApi ApiServer = new KzParkingv5ApiHelper();
-        private List<IdentityGroup> IdentityGroups = new List<IdentityGroup>();
+        private List<ChargeRate> chargeRates = new List<ChargeRate>();
         private string Tin
         {
             get { return TimeIn.Value.ToString("HH:mm:ss"); }
@@ -34,9 +35,9 @@ namespace iParkingv5.FeeTest
         {
             get
             {
-                if (cbbIdentityGroup.Text == "")
+                if (cbChargeRate.Text == "")
                     return "";
-                return ((ListItem)cbbIdentityGroup.SelectedItem).Value;
+                return ((ListItem)cbChargeRate.SelectedItem).Value;
             }
 
         }
@@ -67,9 +68,9 @@ namespace iParkingv5.FeeTest
         }
         private async void LoadCT()
         {
-            IdentityGroups = (await ApiServer.parkingDataService.GetIdentityGroupsAsync())?.Item1 ?? new List<IdentityGroup>();
+            chargeRates = (await ApiServer.parkingDataService.GetChargeRateAsync())?.Item1 ?? new List<ChargeRate>();
             var listItems = new List<ListItem>();
-            foreach (var item in IdentityGroups)
+            foreach (var item in chargeRates)
             {
                 listItems.Add(new ListItem
                 {
@@ -78,9 +79,9 @@ namespace iParkingv5.FeeTest
                 });
             }
 
-            cbbIdentityGroup.DataSource = listItems;
-            cbbIdentityGroup.DisplayMember = "Name";
-            cbbIdentityGroup.ValueMember = "Value";
+            cbChargeRate.DataSource = listItems;
+            cbChargeRate.DisplayMember = "Name";
+            cbChargeRate.ValueMember = "Value";
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
@@ -91,7 +92,7 @@ namespace iParkingv5.FeeTest
         {
             public int Stt { get; set; }
             public string FeeName { get; set; }
-            public string CardGroupName { get; set; }
+            public string chargeRateName { get; set; }
             public string TimeIn_List { get; set; }
             public string TimeOut_List { get; set; }
             public string Monney_List { get; set; }
@@ -121,7 +122,7 @@ namespace iParkingv5.FeeTest
                     return;
                 }
 
-                string feeMoney = await ApiServer.parkingProcessService.GetFeeCalculate(dateTimeInUTC, dateTimeOutUTC, cbbIdentityGroup.SelectedValue.ToString());
+                string feeMoney = await ApiServer.parkingProcessService.GetFeeCalculate(dateTimeInUTC, dateTimeOutUTC, cbChargeRate.SelectedValue.ToString());
                 NumberFormatInfo num = new CultureInfo("de-DE", false).NumberFormat;
                 if (feeMoney != "")
                 {
@@ -131,13 +132,12 @@ namespace iParkingv5.FeeTest
                         FeeTest_Model newResult = new FeeTest_Model()
                         {
                             Stt = dgvShow.Rows.Count + 1,
-                            FeeName = txtFeeName.Text,
-                            CardGroupName = cbbIdentityGroup.Text,
+                            chargeRateName = cbChargeRate.Text,
                             TimeIn_List = dateTimeIn.ToString("dd/MM/yyyy HH:mm:ss"),
                             TimeOut_List = dateTimeOut.ToString("dd/MM/yyyy HH:mm:ss"),
                             Monney_List = feeAmount.ToString("N0", num),
                         };
-                        dgvShow.Rows.Add(dgvShow.Rows.Count + 1, txtFeeName.Text, newResult.CardGroupName, newResult.TimeIn_List, newResult.TimeOut_List, newResult.Monney_List);
+                        dgvShow.Rows.Add(dgvShow.Rows.Count + 1, newResult.chargeRateName, newResult.TimeIn_List, newResult.TimeOut_List, newResult.Monney_List);
                     }
                     else
                     {
@@ -198,6 +198,11 @@ namespace iParkingv5.FeeTest
 
                 //dataGridView1.ClearSelection();
             }
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
