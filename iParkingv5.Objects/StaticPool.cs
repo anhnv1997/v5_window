@@ -42,6 +42,10 @@ namespace iParkingv5.Objects
         public static CustomerGroupCollection customerGroupCollection = new CustomerGroupCollection();
         public static Mdb mdb;
         public static ServerConfig serverConfig = new ServerConfig();
+        public static string QR_Path = "QRConfig.txt";
+
+        public static ConnectionInfo connectionInfo = null;
+        public static List<string> listIP = new List<string>();
         #endregion End App Datas
 
         //--Function

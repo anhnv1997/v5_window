@@ -50,3 +50,15 @@ F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Objects\obj\x64\Debug\netstandard
 F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\OpenCvSharp.Extensions.dll
 F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\OpenCvSharp.Extensions.pdb
 F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\OpenCvSharp.Extensions.xml
+F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\NXT.Net6.LPR_AI.dll
+F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\DarknetYolo.dll
+F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\Sdcb.PaddleOCR.dll
+F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\Emgu.CV.Platform.NetStandard.dll
+F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\Sdcb.PaddleOCR.Models.Local.dll
+F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\Sdcb.PaddleInference.dll
+F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\Emgu.CV.Bitmap.dll
+F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\Sdcb.PaddleOCR.Models.Shared.dll
+F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\Sdcb.PaddleOCR.Models.LocalV3.dll
+F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\Sdcb.PaddleOCR.Models.LocalV4.dll
+F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\NXT.Net6.LPR_AI.pdb
+F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.Objects\bin\x64\Debug\netstandard2.1\DarknetYolo.pdb
