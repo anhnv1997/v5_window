@@ -1,6 +1,4 @@
-﻿using iParkingv5.Lpr.Objects;
-using iParkingv5.LprDetecter.LprDetecters;
-using iParkingv5.Objects.Configs;
+﻿using iParkingv5.Objects.Configs;
 using iParkingv5.Objects.Databases;
 using iParkingv5.Objects.Datas.Device_service;
 using iParkingv5.Objects.Datas.parking_service;
@@ -34,11 +32,7 @@ namespace iParkingv5.Objects
         public static AppOption appOption = new AppOption();
         public static OEMConfig oemConfig = new OEMConfig();
         public static EInvoiceConfig eInvoiceConfig = new EInvoiceConfig();
-        public static LprConfig lprConfig = new LprConfig();
-        public static ILpr LprDetect;
-        public static ILpr LprDetect2;
-        public static ILpr LprDetect3;
-        public static ILpr LprDetect4;
+   
 
 
         public static CustomerGroupCollection customerGroupCollection = new CustomerGroupCollection();

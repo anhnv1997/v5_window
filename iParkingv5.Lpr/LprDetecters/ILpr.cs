@@ -1,4 +1,5 @@
 ﻿using iParkingv5.Lpr.Objects;
+using iParkingv5.Objects.Configs;
 using System;
 using System.Drawing;
 using System.Threading.Tasks;

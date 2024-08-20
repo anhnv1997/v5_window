@@ -131,14 +131,14 @@ namespace iParkingv5_window.Usercontrols
                 {
                     Bitmap bitmapCut = CropBitmap((Bitmap)image, (Rectangle)config!);
 
-                    string carPlate = StaticPool.LprDetect.GetPlateNumber(bitmapCut, true, null, out Image? lprImage);
+                    string carPlate = AppData.LprDetect.GetPlateNumber(bitmapCut, true, null, out Image? lprImage);
                     lblDetectPlate.Text = carPlate;
                     picCutVehicleImage.Image = bitmapCut;
                     picLprImage.Image = lprImage;
                 }
                 else
                 {
-                    string plate = StaticPool.LprDetect.GetPlateNumber(image, true, null, out Image? lprImage);
+                    string plate = AppData.LprDetect.GetPlateNumber(image, true, null, out Image? lprImage);
                     lblDetectPlate.Text = plate;
                     picCutVehicleImage.Image = image;
                     picLprImage.Image = lprImage;
@@ -159,14 +159,14 @@ namespace iParkingv5_window.Usercontrols
                 {
                     Bitmap bitmapCut = CropBitmap((Bitmap)image, (Rectangle)config!);
 
-                    string carPlate = StaticPool.LprDetect.GetPlateNumber(bitmapCut, false, null, out Image? lprImage);
+                    string carPlate = AppData.LprDetect.GetPlateNumber(bitmapCut, false, null, out Image? lprImage);
                     lblDetectPlate.Text = carPlate;
                     picCutVehicleImage.Image = bitmapCut;
                     picLprImage.Image = lprImage;
                 }
                 else
                 {
-                    string plate = StaticPool.LprDetect.GetPlateNumber(image, false, null, out Image? lprImage);
+                    string plate = AppData.LprDetect.GetPlateNumber(image, false, null, out Image? lprImage);
                     lblDetectPlate.Text = plate;
                     picCutVehicleImage.Image = image;
                     picLprImage.Image = lprImage;

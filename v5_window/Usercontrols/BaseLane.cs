@@ -221,7 +221,7 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
             vehicleImg = ucCameraView?.GetFullCurrentImage();
-            plate = StaticPool.LprDetect.GetPlateNumber(vehicleImg, isCar, config, out lprImage);
+            plate = AppData.LprDetect.GetPlateNumber(vehicleImg, isCar, config, out lprImage);
             if (string.IsNullOrEmpty(plate))
             {
                 for (int i = 0; i < camDuPhongs.Count; i++)
@@ -241,7 +241,7 @@ namespace iParkingv5_window.Usercontrols
                         }
                     }
                     var tempImg = camDuPhongs[i].GetCurrentVideoFrame();
-                    plate = StaticPool.LprDetect.GetPlateNumber(tempImg, isCar, config, out lprImage);
+                    plate = AppData.LprDetect.GetPlateNumber(tempImg, isCar, config, out lprImage);
                     if (!string.IsNullOrEmpty(plate))
                     {
                         vehicleImg = tempImg;

@@ -1,6 +1,5 @@
 ﻿using IPaking.Ultility;
 using iParking.ConfigurationManager.UserControls;
-using iParkingv5.Lpr.Objects;
 using iParkingv5.Objects.Configs;
 using iParkingv5.Objects.Databases;
 using Kztek.Scale_net6.Objects;

@@ -4,6 +4,8 @@
 using iParkingv5.Lpr.Objects;
 using iParkingv5.LprDetecter.LprDetecters;
 using iParkingv5.Objects;
+using iParkingv5.Objects.Configs;
+using iParkingv5_window;
 
 namespace iParkingv5.LprServer
 {
@@ -36,10 +38,10 @@ namespace iParkingv5.LprServer
         {
             var lprConfig = new LprConfig()
             {
-                LPRDetecterType = LprDetecter.Objects.LprDetecter.EmLprDetecter.KztekLpr,
+                LPRDetecterType = Objects.Configs.LprDetecter.EmLprDetecter.KztekLpr,
             };
-            StaticPool.LprDetect = LprFactory.CreateLprDetecter(lprConfig, null);
-            StaticPool.LprDetect?.CreateLpr(lprConfig);
+            AppData.LprDetect = LprFactory.CreateLprDetecter(lprConfig, null);
+            AppData.LprDetect?.CreateLpr(lprConfig);
         }
         public static void showEvent(string input, string output, string plate)
         {

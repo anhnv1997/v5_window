@@ -1,5 +1,6 @@
 ﻿using iParkingv5.LprServer;
 using iParkingv5.Objects;
+using iParkingv5_window;
 using Kztek.Tools;
 using Microsoft.AspNetCore.Mvc;
 using System.Drawing.Imaging;
@@ -47,7 +48,7 @@ namespace IPGS.Controls.Controller
             {
                 try
                 {
-                    var plate = StaticPool.LprDetect.GetPlateNumber(image, lprRequest.isCar, null, out lprImage);
+                    var plate = AppData.LprDetect.GetPlateNumber(image, lprRequest.isCar, null, out lprImage);
                     string base64Str = "";
                     using (MemoryStream memoryStream = new MemoryStream())
                     {
@@ -120,7 +121,7 @@ namespace IPGS.Controls.Controller
             {
                 try
                 {
-                    var plate = StaticPool.LprDetect.GetPlateNumber(image, lprRequest.isCar, null, out lprImage);
+                    var plate = AppData.LprDetect.GetPlateNumber(image, lprRequest.isCar, null, out lprImage);
                     string base64Str = "";
                     using (MemoryStream memoryStream = new MemoryStream())
                     {

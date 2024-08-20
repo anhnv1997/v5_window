@@ -1,8 +1,9 @@
 ﻿using iParkingv5.Lpr.LprDetecters.AmericalLprs;
 using iParkingv5.Lpr.Objects;
+using iParkingv5.Objects.Configs;
 using System.Drawing;
 using static iParkingv5.LprDetecter.Events.Events;
-using static iParkingv5.LprDetecter.Objects.LprDetecter;
+using static iParkingv5.Objects.Configs.LprDetecter;
 
 namespace iParkingv5.LprDetecter.LprDetecters
 {
@@ -13,10 +14,10 @@ namespace iParkingv5.LprDetecter.LprDetecters
             ILpr? lpr = null;
             switch (lprConfig.LPRDetecterType)
             {
-                case Objects.LprDetecter.EmLprDetecter.KztekLpr:
+                case EmLprDetecter.KztekLpr:
                     lpr = new KztekLpr();
                     break;
-                case Objects.LprDetecter.EmLprDetecter.AmericalLpr:
+                case EmLprDetecter.AmericalLpr:
                     lpr = new AmericalLpr(lprConfig);
                     break;
                 default:

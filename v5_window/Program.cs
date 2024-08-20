@@ -1,6 +1,5 @@
 ﻿using IPaking.Ultility;
 using iParkingv5.ApiManager.KzParkingv5Apis;
-using iParkingv5.Lpr.Objects;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
 using Kztek.Tool;
@@ -162,7 +161,7 @@ namespace v6_window
                 StaticPool.eInvoiceConfig = NewtonSoftHelper<EInvoiceConfig>.DeserializeObjectFromPath(PathManagement.einvoiceConfigPath) ?? new EInvoiceConfig();
 
                 LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Application", "Load Lpr Config");
-                StaticPool.lprConfig = NewtonSoftHelper<LprConfig>.DeserializeObjectFromPath(PathManagement.lprConfigPath) ?? new LprConfig();
+                AppData.lprConfig = NewtonSoftHelper<LprConfig>.DeserializeObjectFromPath(PathManagement.lprConfigPath) ?? new LprConfig();
                 LogHelper.isSaveLog = StaticPool.appOption.IsSaveLog;
             }
             catch (Exception ex)

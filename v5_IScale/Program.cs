@@ -1,6 +1,5 @@
 ﻿using IPaking.Ultility;
 using iParkingv5.ApiManager.KzParkingv5Apis;
-using iParkingv5.Lpr.Objects;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
 using iParkingv5_window;

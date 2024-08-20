@@ -2,16 +2,8 @@
 using iParkingv5.Objects.Events;
 using iParkingv6.Objects.Datas;
 using Kztek.Tool.SocketHelpers;
-using OpenCvSharp;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using static OpenCvSharp.Stitcher;
-using static System.Windows.Forms.AxHost;
 
 namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
 {

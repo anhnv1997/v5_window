@@ -1,5 +1,4 @@
-﻿
-namespace iParkingv5.LprDetecter.Objects
+﻿namespace iParkingv5.Objects.Configs
 {
     public class LprDetecter
     {

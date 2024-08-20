@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using static iParkingv5.LprDetecter.Objects.LprDetecter;
+using static iParkingv5.Objects.Configs.LprDetecter;
 
-namespace iParkingv5.Lpr.Objects
+namespace iParkingv5.Objects.Configs
 {
     public class LprConfig
     {

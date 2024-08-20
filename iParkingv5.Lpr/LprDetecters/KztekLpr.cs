@@ -1,4 +1,4 @@
-﻿using iParkingv5.Lpr.Objects;
+﻿using iParkingv5.Objects.Configs;
 using NXT.Net6.LPR_AI;
 using System;
 using System.Drawing;

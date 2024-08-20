@@ -53,7 +53,15 @@ namespace iParkingv5.FeeTest
             //DataSet();
 
             LoadCT();
+            this.FormClosing += FrmFeeCalculate_FormClosing;
         }
+
+        private void FrmFeeCalculate_FormClosing(object? sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+            Environment.Exit(0);
+        }
+
         private void DataSet()
         {
             dgvShow.DataSource = null;

@@ -1,6 +1,7 @@
 ﻿using iParkingv5.Lpr.Objects;
 using iParkingv5.LprDetecter.Events;
 using iParkingv5.LprDetecter.LprDetecters;
+using iParkingv5.Objects.Configs;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;

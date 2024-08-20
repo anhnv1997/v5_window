@@ -15,6 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\iParkingv5.Objects\iParkingv5.Objects.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="NXT.Net6.LPR_AI">
       <HintPath>..\packages\LprLib\LPR_09082024\NXT.Net6.LPR_AI.dll</HintPath>
     </Reference>

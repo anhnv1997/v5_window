@@ -411,12 +411,12 @@ namespace iParkingv5_window.Forms.SystemForms
             this.isWaiting = true;
             timer1.Enabled = true;
 
-            StaticPool.LprDetect = LprFactory.CreateLprDetecter(StaticPool.lprConfig, null);
-            StaticPool.LprDetect?.CreateLpr(StaticPool.lprConfig);
+            AppData.LprDetect = LprFactory.CreateLprDetecter(AppData.lprConfig, null);
+            AppData.LprDetect?.CreateLpr(AppData.lprConfig);
 
             this.isWaiting = false;
             timer1.Enabled = false;
-            return StaticPool.LprDetect != null;
+            return AppData.LprDetect != null;
         }
         private List<string> CreateDisplayListMessage(string message)
         {

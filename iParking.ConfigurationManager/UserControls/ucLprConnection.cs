@@ -1,4 +1,4 @@
-﻿using iParkingv5.Lpr.Objects;
+﻿using iParkingv5.Objects.Configs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static iParkingv5.LprDetecter.Objects.LprDetecter;
+using static iParkingv5.Objects.Configs.LprDetecter;
 
 namespace iParking.ConfigurationManager.UserControls
 {

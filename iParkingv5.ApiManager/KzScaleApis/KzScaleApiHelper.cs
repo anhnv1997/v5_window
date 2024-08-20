@@ -1,7 +1,6 @@
 ﻿using iParkingv5.Objects;
 using iParkingv5.Objects.Datas.weighing_service;
 using iParkingv6.ApiManager;
-using OpenCvSharp;
 using System;
 using System.Collections.Generic;
 using System.Threading;
