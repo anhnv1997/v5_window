@@ -73,13 +73,10 @@ namespace v5_IScale.Forms.ReportForms
             tableLayoutPanel1 = new TableLayoutPanel();
             panel4 = new Panel();
             label8 = new Label();
-            picSecondWeight = new iParkingv5_window.Usercontrols.MovablePictureBox();
             panel3 = new Panel();
             label7 = new Label();
-            picFirstWeight = new iParkingv5_window.Usercontrols.MovablePictureBox();
             panel2 = new Panel();
             label6 = new Label();
-            picVehicleImage = new iParkingv5_window.Usercontrols.MovablePictureBox();
             groupBox2 = new GroupBox();
             cbPrintMode = new ComboBox();
             btnPrintInternetEInvoice = new Button();
@@ -90,11 +87,8 @@ namespace v5_IScale.Forms.ReportForms
             panel1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picSecondWeight).BeginInit();
             panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picFirstWeight).BeginInit();
             panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picVehicleImage).BeginInit();
             groupBox2.SuspendLayout();
             SuspendLayout();
             // 
@@ -440,7 +434,6 @@ namespace v5_IScale.Forms.ReportForms
             // panel4
             // 
             panel4.Controls.Add(label8);
-            panel4.Controls.Add(picSecondWeight);
             panel4.Dock = DockStyle.Fill;
             panel4.Location = new Point(508, 2);
             panel4.Margin = new Padding(0);
@@ -462,23 +455,9 @@ namespace v5_IScale.Forms.ReportForms
             label8.TabIndex = 0;
             label8.Text = "ẢNH SAU";
             // 
-            // picSecondWeight
-            // 
-            picSecondWeight.BackColor = SystemColors.ControlLightLight;
-            picSecondWeight.Dock = DockStyle.Fill;
-            picSecondWeight.Location = new Point(0, 0);
-            picSecondWeight.Margin = new Padding(0);
-            picSecondWeight.Name = "picSecondWeight";
-            picSecondWeight.Size = new Size(252, 159);
-            picSecondWeight.SizeMode = PictureBoxSizeMode.Zoom;
-            picSecondWeight.TabIndex = 1;
-            picSecondWeight.TabStop = false;
-            picSecondWeight.LoadCompleted += Pic_LoadCompleted;
-            // 
             // panel3
             // 
             panel3.Controls.Add(label7);
-            panel3.Controls.Add(picFirstWeight);
             panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(255, 2);
             panel3.Margin = new Padding(0);
@@ -500,23 +479,9 @@ namespace v5_IScale.Forms.ReportForms
             label7.TabIndex = 0;
             label7.Text = "ẢNH TRƯỚC";
             // 
-            // picFirstWeight
-            // 
-            picFirstWeight.BackColor = SystemColors.ControlLightLight;
-            picFirstWeight.Dock = DockStyle.Fill;
-            picFirstWeight.Location = new Point(0, 0);
-            picFirstWeight.Margin = new Padding(0);
-            picFirstWeight.Name = "picFirstWeight";
-            picFirstWeight.Size = new Size(251, 159);
-            picFirstWeight.SizeMode = PictureBoxSizeMode.Zoom;
-            picFirstWeight.TabIndex = 1;
-            picFirstWeight.TabStop = false;
-            picFirstWeight.LoadCompleted += Pic_LoadCompleted;
-            // 
             // panel2
             // 
             panel2.Controls.Add(label6);
-            panel2.Controls.Add(picVehicleImage);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(2, 2);
             panel2.Margin = new Padding(0);
@@ -537,19 +502,6 @@ namespace v5_IScale.Forms.ReportForms
             label6.Size = new Size(100, 20);
             label6.TabIndex = 0;
             label6.Text = "ẢNH XE VÀO";
-            // 
-            // picVehicleImage
-            // 
-            picVehicleImage.BackColor = SystemColors.ControlLightLight;
-            picVehicleImage.Dock = DockStyle.Fill;
-            picVehicleImage.Location = new Point(0, 0);
-            picVehicleImage.Margin = new Padding(0);
-            picVehicleImage.Name = "picVehicleImage";
-            picVehicleImage.Size = new Size(251, 159);
-            picVehicleImage.SizeMode = PictureBoxSizeMode.Zoom;
-            picVehicleImage.TabIndex = 1;
-            picVehicleImage.TabStop = false;
-            picVehicleImage.LoadCompleted += Pic_LoadCompleted;
             // 
             // groupBox2
             // 
@@ -646,13 +598,10 @@ namespace v5_IScale.Forms.ReportForms
             tableLayoutPanel1.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picSecondWeight).EndInit();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picFirstWeight).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picVehicleImage).EndInit();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             ResumeLayout(false);
