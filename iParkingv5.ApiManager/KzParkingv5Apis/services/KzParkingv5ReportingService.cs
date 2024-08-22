@@ -153,6 +153,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                         TotalPage = baseResponse.totalPage,
                         TotalCount = baseResponse.totalCount,
                         data = baseResponse.data ?? new List<EventOutReport>(),
+                        Revenue = baseResponse.Revenue
                     };
                     return report;
                 }
