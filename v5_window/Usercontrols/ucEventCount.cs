@@ -19,7 +19,6 @@ namespace iParkingv5_window.Usercontrols
         #region Timer
         private async void timerUpdateCount_Tick(object sender, EventArgs e)
         {
-            //return;
             try
             {
                 timerUpdateCount.Enabled = false;

@@ -87,7 +87,7 @@ namespace v5_IScale.Forms
             cbVehicleType.SelectedIndexChanged += ChangeSearchConditionEvent;
             cbIdentityGroupType.SelectedIndexChanged += ChangeSearchConditionEvent;
             cbLane.SelectedIndexChanged += ChangeSearchConditionEvent;
-            btnSearch.PerformClick();
+            //btnSearch.PerformClick();
             this.FormClosing += FrmReportIn_FormClosing;
         }
 

@@ -55,10 +55,10 @@ namespace iParkingv5_window.Forms.SystemForms
             }
             string clientId = "910ae83b-5205-4c35-bf45-8926ff620386";
             KzParkingv5BaseApi.client_id = clientId;
-            
+
             options = new OidcClientOptions
             {
-                Authority = KzParkingv5BaseApi.server.Replace(":5000", ":3000").Replace("api.","oauth."),
+                Authority = KzParkingv5BaseApi.server.Replace(":5000", ":3000").Replace("api.", "oauth."),
                 ClientId = clientId,
                 Scope = "openid role-data user-data parking-data offline_access device-data invoice-data project-data payment-data tenant-data warehouse-data reporting-data",
                 RedirectUri = "http://localhost/winforms.client",
@@ -105,6 +105,7 @@ namespace iParkingv5_window.Forms.SystemForms
             {
                 //timerRefreshToken.Enabled = true;
                 StartSocketServer();
+
                 timerRestartSocket.Enabled = true;
                 NewtonSoftHelper<string>.SaveConfig(loginResult.RefreshToken, PathManagement.tokenPath);
                 this.refreshToken = loginResult.RefreshToken;

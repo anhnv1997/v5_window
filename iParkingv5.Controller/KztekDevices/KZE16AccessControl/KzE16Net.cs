@@ -136,7 +136,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE16AccessControl
                     //InputEvent     : Char(2) + GetEvent?/Style=input/Input=INPUT1/DateTime=YYYYMMDDhhmmss + char(3)
                     //NoEvent        : Char(2) + GetEvent?/NotEvent + char(3)
                     
-                    response = "GetCardEvent?/UserID=NULL/LenCard=3/Card=BDE223/Reader=02/DateTime=20240511062908";
+                    //response = "GetCardEvent?/UserID=NULL/LenCard=3/Card=BDE223/Reader=02/DateTime=20240511062908";
                     if (response != "" && (response.Contains("GetCardEvent?/")) && !response.Contains("NotEvent"))
                     {
                         string[] data = response.Split('/');

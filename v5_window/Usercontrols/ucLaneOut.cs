@@ -937,7 +937,7 @@ namespace iParkingv5_window.Usercontrols
                     string plateNumber = data.data[0].plateNumber;
                     string id = data.data[0].id;
                     string message = $"Bạn có xác nhận sử dụng thẻ \r\n{identity.Name} cho phương tiện {plateNumber}";
-                    bool isUpdate = MessageBox.Show(message,"Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+                    bool isUpdate = MessageBox.Show(message, "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
                                     == DialogResult.Yes;
                     if (isUpdate)
                     {
@@ -1357,6 +1357,7 @@ namespace iParkingv5_window.Usercontrols
 
             DisplayEventOutInfo(eventOut?.eventIn?.DatetimeIn, eventTime, detectedPlate, identity, identityGroup, vehicleType, eventOut?.RegisteredVehicle, (long)(eventOut?.charge?.Amount ?? 0), eventOut?.Customer, null, eventOut?.eventIn?.thirdPartyNote ?? "", eventOut?.eventIn?.Note ?? "");
             ShowEventInData(eventOut);
+
             Task.Run(async () =>
             {
                 BaseLane.DisplayLed(detectedPlate, eventTime, identity, identityGroup, "Hẹn gặp lại", this.lane.id, eventOut.charge.Amount.ToString());
@@ -1379,7 +1380,7 @@ namespace iParkingv5_window.Usercontrols
                     var vehicleCutKey = imageKey + "_LPROUT.jpeg";
 
                     var imageKeys = new List<string>() { overviewKey, vehicleKey, vehicleCutKey };
-                    ucLastEventInfos[0].UpdateEventInfo(lastEvent.Id, detectedPlate, identityGroup?.Id.ToString() ?? "",
+                    ucLastEventInfos[0].UpdateEventInfo(eventOut.Id, detectedPlate, identityGroup?.Id.ToString() ?? "",
                                                         identityGroup?.Id.ToString() ?? "", eventTime, imageKeys,
                                                         "", "", this.lane.id, identity?.Id, false);
                 }));
@@ -1400,10 +1401,12 @@ namespace iParkingv5_window.Usercontrols
                 LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Send Api XC");
                 XuanCuongApiHelper.SendParkingInfo(lastEvent.Id, "out", detectedPlate, eventTime, imageKeys, lastEvent.eventIn.Id);
             }
+            
+            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Create Payment Transaction");
+            AppData.ApiServer.CreatePaymentTransaction(eventOut);
+           
             if ((eventOut?.charge?.Amount ?? 0) > 0)
             {
-                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Create Payment Transaction");
-                AppData.ApiServer.CreatePaymentTransaction(eventOut);
                 //UPDATE TEST
                 LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, mo_ta_them: "Yêu cầu xác nhận gửi hóa đơn: " + lastEvent.Id);
                 //bool isConfirmSendEinvoie = MessageBox.Show($"Bạn có muốn gửi hóa đơn ({TextFormatingTool.GetMoneyFormat(eventOut.charge.Amount.ToString())}) không?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes;

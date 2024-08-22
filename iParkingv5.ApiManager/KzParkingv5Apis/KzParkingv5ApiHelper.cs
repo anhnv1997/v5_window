@@ -1287,7 +1287,6 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             };
 
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
-
             if (!string.IsNullOrEmpty(response.Item1))
             {
                 var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventOutReport>>>.GetBaseResponse(response.Item1);
@@ -1299,42 +1298,71 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             }
             return null;
         }
+
+
+        public class TempObj
+        {
+            public string id { get; set; }
+            public IdentityGroup identityGroup { get; set; }
+            public string plateNumber { get; set; }
+            public string[] fileKeys { get; set; }
+            public bool force { get; set; }
+            public bool approve { get; set; }
+            public DateTime lastPaymentUtc { get; set; }
+            public int charge { get; set; }
+            public int discount { get; set; }
+            public int paid { get; set; }
+            public DateTime createdUtc { get; set; }
+            public string createdBy { get; set; }
+            public DateTime updatedUtc { get; set; }
+            public string note { get; set; }
+            public int weight { get; set; }
+        }
+
         public async Task<string> GetLastEventOutIdentityGroupIdByPlateNumber(string plateNumber)
         {
+            //return "";
             StandardlizeServerName();
-            string apiUrl = server + "reporting/parking/event-out";
+
+
+            string apiUrl = server + "event-out/search";
+            var filter = Filter.CreateFilter(new List<FilterModel>()
+                         {
+                             new FilterModel("plateNumber", "TEXT", plateNumber, "eq"),
+                         }, EmMainOperation.and, 0, 1);
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
                 { "Authorization","Bearer " + token  }
             };
 
 
-            var searchData = new SearchEventIn()
-            {
-                keyword = plateNumber,
-                FromUTC = new DateTime(2023, 1, 1, 0, 0, 0).ToUniversalTime(),
-                ToUTC = new DateTime(2099, 1, 1, 0, 0, 0).ToUniversalTime(),
-            };
-            var data = new
-            {
-                filter = searchData,
-                pageIndex = 0,
-                pageSize = 1,
-                paging = true,
-            };
+            //var searchData = new SearchEventIn()
+            //{
+            //    keyword = plateNumber,
+            //    FromUTC = new DateTime(2023, 1, 1, 0, 0, 0).ToUniversalTime(),
+            //    ToUTC = new DateTime(2099, 1, 1, 0, 0, 0).ToUniversalTime(),
+            ////};
+            //var data = new
+            //{
+            //    filter = filter,
+            //    pageIndex = 0,
+            //    pageSize = 1,
+            //    paging = true,
+            //};
 
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, RestSharp.Method.Post);
 
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventOutReport>>>.GetBaseResponse(response.Item1);
+                var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<TempObj>>>.GetBaseResponse(response.Item1);
                 if (baseResponse != null)
                 {
                     if (baseResponse.data.Count == 0)
                     {
                         return string.Empty;
                     }
-                    return baseResponse.data[0].IdentityGroupId;
+
+                    return baseResponse.data[0]?.identityGroup?.Id.ToString();
                 }
             }
             return string.Empty;

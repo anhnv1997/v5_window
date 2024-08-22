@@ -226,7 +226,7 @@
       }
     },
     "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.ApiManager\\iParkingv5.ApiManager.csproj": {
-      "version": "1.0.2.8",
+      "version": "1.0.3",
       "restore": {
         "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.ApiManager\\iParkingv5.ApiManager.csproj",
         "projectName": "iParkingv5.ApiManager",
@@ -785,7 +785,7 @@
       }
     },
     "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\v5_window\\iParkingv5_window.csproj": {
-      "version": "1.1.0.3",
+      "version": "1.1.0.5",
       "restore": {
         "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\v5_window\\iParkingv5_window.csproj",
         "projectName": "iParkingv5_window",
