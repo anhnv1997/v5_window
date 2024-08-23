@@ -629,6 +629,11 @@ namespace iParkingv5_window.Usercontrols
         private async void btnPrintQR_Click(object? sender, EventArgs e)
         {
             lblResult.UpdateResultMessage("Đang lấy thông tin QR...", ProcessColor);
+            if (lastHausVistor == null)
+            {
+                lblResult.UpdateResultMessage("Không có thông tin khách đăng ký, vui lòng thử lại!", ErrorColor);
+                return;
+            }
             var qrData = await ThirdPartyService.GetQRData(lastHausVistor);
             if (qrData == null || string.IsNullOrEmpty(qrData.QrCode))
             {
@@ -636,6 +641,19 @@ namespace iParkingv5_window.Usercontrols
             }
             else
             {
+                foreach (var item in this.lane.controlUnits)
+                {
+                    if (item.readers.Length > 0)
+                    {
+                        CardEventArgs ce = new CardEventArgs();
+                        ce.DeviceId = item.controlUnitId;
+                        ce.ReaderIndex = item.readers[0];
+                        ce.PreferCard = lastHausVistor.IdentityCode;
+                        this.OnNewEvent(ce);
+                        break;
+                    }
+                }
+
                 var printer = new OfficeHausPrinter();
                 string baseContent = File.ReadAllText(PathManagement.hausQRPath());
                 lblResult.UpdateResultMessage("Lấy thông tin thành công.", SuccessColor);

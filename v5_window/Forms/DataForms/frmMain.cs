@@ -774,12 +774,7 @@ namespace iParkingv5_window.Forms.DataForms
             try
             {
                 this.timerClearLog.Enabled = false;
-                DateTime before10Day = DateTime.Now.AddDays(-10);
-                string path = Path.Combine(LogHelper.SaveLogFolder, $"logs/{before10Day.Year}/{before10Day.Month}/{before10Day.Day}");
-                if (Directory.Exists(path))
-                {
-                    Directory.Delete(path, true);
-                }
+                LogHelper.ClearLogAfterDays(StaticPool.appOption.NumLogKeepDays * -1);
                 this.timerClearLog.Enabled = true;
             }
             catch (Exception ex)

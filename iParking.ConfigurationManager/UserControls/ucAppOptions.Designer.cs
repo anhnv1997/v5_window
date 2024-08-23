@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             groupBox2 = new GroupBox();
+            chbDisplayCustomer = new CheckBox();
             chbIsCheckKey = new CheckBox();
             chbIsUseInvoice = new CheckBox();
             chbIsIntergratedScaleStation = new CheckBox();
@@ -56,12 +57,15 @@
             label5 = new Label();
             label1 = new Label();
             label2 = new Label();
-            chbDisplayCustomer = new CheckBox();
+            label16 = new Label();
+            numLogKeepDays = new NumericUpDown();
+            label17 = new Label();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoDelayTime).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoTurn).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numAutoReturnDialogTime).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numLoopDelay).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numLogKeepDays).BeginInit();
             SuspendLayout();
             // 
             // groupBox2
@@ -71,8 +75,10 @@
             groupBox2.Controls.Add(chbIsCheckKey);
             groupBox2.Controls.Add(chbIsUseInvoice);
             groupBox2.Controls.Add(chbIsIntergratedScaleStation);
+            groupBox2.Controls.Add(numLogKeepDays);
             groupBox2.Controls.Add(numRetakePhotoDelayTime);
             groupBox2.Controls.Add(numRetakePhotoTurn);
+            groupBox2.Controls.Add(label17);
             groupBox2.Controls.Add(label12);
             groupBox2.Controls.Add(chbIsAllowEditPlateOut);
             groupBox2.Controls.Add(chbIsSaveLog);
@@ -90,6 +96,7 @@
             groupBox2.Controls.Add(cbPrintTemplate);
             groupBox2.Controls.Add(txtUpdatePath);
             groupBox2.Controls.Add(txtWaitSwipeCardTime);
+            groupBox2.Controls.Add(label16);
             groupBox2.Controls.Add(label15);
             groupBox2.Controls.Add(txtAllowOpenBarrieTime);
             groupBox2.Controls.Add(label5);
@@ -100,15 +107,25 @@
             groupBox2.Margin = new Padding(4, 3, 4, 3);
             groupBox2.Name = "groupBox2";
             groupBox2.Padding = new Padding(4, 3, 4, 3);
-            groupBox2.Size = new Size(734, 561);
+            groupBox2.Size = new Size(742, 604);
             groupBox2.TabIndex = 5;
             groupBox2.TabStop = false;
             groupBox2.Text = "Tùy chọn";
             // 
+            // chbDisplayCustomer
+            // 
+            chbDisplayCustomer.AutoSize = true;
+            chbDisplayCustomer.Location = new Point(246, 518);
+            chbDisplayCustomer.Name = "chbDisplayCustomer";
+            chbDisplayCustomer.Size = new Size(234, 25);
+            chbDisplayCustomer.TabIndex = 13;
+            chbDisplayCustomer.Text = "Hiển thị thông tin khách hàng";
+            chbDisplayCustomer.UseVisualStyleBackColor = true;
+            // 
             // chbIsCheckKey
             // 
             chbIsCheckKey.AutoSize = true;
-            chbIsCheckKey.Location = new Point(246, 507);
+            chbIsCheckKey.Location = new Point(246, 550);
             chbIsCheckKey.Margin = new Padding(4);
             chbIsCheckKey.Name = "chbIsCheckKey";
             chbIsCheckKey.Size = new Size(115, 25);
@@ -120,7 +137,7 @@
             // chbIsUseInvoice
             // 
             chbIsUseInvoice.AutoSize = true;
-            chbIsUseInvoice.Location = new Point(246, 443);
+            chbIsUseInvoice.Location = new Point(246, 486);
             chbIsUseInvoice.Margin = new Padding(4);
             chbIsUseInvoice.Name = "chbIsUseInvoice";
             chbIsUseInvoice.Size = new Size(203, 25);
@@ -131,7 +148,7 @@
             // chbIsIntergratedScaleStation
             // 
             chbIsIntergratedScaleStation.AutoSize = true;
-            chbIsIntergratedScaleStation.Location = new Point(246, 414);
+            chbIsIntergratedScaleStation.Location = new Point(246, 457);
             chbIsIntergratedScaleStation.Margin = new Padding(4);
             chbIsIntergratedScaleStation.Name = "chbIsIntergratedScaleStation";
             chbIsIntergratedScaleStation.Size = new Size(183, 25);
@@ -146,7 +163,7 @@
             numRetakePhotoDelayTime.Margin = new Padding(4, 3, 4, 3);
             numRetakePhotoDelayTime.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numRetakePhotoDelayTime.Name = "numRetakePhotoDelayTime";
-            numRetakePhotoDelayTime.Size = new Size(429, 29);
+            numRetakePhotoDelayTime.Size = new Size(437, 29);
             numRetakePhotoDelayTime.TabIndex = 5;
             // 
             // numRetakePhotoTurn
@@ -156,7 +173,7 @@
             numRetakePhotoTurn.Margin = new Padding(4, 3, 4, 3);
             numRetakePhotoTurn.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numRetakePhotoTurn.Name = "numRetakePhotoTurn";
-            numRetakePhotoTurn.Size = new Size(429, 29);
+            numRetakePhotoTurn.Size = new Size(437, 29);
             numRetakePhotoTurn.TabIndex = 4;
             // 
             // label12
@@ -172,7 +189,7 @@
             // chbIsAllowEditPlateOut
             // 
             chbIsAllowEditPlateOut.AutoSize = true;
-            chbIsAllowEditPlateOut.Location = new Point(246, 385);
+            chbIsAllowEditPlateOut.Location = new Point(246, 428);
             chbIsAllowEditPlateOut.Margin = new Padding(4, 3, 4, 3);
             chbIsAllowEditPlateOut.Name = "chbIsAllowEditPlateOut";
             chbIsAllowEditPlateOut.Size = new Size(196, 25);
@@ -183,7 +200,7 @@
             // chbIsSaveLog
             // 
             chbIsSaveLog.AutoSize = true;
-            chbIsSaveLog.Location = new Point(246, 353);
+            chbIsSaveLog.Location = new Point(246, 396);
             chbIsSaveLog.Margin = new Padding(4, 3, 4, 3);
             chbIsSaveLog.Name = "chbIsSaveLog";
             chbIsSaveLog.Size = new Size(147, 25);
@@ -228,7 +245,7 @@
             numAutoReturnDialogTime.Margin = new Padding(4, 3, 4, 3);
             numAutoReturnDialogTime.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numAutoReturnDialogTime.Name = "numAutoReturnDialogTime";
-            numAutoReturnDialogTime.Size = new Size(429, 29);
+            numAutoReturnDialogTime.Size = new Size(437, 29);
             numAutoReturnDialogTime.TabIndex = 7;
             // 
             // numLoopDelay
@@ -238,7 +255,7 @@
             numLoopDelay.Margin = new Padding(4, 3, 4, 3);
             numLoopDelay.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numLoopDelay.Name = "numLoopDelay";
-            numLoopDelay.Size = new Size(429, 29);
+            numLoopDelay.Size = new Size(437, 29);
             numLoopDelay.TabIndex = 3;
             // 
             // label14
@@ -300,7 +317,7 @@
             cbAutoReturnDialogResult.Location = new Point(246, 318);
             cbAutoReturnDialogResult.Margin = new Padding(4, 3, 4, 3);
             cbAutoReturnDialogResult.Name = "cbAutoReturnDialogResult";
-            cbAutoReturnDialogResult.Size = new Size(478, 29);
+            cbAutoReturnDialogResult.Size = new Size(486, 29);
             cbAutoReturnDialogResult.TabIndex = 8;
             // 
             // cbPrintTemplate
@@ -311,7 +328,7 @@
             cbPrintTemplate.Location = new Point(246, 97);
             cbPrintTemplate.Margin = new Padding(4, 3, 4, 3);
             cbPrintTemplate.Name = "cbPrintTemplate";
-            cbPrintTemplate.Size = new Size(478, 29);
+            cbPrintTemplate.Size = new Size(486, 29);
             cbPrintTemplate.TabIndex = 2;
             // 
             // txtUpdatePath
@@ -321,7 +338,7 @@
             txtUpdatePath.Margin = new Padding(4, 3, 4, 3);
             txtUpdatePath.Name = "txtUpdatePath";
             txtUpdatePath.PlaceholderText = "Đường dẫn chứa file update";
-            txtUpdatePath.Size = new Size(478, 29);
+            txtUpdatePath.Size = new Size(486, 29);
             txtUpdatePath.TabIndex = 6;
             // 
             // txtWaitSwipeCardTime
@@ -331,7 +348,7 @@
             txtWaitSwipeCardTime.Margin = new Padding(4, 3, 4, 3);
             txtWaitSwipeCardTime.Name = "txtWaitSwipeCardTime";
             txtWaitSwipeCardTime.PlaceholderText = "Thời gian giữa 2 lần quẹt thẻ liên tiếp (s)";
-            txtWaitSwipeCardTime.Size = new Size(481, 29);
+            txtWaitSwipeCardTime.Size = new Size(489, 29);
             txtWaitSwipeCardTime.TabIndex = 1;
             // 
             // label15
@@ -351,7 +368,7 @@
             txtAllowOpenBarrieTime.Margin = new Padding(4, 3, 4, 3);
             txtAllowOpenBarrieTime.Name = "txtAllowOpenBarrieTime";
             txtAllowOpenBarrieTime.PlaceholderText = "Thời gian cho phép mở barrie (s)";
-            txtAllowOpenBarrieTime.Size = new Size(478, 29);
+            txtAllowOpenBarrieTime.Size = new Size(486, 29);
             txtAllowOpenBarrieTime.TabIndex = 0;
             // 
             // label5
@@ -384,15 +401,35 @@
             label2.TabIndex = 2;
             label2.Text = "Thời gian cho phép mở barrie";
             // 
-            // chbDisplayCustomer
+            // label16
             // 
-            chbDisplayCustomer.AutoSize = true;
-            chbDisplayCustomer.Location = new Point(246, 475);
-            chbDisplayCustomer.Name = "chbDisplayCustomer";
-            chbDisplayCustomer.Size = new Size(234, 25);
-            chbDisplayCustomer.TabIndex = 13;
-            chbDisplayCustomer.Text = "Hiển thị thông tin khách hàng";
-            chbDisplayCustomer.UseVisualStyleBackColor = true;
+            label16.AutoSize = true;
+            label16.Location = new Point(8, 361);
+            label16.Margin = new Padding(4, 0, 4, 0);
+            label16.Name = "label16";
+            label16.Size = new Size(103, 21);
+            label16.TabIndex = 2;
+            label16.Text = "Giữ log tối đa";
+            // 
+            // numLogKeepDays
+            // 
+            numLogKeepDays.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            numLogKeepDays.Location = new Point(246, 359);
+            numLogKeepDays.Margin = new Padding(4, 3, 4, 3);
+            numLogKeepDays.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            numLogKeepDays.Name = "numLogKeepDays";
+            numLogKeepDays.Size = new Size(437, 29);
+            numLogKeepDays.TabIndex = 5;
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new Point(693, 361);
+            label17.Margin = new Padding(4, 0, 4, 0);
+            label17.Name = "label17";
+            label17.Size = new Size(44, 21);
+            label17.TabIndex = 7;
+            label17.Text = "ngày";
             // 
             // ucAppOptions
             // 
@@ -403,13 +440,14 @@
             Font = new Font("Segoe UI", 12F);
             Margin = new Padding(4, 3, 4, 3);
             Name = "ucAppOptions";
-            Size = new Size(734, 556);
+            Size = new Size(742, 601);
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoDelayTime).EndInit();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoTurn).EndInit();
             ((System.ComponentModel.ISupportInitialize)numAutoReturnDialogTime).EndInit();
             ((System.ComponentModel.ISupportInitialize)numLoopDelay).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numLogKeepDays).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -449,5 +487,8 @@
         private ComboBox cbAutoReturnDialogResult;
         private Label label15;
         private CheckBox chbDisplayCustomer;
+        private NumericUpDown numLogKeepDays;
+        private Label label17;
+        private Label label16;
     }
 }

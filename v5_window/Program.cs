@@ -32,7 +32,6 @@ namespace v6_window
 
                 LogHelper.CreateConnection();
                 LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Application", "Start Program");
-
                 using (Mutex mutex = new Mutex(true, appName, out bool ownmutex))
                 {
                     if (ownmutex)

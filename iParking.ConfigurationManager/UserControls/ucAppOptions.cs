@@ -34,6 +34,7 @@ namespace iParking.ConfigurationManager.UserControls
                 numAutoReturnDialogTime.Value = appOption.AutoRejectDialogTime;
                 cbAutoReturnDialogResult.SelectedIndex = appOption.AutoRejectDialogResult ? 0 : 1;
                 chbDisplayCustomer.Checked = appOption.IsDisplayCustomerInfo;
+                numLogKeepDays.Value = appOption.NumLogKeepDays;
             }
             txtWaitSwipeCardTime.TextChanged += TxtWaitSwipeCardTime_TextChanged;
             txtAllowOpenBarrieTime.TextChanged += TxtAllowOpenBarrieTime_TextChanged;
@@ -94,6 +95,7 @@ namespace iParking.ConfigurationManager.UserControls
                 AutoRejectDialogResult = cbAutoReturnDialogResult.SelectedIndex == 0 ? true : false,
                 AutoRejectDialogTime = (int)numAutoReturnDialogTime.Value,
                 IsDisplayCustomerInfo = chbDisplayCustomer.Checked,
+                NumLogKeepDays = (int)numLogKeepDays.Value,
             };
         }
         #endregion End Public Function

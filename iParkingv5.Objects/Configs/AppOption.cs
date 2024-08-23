@@ -29,5 +29,6 @@ namespace iParkingv5.Objects.Configs
         public int AutoRejectDialogTime { get; set; } = 0;
         public bool AutoRejectDialogResult { get; set; } = false;
         public bool IsDisplayCustomerInfo { get; set; } = false;
+        public int NumLogKeepDays { get; set; } = 10;
     }
 }
