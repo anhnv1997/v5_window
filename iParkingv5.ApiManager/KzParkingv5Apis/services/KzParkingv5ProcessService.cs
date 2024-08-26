@@ -20,8 +20,6 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         #region EVENT-IN
         public async Task<bool> UpdateEventInPlateAsync(string eventId, string newPlate, string oldPlate)
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Update Event In Plate",
-                         ("Id: " + eventId, "Old: " + oldPlate, "New: " + newPlate));
             server = server.StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/" + eventId;
             //Gửi API
@@ -39,9 +37,6 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, commitData, headers, null, timeOut, RestSharp.Method.Patch);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, specailName: "LPR_EDIT_IN", mo_ta_them: "EventId: " + eventId +
-                                                                                                                                 "\r\nOld Plate: " + oldPlate +
-                                                                                                                                 " => New Plate: " + newPlate);
                 return true;
             }
             return false;
@@ -49,15 +44,12 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         public async Task<Tuple<EventInData, BaseErrorData>> PostCheckInAsync(
             string _laneId, string _plateNumber, Identity? identity, List<EmParkingImageType> validImageTypes, bool isForce = false, RegisteredVehicle? registeredVehicle = null, string _note = "")
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Start Check In", _laneId);
             if (identity == null)
             {
-                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Check In By Identity", (_laneId, identity));
                 return await PostCheckInByPlateAsync(_laneId, _plateNumber, identity, validImageTypes, isForce, registeredVehicle, _note);
             }
             else
             {
-                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Check In By Plate", (_laneId, _plateNumber));
                 return await PostCheckInByIdentityAsync(_laneId, _plateNumber, identity, validImageTypes, isForce, registeredVehicle, _note);
             }
         }
@@ -176,15 +168,12 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         public async Task<Tuple<EventOutData, BaseErrorData>> PostCheckOutAsync(string _laneId, string _plateNumber, Identity? identitiy,
                                                                   List<EmParkingImageType> validImageTypes, bool isForce)
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Start Check Out", _laneId);
             if (identitiy == null)
             {
-                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Check Out By Identity", (_laneId, identitiy));
                 return await PostCheckOutByPlateAsync(_laneId, _plateNumber, identitiy, validImageTypes, isForce);
             }
             else
             {
-                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Check Out By Plate", (_laneId, _plateNumber));
                 return await PostCheckOutByIdentityAsync(_laneId, _plateNumber, identitiy, validImageTypes, isForce);
             }
         }
@@ -297,8 +286,6 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 
         public async Task<bool> UpdateEventOutPlate(string eventId, string newPlate, string oldPlate)
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Update Event In Plate",
-                         ("Id: " + eventId, "Old: " + oldPlate, "New: " + newPlate));
             server = server.StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/" + eventId;
             //Gửi API
@@ -316,15 +303,12 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, commitData, headers, null, timeOut, RestSharp.Method.Patch);
             if (!string.IsNullOrEmpty(response.Item1))
             {
-                LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, specailName: "LPR_EDIT_OUT", mo_ta_them: "EventId: " + eventId +
-                                                                                                                                    "\r\nOld Plate: " + oldPlate +
-                                                                                                                                    " => New Plate: " + newPlate); return true;
+                return true;
             }
             return false;
         }
         public async Task<bool> CommitOutAsync(EventOutData eventOut)
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Commit Out", eventOut);
             server = server.StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut) + "/" + eventOut.Id;
             //Gửi API
@@ -358,7 +342,6 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                                                 string _identityGroupId, string customerId,
                                                 string registerVehicleId, string description)
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Create Alarm Event");
             server = server.StandardlizeServerName();
             string apiUrl = server + "abnormal-event";
             //Gửi API
@@ -404,7 +387,6 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 
         public async Task<bool> SaveEventImage(string bucketName, string objKey, EmParkingImageType objType, List<byte> imageData)
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Save Event Image");
             server = server.StandardlizeServerName();
 
             var options = new RestClientOptions(server)
@@ -419,14 +401,12 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             request.AddParameter("objectKey", objKey);
             request.AddParameter("objectType", 0);
             request.AddFile($"file", imageData.ToArray(), "x.jpg");
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Api, mo_ta_them: request.Parameters);
             RestResponse response = await client.ExecuteAsync(request);
             return response.StatusCode == System.Net.HttpStatusCode.Created;
         }
 
         public async Task<string> GetImageUrl(string bucketName, string objKey)
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Get Display Image Url");
             server = server.StandardlizeServerName();
             string apiUrl = $"{server}s3/presigned-url";
 
@@ -456,7 +436,6 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         }
         public async Task<string> GetFeeCalculate(string dateTimeIn, string dateTimeOut, string feeId)
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Get Fee Calculate");
             server = server.StandardlizeServerName();
             string apiUrl = $"{server}charge-rate/compute";
 
@@ -487,7 +466,6 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         }
         public async Task<bool> UpdateBSXNote(string newNote, string eventId, bool isEventIn)
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ParkingProcessService", "Update Note");
             server = server.StandardlizeServerName();
             string apiUrl = isEventIn ?
                 server + KzParkingv5ApiUrlManagement.PostObjectRoute(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn) + "/" + eventId :

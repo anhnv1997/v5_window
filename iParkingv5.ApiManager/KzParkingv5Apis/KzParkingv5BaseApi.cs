@@ -7,12 +7,14 @@ using System.Text;
 using static iParkingv5.ApiManager.KzParkingv5Apis.Filter;
 using System.Threading.Tasks;
 using System.Threading;
+using iParkingv5.Objects.Datas;
+using Kztek.Tools;
+using Kztek.Tool.LogDatabases;
 
 namespace iParkingv5.ApiManager.KzParkingv5Apis
 {
     public static class KzParkingv5BaseApi
     {
-
         #region Properties
         public static string server = "http://14.160.26.45:5000";
         public static string username = "admin";
@@ -36,6 +38,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         public static async Task<Tuple<List<T>, string>> GetAllObjectAsync<T>(
             KzParkingv5ApiUrlManagement.EmParkingv5ObjectType objectType) where T : class
         {
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.MainServer,
+                                 tblSystemLog.EmSystemActionDetail.GET, $"Get All {objectType}");
             server = server.StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.SearchObjectDataRoute(objectType);
 
@@ -76,6 +80,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             KzParkingv5ApiUrlManagement.EmParkingv5ObjectType objectType,
             EmPageSearchType emPageSearchType, EmPageSearchKey emPageSearchKey, string searchValue) where T : class
         {
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.MainServer,
+                                 tblSystemLog.EmSystemActionDetail.GET,
+                                 $"Get Top 1 {objectType.ToString()} By Condition {emPageSearchKey}", searchValue);
             server = server.StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.SearchObjectDataRoute(objectType);
 
@@ -117,6 +124,9 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             KzParkingv5ApiUrlManagement.EmParkingv5ObjectType objectType,
             EmPageSearchType emPageSearchType, EmPageSearchKey emPageSearchKey, string searchValue, EmOperation operation) where T : class
         {
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.MainServer,
+                                 tblSystemLog.EmSystemActionDetail.GET,
+                                 $"Get Multiple {objectType.ToString()} By Condition {emPageSearchKey}", searchValue);
             server = server.StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.SearchObjectDataRoute(objectType);
 
@@ -153,6 +163,10 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
         public static async Task<Tuple<T, string>> GetObjectDetailByIdAsync<T>(
             KzParkingv5ApiUrlManagement.EmParkingv5ObjectType objectType, string id) where T : class
         {
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.MainServer,
+                                 tblSystemLog.EmSystemActionDetail.GET,
+                                 $"Get Detail {objectType.ToString()} By Id ", id);
+
             server = server.StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.GetObjectDataDetailRoute(objectType, id.ToUpper());
 
@@ -166,7 +180,6 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
             {
                 try
                 {
-
                     var data = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(response.Item1);
                     return Tuple.Create<T, string>(data, response.Item2);
                 }
@@ -184,6 +197,10 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                                     KzParkingv5ApiUrlManagement.EmParkingv5ObjectType objectType,
                                     T obj) where T : class
         {
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.MainServer,
+                                 tblSystemLog.EmSystemActionDetail.CREATE,
+                                 $"{objectType.ToString()} ", obj);
+
             server = server.StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.PostObjectRoute(objectType);
 

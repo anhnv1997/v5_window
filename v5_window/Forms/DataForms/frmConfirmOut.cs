@@ -26,10 +26,11 @@ namespace iParkingv5_window.Forms.DataForms
         private List<string>? eventInFileKeys;
         private DateTime dateTime;
         private int autoReturnTime = 0;
+        VehicleBaseType vehicleType;
         #endregion End PROPERTIES
 
         #region Forms
-        public frmConfirmOut(string detectedPlate, string errorMessage, string plateIn, string identityNameIn, string identityGroupName,
+        public frmConfirmOut(string detectedPlate, string errorMessage, string plateIn, string identityNameIn, string identityGroupName, VehicleBaseType vehicleType,
                             Dictionary<EmParkingImageType, List<ImageData>> fileKeys, DateTime datetimeIn, bool isDisplayQuestion = true, long charge = 0)
         {
             InitializeComponent();
@@ -60,6 +61,7 @@ namespace iParkingv5_window.Forms.DataForms
             this.datetimeIn = datetimeIn;
             this.charge = charge;
             this.updatePlate = detectedPlate;
+            this.vehicleType = vehicleType;
             this.FormClosing += FrmConfirmOut_FormClosing;
             this.Load += FrmConfirm_Load;
         }
@@ -80,7 +82,7 @@ namespace iParkingv5_window.Forms.DataForms
                 lblTimer.Text = "";
                 timerAutoConfirm.Enabled = true;
             }
-            ShowInfo(this.detectedPlate, this.datetimeIn, this.plateIn, this.identityNameIn);
+            ShowInfo(this.detectedPlate, this.datetimeIn, this.plateIn, this.identityNameIn, vehicleType);
         }
         private void frmConfirmOut_KeyDown(object sender, KeyEventArgs e)
         {
@@ -172,13 +174,12 @@ namespace iParkingv5_window.Forms.DataForms
         #endregion End PRIVATE FUNCTION
 
         #region PUBLIC FUNCTION
-        public async void ShowInfo(string detectedPlate, DateTime datetimeIn, string plateIn, string identityInName)
+        public async void ShowInfo(string detectedPlate, DateTime datetimeIn, string plateIn, string identityInName, VehicleBaseType vehicleType)
         {
             try
             {
                 this.SuspendLayout();
                 this.updatePlate = detectedPlate;
-                VehicleBaseType vehicleTypeIn = VehicleBaseType.Car;
 
                 this.Invoke(new Action(() =>
                 {
@@ -188,7 +189,7 @@ namespace iParkingv5_window.Forms.DataForms
                     txtPlateOut.Text = detectedPlate;
                     lblPlateIn.Text = plateIn;
                     lblIdentityGroup.Text = identityGroupName;
-                    lblVehicleType.Text = VehicleType.GetDisplayStr(vehicleTypeIn);
+                    lblVehicleType.Text = VehicleType.GetDisplayStr(vehicleType);
                 }));
 
 

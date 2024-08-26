@@ -207,7 +207,6 @@ namespace iParkingv5.Controller.Dahua
                 case EM_ALARM_TYPE.ALARM_ACCESS_CTL_EVENT:
                     NET_ALARM_ACCESS_CTL_EVENT_INFO access_info = (NET_ALARM_ACCESS_CTL_EVENT_INFO)Marshal.PtrToStructure(pBuf, typeof(NET_ALARM_ACCESS_CTL_EVENT_INFO));
 
-                    LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.Controller, obj: access_info);
                     if (access_info.emOpenMethod == EM_ACCESS_DOOROPEN_METHOD.FINGERPRINT)
                     {
                         int userId = 0;

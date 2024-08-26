@@ -13,6 +13,7 @@ using iParkingv5.Objects.EventDatas;
 using iParkingv5.Printer;
 using iParkingv5_window.Forms;
 using Kztek.Helper;
+using Kztek.Tool.LogDatabases;
 using Kztek.Tool.TextFormatingTools;
 using Kztek.Tools;
 using System.ComponentModel;
@@ -20,6 +21,7 @@ using System.Data;
 using System.Runtime.InteropServices;
 using static iParkingv5.Objects.Enums.ParkingImageType;
 using static iParkingv5.Objects.Enums.PrintHelpers;
+using static Kztek.Tool.LogDatabases.tblSystemLog;
 using ImageData = iParkingv5.Objects.EventDatas.ImageData;
 
 namespace iParkingv5.Reporting
@@ -122,7 +124,7 @@ namespace iParkingv5.Reporting
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, mo_ta_them: ex);
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "ReportInOut", ex);
             }
             finally
             {
@@ -276,8 +278,8 @@ namespace iParkingv5.Reporting
             }
             catch (Exception ex)
             {
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "ReportInOut", ex);
                 MessageBox.Show(ex.Message);
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
             }
 
         }
@@ -313,7 +315,7 @@ namespace iParkingv5.Reporting
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "ReportInOut", ex);
             }
             finally
             {
@@ -370,7 +372,7 @@ namespace iParkingv5.Reporting
                         }
                         catch (Exception ex)
                         {
-                            LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
+                            tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "ReportInOut", ex);
                         }
                     }
                 }
@@ -450,7 +452,7 @@ namespace iParkingv5.Reporting
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, mo_ta_them: ex);
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "ReportInOut", ex);
             }
 
         }

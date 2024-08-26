@@ -23,16 +23,14 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
     {
         public async Task<Report<EventInReport>> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
                                     string identityGroupId, string vehicleTypeId, string laneId, string user, bool isPaging,
-                                    int pageIndex = 0, int pageSize = 100, string eventInId = "")
+                                    int pageIndex = 0, int pageSize = 100, string eventInId = "", bool isSaveLog = true)
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ReportingService", "Get Event In");
             server = server.StandardlizeServerName();
             string apiUrl = server + "event-in/search";
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
                 { "Authorization","Bearer " + token  }
             };
-
 
             List<FilterModel> filterModels = new List<FilterModel>()
                         {
@@ -68,7 +66,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                                             pageIndex: pageIndex,
                                             pageSize: pageSize);
 
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, RestSharp.Method.Post);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, RestSharp.Method.Post, isSaveLog);
 
             if (!string.IsNullOrEmpty(response.Item1))
             {
@@ -100,9 +98,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 
         public async Task<Report<EventOutReport>> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId,
                                                                string vehicleTypeId, string laneId, string user, bool isPaging,
-                                                               int pageIndex = 1, int pageSize = 10000, string eventId = "")
+                                                               int pageIndex = 1, int pageSize = 10000, string eventId = "", bool isSaveLog = true)
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ReportingService", "Get Event Out");
             server = server.StandardlizeServerName();
             string apiUrl = server + "event-out/search";
             Dictionary<string, string> headers = new Dictionary<string, string>()
@@ -142,7 +139,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             var filter = Filter.CreateFilter(new List<Dictionary<string, List<FilterModel>>>() { filter1, filter2 }, isPaging,
                                             pageIndex: pageIndex,
                                             pageSize: pageSize);
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, Method.Post);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, Method.Post, isSaveLog);
             if (!string.IsNullOrEmpty(response.Item1))
             {
                 var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventOutReport>>>.GetBaseResponse(response.Item1);
@@ -174,7 +171,6 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 
         public async Task<DataTable> GetAlarmReport(string keyword, DateTime startTime, DateTime endTime, string identityGroupId, string vehicleTypeId, string laneId, int pageIndex = 1, int pageSize = 10000)
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ReportingService", "Get Alarm");
             server = server.StandardlizeServerName();
             string apiUrl = server + KzParkingv5ApiUrlManagement.GetBySqlCmd;
             string cmd = string.Empty;
@@ -268,17 +264,16 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         /// <returns></returns>
         public async Task<SumaryCountEvent> SummaryEventAsync()
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ReportingService", "Get Summary");
             server = server.StandardlizeServerName();
 
             DateTime minTime = new DateTime(2000, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
             DateTime startTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
             DateTime endTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
 
-            var dataOut = await GetEventOuts("", startTime, endTime, "", "", "", "", true, 0, 1);
-            var dataIn = await GetEventIns("", startTime, endTime, "", "", "", "", true, 0, 1);
+            var dataOut = await GetEventOuts("", startTime, endTime, "", "", "", "", true, 0, 1, isSaveLog: false);
+            var dataIn = await GetEventIns("", startTime, endTime, "", "", "", "", true, 0, 1, isSaveLog: false);
             var dataInAndOut = await GetEventInAndOuts("", startTime, endTime, "", "", "", "", true, 0, 1);
-            var dataInPark = await GetEventIns("", minTime, endTime, "", "", "", "", true, 0, 1);
+            var dataInPark = await GetEventIns("", minTime, endTime, "", "", "", "", true, 0, 1, isSaveLog: false);
 
             int vehicleInPark = dataInPark.TotalCount;
             int vehicleGotIn = dataIn.TotalCount + dataInAndOut.TotalCount;
@@ -331,7 +326,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             var filter = Filter.CreateFilter(new List<Dictionary<string, List<FilterModel>>>() { filter1, filter2 }, isPaging,
                                             pageIndex: pageIndex,
                                             pageSize: pageSize);
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, Method.Post);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, Method.Post, false);
             if (!string.IsNullOrEmpty(response.Item1))
             {
                 var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventOutReport>>>.GetBaseResponse(response.Item1);

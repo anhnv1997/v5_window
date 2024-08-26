@@ -1,4 +1,5 @@
-﻿using Kztek.Tools;
+﻿using Kztek.Tool.LogDatabases;
+using Kztek.Tools;
 using System.Drawing.Imaging;
 
 namespace Kztek.Helper
@@ -70,7 +71,7 @@ namespace Kztek.Helper
                     }
                     catch (Exception ex)
                     {
-                        LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
+                        tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CREATE, "", ex);
                         return new List<byte>();
                     }
                 }
@@ -94,7 +95,7 @@ namespace Kztek.Helper
                 }
                 catch (Exception ex)
                 {
-                    LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CREATE, "", ex);
                     return new List<byte>();
                 }
             }

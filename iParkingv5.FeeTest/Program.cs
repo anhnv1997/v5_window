@@ -5,6 +5,7 @@ using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
 using Kztek.Helper;
 using Kztek.Tool;
+using Kztek.Tool.LogDatabases;
 using Kztek.Tools;
 
 namespace iParkingv5.FeeTest
@@ -23,7 +24,8 @@ namespace iParkingv5.FeeTest
 
             const string appName = "IP_DA_V5_LU_FEE_TEST";
             PathManagement.baseBath = LogHelper.SaveLogFolder = Application.StartupPath;
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Khởi chạy ứng dụng");
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "CHECK KEY");
+
             if (LoadSystemConfig())
             {
                 Application.Run(new frmLogin(AppData.ApiServer, KzParkingv5BaseApi.server, OpenHomePage));

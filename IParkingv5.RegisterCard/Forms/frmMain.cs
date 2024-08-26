@@ -4,6 +4,7 @@ using iParkingv5.Objects.Datas.parking_service;
 using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.Events;
 using iParkingv6.Objects.Datas;
+using Kztek.Tool.LogDatabases;
 using Kztek.Tools;
 using System;
 using System.Collections.Generic;
@@ -178,7 +179,7 @@ namespace IParkingv5.RegisterCard
         }
         private async void Controller_CardEvent(object sender, iParkingv5.Objects.Events.CardEventArgs e)
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "NHẬN SK THẺ: " + e.PreferCard);
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "Card Event", e);
 
             string identityGroupId = "";
             this.Invoke(new Action(() =>
@@ -254,81 +255,6 @@ namespace IParkingv5.RegisterCard
         private async void btnStart_Click_1(object sender, EventArgs e)
         {
 
-        }
-
-        private async void button1_Click(object sender, EventArgs ea)
-        {
-            CardEventArgs e =  new CardEventArgs();
-            e.PreferCard = "F7D5B8E4";
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "NHẬN SK THẺ: " + e.PreferCard);
-
-            string identityGroupId = "";
-            this.Invoke(new Action(() =>
-            {
-                identityGroupId = ((ListItem)cbIdentityGroup.SelectedItem)?.Value ?? "";
-                if (string.IsNullOrWhiteSpace(identityGroupId))
-                {
-                    MessageBox.Show("Hãy chọn nhóm định danh", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-            }));
-            string code = "";
-            this.Invoke(new Action(() =>
-            {
-                code = CardFactory.StandardlizedCardNumber(e.PreferCard, new iParkingv5.Objects.Configs.CardFormatConfig()
-                {
-                    InputFormat = (EmCardFormat)cbInputFormat.SelectedIndex,
-                    OutputFormat = (EmCardFormat)cbOutputFormat.SelectedIndex,
-                    OutputOption = (EmCardFormatOption)cbOption.SelectedIndex,
-                });
-            }));
-            Identity? identity = (await AppData.ApiServer.parkingDataService.GetIdentityByCodeAsync(code)).Item1;
-            if (identity == null)
-            {
-                int currentIndex = (int)numericUpDown1.Value + 1;
-                string format = "";
-                IdentityType type = IdentityType.Card;
-                this.Invoke(new Action(() =>
-                {
-                    format = cbFormat.Text;
-                    type = (IdentityType)cbIdentityType.SelectedIndex;
-
-                }));
-                //Thêm mới
-                identity = new Identity()
-                {
-                    Name = txtLetter.Text + currentIndex.ToString(format),
-                    Code = code,
-                    IdentityGroupId = identityGroupId,
-                    Type = type,
-                };
-
-                identity = (await AppData.ApiServer.parkingDataService.CreateIdentityAsync(identity))?.Item1 ?? null;
-                if (identity != null)
-                {
-                    this.Invoke(new Action(() =>
-                    {
-                        numericUpDown1.Value = currentIndex;
-                        lsbShow.Items.Add(code + " - Thêm mới");
-                    }));
-                }
-                else
-                {
-                    this.Invoke(new Action(() =>
-                    {
-                        numericUpDown1.Value = currentIndex;
-                        lsbShow.Items.Add(code + " - Thêm mới thất bại");
-                    }));
-                }
-            }
-            else
-            {
-                this.Invoke((Action)(() =>
-                {
-                    //Thông báo đã có
-                    lsbShow.Items.Add(code + " - đã tồn tại trong hệ thống");
-                }));
-            }
         }
     }
 }

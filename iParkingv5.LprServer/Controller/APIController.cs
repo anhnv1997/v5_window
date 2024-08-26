@@ -27,7 +27,6 @@ namespace IPGS.Controls.Controller
         [HttpPost("DetectPlate")]
         public ActionResult<LprResult> DetectPlate([FromBody] LprRequest lprRequest)
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, obj: lprRequest);
             var image = Kztek.Helper.ImageHelper.Base64ToImage(lprRequest.base64);
             byte[] baseImageBytes = Convert.FromBase64String(lprRequest.base64);
 
@@ -100,7 +99,6 @@ namespace IPGS.Controls.Controller
         [HttpPost("lprinfo")]
         public ActionResult<LprResponseModel> DetectPlatev3([FromBody] LprRequest lprRequest)
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, obj: lprRequest);
             var image = Kztek.Helper.ImageHelper.Base64ToImage(lprRequest.base64);
             byte[] baseImageBytes = Convert.FromBase64String(lprRequest.base64);
 

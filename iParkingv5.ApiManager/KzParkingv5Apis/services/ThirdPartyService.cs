@@ -14,8 +14,6 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
     {
         public static async Task<HausVisitor> AddVisitor(string identityGroupCode, string plateNumber)
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ThirdPartyService", "Add Visitor", (identityGroupCode, plateNumber));
-
             server = server.StandardlizeServerName();
             string apiUrl = server + "integration/visitor";
 
@@ -48,7 +46,6 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 
         public static async Task<HausQR> GetQRData(HausVisitor visitor)
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "ThirdPartyService", "Get QR Data", visitor);
             server = server.StandardlizeServerName();
             string apiUrl = server + "integration/visitor/get-qr";
 

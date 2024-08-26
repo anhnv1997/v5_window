@@ -11,12 +11,8 @@ using iParkingv5.Objects.EventDatas;
 using iParkingv5.Objects.Events;
 using iParkingv5_window.Forms.DataForms;
 using Kztek.Tool;
+using Kztek.Tool.LogDatabases;
 using Kztek.Tools;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static iParkingv5.Objects.Enums.ParkingImageType;
 
 namespace iParkingv5_window.Usercontrols
@@ -26,7 +22,6 @@ namespace iParkingv5_window.Usercontrols
         public static bool CheckNewCardEvent(this iLane iLane, Lane lane, CardEventArgs ce,
                                              out ControllerInLane? controllerInLane, out int thoiGianCho)
         {
-            LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, mo_ta_them: lane, obj: ce);
             thoiGianCho = 0;
             DateTime eventTime = DateTime.Now;
             bool isValidControllerIdAndReader = IsValidControllerAndReader(lane, ce, out controllerInLane);
@@ -168,35 +163,22 @@ namespace iParkingv5_window.Usercontrols
                 {
                     for (int i = 0; i < controllerInLane.barriers.Length; i++)
                     {
-                        bool isOpenSuccess = false;
-                        if (!await item.OpenDoor(100, controllerInLane.barriers[i]))
+                        bool isOpenSuccess = !await item.OpenDoor(100, controllerInLane.barriers[i]);
+                        if (!isOpenSuccess)
                         {
+                            tblDeviceLog.SaveLog(item.ControllerInfo.Id, item.ControllerInfo.Name, "", "",
+                                                     "Mở barrie Lần 1 Thất Bại");
                             isOpenSuccess = await item.OpenDoor(100, controllerInLane.barriers[i]);
                             if (!isOpenSuccess)
                             {
-                                LogHelper.Log(logType: LogHelper.EmLogType.ERROR,
-                                        doi_tuong_tac_dong: LogHelper.EmObjectLogType.Controller,
-                                        hanh_dong: "OPEN BARRIE",
-                                        mo_ta_them: "LẦN 2 THẤT BẠI",
-                                        specailName: controllerInLane.controlUnitId);
+                                tblDeviceLog.SaveLog(item.ControllerInfo.Id, item.ControllerInfo.Name, "", "",
+                                                     "Mở barrie Lần 2 Thất Bại");
                             }
                         }
-                        else
-                        {
-                            LogHelper.Log(logType: LogHelper.EmLogType.ERROR,
-                                         doi_tuong_tac_dong: LogHelper.EmObjectLogType.Controller,
-                                         hanh_dong: "OPEN BARRIE",
-                                         mo_ta_them: "LẦN 1 THẤT BẠI",
-                                         specailName: controllerInLane.controlUnitId);
-                        }
-
                         if (isOpenSuccess)
                         {
-                            LogHelper.Log(logType: LogHelper.EmLogType.INFOR,
-                                          doi_tuong_tac_dong: LogHelper.EmObjectLogType.Controller,
-                                          hanh_dong: "OPEN BARRIE",
-                                          mo_ta_them: "SUCCESS",
-                                          specailName: controllerInLane.controlUnitId);
+                            tblDeviceLog.SaveLog(item.ControllerInfo.Id, item.ControllerInfo.Name, "", "",
+                                                 "Mở barrie Thành Công");
                         }
                     }
                 }

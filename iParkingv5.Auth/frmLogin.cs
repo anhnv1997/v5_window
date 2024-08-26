@@ -5,6 +5,7 @@ using iParkingv5.ApiManager.KzParkingv5Apis;
 using iParkingv5.Objects;
 using Kztek.Helper;
 using Kztek.Tool;
+using Kztek.Tool.LogDatabases;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +20,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Kztek.Tool.LogDatabases.tblSystemLog;
 using static Kztek.Tools.LogHelper;
 
 namespace iParkingv5.Auth
@@ -201,9 +203,8 @@ namespace iParkingv5.Auth
             }
             catch (Exception ex)
             {
-                Log(EmLogType.ERROR, EmObjectLogType.System,
-                    hanh_dong: "frmMain ", noi_dung_hanh_dong: "Restart socker server",
-                    obj: ex);
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.SOCKET, tblSystemLog.EmSystemActionDetail.UPDATE,
+                                     "", ex);
             }
             finally
             {
@@ -215,8 +216,6 @@ namespace iParkingv5.Auth
         private void StartSocketServer()
         {
             int port = 100;
-            // Get the IP addresses associated with the PC name
-            //IPAddress[] ipAddressList = Dns.GetHostAddresses(Environment.MachineName);
             var LocalPort = port;
             var localEndPoint = new IPEndPoint(IPAddress.Any, LocalPort);
             socket_listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -224,16 +223,12 @@ namespace iParkingv5.Auth
             {
                 socket_listener.Bind(localEndPoint);
                 socket_listener.Listen(10);
-                //isListening = true;
                 ctsSocket = new CancellationTokenSource();
                 Task.Run(() => PollingReceiveSocketMessage(ctsSocket.Token));
             }
             catch (Exception ex)
             {
-                Log(EmLogType.ERROR, EmObjectLogType.System,
-                    hanh_dong: "frmMain", noi_dung_hanh_dong: "Start Socket Server",
-                    //mo_ta_them: ipAddressList,
-                    obj: ex);
+                tblSystemLog.SaveLog(EmSystemAction.SOCKET, EmSystemActionDetail.CREATE, "", ex);
             }
         }
 

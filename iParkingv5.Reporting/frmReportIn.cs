@@ -12,6 +12,7 @@ using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.EventDatas;
 using iParkingv5_window.Forms;
 using Kztek.Helper;
+using Kztek.Tool.LogDatabases;
 using Kztek.Tools;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static iParkingv5.Objects.Enums.ParkingImageType;
+using static Kztek.Tool.LogDatabases.tblSystemLog;
 
 namespace iParkingv5.Reporting
 {
@@ -205,7 +207,7 @@ namespace iParkingv5.Reporting
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, mo_ta_them: ex);
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "Get Event In Report", ex);
             }
             finally
             {
@@ -250,7 +252,7 @@ namespace iParkingv5.Reporting
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "Display Selected Event In", ex);
             }
 
         }
@@ -368,7 +370,7 @@ namespace iParkingv5.Reporting
                         }
                         catch (Exception ex)
                         {
-                            LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
+                            tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "Create UI", ex);
                         }
                     }
                 }
@@ -450,7 +452,7 @@ namespace iParkingv5.Reporting
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, mo_ta_them: ex);
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "Create UI", ex);
             }
         }
         private void DisableFastLoading()
@@ -473,7 +475,7 @@ namespace iParkingv5.Reporting
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "Enable Fast Loading", ex);
             }
         }
         private void DisplayNavigation()
@@ -560,7 +562,8 @@ namespace iParkingv5.Reporting
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, 
+                                     "Display Event In Report", ex);
             }
         }
         private void LoadVehicleTypeData()

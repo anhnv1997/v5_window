@@ -1,4 +1,5 @@
-﻿using Kztek.Tools;
+﻿using Kztek.Tool.LogDatabases;
+using Kztek.Tools;
 using Minio;
 using System;
 using System.Collections.Generic;
@@ -84,8 +85,7 @@ namespace Kztek.Helper
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, mo_ta_them: ex);
-                //MessageBox.Show("Lưu hình ảnh lỗi", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CREATE, "", ex);
                 return string.Empty;
             }
         }
@@ -121,7 +121,7 @@ namespace Kztek.Helper
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, mo_ta_them: ex);
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CREATE, "", ex);
                 //MessageBox.Show("Lưu hình ảnh lỗi", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }

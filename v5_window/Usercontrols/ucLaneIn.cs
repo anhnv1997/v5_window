@@ -1,5 +1,4 @@
-﻿using DocumentFormat.OpenXml.VariantTypes;
-using IPaking.Ultility;
+﻿using IPaking.Ultility;
 using iPakrkingv5.Controls;
 using iPakrkingv5.Controls.Controls.Labels;
 using iParkingv5.ApiManager.KzParkingv5Apis.services;
@@ -18,18 +17,18 @@ using iParkingv5.Printer.OfficeHaus;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv5_window.Forms.SystemForms;
 using iParkingv5_window.Forms.ThirdPartyForms.OfficeHausForms;
-using iParkingv5_window.Usercontrols.ShortcutConfiguration;
 using iParkingv6.Objects.Datas;
 using Kztek.Helper;
 using Kztek.Tool;
+using Kztek.Tool.LogDatabases;
 using Kztek.Tools;
 using System.Data;
 using System.Windows.Forms;
 using static iParkingv5.Objects.Configs.LaneDirectionConfig;
-using static iParkingv5.Objects.Enums.LaneDirectionType;
 using static iParkingv5.Objects.Enums.ParkingImageType;
 using static iParkingv5.Objects.Enums.PrintHelpers;
 using static iParkingv5.Objects.Enums.VehicleType;
+using static Kztek.Tool.LogDatabases.tblSystemLog;
 
 namespace iParkingv5_window.Usercontrols
 {
@@ -65,6 +64,8 @@ namespace iParkingv5_window.Usercontrols
             this.laneDirectionConfig = laneDirectionConfig;
 
             this.DoubleBuffered = true;
+
+            tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "Init Lane");
         }
 
         /// <summary> 
@@ -77,6 +78,8 @@ namespace iParkingv5_window.Usercontrols
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
+            tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "Dispose Lane");
+
             foreach (var cam in this.camBienSoOTODuPhongs)
             {
                 cam?.Stop();
@@ -99,6 +102,8 @@ namespace iParkingv5_window.Usercontrols
         public async void OnKeyPress(Keys keys)
         {
             await semaphoreSlimOnKeyPress.WaitAsync();
+            tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, $"KeyPress {keys.ToString()}");
+
             try
             {
                 if (keys == Keys.F9)
@@ -111,7 +116,7 @@ namespace iParkingv5_window.Usercontrols
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, $"KeyPress {keys.ToString()}", ex);
             }
             finally
             {
@@ -133,18 +138,22 @@ namespace iParkingv5_window.Usercontrols
             {
                 if (e is CardEventArgs cardEvent)
                 {
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS,
+                                         $"Get New Card Event", cardEvent);
                     string controlUnitId = cardEvent.DeviceId;
                     int readerIndex = cardEvent.ReaderIndex;
                     await ExcecuteCardEvent(cardEvent);
                 }
                 else if (e is InputEventArgs inputEvent)
                 {
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS,
+                                         $"Get New Input Event", inputEvent);
                     await ExcecuteInputEvent(inputEvent, lblResult);
                 }
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.Form, "OnNewEvent", "", e, ex);
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "OnNewEvent", ex);
             }
             finally
             {
@@ -160,6 +169,8 @@ namespace iParkingv5_window.Usercontrols
         /// <returns></returns>
         public override async Task ExcecuteLoopEvent(InputEventArgs ie)
         {
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
+                                 $"{this.lane.name}.Loop.{ie.InputIndex} - START");
             ClearView();
 
             EventInData? eventIn = null;
@@ -170,71 +181,112 @@ namespace iParkingv5_window.Usercontrols
             bool isAlarm = false;
             var lprResult = new LoopLprResult();
 
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
+                                 $"{this.lane.name}.Loop.{ie.InputIndex} - START DETECT PLATE");
             lblResult.UpdateResultMessage("Nhận dạng biển số", ProcessColor);
             overviewImg = ucOverView?.GetFullCurrentImage();
             lprResult = await LoopLprDetection();
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
+                                 $"{this.lane.name}.Loop.{ie.InputIndex} - END DETECT PLATE");
 
             //Hiển thị hình ảnh
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
+                                 $"{this.lane.name}.Loop.{ie.InputIndex} - DISPLAY EVENT IMAGE");
             BaseLane.ShowImage(picVehicleImage, lprResult.VehicleImage);
             BaseLane.ShowImage(picOverviewImage, overviewImg);
             DisplayDetectedPlate(lprResult.PlateNumber, lprResult.LprImage);
 
             if (lprResult.Vehicle == null)
             {
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
+                                $"{this.lane.name}.Loop.{ie.InputIndex} - VEHICLE NULL - END");
                 lblResult.UpdateResultMessage("Phương tiện chưa được đăng ký trong hệ thống", ErrorColor);
                 return;
             }
 
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
+                                $"{this.lane.name}.Loop.{ie.InputIndex} - START CHECK IN");
             lblResult.UpdateResultMessage("Đang check in..." + lprResult.PlateNumber, ProcessColor);
             string customerId = lprResult.Vehicle.CustomerId;
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
+                                $"{this.lane.name}.Loop.{ie.InputIndex} - GET CUSTOMER INFO");
             Customer? customer = string.IsNullOrEmpty(customerId) ?
                                            null : customer = (await AppData.ApiServer.parkingDataService.GetCustomerByIdAsync(customerId))?.Item1;
 
             List<EmParkingImageType> validImageTypes = BaseLane.GetValidImageType(overviewImg, lprResult.VehicleImage, lprResult.LprImage);
+
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
+                                $"{this.lane.name}.Loop.{ie.InputIndex} - SEND CHECK IN NORMAL REQUEST");
             var eventInResponse = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, lprResult.PlateNumber, null, validImageTypes,
                                                                                                   false, lprResult.Vehicle);
 
             var checkInOutResponse = CheckEventInReponse(eventInResponse, customer, lprResult.Vehicle.vehicleType, lprResult.PlateNumber, false);
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
+                                 $"{this.lane.name}.Loop.{ie.InputIndex} - CHECK EVENT IN NORMAL RESPONSE", checkInOutResponse);
+
             if (!checkInOutResponse.IsValidEvent)
             {
                 if (!checkInOutResponse.IsContinueExcecute)
                 {
                     return;
                 }
-
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
+                                 $"{this.lane.name}.Loop.{ie.InputIndex} - SHOW CONFIRM REQUEST", checkInOutResponse.ErrorMessage);
                 bool isConfirm = new frmConfirm(checkInOutResponse.ErrorMessage).ShowDialog() == DialogResult.OK;
                 if (!isConfirm)
                 {
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
+                                 $"{this.lane.name}.Loop.{ie.InputIndex} - NOT CONFIRM, END PROCES");
                     return;
                 }
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
+                                $"{this.lane.name}.Loop.{ie.InputIndex} - SEND CHECK IN FORCE REQUEST");
                 eventInResponse = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, lprResult.PlateNumber, null, validImageTypes,
                                                                                                   true, lprResult.Vehicle);
                 checkInOutResponse = CheckEventInReponse(eventInResponse, customer, lprResult.Vehicle.vehicleType, lprResult.PlateNumber, true);
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
+                                  $"{this.lane.name}.Loop.{ie.InputIndex} - CHECK EVENT OUT FORCE RESPONSE", checkInOutResponse);
                 //Sau khi force vẫn không thành công, kết thúc quy trình
                 if (!checkInOutResponse.IsValidEvent)
+                {
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
+                                 $"{this.lane.name}.Loop.{ie.InputIndex} - INVALID EVENT, END PROCESS");
                     return;
+                }
             }
 
             eventIn = checkInOutResponse.eventIn!;
             if (eventIn.OpenBarrier)
             {
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
+                       $"{this.lane.name}.Loop.{ie.InputIndex} - OPEN BARRIE");
                 ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
                                                       where _controllerInLane.controlUnitId == ie.DeviceId
                                                       select _controllerInLane).FirstOrDefault();
-                BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
+                _ = BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
             }
             else
             {
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
+                       $"{this.lane.name}.Loop.{ie.InputIndex} - SHOW CONFIRM OPEN BARRIE REQUEST");
                 bool isOpenBarrie = new frmConfirm("Bạn có muốn mở Barrie không?").ShowDialog() == DialogResult.OK;
                 if (isOpenBarrie)
                 {
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
+                                         $"{this.lane.name}.Loop.{ie.InputIndex} - CONFIRM OPEN BARRIE");
                     ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
                                                           where _controllerInLane.controlUnitId == ie.DeviceId
                                                           select _controllerInLane).FirstOrDefault();
-                    BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
+                    _ = BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
+                }
+                else
+                {
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
+                       $"{this.lane.name}.Loop.{ie.InputIndex} - NOT CONFIRM OPEN BARRIE");
                 }
             }
-
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
+                                 $"{this.lane.name}.Loop.{ie.InputIndex} - Display Valid Event");
             await ExcecuteValidEvent(null, null, lprResult.Vehicle.vehicleType, lprResult.PlateNumber, eventIn.DateTimeIn ?? ie.EventTime, overviewImg,
                                      lprResult.VehicleImage, lprResult.LprImage, eventIn, isAlarm);
         }
@@ -246,11 +298,15 @@ namespace iParkingv5_window.Usercontrols
         /// <returns></returns>
         public override async Task ExcecuteExitEvent(InputEventArgs ie)
         {
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.EXIT_EVENT,
+                                $"{this.lane.name}.Exit.{ie.InputIndex}");
             string plateNumber = lastEvent?.PlateNumber ?? "";
-            var imageData = GetAllCameraImage();
             bool isOverAllowTime = ((DateTime.Now - lastEvent?.DateTimeIn)?.TotalSeconds ?? -1) >= StaticPool.appOption.AllowBarrieDelayOpenTime;
             if (lastEvent == null || isOverAllowTime)
             {
+                var imageData = GetAllCameraImage();
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.EXIT_EVENT,
+                                $"{this.lane.name}.Exit.{ie.InputIndex} - SAVE EXIT ABNOMAL EVENT");
                 await SaveManualAbnormalEvent(plateNumber, lastEvent?.Identity, lastEvent?.IdentityGroup, imageData, true, abnormalCode: AbnormalCode.OpenBarrierByButton);
             }
         }
@@ -262,10 +318,14 @@ namespace iParkingv5_window.Usercontrols
         /// <returns></returns>
         public async Task ExcecuteCardEvent(CardEventArgs ce)
         {
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                            $"{this.lane.name}.Card.{ce.PreferCard} - START");
             if (!this.CheckNewCardEvent(this.lane, ce, out ControllerInLane? controllerInLane, out int thoiGianCho))
             {
                 if (thoiGianCho > 0)
                 {
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                              $"{this.lane.name}.Card.{ce.PreferCard} - In Waiting Time: {thoiGianCho}s");
                     lblResult.UpdateResultMessage($"Đang trong thời gian chờ, vui lòng quẹt lại sau {thoiGianCho}s", ProcessColor);
                 }
                 return;
@@ -275,14 +335,19 @@ namespace iParkingv5_window.Usercontrols
             lblResult.UpdateResultMessage("Đang kiểm tra thông tin sự kiện quẹt thẻ..." + ce.PreferCard, ProcessColor);
 
             #region Kiểm tra thông tin định danh
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                              $"{this.lane.name}.Card.{ce.PreferCard} - Check Identity");
             var identityResponse = await IsValidIdentity(ce.PreferCard);
 
             if (!identityResponse.Item1)
             {
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                              $"{this.lane.name}.Card.{ce.PreferCard} - Invalid Identity");
                 return;
             }
             Identity? identity = identityResponse.Item2!;
-
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                        $"{this.lane.name}.Card.{ce.PreferCard} - Check Identity Detail & Identity Group");
             var identityTask = AppData.ApiServer.parkingDataService.GetIdentityByIdAsync(identity.Id);
             var identityGroupTask = AppData.ApiServer.parkingDataService.GetIdentityGroupByIdAsync(identity.IdentityGroupId.ToString());
             await Task.WhenAll(identityTask, identityGroupTask);
@@ -291,6 +356,8 @@ namespace iParkingv5_window.Usercontrols
             identity = identityTask.Result.Item1;
             if (identity == null || string.IsNullOrEmpty(identity.Id) || identity.Id == Guid.Empty.ToString())
             {
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                     $"{this.lane.name}.Card.{ce.PreferCard} - Invalid Identity");
                 lblResult.UpdateResultMessage("Không đọc được thông tin định danh, vui lòng thử lại", ErrorColor);
                 return;
             }
@@ -300,22 +367,32 @@ namespace iParkingv5_window.Usercontrols
             IdentityGroup? identityGroup = identityGroupTask.Result.Item1;
             if (identityGroup == null || identityGroup.Id == Guid.Empty)
             {
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                     $"{this.lane.name}.Card.{ce.PreferCard} - Invalid IdentityGroup");
                 lblResult.UpdateResultMessage("Không đọc được thông tin nhóm định danh, vui lòng thử lại", ErrorColor);
                 return;
             }
             #endregion End kiểm tra thông tin nhóm định danh
 
             #region Kiểm tra thông tin loại phương tiện
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                     $"{this.lane.name}.Card.{ce.PreferCard} - Check Vehicle Type");
             VehicleBaseType vehicleBaseType = identityGroup.VehicleType;
             if (vehicleBaseType == VehicleBaseType.Unknown)
             {
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                     $"{this.lane.name}.Card.{ce.PreferCard} - Invalid Vehicle Type");
                 lblResult.UpdateResultMessage("Thông tin loại phương tiện không hợp lệ, vui lòng kiểm tra thông tin định danh", ErrorColor);
                 return;
             }
             #endregion End kiểm tra thông tin loại phương tiện
-
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                 $"{this.lane.name}.Card.{ce.PreferCard} - Get Event Image");
             Image? overviewImg = ucOverView?.GetFullCurrentImage();
             Image? vehicleImg = null;
+
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                 $"{this.lane.name}.Card.{ce.PreferCard} - Get Plate");
             Image? lprImage = GetPlate(ce, ref overviewImg, ref vehicleImg, vehicleBaseType, lblResult, txtPlate, picOverviewImage, picVehicleImage, picLprImage);
 
             //Đọc thông tin loại phương tiện
@@ -325,12 +402,16 @@ namespace iParkingv5_window.Usercontrols
                 bool isDailyCard = identityGroup.Type == IdentityGroupType.Daily;
                 if (isDailyCard)
                 {
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                 $"{this.lane.name}.Card.{ce.PreferCard} - Start Non Month Card Process");
                     await ExcecuteNonMonthCardEventIn(identity, identityGroup, vehicleBaseType, ce.PlateNumber,
                                                       ce, controllerInLane,
                                                       overviewImg, vehicleImg, lprImage);
                 }
                 else
                 {
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                 $"{this.lane.name}.Card.{ce.PreferCard} - Start Month Card Process");
                     await ExcecuteMonthCardEventIn(identity, identityGroup, vehicleBaseType, ce.PlateNumber,
                                                   ce, controllerInLane,
                                                   overviewImg, vehicleImg, lprImage);
@@ -339,7 +420,7 @@ namespace iParkingv5_window.Usercontrols
             catch (Exception ex)
             {
                 lblResult.UpdateResultMessage("Gặp lỗi trong quá trình xử lý, vui lòng thử lại", ErrorColor);
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "ExcecuteCardEvent", ex);
             }
         }
         #endregion End EVENT
@@ -353,15 +434,22 @@ namespace iParkingv5_window.Usercontrols
             bool isAlarm = false;
             string errorMessage = string.Empty;
             List<EmParkingImageType> validImageTypes = BaseLane.GetValidImageType(overviewImg, vehicleImg, lprImage);
-
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                               $"{this.lane.name}.Card.{ce.PreferCard} - Check Valid Register Vehicle");
             if (identity.Vehicles == null)
             {
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                              $"{this.lane.name}.Card.{ce.PreferCard} - Invalid Register Vehicle, End Process");
+
                 lblResult.UpdateResultMessage("Thẻ tháng chưa đăng ký phương tiện", ErrorColor);
                 return;
             }
 
             if (identity.Vehicles.Count == 0)
             {
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                               $"{this.lane.name}.Card.{ce.PreferCard} - Invalid Register Vehicle, End Process");
+
                 lblResult.UpdateResultMessage("Thẻ tháng chưa đăng ký phương tiện", ErrorColor);
                 return;
             }
@@ -369,10 +457,17 @@ namespace iParkingv5_window.Usercontrols
             EventInData? eventIn = null;
             if (string.IsNullOrEmpty(plateNumber) && identityGroup.PlateNumberValidation != (int)EmPlateCompareRule.UnCheck)
             {
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                    $"{this.lane.name}.Card.{ce.PreferCard} - Empty Plate && Register Vehicle Count = {identity.Vehicles.Count}",
+                                    identity.Vehicles);
+
                 isAlarm = true;
                 bool isConfirm = false;
                 if (identity.Vehicles.Count == 1)
                 {
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                         $"{this.lane.name}.Card.{ce.PreferCard} - Show Confirm Plate Request");
+
                     string message = "Không nhận diện được biển số, bạn có muốn cho xe vào bãi?";
                     frmConfirmIn frmConfirmIn = new frmConfirmIn(message, identity, identityGroup, identity.Vehicles[0].customer,
                                                                  identity.Vehicles[0], plateNumber, vehicleImg, overviewImg);
@@ -385,6 +480,9 @@ namespace iParkingv5_window.Usercontrols
                 }
                 else
                 {
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                         $"{this.lane.name}.Card.{ce.PreferCard} - Show Select Plate Request");
+
                     var frmSelectVehicle = new frmSelectVehicle(identity.Vehicles);
                     isConfirm = frmSelectVehicle.ShowDialog() == DialogResult.OK;
                     if (isConfirm)
@@ -395,13 +493,23 @@ namespace iParkingv5_window.Usercontrols
                 }
                 if (!isConfirm)
                 {
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                         $"{this.lane.name}.Card.{ce.PreferCard} - Not Confirm, End Process");
+
                     ClearView();
                     return;
                 }
             }
 
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                         $"{this.lane.name}.Card.{ce.PreferCard} - Send Check In Normal Request");
+
             var eventInResponse = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plateNumber, identity, validImageTypes, false, null, "");
+
             var checkInOutResponse = CheckEventInReponse(eventInResponse, null, vehicleType, plateNumber, false);
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                         $"{this.lane.name}.Card.{ce.PreferCard} - Check Event In Response", checkInOutResponse);
+
             if (!checkInOutResponse.IsValidEvent)
             {
                 if (!checkInOutResponse.IsContinueExcecute)
@@ -412,6 +520,9 @@ namespace iParkingv5_window.Usercontrols
 
                 if (identity.Vehicles.Count == 1)
                 {
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                         $"{this.lane.name}.Card.{ce.PreferCard} - Show Confirm Plate Request");
+
                     string message = "Biển số không khớp với biển số đăng ký" + "\r\nBạn có muốn cho xe vào bãi?";
                     frmConfirmIn frmConfirmIn = new frmConfirmIn(message, identity, identityGroup, identity.Vehicles[0].customer, identity.Vehicles[0],
                                                                  plateNumber, vehicleImg, overviewImg);
@@ -420,6 +531,9 @@ namespace iParkingv5_window.Usercontrols
                 }
                 else
                 {
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                        $"{this.lane.name}.Card.{ce.PreferCard} - Show Select Plate Request");
+
                     var frmSelectVehicle = new frmSelectVehicle(identity.Vehicles);
                     isConfirm = frmSelectVehicle.ShowDialog() == DialogResult.OK;
                     if (isConfirm)
@@ -431,30 +545,56 @@ namespace iParkingv5_window.Usercontrols
 
                 if (!isConfirm)
                 {
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                         $"{this.lane.name}.Card.{ce.PreferCard} - Not Confirm, End Process");
                     return;
                 }
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                       $"{this.lane.name}.Card.{ce.PreferCard} - Send Check In Force Request");
+
                 eventInResponse = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plateNumber, identity, validImageTypes, true, null, "");
                 checkInOutResponse = CheckEventInReponse(eventInResponse, null, vehicleType, plateNumber, true);
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                         $"{this.lane.name}.Card.{ce.PreferCard} - Check Event Out Force Response", checkInOutResponse);
+
                 if (!checkInOutResponse.IsValidEvent)
+                {
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                       $"{this.lane.name}.Card.{ce.PreferCard} - Invalid Event, End Process");
+
                     return;
+                }
             }
 
             eventIn = checkInOutResponse.eventIn!;
             if (eventIn.OpenBarrier)
             {
-                BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                       $"{this.lane.name}.Card.{ce.PreferCard} - Open Barrie");
+
+                _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
             }
             else
             {
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                        $"{this.lane.name}.Card.{ce.PreferCard} - Show Confirm Open Barrie Request");
 
                 string message = "Bạn có muốn mở Barrie?";
                 frmConfirm frmConfirm = new frmConfirm(message);
                 bool isOpenBarrie = frmConfirm.ShowDialog() == DialogResult.OK;
                 if (isOpenBarrie)
                 {
-                    BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
+                    _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
+                }
+                else
+                {
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                            $"{this.lane.name}.Card.{ce.PreferCard} - Not Confirm Open Barrie");
                 }
             }
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                            $"{this.lane.name}.Card.{ce.PreferCard} - Display Valid Event");
+
             await ExcecuteValidEvent(identity, identityGroup, vehicleType, ce.PlateNumber, ce.EventTime,
                                       overviewImg, vehicleImg, lprImage, eventIn, isAlarm);
         }
@@ -473,35 +613,63 @@ namespace iParkingv5_window.Usercontrols
                 {
                     isAlarm = true;
                     string message = "Không nhận diện được biển số, bạn có muốn cho xe vào bãi?";
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                 $"{this.lane.name}.Card.{ce.PreferCard} - Empty Plate - Show Confirm Request");
                     frmConfirm frmConfirm = new frmConfirm(message);
                     bool isConfirm = frmConfirm.ShowDialog() == DialogResult.OK;
                     frmConfirm.Dispose();
                     if (!isConfirm)
                     {
+                        tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                 $"{this.lane.name}.Card.{ce.PreferCard} - Not Confirm");
+
                         ClearView();
                         return;
                     }
                 }
             }
-
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                 $"{this.lane.name}.Card.{ce.PreferCard} - Send Check In Normal Request");
             var eventInResponse = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plateNumber, identity, validImageTypes, false, null, "");
             var checkInOutResponse = CheckEventInReponse(eventInResponse, null, vehicleType, plateNumber, false);
+
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                $"{this.lane.name}.Card.{ce.PreferCard} - Check Check In Normal Response", checkInOutResponse);
+
             if (!checkInOutResponse.IsValidEvent)
             {
                 isAlarm = true;
                 if (checkInOutResponse.IsContinueExcecute)
                 {
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                               $"{this.lane.name}.Card.{ce.PreferCard} - Show Confirm Request", checkInOutResponse.ErrorMessage);
+
                     frmConfirm frmConfirm = new frmConfirm(checkInOutResponse.ErrorMessage);
                     bool isConfirm = frmConfirm.ShowDialog() == DialogResult.OK;
                     frmConfirm.Dispose();
                     if (!isConfirm)
                     {
+                        tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                               $"{this.lane.name}.Card.{ce.PreferCard} - Not Confirm, End Process");
+
                         return;
                     }
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                               $"{this.lane.name}.Card.{ce.PreferCard} - Confirm, Send Check In Force Request");
+
                     eventInResponse = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plateNumber, identity, validImageTypes, true, null, "");
+
                     checkInOutResponse = CheckEventInReponse(eventInResponse, null, vehicleType, plateNumber, true);
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                $"{this.lane.name}.Card.{ce.PreferCard} - Check Event In Force Response", checkInOutResponse);
+
                     if (!checkInOutResponse.IsValidEvent)
+                    {
+                        tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                             $"{this.lane.name}.Card.{ce.PreferCard} - Invalid Event, End Process", checkInOutResponse);
+
                         return;
+                    }
                 }
                 else
                 {
@@ -512,15 +680,29 @@ namespace iParkingv5_window.Usercontrols
             eventIn = checkInOutResponse.eventIn!;
             if (eventIn.OpenBarrier)
             {
-                BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                              $"{this.lane.name}.Card.{ce.PreferCard} - Open Barrie");
+
+                _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
             }
             else
             {
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                               $"{this.lane.name}.Card.{ce.PreferCard} - Show Confirm Open Barrie Request");
+
                 frmConfirm frmConfirm = new frmConfirm("Bạn có muốn mở Barrie?");
                 bool isOpenBarrie = frmConfirm.ShowDialog() == DialogResult.OK;
                 if (isOpenBarrie)
                 {
-                    BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                               $"{this.lane.name}.Card.{ce.PreferCard} - Confirm Open Barrie");
+
+                    _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
+                }
+                else
+                {
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                              $"{this.lane.name}.Card.{ce.PreferCard} - Not Confirm Open Barrie");
                 }
             }
             await ExcecuteValidEvent(identity, identityGroup, vehicleType, ce.PlateNumber, ce.EventTime,
@@ -556,12 +738,18 @@ namespace iParkingv5_window.Usercontrols
                     customer = customerResponse.Item1;
                 }
             }
-
+            tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
+                                 $"{this.lane.name}.EventIn.{eventIn.Id} - Display Event In Info");
             DisplayEventInfo(eventTime, detectPlate, identity, identityGroup, vehicleType, customer, registeredVehicle, null);
+
+            tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
+                                 $"{this.lane.name}.EventIn.{eventIn.Id} - Display Led");
             BaseLane.DisplayLed(detectPlate, eventTime, identity, identityGroup, "Xin mời qua", this.lane.Id, "0");
 
             lastEvent = eventIn;
 
+            tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
+                                 $"{this.lane.name}.EventIn.{eventIn.Id} - Save Image");
             var task1 = overviewImg.ImageToByteArrayAsync();
             var task2 = vehicleImg.ImageToByteArrayAsync();
             var task3 = lprImage.ImageToByteArrayAsync();
@@ -574,16 +762,18 @@ namespace iParkingv5_window.Usercontrols
                     { EmParkingImageType.Plate, new List<List<byte>>(){ task3.Result } }
                 };
 
-            BaseLane.SaveImage(eventIn.images, imageDatas);
+            _ = BaseLane.SaveImage(eventIn.images, imageDatas);
 
             if (isAlarm)
             {
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
+                              $"{this.lane.name}.EventIn.{eventIn.Id} - Save Alarm");
                 string alarmStr = "Cảnh báo biển số";
                 var response = await AppData.ApiServer.parkingProcessService.CreateAlarmAsync(identity?.Code, this.lane.Id, detectPlate, AbnormalCode.InvalidPlateNumber,
                                                             imageDatas, true, identityGroup?.Id.ToString(), "", "", alarmStr);
                 if (response != null)
                 {
-                    BaseLane.SaveImage(response.images, imageDatas);
+                    _ = BaseLane.SaveImage(response.images, imageDatas);
                 }
             }
 
@@ -609,6 +799,8 @@ namespace iParkingv5_window.Usercontrols
         #region THIRD - PARTY - OK
         private async void btnRegister_Click(object? sender, EventArgs e)
         {
+            tblUserLog.SaveLog(this.lane.name, $"User Click To Open Register Screen");
+
             var frmAddVisitor = new frmAddVisitor();
             if (frmAddVisitor.ShowDialog() == DialogResult.OK)
             {
@@ -626,8 +818,29 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
         }
+        public async void printQR(CardEventArgs ce, HausQR qrData)
+        {
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.ThirtParty, tblSystemLog.EmSystemActionDetail.PROCESS,
+                                $"{this.lane.name}.Card.{ce.PreferCard} - Print QR Request");
+
+            await this.OnNewEvent(ce);
+            if (lastEvent == null)
+            {
+                lblResult.UpdateResultMessage("Lưu thông tin không thành công, vui lòng thử lại!", ErrorColor);
+            }
+            else
+            {
+                var printer = new OfficeHausPrinter();
+                string baseContent = File.ReadAllText(PathManagement.hausQRPath());
+                lblResult.UpdateResultMessage("Lấy thông tin thành công.", SuccessColor);
+                printer.printQR(baseContent, qrData.QrCode ?? "");
+            }
+        }
         private async void btnPrintQR_Click(object? sender, EventArgs e)
         {
+            tblUserLog.SaveLog(this.lane.name, $"User Click To Print QR");
+
+            lastEvent = null;
             lblResult.UpdateResultMessage("Đang lấy thông tin QR...", ProcessColor);
             if (lastHausVistor == null)
             {
@@ -649,11 +862,15 @@ namespace iParkingv5_window.Usercontrols
                         ce.DeviceId = item.controlUnitId;
                         ce.ReaderIndex = item.readers[0];
                         ce.PreferCard = lastHausVistor.IdentityCode;
-                        this.OnNewEvent(ce);
+                        await this.OnNewEvent(ce);
                         break;
                     }
                 }
-
+                if (lastEvent == null)
+                {
+                    lblResult.UpdateResultMessage("Lưu thông tin không thành công, vui lòng thử lại!", ErrorColor);
+                    return;
+                }
                 var printer = new OfficeHausPrinter();
                 string baseContent = File.ReadAllText(PathManagement.hausQRPath());
                 lblResult.UpdateResultMessage("Lấy thông tin thành công.", SuccessColor);
@@ -671,6 +888,10 @@ namespace iParkingv5_window.Usercontrols
         {
             try
             {
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
+                                     $"{this.lane.name}.EventIn.{eventId}  - User Click To UcTopEvent");
+                tblUserLog.SaveLog(this.lane.name, $"User Click To UC {eventId}");
+
                 StopTimeRefreshUI();
                 if (string.IsNullOrEmpty(eventId))
                 {
@@ -680,14 +901,23 @@ namespace iParkingv5_window.Usercontrols
                 DateTime now = DateTime.Now;
                 DateTime startTime = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
                 DateTime endTime = new DateTime(now.Year, now.Month, now.Day, 23, 59, 59);
+
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
+                                     $"{this.lane.name}.EventIn.{eventId}  - Get Report By EventInId");
                 var report = await AppData.ApiServer.reportingService.GetEventIns("", startTime, endTime, "", "", "", "", true, 0, 1, eventId);
                 if (report == null || report.data.Count == 0)
                 {
+                    tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
+                                  $"{this.lane.name}.EventIn.{eventId}  - Report InValid, End Process");
                     ClearView();
                     return;
                 }
                 var eventInfo = report.data[0];
                 lastEvent = new EventInData(eventInfo);
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
+                                   $"{this.lane.name}.EventIn.{eventId}  - Event Info", eventInfo);
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
+                                     $"{this.lane.name}.EventIn.{eventId}  - Get EventIn Image");
 
                 if (eventInfo.images != null)
                 {
@@ -708,6 +938,8 @@ namespace iParkingv5_window.Usercontrols
                     picVehicleImage.ShowImageUrlAsync(vehicleInTask.Result);
                     picOverviewImage.ShowImageUrlAsync(overviewInTask.Result);
                 }
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
+                                  $"{this.lane.name}.EventIn.{eventId}  - Display Event Info");
                 DisplayEventInfo(eventInfo.DateTimeIn ?? DateTime.Now, eventInfo.PlateNumber, eventInfo.Identity, eventInfo.IdentityGroup,
                                eventInfo.IdentityGroup.VehicleType, eventInfo.customer, eventInfo.vehicle, null);
                 this.Invoke(new Action(() =>
@@ -717,7 +949,7 @@ namespace iParkingv5_window.Usercontrols
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "UcTopEvent_onChoosen", ex);
             }
             finally
             {
@@ -732,6 +964,8 @@ namespace iParkingv5_window.Usercontrols
         /// <param name="e"></param>
         private void picSetting_Click(object? sender, EventArgs e)
         {
+            tblUserLog.SaveLog(this.lane.name, $"User Click To Open Setting Screen");
+
             var frmConfirmPassword = new frmConfirmPassword();
             if (frmConfirmPassword.ShowDialog() != DialogResult.OK)
             {
@@ -768,6 +1002,8 @@ namespace iParkingv5_window.Usercontrols
         /// </summary>
         private async void BtnWriteIn_Click(object? sender, EventArgs e)
         {
+            tblUserLog.SaveLog(this.lane.name, $"User Click To Open WriteIn Screen");
+
             lblResult.UpdateResultMessage("Ra Lệnh Ghi Vé Vào", ProcessColor);
             frmSelectCard frmSelectCard = new frmSelectCard("Danh sách thẻ");
 
@@ -809,6 +1045,8 @@ namespace iParkingv5_window.Usercontrols
         /// </summary>
         private void BtnReTakePhoto_Click(object? sender, EventArgs e)
         {
+            tblUserLog.SaveLog(this.lane.name, $"User Click To Btn Take Photo");
+
             lblResult.UpdateResultMessage("Ra lệnh chụp lại", ProcessColor);
             if (lane.controlUnits == null)
             {
@@ -837,6 +1075,8 @@ namespace iParkingv5_window.Usercontrols
         /// </summary>
         private async void BtnOpenBarrie_Click(object? sender, EventArgs e)
         {
+            tblUserLog.SaveLog(this.lane.name, $"User Click To Btn Open Barrie");
+
             await OpenAllBarrie();
             bool isOverAllowTime = ((DateTime.Now - lastEvent?.DateTimeIn)?.TotalSeconds ?? -1) >= StaticPool.appOption.AllowBarrieDelayOpenTime;
             if (lastEvent == null || isOverAllowTime)
@@ -1620,7 +1860,7 @@ namespace iParkingv5_window.Usercontrols
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.Form, "DisplayUIConfig", "splitContainerMain-SplitterDistance", ex);
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "LoadSavedUIConfig", ex);
             }
 
             try
@@ -1629,7 +1869,7 @@ namespace iParkingv5_window.Usercontrols
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.Form, "DisplayUIConfig", "splitterEventInfoWithCamera-SplitPosition", ex);
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "LoadSavedUIConfig", ex);
             }
 
             try
@@ -1638,7 +1878,7 @@ namespace iParkingv5_window.Usercontrols
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.Form, "DisplayUIConfig", "splitterEventInfoWithCamera-SplitPosition", ex);
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "LoadSavedUIConfig", ex);
             }
 
             try
@@ -1650,7 +1890,7 @@ namespace iParkingv5_window.Usercontrols
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.Form, "DisplayUIConfig", "splitterEventInfoWithCamera-SplitPosition", ex);
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "LoadSavedUIConfig", ex);
             }
 
             try
@@ -1659,7 +1899,7 @@ namespace iParkingv5_window.Usercontrols
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.Form, "DisplayUIConfig", "splitContainerEventContent-SplitterDistance", ex);
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "LoadSavedUIConfig", ex);
             }
 
             try
@@ -1668,7 +1908,7 @@ namespace iParkingv5_window.Usercontrols
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.Form, "DisplayUIConfig", "splitterCamera-SplitPosition", ex);
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "LoadSavedUIConfig", ex);
             }
 
             AllowDesignRealtime(false);

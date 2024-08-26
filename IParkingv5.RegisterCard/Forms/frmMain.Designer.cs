@@ -54,7 +54,6 @@
             cbInputFormat = new ComboBox();
             label9 = new Label();
             lsbShow = new ListBox();
-            button1 = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             groupBox2.SuspendLayout();
@@ -147,7 +146,6 @@
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(button1);
             groupBox1.Controls.Add(numericUpDown1);
             groupBox1.Controls.Add(label7);
             groupBox1.Controls.Add(label6);
@@ -344,16 +342,6 @@
             lsbShow.Size = new Size(1064, 151);
             lsbShow.TabIndex = 2;
             // 
-            // button1
-            // 
-            button1.Location = new Point(20, 213);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 6;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
-            // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -403,6 +391,5 @@
         private Label label9;
         private ComboBox cbOption;
         private Label label11;
-        private Button button1;
     }
 }

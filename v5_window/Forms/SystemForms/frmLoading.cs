@@ -6,6 +6,7 @@ using iParkingv5.Objects.Datas.parking_service;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv6.Objects.Datas;
 using Kztek.Helper;
+using Kztek.Tool.LogDatabases;
 using Kztek.Tool.NetworkTools;
 using Kztek.Tools;
 using Minio;
@@ -205,7 +206,8 @@ namespace iParkingv5_window.Forms.SystemForms
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, 
+                                     tblSystemLog.EmSystemActionDetail.PROCESS, "Check Minio Connection",ex);
                 timer1.Enabled = false;
                 return false;
             }

@@ -4,6 +4,7 @@ using iParkingv5.Auth;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
 using Kztek.Tool;
+using Kztek.Tool.LogDatabases;
 using Kztek.Tools;
 using System.Diagnostics;
 
@@ -25,7 +26,7 @@ namespace IParkingv5.RegisterCard
                 const string appName = "IP_DA_V3_WD";
                 PathManagement.baseBath = LogHelper.SaveLogFolder = Application.StartupPath;
                 LogHelper.CreateConnection();
-                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Khởi chạy ứng dụng");
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "START");
                 string appCode = "IP_DA_V3_WD";
                 using (Mutex mutex = new Mutex(true, appName, out bool ownmutex))
                 {
@@ -77,12 +78,12 @@ namespace IParkingv5.RegisterCard
                         //}
                         //DahuaAccessControl.Init();
                         LoadSystemConfig();
-                        LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Mở giao diện đăng nhập hệ thống");
+                        tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "OPEN MAIN PAGE");
                         Application.Run(new frmLogin(AppData.ApiServer, KzParkingv5BaseApi.server, OpenMainPage));
                     }
                     else
                     {
-                        LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, "Start", "Ứng dụng đã được mở trước đó", "Tắt ứng dụng cũ và kiểm tra lại");
+                        tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "Duplicate App Running");
                         // ?ng d?ng ?ã ch?y, ?óng ?ng d?ng tr??c ?ó và ch?y ?ng d?ng m?i
                         Process currentProcess = Process.GetCurrentProcess();
                         foreach (Process process in Process.GetProcessesByName(currentProcess.ProcessName))
@@ -99,7 +100,7 @@ namespace IParkingv5.RegisterCard
                             }
                             catch (Exception ex)
                             {
-                                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, "Start", "Ứng dụng đã được mở trước đó", "Tắt ứng dụng cũ và kiểm tra lại", obj: ex);
+                                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "Duplicate App Running", ex);
                                 goto StartApp;
                             }
                         }

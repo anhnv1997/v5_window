@@ -10,6 +10,7 @@ using iParkingv5_window.Forms.SystemForms;
 using Kztek.Helper;
 using KztekKeyRegister;
 using iParkingv5_window;
+using Kztek.Tool.LogDatabases;
 
 namespace v6_window
 {
@@ -31,7 +32,8 @@ namespace v6_window
                 PathManagement.baseBath = LogHelper.SaveLogFolder = Application.StartupPath;
 
                 LogHelper.CreateConnection();
-                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Application", "Start Program");
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "START");
+
                 using (Mutex mutex = new Mutex(true, appName, out bool ownmutex))
                 {
                     if (ownmutex)
@@ -39,7 +41,7 @@ namespace v6_window
                         LoadSystemConfig();
                         if (StaticPool.appOption.IsCheckKey)
                         {
-                            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Application", "Check Key Program");
+                            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "CHECK KEY");
                             var frmLicenseValidatorForm = new LicenseValidatorForm();
                             frmLicenseValidatorForm.Init(appName);
                             try
@@ -88,12 +90,13 @@ namespace v6_window
                         {
                             AppData.ApiServer.invoiceService = null;
                         }
-                        LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Mở giao diện đăng nhập hệ thống");
+                        tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "OPEN LOADING SCREEN");
                         Application.Run(new frmLogin(AppData.ApiServer, KzParkingv5BaseApi.server, OpenLoadingPage));
                     }
                     else
                     {
-                        LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, "Application", "Duplicate App Running");
+                        tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "Duplicate App Running");
+
                         Process currentProcess = Process.GetCurrentProcess();
                         foreach (Process process in Process.GetProcessesByName(currentProcess.ProcessName))
                         {
@@ -109,7 +112,7 @@ namespace v6_window
                             }
                             catch (Exception ex)
                             {
-                                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, "Application", "Duplicate App Running", ex);
+                                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "Duplicate App Running", ex);
                                 goto StartApp;
                             }
                         }
@@ -128,7 +131,7 @@ namespace v6_window
         {
             try
             {
-                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Application", "Load System Config");
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "Load System Config");
                 StaticPool.serverConfig = NewtonSoftHelper<ServerConfig>.DeserializeObjectFromPath(PathManagement.serverConfigPath);
                 if (StaticPool.serverConfig == null)
                 {
@@ -143,36 +146,36 @@ namespace v6_window
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, "Application", "Load System Config", ex);
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "Load System Config", ex);
                 MessageBox.Show("LoadServer: " + ex.Message + "\r\n" + ex.InnerException?.Message);
             }
 
 
             try
             {
-                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Application", "Load OEM Config");
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "Load OEM Config");
                 StaticPool.oemConfig = NewtonSoftHelper<OEMConfig>.DeserializeObjectFromPath(PathManagement.oemConfigPath) ?? new OEMConfig();
 
-                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Application", "Load APP Option");
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "Load APP Option");
                 StaticPool.appOption = NewtonSoftHelper<AppOption>.DeserializeObjectFromPath(PathManagement.appOptionConfigPath) ?? new AppOption();
 
-                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Application", "Load EInvoice Config");
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "Load EInvoice Config");
                 StaticPool.eInvoiceConfig = NewtonSoftHelper<EInvoiceConfig>.DeserializeObjectFromPath(PathManagement.einvoiceConfigPath) ?? new EInvoiceConfig();
 
-                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Application", "Load Lpr Config");
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "Load Lpr Config");
                 AppData.lprConfig = NewtonSoftHelper<LprConfig>.DeserializeObjectFromPath(PathManagement.lprConfigPath) ?? new LprConfig();
                 LogHelper.isSaveLog = StaticPool.appOption.IsSaveLog;
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, "Application", "Load Config", ex);
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "Load Config", ex);
                 MessageBox.Show("LoadServer2: " + ex.Message + "\r\n" + ex.InnerException?.Message);
             }
 
         }
         private static void CheckForUpdate()
         {
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Application", "Check Update");
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "Check Update");
             if (string.IsNullOrEmpty(StaticPool.appOption.CheckForUpdatePath)) return;
 
             if (!Directory.Exists(StaticPool.appOption.CheckForUpdatePath)) return;
@@ -222,12 +225,10 @@ namespace v6_window
                         {
                         }
 
-
-
                         if (currentFilePathVersion != updateFilePathVersion)
                         {
-                            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Application",
-                                          $"Update {fileName} From {currentFilePathVersion} To {updateFilePathVersion}");
+                            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, 
+                                                 $"Update {fileName} From {currentFilePathVersion} To {updateFilePathVersion}");
                             isHavingUpdate = true;
                             string newFilePath = Path.Combine(Application.StartupPath, fileName + "_bak_" + currentFilePathVersion + "_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm_ss"));
                             File.Move(currentFilePath, newFilePath);
@@ -239,7 +240,7 @@ namespace v6_window
                         }
                         else if (updateFilePathVersion == null && currentFilePathVersion == null)
                         {
-                            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Application", $"Copy New {fileName}");
+                            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, $"Copy New {fileName}");
 
                             File.Delete(currentFilePath);
                             File.Copy(updateFilePath, currentFilePath);
@@ -272,7 +273,7 @@ namespace v6_window
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, "Application", "Check Update", ex);
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "Check Update", ex);
                 MessageBox.Show(ex.Message);
             }
         }

@@ -1,5 +1,6 @@
 ﻿using iParkingv5.Objects.Configs;
 using iParkingv5.Objects.Datas.Device_service;
+using iParkingv5.Objects.Datas.ThirtParty.OfficeHaus;
 using iParkingv5.Objects.Events;
 using System;
 using System.Collections.Generic;
@@ -21,5 +22,6 @@ namespace iParkingv5_window.Usercontrols
         void GetShortcutConfig();
         void LoadSavedUIConfig();
         void DispayUI();
+        void printQR(CardEventArgs ce, HausQR qrData);
     }
 }

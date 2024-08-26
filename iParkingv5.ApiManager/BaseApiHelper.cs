@@ -1,4 +1,5 @@
 ﻿using iParkingv5.ApiManager.KzParkingv5Apis;
+using Kztek.Tool.LogDatabases;
 using Kztek.Tool.NetworkTools;
 using Kztek.Tool.TextFormatingTools;
 using Kztek.Tools;
@@ -140,9 +141,8 @@ namespace iParkingv6.ApiManager
         /// <param name="method"></param>
         /// <returns></returns>
         public static async Task<Tuple<string, string>> GeneralJsonAPIAsync(string apiUrl, object data, Dictionary<string, string>? headerValues,
-                                                                            Dictionary<string, string>? requiredParams, int timeOut, Method method)
+                                                                            Dictionary<string, string>? requiredParams, int timeOut, Method method, bool isSaveLog = true)
         {
-
             DataLog dataLog = new DataLog()
             {
                 Headers = headerValues,
@@ -150,11 +150,17 @@ namespace iParkingv6.ApiManager
                 Data = data,
             };
 
-            LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Api, apiUrl, "Start" + method.ToString(), TextFormatingTool.BeautyJson(dataLog));
-
+            DateTime startTime = DateTime.Now;
+            string apiId = Guid.NewGuid().ToString();
             string errorMessage = string.Empty;
             for (int i = 0; i < max_send_times; i++)
             {
+                if (isSaveLog)
+                {
+                    tblApiLogDetail.SaveLog(apiUrl, startTime, apiId, method.ToString(),
+                                            headerValues, requiredParams, data, description: $"START {i + 1}");
+                }
+
                 var client = new RestClient(apiUrl);
                 var request = new RestRequest
                 {
@@ -181,8 +187,15 @@ namespace iParkingv6.ApiManager
                     }
                 }
 
-                string a = Newtonsoft.Json.JsonConvert.SerializeObject(data);
                 var response = await client.ExecuteAsync(request);
+                if (isSaveLog)
+                {
+                    tblApiLogDetail.SaveLog(apiUrl, startTime, apiId, method.ToString(),
+                                            headerValues, requiredParams, data,
+                                            (int)response.StatusCode, response.Content, response.ErrorException,
+                                            description: $"End {i + 1}");
+                }
+
                 if (response.StatusCode == HttpStatusCode.Unauthorized)
                 {
                 GetToken:
@@ -232,9 +245,6 @@ namespace iParkingv6.ApiManager
                     var logResponse = response;
                     logResponse.Request = null;
 
-                    LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.Api, apiUrl, "End: " + method.ToString() + $"{i + 1}",
-                                  TextFormatingTool.BeautyJson(dataLog), obj: response.Content);
-
 
                     if (string.IsNullOrEmpty(response.Content))
                     {
@@ -243,14 +253,27 @@ namespace iParkingv6.ApiManager
                     }
                     else
                     {
+                        if (isSaveLog)
+                            tblApiLog.SaveLog(apiId, apiUrl, startTime, DateTime.Now, method.ToString(),
+                                              headerValues, requiredParams, data,
+                                              (int)response.StatusCode, response.Content, response.ErrorException);
                         return Tuple.Create<string, string>(response.Content, "Error");
                     }
                 }
-                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Api, apiUrl, "End: " + method.ToString(),
-                              TextFormatingTool.BeautyJson(dataLog), obj: response.Content);
+                if (isSaveLog)
+                {
+                    tblApiLog.SaveLog(apiId, apiUrl, startTime, DateTime.Now, method.ToString(),
+                                              headerValues, requiredParams, data,
+                                              (int)response.StatusCode, response.Content, response.ErrorException);
+                }
                 return Tuple.Create<string, string>(response.Content, string.Empty);
             }
-
+            if (isSaveLog)
+            {
+                tblApiLog.SaveLog(apiId, apiUrl, startTime, DateTime.Now, method.ToString(),
+                                  headerValues, requiredParams, data,
+                                  -1, "", errorMessage);
+            }
             return Tuple.Create<string, string>(string.Empty, errorMessage);
         }
         #endregion END JSON API HELPER
@@ -261,12 +284,6 @@ namespace iParkingv6.ApiManager
             Uri uri = new Uri(apiUrl);
             if (!NetWorkTools.IsPingSuccess(uri.Host, 100))
             {
-                LogHelper.Log(logType: LogHelper.EmLogType.ERROR,
-                              doi_tuong_tac_dong: LogHelper.EmObjectLogType.Api,
-                              hanh_dong: "PING",
-                              noi_dung_hanh_dong: "Kiểm tra ping đến host " + uri.Host,
-                              mo_ta_them: "PING ERROR",
-                              obj: uri);
                 return false;
             }
             return true;

@@ -19,6 +19,7 @@ using iParkingv5_window.Usercontrols;
 using iParkingv6.Objects.Datas;
 using Kztek.Scale_net6.Interfaces;
 using Kztek.Tool;
+using Kztek.Tool.LogDatabases;
 using Kztek.Tools;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -27,8 +28,11 @@ using System.Reflection;
 using System.Text;
 using static IPaking.Ultility.TextManagement;
 using static iParkingv5.Controller.ControllerFactory;
+using static iParkingv5.Objects.Enums.LaneDirectionType;
 using static iParkingv5.Objects.Enums.PrintHelpers;
+using static Kztek.Tool.LogDatabases.tblSystemLog;
 using static Kztek.Tools.LogHelper;
+using static QRCoder.PayloadGenerator;
 
 namespace iParkingv5_window.Forms.DataForms
 {
@@ -94,7 +98,6 @@ namespace iParkingv5_window.Forms.DataForms
         {
             InitializeComponent();
             this.Load += FrmMain_Load;
-            this.Shown += FrmMain_Shown;
 
             AppData.printer = PrinterFactory.CreatePrinter((EmPrintTemplate)StaticPool.appOption.PrintTemplate);
 
@@ -134,13 +137,6 @@ namespace iParkingv5_window.Forms.DataForms
         }
         public static bool isNeedToRestart = true;
 
-        private void FrmMain_Shown(object? sender, EventArgs e)
-        {
-            //foreach (var item in lanes)
-            //{
-            //    item.DisplayUIConfig();
-            //}
-        }
         private async void FrmMain_Load(object? sender, EventArgs e)
         {
             try
@@ -168,7 +164,6 @@ namespace iParkingv5_window.Forms.DataForms
             }
             catch (Exception ex)
             {
-                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, obj: ex);
             }
         }
 
@@ -228,19 +223,25 @@ namespace iParkingv5_window.Forms.DataForms
         #region Controls In Form
         private void tsmiExit_Click(object sender, EventArgs e)
         {
+            tblUserLog.SaveLog("Application", $"User Click To Exit");
+
             Application.Exit();
             Environment.Exit(0);
         }
         private void tsmiAlarmReport_Click(object sender, EventArgs e)
         {
+            tblUserLog.SaveLog("Application", $"User Click To Alarm Report");
+
             //new frmReportAlarms().Show(this);
         }
         private void tsmiReportIn_Click(object sender, EventArgs e)
         {
+            tblUserLog.SaveLog("Application", $"User Click To Report In");
             new frmReportIn(Image.FromFile(defaultImagePath), AppData.ApiServer).Show(this);
         }
         private void tsmiReportInOut_Click(object sender, EventArgs e)
         {
+            tblUserLog.SaveLog("Application", $"User Click To Report Out");
             new frmReportInOut(AppData.ApiServer, Image.FromFile(defaultImagePath), AppData.printer).Show(this);
         }
         private void tsmiReport_MouseEnter(object sender, EventArgs e)
@@ -326,7 +327,6 @@ namespace iParkingv5_window.Forms.DataForms
                                             OutputFormat = CardFormat.EmCardFormat.HEXA,
                                             OutputOption = CardFormat.EmCardFormatOption.Min_8,
                                         };
-                        LogHelper.Log(EmLogType.WARN, EmObjectLogType.System, configPath);
                         e.PreferCard = CardFactory.StandardlizedCardNumber(e.PreferCard, config);
                         while (e.PreferCard.Length < 8)
                         {
@@ -524,7 +524,8 @@ namespace iParkingv5_window.Forms.DataForms
                 }
                 catch (Exception ex)
                 {
-                    LogHelper.Log(EmLogType.ERROR, EmObjectLogType.System, obj: ex.Message, mo_ta_them: ex);
+                    tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
+                                         $"RabbitMQ Connect {StaticPool.serverConfig.RabbitMqUrl} - {StaticPool.serverConfig.RabbitMqUsername} - {StaticPool.serverConfig.RabbitMqPassword}", ex);
                     MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             });
@@ -549,10 +550,10 @@ namespace iParkingv5_window.Forms.DataForms
 
         private void ControllerEventConsumer_Received(object? sender, BasicDeliverEventArgs e)
         {
+            string payLoad = Encoding.ASCII.GetString(e.Body.ToArray());
             try
             {
-                string payLoad = Encoding.ASCII.GetString(e.Body.ToArray());
-                LogHelper.Log(EmLogType.INFOR, EmObjectLogType.System, specailName: "RabbitMQ", obj: payLoad);
+                tblSystemLog.SaveLog(EmSystemAction.MessageQueue, EmSystemActionDetail.GET, payLoad);
                 CardEventArgs ce = Newtonsoft.Json.JsonConvert.DeserializeObject<CardEventArgs>(payLoad)!;
 
                 foreach (var item in lanes)
@@ -568,29 +569,10 @@ namespace iParkingv5_window.Forms.DataForms
                         break;
                     }
                 }
-
-                //foreach (var item in controllers)
-                //{
-                //    if (item.ControllerInfo.Code == ce.DeviceId)
-                //    {
-                //        ce.DeviceId = item.ControllerInfo.Id;
-                //        break;
-                //    }
-                //}
-
-                //this.Invoke(new Action(() =>
-                //{
-                //    lblLoadingStatus.Text = $"Nhận sự kiện quẹt thẻ READER: {ce.ReaderIndex}, CARD: {ce.PreferCard} từ bộ điều khiển " + ce.DeviceName;
-                //    lblLoadingStatus.Refresh();
-
-                //    foreach (iLane iLane in lanes)
-                //    {
-                //        iLane.OnNewEvent(ce);
-                //    }
-                //}));
             }
             catch (Exception ex)
             {
+                tblSystemLog.SaveLog(EmSystemAction.MessageQueue, EmSystemActionDetail.GET, payLoad, ex);
             }
         }
 
@@ -614,6 +596,8 @@ namespace iParkingv5_window.Forms.DataForms
 
         private async void tsmiActiveLanesConfig_Click(object sender, EventArgs e)
         {
+            tblUserLog.SaveLog("Application", $"User Click To Open Chosse Lane");
+
             FormClosing -= frmMain_FormClosing;
             try
             {
@@ -779,7 +763,7 @@ namespace iParkingv5_window.Forms.DataForms
             }
             catch (Exception ex)
             {
-                Log(EmLogType.ERROR, EmObjectLogType.System, hanh_dong: "frmMain", noi_dung_hanh_dong: "Clear log", obj: ex);
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.DELETE, "LOG", ex);
             }
         }
 
@@ -791,6 +775,8 @@ namespace iParkingv5_window.Forms.DataForms
         HausVisitor? lastHausVistor = null;
         private void btnRegister_Click(object? sender, EventArgs e)
         {
+            tblUserLog.SaveLog("Application", $"User Click To Open Register Screen");
+
             var frmAddVisitor = new frmAddVisitor();
             if (frmAddVisitor.ShowDialog() == DialogResult.OK)
             {
@@ -801,6 +787,13 @@ namespace iParkingv5_window.Forms.DataForms
         }
         private async void btnPrintQR_Click(object? sender, EventArgs e)
         {
+            tblUserLog.SaveLog("Application", $"User Click To Print QR");
+
+            if (lastHausVistor == null)
+            {
+                MessageBox.Show("Không có thông tin khách đăng ký, vui lòng thử lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             var qrData = await ThirdPartyService.GetQRData(lastHausVistor);
             if (qrData == null || string.IsNullOrEmpty(qrData.QrCode))
             {
@@ -808,9 +801,24 @@ namespace iParkingv5_window.Forms.DataForms
             }
             else
             {
-                var printer = new OfficeHausPrinter();
-                string baseContent = File.ReadAllText(PathManagement.hausQRPath());
-                printer.printQR(baseContent, qrData.QrCode ?? "");
+                foreach (var lane in lanes)
+                {
+                    if (lane.lane.type + 1 == (int)EmLaneDirection.IN)
+                    {
+                        if (lane.lane.controlUnits[0].readers.Length > 0)
+                        {
+                            CardEventArgs ce = new CardEventArgs();
+                            ce.DeviceId = lane.lane.controlUnits[0].controlUnitId;
+                            ce.ReaderIndex = lane.lane.controlUnits[0].readers[0];
+                            ce.PreferCard = lastHausVistor.IdentityCode;
+                            await lane.OnNewEvent(ce);
+                            break;
+                        }
+                    }
+                }
+                //var printer = new OfficeHausPrinter();
+                //string baseContent = File.ReadAllText(PathManagement.hausQRPath());
+                //printer.printQR(baseContent, qrData.QrCode ?? "");
             }
         }
     }

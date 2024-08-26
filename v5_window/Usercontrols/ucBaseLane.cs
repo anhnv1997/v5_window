@@ -11,6 +11,7 @@ using iParkingv5.Objects.Events;
 using iParkingv5_CustomerRegister.Forms;
 using iParkingv5_window.Forms.DataForms;
 using iParkingv6.Objects.Datas;
+using Kztek.Tool.LogDatabases;
 using Kztek.Tools;
 using System;
 using System.Collections.Generic;
@@ -195,9 +196,7 @@ namespace iParkingv5_window.Usercontrols
         }
         public void CameraErrorFunc(object sender, string errorString)
         {
-            LogHelper.Log(logType: LogHelper.EmLogType.ERROR,
-                           doi_tuong_tac_dong: LogHelper.EmObjectLogType.Camera,
-                           mo_ta_them: errorString);
+            tblDeviceLog.SaveLog("", "", "", "", errorString);
         }
 
         protected void OnChangeLaneEventInvoke(object e)
@@ -360,12 +359,12 @@ namespace iParkingv5_window.Usercontrols
                                 bool isOpenSuccess = await controller.OpenDoor(100, item.barriers[i]);
                                 if (!isOpenSuccess)
                                 {
-                                    LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.Controller, controller.ControllerInfo.Comport, "Mở barrie thủ công thất bại");
+                                    tblDeviceLog.SaveLog(controller.ControllerInfo.Id, controller.ControllerInfo.Name, "", "", "Mở barrie thủ công thất bại");
                                 }
                             }
                             else
                             {
-                                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.Controller, controller.ControllerInfo.Comport, "Mở barrie thủ công thất bại");
+                                tblDeviceLog.SaveLog(controller.ControllerInfo.Id, controller.ControllerInfo.Name, "", "", "Mở barrie thủ công thành công");
                             }
                         }
                         break;
@@ -388,6 +387,5 @@ namespace iParkingv5_window.Usercontrols
                 await BaseLane.SaveImage(response.images, imageDatas);
             }
         }
-
     }
 }

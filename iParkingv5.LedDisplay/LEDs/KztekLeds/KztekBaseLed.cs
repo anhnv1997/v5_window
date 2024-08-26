@@ -1,6 +1,7 @@
 ﻿using iParkingv5.LedDisplay.Enums;
 using iParkingv5.Objects.Datas;
 using iParkingv5.Objects.Datas.Device_service;
+using Kztek.Tool.LogDatabases;
 using Kztek.Tool.SocketHelpers;
 using Kztek.Tool.TextFormatingTools;
 using Kztek.Tools;
@@ -92,9 +93,9 @@ namespace iParkingv5.LedDisplay.LEDs.KztekLeds
             string result = string.Empty;
             await Task.Run(() =>
             {
-                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Controller, specailName: this.Comport, noi_dung_hanh_dong: changeScreenCmd);
+                tblDeviceLog.SaveLog(this.led.id, this.led.name, changeScreenCmd, "", "START");
                 result = UdpTools.ExecuteCommand_UTF8(this.Comport, this.Baudrate, changeScreenCmd);
-                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.Controller, specailName: this.Comport, noi_dung_hanh_dong: changeScreenCmd, mo_ta_them: result);
+                tblDeviceLog.SaveLog(this.led.id, this.led.name, changeScreenCmd, result, "END");
             });
             return result.Contains("OK");
         }

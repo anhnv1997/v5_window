@@ -1,10 +1,4 @@
-﻿using iParkingv5.ApiManager.KzParkingv5Apis;
-using iParkingv5.LprDetecter.LprDetecters;
-using iParkingv5.Objects;
-using iParkingv6.ApiManager.KzParkingv3Apis;
-using iParkingv6.Objects.Datas;
-using Kztek.Tool.NetworkTools;
-using Kztek.Tools;
+﻿using iParkingv6.Objects.Datas;
 using v5MonitorApp;
 
 namespace iParkingv5_window.Forms.SystemForms
