@@ -157,7 +157,7 @@ namespace iParkingv6.ApiManager
             {
                 if (isSaveLog)
                 {
-                    tblApiLogDetail.SaveLog(apiUrl, startTime, apiId, method.ToString(),
+                    tblApiLogDetail.SaveLog(apiUrl, DateTime.Now, apiId, method.ToString(),
                                             headerValues, requiredParams, data, description: $"START {i + 1}");
                 }
 
@@ -190,7 +190,7 @@ namespace iParkingv6.ApiManager
                 var response = await client.ExecuteAsync(request);
                 if (isSaveLog)
                 {
-                    tblApiLogDetail.SaveLog(apiUrl, startTime, apiId, method.ToString(),
+                    tblApiLogDetail.SaveLog(apiUrl, DateTime.Now, apiId, method.ToString(),
                                             headerValues, requiredParams, data,
                                             (int)response.StatusCode, response.Content, response.ErrorException,
                                             description: $"End {i + 1}");

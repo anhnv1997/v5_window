@@ -1,5 +1,6 @@
 ﻿using iParkingv5.LprDetecter.LprDetecters;
 using iParkingv5.Objects;
+using iParkingv5_window;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 
@@ -17,8 +18,8 @@ namespace KztekLprDetectionTest
 
         private void Form1_Load(object? sender, EventArgs e)
         {
-            StaticPool.LprDetect = LprFactory.CreateLprDetecter(StaticPool.lprConfig, null);
-            StaticPool.LprDetect?.CreateLpr(StaticPool.lprConfig);
+            AppData.LprDetect = LprFactory.CreateLprDetecter(AppData.lprConfig, null);
+            AppData.LprDetect?.CreateLpr(AppData.lprConfig);
             //StaticPool.LprDetect2 = LprFactory.CreateLprDetecter(StaticPool.lprConfig, null);
             //StaticPool.LprDetect2?.CreateLpr(StaticPool.lprConfig);
             //StaticPool.LprDetect3 = LprFactory.CreateLprDetecter(StaticPool.lprConfig, null);
@@ -364,7 +365,7 @@ namespace KztekLprDetectionTest
                         using (Image img = Image.FromFile(file))
                         {
                             sw = Stopwatch.StartNew();
-                            string plate = StaticPool.LprDetect.GetPlateNumber(img, chbIsCar.Checked, null, out Image resultImg);
+                            string plate = AppData.LprDetect.GetPlateNumber(img, chbIsCar.Checked, null, out Image resultImg);
                             var detectTime = sw.ElapsedMilliseconds;
                             string savePath = string.Empty;
 
