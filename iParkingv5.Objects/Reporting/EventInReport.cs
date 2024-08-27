@@ -44,8 +44,10 @@ namespace iParkingv5.Objects.Reporting
                 }
             }
         }
+
         public string IdentityGroupId { get; set; }
         public string CustomerId { get; set; }
+
         public string RegisteredVehicleId { get; set; }
         public string CheckOutValidationStatus { get; set; }
 
