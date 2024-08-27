@@ -20,12 +20,6 @@ namespace KztekLprDetectionTest
         {
             AppData.LprDetect = LprFactory.CreateLprDetecter(AppData.lprConfig, null);
             AppData.LprDetect?.CreateLpr(AppData.lprConfig);
-            //StaticPool.LprDetect2 = LprFactory.CreateLprDetecter(StaticPool.lprConfig, null);
-            //StaticPool.LprDetect2?.CreateLpr(StaticPool.lprConfig);
-            //StaticPool.LprDetect3 = LprFactory.CreateLprDetecter(StaticPool.lprConfig, null);
-            //StaticPool.LprDetect3?.CreateLpr(StaticPool.lprConfig);
-            //StaticPool.LprDetect4 = LprFactory.CreateLprDetecter(StaticPool.lprConfig, null);
-            //StaticPool.LprDetect4?.CreateLpr(StaticPool.lprConfig);
             dgvData.SelectionChanged += DgvData_SelectionChanged;
         }
 
@@ -77,10 +71,9 @@ namespace KztekLprDetectionTest
         }
 
         List<string> files = new List<string>();
-        int lastIndex = 1;
+        int lastIndex = 0;
         private async void btnDetect_Click(object sender, EventArgs e)
         {
-            //dgvData.SelectionChanged -= DgvData_SelectionChanged;
             string rootPath = txtInputPath.Text;
             string resultPath = txtOutputPath.Text;
             if (!isStop)
@@ -115,248 +108,8 @@ namespace KztekLprDetectionTest
             var sw = Stopwatch.StartNew();
             isStop = false;
 
-            //Task.Run(() =>
-            //{
-            //    for (int i = lastIndex; i < files.Count; i += 1)
-            //    {
-            //        //1;5;7;9;11;13
-            //        if (i % 2 == 0 || i % 3 == 0)
-            //        {
-            //            continue;
-            //        }
-            //        string? file = files[i];
-            //        if (!isStop)
-            //        {
-            //            try
-            //            {
-            //                using (Image img = Image.FromFile(file))
-            //                {
-            //                    var sw = Stopwatch.StartNew();
-            //                    string plate = StaticPool.LprDetect.GetPlateNumber(img, chbIsCar.Checked, null, out Image resultImg);
-            //                    var detectTime = sw.ElapsedMilliseconds;
-            //                    string savePath = string.Empty;
-
-            //                    //Task.Run(() =>
-            //                    //{
-            //                    if (string.IsNullOrEmpty(plate))
-            //                    {
-            //                        savePath = Path.Combine(resultPath, DateTime.Now.ToString("yyyy_MM_dd"), "ERROR", $"{Path.GetFileNameWithoutExtension(file)}_{plate.Replace("-", "").Replace(" ", "")}.jpg");
-            //                        img?.Save(savePath, ImageFormat.Jpeg);
-            //                    }
-            //                    else
-            //                    {
-            //                        savePath = Path.Combine(resultPath, DateTime.Now.ToString("yyyy_MM_dd"), "LPR", $"{Path.GetFileNameWithoutExtension(file)}_{plate.Replace("-", "").Replace(" ", "")}.jpg");
-            //                        resultImg?.Save(savePath, ImageFormat.Jpeg);
-            //                        resultImg?.Dispose();
-            //                    }
-            //                    //});
-
-
-            //                    this.Invoke(new Action(() =>
-            //                    {
-            //                        dgvData.Rows.Add(dgvData.Rows.Count + 1, file, savePath, Path.GetFileNameWithoutExtension(file), plate, sw.ElapsedMilliseconds + " ms");
-            //                        dgvData.CurrentCell = dgvData.Rows[dgvData.RowCount - 1].Cells[0];
-            //                        Application.DoEvents();
-            //                    }));
-            //                    //GC.Collect();
-            //                }
-            //            }
-            //            catch (Exception ex)
-            //            {
-            //                // Handle exceptions
-            //                Console.WriteLine($"Error processing file {file}: {ex.Message}");
-            //            }
-            //        }
-            //        else
-            //        {
-            //            lastIndex = i;
-            //            break;
-            //        }
-            //    }
-            //});
-            //Task.Run(() =>
-            //{
-            //    for (int i = lastIndex; i < files.Count; i += 1)
-            //    {
-            //        //0;2;4;6;8;10
-            //        if (i % 2 != 0)
-            //        {
-            //            continue;
-            //        }
-            //        string? file = files[i];
-            //        if (!isStop)
-            //        {
-            //            try
-            //            {
-            //                using (Image img = Image.FromFile(file))
-            //                {
-            //                    var sw = Stopwatch.StartNew();
-            //                    string plate = StaticPool.LprDetect2.GetPlateNumber(img, chbIsCar.Checked, null, out Image resultImg);
-            //                    var detectTime = sw.ElapsedMilliseconds;
-            //                    string savePath = string.Empty;
-
-            //                    //Task.Run(() =>
-            //                    //{
-            //                    if (string.IsNullOrEmpty(plate))
-            //                    {
-            //                        savePath = Path.Combine(resultPath, DateTime.Now.ToString("yyyy_MM_dd"), "ERROR", $"{Path.GetFileNameWithoutExtension(file)}_{plate.Replace("-", "").Replace(" ", "")}.jpg");
-            //                        img?.Save(savePath, ImageFormat.Jpeg);
-            //                    }
-            //                    else
-            //                    {
-            //                        savePath = Path.Combine(resultPath, DateTime.Now.ToString("yyyy_MM_dd"), "LPR", $"{Path.GetFileNameWithoutExtension(file)}_{plate.Replace("-", "").Replace(" ", "")}.jpg");
-            //                        resultImg?.Save(savePath, ImageFormat.Jpeg);
-            //                        resultImg?.Dispose();
-            //                    }
-            //                    //});
-
-
-            //                    this.Invoke(new Action(() =>
-            //                    {
-            //                        dgvData.Rows.Add(dgvData.Rows.Count + 1, file, savePath, Path.GetFileNameWithoutExtension(file), plate, sw.ElapsedMilliseconds + " ms");
-            //                        dgvData.CurrentCell = dgvData.Rows[dgvData.RowCount - 1].Cells[0];
-            //                        Application.DoEvents();
-            //                    }));
-            //                    //GC.Collect();
-            //                }
-            //            }
-            //            catch (Exception ex)
-            //            {
-            //                // Handle exceptions
-            //                Console.WriteLine($"Error processing file {file}: {ex.Message}");
-            //            }
-            //        }
-            //        else
-            //        {
-            //            lastIndex = i;
-            //            break;
-            //        }
-            //    }
-            //});
-            //Task.Run(() =>
-            //{
-            //    for (int i = lastIndex; i < files.Count; i += 1)
-            //    {
-            //        //1;3;9
-            //        if (i % 2 == 0 || i % 3 != 0)
-            //        {
-            //            continue;
-            //        }
-            //        string? file = files[i];
-            //        if (!isStop)
-            //        {
-            //            try
-            //            {
-            //                using (Image img = Image.FromFile(file))
-            //                {
-            //                    var sw = Stopwatch.StartNew();
-            //                    string plate = StaticPool.LprDetect3.GetPlateNumber(img, chbIsCar.Checked, null, out Image resultImg);
-            //                    var detectTime = sw.ElapsedMilliseconds;
-            //                    string savePath = string.Empty;
-
-            //                    //Task.Run(() =>
-            //                    //{
-            //                    if (string.IsNullOrEmpty(plate))
-            //                    {
-            //                        savePath = Path.Combine(resultPath, DateTime.Now.ToString("yyyy_MM_dd"), "ERROR", $"{Path.GetFileNameWithoutExtension(file)}_{plate.Replace("-", "").Replace(" ", "")}.jpg");
-            //                        img?.Save(savePath, ImageFormat.Jpeg);
-            //                    }
-            //                    else
-            //                    {
-            //                        savePath = Path.Combine(resultPath, DateTime.Now.ToString("yyyy_MM_dd"), "LPR", $"{Path.GetFileNameWithoutExtension(file)}_{plate.Replace("-", "").Replace(" ", "")}.jpg");
-            //                        resultImg?.Save(savePath, ImageFormat.Jpeg);
-            //                        resultImg?.Dispose();
-            //                        Application.DoEvents();
-            //                    }
-            //                    //});
-
-
-            //                    this.Invoke(new Action(() =>
-            //                    {
-            //                        dgvData.Rows.Add(dgvData.Rows.Count + 1, file, savePath, Path.GetFileNameWithoutExtension(file), plate, sw.ElapsedMilliseconds + " ms");
-            //                        dgvData.CurrentCell = dgvData.Rows[dgvData.RowCount - 1].Cells[0];
-            //                        Application.DoEvents();
-            //                    }));
-            //                    //GC.Collect();
-            //                }
-            //            }
-            //            catch (Exception ex)
-            //            {
-            //                // Handle exceptions
-            //                Console.WriteLine($"Error processing file {file}: {ex.Message}");
-            //            }
-            //        }
-            //        else
-            //        {
-            //            lastIndex = i;
-            //            break;
-            //        }
-
-            //    }
-            //});
-            //Task.Run(() =>
-            //{
-            //    for (int i = lastIndex; i < files.Count; i += 1)
-            //    {
-            //        //0;6;12;18
-            //        if (i % 2 != 0 || i % 3 != 0)
-            //        {
-            //            continue;
-            //        }
-            //        string? file = files[i];
-            //        if (!isStop)
-            //        {
-            //            try
-            //            {
-            //                using (Image img = Image.FromFile(file))
-            //                {
-            //                    var sw = Stopwatch.StartNew();
-            //                    string plate = StaticPool.LprDetect4.GetPlateNumber(img, chbIsCar.Checked, null, out Image resultImg);
-            //                    var detectTime = sw.ElapsedMilliseconds;
-            //                    string savePath = string.Empty;
-
-            //                    if (string.IsNullOrEmpty(plate))
-            //                    {
-            //                        savePath = Path.Combine(resultPath, DateTime.Now.ToString("yyyy_MM_dd"), "ERROR", $"{Path.GetFileNameWithoutExtension(file)}_{plate.Replace("-", "").Replace(" ", "")}.jpg");
-            //                        img?.Save(savePath, ImageFormat.Jpeg);
-            //                    }
-            //                    else
-            //                    {
-            //                        savePath = Path.Combine(resultPath, DateTime.Now.ToString("yyyy_MM_dd"), "LPR", $"{Path.GetFileNameWithoutExtension(file)}_{plate.Replace("-", "").Replace(" ", "")}.jpg");
-            //                        resultImg?.Save(savePath, ImageFormat.Jpeg);
-            //                        resultImg?.Dispose();
-            //                    }
-
-            //                    this.Invoke(new Action(() =>
-            //                    {
-            //                        dgvData.Rows.Add(dgvData.Rows.Count + 1, file, savePath, Path.GetFileNameWithoutExtension(file), plate, sw.ElapsedMilliseconds + " ms");
-            //                        dgvData.CurrentCell = dgvData.Rows[dgvData.RowCount - 1].Cells[0];
-            //                        Application.DoEvents();
-            //                    }));
-            //                    //GC.Collect();
-            //                }
-            //            }
-            //            catch (Exception ex)
-            //            {
-            //                // Handle exceptions
-            //                Console.WriteLine($"Error processing file {file}: {ex.Message}");
-            //            }
-            //        }
-            //        else
-            //        {
-            //            lastIndex = i;
-            //            break;
-            //        }
-
-            //    }
-            //});
-            for (int i = 0; i < files.Count; i += 1)
+            for (int i = lastIndex; i < files.Count; i += 1)
             {
-                //1;5;7;9;11;13
-                //if (i % 2 == 0 || i % 3 == 0)
-                //{
-                //    continue;
-                //}
                 string? file = files[i];
                 if (!isStop)
                 {
@@ -369,8 +122,6 @@ namespace KztekLprDetectionTest
                             var detectTime = sw.ElapsedMilliseconds;
                             string savePath = string.Empty;
 
-                            //Task.Run(() =>
-                            //{
                             if (string.IsNullOrEmpty(plate))
                             {
                                 savePath = Path.Combine(resultPath, DateTime.Now.ToString("yyyy_MM_dd"), "ERROR", $"{Path.GetFileNameWithoutExtension(file)}_{plate.Replace("-", "").Replace(" ", "")}.jpg");
@@ -382,21 +133,17 @@ namespace KztekLprDetectionTest
                                 resultImg?.Save(savePath, ImageFormat.Jpeg);
                                 resultImg?.Dispose();
                             }
-                            //});
-
 
                             this.Invoke(new Action(() =>
                             {
-                                dgvData.Rows.Add(dgvData.Rows.Count + 1, file, savePath, Path.GetFileNameWithoutExtension(file), plate, sw.ElapsedMilliseconds + " ms");
+                                dgvData.Rows.Add(dgvData.Rows.Count + 1, file, savePath, plate, sw.ElapsedMilliseconds + " ms", Path.GetFileNameWithoutExtension(file));
                                 dgvData.CurrentCell = dgvData.Rows[dgvData.RowCount - 1].Cells[0];
                                 Application.DoEvents();
                             }));
-                            //GC.Collect();
                         }
                     }
                     catch (Exception ex)
                     {
-                        // Handle exceptions
                         Console.WriteLine($"Error processing file {file}: {ex.Message}");
                     }
                 }

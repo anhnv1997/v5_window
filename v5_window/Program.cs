@@ -28,6 +28,20 @@ namespace v6_window
 
         StartApp:
             {
+                //string destPath = "D:\\TrainingLPR\\DUYTAN\\LprDetect";
+                //string rootPath = "D:\\TrainingLPR\\DUYTAN\\New folder";
+                //string[] detectFile = Directory.GetFiles(rootPath,
+                //                                         "*", SearchOption.AllDirectories);
+                //int i = 1;
+                //foreach (string file in detectFile)
+                //{
+                //    if (file.Contains("PLATEIN") || file.Contains("PLATEOUT"))
+                //    {
+                //        File.Copy(file, Path.Combine(destPath, $"{i}.png"));
+                //        i++;
+                //    }
+                //}
+
                 const string appName = "IP_DA_V5_WD";
                 PathManagement.baseBath = LogHelper.SaveLogFolder = Application.StartupPath;
 
@@ -227,7 +241,7 @@ namespace v6_window
 
                         if (currentFilePathVersion != updateFilePathVersion)
                         {
-                            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, 
+                            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS,
                                                  $"Update {fileName} From {currentFilePathVersion} To {updateFilePathVersion}");
                             isHavingUpdate = true;
                             string newFilePath = Path.Combine(Application.StartupPath, fileName + "_bak_" + currentFilePathVersion + "_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm_ss"));

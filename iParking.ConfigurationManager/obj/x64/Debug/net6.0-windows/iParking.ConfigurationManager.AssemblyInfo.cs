@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("iParking.ConfigurationManager")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.2")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0.2+46f35c092c645c73dfbd15687929a2b5f9d0c116")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0.2+ebadc0abbe5ffb79e9a49a68fa6a3a470253c896")]
 [assembly: System.Reflection.AssemblyProductAttribute("iParking.ConfigurationManager")]
 [assembly: System.Reflection.AssemblyTitleAttribute("iParking.ConfigurationManager")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.2")]
