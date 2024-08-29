@@ -851,7 +851,7 @@
           "IdentityModel": "7.0.0",
           "Newtonsoft.Json": "13.0.3",
           "RestSharp": "110.2.0",
-          "iParkingv5.Objects": "1.0.1"
+          "iParkingv5.Objects": "1.0.1.1"
         },
         "compile": {
           "bin/placeholder/iParkingv5.ApiManager.dll": {}
@@ -865,7 +865,7 @@
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
           "System.IO.Ports": "8.0.0",
-          "iParkingv5.Objects": "1.0.1"
+          "iParkingv5.Objects": "1.0.1.1"
         },
         "compile": {
           "bin/placeholder/iParkingv5.Controller.dll": {}
@@ -901,7 +901,7 @@
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
           "iParkingv5.Lpr": "1.0.0.1",
-          "iParkingv5.Objects": "1.0.1"
+          "iParkingv5.Objects": "1.0.1.1"
         },
         "compile": {
           "bin/placeholder/iParkingv5.LedDisplay.dll": {}
@@ -925,7 +925,7 @@
           "bin/placeholder/iParkingv5.Lpr.dll": {}
         }
       },
-      "iParkingv5.Objects/1.0.1": {
+      "iParkingv5.Objects/1.0.1.1": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
@@ -2483,7 +2483,7 @@
       "path": "../iParkingv5.Lpr/iParkingv5.Lpr.csproj",
       "msbuildProject": "../iParkingv5.Lpr/iParkingv5.Lpr.csproj"
     },
-    "iParkingv5.Objects/1.0.1": {
+    "iParkingv5.Objects/1.0.1.1": {
       "type": "project",
       "path": "../iParkingv5.Objects/iParkingv5.Objects.csproj",
       "msbuildProject": "../iParkingv5.Objects/iParkingv5.Objects.csproj"
@@ -2524,7 +2524,7 @@
       "iParkingv5.FeeTest >= 1.0.0",
       "iParkingv5.LedDisplay >= 1.0.0.1",
       "iParkingv5.Lpr >= 1.0.0.1",
-      "iParkingv5.Objects >= 1.0.1"
+      "iParkingv5.Objects >= 1.0.1.1"
     ]
   },
   "packageFolders": {
@@ -2533,7 +2533,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.1.0.5",
+    "version": "1.1.1",
     "restore": {
       "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\v5_window\\iParkingv5_window.csproj",
       "projectName": "iParkingv5_window",

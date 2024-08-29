@@ -293,8 +293,12 @@ namespace iParkingv5_window.Forms.ReportForms
 
                 dgvData.CurrentCell = dgvData.Rows[e.RowIndex].Cells[1];
                 ContextMenuStrip ctx = new ContextMenuStrip();
-                ctx.Items.Add("Sửa ghi chú BSX", Properties.Resources.setting_0_0_0_32px).Name = "UpdateNote";
-                ctx.Items.Add("Sửa biển số", Properties.Resources.setting_0_0_0_32px).Name = "UpdatePlateIn";
+                string currentNote = dgvData.Rows[e.RowIndex].Cells["NoteBSX"].Value?.ToString() ?? "";
+                if (!currentNote.ToLower().Contains("xe lùi"))
+                {
+                    ctx.Items.Add("Sửa ghi chú BSX", Properties.Resources.setting_0_0_0_32px).Name = "UpdateNote";
+                    ctx.Items.Add("Sửa biển số", Properties.Resources.setting_0_0_0_32px).Name = "UpdatePlateIn";
+                }
                 ctx.Items.Add("Sửa loại dịch vụ", Properties.Resources.setting_0_0_0_32px).Name = "UpdateWarehose";
                 ctx.Items.Add("In Phiếu Xuất", Properties.Resources.print_0_0_0_32px).Name = "PrintWarehouse";
                 ctx.Items.Add("Cân thủ công", Properties.Resources.setting_0_0_0_32px).Name = "ScaleManual";
@@ -309,7 +313,6 @@ namespace iParkingv5_window.Forms.ReportForms
                 {
                     string id = dgvData.Rows[e.RowIndex].Cells[0].Value.ToString() ?? "";
                     string currentPlateIn = dgvData.Rows[e.RowIndex].Cells["plate"].Value?.ToString() ?? "";
-                    string currentNote = dgvData.Rows[e.RowIndex].Cells["NoteBSX"].Value?.ToString() ?? "";
                     string current_warehouse = dgvData.Rows[e.RowIndex].Cells["warehouse"].Value?.ToString() ?? "";
                     string timeIn = dgvData.Rows[e.RowIndex].Cells["timeIn"].Value?.ToString() ?? "";
                     string identityName = dgvData.Rows[e.RowIndex].Cells["identityName"].Value?.ToString() ?? "";

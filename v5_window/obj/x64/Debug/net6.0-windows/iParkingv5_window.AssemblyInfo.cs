@@ -13,11 +13,11 @@ using System.Reflection;
 
 [assembly: System.Reflection.AssemblyCompanyAttribute("iParkingv5_window")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
-[assembly: System.Reflection.AssemblyFileVersionAttribute("1.1.0.5")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.1.0.5")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.1.1.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.1.1.0+34449b23f90e71093956f4eb6f6f94c92718c4d1")]
 [assembly: System.Reflection.AssemblyProductAttribute("iParkingv5_window")]
 [assembly: System.Reflection.AssemblyTitleAttribute("iParkingv5_window")]
-[assembly: System.Reflection.AssemblyVersionAttribute("1.1.0.5")]
+[assembly: System.Reflection.AssemblyVersionAttribute("1.1.1.0")]
 [assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]
 

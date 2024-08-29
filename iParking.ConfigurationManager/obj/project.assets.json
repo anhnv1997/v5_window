@@ -504,7 +504,7 @@
           "IdentityModel": "7.0.0",
           "Newtonsoft.Json": "13.0.3",
           "RestSharp": "110.2.0",
-          "iParkingv5.Objects": "1.0.1"
+          "iParkingv5.Objects": "1.0.1.1"
         },
         "compile": {
           "bin/placeholder/iParkingv5.ApiManager.dll": {}
@@ -518,7 +518,7 @@
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
           "System.IO.Ports": "8.0.0",
-          "iParkingv5.Objects": "1.0.1"
+          "iParkingv5.Objects": "1.0.1.1"
         },
         "compile": {
           "bin/placeholder/iParkingv5.Controller.dll": {}
@@ -545,7 +545,7 @@
           "bin/placeholder/iParkingv5.Lpr.dll": {}
         }
       },
-      "iParkingv5.Objects/1.0.1": {
+      "iParkingv5.Objects/1.0.1.1": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
@@ -1504,7 +1504,7 @@
       "path": "../iParkingv5.Lpr/iParkingv5.Lpr.csproj",
       "msbuildProject": "../iParkingv5.Lpr/iParkingv5.Lpr.csproj"
     },
-    "iParkingv5.Objects/1.0.1": {
+    "iParkingv5.Objects/1.0.1.1": {
       "type": "project",
       "path": "../iParkingv5.Objects/iParkingv5.Objects.csproj",
       "msbuildProject": "../iParkingv5.Objects/iParkingv5.Objects.csproj"

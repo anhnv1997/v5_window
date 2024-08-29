@@ -72,10 +72,13 @@ namespace v5_IScale.Forms.ReportForms
             panel1 = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
             panel4 = new Panel();
+            picSecondWeight = new MovablePictureBox();
             label8 = new Label();
             panel3 = new Panel();
+            picFirstWeight = new MovablePictureBox();
             label7 = new Label();
             panel2 = new Panel();
+            picVehicleImage = new MovablePictureBox();
             label6 = new Label();
             groupBox2 = new GroupBox();
             cbPrintMode = new ComboBox();
@@ -87,8 +90,11 @@ namespace v5_IScale.Forms.ReportForms
             panel1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picSecondWeight).BeginInit();
             panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picFirstWeight).BeginInit();
             panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picVehicleImage).BeginInit();
             groupBox2.SuspendLayout();
             SuspendLayout();
             // 
@@ -433,6 +439,7 @@ namespace v5_IScale.Forms.ReportForms
             // 
             // panel4
             // 
+            panel4.Controls.Add(picSecondWeight);
             panel4.Controls.Add(label8);
             panel4.Dock = DockStyle.Fill;
             panel4.Location = new Point(508, 2);
@@ -440,6 +447,16 @@ namespace v5_IScale.Forms.ReportForms
             panel4.Name = "panel4";
             panel4.Size = new Size(252, 159);
             panel4.TabIndex = 0;
+            // 
+            // picSecondWeight
+            // 
+            picSecondWeight.Dock = DockStyle.Fill;
+            picSecondWeight.Location = new Point(0, 20);
+            picSecondWeight.Name = "picSecondWeight";
+            picSecondWeight.Size = new Size(252, 139);
+            picSecondWeight.SizeMode = PictureBoxSizeMode.Zoom;
+            picSecondWeight.TabIndex = 1;
+            picSecondWeight.TabStop = false;
             // 
             // label8
             // 
@@ -457,6 +474,7 @@ namespace v5_IScale.Forms.ReportForms
             // 
             // panel3
             // 
+            panel3.Controls.Add(picFirstWeight);
             panel3.Controls.Add(label7);
             panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(255, 2);
@@ -464,6 +482,16 @@ namespace v5_IScale.Forms.ReportForms
             panel3.Name = "panel3";
             panel3.Size = new Size(251, 159);
             panel3.TabIndex = 0;
+            // 
+            // picFirstWeight
+            // 
+            picFirstWeight.Dock = DockStyle.Fill;
+            picFirstWeight.Location = new Point(0, 20);
+            picFirstWeight.Name = "picFirstWeight";
+            picFirstWeight.Size = new Size(251, 139);
+            picFirstWeight.SizeMode = PictureBoxSizeMode.Zoom;
+            picFirstWeight.TabIndex = 1;
+            picFirstWeight.TabStop = false;
             // 
             // label7
             // 
@@ -481,6 +509,7 @@ namespace v5_IScale.Forms.ReportForms
             // 
             // panel2
             // 
+            panel2.Controls.Add(picVehicleImage);
             panel2.Controls.Add(label6);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(2, 2);
@@ -488,6 +517,16 @@ namespace v5_IScale.Forms.ReportForms
             panel2.Name = "panel2";
             panel2.Size = new Size(251, 159);
             panel2.TabIndex = 0;
+            // 
+            // picVehicleImage
+            // 
+            picVehicleImage.Dock = DockStyle.Fill;
+            picVehicleImage.Location = new Point(0, 20);
+            picVehicleImage.Name = "picVehicleImage";
+            picVehicleImage.Size = new Size(251, 139);
+            picVehicleImage.SizeMode = PictureBoxSizeMode.Zoom;
+            picVehicleImage.TabIndex = 1;
+            picVehicleImage.TabStop = false;
             // 
             // label6
             // 
@@ -598,10 +637,13 @@ namespace v5_IScale.Forms.ReportForms
             tableLayoutPanel1.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picSecondWeight).EndInit();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picFirstWeight).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picVehicleImage).EndInit();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             ResumeLayout(false);
@@ -636,9 +678,6 @@ namespace v5_IScale.Forms.ReportForms
         private Button btnExcel;
         private Panel panel2;
         private Label label6;
-        private iParkingv5_window.Usercontrols.MovablePictureBox picSecondWeight;
-        private iParkingv5_window.Usercontrols.MovablePictureBox picFirstWeight;
-        private iParkingv5_window.Usercontrols.MovablePictureBox picVehicleImage;
         private DataGridViewTextBoxColumn Column13;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
@@ -653,5 +692,8 @@ namespace v5_IScale.Forms.ReportForms
         private DataGridViewTextBoxColumn Column10;
         private DataGridViewTextBoxColumn Column11;
         private DataGridViewTextBoxColumn Column12;
+        private MovablePictureBox picSecondWeight;
+        private MovablePictureBox picFirstWeight;
+        private MovablePictureBox picVehicleImage;
     }
 }

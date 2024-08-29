@@ -911,7 +911,7 @@ namespace iParkingv5_window.Forms.ReportForms
                 row.Cells[i++].Value = DateTime.Parse(item.eventInCreatedUtc).AddHours(7).ToString(UltilityManagement.fullDayFormat); //2
                 row.Cells[i++].Value = DateTime.Parse(item.createdUtc).AddHours(7).ToString(UltilityManagement.fullDayFormat); //3
                 row.Cells[i++].Value = item.ParkingTime(); //4
-                row.Cells[i++].Value = GetIdentityGroupName(item.IdentityGroupId);//6
+                row.Cells[i++].Value = item.identityGroupName;//6
 
                 row.Cells[i++].Value = TransactionType.GetTransactionTypeStr(item.TransactionType); //9
                 row.Cells[i++].Value = (item.TransactionCode ?? "").Contains("-0-0") ? "" : item.TransactionCode;              //10
@@ -1136,7 +1136,11 @@ namespace iParkingv5_window.Forms.ReportForms
             {
                 dgvData.CurrentCell = dgvData.Rows[e.RowIndex].Cells[2];
                 ContextMenuStrip ctx = new ContextMenuStrip();
-                ctx.Items.Add("Sửa ghi chú BSX", Properties.Resources.setting_0_0_0_32px).Name = "UpdateNote";
+                string currentNote = dgvData.Rows[e.RowIndex].Cells["NoteBSX"].Value?.ToString() ?? "";
+                if (!currentNote.ToLower().Contains("xe lùi"))
+                {
+                    ctx.Items.Add("Sửa ghi chú BSX", Properties.Resources.setting_0_0_0_32px).Name = "UpdateNote";
+                }
                 if (StaticPool.appOption.IsAllowEditPlateOut)
                 {
                     ctx.Items.Add("Sửa biển số vào", Properties.Resources.setting_0_0_0_32px).Name = "UpdatePlateIn";
@@ -1147,9 +1151,13 @@ namespace iParkingv5_window.Forms.ReportForms
 
                 if (!string.IsNullOrEmpty(pendingOrderId) || string.IsNullOrEmpty(invoiceId))
                 {
+
                     ctx.Items.Add("Gửi hóa đơn", Properties.Resources.setting_0_0_0_32px).Name = "SendPendingEInvoice";
-                    ctx.Items.Add("Sửa biển số vào", Properties.Resources.setting_0_0_0_32px).Name = "UpdatePlateIn";
-                    ctx.Items.Add("Sửa biển số ra", Properties.Resources.setting_0_0_0_32px).Name = "UpdatePlateOut";
+                    if (!currentNote.ToLower().Contains("xe lùi"))
+                    {
+                        ctx.Items.Add("Sửa biển số vào", Properties.Resources.setting_0_0_0_32px).Name = "UpdatePlateIn";
+                        ctx.Items.Add("Sửa biển số ra", Properties.Resources.setting_0_0_0_32px).Name = "UpdatePlateOut";
+                    }
                 }
                 ctx.Items.Add("Cân thủ công", Properties.Resources.setting_0_0_0_32px).Name = "ScaleManual";
 
@@ -1161,7 +1169,6 @@ namespace iParkingv5_window.Forms.ReportForms
                     string eventOutId = dgvData.Rows[e.RowIndex].Cells["id"].Value?.ToString() ?? "";
                     string currentPlateIn = dgvData.Rows[e.RowIndex].Cells["PlateIn"].Value?.ToString() ?? "";
                     string currentPlateOut = dgvData.Rows[e.RowIndex].Cells["PlateOut"].Value?.ToString() ?? "";
-                    string currentNote = dgvData.Rows[e.RowIndex].Cells["NoteBSX"].Value?.ToString() ?? "";
                     string FileIds = dgvData.Rows[e.RowIndex].Cells["file_key_out"].Value?.ToString() ?? "";
 
                     switch (ctx_e.ClickedItem.Name.ToString())

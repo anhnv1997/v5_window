@@ -924,7 +924,7 @@ namespace iParkingv5_window.Usercontrols
                                                   overviewImg, vehicleImg, lprImage, imageKey, weight);
             }
         }
-        private async void ExcecuteVIPProcess(Identity identity)
+        private async void ExcecuteVIPProcess(Identity identity, IdentityGroup ig)
         {
             //Nếu không có thông tin sự kiện trước đó thì lấy thông tin sự kiện ra gần nhất
             if (lastEvent == null)
@@ -945,7 +945,7 @@ namespace iParkingv5_window.Usercontrols
                         string currentNote = data.data[0].thirdpartynote ?? "";
                         string[] currentNoteArray = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(currentNote)?.ToArray() ?? new string[] { };// note.Split(";");
                         string note1 = currentNoteArray.Length > 1 ? currentNoteArray[0] : "";
-                        string note2 = identity.Note;
+                        string note2 = ig.Name;
                         string note3 = currentNoteArray.Length > 2 ? currentNoteArray[2] : "";
                         bool isSuccess = await KzParkingv5ApiHelper.UpdateNoteOut(id, note1, note2, note3);
                         if (!isSuccess)
@@ -974,7 +974,7 @@ namespace iParkingv5_window.Usercontrols
         {
             if (identityGroup.Type == IdentityGroupType.Vip)
             {
-                ExcecuteVIPProcess(identity);
+                ExcecuteVIPProcess(identity, identityGroup);
                 return;
             }
 
@@ -1401,10 +1401,10 @@ namespace iParkingv5_window.Usercontrols
                 LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Send Api XC");
                 XuanCuongApiHelper.SendParkingInfo(lastEvent.Id, "out", detectedPlate, eventTime, imageKeys, lastEvent.eventIn.Id);
             }
-            
+
             LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Create Payment Transaction");
             AppData.ApiServer.CreatePaymentTransaction(eventOut);
-           
+
             if ((eventOut?.charge?.Amount ?? 0) > 0)
             {
                 //UPDATE TEST

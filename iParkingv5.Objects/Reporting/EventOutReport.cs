@@ -88,6 +88,7 @@ namespace iParkingv5.Objects.Reporting
         }
         public string IdentityName { get; set; }
         public string IdentityGroupId { get; set; }
+        public string identityGroupName { get; set; }
         public string eventInPlateNumber { get; set; }
         public string plateNumber { get; set; }
         public int TransactionType { get; set; }

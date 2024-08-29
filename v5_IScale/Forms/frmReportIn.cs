@@ -65,30 +65,36 @@ namespace v5_IScale.Forms
 
         private async void FrmReportIn_Load(object? sender, EventArgs e)
         {
-            //registerVehicles = await KzParkingApiHelper.GetRegisteredVehicles("");
-            registerVehicles = (await AppData.ApiServer.GetRegisterVehiclesAsync("")).Item1;
-
-            //customers = (await KzParkingApiHelper.GetAllCustomers())?.Item1 ?? new List<Customer>();
-            customers = (await AppData.ApiServer.GetCustomersAsync())?.Item1 ?? new List<Customer>();
-
-            await CreateUI();
-            this.ActiveControl = btnSearch;
-            panelData.ToggleDoubleBuffered(true);
-            if (this.isAllowSelect)
+            try
             {
-                dgvData.CellDoubleClick += DgvData_CellDoubleClick;
+                //registerVehicles = await KzParkingApiHelper.GetRegisteredVehicles("");
+                registerVehicles = (await AppData.ApiServer.GetRegisterVehiclesAsync("")).Item1;
+
+                //customers = (await KzParkingApiHelper.GetAllCustomers())?.Item1 ?? new List<Customer>();
+                customers = (await AppData.ApiServer.GetCustomersAsync())?.Item1 ?? new List<Customer>();
+
+                await CreateUI();
+                this.ActiveControl = btnSearch;
+                panelData.ToggleDoubleBuffered(true);
+                if (this.isAllowSelect)
+                {
+                    dgvData.CellDoubleClick += DgvData_CellDoubleClick;
+                }
+                picOverviewImageIn.Image = picOverviewImageIn.ErrorImage = defaultImg;
+                picVehicleImageIn.Image = picVehicleImageIn.ErrorImage = defaultImg;
+
+                picOverviewImageIn.LoadCompleted += Pic_LoadCompleted;
+                picVehicleImageIn.LoadCompleted += Pic_LoadCompleted;
+
+                cbVehicleType.SelectedIndexChanged += ChangeSearchConditionEvent;
+                cbIdentityGroupType.SelectedIndexChanged += ChangeSearchConditionEvent;
+                cbLane.SelectedIndexChanged += ChangeSearchConditionEvent;
+                //btnSearch.PerformClick();
+                this.FormClosing += FrmReportIn_FormClosing;
             }
-            picOverviewImageIn.Image = picOverviewImageIn.ErrorImage = defaultImg;
-            picVehicleImageIn.Image = picVehicleImageIn.ErrorImage = defaultImg;
-
-            picOverviewImageIn.LoadCompleted += Pic_LoadCompleted;
-            picVehicleImageIn.LoadCompleted += Pic_LoadCompleted;
-
-            cbVehicleType.SelectedIndexChanged += ChangeSearchConditionEvent;
-            cbIdentityGroupType.SelectedIndexChanged += ChangeSearchConditionEvent;
-            cbLane.SelectedIndexChanged += ChangeSearchConditionEvent;
-            //btnSearch.PerformClick();
-            this.FormClosing += FrmReportIn_FormClosing;
+            catch (Exception)
+            {
+            }
         }
 
         private void FrmReportIn_FormClosing(object? sender, FormClosingEventArgs e)
@@ -139,36 +145,43 @@ namespace v5_IScale.Forms
         #region Controls In Form
         private async void btnSearch_Click(object? sender, EventArgs e)
         {
-            picOverviewImageIn.Image = defaultImg;
-            picVehicleImageIn.Image = defaultImg;
-
-            string keyword = txtKeyword.Text;
-            DateTime startTime = dtpStartTime.Value;
-            DateTime endTime = dtpEndTime.Value;
-            string vehicleTypeId = ((ListItem)cbVehicleType.SelectedItem)?.Value ?? "";
-            string identityGroupId = ((ListItem)cbIdentityGroupType.SelectedItem)?.Value ?? "";
-            string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
-            //Tuple<List<EventInReport>, int, int> eventInData = await KzParkingApiHelper.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId);
-            var data = await AppData.ApiServer.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, "", 0, -1);
-            List<EventInReport> eventInReports = data?.data ?? null;
-            if (eventInReports == null)
+            try
             {
-                panelData.BackColor = Color.White;
-                ucLoading1.HideLoading();
-                ucNotify1.Show(ucNotify.EmNotiType.Error, "Không tải được thông tin xe trong bãi. Vui lòng thử lại!");
-                return;
+                picOverviewImageIn.Image = defaultImg;
+                picVehicleImageIn.Image = defaultImg;
+
+                string keyword = txtKeyword.Text;
+                DateTime startTime = dtpStartTime.Value;
+                DateTime endTime = dtpEndTime.Value;
+                string vehicleTypeId = ((ListItem)cbVehicleType.SelectedItem)?.Value ?? "";
+                string identityGroupId = ((ListItem)cbIdentityGroupType.SelectedItem)?.Value ?? "";
+                string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
+                //Tuple<List<EventInReport>, int, int> eventInData = await KzParkingApiHelper.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId);
+                var data = await AppData.ApiServer.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, "", 0, -1);
+                List<EventInReport> eventInReports = data?.data ?? null;
+                if (eventInReports == null)
+                {
+                    panelData.BackColor = Color.White;
+                    ucLoading1.HideLoading();
+                    ucNotify1.Show(ucNotify.EmNotiType.Error, "Không tải được thông tin xe trong bãi. Vui lòng thử lại!");
+                    return;
+                }
+
+                totalPages = 1;
+                totalEvents = eventInReports.Count;
+
+                panelData.SuspendLayout();
+                EnableFastLoading();
+                DisplayNavigation();
+                await DisplayEventInData(eventInReports);
+                DisableFastLoading();
+                eventInReports.Clear();
+                panelData.ResumeLayout();
             }
-
-            totalPages = 1;
-            totalEvents = eventInReports.Count;
-
-            panelData.SuspendLayout();
-            EnableFastLoading();
-            DisplayNavigation();
-            await DisplayEventInData(eventInReports);
-            DisableFastLoading();
-            eventInReports.Clear();
-            panelData.ResumeLayout();
+            catch (Exception)
+            {
+            }
+          
         }
 
         private void Pic_LoadCompleted(object? sender, System.ComponentModel.AsyncCompletedEventArgs e)
