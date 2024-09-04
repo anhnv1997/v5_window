@@ -1,8 +1,10 @@
 ﻿using IPaking.Ultility;
 using iPakrkingv5.Controls;
 using iPakrkingv5.Controls.Controls.Labels;
+using iParkingv5.ApiManager;
 using iParkingv5.ApiManager.KzParkingv5Apis.services;
 using iParkingv5.Controller;
+using iParkingv5.LprDetecter.LprDetecters;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
 using iParkingv5.Objects.Datas;
@@ -35,7 +37,6 @@ namespace iParkingv5_window.Usercontrols
     public partial class ucLaneIn : ucBaseLane, iLane, IDisposable
     {
         #region PROPERTIES
-
         #region THIRD - PARTY
         HausVisitor? lastHausVistor = null;
         #endregion End THIRD - PARTY
@@ -393,7 +394,29 @@ namespace iParkingv5_window.Usercontrols
 
             tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                  $"{this.lane.name}.Card.{ce.PreferCard} - Get Plate");
-            Image? lprImage = GetPlate(ce, ref overviewImg, ref vehicleImg, vehicleBaseType, lblResult, txtPlate, picOverviewImage, picVehicleImage, picLprImage);
+            Image? lprImage = null;
+            if ((ucCarLpr != null && ucCarLpr._Camera?.CameraType != Kztek.Cameras.CameraType.HANET) ||
+                (ucMotoLpr != null && ucMotoLpr._Camera?.CameraType != Kztek.Cameras.CameraType.HANET))
+            {
+                lprImage = GetPlate(ce, ref overviewImg, ref vehicleImg, vehicleBaseType, lblResult, txtPlate, picOverviewImage, picVehicleImage, picLprImage);
+            }
+            else
+            {
+                bool isSuccess = HANETApi.CheckPlate(ucCarLpr?._Camera?.Code);
+                await Task.Delay(2000);
+                ce.PlateNumber = hanetPlateNumber;
+                lprImage = hanetImg;
+                lblResult.UpdateResultMessage("Hiển thị hình ảnh sự kiện...", Color.DarkBlue);
+                BaseLane.ShowImage(picOverviewImage, overviewImg);
+                BaseLane.ShowImage(picVehicleImage, vehicleImg);
+                BaseLane.ShowImage(picLprImage, lprImage);
+
+                txtPlate.BeginInvoke(new Action(() =>
+                {
+                    txtPlate.Text = ce.PlateNumber;
+                    txtPlate.Refresh();
+                }));
+            }
 
             //Đọc thông tin loại phương tiện
             lblResult.UpdateResultMessage("Đang kiểm tra thông tin..." + ce.PreferCard, ProcessColor);
@@ -1804,7 +1827,8 @@ namespace iParkingv5_window.Usercontrols
                 picVehicleImage.Image = defaultImg;
 
                 txtPlate.Text = string.Empty;
-
+                hanetPlateNumber = "";
+                hanetImg = null;
                 lblResult.UpdateResultMessage(StaticPool.oemConfig.AppName, SuccessColor);
             }));
         }

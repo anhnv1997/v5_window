@@ -29,6 +29,9 @@ namespace iParkingv5_window.Usercontrols
 {
     public partial class ucBaseLane : UserControl
     {
+        public string hanetPlateNumber { get; set; }
+        public Image? hanetImg { get; set; }
+
         public List<string> allowAlarmMessage = new List<string>()
         {
             "Biển số không hợp lệ".ToUpper(),

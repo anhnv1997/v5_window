@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace iParkingv5.ApiManager
 {
@@ -64,6 +65,22 @@ namespace iParkingv5.ApiManager
             request.AddParameter("placeID", placeId);
             request.AddParameter("title", name);
             request.AddFile($"file", imageBytes.ToArray(), "x.jpg");
+            var _response = _client.Execute(request);
+            return _response.IsSuccessful;
+        }
+        public static bool CheckPlate(string deviceId)
+        {
+            string url = "https://partner3.hanet.ai/device/checkLicensePlate";
+
+            var _client = new RestClient(url);
+            var request = new RestRequest
+            {
+                Method = Method.Post,
+                Timeout = 10000,
+            };
+            request.AlwaysMultipartFormData = true;
+            request.AddParameter("token", token);
+            request.AddParameter("deviceID", "O2238UV1088");
             var _response = _client.Execute(request);
             return _response.IsSuccessful;
         }

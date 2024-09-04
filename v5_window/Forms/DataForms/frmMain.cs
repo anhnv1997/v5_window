@@ -158,8 +158,7 @@ namespace iParkingv5_window.Forms.DataForms
                     lblUserNaem.Width = lblUserNaem.PreferredSize.Width;
                 }));
                 var screenBound = Screen.FromControl(this).WorkingArea;
-                //this.Size = new Size(screenBound.Width, screenBound.Height);
-                this.Size = new Size(1366, 768);
+                this.Size = new Size(screenBound.Width, screenBound.Height);
                 this.Location = new Point(0, 0);
 
                 LoadAppDisplayConfig();
@@ -316,8 +315,8 @@ namespace iParkingv5_window.Forms.DataForms
         }
         private void Controller_InputEvent(object sender, InputEventArgs e)
         {
-           // lblLoadingStatus.UpdateResultMessage(
-           //$"Nhận sự kiện input {e.InputIndex} Controller " + e.DeviceName, Color.DarkBlue);
+            // lblLoadingStatus.UpdateResultMessage(
+            //$"Nhận sự kiện input {e.InputIndex} Controller " + e.DeviceName, Color.DarkBlue);
 
             lblLoadingStatus.Message = $"Nhận sự kiện input {e.InputIndex} Controller " + e.DeviceName;
 
@@ -616,10 +615,6 @@ namespace iParkingv5_window.Forms.DataForms
                     if (item.lane.code == ce.DeviceId)
                     {
                         lblLoadingStatus.Message = $"{DateTime.Now:HH:mm:ss} READER: {ce.ReaderIndex}, CARD: {ce.PreferCard} Controller " + ce.DeviceName;
-     //                   lblLoadingStatus.UpdateResultMessage(
-     //$"{DateTime.Now:HH:mm:ss} READER: {ce.ReaderIndex}, CARD: {ce.PreferCard} Controller " + ce.DeviceName,
-     // Color.DarkBlue);
-
                         ce.DeviceId = item.lane.controlUnits[0].controlUnitId;
                         ce.ReaderIndex = item.lane.controlUnits[0].readers[0];
                         item.OnNewEvent(ce);
@@ -889,10 +884,10 @@ namespace iParkingv5_window.Forms.DataForms
 
         private void _MqttClient_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
-            if (e.Topic.Contains("topic/detected"))
+            var data = Encoding.UTF8.GetString(e.Message);
+            var topic = e.Topic;
+            if (e.Topic.Contains("topic/detected/O2238UV0956"))
             {
-                var data = Encoding.UTF8.GetString(e.Message);
-                var topic = e.Topic;
                 HANETFaceData faceData = Newtonsoft.Json.JsonConvert.DeserializeObject<HANETFaceData>(data);
                 if (faceData != null)
                 {
@@ -928,6 +923,28 @@ namespace iParkingv5_window.Forms.DataForms
                             }
                         }
                     }));
+                }
+            }
+            else if (e.Topic.Contains("topic/detected/O2238UV1088"))
+            {
+                HANETPlateData plateData = Newtonsoft.Json.JsonConvert.DeserializeObject<HANETPlateData>(data);
+                if (plateData != null)
+                {
+                    if (string.IsNullOrEmpty(plateData.image))
+                    {
+                        return;
+                    }
+                    foreach (var item in lanes)
+                    {
+                        item.hanetPlateNumber = plateData.code_result;
+                        try
+                        {
+                            item.hanetImg = StaticPool.Base64ToImage(plateData.image.Split(",")[1]);
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    }
                 }
             }
         }

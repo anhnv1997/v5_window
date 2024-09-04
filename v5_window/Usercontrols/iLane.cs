@@ -12,6 +12,8 @@ namespace iParkingv5_window.Usercontrols
 {
     public interface iLane
     {
+        string hanetPlateNumber { get; set; }
+        Image? hanetImg { get; set; }
         event OnChangeLaneEvent OnChangeLaneEvent;
         Lane lane { get; set; }
         List<CardEventArgs> lastCardEventDatas { get; set; }
