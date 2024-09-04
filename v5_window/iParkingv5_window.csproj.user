@@ -43,7 +43,13 @@
     <Compile Update="Forms\SystemForms\frmLoading.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\SystemForms\frmMainViewDisplayConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\SystemForms\frmSelectLaneMode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\ThirdPartyForms\HANETForms\frmRegisterHANETUser.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\ThirdPartyForms\OfficeHausForms\frmAddVisitor.cs">

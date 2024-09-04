@@ -17,6 +17,7 @@ namespace iParkingv5_window.Forms.DataForms
         #region Properties
         private List<RegisteredVehicle> vehicles = new List<RegisteredVehicle>();
         public string selectedPlate;
+        public RegisteredVehicle? selectedVehicle;
         #endregion End Properties
 
         #region Forms
@@ -68,8 +69,10 @@ namespace iParkingv5_window.Forms.DataForms
                 {
                     if (((RadioButton)item).Checked)
                     {
-
                         selectedPlate = ((RadioButton)item).Tag.ToString()!;
+                        selectedVehicle =  (from RegisteredVehicle vehicle in this.vehicles
+                                           where vehicle.PlateNumber == selectedPlate
+                                           select vehicle).FirstOrDefault();
                     }
                 }
             }

@@ -104,6 +104,7 @@ namespace iParkingv5.Controller.Aopu
                            byte DoorStatus,
                            byte Ver, byte FuntionByte, bool Online, byte CardsofPackage, string CardNo, string QRCode, byte Door, byte EventType,
                            ushort CardIndex, byte CardStatus, byte reader, out byte relay, out bool OpenDoor, out bool Ack)
+        
         {
             Ack = true;
             OpenDoor = false;

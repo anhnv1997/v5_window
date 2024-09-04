@@ -26,6 +26,8 @@ using RabbitMQ.Client.Events;
 using System.Collections.Concurrent;
 using System.Reflection;
 using System.Text;
+using uPLibrary.Networking.M2Mqtt.Messages;
+using uPLibrary.Networking.M2Mqtt;
 using static IPaking.Ultility.TextManagement;
 using static iParkingv5.Controller.ControllerFactory;
 using static iParkingv5.Objects.Enums.LaneDirectionType;
@@ -33,6 +35,10 @@ using static iParkingv5.Objects.Enums.PrintHelpers;
 using static Kztek.Tool.LogDatabases.tblSystemLog;
 using static Kztek.Tools.LogHelper;
 using static QRCoder.PayloadGenerator;
+using iParkingv5.Objects.Datas.ThirtParty.Hanet;
+using DocumentFormat.OpenXml.VariantTypes;
+using iParkingv5.ApiManager;
+using iParkingv5_window.Forms.ThirdPartyForms.HANETForms;
 
 namespace iParkingv5_window.Forms.DataForms
 {
@@ -126,13 +132,18 @@ namespace iParkingv5_window.Forms.DataForms
             {
                 tsmiActiveLanesConfig.Visible = false;
             }
-            if (StaticPool.appOption.PrintTemplate != (int)EmPrintTemplate.OfficeHaus)
+            if (StaticPool.appOption.PrintTemplate != (int)EmPrintTemplate.OfficeHaus &&
+                StaticPool.appOption.PrintTemplate != (int)EmPrintTemplate.HANET)
             {
                 tsmiRegister.Visible = false;
                 inQRToolStripMenuItem.Visible = false;
             }
             lblSoftwareName.Text = StaticPool.oemConfig.AppName + " - " + Assembly.GetExecutingAssembly().GetName().Version!.ToString();
             lblSoftwareName.Width = lblSoftwareName.PreferredSize.Width;
+
+            lblLoadingStatus.MessageForeColor = Color.Black;
+            lblLoadingStatus.MessageBackColor = SystemColors.Control;
+
             this.FormClosing += frmMain_FormClosing;
         }
         public static bool isNeedToRestart = true;
@@ -147,7 +158,8 @@ namespace iParkingv5_window.Forms.DataForms
                     lblUserNaem.Width = lblUserNaem.PreferredSize.Width;
                 }));
                 var screenBound = Screen.FromControl(this).WorkingArea;
-                this.Size = new Size(screenBound.Width, screenBound.Height);
+                //this.Size = new Size(screenBound.Width, screenBound.Height);
+                this.Size = new Size(1366, 768);
                 this.Location = new Point(0, 0);
 
                 LoadAppDisplayConfig();
@@ -157,6 +169,8 @@ namespace iParkingv5_window.Forms.DataForms
 
                 await ConnectToRabbitMQ();
                 await StartControllers();
+
+                ConnectMQTT();
                 lblSoftwareName.Width = lblSoftwareName.PreferredWidth;
                 lblServerName.Width = lblServerName.PreferredWidth;
                 lblCompanyName.Width = lblCompanyName.PreferredWidth;
@@ -276,26 +290,41 @@ namespace iParkingv5_window.Forms.DataForms
 
         private void Controller_DeviceInfoChangeEvent(object sender, DeviceInfoChangeArgs e)
         {
-            lblLoadingStatus.BeginInvoke(new Action(() =>
-            {
-                lblLoadingStatus.Text = "Nhận sự kiện thay đổi thông tin thiết bị từ bộ điều khiển " + e.DeviceName;
-                lblLoadingStatus.Refresh();
-            }));
+            lblLoadingStatus.Message = "Nhận sự kiện thay đổi thông tin thiết bị Controller " + e.DeviceName;
+            //lblLoadingStatus.UpdateResultMessage(
+            //    "Nhận sự kiện thay đổi thông tin thiết bị Controller " + e.DeviceName,
+            //    Color.DarkBlue);
+            //lblLoadingStatus.BeginInvoke(new Action(() =>
+            //{
+            //    lblLoadingStatus.Text = "Nhận sự kiện thay đổi thông tin thiết bị Controller " + e.DeviceName;
+            //    lblLoadingStatus.Refresh();
+            //}));
         }
         private void Controller_ConnectStatusChangeEvent(object sender, ConnectStatusCHangeEventArgs e)
         {
-            lblLoadingStatus.BeginInvoke(new Action(() =>
-            {
-                lblLoadingStatus.Text = "Nhận sự kiện thay đổi trạng thái kết nối từ bộ điều khiển " + e.DeviceName;
-                lblLoadingStatus.Refresh();
-            }));
+            lblLoadingStatus.Message = "Nhận sự kiện thay đổi trạng thái kết nối Controller " + e.DeviceName;
+
+            //lblLoadingStatus.UpdateResultMessage(
+            //           "Nhận sự kiện thay đổi trạng thái kết nối Controller " + e.DeviceName,
+            //           Color.DarkBlue);
+
+            //lblLoadingStatus.BeginInvoke(new Action(() =>
+            //{
+            //    lblLoadingStatus.Text = "Nhận sự kiện thay đổi trạng thái kết nối Controller " + e.DeviceName;
+            //    lblLoadingStatus.Refresh();
+            //}));
         }
         private void Controller_InputEvent(object sender, InputEventArgs e)
         {
+           // lblLoadingStatus.UpdateResultMessage(
+           //$"Nhận sự kiện input {e.InputIndex} Controller " + e.DeviceName, Color.DarkBlue);
+
+            lblLoadingStatus.Message = $"Nhận sự kiện input {e.InputIndex} Controller " + e.DeviceName;
+
             lblLoadingStatus.BeginInvoke(new Action(() =>
             {
-                lblLoadingStatus.Text = $"Nhận sự kiện input {e.InputIndex} từ bộ điều khiển " + e.DeviceName;
-                lblLoadingStatus.Refresh();
+                //lblLoadingStatus.Text = $"Nhận sự kiện input {e.InputIndex} Controller " + e.DeviceName;
+                //lblLoadingStatus.Refresh();
                 foreach (iLane iLane in lanes)
                 {
                     iLane.OnNewEvent(e);
@@ -304,11 +333,16 @@ namespace iParkingv5_window.Forms.DataForms
         }
         private void Controller_ErrorEvent(object sender, ControllerErrorEventArgs e)
         {
-            lblLoadingStatus.BeginInvoke(new Action(() =>
-            {
-                lblLoadingStatus.Text = $"Nhận sự kiện error từ bộ điều khiển " + e.DeviceName;
-                lblLoadingStatus.Refresh();
-            }));
+            lblLoadingStatus.Message = $"Nhận sự kiện error Controller " + e.DeviceName;
+
+            //lblLoadingStatus.UpdateResultMessage(
+            //   $"Nhận sự kiện error Controller " + e.DeviceName, Color.DarkBlue);
+
+            //lblLoadingStatus.BeginInvoke(new Action(() =>
+            //{
+            //    lblLoadingStatus.Text = $"Nhận sự kiện error Controller " + e.DeviceName;
+            //    lblLoadingStatus.Refresh();
+            //}));
         }
         private void Controller_CardEvent(object sender, CardEventArgs e)
         {
@@ -332,9 +366,9 @@ namespace iParkingv5_window.Forms.DataForms
                         {
                             e.PreferCard = "0" + e.PreferCard;
                         }
-                        lblLoadingStatus.Text = $"Nhận sự kiện quẹt thẻ READER: {e.ReaderIndex}, CARD: {e.PreferCard} từ bộ điều khiển " + e.DeviceName;
-                        lblLoadingStatus.Refresh();
+                        e.AllCardFormats.Add(e.PreferCard);
 
+                        lblLoadingStatus.Message = $"{DateTime.Now:HH:mm:ss} READER: {e.ReaderIndex}, CARD: {e.PreferCard} Controller " + e.DeviceName;
                         iLane.OnNewEvent(e);
                     }
                 }
@@ -385,8 +419,8 @@ namespace iParkingv5_window.Forms.DataForms
             lanes.Clear();
             foreach (Lane lane in this.activeLanes)
             {
-                lblLoadingStatus.Text = "Khởi tạo làn: " + lane.name;
-                lblLoadingStatus.Refresh();
+                lblLoadingStatus.Message = "Khởi tạo làn: " + lane.name;
+
                 LaneDisplayConfig? laneDisplayConfig = GetLaneDisplayConfigByLaneId(lane);
                 string configPath = PathManagement.appLaneDirectionConfigPath(lane.Id);
                 var laneDirectionConfig = NewtonSoftHelper<LaneDirectionConfig>.DeserializeObjectFromPath(configPath) ?? LaneDirectionConfig.CreateDefault();
@@ -459,7 +493,7 @@ namespace iParkingv5_window.Forms.DataForms
                 lbl.Text = bdk.Name;
                 lbl.Name = bdk.Id;
                 lbl.AutoSize = false;
-
+                lbl.Width = lbl.PreferredWidth;
                 IController? controller = ControllerFactory.CreateController(bdk);
                 if (controller != null)
                 {
@@ -493,6 +527,27 @@ namespace iParkingv5_window.Forms.DataForms
             }
             return true;
             //return NewtonSoftHelper<List<LaneDisplayConfig>>.SaveConfig(laneDisplayConfigs, PathManagement.appDisplayConfigPath);
+        }
+
+        //--MQTT
+        public void ConnectMQTT()
+        {
+            if (!string.IsNullOrEmpty(StaticPool.serverConfig.MQTTUrl))
+            {
+                var _MqttClient = new MqttClient(StaticPool.serverConfig.MQTTUrl, 1883, false, MqttSslProtocols.None, null, null);
+                _MqttClient.ProtocolVersion = MqttProtocolVersion.Version_3_1;
+
+                // Set username and password
+                string username = StaticPool.serverConfig.MQTTUsername;
+                string password = StaticPool.serverConfig.MQTTPassword;
+
+                // Connect to the MQTT broker with the specified credentials
+                _MqttClient.Connect(StaticPool.selectedComputer.Name, username, password);
+
+                // Subscribe to topics
+                _MqttClient.MqttMsgPublishReceived += _MqttClient_MqttMsgPublishReceived;
+                _MqttClient.Subscribe(new string[] { "#" }, new byte[] { MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE });
+            }
         }
 
         //--RABBITMQ
@@ -560,9 +615,11 @@ namespace iParkingv5_window.Forms.DataForms
                 {
                     if (item.lane.code == ce.DeviceId)
                     {
-                        lblLoadingStatus.Text = $"Nhận sự kiện quẹt thẻ READER: {ce.ReaderIndex}, CARD: {ce.PreferCard} từ bộ điều khiển " + ce.DeviceName;
-                        lblLoadingStatus.Width = lblLoadingStatus.PreferredWidth;
-                        lblLoadingStatus.Refresh();
+                        lblLoadingStatus.Message = $"{DateTime.Now:HH:mm:ss} READER: {ce.ReaderIndex}, CARD: {ce.PreferCard} Controller " + ce.DeviceName;
+     //                   lblLoadingStatus.UpdateResultMessage(
+     //$"{DateTime.Now:HH:mm:ss} READER: {ce.ReaderIndex}, CARD: {ce.PreferCard} Controller " + ce.DeviceName,
+     // Color.DarkBlue);
+
                         ce.DeviceId = item.lane.controlUnits[0].controlUnitId;
                         ce.ReaderIndex = item.lane.controlUnits[0].readers[0];
                         item.OnNewEvent(ce);
@@ -709,8 +766,9 @@ namespace iParkingv5_window.Forms.DataForms
                 }
                 if (updateLane != null)
                 {
-                    lblLoadingStatus.Text = "Khởi tạo làn: " + updateLane.name;
-                    lblLoadingStatus.Refresh();
+                    lblLoadingStatus.Message = "Khởi tạo làn: " + updateLane.name;
+
+                    //lblLoadingStatus.UpdateResultMessage("Khởi tạo làn: " + updateLane.name, Color.DarkBlue);
                     LoadAppDisplayConfig();
                     LaneDisplayConfig? laneDisplayConfig = GetLaneDisplayConfigByLaneId(updateLane);
                     string configPath = PathManagement.appLaneDirectionConfigPath(updateLane.Id);
@@ -776,14 +834,21 @@ namespace iParkingv5_window.Forms.DataForms
         private void btnRegister_Click(object? sender, EventArgs e)
         {
             tblUserLog.SaveLog("Application", $"User Click To Open Register Screen");
-
-            var frmAddVisitor = new frmAddVisitor();
-            if (frmAddVisitor.ShowDialog() == DialogResult.OK)
+            if (StaticPool.appOption.PrintTemplate == (int)EmPrintTemplate.HANET)
             {
-                string identityGroupCode = frmAddVisitor.IdentityGroupCode;
-                string plateNumber = frmAddVisitor.PlateNumber;
-                lastHausVistor = frmAddVisitor.lastHausVistor;
+                new frmRegisterHANETUser().ShowDialog();
             }
+            else
+            {
+                var frmAddVisitor = new frmAddVisitor();
+                if (frmAddVisitor.ShowDialog() == DialogResult.OK)
+                {
+                    string identityGroupCode = frmAddVisitor.IdentityGroupCode;
+                    string plateNumber = frmAddVisitor.PlateNumber;
+                    lastHausVistor = frmAddVisitor.lastHausVistor;
+                }
+            }
+
         }
         private async void btnPrintQR_Click(object? sender, EventArgs e)
         {
@@ -811,7 +876,7 @@ namespace iParkingv5_window.Forms.DataForms
                             ce.DeviceId = lane.lane.controlUnits[0].controlUnitId;
                             ce.ReaderIndex = lane.lane.controlUnits[0].readers[0];
                             ce.PreferCard = lastHausVistor.IdentityCode;
-                            await lane.OnNewEvent(ce);
+                            lane.printQR(ce, qrData);
                             break;
                         }
                     }
@@ -819,6 +884,51 @@ namespace iParkingv5_window.Forms.DataForms
                 //var printer = new OfficeHausPrinter();
                 //string baseContent = File.ReadAllText(PathManagement.hausQRPath());
                 //printer.printQR(baseContent, qrData.QrCode ?? "");
+            }
+        }
+
+        private void _MqttClient_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
+        {
+            if (e.Topic.Contains("topic/detected"))
+            {
+                var data = Encoding.UTF8.GetString(e.Message);
+                var topic = e.Topic;
+                HANETFaceData faceData = Newtonsoft.Json.JsonConvert.DeserializeObject<HANETFaceData>(data);
+                if (faceData != null)
+                {
+                    var identityCode = HANETApi.GetIdentityCodeByPersonId(faceData.person_id);
+                    this.Invoke(new Action(() =>
+                    {
+                        foreach (var item in lanes)
+                        {
+                            foreach (ControllerInLane controllerInLane in item.lane.controlUnits)
+                            {
+                                Bdk bdk = (from Bdk _bdk in StaticPool.bdks
+                                           where _bdk.Id.ToLower() == controllerInLane.controlUnitId
+                                           select _bdk).FirstOrDefault();
+                                if (bdk == null)
+                                {
+                                    continue;
+                                }
+                                if (bdk.Code == faceData.camera_id)
+                                {
+                                    lblLoadingStatus.Message = $"{DateTime.Now:HH:mm:ss} Face:{faceData.person_name} - {faceData.person_id} - {faceData.camera_id}";
+
+                                    //lblLoadingStatus.UpdateResultMessage($"{DateTime.Now:HH:mm:ss} Face:{faceData.person_name} - {faceData.person_id} - {faceData.camera_id}", Color.DarkBlue);
+
+                                    CardEventArgs ce = new CardEventArgs();
+                                    ce.DeviceId = item.lane.controlUnits[0].controlUnitId;
+                                    ce.ReaderIndex = item.lane.controlUnits[0].readers[0];
+                                    ce.AllCardFormats.Add(identityCode);
+                                    ce.PreferCard = identityCode;
+                                    item.OnNewEvent(ce);
+
+                                    break;
+                                }
+                            }
+                        }
+                    }));
+                }
             }
         }
     }

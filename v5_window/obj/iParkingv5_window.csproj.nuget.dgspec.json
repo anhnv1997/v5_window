@@ -1352,6 +1352,10 @@
               "target": "Package",
               "version": "[6.0.0, )"
             },
+            "M2Mqtt": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
             "Microsoft.Web.WebView2": {
               "target": "Package",
               "version": "[1.0.2420.47, )"

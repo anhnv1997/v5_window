@@ -338,8 +338,8 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
                                     //                 2023-11-15 15:16:55,0,0,1,201,2,200
                                     //--LOCK1 (LOOP2): 2023-11-15 15:14:52,0,0,2,102,2,200
                                     //                 2023-11-15 15:14:55,0,0,2,201,2,200
-                                    eventType = "203";
-                                    cardNumberInt = "13033089";
+                                    //eventType = "203";
+                                    //cardNumberInt = "13033089";
                                     //--Door Status Event
                                     if (eventType == "255")
                                     {
@@ -373,7 +373,7 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
                             this.ControllerInfo.IsConnect = false;
                         }
                     }
-                    await Task.Delay(5000);
+                    await Task.Delay(300);
                 }
                 catch (Exception ex)
                 {

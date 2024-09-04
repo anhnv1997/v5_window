@@ -9,6 +9,8 @@ namespace iParkingv5.Objects.Datas.payment_service
     {
         public string targetId { get; set; }
         public InvoiceTargetType targetType { get; set; } = InvoiceTargetType.EventOut;
+        public int method { get; set; } = 0;
+        public int provider { get; set; } = 0;
         public long amount { get; set; }
         public List<PaymentDetail> details { get; set; }
     }

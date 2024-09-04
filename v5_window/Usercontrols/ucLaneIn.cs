@@ -220,7 +220,7 @@ namespace iParkingv5_window.Usercontrols
             var eventInResponse = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, lprResult.PlateNumber, null, validImageTypes,
                                                                                                   false, lprResult.Vehicle);
 
-            var checkInOutResponse = CheckEventInReponse(eventInResponse, customer, lprResult.Vehicle.vehicleType, lprResult.PlateNumber, false);
+            var checkInOutResponse = CheckEventInReponse(eventInResponse, customer, lprResult.Vehicle.vehicleType, lprResult.PlateNumber, false, null, null, lprResult.Vehicle);
             tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
                                  $"{this.lane.name}.Loop.{ie.InputIndex} - CHECK EVENT IN NORMAL RESPONSE", checkInOutResponse);
 
@@ -243,7 +243,7 @@ namespace iParkingv5_window.Usercontrols
                                 $"{this.lane.name}.Loop.{ie.InputIndex} - SEND CHECK IN FORCE REQUEST");
                 eventInResponse = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, lprResult.PlateNumber, null, validImageTypes,
                                                                                                   true, lprResult.Vehicle);
-                checkInOutResponse = CheckEventInReponse(eventInResponse, customer, lprResult.Vehicle.vehicleType, lprResult.PlateNumber, true);
+                checkInOutResponse = CheckEventInReponse(eventInResponse, customer, lprResult.Vehicle.vehicleType, lprResult.PlateNumber, true, null, null, lprResult.Vehicle);
                 tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
                                   $"{this.lane.name}.Loop.{ie.InputIndex} - CHECK EVENT OUT FORCE RESPONSE", checkInOutResponse);
                 //Sau khi force vẫn không thành công, kết thúc quy trình
@@ -327,8 +327,8 @@ namespace iParkingv5_window.Usercontrols
                     tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                               $"{this.lane.name}.Card.{ce.PreferCard} - In Waiting Time: {thoiGianCho}s");
                     lblResult.UpdateResultMessage($"Đang trong thời gian chờ, vui lòng quẹt lại sau {thoiGianCho}s", ProcessColor);
-                    return;
                 }
+                return;
             }
 
             ClearView();
@@ -455,6 +455,7 @@ namespace iParkingv5_window.Usercontrols
             }
 
             EventInData? eventIn = null;
+            RegisteredVehicle? registeredVehicle = identity.Vehicles[0];
             if (string.IsNullOrEmpty(plateNumber) && identityGroup.PlateNumberValidation != (int)EmPlateCompareRule.UnCheck)
             {
                 tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
@@ -465,6 +466,7 @@ namespace iParkingv5_window.Usercontrols
                 bool isConfirm = false;
                 if (identity.Vehicles.Count == 1)
                 {
+                    registeredVehicle = identity.Vehicles[0];
                     tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                          $"{this.lane.name}.Card.{ce.PreferCard} - Show Confirm Plate Request");
 
@@ -489,6 +491,7 @@ namespace iParkingv5_window.Usercontrols
                     {
                         isAlarm = true;
                         plateNumber = frmSelectVehicle.selectedPlate;
+                        registeredVehicle = frmSelectVehicle.selectedVehicle;
                     }
                 }
                 if (!isConfirm)
@@ -505,8 +508,10 @@ namespace iParkingv5_window.Usercontrols
                                          $"{this.lane.name}.Card.{ce.PreferCard} - Send Check In Normal Request");
 
             var eventInResponse = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plateNumber, identity, validImageTypes, false, null, "");
+            Customer? customer = string.IsNullOrEmpty(registeredVehicle?.customer?.Id ?? "") ?
+                                           null : customer = (await AppData.ApiServer.parkingDataService.GetCustomerByIdAsync(registeredVehicle?.customer?.Id ?? ""))?.Item1;
 
-            var checkInOutResponse = CheckEventInReponse(eventInResponse, null, vehicleType, plateNumber, false);
+            var checkInOutResponse = CheckEventInReponse(eventInResponse, customer, vehicleType, plateNumber, false, identity, identityGroup, registeredVehicle);
             tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                          $"{this.lane.name}.Card.{ce.PreferCard} - Check Event In Response", checkInOutResponse);
 
@@ -553,7 +558,7 @@ namespace iParkingv5_window.Usercontrols
                                        $"{this.lane.name}.Card.{ce.PreferCard} - Send Check In Force Request");
 
                 eventInResponse = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plateNumber, identity, validImageTypes, true, null, "");
-                checkInOutResponse = CheckEventInReponse(eventInResponse, null, vehicleType, plateNumber, true);
+                checkInOutResponse = CheckEventInReponse(eventInResponse, customer, vehicleType, plateNumber, true, identity, identityGroup, registeredVehicle);
                 tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                          $"{this.lane.name}.Card.{ce.PreferCard} - Check Event Out Force Response", checkInOutResponse);
 
@@ -631,7 +636,7 @@ namespace iParkingv5_window.Usercontrols
             tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                  $"{this.lane.name}.Card.{ce.PreferCard} - Send Check In Normal Request");
             var eventInResponse = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plateNumber, identity, validImageTypes, false, null, "");
-            var checkInOutResponse = CheckEventInReponse(eventInResponse, null, vehicleType, plateNumber, false);
+            var checkInOutResponse = CheckEventInReponse(eventInResponse, null, vehicleType, plateNumber, false, identity, identityGroup);
 
             tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                 $"{this.lane.name}.Card.{ce.PreferCard} - Check Check In Normal Response", checkInOutResponse);
@@ -659,7 +664,7 @@ namespace iParkingv5_window.Usercontrols
 
                     eventInResponse = await AppData.ApiServer.parkingProcessService.PostCheckInAsync(lane.Id, plateNumber, identity, validImageTypes, true, null, "");
 
-                    checkInOutResponse = CheckEventInReponse(eventInResponse, null, vehicleType, plateNumber, true);
+                    checkInOutResponse = CheckEventInReponse(eventInResponse, null, vehicleType, plateNumber, true, identity, identityGroup);
                     tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                 $"{this.lane.name}.Card.{ce.PreferCard} - Check Event In Force Response", checkInOutResponse);
 
@@ -714,10 +719,10 @@ namespace iParkingv5_window.Usercontrols
             lblResult.UpdateResultMessage("Gặp lỗi trong quá trình xử lý, vui lòng thử lại sau giây lát", ErrorColor);
         }
         private void ExcecuteUnvalidEvent(Identity? identity, IdentityGroup? identityGroup, VehicleBaseType vehicleType, string detectPlate,
-                                          DateTime eventTime, string errorMessage, Customer? customer, string registerPlate)
+                                          DateTime eventTime, string errorMessage, Customer? customer, RegisteredVehicle? registerPlate)
         {
             lblResult.UpdateResultMessage(errorMessage, ErrorColor);
-            DisplayEventInfo(eventTime, detectPlate, identity, identityGroup, vehicleType, customer, null);
+            DisplayEventInfo(eventTime, detectPlate, identity, identityGroup, vehicleType, customer, registerPlate, null);
         }
         private async Task ExcecuteValidEvent(Identity? identity, IdentityGroup? identityGroup,
                                               VehicleBaseType vehicleType, string detectPlate,
@@ -1642,7 +1647,7 @@ namespace iParkingv5_window.Usercontrols
         /// <returns></returns>
         private CheckEventInResponse CheckEventInReponse(Tuple<EventInData, BaseErrorData> eventInReponse, Customer? customer,
                                                       VehicleBaseType vehicleBaseType, string plateNumber,
-                                                      bool isForce)
+                                                      bool isForce, Identity? identity, IdentityGroup? identityGroup, RegisteredVehicle? registeredVehicle = null)
         {
             CheckEventInResponse checkInOutResponse = new CheckEventInResponse()
             {
@@ -1652,13 +1657,7 @@ namespace iParkingv5_window.Usercontrols
                 ErrorMessage = string.Empty,
                 ErrorData = eventInReponse.Item2,
             };
-            if (eventInReponse == null)
-            {
-                ExcecuteSystemErrorCheckIn();
-                return checkInOutResponse;
-            }
-
-            if (checkInOutResponse.eventIn is null && checkInOutResponse.ErrorData is null)
+            if (eventInReponse == null || (checkInOutResponse.eventIn is null && checkInOutResponse.ErrorData is null))
             {
                 ExcecuteSystemErrorCheckIn();
                 return checkInOutResponse;
@@ -1671,7 +1670,6 @@ namespace iParkingv5_window.Usercontrols
                 checkInOutResponse.IsContinueExcecute = false;
                 return checkInOutResponse;
             }
-
             //Sự kiện lỗi, kiểm tra thông tin lỗi
             else
             {
@@ -1683,8 +1681,8 @@ namespace iParkingv5_window.Usercontrols
                 checkInOutResponse.ErrorMessage = checkInOutResponse.ErrorData.fields[0].ToString();
                 if (isForce)
                 {
-                    ExcecuteUnvalidEvent(null, null, vehicleBaseType, plateNumber, DateTime.Now,
-                                        checkInOutResponse.ErrorMessage, customer, plateNumber);
+                    ExcecuteUnvalidEvent(identity, identityGroup, vehicleBaseType, plateNumber, DateTime.Now,
+                                        checkInOutResponse.ErrorMessage, customer, registeredVehicle);
                     return checkInOutResponse;
                 }
                 else
@@ -1692,8 +1690,8 @@ namespace iParkingv5_window.Usercontrols
                     // Sử dụng cho các trường hợp phương tiện hết hạn sử dụng, ngoài giờ được phép sử dụng
                     if (!allowAlarmMessage.Contains(checkInOutResponse.ErrorMessage))
                     {
-                        ExcecuteUnvalidEvent(null, null, vehicleBaseType, plateNumber, DateTime.Now,
-                                             checkInOutResponse.ErrorMessage, customer, plateNumber);
+                        ExcecuteUnvalidEvent(identity, identityGroup, vehicleBaseType, plateNumber, DateTime.Now,
+                                             checkInOutResponse.ErrorMessage, customer, registeredVehicle);
                         return checkInOutResponse;
                     }
                     checkInOutResponse.IsContinueExcecute = true;
@@ -1756,7 +1754,7 @@ namespace iParkingv5_window.Usercontrols
                 {
                     if (customer != null)
                     {
-                        dgvEventContent.Rows.Add("Nhóm khách hàng", customer.CustomerGroupName);
+                        dgvEventContent.Rows.Add("Nhóm khách hàng", customer.customerGroup?.Name ?? "");
                         dgvEventContent.Rows.Add("Khách hàng", customer.Name + " / " + customer.Address);
                         dgvEventContent.Rows.Add("SĐT", customer.PhoneNumber);
                     }
@@ -1764,7 +1762,25 @@ namespace iParkingv5_window.Usercontrols
                 if (registeredVehicle != null)
                 {
                     dgvEventContent.Rows.Add("BSĐK", registeredVehicle.Name + "/" + registeredVehicle.PlateNumber);
-                    dgvEventContent.Rows.Add("Hết hạn", registeredVehicle.ExpireTime);
+                    if (registeredVehicle.ExpireTime != null)
+                    {
+                        dgvEventContent.Rows.Add("Hết hạn", registeredVehicle.ExpireTime);
+                        double remainingTime = (DateTime.Now - registeredVehicle.ExpireTime.Value).TotalDays;
+                        if (remainingTime <= 7)
+                        {
+                            if (this.Width < 1500)
+                            {
+                                dgvEventContent.Rows[dgvEventContent.RowCount - 1].DefaultCellStyle.Font = new Font(dgvEventContent.DefaultCellStyle.Font.Name,
+                                                                                                                    20, FontStyle.Bold);
+                            }
+                            else
+                            {
+                                dgvEventContent.Rows[dgvEventContent.RowCount - 1].DefaultCellStyle.Font = new Font(dgvEventContent.DefaultCellStyle.Font.Name,
+                                                                                                                    dgvEventContent.DefaultCellStyle.Font.Size * 3, FontStyle.Bold);
+                            }
+                            dgvEventContent.Rows[dgvEventContent.RowCount - 1].DefaultCellStyle.ForeColor = Color.Red;
+                        }
+                    }
                 }
                 if (identityGroup != null)
                 {

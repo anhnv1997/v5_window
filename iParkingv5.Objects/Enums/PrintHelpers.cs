@@ -11,7 +11,8 @@ namespace iParkingv5.Objects.Enums
             BaseTemplate,
             XuanCuong,
             OfficeHaus,
-            Seastars_Hotel
+            Seastars_Hotel,
+            HANET
         }
     }
 }

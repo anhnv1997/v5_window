@@ -19,6 +19,20 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 {
     public class KzParkingv5PaymentService : iPaymentService
     {
+        public enum Method
+        {
+            QrCode,
+            Cash,
+            Card
+        }
+        public enum Provider
+        {
+            None,
+            Momo,
+            Tingee,
+            Vimo,
+        }
+
         public async Task<PaymentTransaction> CreatePaymentTransaction(EventOutData eventOut)
         {
             var data = new PaymentTransaction
@@ -26,6 +40,8 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                 targetId = eventOut.Id,
                 targetType = InvoiceTargetType.EventOut,
                 amount = eventOut.Charge,
+                method = (int)Method.Cash,
+                provider = (int)Provider.None,
                 //details = new List<PaymentDetail>()
                 //{
                 //    new PaymentDetail(){purpose = EmPaymentPurpose.ParkingDay, quantity = eventOut.charge.Day, amount = eventOut.charge.DayAmount, price = eventOut.charge.DayPrice },

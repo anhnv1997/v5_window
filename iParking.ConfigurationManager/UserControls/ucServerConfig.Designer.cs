@@ -45,9 +45,17 @@
             label6 = new Label();
             txtRabbitMQUsername = new TextBox();
             label7 = new Label();
+            groupBox4 = new GroupBox();
+            label8 = new Label();
+            txtMQTTServer = new TextBox();
+            txtMQTTPassword = new TextBox();
+            label9 = new Label();
+            txtMQTTUsername = new TextBox();
+            label10 = new Label();
             groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox3.SuspendLayout();
+            groupBox4.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox2
@@ -247,24 +255,108 @@
             label7.TabIndex = 2;
             label7.Text = "Url";
             // 
+            // groupBox4
+            // 
+            groupBox4.AutoSize = true;
+            groupBox4.Controls.Add(label8);
+            groupBox4.Controls.Add(txtMQTTServer);
+            groupBox4.Controls.Add(txtMQTTPassword);
+            groupBox4.Controls.Add(label9);
+            groupBox4.Controls.Add(txtMQTTUsername);
+            groupBox4.Controls.Add(label10);
+            groupBox4.Dock = DockStyle.Top;
+            groupBox4.Location = new Point(0, 372);
+            groupBox4.Margin = new Padding(4, 3, 4, 3);
+            groupBox4.Name = "groupBox4";
+            groupBox4.Padding = new Padding(4, 3, 4, 3);
+            groupBox4.Size = new Size(703, 147);
+            groupBox4.TabIndex = 8;
+            groupBox4.TabStop = false;
+            groupBox4.Text = "Thông tin MQTT";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(7, 94);
+            label8.Margin = new Padding(4, 0, 4, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(93, 21);
+            label8.TabIndex = 6;
+            label8.Text = "Mã bảo mật";
+            // 
+            // txtMQTTServer
+            // 
+            txtMQTTServer.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtMQTTServer.Location = new Point(167, 21);
+            txtMQTTServer.Margin = new Padding(4, 3, 4, 3);
+            txtMQTTServer.Name = "txtMQTTServer";
+            txtMQTTServer.PlaceholderText = "Địa chỉ IP của Server";
+            txtMQTTServer.Size = new Size(512, 29);
+            txtMQTTServer.TabIndex = 1;
+            // 
+            // txtMQTTPassword
+            // 
+            txtMQTTPassword.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtMQTTPassword.Location = new Point(167, 90);
+            txtMQTTPassword.Margin = new Padding(4, 3, 4, 3);
+            txtMQTTPassword.Name = "txtMQTTPassword";
+            txtMQTTPassword.PasswordChar = '*';
+            txtMQTTPassword.PlaceholderText = "Mật khẩu tài khoản hoặc mã bảo mật";
+            txtMQTTPassword.Size = new Size(512, 29);
+            txtMQTTPassword.TabIndex = 3;
+            txtMQTTPassword.UseSystemPasswordChar = true;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(7, 55);
+            label9.Margin = new Padding(4, 0, 4, 0);
+            label9.Name = "label9";
+            label9.Size = new Size(111, 21);
+            label9.TabIndex = 7;
+            label9.Text = "Tên đăng nhập";
+            // 
+            // txtMQTTUsername
+            // 
+            txtMQTTUsername.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtMQTTUsername.Location = new Point(167, 56);
+            txtMQTTUsername.Margin = new Padding(4, 3, 4, 3);
+            txtMQTTUsername.Name = "txtMQTTUsername";
+            txtMQTTUsername.PlaceholderText = "Tên đăng nhập vào hệ thống";
+            txtMQTTUsername.Size = new Size(512, 29);
+            txtMQTTUsername.TabIndex = 2;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(7, 24);
+            label10.Margin = new Padding(4, 0, 4, 0);
+            label10.Name = "label10";
+            label10.Size = new Size(31, 21);
+            label10.TabIndex = 2;
+            label10.Text = "Url";
+            // 
             // ucServerConfig
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ButtonHighlight;
+            Controls.Add(groupBox4);
             Controls.Add(groupBox3);
             Controls.Add(groupBox1);
             Controls.Add(groupBox2);
             Font = new Font("Segoe UI", 12F);
             Margin = new Padding(4, 3, 4, 3);
             Name = "ucServerConfig";
-            Size = new Size(703, 409);
+            Size = new Size(703, 529);
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
+            groupBox4.ResumeLayout(false);
+            groupBox4.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -288,5 +380,12 @@
         private Label label6;
         private TextBox txtRabbitMQUsername;
         private Label label7;
+        private GroupBox groupBox4;
+        private Label label8;
+        private TextBox txtMQTTServer;
+        private TextBox txtMQTTPassword;
+        private Label label9;
+        private TextBox txtMQTTUsername;
+        private Label label10;
     }
 }

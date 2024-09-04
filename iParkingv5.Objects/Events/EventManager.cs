@@ -62,10 +62,10 @@ namespace iParkingv5.Objects.Events
             {
                 return false;
             }
-            if (AllCardFormats.Count != e.AllCardFormats.Count)
-            {
-                return false;
-            }
+            //if (AllCardFormats.Count != e.AllCardFormats.Count)
+            //{
+            //    return false;
+            //}
             foreach (string format in AllCardFormats)
             {
                 if (!e.AllCardFormats.Contains(format))

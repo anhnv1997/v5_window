@@ -22,6 +22,9 @@ namespace iParkingv5.Objects.Datas.parking_service
         {
             get => StaticPool.customerGroupCollection.GetById(CustomerGroupId)?.Name ?? "";
         }
+
+        public CustomerGroup customerGroup { get; set; }
+
         public object Description { get; set; }
         public bool Enabled { get; set; } = true;
         public static void GetCustomerName(List<Customer> customers, string id, out string customerName, out string customerCode, out string customerGroupId, out string customerGroupName)

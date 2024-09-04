@@ -1,4 +1,6 @@
-﻿namespace iParkingv5_window.Forms.DataForms
+﻿using iPakrkingv5.Controls.Controls.Labels;
+
+namespace iParkingv5_window.Forms.DataForms
 {
     partial class frmMain
     {
@@ -46,7 +48,7 @@
             panelMain = new Panel();
             ucViewGrid1 = new Usercontrols.ucViewGrid();
             panelAppStatus = new Panel();
-            lblLoadingStatus = new Label();
+            lblLoadingStatus = new lblResult();
             lblScale = new Label();
             lblCompanyName = new Label();
             lblTime = new Label();
@@ -147,7 +149,7 @@
             // 
             btnRegister.Image = (Image)resources.GetObject("btnRegister.Image");
             btnRegister.Name = "btnRegister";
-            btnRegister.Size = new Size(180, 26);
+            btnRegister.Size = new Size(137, 26);
             btnRegister.Text = "Đăng ký";
             btnRegister.Click += btnRegister_Click;
             // 
@@ -155,7 +157,7 @@
             // 
             btnPrintQR.Image = (Image)resources.GetObject("btnPrintQR.Image");
             btnPrintQR.Name = "btnPrintQR";
-            btnPrintQR.Size = new Size(180, 26);
+            btnPrintQR.Size = new Size(137, 26);
             btnPrintQR.Text = "In QR";
             btnPrintQR.Click += btnPrintQR_Click;
             // 
@@ -222,7 +224,6 @@
             lblLoadingStatus.Padding = new Padding(9, 0, 0, 0);
             lblLoadingStatus.Size = new Size(172, 24);
             lblLoadingStatus.TabIndex = 4;
-            lblLoadingStatus.Text = "Đang Tải Thông Tin ...";
             lblLoadingStatus.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblScale
@@ -411,7 +412,7 @@
         private Panel panelMain;
         private Usercontrols.ucViewGrid ucViewGrid1;
         private Panel panelAppStatus;
-        private Label lblLoadingStatus;
+        private lblResult lblLoadingStatus;
         private Label lblCompanyName;
         private Label lblTime;
         private Label lblServerName;

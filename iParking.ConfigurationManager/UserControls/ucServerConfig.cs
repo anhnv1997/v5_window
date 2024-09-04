@@ -28,9 +28,14 @@ namespace iParking.ConfigurationManager.UserControls
                 txtMinioServerUrl.Text = this.serverConfig.MinioServerUrl;
                 txtMinioServerUsername.Text = this.serverConfig.MinioServerUsername;
                 txtMinioServerPassword.Text = this.serverConfig.MinioServerPassword;
+
                 txtRabbitMqServer.Text = this.serverConfig.RabbitMqUrl;
                 txtRabbitMQUsername.Text = this.serverConfig.RabbitMqUsername;
                 txtRabbitMQPassword.Text = this.serverConfig.RabbitMqPassword;
+
+                txtMQTTServer.Text = this.serverConfig.MQTTUrl;
+                txtMQTTUsername.Text = this.serverConfig.MQTTUsername;
+                txtMQTTPassword.Text = this.serverConfig.MQTTPassword;
             }
         }
         #endregion End Forms
@@ -47,6 +52,9 @@ namespace iParking.ConfigurationManager.UserControls
                 RabbitMqUrl = txtRabbitMqServer.Text,
                 RabbitMqUsername = txtRabbitMQUsername.Text,
                 RabbitMqPassword = txtRabbitMQPassword.Text,
+                MQTTUsername = txtMQTTUsername.Text,
+                MQTTPassword = txtMQTTPassword.Text,
+                MQTTUrl = txtMQTTServer.Text
             };
         }
         #endregion End Public Function
