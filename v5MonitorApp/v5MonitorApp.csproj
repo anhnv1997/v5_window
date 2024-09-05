@@ -33,12 +33,12 @@
     <ProjectReference Include="..\iPakrkingv5.Controls\iPakrkingv5.Controls.csproj" />
     <ProjectReference Include="..\iParking.ConfigurationManager\iParking.ConfigurationManager.csproj" />
     <ProjectReference Include="..\iParkingv5.ApiManager\iParkingv5.ApiManager.csproj" />
+    <ProjectReference Include="..\iParkingv5.Auth\iParkingv5.Auth.csproj" />
     <ProjectReference Include="..\iParkingv5.Objects\iParkingv5.Objects.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Forms\SystemForms\frmLoading.cs" />
-    <Compile Update="Forms\SystemForms\frmLogin.cs" />
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

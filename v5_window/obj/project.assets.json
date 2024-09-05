@@ -3004,8 +3004,8 @@
     },
     "Kztek.Cameras/1.0.0.2": {
       "type": "project",
-      "path": "../../../../../../../BaseLib/Kztek.Cameras/Kztek.Cameras.csproj",
-      "msbuildProject": "../../../../../../../BaseLib/Kztek.Cameras/Kztek.Cameras.csproj"
+      "path": "../../../../../../../KZTEK/CODE/18.BaseLib/Kztek.Cameras/Kztek.Cameras.csproj",
+      "msbuildProject": "../../../../../../../KZTEK/CODE/18.BaseLib/Kztek.Cameras/Kztek.Cameras.csproj"
     },
     "Kztek.Helper/1.0.0": {
       "type": "project",
@@ -3014,8 +3014,8 @@
     },
     "Kztek.RtspPlayer/1.0.0.2": {
       "type": "project",
-      "path": "../../../../../../../BaseLib/Kztek.RtspPlayer/Kztek.RtspPlayer/Kztek.RtspPlayer.csproj",
-      "msbuildProject": "../../../../../../../BaseLib/Kztek.RtspPlayer/Kztek.RtspPlayer/Kztek.RtspPlayer.csproj"
+      "path": "../../../../../../../KZTEK/CODE/18.BaseLib/Kztek.RtspPlayer/Kztek.RtspPlayer/Kztek.RtspPlayer.csproj",
+      "msbuildProject": "../../../../../../../KZTEK/CODE/18.BaseLib/Kztek.RtspPlayer/Kztek.RtspPlayer/Kztek.RtspPlayer.csproj"
     },
     "Kztek.Scale_net6/1.0.0.10": {
       "type": "project",
@@ -3136,11 +3136,11 @@
             "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Scale\\Net6\\Kztek.Scale\\Kztek.Scale_net6.csproj": {
               "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Scale\\Net6\\Kztek.Scale\\Kztek.Scale_net6.csproj"
             },
-            "E:\\BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj": {
-              "projectPath": "E:\\BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj"
+            "E:\\KZTEK\\CODE\\18.BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj": {
+              "projectPath": "E:\\KZTEK\\CODE\\18.BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj"
             },
-            "E:\\BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj": {
-              "projectPath": "E:\\BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj"
+            "E:\\KZTEK\\CODE\\18.BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj": {
+              "projectPath": "E:\\KZTEK\\CODE\\18.BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj"
             }
           }
         }

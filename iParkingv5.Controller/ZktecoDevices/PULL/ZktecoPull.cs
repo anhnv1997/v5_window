@@ -16,6 +16,7 @@ using static iParkingv5.Objects.Enums.CommunicationTypes;
 using System.Threading;
 using Kztek.Tools;
 using System.Text.RegularExpressions;
+using Kztek.Tool.LogDatabases;
 
 namespace iParkingv5.Controller.ZktecoDevices.PULL
 {
@@ -358,7 +359,7 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
                                     {
                                         if (!string.IsNullOrEmpty(cardNumberInt) && Int64.Parse(cardNumberInt) != 0)
                                         {
-                                            CallCardEvent(ControllerInfo, cardNumberInt, entryStatus);
+                                            CallCardEvent(ControllerInfo, cardNumberInt, doorNo);
                                         }
                                     }
                                 }
@@ -410,10 +411,11 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
                 DeviceId = controller.Id,
                 DeviceName = controller.Name,
                 AllCardFormats = new List<string>(),
+
             };
             string cardNumberHex = Convert.ToInt64(cardNumberInt).ToString("X");
             e.PreferCard = cardNumberHex;
-            e.ReaderIndex = Regex.IsMatch(readerIndex, @"^\d+$") ? Convert.ToInt32(readerIndex) + 1 : -1;
+            e.ReaderIndex = Regex.IsMatch(readerIndex, @"^\d+$") ? Convert.ToInt32(readerIndex) : -1;
             OnCardEvent(e);
         }
         public async Task<bool> OpenDoor(int timeInMilisecond, int relayIndex)

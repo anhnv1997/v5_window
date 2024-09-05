@@ -56,7 +56,7 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManag
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\obj\x64\Debug\netstandard2.1\iParkingv5.ApiManager.AssemblyInfoInputs.cache
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\obj\x64\Debug\netstandard2.1\iParkingv5.ApiManager.AssemblyInfo.cs
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\obj\x64\Debug\netstandard2.1\iParkingv5.ApiManager.csproj.CoreCompileInputs.cache
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\obj\x64\Debug\netstandard2.1\iParkingv5.ApiManager.dll
-E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\obj\x64\Debug\netstandard2.1\iParkingv5.ApiManager.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\obj\x64\Debug\netstandard2.1\iParkingv5.ApiManager.sourcelink.json
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\obj\x64\Debug\netstandard2.1\iParking.27C041DC.Up2Date
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\obj\x64\Debug\netstandard2.1\iParkingv5.ApiManager.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\obj\x64\Debug\netstandard2.1\iParkingv5.ApiManager.pdb

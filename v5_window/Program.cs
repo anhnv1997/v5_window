@@ -164,7 +164,6 @@ namespace v6_window
                 MessageBox.Show("LoadServer: " + ex.Message + "\r\n" + ex.InnerException?.Message);
             }
 
-
             try
             {
                 tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "Load OEM Config");

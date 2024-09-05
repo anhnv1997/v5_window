@@ -1320,11 +1320,11 @@
               "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Scale\\Net6\\Kztek.Scale\\Kztek.Scale_net6.csproj": {
                 "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Scale\\Net6\\Kztek.Scale\\Kztek.Scale_net6.csproj"
               },
-              "E:\\BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj": {
-                "projectPath": "E:\\BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj"
+              "E:\\KZTEK\\CODE\\18.BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj": {
+                "projectPath": "E:\\KZTEK\\CODE\\18.BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj"
               },
-              "E:\\BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj": {
-                "projectPath": "E:\\BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj"
+              "E:\\KZTEK\\CODE\\18.BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj": {
+                "projectPath": "E:\\KZTEK\\CODE\\18.BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj"
               }
             }
           }
@@ -1396,14 +1396,14 @@
         }
       }
     },
-    "E:\\BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj": {
+    "E:\\KZTEK\\CODE\\18.BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj": {
       "version": "1.0.0.2",
       "restore": {
-        "projectUniqueName": "E:\\BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj",
+        "projectUniqueName": "E:\\KZTEK\\CODE\\18.BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj",
         "projectName": "Kztek.Cameras",
-        "projectPath": "E:\\BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj",
+        "projectPath": "E:\\KZTEK\\CODE\\18.BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "E:\\BaseLib\\Kztek.Cameras\\obj\\",
+        "outputPath": "E:\\KZTEK\\CODE\\18.BaseLib\\Kztek.Cameras\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -1426,8 +1426,8 @@
           "net5.0-windows7.0": {
             "targetAlias": "net5.0-windows",
             "projectReferences": {
-              "E:\\BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj": {
-                "projectPath": "E:\\BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj"
+              "E:\\KZTEK\\CODE\\18.BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj": {
+                "projectPath": "E:\\KZTEK\\CODE\\18.BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj"
               }
             }
           }
@@ -1469,14 +1469,14 @@
         }
       }
     },
-    "E:\\BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj": {
+    "E:\\KZTEK\\CODE\\18.BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj": {
       "version": "1.0.0.2",
       "restore": {
-        "projectUniqueName": "E:\\BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj",
+        "projectUniqueName": "E:\\KZTEK\\CODE\\18.BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj",
         "projectName": "Kztek.RtspPlayer",
-        "projectPath": "E:\\BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj",
+        "projectPath": "E:\\KZTEK\\CODE\\18.BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "E:\\BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\obj\\",
+        "outputPath": "E:\\KZTEK\\CODE\\18.BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

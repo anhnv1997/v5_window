@@ -1,7 +1,9 @@
 ﻿using IPaking.Ultility;
 using iParkingv5.ApiManager.KzParkingv5Apis;
+using iParkingv5.Auth;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
+using iParkingv5_window;
 using iParkingv5_window.Forms.SystemForms;
 using Kztek.Tool;
 using Kztek.Tools;
@@ -19,68 +21,18 @@ namespace v5MonitorApp
         {
         StartApp:
             {
-                const string appName = "IP_DA_V5_Monitor";
+                const string appName = "IP_DA_V5_Monitor_App";
                 PathManagement.baseBath = LogHelper.SaveLogFolder = Application.StartupPath;
-                LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Khởi chạy ứng dụng");
-                string appCode = "IP_DA_V5_Monitor";
                 using (Mutex mutex = new Mutex(true, appName, out bool ownmutex))
                 {
                     if (ownmutex)
                     {
-                        //return;
-                        //if (Environment.MachineName.ToUpper() != "VIETANHPC")
-                        //{
-                        //    var frmLicenseValidatorForm = new LicenseValidatorForm();
-                        //    frmLicenseValidatorForm.Init(appCode);
-                        //    try
-                        //    {
-                        //        if (frmLicenseValidatorForm.LoadSavedLicense() == null)
-                        //        {
-                        //            bool isOpenActiveForm = MessageBox.Show("Ứng dụng chưa được kích hoạt, bạn có muốn kích hoạt phần mềm?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
-
-                        //            if (isOpenActiveForm)
-                        //            {
-                        //                frmLicenseValidatorForm.ShowActivateForm();
-                        //            }
-                        //            else
-                        //            {
-                        //                Application.Exit();
-                        //                return;
-                        //            }
-                        //        }
-                        //    }
-                        //    catch (Exception ex)
-                        //    {
-                        //        bool isOpenActiveForm = MessageBox.Show("Ứng dụng chưa được kích hoạt, bạn có muốn kích hoạt phần mềm?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes;
-
-                        //        if (isOpenActiveForm)
-                        //        {
-                        //            frmLicenseValidatorForm.ShowActivateForm();
-                        //            if (!frmLicenseValidatorForm.LicenseActivated)
-                        //            {
-                        //                MessageBox.Show("Kích hoạt không thành công " + ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        //                Application.Exit();
-                        //                return;
-                        //            }
-                        //        }
-                        //        else
-                        //        {
-                        //            Application.Exit();
-                        //            return;
-                        //        }
-                        //    }
-
-                        //}
-                        //DahuaAccessControl.Init();
                         LoadSystemConfig();
                         CheckForUpdate();
-                        LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Mở giao diện đăng nhập hệ thống");
-                        Application.Run(new frmLogin());
+                        Application.Run(new frmLogin(AppData.ApiServer, KzParkingv5BaseApi.server, OpenLoadingPage));
                     }
                     else
                     {
-                        LogHelper.Log(LogHelper.EmLogType.WARN, LogHelper.EmObjectLogType.System, "Start", "Ứng dụng đã được mở trước đó", "Tắt ứng dụng cũ và kiểm tra lại");
-                        // ứng dụng đã chạy, đóng ứng dụng trước đó và chạy ứng dụng mới
                         Process currentProcess = Process.GetCurrentProcess();
                         foreach (Process process in Process.GetProcessesByName(currentProcess.ProcessName))
                         {
@@ -94,9 +46,8 @@ namespace v5MonitorApp
                                     goto StartApp;
                                 }
                             }
-                            catch (Exception ex)
+                            catch (Exception)
                             {
-                                LogHelper.Log(LogHelper.EmLogType.ERROR, LogHelper.EmObjectLogType.System, "Start", "Ứng dụng đã được mở trước đó", "Tắt ứng dụng cũ và kiểm tra lại", obj: ex);
                                 goto StartApp;
                             }
                         }
@@ -116,7 +67,7 @@ namespace v5MonitorApp
                     Application.Exit();
                     return;
                 }
-                KzParkingv5ApiHelper.server = StaticPool.serverConfig.ParkingServerUrl;
+                KzParkingv5BaseApi.server = StaticPool.serverConfig.ParkingServerUrl;
             }
             catch (Exception ex)
             {
@@ -235,6 +186,10 @@ namespace v5MonitorApp
                 MessageBox.Show(ex.Message);
             }
         }
-
+        static void OpenLoadingPage()
+        {
+            frmLoading frm = new();
+            frm.Show();
+        }
     }
 }
