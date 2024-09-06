@@ -17,6 +17,19 @@ namespace iParkingv5_window.Forms.SystemForms
         public frmConfirmPassword()
         {
             InitializeComponent();
+            this.KeyDown += FrmConfirmPassword_KeyDown;
+        }
+
+        private void FrmConfirmPassword_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Return)
+            {
+                btnConfirm_Click(null, EventArgs.Empty);
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                btnCancel_Click(null, EventArgs.Empty);
+            }
         }
         #endregion
 

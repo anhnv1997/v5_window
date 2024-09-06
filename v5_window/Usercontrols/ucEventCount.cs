@@ -24,7 +24,9 @@ namespace iParkingv5_window.Usercontrols
             lblVehicleOutDay.Message = vehicleOutDay.ToString();
 
             lblVehicleInTitle.MaxFontSize = lblVehicleOutDayTitle.MaxFontSize = lblCurrentVehicleInParkTitle.MaxFontSize =
-                Math.Min(Math.Min(lblVehicleInTitle.CurrentFontSize, lblVehicleOutDayTitle.CurrentFontSize), lblCurrentVehicleInParkTitle.CurrentFontSize);
+                Math.Min(Math.Min(lblVehicleInTitle.CurrentFontSize, 
+                                lblVehicleOutDayTitle.CurrentFontSize), 
+                                lblCurrentVehicleInParkTitle.CurrentFontSize);
 
         }
 
@@ -77,8 +79,10 @@ namespace iParkingv5_window.Usercontrols
 
         private void UcEventCount_SizeChanged(object? sender, EventArgs e)
         {
+            lblVehicleInTitle.MaxFontSize = lblVehicleOutDayTitle.MaxFontSize = lblCurrentVehicleInParkTitle.MaxFontSize = 100;
+
             lblVehicleInTitle.MaxFontSize = lblVehicleOutDayTitle.MaxFontSize = lblCurrentVehicleInParkTitle.MaxFontSize =
-                    Math.Min(Math.Min(lblVehicleInTitle.CurrentFontSize, lblVehicleOutDayTitle.CurrentFontSize), lblCurrentVehicleInParkTitle.CurrentFontSize);
+                  Math.Min(Math.Min(lblVehicleInTitle.CurrentFontSize, lblVehicleOutDayTitle.CurrentFontSize), lblCurrentVehicleInParkTitle.CurrentFontSize);
         }
         #endregion End Forms
 

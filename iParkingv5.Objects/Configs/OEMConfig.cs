@@ -11,5 +11,6 @@ namespace iParkingv5.Objects.Configs
         public int Language { get; set; } = 0;
         public int TimeToDefautUI { get; set; } = 15;
         public bool IsAutoReturnToDefault { get; set; } = false;
+        public string LogoPath { get; set; } = "";
     }
 }

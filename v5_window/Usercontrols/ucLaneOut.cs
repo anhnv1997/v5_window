@@ -50,7 +50,7 @@ namespace iParkingv5_window.Usercontrols
         #endregion End EVENT
 
         #region OTHER
-        public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
+        public static Image defaultImg = Image.FromFile(StaticPool.oemConfig.LogoPath);
         #endregion End OTHER
 
         #endregion End PROPERTIES

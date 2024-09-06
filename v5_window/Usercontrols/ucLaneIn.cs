@@ -4,7 +4,6 @@ using iPakrkingv5.Controls.Controls.Labels;
 using iParkingv5.ApiManager;
 using iParkingv5.ApiManager.KzParkingv5Apis.services;
 using iParkingv5.Controller;
-using iParkingv5.LprDetecter.LprDetecters;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
 using iParkingv5.Objects.Datas;
@@ -23,9 +22,7 @@ using iParkingv6.Objects.Datas;
 using Kztek.Helper;
 using Kztek.Tool;
 using Kztek.Tool.LogDatabases;
-using Kztek.Tools;
 using System.Data;
-using System.Windows.Forms;
 using static iParkingv5.Objects.Configs.LaneDirectionConfig;
 using static iParkingv5.Objects.Enums.ParkingImageType;
 using static iParkingv5.Objects.Enums.PrintHelpers;
@@ -50,7 +47,7 @@ namespace iParkingv5_window.Usercontrols
         #endregion End EVENT
 
         #region OTHER
-        public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
+        public static Image defaultImg = Image.FromFile(StaticPool.oemConfig.LogoPath);
         #endregion End OTHER
 
         #endregion End PROPERTIES

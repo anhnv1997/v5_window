@@ -168,7 +168,11 @@ namespace v6_window
             {
                 tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "Load OEM Config");
                 StaticPool.oemConfig = NewtonSoftHelper<OEMConfig>.DeserializeObjectFromPath(PathManagement.oemConfigPath) ?? new OEMConfig();
-
+                if (string.IsNullOrEmpty(StaticPool.oemConfig.LogoPath) || 
+                    !File.Exists(StaticPool.oemConfig.LogoPath))
+                {
+                    StaticPool.oemConfig.LogoPath = Path.Combine(Application.StartupPath, @"Resources\defaultImage.png");
+                }
                 tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "Load APP Option");
                 StaticPool.appOption = NewtonSoftHelper<AppOption>.DeserializeObjectFromPath(PathManagement.appOptionConfigPath) ?? new AppOption();
 

@@ -168,6 +168,7 @@
             // 
             // cbCamScale
             // 
+            cbCamScale.DropDownStyle = ComboBoxStyle.DropDownList;
             cbCamScale.FormattingEnabled = true;
             cbCamScale.Location = new Point(199, 198);
             cbCamScale.Margin = new Padding(4, 3, 4, 3);

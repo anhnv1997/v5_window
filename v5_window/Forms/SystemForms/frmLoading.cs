@@ -81,12 +81,15 @@ namespace iParkingv5_window.Forms.SystemForms
             this.FormClosing -= frmLoading_FormClosing;
 
             bool isNeedToChooseLane = false;
-            foreach (var item in StaticPool.lanes)
+            if (StaticPool.lanes.Count > 1)
             {
-                if (!string.IsNullOrEmpty(item.reverseLaneId))
+                foreach (var item in StaticPool.lanes)
                 {
-                    isNeedToChooseLane = true;
-                    break;
+                    if (!string.IsNullOrEmpty(item.reverseLaneId))
+                    {
+                        isNeedToChooseLane = true;
+                        break;
+                    }
                 }
             }
 
@@ -206,8 +209,8 @@ namespace iParkingv5_window.Forms.SystemForms
             }
             catch (Exception ex)
             {
-                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, 
-                                     tblSystemLog.EmSystemActionDetail.PROCESS, "Check Minio Connection",ex);
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application,
+                                     tblSystemLog.EmSystemActionDetail.PROCESS, "Check Minio Connection", ex);
                 timer1.Enabled = false;
                 return false;
             }
@@ -343,7 +346,7 @@ namespace iParkingv5_window.Forms.SystemForms
                 {
                     Lane? _lane = (await AppData.ApiServer.deviceService.GetLaneByIdAsync(lane.Id)).Item1;
 
-                    if (_lane != null)
+                    if (_lane != null && _lane.enabled)
                     {
                         StaticPool.lanes.Add(_lane);
                     }

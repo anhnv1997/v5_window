@@ -1,4 +1,5 @@
 ﻿using iPakrkingv5.Controls;
+using iParkingv5.Objects;
 using iParkingv5.Objects.EventDatas;
 using iParkingv5_window.Forms.DataForms;
 using Kztek.Helper;
@@ -22,7 +23,7 @@ namespace iParkingv5_window.Usercontrols
 
         public DateTime datetimeIn = DateTime.Now;
         public Dictionary<EmParkingImageType, List<ImageData>> picDirs = new Dictionary<EmParkingImageType, List<ImageData>>();
-        public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
+        public static Image defaultImg = Image.FromFile(StaticPool.oemConfig.LogoPath);
         private bool isEventIn = false;
         public delegate void OnChoosen(object sender, string eventId);
         public event OnChoosen? onChoosen;

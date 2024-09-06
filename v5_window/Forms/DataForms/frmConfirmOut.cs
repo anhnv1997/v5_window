@@ -21,7 +21,7 @@ namespace iParkingv5_window.Forms.DataForms
         private long charge = 0;
         public string updatePlate;
 
-        public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
+        public static Image defaultImg = Image.FromFile(StaticPool.oemConfig.LogoPath);
 
         private List<string>? eventInFileKeys;
         private DateTime dateTime;

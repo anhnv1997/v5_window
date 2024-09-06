@@ -39,6 +39,8 @@
             cbLanguage = new ComboBox();
             txtCompanyName = new TextBox();
             label1 = new Label();
+            label4 = new Label();
+            btnChooseLogoPath = new Button();
             ((System.ComponentModel.ISupportInitialize)numTimeToDefaultConfig).BeginInit();
             groupBox2.SuspendLayout();
             SuspendLayout();
@@ -46,7 +48,7 @@
             // chbIsReturnDefaultConfig
             // 
             chbIsReturnDefaultConfig.AutoSize = true;
-            chbIsReturnDefaultConfig.Location = new Point(272, 187);
+            chbIsReturnDefaultConfig.Location = new Point(273, 229);
             chbIsReturnDefaultConfig.Margin = new Padding(5, 6, 5, 6);
             chbIsReturnDefaultConfig.Name = "chbIsReturnDefaultConfig";
             chbIsReturnDefaultConfig.Size = new Size(222, 25);
@@ -107,10 +109,12 @@
             // groupBox2
             // 
             groupBox2.AutoSize = true;
+            groupBox2.Controls.Add(btnChooseLogoPath);
             groupBox2.Controls.Add(label3);
             groupBox2.Controls.Add(cbLanguage);
             groupBox2.Controls.Add(chbIsReturnDefaultConfig);
             groupBox2.Controls.Add(numTimeToDefaultConfig);
+            groupBox2.Controls.Add(label4);
             groupBox2.Controls.Add(label7);
             groupBox2.Controls.Add(txtCompanyName);
             groupBox2.Controls.Add(label1);
@@ -123,7 +127,7 @@
             groupBox2.Margin = new Padding(5, 4, 5, 4);
             groupBox2.Name = "groupBox2";
             groupBox2.Padding = new Padding(5, 4, 5, 4);
-            groupBox2.Size = new Size(664, 244);
+            groupBox2.Size = new Size(664, 286);
             groupBox2.TabIndex = 6;
             groupBox2.TabStop = false;
             groupBox2.Text = "OEM";
@@ -171,6 +175,26 @@
             label1.TabIndex = 2;
             label1.Text = "Ngôn ngữ";
             // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(10, 192);
+            label4.Margin = new Padding(5, 0, 5, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(45, 21);
+            label4.TabIndex = 7;
+            label4.Text = "Logo";
+            // 
+            // btnChooseLogoPath
+            // 
+            btnChooseLogoPath.Location = new Point(272, 184);
+            btnChooseLogoPath.Name = "btnChooseLogoPath";
+            btnChooseLogoPath.Size = new Size(377, 36);
+            btnChooseLogoPath.TabIndex = 13;
+            btnChooseLogoPath.Text = "__Chọn hình ảnh _";
+            btnChooseLogoPath.UseVisualStyleBackColor = true;
+            btnChooseLogoPath.Click += btnChooseLogoPath_Click;
+            // 
             // ucOEM
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -180,7 +204,7 @@
             Margin = new Padding(4);
             Name = "ucOEM";
             Padding = new Padding(4);
-            Size = new Size(672, 264);
+            Size = new Size(672, 309);
             ((System.ComponentModel.ISupportInitialize)numTimeToDefaultConfig).EndInit();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
@@ -201,5 +225,7 @@
         private Label label1;
         private ComboBox cbLanguage;
         private Label label3;
+        private Button btnChooseLogoPath;
+        private Label label4;
     }
 }

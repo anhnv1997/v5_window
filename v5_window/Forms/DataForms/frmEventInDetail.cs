@@ -1,4 +1,5 @@
 ﻿using iParkingv5.ApiManager.KzScaleApis;
+using iParkingv5.Objects;
 using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.EventDatas;
 using iParkingv5_window.Usercontrols;
@@ -18,7 +19,8 @@ namespace iParkingv5_window.Forms.DataForms
         private Dictionary<EmParkingImageType, List<ImageData>> picDirs = new Dictionary<EmParkingImageType, List<ImageData>>();
         private string customerId, registerVehicleId, laneId, identityId;
         public string updatePlate = "";
-        public static Image defaultImg = Image.FromFile(frmMain.defaultImagePath);
+        public static Image defaultImg = Image.FromFile(StaticPool.oemConfig.LogoPath);
+
         private bool isEventIn = false;
         #endregion End Properties
 

@@ -55,7 +55,6 @@ namespace iParkingv5_window.Forms.DataForms
         List<LaneDisplayConfig>? laneDisplayConfigs = null;
         public static string controllerEventInitQueueName = "queue.ControllerEvent";
         private List<Lane> activeLanes = new List<Lane>();
-        public static string defaultImagePath = Application.StartupPath + @"Resources\defaultImage.png";
         //public static Image _defaultImage ;
         #endregion
 
@@ -250,12 +249,12 @@ namespace iParkingv5_window.Forms.DataForms
         private void tsmiReportIn_Click(object sender, EventArgs e)
         {
             tblUserLog.SaveLog("Application", $"User Click To Report In");
-            new frmReportIn(Image.FromFile(defaultImagePath), AppData.ApiServer).Show(this);
+            new frmReportIn(Image.FromFile(StaticPool.oemConfig.LogoPath), AppData.ApiServer).Show(this);
         }
         private void tsmiReportInOut_Click(object sender, EventArgs e)
         {
             tblUserLog.SaveLog("Application", $"User Click To Report Out");
-            new frmReportInOut(AppData.ApiServer, Image.FromFile(defaultImagePath), AppData.printer).Show(this);
+            new frmReportInOut(AppData.ApiServer, Image.FromFile(StaticPool.oemConfig.LogoPath), AppData.printer).Show(this);
         }
         private void tsmiReport_MouseEnter(object sender, EventArgs e)
         {
