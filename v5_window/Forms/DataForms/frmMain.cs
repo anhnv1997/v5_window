@@ -107,7 +107,6 @@ namespace iParkingv5_window.Forms.DataForms
             AppData.printer = PrinterFactory.CreatePrinter((EmPrintTemplate)StaticPool.appOption.PrintTemplate);
 
             lblServerName.Text = Environment.MachineName;
-            lblCompanyName.Text = StaticPool.oemConfig.CompanyName;
             this.Text = StaticPool.oemConfig.AppName;
 
             controllerEventInitQueueName = "queue.ControllerEvent";
@@ -141,7 +140,7 @@ namespace iParkingv5_window.Forms.DataForms
             lblSoftwareName.Width = lblSoftwareName.PreferredSize.Width;
 
             lblLoadingStatus.MessageForeColor = Color.Black;
-            lblLoadingStatus.MessageBackColor = SystemColors.Control;
+            lblLoadingStatus.MessageBackColor = SystemColors.ButtonHighlight;
 
             this.FormClosing += frmMain_FormClosing;
         }
@@ -157,7 +156,8 @@ namespace iParkingv5_window.Forms.DataForms
                     lblUserNaem.Width = lblUserNaem.PreferredSize.Width;
                 }));
                 var screenBound = Screen.FromControl(this).WorkingArea;
-                this.Size = new Size(screenBound.Width, screenBound.Height);
+                //this.Size = new Size(screenBound.Width, screenBound.Height);
+                this.Size = new Size(1366, 768);
                 this.Location = new Point(0, 0);
 
                 LoadAppDisplayConfig();
@@ -171,7 +171,6 @@ namespace iParkingv5_window.Forms.DataForms
                 ConnectMQTT();
                 lblSoftwareName.Width = lblSoftwareName.PreferredWidth;
                 lblServerName.Width = lblServerName.PreferredWidth;
-                lblCompanyName.Width = lblCompanyName.PreferredWidth;
                 lblTime.Width = lblTime.PreferredWidth;
             }
             catch (Exception ex)
@@ -505,7 +504,7 @@ namespace iParkingv5_window.Forms.DataForms
                 }
             }
             lblTime.SendToBack();
-
+            ucEventCount1.SendToBack();
             foreach (IController controller in controllers)
             {
                 controller.PollingStart();
@@ -634,7 +633,7 @@ namespace iParkingv5_window.Forms.DataForms
             timerUpdateControllerConnection.Enabled = false;
             foreach (Bdk bdk in StaticPool.bdks)
             {
-                foreach (Label lbl in panelAppStatus.Controls)
+                foreach (Label lbl in panelAppStatus.Controls.OfType<Label>())
                 {
                     if (lbl.Name == bdk.Id)
                     {

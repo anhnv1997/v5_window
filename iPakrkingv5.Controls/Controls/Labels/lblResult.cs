@@ -10,12 +10,30 @@ namespace iPakrkingv5.Controls.Controls.Labels
     public class lblResult : Label
     {
         #region Properties
+
+        private bool isBold = true;
+        // Expose properties to design mode
+        [Browsable(true)]
+        [Category("Custom Message")]
+        [Description("Sets the text of the Label")]
+        public bool IsBold
+        {
+            get { return isBold; }
+            set
+            {
+                this.isBold = value;
+                this.Refresh();
+            }
+        }
+
         private string message = string.Empty;
         // Expose properties to design mode
+        [Browsable(true)]
         [Category("Custom Message")]
         [Description("Sets the text of the Label")]
         public string Message
         {
+            get { return message; }
             set
             {
                 this.message = value;
@@ -23,10 +41,12 @@ namespace iPakrkingv5.Controls.Controls.Labels
             }
         }
 
+        [Browsable(true)]
         [Category("Custom Back Color")]
         [Description("Sets the back color of the Label")]
         public Color MessageBackColor
         {
+            get { return this.BackColor; }
             set
             {
                 this.BackColor = value;
@@ -37,6 +57,7 @@ namespace iPakrkingv5.Controls.Controls.Labels
         private Color messageForeColor = Color.White;
         public Color MessageForeColor
         {
+            get { return this.messageForeColor; }
             set
             {
                 this.messageForeColor = value;
@@ -56,8 +77,12 @@ namespace iPakrkingv5.Controls.Controls.Labels
 
 
         private int maxFontSize = -1;
+        [Browsable(true)]
+        [Category("Custom max font size")]
+        [Description("Sets  max font size of the Label")]
         public int MaxFontSize
         {
+            get { return maxFontSize; }
             set
             {
                 this.maxFontSize = value;
@@ -77,9 +102,10 @@ namespace iPakrkingv5.Controls.Controls.Labels
         private void LblResult_Paint(object? sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            using (Font font = new Font(this.fontName, 10, FontStyle.Bold))
+            var useFont = isBold ? new Font(this.fontName, 10, FontStyle.Bold) : new Font(this.fontName, 10);
+            using (useFont)
             {
-                DrawTextInCenter(g, this.message.ToUpper(), font, this.messageForeColor);
+                DrawTextInCenter(g, this.message.ToUpper(), useFont, this.messageForeColor);
             }
 
         }

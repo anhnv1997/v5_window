@@ -35,14 +35,26 @@ namespace iParkingv5_window.Usercontrols
             InitializeComponent();
             this.DoubleBuffered = true;
             picVehicle.Image = picVehicle.ErrorImage = defaultImg;
-            pictureBox1.Visible = isDisplayArrow;
             this.Load += UcLastEventInfo_Load;
             this.SizeChanged += UcLastEventInfo_SizeChanged;
         }
 
+        private void Parent_SizeChanged(object? sender, EventArgs e)
+        {
+            this.Width = this.Parent.Width / 3;
+        }
+
         private void UcLastEventInfo_SizeChanged(object? sender, EventArgs e)
         {
-            this.Width = pictureBox1.Visible ? this.Height + pictureBox1.Width : this.Height;
+            if (this.Parent != null)
+            {
+
+                this.Width = this.Parent.Width / 3;
+            }
+            else
+            {
+                this.Width = this.Height;
+            }
         }
 
         private void UcLastEventInfo_Load(object? sender, EventArgs e)
@@ -57,7 +69,7 @@ namespace iParkingv5_window.Usercontrols
 
             picVehicle.MouseEnter += UcLastEventInfo_MouseEnter;
             picVehicle.MouseLeave += UcLastEventInfo_MouseLeave;
-            this.Width = pictureBox1.Visible ? this.Width : this.Width - pictureBox1.Width;
+            this.Width = this.Height * 16 / 9;
         }
 
         private void UcLastEventInfo_MouseLeave(object? sender, EventArgs e)

@@ -38,12 +38,12 @@ namespace iParkingv5.Auth
         #region Forms
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (keyData == Keys.Return)
-            {
-                if (btnLogin.Enabled)
-                    btnLogin_Click(null, null);
-                return true;
-            }
+            //if (keyData == Keys.Return)
+            //{
+            //    if (btnLogin.Enabled)
+            //        btnLogin_Click(null, null);
+            //    return true;
+            //}
             return base.ProcessCmdKey(ref msg, keyData);
         }
         OidcClient _oidcClient;
@@ -68,7 +68,8 @@ namespace iParkingv5.Auth
             {
                 Authority = url.Replace(":5000", ":3000"),
                 ClientId = clientId,
-                Scope = "openid role-data user-data parking-data offline_access device-data invoice-data project-data payment-data tenant-data",
+                //Scope = "openid role-data user-data parking-data offline_access device-data invoice-data project-data payment-data tenant-data",
+                Scope = "openid role-data user-data parking-data offline_access device-data invoice-data project-data payment-data tenant-data storage-data",
                 RedirectUri = "http://localhost/winforms.client",
                 Browser = new WinFormsWebView(webView21, this),
                 Policy = new Policy

@@ -49,12 +49,11 @@ namespace iParkingv5_window.Forms.DataForms
             ucViewGrid1 = new Usercontrols.ucViewGrid();
             panelAppStatus = new Panel();
             lblLoadingStatus = new lblResult();
-            lblScale = new Label();
-            lblCompanyName = new Label();
             lblTime = new Label();
             lblServerName = new Label();
             lblSoftwareName = new Label();
             lblUserNaem = new Label();
+            ucEventCount1 = new Usercontrols.ucEventCount();
             timerUpdateTime = new System.Windows.Forms.Timer(components);
             panelDevelopeMode = new Panel();
             dgvWaitingEvents = new DataGridView();
@@ -72,12 +71,13 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             // menuStrip1
             // 
+            menuStrip1.BackColor = SystemColors.ButtonHighlight;
             menuStrip1.Font = new Font("Segoe UI", 12F);
             menuStrip1.Items.AddRange(new ToolStripItem[] { miSystem, miReport, chứcNăngToolStripMenuItem, tsmiRegister, inQRToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(5, 2, 0, 2);
-            menuStrip1.Size = new Size(803, 29);
+            menuStrip1.Size = new Size(1058, 29);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             menuStrip1.DoubleClick += menuStrip1_DoubleClick;
@@ -182,7 +182,7 @@ namespace iParkingv5_window.Forms.DataForms
             panelMain.Location = new Point(0, 29);
             panelMain.Margin = new Padding(0);
             panelMain.Name = "panelMain";
-            panelMain.Size = new Size(478, 382);
+            panelMain.Size = new Size(733, 442);
             panelMain.TabIndex = 1;
             // 
             // ucViewGrid1
@@ -194,72 +194,51 @@ namespace iParkingv5_window.Forms.DataForms
             ucViewGrid1.Margin = new Padding(0);
             ucViewGrid1.Name = "ucViewGrid1";
             ucViewGrid1.RowsCount = 2;
-            ucViewGrid1.Size = new Size(478, 382);
+            ucViewGrid1.Size = new Size(733, 442);
             ucViewGrid1.TabIndex = 0;
             // 
             // panelAppStatus
             // 
+            panelAppStatus.BackColor = SystemColors.ButtonHighlight;
             panelAppStatus.BorderStyle = BorderStyle.Fixed3D;
             panelAppStatus.Controls.Add(lblLoadingStatus);
-            panelAppStatus.Controls.Add(lblScale);
-            panelAppStatus.Controls.Add(lblCompanyName);
             panelAppStatus.Controls.Add(lblTime);
             panelAppStatus.Controls.Add(lblServerName);
             panelAppStatus.Controls.Add(lblSoftwareName);
             panelAppStatus.Controls.Add(lblUserNaem);
+            panelAppStatus.Controls.Add(ucEventCount1);
             panelAppStatus.Dock = DockStyle.Bottom;
-            panelAppStatus.Location = new Point(0, 411);
+            panelAppStatus.Location = new Point(0, 471);
             panelAppStatus.Margin = new Padding(3, 2, 3, 2);
             panelAppStatus.Name = "panelAppStatus";
-            panelAppStatus.Size = new Size(803, 28);
+            panelAppStatus.Size = new Size(1058, 37);
             panelAppStatus.TabIndex = 2;
             // 
             // lblLoadingStatus
             // 
+            lblLoadingStatus.BackColor = SystemColors.ButtonHighlight;
             lblLoadingStatus.Dock = DockStyle.Fill;
             lblLoadingStatus.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             lblLoadingStatus.ForeColor = Color.FromArgb(192, 64, 0);
-            lblLoadingStatus.Location = new Point(416, 0);
+            lblLoadingStatus.Location = new Point(291, 0);
+            lblLoadingStatus.MaxFontSize = -1;
+            lblLoadingStatus.Message = "";
+            lblLoadingStatus.MessageBackColor = SystemColors.ButtonHighlight;
+            lblLoadingStatus.MessageForeColor = Color.White;
             lblLoadingStatus.Name = "lblLoadingStatus";
             lblLoadingStatus.Padding = new Padding(9, 0, 0, 0);
-            lblLoadingStatus.Size = new Size(172, 24);
+            lblLoadingStatus.Size = new Size(328, 33);
             lblLoadingStatus.TabIndex = 4;
             lblLoadingStatus.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // lblScale
-            // 
-            lblScale.Dock = DockStyle.Left;
-            lblScale.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblScale.Location = new Point(300, 0);
-            lblScale.Name = "lblScale";
-            lblScale.Padding = new Padding(9, 0, 0, 0);
-            lblScale.Size = new Size(116, 24);
-            lblScale.TabIndex = 5;
-            lblScale.Text = "Số Cân: ";
-            lblScale.TextAlign = ContentAlignment.MiddleLeft;
-            lblScale.Visible = false;
-            // 
-            // lblCompanyName
-            // 
-            lblCompanyName.Dock = DockStyle.Right;
-            lblCompanyName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold | FontStyle.Underline);
-            lblCompanyName.ForeColor = Color.Navy;
-            lblCompanyName.Location = new Point(588, 0);
-            lblCompanyName.Name = "lblCompanyName";
-            lblCompanyName.Padding = new Padding(9, 0, 0, 0);
-            lblCompanyName.Size = new Size(118, 24);
-            lblCompanyName.TabIndex = 3;
-            lblCompanyName.Text = "KZTEK-Parking";
-            lblCompanyName.TextAlign = ContentAlignment.MiddleRight;
             // 
             // lblTime
             // 
             lblTime.Dock = DockStyle.Right;
             lblTime.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblTime.Location = new Point(706, 0);
+            lblTime.Location = new Point(619, 0);
             lblTime.Name = "lblTime";
             lblTime.Padding = new Padding(9, 0, 0, 0);
-            lblTime.Size = new Size(93, 24);
+            lblTime.Size = new Size(93, 33);
             lblTime.TabIndex = 2;
             lblTime.Text = "16:04:04";
             lblTime.TextAlign = ContentAlignment.MiddleRight;
@@ -268,10 +247,10 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             lblServerName.Dock = DockStyle.Left;
             lblServerName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblServerName.Location = new Point(198, 0);
+            lblServerName.Location = new Point(189, 0);
             lblServerName.Name = "lblServerName";
             lblServerName.Padding = new Padding(9, 0, 0, 0);
-            lblServerName.Size = new Size(102, 24);
+            lblServerName.Size = new Size(102, 33);
             lblServerName.TabIndex = 1;
             lblServerName.Text = "VIETANHPC";
             lblServerName.TextAlign = ContentAlignment.MiddleLeft;
@@ -280,10 +259,10 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             lblSoftwareName.Dock = DockStyle.Left;
             lblSoftwareName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblSoftwareName.Location = new Point(99, 0);
+            lblSoftwareName.Location = new Point(59, 0);
             lblSoftwareName.Name = "lblSoftwareName";
             lblSoftwareName.Padding = new Padding(9, 0, 0, 0);
-            lblSoftwareName.Size = new Size(99, 24);
+            lblSoftwareName.Size = new Size(130, 33);
             lblSoftwareName.TabIndex = 0;
             lblSoftwareName.Text = "KZTEK-Parking";
             lblSoftwareName.TextAlign = ContentAlignment.MiddleLeft;
@@ -295,10 +274,21 @@ namespace iParkingv5_window.Forms.DataForms
             lblUserNaem.Location = new Point(0, 0);
             lblUserNaem.Name = "lblUserNaem";
             lblUserNaem.Padding = new Padding(9, 0, 0, 0);
-            lblUserNaem.Size = new Size(99, 24);
+            lblUserNaem.Size = new Size(59, 33);
             lblUserNaem.TabIndex = 6;
             lblUserNaem.Text = "_";
             lblUserNaem.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // ucEventCount1
+            // 
+            ucEventCount1.Dock = DockStyle.Right;
+            ucEventCount1.Font = new Font("Segoe UI", 12F);
+            ucEventCount1.Location = new Point(712, 0);
+            ucEventCount1.Margin = new Padding(4, 3, 4, 3);
+            ucEventCount1.Name = "ucEventCount1";
+            ucEventCount1.Padding = new Padding(3, 0, 0, 0);
+            ucEventCount1.Size = new Size(342, 33);
+            ucEventCount1.TabIndex = 7;
             // 
             // timerUpdateTime
             // 
@@ -312,10 +302,10 @@ namespace iParkingv5_window.Forms.DataForms
             panelDevelopeMode.Controls.Add(dgvWaitingEvents);
             panelDevelopeMode.Controls.Add(label1);
             panelDevelopeMode.Dock = DockStyle.Right;
-            panelDevelopeMode.Location = new Point(487, 29);
+            panelDevelopeMode.Location = new Point(742, 29);
             panelDevelopeMode.Margin = new Padding(3, 2, 3, 2);
             panelDevelopeMode.Name = "panelDevelopeMode";
-            panelDevelopeMode.Size = new Size(316, 382);
+            panelDevelopeMode.Size = new Size(316, 442);
             panelDevelopeMode.TabIndex = 3;
             panelDevelopeMode.Visible = false;
             // 
@@ -331,7 +321,7 @@ namespace iParkingv5_window.Forms.DataForms
             dgvWaitingEvents.Name = "dgvWaitingEvents";
             dgvWaitingEvents.ReadOnly = true;
             dgvWaitingEvents.RowTemplate.Height = 29;
-            dgvWaitingEvents.Size = new Size(316, 347);
+            dgvWaitingEvents.Size = new Size(316, 407);
             dgvWaitingEvents.TabIndex = 1;
             // 
             // label1
@@ -351,10 +341,10 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             splitterDevelopeMode.BackColor = Color.FromArgb(192, 0, 0);
             splitterDevelopeMode.Dock = DockStyle.Right;
-            splitterDevelopeMode.Location = new Point(478, 29);
+            splitterDevelopeMode.Location = new Point(733, 29);
             splitterDevelopeMode.Margin = new Padding(3, 2, 3, 2);
             splitterDevelopeMode.Name = "splitterDevelopeMode";
-            splitterDevelopeMode.Size = new Size(9, 382);
+            splitterDevelopeMode.Size = new Size(9, 442);
             splitterDevelopeMode.TabIndex = 4;
             splitterDevelopeMode.TabStop = false;
             splitterDevelopeMode.Visible = false;
@@ -379,12 +369,12 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(803, 439);
+            ClientSize = new Size(1058, 508);
             Controls.Add(panelMain);
             Controls.Add(splitterDevelopeMode);
             Controls.Add(panelDevelopeMode);
-            Controls.Add(panelAppStatus);
             Controls.Add(menuStrip1);
+            Controls.Add(panelAppStatus);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             Margin = new Padding(3, 2, 3, 2);
@@ -413,7 +403,6 @@ namespace iParkingv5_window.Forms.DataForms
         private Usercontrols.ucViewGrid ucViewGrid1;
         private Panel panelAppStatus;
         private lblResult lblLoadingStatus;
-        private Label lblCompanyName;
         private Label lblTime;
         private Label lblServerName;
         private Label lblSoftwareName;
@@ -425,7 +414,6 @@ namespace iParkingv5_window.Forms.DataForms
         private ToolStripMenuItem tsmiAlarmReport;
         private System.Windows.Forms.Timer timerUpdateControllerConnection;
         private ToolStripMenuItem tsmiActiveLanesConfig;
-        private Label lblScale;
         private System.Windows.Forms.Timer timerRestartSockerServer;
         private System.Windows.Forms.Timer timerClearLog;
         private Label lblUserNaem;
@@ -434,5 +422,6 @@ namespace iParkingv5_window.Forms.DataForms
         private ToolStripMenuItem btnPrintQR;
         private ToolStripMenuItem tsmiRegister;
         private ToolStripMenuItem inQRToolStripMenuItem;
+        private Usercontrols.ucEventCount ucEventCount1;
     }
 }

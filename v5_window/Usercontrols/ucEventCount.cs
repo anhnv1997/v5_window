@@ -36,9 +36,9 @@ namespace iParkingv5_window.Usercontrols
             lblVehicleOutDayTitle.Text = "";
             lblCurrentVehicleInParkTitle.Text = "";
 
-            lblVehicleInTitle.Message = "Xe Vào   ";
-            lblVehicleOutDayTitle.Message = "Xe Ra    ";
-            lblCurrentVehicleInParkTitle.Message = "Trong Bãi";
+            lblVehicleInTitle.Message = "Vào";
+            lblVehicleOutDayTitle.Message = "Ra";
+            lblCurrentVehicleInParkTitle.Message = "Tồn";
 
             lblVehicleInTitle.MessageForeColor = Color.Black;
             lblVehicleOutDayTitle.MessageForeColor = Color.Black;
@@ -100,9 +100,9 @@ namespace iParkingv5_window.Usercontrols
                 lblCurrentVehicleInPark.Message = totalVehicleInPark.ToString();
                 lblVehicleIn.Message = vehicleInDay.ToString();
                 lblVehicleOutDay.Message = vehicleOutDay.ToString();
-                lblVehicleInTitle.Message = "Xe Vào   ";
-                lblVehicleOutDayTitle.Message = "Xe Ra    ";
-                lblCurrentVehicleInParkTitle.Message = "Trong Bãi";
+                lblVehicleInTitle.Message = "Vào";
+                lblVehicleOutDayTitle.Message = "Ra";
+                lblCurrentVehicleInParkTitle.Message = "Tồn";
 
                 lblVehicleInTitle.MaxFontSize = lblVehicleOutDayTitle.MaxFontSize = lblCurrentVehicleInParkTitle.MaxFontSize =
                     Math.Min(Math.Min(lblVehicleInTitle.CurrentFontSize, lblVehicleOutDayTitle.CurrentFontSize), lblCurrentVehicleInParkTitle.CurrentFontSize);
