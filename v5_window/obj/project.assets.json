@@ -277,15 +277,6 @@
           }
         }
       },
-      "RtspClientSharpSPG/0.0.3": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/RtspClientSharp.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/RtspClientSharp.dll": {}
-        }
-      },
       "runtime.linux-arm.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package",
         "runtimeTargets": {
@@ -941,38 +932,6 @@
           "bin/placeholder/iParkingv5.Objects.dll": {}
         }
       },
-      "Kztek.Cameras/1.0.0.2": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v5.0",
-        "dependencies": {
-          "Kztek.RtspPlayer": "1.0.0.2"
-        },
-        "compile": {
-          "bin/placeholder/Kztek.Cameras.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Kztek.Cameras.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.WindowsDesktop.App.WindowsForms"
-        ]
-      },
-      "Kztek.RtspPlayer/1.0.0.2": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v5.0",
-        "dependencies": {
-          "RtspClientSharpSPG": "0.0.3"
-        },
-        "compile": {
-          "bin/placeholder/Kztek.RtspPlayer.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Kztek.RtspPlayer.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.WindowsDesktop.App.WindowsForms"
-        ]
-      },
       "Kztek.Scale_net6/1.0.0.11": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -1479,18 +1438,6 @@
         "restsharp.110.2.0.nupkg.sha512",
         "restsharp.nuspec",
         "restsharp.png"
-      ]
-    },
-    "RtspClientSharpSPG/0.0.3": {
-      "sha512": "zynym3QRbFwgZhuiu2KvroJ2HnT0M+Y/Io7SbI8V/w0X3hS3YrpfN4OwxsyLa/Je981NSeOFsaT1pe2bEgtoEQ==",
-      "type": "package",
-      "path": "rtspclientsharpspg/0.0.3",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netstandard2.0/RtspClientSharp.dll",
-        "rtspclientsharpspg.0.0.3.nupkg.sha512",
-        "rtspclientsharpspg.nuspec"
       ]
     },
     "runtime.linux-arm.runtime.native.System.IO.Ports/8.0.0": {
@@ -2488,16 +2435,6 @@
       "path": "../iParkingv5.Objects/iParkingv5.Objects.csproj",
       "msbuildProject": "../iParkingv5.Objects/iParkingv5.Objects.csproj"
     },
-    "Kztek.Cameras/1.0.0.2": {
-      "type": "project",
-      "path": "../../../../../../../BaseLib/Kztek.Cameras/Kztek.Cameras.csproj",
-      "msbuildProject": "../../../../../../../BaseLib/Kztek.Cameras/Kztek.Cameras.csproj"
-    },
-    "Kztek.RtspPlayer/1.0.0.2": {
-      "type": "project",
-      "path": "../../../../../../../BaseLib/Kztek.RtspPlayer/Kztek.RtspPlayer/Kztek.RtspPlayer.csproj",
-      "msbuildProject": "../../../../../../../BaseLib/Kztek.RtspPlayer/Kztek.RtspPlayer/Kztek.RtspPlayer.csproj"
-    },
     "Kztek.Scale_net6/1.0.0.11": {
       "type": "project",
       "path": "../Kztek.Scale/Net6/Kztek.Scale/Kztek.Scale_net6.csproj",
@@ -2509,8 +2446,6 @@
       "IPaking.Ultility >= 1.0.0.3",
       "IdentityModel >= 7.0.0",
       "IdentityModel.OidcClient >= 6.0.0",
-      "Kztek.Cameras >= 1.0.0.2",
-      "Kztek.RtspPlayer >= 1.0.0.2",
       "Kztek.Scale_net6 >= 1.0.0.11",
       "Microsoft.Web.WebView2 >= 1.0.2420.47",
       "Minio >= 5.0.0",
@@ -2533,7 +2468,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.1.1",
+    "version": "1.1.1.1",
     "restore": {
       "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\v5_window\\iParkingv5_window.csproj",
       "projectName": "iParkingv5_window",
@@ -2591,12 +2526,6 @@
             },
             "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Scale\\Net6\\Kztek.Scale\\Kztek.Scale_net6.csproj": {
               "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Scale\\Net6\\Kztek.Scale\\Kztek.Scale_net6.csproj"
-            },
-            "E:\\BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj": {
-              "projectPath": "E:\\BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj"
-            },
-            "E:\\BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj": {
-              "projectPath": "E:\\BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj"
             }
           }
         }
@@ -2664,7 +2593,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.302\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

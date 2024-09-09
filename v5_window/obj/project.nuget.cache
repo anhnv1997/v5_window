@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "f463+AERCrI=",
+  "dgSpecHash": "X6meEo+NDOM=",
   "success": true,
   "projectFilePath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\v5_window\\iParkingv5_window.csproj",
   "expectedPackageFiles": [
@@ -19,7 +19,6 @@
     "C:\\Users\\Admin\\.nuget\\packages\\opencvsharp4\\4.9.0.20240103\\opencvsharp4.4.9.0.20240103.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\rabbitmq.client\\6.8.1\\rabbitmq.client.6.8.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\restsharp\\110.2.0\\restsharp.110.2.0.nupkg.sha512",
-    "C:\\Users\\Admin\\.nuget\\packages\\rtspclientsharpspg\\0.0.3\\rtspclientsharpspg.0.0.3.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\runtime.linux-arm.runtime.native.system.io.ports\\8.0.0\\runtime.linux-arm.runtime.native.system.io.ports.8.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\runtime.linux-arm64.runtime.native.system.io.ports\\8.0.0\\runtime.linux-arm64.runtime.native.system.io.ports.8.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\runtime.linux-x64.runtime.native.system.io.ports\\8.0.0\\runtime.linux-x64.runtime.native.system.io.ports.8.0.0.nupkg.sha512",

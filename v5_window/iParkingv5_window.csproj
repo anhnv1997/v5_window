@@ -7,7 +7,7 @@
 		<UseWindowsForms>true</UseWindowsForms>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Platforms>x64;x86</Platforms>
-		<Version>1.1.1.0</Version>
+		<Version>1.1.1.1</Version>
 		<ApplicationIcon>bin\x64\Debug\net6.0-windows\icons8_parking_2.ico</ApplicationIcon>
 		<PackageIcon>icons8_parking_32px.png</PackageIcon>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
@@ -36,8 +36,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\..\..\..\..\BaseLib\Kztek.Cameras\Kztek.Cameras.csproj" />
-		<ProjectReference Include="..\..\..\..\..\..\..\BaseLib\Kztek.RtspPlayer\Kztek.RtspPlayer\Kztek.RtspPlayer.csproj" />
 		<ProjectReference Include="..\IPaking.Ultility\IPaking.Ultility.csproj" />
 		<ProjectReference Include="..\iPakrkingv5.Controls\iPakrkingv5.Controls.csproj" />
 		<ProjectReference Include="..\iParking.ConfigurationManager\iParking.ConfigurationManager.csproj" />
@@ -106,6 +104,12 @@
 		</Reference>
 		<Reference Include="AForge.VideoEx">
 			<HintPath>..\..\..\..\..\..\4..Library Reference\CameraLib\AForge.VideoEx.dll</HintPath>
+		</Reference>
+		<Reference Include="Kztek.Cameras">
+		  <HintPath>C:\Users\Admin\OneDrive\Desktop\APP_XC_BAK\net6.0-windows\Kztek.Cameras.dll</HintPath>
+		</Reference>
+		<Reference Include="Kztek.RtspPlayer">
+		  <HintPath>C:\Users\Admin\OneDrive\Desktop\APP_XC_BAK\net6.0-windows\Kztek.RtspPlayer.dll</HintPath>
 		</Reference>
 		<Reference Include="Kztek.Tool">
 		  <HintPath>C:\Users\Admin\OneDrive\Desktop\APP_XC_BAK\net6.0-windows\Kztek.Tool.dll</HintPath>

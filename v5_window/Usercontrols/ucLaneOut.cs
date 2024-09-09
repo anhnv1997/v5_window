@@ -945,7 +945,7 @@ namespace iParkingv5_window.Usercontrols
                         string currentNote = data.data[0].thirdpartynote ?? "";
                         string[] currentNoteArray = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(currentNote)?.ToArray() ?? new string[] { };// note.Split(";");
                         string note1 = currentNoteArray.Length > 1 ? currentNoteArray[0] : "";
-                        string note2 = ig.Name;
+                        string note2 ="Tên " +  identity.Name + " - Nhóm" + ig.Name;
                         string note3 = currentNoteArray.Length > 2 ? currentNoteArray[2] : "";
                         bool isSuccess = await KzParkingv5ApiHelper.UpdateNoteOut(id, note1, note2, note3);
                         if (!isSuccess)
