@@ -1911,71 +1911,23 @@ namespace iParkingv5_window.Usercontrols
         public void LoadSavedUIConfig()
         {
             if (this.laneDisplayConfig == null) return;
-
             try
             {
-                if (this.splitContainerMain.Panel2Collapsed)
-                {
-                    this.splitContainerMain.Height = this.laneDisplayConfig.splitContainerMain;
-                }
-                else
-                {
-                    this.splitContainerMain.SplitterDistance = this.laneDisplayConfig.splitContainerMain;
-                }
+                this.splitContainerMain.SplitterDistance = this.laneDisplayConfig.splitContainerMain;
+
+                this.spliterCamera_top3Event.SplitterDistance = this.laneDisplayConfig.spliterCamera_top3Event;
+
+                this.spliterCamera_PicEv_PicPlate.SplitterDistance = this.laneDisplayConfig.spliterCamera_PicEv_PicPlate;
+                this.spliterPicEv_PicPlate.SplitterDistance = this.laneDisplayConfig.spliterPicEv_PicPlate;
+                this.spliterEventPlate.SplitterDistance = this.laneDisplayConfig.spliterEventPlate;
+                this.spliterCamera.SplitterDistance = this.laneDisplayConfig.SplitterCameraPosition;
+
+                this.spliterTopEvent_Actions.SplitterDistance = this.laneDisplayConfig.spliterCamera_PicEv_PicPlate;
             }
             catch (Exception ex)
             {
                 tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "LoadSavedUIConfig", ex);
             }
-
-            //try
-            //{
-            //    this.splitterEventInfoWithCamera.SplitPosition = this.laneDisplayConfig.splitEventInfoWithCameraPosition;
-            //}
-            //catch (Exception ex)
-            //{
-            //    tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "LoadSavedUIConfig", ex);
-            //}
-
-            //try
-            //{
-            //    this.splitContainerLastEvent.SplitterDistance = this.laneDisplayConfig.splitLastEventPosition;
-            //}
-            //catch (Exception ex)
-            //{
-            //    tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "LoadSavedUIConfig", ex);
-            //}
-
-            try
-            {
-                if (this.laneDisplayConfig.splitContainerCameraPosition > 0)
-                {
-                    this.spliterCamera_PicEv_PicPlate.SplitterDistance = this.laneDisplayConfig.splitContainerCameraPosition;
-                }
-            }
-            catch (Exception ex)
-            {
-                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "LoadSavedUIConfig", ex);
-            }
-
-            //try
-            //{
-            //    this.splitContainerEventContent.SplitterDistance = this.laneDisplayConfig.splitContainerEventContent;
-            //}
-            //catch (Exception ex)
-            //{
-            //    tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "LoadSavedUIConfig", ex);
-            //}
-
-            try
-            {
-                //this.splitterCamera.SplitPosition = this.laneDisplayConfig.SplitterCameraPosition;
-            }
-            catch (Exception ex)
-            {
-                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "LoadSavedUIConfig", ex);
-            }
-
             AllowDesignRealtime(false);
         }
 
@@ -1985,17 +1937,20 @@ namespace iParkingv5_window.Usercontrols
         /// <returns></returns>
         public LaneDisplayConfig GetCurrentUIConfig()
         {
-            AllowDesignRealtime(true);
+            //AllowDesignRealtime(true);
             return new LaneDisplayConfig()
             {
                 LaneId = this.lane.Id,
                 DisplayIndex = 1,
-                //splitContainerEventContent = this.splitContainerEventContent.SplitterDistance,
-                splitContainerMain = this.splitContainerMain.Panel2Collapsed ? this.splitContainerMain.Height : this.splitContainerMain.SplitterDistance,
-                //SplitterCameraPosition = this.splitterCamera.SplitPosition,
-                //splitEventInfoWithCameraPosition = this.splitterEventInfoWithCamera.SplitPosition,
-                splitContainerCameraPosition = this.spliterCamera_PicEv_PicPlate.SplitterDistance,
-                //splitLastEventPosition = this.splitContainerLastEvent.SplitterDistance,
+
+                splitContainerMain = this.splitContainerMain.SplitterDistance,
+                SplitterCameraPosition = this.spliterCamera.SplitterDistance,
+
+                spliterCamera_PicEv_PicPlate = this.spliterCamera_PicEv_PicPlate.SplitterDistance,
+                spliterCamera_top3Event = this.spliterCamera_top3Event.SplitterDistance,
+                spliterPicEv_PicPlate = this.spliterPicEv_PicPlate.SplitterDistance,
+                spliterEventPlate = this.spliterEventPlate.SplitterDistance,
+                spliterTopEvent_Actions = this.spliterTopEvent_Actions.SplitterDistance,
             };
         }
         #endregion ENd PUBLIC FUNCTION

@@ -661,12 +661,15 @@ namespace iParkingv5_window.Forms.DataForms
                             if (laneDisplayConfig.LaneId == item.lane.Id)
                             {
                                 laneDisplayConfig.DisplayIndex = temp.DisplayIndex;
-                                laneDisplayConfig.splitContainerEventContent = temp.splitContainerEventContent;
-                                laneDisplayConfig.splitContainerMain = temp.splitContainerMain;
                                 laneDisplayConfig.SplitterCameraPosition = temp.SplitterCameraPosition;
-                                laneDisplayConfig.splitEventInfoWithCameraPosition = temp.splitEventInfoWithCameraPosition;
-                                laneDisplayConfig.splitContainerCameraPosition = temp.splitContainerCameraPosition;
-                                laneDisplayConfig.splitLastEventPosition = temp.splitLastEventPosition;
+                                laneDisplayConfig.splitContainerMain = temp.splitContainerMain;
+                                laneDisplayConfig.spliterCamera_PicEv_PicPlate = temp.spliterCamera_PicEv_PicPlate;
+                                laneDisplayConfig.spliterCamera_top3Event = temp.spliterCamera_top3Event;
+                                laneDisplayConfig.spliterPicEv_PicPlate = temp.spliterPicEv_PicPlate;
+                                laneDisplayConfig.spliterEventPlate = temp.spliterEventPlate;
+                                laneDisplayConfig.spliterTopEvent_Actions = temp.spliterTopEvent_Actions;
+                                laneDisplayConfig.spliterEvOutPlate = temp.spliterEvOutPlate;
+                                laneDisplayConfig.spliterEvInPlate = temp.spliterEvInPlate;
                             }
                         }
                     }

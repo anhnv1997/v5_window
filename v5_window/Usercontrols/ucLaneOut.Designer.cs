@@ -19,11 +19,11 @@ namespace iParkingv5_window.Usercontrols
             panelCameras = new Panel();
             lblCamOutTitle = new lblResult();
             splitContainerMain = new SplitContainer();
-            spliterCamera_TopEvent = new SplitContainer();
+            spliterCamera_top3Event = new SplitContainer();
             spliterCamera_PicEv_PicPlate = new SplitContainer();
-            spliterCamera_PicEv = new SplitContainer();
             spliterCamera = new SplitContainer();
             tblCamera = new TableLayoutPanel();
+            spliterPicEv_PicPlate = new SplitContainer();
             tblEventPic = new TableLayoutPanel();
             lblPicOutTitle = new lblResult();
             picVehicleImageIn = new MovablePictureBox();
@@ -110,22 +110,22 @@ namespace iParkingv5_window.Usercontrols
             splitContainerMain.Panel1.SuspendLayout();
             splitContainerMain.Panel2.SuspendLayout();
             splitContainerMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)spliterCamera_TopEvent).BeginInit();
-            spliterCamera_TopEvent.Panel1.SuspendLayout();
-            spliterCamera_TopEvent.Panel2.SuspendLayout();
-            spliterCamera_TopEvent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)spliterCamera_top3Event).BeginInit();
+            spliterCamera_top3Event.Panel1.SuspendLayout();
+            spliterCamera_top3Event.Panel2.SuspendLayout();
+            spliterCamera_top3Event.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)spliterCamera_PicEv_PicPlate).BeginInit();
             spliterCamera_PicEv_PicPlate.Panel1.SuspendLayout();
             spliterCamera_PicEv_PicPlate.Panel2.SuspendLayout();
             spliterCamera_PicEv_PicPlate.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)spliterCamera_PicEv).BeginInit();
-            spliterCamera_PicEv.Panel1.SuspendLayout();
-            spliterCamera_PicEv.Panel2.SuspendLayout();
-            spliterCamera_PicEv.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)spliterCamera).BeginInit();
             spliterCamera.Panel1.SuspendLayout();
             spliterCamera.SuspendLayout();
             tblCamera.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)spliterPicEv_PicPlate).BeginInit();
+            spliterPicEv_PicPlate.Panel1.SuspendLayout();
+            spliterPicEv_PicPlate.Panel2.SuspendLayout();
+            spliterPicEv_PicPlate.SuspendLayout();
             tblEventPic.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picVehicleImageIn).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picVehicleImageOut).BeginInit();
@@ -185,7 +185,7 @@ namespace iParkingv5_window.Usercontrols
             panelCameras.Location = new Point(1, 39);
             panelCameras.Margin = new Padding(0);
             panelCameras.Name = "panelCameras";
-            panelCameras.Size = new Size(147, 288);
+            panelCameras.Size = new Size(451, 288);
             panelCameras.TabIndex = 3;
             // 
             // lblCamOutTitle
@@ -214,7 +214,7 @@ namespace iParkingv5_window.Usercontrols
             // 
             // splitContainerMain.Panel1
             // 
-            splitContainerMain.Panel1.Controls.Add(spliterCamera_TopEvent);
+            splitContainerMain.Panel1.Controls.Add(spliterCamera_top3Event);
             splitContainerMain.Panel1.Controls.Add(lblEventMessage);
             splitContainerMain.Panel1.Font = new Font("Segoe UI", 12F);
             // 
@@ -223,28 +223,28 @@ namespace iParkingv5_window.Usercontrols
             splitContainerMain.Panel2.Controls.Add(tblEventContent);
             splitContainerMain.Size = new Size(1366, 746);
             splitContainerMain.SplitterDistance = 516;
-            splitContainerMain.SplitterWidth = 2;
+            splitContainerMain.SplitterWidth = 1;
             splitContainerMain.TabIndex = 4;
             // 
-            // spliterCamera_TopEvent
+            // spliterCamera_top3Event
             // 
-            spliterCamera_TopEvent.Dock = DockStyle.Fill;
-            spliterCamera_TopEvent.Location = new Point(0, 0);
-            spliterCamera_TopEvent.Margin = new Padding(0);
-            spliterCamera_TopEvent.Name = "spliterCamera_TopEvent";
-            spliterCamera_TopEvent.Orientation = Orientation.Horizontal;
+            spliterCamera_top3Event.Dock = DockStyle.Fill;
+            spliterCamera_top3Event.Location = new Point(0, 0);
+            spliterCamera_top3Event.Margin = new Padding(0);
+            spliterCamera_top3Event.Name = "spliterCamera_top3Event";
+            spliterCamera_top3Event.Orientation = Orientation.Horizontal;
             // 
-            // spliterCamera_TopEvent.Panel1
+            // spliterCamera_top3Event.Panel1
             // 
-            spliterCamera_TopEvent.Panel1.Controls.Add(spliterCamera_PicEv_PicPlate);
+            spliterCamera_top3Event.Panel1.Controls.Add(spliterCamera_PicEv_PicPlate);
             // 
-            // spliterCamera_TopEvent.Panel2
+            // spliterCamera_top3Event.Panel2
             // 
-            spliterCamera_TopEvent.Panel2.Controls.Add(spliterTopEvent_Actions);
-            spliterCamera_TopEvent.Size = new Size(1366, 472);
-            spliterCamera_TopEvent.SplitterDistance = 357;
-            spliterCamera_TopEvent.SplitterWidth = 2;
-            spliterCamera_TopEvent.TabIndex = 2;
+            spliterCamera_top3Event.Panel2.Controls.Add(spliterTopEvent_Actions);
+            spliterCamera_top3Event.Size = new Size(1366, 472);
+            spliterCamera_top3Event.SplitterDistance = 357;
+            spliterCamera_top3Event.SplitterWidth = 1;
+            spliterCamera_top3Event.TabIndex = 2;
             // 
             // spliterCamera_PicEv_PicPlate
             // 
@@ -255,34 +255,15 @@ namespace iParkingv5_window.Usercontrols
             // 
             // spliterCamera_PicEv_PicPlate.Panel1
             // 
-            spliterCamera_PicEv_PicPlate.Panel1.Controls.Add(spliterCamera_PicEv);
+            spliterCamera_PicEv_PicPlate.Panel1.Controls.Add(spliterCamera);
             // 
             // spliterCamera_PicEv_PicPlate.Panel2
             // 
-            spliterCamera_PicEv_PicPlate.Panel2.Controls.Add(tableLayoutPanel7);
+            spliterCamera_PicEv_PicPlate.Panel2.Controls.Add(spliterPicEv_PicPlate);
             spliterCamera_PicEv_PicPlate.Size = new Size(1366, 357);
             spliterCamera_PicEv_PicPlate.SplitterDistance = 453;
-            spliterCamera_PicEv_PicPlate.SplitterWidth = 2;
+            spliterCamera_PicEv_PicPlate.SplitterWidth = 1;
             spliterCamera_PicEv_PicPlate.TabIndex = 1;
-            // 
-            // spliterCamera_PicEv
-            // 
-            spliterCamera_PicEv.Dock = DockStyle.Fill;
-            spliterCamera_PicEv.Location = new Point(0, 0);
-            spliterCamera_PicEv.Margin = new Padding(0);
-            spliterCamera_PicEv.Name = "spliterCamera_PicEv";
-            // 
-            // spliterCamera_PicEv.Panel1
-            // 
-            spliterCamera_PicEv.Panel1.Controls.Add(spliterCamera);
-            // 
-            // spliterCamera_PicEv.Panel2
-            // 
-            spliterCamera_PicEv.Panel2.Controls.Add(tblEventPic);
-            spliterCamera_PicEv.Size = new Size(453, 357);
-            spliterCamera_PicEv.SplitterDistance = 149;
-            spliterCamera_PicEv.SplitterWidth = 2;
-            spliterCamera_PicEv.TabIndex = 0;
             // 
             // spliterCamera
             // 
@@ -296,9 +277,9 @@ namespace iParkingv5_window.Usercontrols
             // 
             spliterCamera.Panel1.Controls.Add(tblCamera);
             spliterCamera.Panel2MinSize = 0;
-            spliterCamera.Size = new Size(149, 357);
+            spliterCamera.Size = new Size(453, 357);
             spliterCamera.SplitterDistance = 328;
-            spliterCamera.SplitterWidth = 2;
+            spliterCamera.SplitterWidth = 1;
             spliterCamera.TabIndex = 4;
             // 
             // tblCamera
@@ -315,8 +296,27 @@ namespace iParkingv5_window.Usercontrols
             tblCamera.RowCount = 2;
             tblCamera.RowStyles.Add(new RowStyle(SizeType.Absolute, 37F));
             tblCamera.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tblCamera.Size = new Size(149, 328);
+            tblCamera.Size = new Size(453, 328);
             tblCamera.TabIndex = 4;
+            // 
+            // spliterPicEv_PicPlate
+            // 
+            spliterPicEv_PicPlate.Dock = DockStyle.Fill;
+            spliterPicEv_PicPlate.Location = new Point(0, 0);
+            spliterPicEv_PicPlate.Margin = new Padding(0);
+            spliterPicEv_PicPlate.Name = "spliterPicEv_PicPlate";
+            // 
+            // spliterPicEv_PicPlate.Panel1
+            // 
+            spliterPicEv_PicPlate.Panel1.Controls.Add(tblEventPic);
+            // 
+            // spliterPicEv_PicPlate.Panel2
+            // 
+            spliterPicEv_PicPlate.Panel2.Controls.Add(tableLayoutPanel7);
+            spliterPicEv_PicPlate.Size = new Size(912, 357);
+            spliterPicEv_PicPlate.SplitterDistance = 299;
+            spliterPicEv_PicPlate.SplitterWidth = 1;
+            spliterPicEv_PicPlate.TabIndex = 0;
             // 
             // tblEventPic
             // 
@@ -338,7 +338,7 @@ namespace iParkingv5_window.Usercontrols
             tblEventPic.RowStyles.Add(new RowStyle(SizeType.Absolute, 37F));
             tblEventPic.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tblEventPic.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tblEventPic.Size = new Size(302, 357);
+            tblEventPic.Size = new Size(299, 357);
             tblEventPic.TabIndex = 5;
             // 
             // lblPicOutTitle
@@ -347,24 +347,25 @@ namespace iParkingv5_window.Usercontrols
             lblPicOutTitle.Dock = DockStyle.Fill;
             lblPicOutTitle.IsBold = true;
             lblPicOutTitle.IsUpper = true;
-            lblPicOutTitle.Location = new Point(154, 1);
+            lblPicOutTitle.Location = new Point(153, 1);
             lblPicOutTitle.MaxFontSize = 12;
             lblPicOutTitle.Message = "Ảnh Ra";
             lblPicOutTitle.MessageBackColor = Color.White;
             lblPicOutTitle.MessageForeColor = Color.Maroon;
             lblPicOutTitle.Name = "lblPicOutTitle";
-            lblPicOutTitle.Size = new Size(144, 37);
+            lblPicOutTitle.Size = new Size(142, 37);
             lblPicOutTitle.TabIndex = 13;
             lblPicOutTitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // picVehicleImageIn
             // 
             picVehicleImageIn.BackColor = Color.WhiteSmoke;
+            picVehicleImageIn.Dock = DockStyle.Fill;
             picVehicleImageIn.Image = Properties.Resources.defaultWhite;
             picVehicleImageIn.Location = new Point(1, 198);
             picVehicleImageIn.Margin = new Padding(0);
             picVehicleImageIn.Name = "picVehicleImageIn";
-            picVehicleImageIn.Size = new Size(149, 158);
+            picVehicleImageIn.Size = new Size(148, 158);
             picVehicleImageIn.SizeMode = PictureBoxSizeMode.StretchImage;
             picVehicleImageIn.TabIndex = 5;
             picVehicleImageIn.TabStop = false;
@@ -382,18 +383,19 @@ namespace iParkingv5_window.Usercontrols
             lblPicInTitle.MessageBackColor = Color.White;
             lblPicInTitle.MessageForeColor = Color.Green;
             lblPicInTitle.Name = "lblPicInTitle";
-            lblPicInTitle.Size = new Size(143, 37);
+            lblPicInTitle.Size = new Size(142, 37);
             lblPicInTitle.TabIndex = 12;
             lblPicInTitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // picVehicleImageOut
             // 
             picVehicleImageOut.BackColor = Color.WhiteSmoke;
+            picVehicleImageOut.Dock = DockStyle.Fill;
             picVehicleImageOut.Image = Properties.Resources.defaultWhite;
-            picVehicleImageOut.Location = new Point(151, 198);
+            picVehicleImageOut.Location = new Point(150, 198);
             picVehicleImageOut.Margin = new Padding(0);
             picVehicleImageOut.Name = "picVehicleImageOut";
-            picVehicleImageOut.Size = new Size(150, 158);
+            picVehicleImageOut.Size = new Size(148, 158);
             picVehicleImageOut.SizeMode = PictureBoxSizeMode.StretchImage;
             picVehicleImageOut.TabIndex = 5;
             picVehicleImageOut.TabStop = false;
@@ -402,11 +404,12 @@ namespace iParkingv5_window.Usercontrols
             // picOverviewImageIn
             // 
             picOverviewImageIn.BackColor = Color.WhiteSmoke;
+            picOverviewImageIn.Dock = DockStyle.Fill;
             picOverviewImageIn.Image = (Image)resources.GetObject("picOverviewImageIn.Image");
             picOverviewImageIn.Location = new Point(1, 39);
             picOverviewImageIn.Margin = new Padding(0);
             picOverviewImageIn.Name = "picOverviewImageIn";
-            picOverviewImageIn.Size = new Size(149, 158);
+            picOverviewImageIn.Size = new Size(148, 158);
             picOverviewImageIn.SizeMode = PictureBoxSizeMode.StretchImage;
             picOverviewImageIn.TabIndex = 5;
             picOverviewImageIn.TabStop = false;
@@ -415,11 +418,12 @@ namespace iParkingv5_window.Usercontrols
             // picOverviewImageOut
             // 
             picOverviewImageOut.BackColor = Color.WhiteSmoke;
+            picOverviewImageOut.Dock = DockStyle.Fill;
             picOverviewImageOut.Image = Properties.Resources.defaultWhite;
-            picOverviewImageOut.Location = new Point(151, 39);
+            picOverviewImageOut.Location = new Point(150, 39);
             picOverviewImageOut.Margin = new Padding(0);
             picOverviewImageOut.Name = "picOverviewImageOut";
-            picOverviewImageOut.Size = new Size(150, 158);
+            picOverviewImageOut.Size = new Size(148, 158);
             picOverviewImageOut.SizeMode = PictureBoxSizeMode.StretchImage;
             picOverviewImageOut.TabIndex = 5;
             picOverviewImageOut.TabStop = false;
@@ -438,7 +442,7 @@ namespace iParkingv5_window.Usercontrols
             tableLayoutPanel7.RowCount = 2;
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel7.Size = new Size(911, 357);
+            tableLayoutPanel7.Size = new Size(612, 357);
             tableLayoutPanel7.TabIndex = 0;
             // 
             // panel3
@@ -449,7 +453,7 @@ namespace iParkingv5_window.Usercontrols
             panel3.Location = new Point(0, 0);
             panel3.Margin = new Padding(0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(911, 178);
+            panel3.Size = new Size(612, 178);
             panel3.TabIndex = 0;
             // 
             // spliterEvInPlate
@@ -466,9 +470,9 @@ namespace iParkingv5_window.Usercontrols
             // spliterEvInPlate.Panel2
             // 
             spliterEvInPlate.Panel2.Controls.Add(tblPlateIn);
-            spliterEvInPlate.Size = new Size(911, 141);
-            spliterEvInPlate.SplitterDistance = 145;
-            spliterEvInPlate.SplitterWidth = 2;
+            spliterEvInPlate.Size = new Size(612, 141);
+            spliterEvInPlate.SplitterDistance = 97;
+            spliterEvInPlate.SplitterWidth = 1;
             spliterEvInPlate.TabIndex = 11;
             // 
             // picLprImageIn
@@ -480,7 +484,7 @@ namespace iParkingv5_window.Usercontrols
             picLprImageIn.Location = new Point(0, 0);
             picLprImageIn.Margin = new Padding(0);
             picLprImageIn.Name = "picLprImageIn";
-            picLprImageIn.Size = new Size(145, 141);
+            picLprImageIn.Size = new Size(97, 141);
             picLprImageIn.SizeMode = PictureBoxSizeMode.StretchImage;
             picLprImageIn.TabIndex = 1;
             picLprImageIn.TabStop = false;
@@ -500,7 +504,7 @@ namespace iParkingv5_window.Usercontrols
             tblPlateIn.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tblPlateIn.RowStyles.Add(new RowStyle());
             tblPlateIn.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tblPlateIn.Size = new Size(764, 141);
+            tblPlateIn.Size = new Size(514, 141);
             tblPlateIn.TabIndex = 8;
             // 
             // lblPlateIn
@@ -517,7 +521,7 @@ namespace iParkingv5_window.Usercontrols
             lblPlateIn.MessageBackColor = SystemColors.ActiveCaption;
             lblPlateIn.MessageForeColor = Color.White;
             lblPlateIn.Name = "lblPlateIn";
-            lblPlateIn.Size = new Size(764, 43);
+            lblPlateIn.Size = new Size(514, 43);
             lblPlateIn.TabIndex = 8;
             lblPlateIn.TextAlign = HorizontalAlignment.Center;
             // 
@@ -533,7 +537,7 @@ namespace iParkingv5_window.Usercontrols
             lblPlateInTitle.MessageBackColor = Color.White;
             lblPlateInTitle.MessageForeColor = Color.Navy;
             lblPlateInTitle.Name = "lblPlateInTitle";
-            lblPlateInTitle.Size = new Size(911, 37);
+            lblPlateInTitle.Size = new Size(612, 37);
             lblPlateInTitle.TabIndex = 10;
             // 
             // panel5
@@ -544,7 +548,7 @@ namespace iParkingv5_window.Usercontrols
             panel5.Location = new Point(0, 178);
             panel5.Margin = new Padding(0);
             panel5.Name = "panel5";
-            panel5.Size = new Size(911, 179);
+            panel5.Size = new Size(612, 179);
             panel5.TabIndex = 1;
             // 
             // spliterEvOutPlate
@@ -561,9 +565,9 @@ namespace iParkingv5_window.Usercontrols
             // spliterEvOutPlate.Panel2
             // 
             spliterEvOutPlate.Panel2.Controls.Add(tblPlateOut);
-            spliterEvOutPlate.Size = new Size(911, 142);
-            spliterEvOutPlate.SplitterDistance = 146;
-            spliterEvOutPlate.SplitterWidth = 2;
+            spliterEvOutPlate.Size = new Size(612, 142);
+            spliterEvOutPlate.SplitterDistance = 97;
+            spliterEvOutPlate.SplitterWidth = 1;
             spliterEvOutPlate.TabIndex = 11;
             // 
             // picLprImage
@@ -575,7 +579,7 @@ namespace iParkingv5_window.Usercontrols
             picLprImage.Location = new Point(0, 0);
             picLprImage.Margin = new Padding(0);
             picLprImage.Name = "picLprImage";
-            picLprImage.Size = new Size(146, 142);
+            picLprImage.Size = new Size(97, 142);
             picLprImage.SizeMode = PictureBoxSizeMode.StretchImage;
             picLprImage.TabIndex = 4;
             picLprImage.TabStop = false;
@@ -595,7 +599,7 @@ namespace iParkingv5_window.Usercontrols
             tblPlateOut.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tblPlateOut.RowStyles.Add(new RowStyle());
             tblPlateOut.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tblPlateOut.Size = new Size(763, 142);
+            tblPlateOut.Size = new Size(514, 142);
             tblPlateOut.TabIndex = 7;
             // 
             // txtPlate
@@ -612,7 +616,7 @@ namespace iParkingv5_window.Usercontrols
             txtPlate.MessageBackColor = SystemColors.ActiveCaption;
             txtPlate.MessageForeColor = Color.White;
             txtPlate.Name = "txtPlate";
-            txtPlate.Size = new Size(763, 43);
+            txtPlate.Size = new Size(514, 43);
             txtPlate.TabIndex = 10;
             txtPlate.TextAlign = HorizontalAlignment.Center;
             // 
@@ -628,7 +632,7 @@ namespace iParkingv5_window.Usercontrols
             lblPlateOutTitle.MessageBackColor = Color.White;
             lblPlateOutTitle.MessageForeColor = Color.Navy;
             lblPlateOutTitle.Name = "lblPlateOutTitle";
-            lblPlateOutTitle.Size = new Size(911, 37);
+            lblPlateOutTitle.Size = new Size(612, 37);
             lblPlateOutTitle.TabIndex = 10;
             // 
             // spliterTopEvent_Actions
@@ -645,9 +649,9 @@ namespace iParkingv5_window.Usercontrols
             // spliterTopEvent_Actions.Panel2
             // 
             spliterTopEvent_Actions.Panel2.Controls.Add(tblActions);
-            spliterTopEvent_Actions.Size = new Size(1366, 113);
+            spliterTopEvent_Actions.Size = new Size(1366, 114);
             spliterTopEvent_Actions.SplitterDistance = 452;
-            spliterTopEvent_Actions.SplitterWidth = 2;
+            spliterTopEvent_Actions.SplitterWidth = 1;
             spliterTopEvent_Actions.TabIndex = 0;
             // 
             // panelLastEvent
@@ -663,7 +667,7 @@ namespace iParkingv5_window.Usercontrols
             panelLastEvent.RowCount = 2;
             panelLastEvent.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
             panelLastEvent.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
-            panelLastEvent.Size = new Size(452, 113);
+            panelLastEvent.Size = new Size(452, 114);
             panelLastEvent.TabIndex = 12;
             // 
             // lblResult2
@@ -688,7 +692,7 @@ namespace iParkingv5_window.Usercontrols
             panelTop3Event.Location = new Point(0, 22);
             panelTop3Event.Margin = new Padding(0);
             panelTop3Event.Name = "panelTop3Event";
-            panelTop3Event.Size = new Size(452, 91);
+            panelTop3Event.Size = new Size(452, 92);
             panelTop3Event.TabIndex = 8;
             panelTop3Event.SizeChanged += panelTop3Event_SizeChanged;
             // 
@@ -708,7 +712,7 @@ namespace iParkingv5_window.Usercontrols
             tblActions.RowCount = 2;
             tblActions.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tblActions.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tblActions.Size = new Size(912, 113);
+            tblActions.Size = new Size(913, 114);
             tblActions.TabIndex = 0;
             // 
             // btnPrintEInvoiceTicket
@@ -717,10 +721,10 @@ namespace iParkingv5_window.Usercontrols
             btnPrintEInvoiceTicket.BackColor = Color.FromArgb(224, 224, 224);
             btnPrintEInvoiceTicket.Dock = DockStyle.Fill;
             btnPrintEInvoiceTicket.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            btnPrintEInvoiceTicket.Location = new Point(456, 56);
+            btnPrintEInvoiceTicket.Location = new Point(456, 57);
             btnPrintEInvoiceTicket.Margin = new Padding(0);
             btnPrintEInvoiceTicket.Name = "btnPrintEInvoiceTicket";
-            btnPrintEInvoiceTicket.Size = new Size(456, 57);
+            btnPrintEInvoiceTicket.Size = new Size(457, 57);
             btnPrintEInvoiceTicket.TabIndex = 3;
             btnPrintEInvoiceTicket.Text = "In vé xe Internet";
             btnPrintEInvoiceTicket.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -734,7 +738,7 @@ namespace iParkingv5_window.Usercontrols
             btnOpenBarrie.Location = new Point(0, 0);
             btnOpenBarrie.Margin = new Padding(0);
             btnOpenBarrie.Name = "btnOpenBarrie";
-            btnOpenBarrie.Size = new Size(456, 56);
+            btnOpenBarrie.Size = new Size(456, 57);
             btnOpenBarrie.TabIndex = 1;
             btnOpenBarrie.Text = "Mở barrie";
             btnOpenBarrie.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -750,7 +754,7 @@ namespace iParkingv5_window.Usercontrols
             btnPrintTicket.Location = new Point(456, 0);
             btnPrintTicket.Margin = new Padding(0);
             btnPrintTicket.Name = "btnPrintTicket";
-            btnPrintTicket.Size = new Size(456, 56);
+            btnPrintTicket.Size = new Size(457, 57);
             btnPrintTicket.TabIndex = 1;
             btnPrintTicket.Text = "In vé xe";
             btnPrintTicket.TextImageRelation = TextImageRelation.ImageAboveText;
@@ -762,7 +766,7 @@ namespace iParkingv5_window.Usercontrols
             btnWriteOut.BackColor = Color.FromArgb(224, 224, 224);
             btnWriteOut.Dock = DockStyle.Fill;
             btnWriteOut.ImageAlign = ContentAlignment.BottomCenter;
-            btnWriteOut.Location = new Point(0, 56);
+            btnWriteOut.Location = new Point(0, 57);
             btnWriteOut.Margin = new Padding(0);
             btnWriteOut.Name = "btnWriteOut";
             btnWriteOut.Size = new Size(456, 57);
@@ -848,7 +852,7 @@ namespace iParkingv5_window.Usercontrols
             tblEventContent.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tblEventContent.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tblEventContent.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tblEventContent.Size = new Size(1366, 228);
+            tblEventContent.Size = new Size(1366, 229);
             tblEventContent.TabIndex = 11;
             // 
             // lblParkingTime
@@ -857,14 +861,14 @@ namespace iParkingv5_window.Usercontrols
             lblParkingTime.Dock = DockStyle.Fill;
             lblParkingTime.IsBold = true;
             lblParkingTime.IsUpper = true;
-            lblParkingTime.Location = new Point(85, 182);
+            lblParkingTime.Location = new Point(85, 187);
             lblParkingTime.MaxFontSize = 12;
             lblParkingTime.Message = "_ _ _ _ _";
             lblParkingTime.MessageBackColor = SystemColors.ButtonHighlight;
             lblParkingTime.MessageForeColor = Color.DarkGreen;
             lblParkingTime.Name = "lblParkingTime";
             tblEventContent.SetRowSpan(lblParkingTime, 2);
-            lblParkingTime.Size = new Size(367, 45);
+            lblParkingTime.Size = new Size(367, 41);
             lblParkingTime.TabIndex = 36;
             lblParkingTime.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -874,13 +878,13 @@ namespace iParkingv5_window.Usercontrols
             lblTimeOutRowTitle.Dock = DockStyle.Fill;
             lblTimeOutRowTitle.IsBold = true;
             lblTimeOutRowTitle.IsUpper = true;
-            lblTimeOutRowTitle.Location = new Point(4, 152);
+            lblTimeOutRowTitle.Location = new Point(4, 156);
             lblTimeOutRowTitle.MaxFontSize = 12;
             lblTimeOutRowTitle.Message = "GIỜ RA";
             lblTimeOutRowTitle.MessageBackColor = SystemColors.ButtonHighlight;
             lblTimeOutRowTitle.MessageForeColor = Color.Black;
             lblTimeOutRowTitle.Name = "lblTimeOutRowTitle";
-            lblTimeOutRowTitle.Size = new Size(74, 29);
+            lblTimeOutRowTitle.Size = new Size(74, 30);
             lblTimeOutRowTitle.TabIndex = 33;
             lblTimeOutRowTitle.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -890,13 +894,13 @@ namespace iParkingv5_window.Usercontrols
             lblTimeOut.Dock = DockStyle.Fill;
             lblTimeOut.IsBold = true;
             lblTimeOut.IsUpper = true;
-            lblTimeOut.Location = new Point(85, 152);
+            lblTimeOut.Location = new Point(85, 156);
             lblTimeOut.MaxFontSize = 12;
             lblTimeOut.Message = "_ _ _ _ _";
             lblTimeOut.MessageBackColor = SystemColors.ButtonHighlight;
             lblTimeOut.MessageForeColor = Color.DarkGreen;
             lblTimeOut.Name = "lblTimeOut";
-            lblTimeOut.Size = new Size(367, 29);
+            lblTimeOut.Size = new Size(367, 30);
             lblTimeOut.TabIndex = 32;
             lblTimeOut.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -906,14 +910,14 @@ namespace iParkingv5_window.Usercontrols
             lblRegisterVehicleValidTime.Dock = DockStyle.Fill;
             lblRegisterVehicleValidTime.IsBold = true;
             lblRegisterVehicleValidTime.IsUpper = true;
-            lblRegisterVehicleValidTime.Location = new Point(995, 122);
+            lblRegisterVehicleValidTime.Location = new Point(995, 125);
             lblRegisterVehicleValidTime.MaxFontSize = 12;
             lblRegisterVehicleValidTime.Message = "_ _ _ _ _";
             lblRegisterVehicleValidTime.MessageBackColor = SystemColors.ButtonHighlight;
             lblRegisterVehicleValidTime.MessageForeColor = Color.DarkGreen;
             lblRegisterVehicleValidTime.Name = "lblRegisterVehicleValidTime";
             tblEventContent.SetRowSpan(lblRegisterVehicleValidTime, 2);
-            lblRegisterVehicleValidTime.Size = new Size(367, 59);
+            lblRegisterVehicleValidTime.Size = new Size(367, 61);
             lblRegisterVehicleValidTime.TabIndex = 29;
             lblRegisterVehicleValidTime.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -923,14 +927,14 @@ namespace iParkingv5_window.Usercontrols
             lblRegisterValidTimeRowTitle.Dock = DockStyle.Fill;
             lblRegisterValidTimeRowTitle.IsBold = true;
             lblRegisterValidTimeRowTitle.IsUpper = true;
-            lblRegisterValidTimeRowTitle.Location = new Point(914, 122);
+            lblRegisterValidTimeRowTitle.Location = new Point(914, 125);
             lblRegisterValidTimeRowTitle.MaxFontSize = 12;
             lblRegisterValidTimeRowTitle.Message = "HSD";
             lblRegisterValidTimeRowTitle.MessageBackColor = SystemColors.ButtonHighlight;
             lblRegisterValidTimeRowTitle.MessageForeColor = Color.Black;
             lblRegisterValidTimeRowTitle.Name = "lblRegisterValidTimeRowTitle";
             tblEventContent.SetRowSpan(lblRegisterValidTimeRowTitle, 2);
-            lblRegisterValidTimeRowTitle.Size = new Size(74, 59);
+            lblRegisterValidTimeRowTitle.Size = new Size(74, 61);
             lblRegisterValidTimeRowTitle.TabIndex = 28;
             lblRegisterValidTimeRowTitle.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -940,13 +944,13 @@ namespace iParkingv5_window.Usercontrols
             lblCustomerName.Dock = DockStyle.Fill;
             lblCustomerName.IsBold = true;
             lblCustomerName.IsUpper = true;
-            lblCustomerName.Location = new Point(540, 62);
+            lblCustomerName.Location = new Point(540, 63);
             lblCustomerName.MaxFontSize = 12;
             lblCustomerName.Message = "_ _ _ _ _";
             lblCustomerName.MessageBackColor = SystemColors.ButtonHighlight;
             lblCustomerName.MessageForeColor = Color.DarkGreen;
             lblCustomerName.Name = "lblCustomerName";
-            lblCustomerName.Size = new Size(367, 29);
+            lblCustomerName.Size = new Size(367, 30);
             lblCustomerName.TabIndex = 6;
             lblCustomerName.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -962,7 +966,7 @@ namespace iParkingv5_window.Usercontrols
             lblIdentityGroupName.MessageBackColor = SystemColors.ButtonHighlight;
             lblIdentityGroupName.MessageForeColor = Color.Black;
             lblIdentityGroupName.Name = "lblIdentityGroupName";
-            lblIdentityGroupName.Size = new Size(367, 29);
+            lblIdentityGroupName.Size = new Size(367, 30);
             lblIdentityGroupName.TabIndex = 25;
             lblIdentityGroupName.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -972,13 +976,13 @@ namespace iParkingv5_window.Usercontrols
             lblCustomerNameRowTitle.Dock = DockStyle.Fill;
             lblCustomerNameRowTitle.IsBold = true;
             lblCustomerNameRowTitle.IsUpper = true;
-            lblCustomerNameRowTitle.Location = new Point(459, 62);
+            lblCustomerNameRowTitle.Location = new Point(459, 63);
             lblCustomerNameRowTitle.MaxFontSize = 12;
             lblCustomerNameRowTitle.Message = "Tên";
             lblCustomerNameRowTitle.MessageBackColor = SystemColors.ButtonHighlight;
             lblCustomerNameRowTitle.MessageForeColor = Color.Black;
             lblCustomerNameRowTitle.Name = "lblCustomerNameRowTitle";
-            lblCustomerNameRowTitle.Size = new Size(74, 29);
+            lblCustomerNameRowTitle.Size = new Size(74, 30);
             lblCustomerNameRowTitle.TabIndex = 5;
             lblCustomerNameRowTitle.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -988,13 +992,13 @@ namespace iParkingv5_window.Usercontrols
             lblTimeIn.Dock = DockStyle.Fill;
             lblTimeIn.IsBold = true;
             lblTimeIn.IsUpper = true;
-            lblTimeIn.Location = new Point(85, 122);
+            lblTimeIn.Location = new Point(85, 125);
             lblTimeIn.MaxFontSize = 12;
             lblTimeIn.Message = "_ _ _ _ _";
             lblTimeIn.MessageBackColor = SystemColors.ButtonHighlight;
             lblTimeIn.MessageForeColor = Color.DarkGreen;
             lblTimeIn.Name = "lblTimeIn";
-            lblTimeIn.Size = new Size(367, 29);
+            lblTimeIn.Size = new Size(367, 30);
             lblTimeIn.TabIndex = 4;
             lblTimeIn.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -1004,13 +1008,13 @@ namespace iParkingv5_window.Usercontrols
             lblTimeInRowTitle.Dock = DockStyle.Fill;
             lblTimeInRowTitle.IsBold = true;
             lblTimeInRowTitle.IsUpper = true;
-            lblTimeInRowTitle.Location = new Point(4, 122);
+            lblTimeInRowTitle.Location = new Point(4, 125);
             lblTimeInRowTitle.MaxFontSize = 12;
             lblTimeInRowTitle.Message = "Giờ Vào";
             lblTimeInRowTitle.MessageBackColor = SystemColors.ButtonHighlight;
             lblTimeInRowTitle.MessageForeColor = Color.Black;
             lblTimeInRowTitle.Name = "lblTimeInRowTitle";
-            lblTimeInRowTitle.Size = new Size(74, 29);
+            lblTimeInRowTitle.Size = new Size(74, 30);
             lblTimeInRowTitle.TabIndex = 3;
             lblTimeInRowTitle.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -1021,14 +1025,14 @@ namespace iParkingv5_window.Usercontrols
             lblCustomerAddress.Font = new Font("Segoe UI", 11F);
             lblCustomerAddress.IsBold = false;
             lblCustomerAddress.IsUpper = true;
-            lblCustomerAddress.Location = new Point(540, 122);
+            lblCustomerAddress.Location = new Point(540, 125);
             lblCustomerAddress.MaxFontSize = 12;
             lblCustomerAddress.Message = "_ _ _ _ _";
             lblCustomerAddress.MessageBackColor = SystemColors.ButtonHighlight;
             lblCustomerAddress.MessageForeColor = Color.Black;
             lblCustomerAddress.Name = "lblCustomerAddress";
             tblEventContent.SetRowSpan(lblCustomerAddress, 2);
-            lblCustomerAddress.Size = new Size(367, 59);
+            lblCustomerAddress.Size = new Size(367, 61);
             lblCustomerAddress.TabIndex = 27;
             lblCustomerAddress.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -1038,14 +1042,14 @@ namespace iParkingv5_window.Usercontrols
             lblCustomerAddressRowTitle.Dock = DockStyle.Fill;
             lblCustomerAddressRowTitle.IsBold = true;
             lblCustomerAddressRowTitle.IsUpper = true;
-            lblCustomerAddressRowTitle.Location = new Point(459, 122);
+            lblCustomerAddressRowTitle.Location = new Point(459, 125);
             lblCustomerAddressRowTitle.MaxFontSize = 12;
             lblCustomerAddressRowTitle.Message = "Địa chỉ";
             lblCustomerAddressRowTitle.MessageBackColor = SystemColors.ButtonHighlight;
             lblCustomerAddressRowTitle.MessageForeColor = Color.Black;
             lblCustomerAddressRowTitle.Name = "lblCustomerAddressRowTitle";
             tblEventContent.SetRowSpan(lblCustomerAddressRowTitle, 2);
-            lblCustomerAddressRowTitle.Size = new Size(74, 59);
+            lblCustomerAddressRowTitle.Size = new Size(74, 61);
             lblCustomerAddressRowTitle.TabIndex = 26;
             lblCustomerAddressRowTitle.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -1055,13 +1059,13 @@ namespace iParkingv5_window.Usercontrols
             lblCustomerPhone.Dock = DockStyle.Fill;
             lblCustomerPhone.IsBold = false;
             lblCustomerPhone.IsUpper = true;
-            lblCustomerPhone.Location = new Point(540, 92);
+            lblCustomerPhone.Location = new Point(540, 94);
             lblCustomerPhone.MaxFontSize = 12;
             lblCustomerPhone.Message = "_ _ _ _ _";
             lblCustomerPhone.MessageBackColor = SystemColors.ButtonHighlight;
             lblCustomerPhone.MessageForeColor = Color.Black;
             lblCustomerPhone.Name = "lblCustomerPhone";
-            lblCustomerPhone.Size = new Size(367, 29);
+            lblCustomerPhone.Size = new Size(367, 30);
             lblCustomerPhone.TabIndex = 21;
             lblCustomerPhone.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -1071,13 +1075,13 @@ namespace iParkingv5_window.Usercontrols
             lblCustomerPhoneRowTitle.Dock = DockStyle.Fill;
             lblCustomerPhoneRowTitle.IsBold = true;
             lblCustomerPhoneRowTitle.IsUpper = true;
-            lblCustomerPhoneRowTitle.Location = new Point(459, 92);
+            lblCustomerPhoneRowTitle.Location = new Point(459, 94);
             lblCustomerPhoneRowTitle.MaxFontSize = 12;
             lblCustomerPhoneRowTitle.Message = "SĐT";
             lblCustomerPhoneRowTitle.MessageBackColor = SystemColors.ButtonHighlight;
             lblCustomerPhoneRowTitle.MessageForeColor = Color.Black;
             lblCustomerPhoneRowTitle.Name = "lblCustomerPhoneRowTitle";
-            lblCustomerPhoneRowTitle.Size = new Size(74, 29);
+            lblCustomerPhoneRowTitle.Size = new Size(74, 30);
             lblCustomerPhoneRowTitle.TabIndex = 20;
             lblCustomerPhoneRowTitle.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -1093,7 +1097,7 @@ namespace iParkingv5_window.Usercontrols
             lblRegisterPlate.MessageBackColor = SystemColors.ButtonHighlight;
             lblRegisterPlate.MessageForeColor = Color.Black;
             lblRegisterPlate.Name = "lblRegisterPlate";
-            lblRegisterPlate.Size = new Size(367, 29);
+            lblRegisterPlate.Size = new Size(367, 30);
             lblRegisterPlate.TabIndex = 8;
             lblRegisterPlate.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -1147,7 +1151,7 @@ namespace iParkingv5_window.Usercontrols
             lblIdentityGroupRowTitle.MessageBackColor = SystemColors.ButtonHighlight;
             lblIdentityGroupRowTitle.MessageForeColor = Color.Black;
             lblIdentityGroupRowTitle.Name = "lblIdentityGroupRowTitle";
-            lblIdentityGroupRowTitle.Size = new Size(74, 29);
+            lblIdentityGroupRowTitle.Size = new Size(74, 30);
             lblIdentityGroupRowTitle.TabIndex = 9;
             lblIdentityGroupRowTitle.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -1157,13 +1161,13 @@ namespace iParkingv5_window.Usercontrols
             lblIdentityNameRowTitle.Dock = DockStyle.Fill;
             lblIdentityNameRowTitle.IsBold = true;
             lblIdentityNameRowTitle.IsUpper = true;
-            lblIdentityNameRowTitle.Location = new Point(4, 62);
+            lblIdentityNameRowTitle.Location = new Point(4, 63);
             lblIdentityNameRowTitle.MaxFontSize = 12;
             lblIdentityNameRowTitle.Message = "Tên";
             lblIdentityNameRowTitle.MessageBackColor = SystemColors.ButtonHighlight;
             lblIdentityNameRowTitle.MessageForeColor = Color.Black;
             lblIdentityNameRowTitle.Name = "lblIdentityNameRowTitle";
-            lblIdentityNameRowTitle.Size = new Size(74, 29);
+            lblIdentityNameRowTitle.Size = new Size(74, 30);
             lblIdentityNameRowTitle.TabIndex = 18;
             lblIdentityNameRowTitle.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -1173,13 +1177,13 @@ namespace iParkingv5_window.Usercontrols
             lblIdentityCodeRowTitle.Dock = DockStyle.Fill;
             lblIdentityCodeRowTitle.IsBold = true;
             lblIdentityCodeRowTitle.IsUpper = true;
-            lblIdentityCodeRowTitle.Location = new Point(4, 92);
+            lblIdentityCodeRowTitle.Location = new Point(4, 94);
             lblIdentityCodeRowTitle.MaxFontSize = 12;
             lblIdentityCodeRowTitle.Message = "Mã";
             lblIdentityCodeRowTitle.MessageBackColor = SystemColors.ButtonHighlight;
             lblIdentityCodeRowTitle.MessageForeColor = Color.Black;
             lblIdentityCodeRowTitle.Name = "lblIdentityCodeRowTitle";
-            lblIdentityCodeRowTitle.Size = new Size(74, 29);
+            lblIdentityCodeRowTitle.Size = new Size(74, 30);
             lblIdentityCodeRowTitle.TabIndex = 24;
             lblIdentityCodeRowTitle.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -1189,13 +1193,13 @@ namespace iParkingv5_window.Usercontrols
             lblIdentityName.Dock = DockStyle.Fill;
             lblIdentityName.IsBold = true;
             lblIdentityName.IsUpper = true;
-            lblIdentityName.Location = new Point(85, 62);
+            lblIdentityName.Location = new Point(85, 63);
             lblIdentityName.MaxFontSize = 12;
             lblIdentityName.Message = "_ _ _ _ _";
             lblIdentityName.MessageBackColor = SystemColors.ButtonHighlight;
             lblIdentityName.MessageForeColor = Color.DarkGreen;
             lblIdentityName.Name = "lblIdentityName";
-            lblIdentityName.Size = new Size(367, 29);
+            lblIdentityName.Size = new Size(367, 30);
             lblIdentityName.TabIndex = 19;
             lblIdentityName.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -1211,7 +1215,7 @@ namespace iParkingv5_window.Usercontrols
             lblCustomerGroupRowTitle.MessageBackColor = SystemColors.ButtonHighlight;
             lblCustomerGroupRowTitle.MessageForeColor = Color.Black;
             lblCustomerGroupRowTitle.Name = "lblCustomerGroupRowTitle";
-            lblCustomerGroupRowTitle.Size = new Size(74, 29);
+            lblCustomerGroupRowTitle.Size = new Size(74, 30);
             lblCustomerGroupRowTitle.TabIndex = 11;
             lblCustomerGroupRowTitle.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -1227,7 +1231,7 @@ namespace iParkingv5_window.Usercontrols
             lblCustomerGroupName.MessageBackColor = SystemColors.ButtonHighlight;
             lblCustomerGroupName.MessageForeColor = Color.Black;
             lblCustomerGroupName.Name = "lblCustomerGroupName";
-            lblCustomerGroupName.Size = new Size(367, 29);
+            lblCustomerGroupName.Size = new Size(367, 30);
             lblCustomerGroupName.TabIndex = 12;
             lblCustomerGroupName.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -1237,13 +1241,13 @@ namespace iParkingv5_window.Usercontrols
             lblRegisterNameRowTitle.Dock = DockStyle.Fill;
             lblRegisterNameRowTitle.IsBold = true;
             lblRegisterNameRowTitle.IsUpper = true;
-            lblRegisterNameRowTitle.Location = new Point(914, 62);
+            lblRegisterNameRowTitle.Location = new Point(914, 63);
             lblRegisterNameRowTitle.MaxFontSize = 12;
             lblRegisterNameRowTitle.Message = "Tên";
             lblRegisterNameRowTitle.MessageBackColor = SystemColors.ButtonHighlight;
             lblRegisterNameRowTitle.MessageForeColor = Color.Black;
             lblRegisterNameRowTitle.Name = "lblRegisterNameRowTitle";
-            lblRegisterNameRowTitle.Size = new Size(74, 29);
+            lblRegisterNameRowTitle.Size = new Size(74, 30);
             lblRegisterNameRowTitle.TabIndex = 5;
             lblRegisterNameRowTitle.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -1253,13 +1257,13 @@ namespace iParkingv5_window.Usercontrols
             lblRegisterVehilceName.Dock = DockStyle.Fill;
             lblRegisterVehilceName.IsBold = true;
             lblRegisterVehilceName.IsUpper = true;
-            lblRegisterVehilceName.Location = new Point(995, 62);
+            lblRegisterVehilceName.Location = new Point(995, 63);
             lblRegisterVehilceName.MaxFontSize = 12;
             lblRegisterVehilceName.Message = "_ _ _ _ _";
             lblRegisterVehilceName.MessageBackColor = SystemColors.ButtonHighlight;
             lblRegisterVehilceName.MessageForeColor = Color.DarkGreen;
             lblRegisterVehilceName.Name = "lblRegisterVehilceName";
-            lblRegisterVehilceName.Size = new Size(367, 29);
+            lblRegisterVehilceName.Size = new Size(367, 30);
             lblRegisterVehilceName.TabIndex = 6;
             lblRegisterVehilceName.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -1275,7 +1279,7 @@ namespace iParkingv5_window.Usercontrols
             lblRegisterPlateRowTitle.MessageBackColor = SystemColors.ButtonHighlight;
             lblRegisterPlateRowTitle.MessageForeColor = Color.Black;
             lblRegisterPlateRowTitle.Name = "lblRegisterPlateRowTitle";
-            lblRegisterPlateRowTitle.Size = new Size(74, 29);
+            lblRegisterPlateRowTitle.Size = new Size(74, 30);
             lblRegisterPlateRowTitle.TabIndex = 7;
             lblRegisterPlateRowTitle.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -1285,13 +1289,13 @@ namespace iParkingv5_window.Usercontrols
             lblIdentityCode.Dock = DockStyle.Fill;
             lblIdentityCode.IsBold = false;
             lblIdentityCode.IsUpper = true;
-            lblIdentityCode.Location = new Point(85, 92);
+            lblIdentityCode.Location = new Point(85, 94);
             lblIdentityCode.MaxFontSize = 12;
             lblIdentityCode.Message = "_ _ _ _ _";
             lblIdentityCode.MessageBackColor = SystemColors.ButtonHighlight;
             lblIdentityCode.MessageForeColor = Color.Black;
             lblIdentityCode.Name = "lblIdentityCode";
-            lblIdentityCode.Size = new Size(367, 29);
+            lblIdentityCode.Size = new Size(367, 30);
             lblIdentityCode.TabIndex = 10;
             lblIdentityCode.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -1301,13 +1305,13 @@ namespace iParkingv5_window.Usercontrols
             lblRegisterExpireTimeRowTitle.Dock = DockStyle.Fill;
             lblRegisterExpireTimeRowTitle.IsBold = true;
             lblRegisterExpireTimeRowTitle.IsUpper = true;
-            lblRegisterExpireTimeRowTitle.Location = new Point(914, 92);
+            lblRegisterExpireTimeRowTitle.Location = new Point(914, 94);
             lblRegisterExpireTimeRowTitle.MaxFontSize = 12;
             lblRegisterExpireTimeRowTitle.Message = "Hết hạn";
             lblRegisterExpireTimeRowTitle.MessageBackColor = SystemColors.ButtonHighlight;
             lblRegisterExpireTimeRowTitle.MessageForeColor = Color.Black;
             lblRegisterExpireTimeRowTitle.Name = "lblRegisterExpireTimeRowTitle";
-            lblRegisterExpireTimeRowTitle.Size = new Size(74, 29);
+            lblRegisterExpireTimeRowTitle.Size = new Size(74, 30);
             lblRegisterExpireTimeRowTitle.TabIndex = 13;
             lblRegisterExpireTimeRowTitle.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -1317,13 +1321,13 @@ namespace iParkingv5_window.Usercontrols
             lblRegisterVehileExpireDate.Dock = DockStyle.Fill;
             lblRegisterVehileExpireDate.IsBold = true;
             lblRegisterVehileExpireDate.IsUpper = true;
-            lblRegisterVehileExpireDate.Location = new Point(995, 92);
+            lblRegisterVehileExpireDate.Location = new Point(995, 94);
             lblRegisterVehileExpireDate.MaxFontSize = 12;
             lblRegisterVehileExpireDate.Message = "_ _ _ _ _";
             lblRegisterVehileExpireDate.MessageBackColor = SystemColors.ButtonHighlight;
             lblRegisterVehileExpireDate.MessageForeColor = Color.DarkGreen;
             lblRegisterVehileExpireDate.Name = "lblRegisterVehileExpireDate";
-            lblRegisterVehileExpireDate.Size = new Size(367, 29);
+            lblRegisterVehileExpireDate.Size = new Size(367, 30);
             lblRegisterVehileExpireDate.TabIndex = 14;
             lblRegisterVehileExpireDate.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -1364,14 +1368,14 @@ namespace iParkingv5_window.Usercontrols
             lblFee.Font = new Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblFee.IsBold = true;
             lblFee.IsUpper = true;
-            lblFee.Location = new Point(914, 182);
+            lblFee.Location = new Point(914, 187);
             lblFee.MaxFontSize = 32;
             lblFee.Message = "_ _ _ _ _";
             lblFee.MessageBackColor = Color.DarkGreen;
             lblFee.MessageForeColor = SystemColors.ButtonHighlight;
             lblFee.Name = "lblFee";
             tblEventContent.SetRowSpan(lblFee, 2);
-            lblFee.Size = new Size(448, 45);
+            lblFee.Size = new Size(448, 41);
             lblFee.TabIndex = 35;
             lblFee.TextAlign = ContentAlignment.MiddleCenter;
             // 
@@ -1382,14 +1386,14 @@ namespace iParkingv5_window.Usercontrols
             lblParkingFeeRowTitle.Dock = DockStyle.Fill;
             lblParkingFeeRowTitle.IsBold = true;
             lblParkingFeeRowTitle.IsUpper = true;
-            lblParkingFeeRowTitle.Location = new Point(459, 182);
+            lblParkingFeeRowTitle.Location = new Point(459, 187);
             lblParkingFeeRowTitle.MaxFontSize = 32;
             lblParkingFeeRowTitle.Message = "Phí Gửi Xe";
             lblParkingFeeRowTitle.MessageBackColor = SystemColors.ButtonHighlight;
             lblParkingFeeRowTitle.MessageForeColor = Color.Black;
             lblParkingFeeRowTitle.Name = "lblParkingFeeRowTitle";
             tblEventContent.SetRowSpan(lblParkingFeeRowTitle, 2);
-            lblParkingFeeRowTitle.Size = new Size(448, 45);
+            lblParkingFeeRowTitle.Size = new Size(448, 41);
             lblParkingFeeRowTitle.TabIndex = 34;
             lblParkingFeeRowTitle.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -1399,14 +1403,14 @@ namespace iParkingv5_window.Usercontrols
             lblResult1.Dock = DockStyle.Fill;
             lblResult1.IsBold = true;
             lblResult1.IsUpper = true;
-            lblResult1.Location = new Point(4, 182);
+            lblResult1.Location = new Point(4, 187);
             lblResult1.MaxFontSize = 32;
             lblResult1.Message = "TG Gửi";
             lblResult1.MessageBackColor = SystemColors.ButtonHighlight;
             lblResult1.MessageForeColor = Color.Black;
             lblResult1.Name = "lblResult1";
             tblEventContent.SetRowSpan(lblResult1, 2);
-            lblResult1.Size = new Size(74, 45);
+            lblResult1.Size = new Size(74, 41);
             lblResult1.TabIndex = 34;
             lblResult1.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -1586,22 +1590,22 @@ namespace iParkingv5_window.Usercontrols
             splitContainerMain.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainerMain).EndInit();
             splitContainerMain.ResumeLayout(false);
-            spliterCamera_TopEvent.Panel1.ResumeLayout(false);
-            spliterCamera_TopEvent.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)spliterCamera_TopEvent).EndInit();
-            spliterCamera_TopEvent.ResumeLayout(false);
+            spliterCamera_top3Event.Panel1.ResumeLayout(false);
+            spliterCamera_top3Event.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)spliterCamera_top3Event).EndInit();
+            spliterCamera_top3Event.ResumeLayout(false);
             spliterCamera_PicEv_PicPlate.Panel1.ResumeLayout(false);
             spliterCamera_PicEv_PicPlate.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)spliterCamera_PicEv_PicPlate).EndInit();
             spliterCamera_PicEv_PicPlate.ResumeLayout(false);
-            spliterCamera_PicEv.Panel1.ResumeLayout(false);
-            spliterCamera_PicEv.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)spliterCamera_PicEv).EndInit();
-            spliterCamera_PicEv.ResumeLayout(false);
             spliterCamera.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)spliterCamera).EndInit();
             spliterCamera.ResumeLayout(false);
             tblCamera.ResumeLayout(false);
+            spliterPicEv_PicPlate.Panel1.ResumeLayout(false);
+            spliterPicEv_PicPlate.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)spliterPicEv_PicPlate).EndInit();
+            spliterPicEv_PicPlate.ResumeLayout(false);
             tblEventPic.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picVehicleImageIn).EndInit();
             ((System.ComponentModel.ISupportInitialize)picVehicleImageOut).EndInit();
@@ -1679,7 +1683,7 @@ namespace iParkingv5_window.Usercontrols
         private System.Windows.Forms.Timer timerRefreshUI;
         private TableLayoutPanel panelLastEvent;
         private lblResult lblResult2;
-        private SplitContainer spliterCamera_PicEv;
+        private SplitContainer spliterPicEv_PicPlate;
         private TableLayoutPanel tblEventContent;
         private lblResult lblRegisterVehicleValidTime;
         private lblResult lblRegisterValidTimeRowTitle;
@@ -1721,7 +1725,7 @@ namespace iParkingv5_window.Usercontrols
         private lblResult lblCamOutTitle;
         private lblResult lblPicOutTitle;
         private lblResult lblPicInTitle;
-        private SplitContainer spliterCamera_TopEvent;
+        private SplitContainer spliterCamera_top3Event;
         private SplitContainer spliterEvInPlate;
         private SplitContainer spliterEvOutPlate;
         private lblResult lblTimeOutRowTitle;
