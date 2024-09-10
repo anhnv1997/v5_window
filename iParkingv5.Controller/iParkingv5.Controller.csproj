@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <Reference Include="Aopu_Controller">
-      <HintPath>C:\Users\PC_Kien\Desktop\Aopu_Controller.dll</HintPath>
+      <HintPath>..\..\..\16.BaoTangVuTru\package\Aopu_Controller.dll</HintPath>
     </Reference>
     <Reference Include="DahuaLib">
       <HintPath>..\packages\DahuaLib.dll</HintPath>
@@ -33,7 +33,7 @@
       <HintPath>..\packages\Interop.AccessTcp.dll</HintPath>
     </Reference>
     <Reference Include="Kztek.Tool">
-      <HintPath>..\packages\Kztek.Tool.dll</HintPath>
+      <HintPath>..\..\..\16.BaoTangVuTru\package\Kztek.Tool.dll</HintPath>
     </Reference>
   </ItemGroup>
 

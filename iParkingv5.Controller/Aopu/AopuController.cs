@@ -109,6 +109,7 @@ namespace iParkingv5.Controller.Aopu
             OpenDoor = false;
             relay = 0;
             string dt = Datetime.ToString();
+            ControllerInfo.IsConnect = true;
             switch (EType)
             {
                 case 0:
@@ -128,6 +129,8 @@ namespace iParkingv5.Controller.Aopu
                             _olddoor = Door;
                             _oldeventtype = EventType;
                             _oldcardnumber = CardNo;
+
+
                         }
                     }
                     catch
@@ -343,7 +346,10 @@ namespace iParkingv5.Controller.Aopu
                 DeviceName = controller.Name,
                 AllCardFormats = new List<string>(),
             };
-            string cardNumberHex = Convert.ToInt32(cardNumberInt).ToString("X8");
+
+            // Fix cung
+            string cardNumberHex = cardNumberInt;//Convert.ToInt32(cardNumberInt).ToString("X8");
+
             e.AllCardFormats.Add(cardNumberHex);
             e.AllCardFormats.Add(cardNumberInt);
 
@@ -373,7 +379,12 @@ namespace iParkingv5.Controller.Aopu
                 e.AllCardFormats.Add(maSauFormat2);
                 e.PreferCard = maSauFormat3;
             }
+            else
+            {
+                e.PreferCard = cardNumberInt;
+            }
             e.ReaderIndex = Regex.IsMatch(readerIndex, @"^\d+$") ? Convert.ToInt32(readerIndex) : -1;
+
             OnCardEvent(e);
         }
 
@@ -385,11 +396,11 @@ namespace iParkingv5.Controller.Aopu
         }
         public bool OpenDoor1()
         {
-            return TcpipObj.OpenDoorLong(0);
+            return TcpipObj.Opendoor(0);
         }
         public bool OpenDoor2()
         {
-            return TcpipObj.OpenDoorLong(1);
+            return TcpipObj.Opendoor(1);
         }
 
         public Task<bool> AddFinger(List<string> fingerDatas)

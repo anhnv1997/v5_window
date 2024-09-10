@@ -1,6 +1,6 @@
 using iParkingv5.Controller.Ingress;
 
-namespace v6_window
+namespace iParkingv5.Controller
 {
     internal static class Program
     {

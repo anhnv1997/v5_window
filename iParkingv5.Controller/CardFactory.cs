@@ -1,5 +1,4 @@
 ﻿using iParkingv5.Controller.CardControllers;
-using KztekObject.Cards;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -3,14 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace KztekObject.Cards
+namespace iParkingv5.Controller.CardControllers
 {
     public class MifareController : ICardFactory
     {
         private int cardType;
         public MifareController(int _cardType)
         {
-            this.cardType = _cardType;
+            cardType = _cardType;
         }
 
         public int CardLen()

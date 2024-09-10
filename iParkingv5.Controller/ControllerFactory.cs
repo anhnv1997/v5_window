@@ -19,7 +19,7 @@ namespace iParkingv5.Controller
         {
             return (EmControllerType)bdk.Type switch
             {
-                EmControllerType.IDTECK => null,
+                EmControllerType.IDTECK => new KzE02Netv2() { ControllerInfo = bdk },
                 EmControllerType.KZE02_NET => new KzE02Netv2() { ControllerInfo = bdk },
                 EmControllerType.KZE16_NET => new KzE16Net() { ControllerInfo = bdk },
                 EmControllerType.MT166 => null,

@@ -124,7 +124,14 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
                     });
                     this.IsBusy = false;
                     // Trang thai thiet bij
-                    this.ControllerInfo.IsConnect = response != "";
+                    if (response.Contains("exception"))
+                    {
+                        this.ControllerInfo.IsConnect = false;
+                    }
+                    else
+                    {
+                        this.ControllerInfo.IsConnect = response != "";
+                    }
                     //response = "GetEvent?/Style=Card/UserID=100/LenCard=4/Card=00000010/Reader=02/DateTime=YYYYMMDDhhmmss/CardState=U/AccessState=1/Door=00/StateMSG=00";
                     //AccessCardGrant: Char(2) + GetEvent?/Style=Card/UserID=100/LenCard=4/Card=7C19F640/Reader=01/DateTime=YYYYMMDDhhmmss/CardState=U/AccessState=1/Door=00/StateMSG=00 + char(3)
                     //AccessCardDenie: Char(2) + GetEvent?/Style=Card/UserID=Null/LenCard=4/Card=7C19F640/Reader=01/DateTime=YYYYMMDDhhmmss/CardState=U/AccessState=1/Door=00/StateMSG=00 + char(3)
@@ -300,7 +307,7 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
             int cardlen = 4;// cardFactory.CardLen();
             string comport = this.ControllerInfo.Comport;
             int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
-            string door =int.Parse(doors).ToString("00");
+            string door = int.Parse(doors).ToString("00");
             if (door == "")
             {
                 errorCode = -1;
