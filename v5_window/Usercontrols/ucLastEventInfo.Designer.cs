@@ -41,7 +41,7 @@
             picVehicle.Location = new Point(0, 0);
             picVehicle.Margin = new Padding(4, 3, 4, 3);
             picVehicle.Name = "picVehicle";
-            picVehicle.Size = new Size(308, 167);
+            picVehicle.Size = new Size(313, 167);
             picVehicle.SizeMode = PictureBoxSizeMode.StretchImage;
             picVehicle.TabIndex = 0;
             picVehicle.TabStop = false;
@@ -56,7 +56,7 @@
             Font = new Font("Segoe UI", 12F);
             Margin = new Padding(0);
             Name = "ucLastEventInfo";
-            Padding = new Padding(0, 0, 10, 1);
+            Padding = new Padding(0, 0, 5, 1);
             Size = new Size(318, 168);
             ((System.ComponentModel.ISupportInitialize)picVehicle).EndInit();
             ResumeLayout(false);

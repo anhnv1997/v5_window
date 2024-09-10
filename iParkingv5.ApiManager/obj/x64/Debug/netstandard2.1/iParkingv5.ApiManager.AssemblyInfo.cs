@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("iParkingv5.ApiManager")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("6.0.0.1")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("6.0.0.1+2902b4c39574594128a06f1ff7af248663002019")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("6.0.0.1+4f0f17cc959eb352ba68bdfc5e62ca617d54bb1c")]
 [assembly: System.Reflection.AssemblyProductAttribute("iParkingv5.ApiManager")]
 [assembly: System.Reflection.AssemblyTitleAttribute("iParkingv5.ApiManager")]
 [assembly: System.Reflection.AssemblyVersionAttribute("6.0.0.1")]

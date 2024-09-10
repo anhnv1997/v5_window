@@ -28,16 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
+            SuspendLayout();
             // 
             // ucViewGrid
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "ucViewGrid";
-            this.Size = new System.Drawing.Size(395, 252);
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            Margin = new Padding(0);
+            Name = "ucViewGrid";
+            Size = new Size(395, 252);
+            ResumeLayout(false);
         }
 
         #endregion

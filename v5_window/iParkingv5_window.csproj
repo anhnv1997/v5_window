@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="fontawesome.sharp" Version="6.3.0" />
     <PackageReference Include="IdentityModel" Version="7.0.0" />
     <PackageReference Include="IdentityModel.OidcClient" Version="6.0.0" />
     <PackageReference Include="M2Mqtt" Version="4.3.0" />

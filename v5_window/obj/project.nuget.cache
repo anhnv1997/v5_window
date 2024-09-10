@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "3MWYRCBZv1U=",
+  "dgSpecHash": "sMwlOqhk0zQ=",
   "success": true,
   "projectFilePath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\v5_window\\iParkingv5_window.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\communitytoolkit.highperformance\\8.1.0\\communitytoolkit.highperformance.8.1.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\documentformat.openxml\\2.11.3\\documentformat.openxml.2.11.3.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\fontawesome.sharp\\6.3.0\\fontawesome.sharp.6.3.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\identitymodel\\7.0.0\\identitymodel.7.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\identitymodel.oidcclient\\6.0.0\\identitymodel.oidcclient.6.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\m2mqtt\\4.3.0\\m2mqtt.4.3.0.nupkg.sha512",

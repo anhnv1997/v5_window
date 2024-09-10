@@ -41,15 +41,18 @@ namespace iParkingv5_window.Usercontrols
 
         private void Parent_SizeChanged(object? sender, EventArgs e)
         {
-            this.Width = this.Parent.Width / 3;
+            this.Width = (this.Parent.Width + this.Padding.Right) / 3;
         }
-
+        public void UpdateSize()
+        {
+            this.Width = (this.Parent.Width + this.Padding.Right) / 3;
+        }
         private void UcLastEventInfo_SizeChanged(object? sender, EventArgs e)
         {
             if (this.Parent != null)
             {
 
-                this.Width = this.Parent.Width / 3;
+                this.Width = (this.Parent.Width + this.Padding.Right) / 3;
             }
             else
             {

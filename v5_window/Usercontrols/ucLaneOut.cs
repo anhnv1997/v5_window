@@ -22,6 +22,7 @@ using Kztek.Tool.LogDatabases;
 using Kztek.Tool.TextFormatingTools;
 using Kztek.Tools;
 using Microsoft.Extensions.Logging;
+using System.Threading;
 using static iParkingv5.Objects.Configs.LaneDirectionConfig;
 using static iParkingv5.Objects.Enums.ParkingImageType;
 using static iParkingv5.Objects.Enums.PrintHelpers;
@@ -67,7 +68,53 @@ namespace iParkingv5_window.Usercontrols
             this.laneDisplayConfig = laneDisplayConfig;
             this.laneDirectionConfig = laneDirectionConfig;
 
+            tblEventContent.ToggleDoubleBuffered(true);
+
+            var activeSpliters = new List<SplitContainer>()
+            {
+                spliterCamera ,
+                spliterCamera_PicEv ,
+                spliterCamera_PicEv_PicPlate ,
+                spliterCamera_TopEvent,
+                spliterEvInPlate ,
+                spliterEvOutPlate,
+                splitContainerMain,
+                spliterTopEvent_Actions
+            };
+
+            foreach (var spliter in activeSpliters)
+            {
+                spliter.ToggleDoubleBuffered(true);
+                spliter.Paint += SpliterCamera_Paint;
+            }
+            activeSpliters.Clear();
+
+
             tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "Init Lane");
+        }
+
+
+        private void SpliterCamera_Paint(object? sender, PaintEventArgs e)
+        {
+            var spliter = sender as SplitContainer;
+            // Set the color you want for the splitter
+            Color splitterColor = this.IsAllowDesignRealtime ? Color.Red : SystemColors.ButtonHighlight;
+
+            // Create a brush with the desired color
+            using (SolidBrush brush = new SolidBrush(splitterColor))
+            {
+                // Draw the splitter manually
+                if (spliter.Orientation == Orientation.Horizontal)
+                {
+                    // Horizontal splitter
+                    e.Graphics.FillRectangle(brush, 0, spliter.SplitterDistance, spliter.Width, spliter.SplitterWidth);
+                }
+                else
+                {
+                    // Vertical splitter
+                    e.Graphics.FillRectangle(brush, spliter.SplitterDistance, 0, spliter.SplitterWidth, spliter.Height);
+                }
+            }
         }
 
         /// <summary> 
@@ -145,7 +192,7 @@ namespace iParkingv5_window.Usercontrols
                 {
                     tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS,
                                          $"Get New Input Event", inputEvent);
-                    await ExcecuteInputEvent(inputEvent, lblResult);
+                    await ExcecuteInputEvent(inputEvent, lblEventMessage);
                 }
             }
             finally
@@ -174,7 +221,7 @@ namespace iParkingv5_window.Usercontrols
 
             tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
                                  $"{this.lane.name}.Loop.{ie.InputIndex} - START DETECT PLATE");
-            lblResult.UpdateResultMessage("Nhận dạng biển số", ProcessColor);
+            lblEventMessage.UpdateResultMessage("Nhận dạng biển số", ProcessColor);
             overviewImg = ucOverView?.GetFullCurrentImage();
             lprResult = await LoopLprDetection();
 
@@ -193,13 +240,13 @@ namespace iParkingv5_window.Usercontrols
             {
                 tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
                                 $"{this.lane.name}.Loop.{ie.InputIndex} - VEHICLE NULL - END");
-                lblResult.UpdateResultMessage("Phương tiện chưa được đăng ký trong hệ thống", ErrorColor);
+                lblEventMessage.UpdateResultMessage("Phương tiện chưa được đăng ký trong hệ thống", ErrorColor);
                 return;
             }
 
             tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
                                 $"{this.lane.name}.Loop.{ie.InputIndex} - START CHECK OUT");
-            lblResult.UpdateResultMessage("Đang check out..." + lprResult.PlateNumber, ProcessColor);
+            lblEventMessage.UpdateResultMessage("Đang check out..." + lprResult.PlateNumber, ProcessColor);
 
             tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
                                 $"{this.lane.name}.Loop.{ie.InputIndex} - GET CUSTOMER INFO");
@@ -279,7 +326,7 @@ namespace iParkingv5_window.Usercontrols
                     tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
                        $"{this.lane.name}.Loop.{ie.InputIndex} - NOT CONFIRM OPEN BARRIE");
 
-                    lblResult.UpdateResultMessage("Không xác nhận mở barrie", ProcessColor);
+                    lblEventMessage.UpdateResultMessage("Không xác nhận mở barrie", ProcessColor);
                     return;
                 }
                 else
@@ -340,7 +387,7 @@ namespace iParkingv5_window.Usercontrols
                 {
                     tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                               $"{this.lane.name}.Card.{ce.PreferCard} - In Waiting Time: {thoiGianCho}s");
-                    lblResult.UpdateResultMessage($"Đang trong thời gian chờ, vui lòng quẹt lại sau {thoiGianCho}s", ProcessColor);
+                    lblEventMessage.UpdateResultMessage($"Đang trong thời gian chờ, vui lòng quẹt lại sau {thoiGianCho}s", ProcessColor);
                 }
                 return;
             }
@@ -352,7 +399,7 @@ namespace iParkingv5_window.Usercontrols
             List<Image?> optionalImages = new();
 
             DateTime eventTime = DateTime.Now;
-            lblResult.UpdateResultMessage("Đang kiểm trang thông tin sự kiện quẹt thẻ..." + ce.PreferCard, ProcessColor);
+            lblEventMessage.UpdateResultMessage("Đang kiểm trang thông tin sự kiện quẹt thẻ..." + ce.PreferCard, ProcessColor);
 
             #region Kiểm tra thông tin định danh
             tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
@@ -380,7 +427,7 @@ namespace iParkingv5_window.Usercontrols
                 tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                      $"{this.lane.name}.Card.{ce.PreferCard} - Invalid Identity");
 
-                lblResult.UpdateResultMessage("Không đọc được thông tin định danh, vui lòng thử lại", ErrorColor);
+                lblEventMessage.UpdateResultMessage("Không đọc được thông tin định danh, vui lòng thử lại", ErrorColor);
                 return;
             }
             #endregion End kiểm tra thông tin định danh
@@ -391,7 +438,7 @@ namespace iParkingv5_window.Usercontrols
             {
                 tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                      $"{this.lane.name}.Card.{ce.PreferCard} - Invalid IdentityGroup");
-                lblResult.UpdateResultMessage("Không đọc được thông tin nhóm định danh, vui lòng thử lại", ErrorColor);
+                lblEventMessage.UpdateResultMessage("Không đọc được thông tin nhóm định danh, vui lòng thử lại", ErrorColor);
                 return;
             }
             #endregion End kiểm tra thông tin nhóm định danh
@@ -399,14 +446,14 @@ namespace iParkingv5_window.Usercontrols
             tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                      $"{this.lane.name}.Card.{ce.PreferCard} - Check Vehicle Type");
 
-            lblResult.UpdateResultMessage("Đọc thông tin loại phương tiện...", ProcessColor);
+            lblEventMessage.UpdateResultMessage("Đọc thông tin loại phương tiện...", ProcessColor);
             VehicleBaseType vehicleBaseType = identityGroup.VehicleType;
             switch (vehicleBaseType)
             {
                 case VehicleBaseType.Unknown:
                     tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                      $"{this.lane.name}.Card.{ce.PreferCard} - Invalid Vehicle Type");
-                    lblResult.UpdateResultMessage("Thông tin loại phương tiện không hợp lệ vui lòng sử dụng thẻ khác", ErrorColor);
+                    lblEventMessage.UpdateResultMessage("Thông tin loại phương tiện không hợp lệ vui lòng sử dụng thẻ khác", ErrorColor);
                     return;
                 default:
                     break;
@@ -415,7 +462,7 @@ namespace iParkingv5_window.Usercontrols
             //Lấy hình ảnh sự kiện
             tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                  $"{this.lane.name}.Card.{ce.PreferCard} - Get Event Image");
-            lblResult.UpdateResultMessage("Lấy hình ảnh sự kiện ra...", ProcessColor);
+            lblEventMessage.UpdateResultMessage("Lấy hình ảnh sự kiện ra...", ProcessColor);
             foreach (KeyValuePair<CameraPurposeType.EmCameraPurposeType, List<Camera>> kvp in cameras)
             {
                 switch (kvp.Key)
@@ -446,11 +493,11 @@ namespace iParkingv5_window.Usercontrols
             //còn nếu là sự kiện loop chuyển qua quẹt thẻ thì hiển thị thông tin biển số đã đọc trước đó chứ không đọc lại tránh tốn lượt nhận dạng
             tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                  $"{this.lane.name}.Card.{ce.PreferCard} - Get Plate");
-            Image? lprImage = GetPlate(ce, ref overviewImg, ref vehicleImg, vehicleBaseType, lblResult, txtPlate,
+            Image? lprImage = GetPlate(ce, ref overviewImg, ref vehicleImg, vehicleBaseType, lblEventMessage, txtPlate,
                                        picOverviewImageOut, picVehicleImageOut, picLprImage);
 
             //Đọc thông tin loại phương tiện
-            lblResult.UpdateResultMessage("Đang check out..." + ce.PreferCard, ProcessColor);
+            lblEventMessage.UpdateResultMessage("Đang check out..." + ce.PreferCard, ProcessColor);
             bool isMonthCard = identityGroup.Type == IdentityGroupType.Monthly;
             if (isMonthCard)
             {
@@ -543,7 +590,7 @@ namespace iParkingv5_window.Usercontrols
                     {
                         tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                 $"{this.lane.name}.Card.{ce.PreferCard} - Not Confirm, End Process");
-                        lblResult.UpdateResultMessage("Không xác nhận sự kiện ra", ProcessColor);
+                        lblEventMessage.UpdateResultMessage("Không xác nhận sự kiện ra", ProcessColor);
                         ClearView();
                         return;
                     }
@@ -593,7 +640,7 @@ namespace iParkingv5_window.Usercontrols
                 {
                     tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                $"{this.lane.name}.Card.{ce.PreferCard} - Not Confirm Open Barrie");
-                    lblResult.UpdateResultMessage("Không xác nhận mở barrie", ProcessColor);
+                    lblEventMessage.UpdateResultMessage("Không xác nhận mở barrie", ProcessColor);
                     return;
                 }
                 else
@@ -628,7 +675,7 @@ namespace iParkingv5_window.Usercontrols
                 tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                $"{this.lane.name}.Card.{ce.PreferCard} - Invalid Register Vehicle, End Process");
 
-                lblResult.UpdateResultMessage("Thẻ tháng chưa đăng ký phương tiện", ErrorColor);
+                lblEventMessage.UpdateResultMessage("Thẻ tháng chưa đăng ký phương tiện", ErrorColor);
                 return;
             }
 
@@ -777,7 +824,7 @@ namespace iParkingv5_window.Usercontrols
                 {
                     tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                             $"{this.lane.name}.Card.{ce.PreferCard} - Not Confirm Open Barrie");
-                    lblResult.UpdateResultMessage("Không xác nhận mở barrie", ProcessColor);
+                    lblEventMessage.UpdateResultMessage("Không xác nhận mở barrie", ProcessColor);
                     return;
                 }
                 else
@@ -800,12 +847,12 @@ namespace iParkingv5_window.Usercontrols
 
         private void ExcecuteSystemErrorCheckOut()
         {
-            lblResult.UpdateResultMessage("Không gửi được thông tin xe ra lên hệ thống, vui lòng thử lại sau giây lát", ErrorColor);
+            lblEventMessage.UpdateResultMessage("Không gửi được thông tin xe ra lên hệ thống, vui lòng thử lại sau giây lát", ErrorColor);
         }
 
         private void ExcecuteUnvalidEvent(Identity identity, VehicleBaseType vehicleType, string plate, DateTime eventTime, EventOutData? eventOut, string errorMessage)
         {
-            lblResult.UpdateResultMessage(errorMessage, ErrorColor);
+            lblEventMessage.UpdateResultMessage(errorMessage, ErrorColor);
             DisplayEventOutInfo(eventOut?.EventIn?.DateTimeIn, eventTime, plate, identity, null, vehicleType, eventOut?.vehicle, (long)(eventOut?.Charge ?? 0), eventOut?.customer, null, "", "");
         }
 
@@ -817,7 +864,7 @@ namespace iParkingv5_window.Usercontrols
             DisplayEventInData(eventOut);
 
             string resultText = eventOut.Charge > 0 ? "Thu tiền" : "Hẹn gặp lại";
-            lblResult.UpdateResultMessage(resultText, SuccessColor);
+            lblEventMessage.UpdateResultMessage(resultText, SuccessColor);
 
             tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
                                  $"{this.lane.name}.EventOut.{eventOut.Id} - Display Event Out Info");
@@ -1041,7 +1088,7 @@ namespace iParkingv5_window.Usercontrols
         private async void BtnWriteOut_Click(object? sender, EventArgs e)
         {
             tblUserLog.SaveLog(this.lane.name, $"User Click To Open WriteOut Screen");
-            lblResult.UpdateResultMessage("Ra lệnh ghi vé ra", ProcessColor);
+            lblEventMessage.UpdateResultMessage("Ra lệnh ghi vé ra", ProcessColor);
             frmReportIn frm = new frmReportIn(defaultImg, AppData.ApiServer, true);
 
             if (frm.ShowDialog() != DialogResult.OK)
@@ -1097,7 +1144,7 @@ namespace iParkingv5_window.Usercontrols
         private async void BtnReTakePhoto_Click(object? sender, EventArgs e)
         {
             tblUserLog.SaveLog(this.lane.name, $"User Click To Btn Take Photo");
-            lblResult.UpdateResultMessage("Ra lệnh chụp lại", ProcessColor);
+            lblEventMessage.UpdateResultMessage("Ra lệnh chụp lại", ProcessColor);
             foreach (ControllerInLane controllerInLane in lane.controlUnits)
             {
                 if (controllerInLane.inputs.Length == 0)
@@ -1142,7 +1189,7 @@ namespace iParkingv5_window.Usercontrols
         private void btnPrintTicket_Click(object? sender, EventArgs e)
         {
             tblUserLog.SaveLog(this.lane.name, $"User Click To Btn Print Ticket");
-            lblResult.UpdateResultMessage("Ra lệnh in vé xe", ProcessColor);
+            lblEventMessage.UpdateResultMessage("Ra lệnh in vé xe", ProcessColor);
             FocusOnTitle();
             if (lastEvent == null)
             {
@@ -1180,8 +1227,8 @@ namespace iParkingv5_window.Usercontrols
         private void PanelCameras_SizeChanged(object? sender, EventArgs e)
         {
             int count = panelCameras.Controls.OfType<ucCameraView>().ToList().Count;
-            int marginHeight = 5;
-            int displayRegionHeight = panelCameras.Height - label4.Height - marginHeight;
+            int marginHeight = 2;
+            int displayRegionHeight = panelCameras.Height - marginHeight;
             foreach (ucCameraView item in panelCameras.Controls.OfType<ucCameraView>())
             {
                 if (laneDirectionConfig.cameraDirection == LaneDirectionConfig.EmCameraDirection.Vertical)
@@ -1202,7 +1249,7 @@ namespace iParkingv5_window.Usercontrols
                 var item = panelCameras.Controls.OfType<ucCameraView>().ToList()[i];
                 if (i == 0)
                 {
-                    item.Location = new Point(0, label4.Height);
+                    item.Location = new Point(0, marginHeight);
                     item.BringToFront();
                 }
                 else
@@ -1283,8 +1330,8 @@ namespace iParkingv5_window.Usercontrols
         #region LOADING
         private async void CreateBaseUI()
         {
-            lblResult.Padding = new Padding(StaticPool.baseSize);
-            lblResult.UpdateResultMessage(StaticPool.oemConfig.AppName, SuccessColor);
+            lblEventMessage.Padding = new Padding(StaticPool.baseSize);
+            lblEventMessage.UpdateResultMessage(StaticPool.oemConfig.AppName, SuccessColor);
 
             CreateToolTip();
             SetDefaultImage();
@@ -1340,7 +1387,6 @@ namespace iParkingv5_window.Usercontrols
             ucTop3Event.Dock = DockStyle.Left;
             ucTop3Event.Location = new Point(400, 0);
             ucTop3Event.Name = "ucTop3Event";
-            ucTop3Event.Padding = new Padding(0);
             // 
             // ucTop2Event
             // 
@@ -1348,7 +1394,6 @@ namespace iParkingv5_window.Usercontrols
             ucTop2Event.Dock = DockStyle.Left;
             ucTop2Event.Location = new Point(200, 0);
             ucTop2Event.Name = "ucTop2Event";
-            ucTop2Event.Padding = new Padding(0);
             // 
             // ucTop1Event
             // 
@@ -1356,7 +1401,6 @@ namespace iParkingv5_window.Usercontrols
             ucTop1Event.Dock = DockStyle.Left;
             ucTop1Event.Location = new Point(0, 0);
             ucTop1Event.Name = "ucTop1Event";
-            ucTop1Event.Padding = new Padding(0);
 
             ucLastEventInfos.Add(ucTop1Event);
             ucLastEventInfos.Add(ucTop2Event);
@@ -1480,18 +1524,26 @@ namespace iParkingv5_window.Usercontrols
             tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
                                   $"{this.lane.name}  - Change Design Mode To {isAllow}");
             this.IsAllowDesignRealtime = isAllow;
-            splitContainerMain.IsSplitterFixed = !isAllow;
-            //splitContainerEventContent.IsSplitterFixed = !isAllow;
-            //splitContainerLastEvent.IsSplitterFixed = !isAllow;
-            //splitterCamera.Enabled = isAllow;
-            //splitterEventInfoWithCamera.Enabled = isAllow;
 
-            Color displayColor = isAllow ? Color.Blue : SystemColors.ButtonHighlight;
-            splitContainerMain.BackColor = displayColor;
-            //splitContainerEventContent.BackColor = displayColor;
-            //splitContainerLastEvent.BackColor = displayColor;
-            //splitterCamera.BackColor = displayColor;
-            //splitterEventInfoWithCamera.BackColor = displayColor;
+            var activeSpliters = new List<SplitContainer>()
+            {
+                spliterCamera ,
+                spliterCamera_PicEv ,
+                spliterCamera_PicEv_PicPlate ,
+                spliterCamera_TopEvent,
+                spliterEvInPlate ,
+                spliterEvOutPlate,
+                splitContainerMain,
+                spliterTopEvent_Actions
+            };
+
+            foreach (var spliter in activeSpliters)
+            {
+                spliter.IsSplitterFixed = !isAllow;
+                spliter.SplitterWidth = isAllow ? 5 : 1;
+                spliter.Refresh();
+            }
+            activeSpliters.Clear();
         }
 
         private async Task CheckControllerShortcutConfig(Keys key)
@@ -1514,7 +1566,7 @@ namespace iParkingv5_window.Usercontrols
                     {
                         if (controller.ControllerInfo.Id.ToLower() == controllerId.ToLower())
                         {
-                            lblResult.UpdateResultMessage("Ra lệnh mở cửa: " + barrieIndex, ProcessColor);
+                            lblEventMessage.UpdateResultMessage("Ra lệnh mở cửa: " + barrieIndex, ProcessColor);
 
                             //Ra lệnh mở cửa
                             await controller.OpenDoor(100, barrieIndex);
@@ -1573,12 +1625,12 @@ namespace iParkingv5_window.Usercontrols
             var isUpdateSuccess = await AppData.ApiServer.parkingProcessService.UpdateEventOutPlate(lastEvent!.Id, newPlate, lastEvent.PlateNumber);
             if (isUpdateSuccess)
             {
-                lblResult.UpdateResultMessage("Ra Lệnh Cập Nhật Biển Số Thành Công", ProcessColor);
+                lblEventMessage.UpdateResultMessage("Ra Lệnh Cập Nhật Biển Số Thành Công", ProcessColor);
                 lastEvent.PlateNumber = newPlate;
             }
             else
             {
-                lblResult.UpdateResultMessage("Cập nhật lỗi, vui lòng thử lại", ProcessColor);
+                lblEventMessage.UpdateResultMessage("Cập nhật lỗi, vui lòng thử lại", ProcessColor);
             }
         }
         private void ReverseLane()
@@ -1586,12 +1638,12 @@ namespace iParkingv5_window.Usercontrols
             if (string.IsNullOrEmpty(this.lane.reverseLaneId?.ToString()))
             {
                 //Chưa cấu hình làn đảo
-                lblResult.UpdateResultMessage("Chưa có cấu hình làn đảo", ProcessColor);
+                lblEventMessage.UpdateResultMessage("Chưa có cấu hình làn đảo", ProcessColor);
                 return;
             }
             var config = GetCurrentUIConfig();
             NewtonSoftHelper<LaneDisplayConfig>.SaveConfig(config, PathManagement.appDisplayConfigPath(this.lane.Id));
-            lblResult.UpdateResultMessage("Ra Lệnh Đảo Làn", ProcessColor);
+            lblEventMessage.UpdateResultMessage("Ra Lệnh Đảo Làn", ProcessColor);
             OnChangeLaneEventInvoke(this);
             this.Dispose();
             return;
@@ -1613,20 +1665,20 @@ namespace iParkingv5_window.Usercontrols
             var identityResponse = await AppData.ApiServer.parkingDataService.GetIdentityByCodeAsync(cardNumber);
             if (identityResponse == null)
             {
-                lblResult.UpdateResultMessage("Không đọc được thông tin định danh, vui lòng thử lại", ErrorColor);
+                lblEventMessage.UpdateResultMessage("Không đọc được thông tin định danh, vui lòng thử lại", ErrorColor);
                 return Tuple.Create<bool, Identity?>(false, null);
             }
 
             Identity? identity = identityResponse.Item1;
             if (identity == null)
             {
-                lblResult.UpdateResultMessage("Mã định danh không có trong hệ thống", ErrorColor);
+                lblEventMessage.UpdateResultMessage("Mã định danh không có trong hệ thống", ErrorColor);
                 return Tuple.Create<bool, Identity?>(false, null);
             }
 
             if (identity.Status == IdentityStatus.Locked)
             {
-                lblResult.UpdateResultMessage("Định danh - ngừng sử dụng", ErrorColor);
+                lblEventMessage.UpdateResultMessage("Định danh - ngừng sử dụng", ErrorColor);
                 return Tuple.Create<bool, Identity?>(false, identity);
             }
             return Tuple.Create<bool, Identity?>(true, identity);
@@ -1770,6 +1822,43 @@ namespace iParkingv5_window.Usercontrols
         {
             laneDirectionConfig = NewtonSoftHelper<LaneDirectionConfig>.DeserializeObjectFromPath(
                                                      PathManagement.appLaneDirectionConfigPath(this.lane.Id)) ?? LaneDirectionConfig.CreateDefault();
+
+            lblFee.Message = TextFormatingTool.GetMoneyFormat(fee.ToString());
+            lblIdentityGroupName.Message = identityGroup?.Name ?? "";
+            lblIdentityName.Message = identity?.Name ?? "";
+            lblIdentityCode.Message = identity?.Code ?? "";
+            lblTimeIn.Message = timeIn.Value.ToString("dd/MM/yyyy HH:mm:ss");
+            lblTimeOut.Message = timeOut.ToString("dd/MM/yyyy HH:mm:ss");
+
+            if (StaticPool.appOption.IsDisplayCustomerInfo)
+            {
+                if (customer != null)
+                {
+                    lblCustomerGroupName.Message = customer.customerGroup?.Name ?? "";
+                    lblCustomerName.Message = customer.Name;
+                    lblCustomerPhone.Message = customer.PhoneNumber;
+                    lblCustomerAddress.Message = customer.Address;
+                }
+            }
+
+            if (registerVehicle != null)
+            {
+                lblRegisterVehilceName.Message = registerVehicle.Name;
+                lblRegisterPlate.Message = registerVehicle.PlateNumber;
+                lblRegisterVehileExpireDate.Message = registerVehicle.ExpireTime!.Value.ToVNTime() ?? DateTime.Now.ToVNTime();
+                double remainingTime = (registerVehicle.ExpireTime.Value - DateTime.Now).TotalDays;
+                lblRegisterVehicleValidTime.Message = (int)remainingTime + " ngày";
+
+                if (remainingTime <= 7)
+                {
+                    lblRegisterVehileExpireDate.MessageForeColor = Color.DarkRed;
+                }
+                else
+                {
+                    lblRegisterVehileExpireDate.MessageForeColor = Color.DarkGreen;
+                }
+            }
+
             //dgvEventContent!.Invoke(new Action(() =>
             //{
             //    dgvEventContent.Columns[0].Visible = laneDirectionConfig.IsDisplayTitle;
@@ -1879,16 +1968,29 @@ namespace iParkingv5_window.Usercontrols
                 FocusOnTitle();
 
                 lastEvent = null;
-                //dgvEventContent.Rows.Clear();
-                lblTimeIn.Message = lblTimeIn.Message = lblCustomerName.Message = lblCustomerGroupName.Message = lblRegisterPlate.Message = lblRegisterVehileExpireDate.Message = "_____";
 
+                lblFee.Message = lblIdentityGroupName.Message =
+                lblIdentityName.Message =
+                lblIdentityCode.Message =
+                lblTimeIn.Message =
+                lblTimeOut.Message =
+                lblCustomerGroupName.Message =
+                lblCustomerName.Message =
+                lblCustomerPhone.Message =
+                lblCustomerAddress.Message =
+                lblRegisterVehilceName.Message =
+                lblRegisterPlate.Message =
+                lblRegisterVehileExpireDate.Message =
+                lblRegisterVehicleValidTime.Message = "_ _ _ _ _";
+
+                //dgvEventContent.Rows.Clear();
                 picOverviewImageIn.Image = picVehicleImageIn.Image =
                 picLprImage.Image = picOverviewImageOut.Image =
                 picVehicleImageOut.Image = picLprImageIn.Image = defaultImg;
 
                 lblPlateIn.Text = txtPlate.Text = string.Empty;
 
-                lblResult.UpdateResultMessage(StaticPool.oemConfig.AppName, SuccessColor);
+                lblEventMessage.UpdateResultMessage(StaticPool.oemConfig.AppName, SuccessColor);
             }));
         }
         #endregion End PROCESS
@@ -2034,5 +2136,13 @@ namespace iParkingv5_window.Usercontrols
             };
         }
         #endregion End PUBLIC FUNCTION
+
+        private void panelTop3Event_SizeChanged(object sender, EventArgs e)
+        {
+            foreach (ucLastEventInfo item in panelTop3Event.Controls.OfType<ucLastEventInfo>())
+            {
+                item.UpdateSize();
+            }
+        }
     }
 }

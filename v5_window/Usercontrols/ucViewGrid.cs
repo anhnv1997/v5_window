@@ -53,7 +53,7 @@ namespace iParkingv5_window.Usercontrols
             table.Dock = DockStyle.Fill;
             table.ColumnCount = column;
             table.RowCount = row;
-            table.Padding = new Padding(3);
+            //table.Padding = new Padding(3);
             for (int i = 0; i < column; i++)
             {
                 table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100 / column));
@@ -62,7 +62,7 @@ namespace iParkingv5_window.Usercontrols
             {
                 table.RowStyles.Add(new RowStyle(SizeType.Percent, 100 / row));
             }
-            table.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
+            //table.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             table.MouseDown += Table_MouseDown;
             table.MouseUp += Table_MouseUp;
             table.MouseMove += Table_MouseMove;

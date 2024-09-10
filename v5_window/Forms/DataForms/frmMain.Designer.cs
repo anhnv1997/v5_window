@@ -220,11 +220,12 @@ namespace iParkingv5_window.Forms.DataForms
             lblLoadingStatus.Dock = DockStyle.Fill;
             lblLoadingStatus.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             lblLoadingStatus.ForeColor = Color.FromArgb(192, 64, 0);
+            lblLoadingStatus.IsBold = true;
             lblLoadingStatus.Location = new Point(291, 0);
-            lblLoadingStatus.MaxFontSize = -1;
-            lblLoadingStatus.Message = "";
+            lblLoadingStatus.MaxFontSize = 12;
+            lblLoadingStatus.Message = "Event Message";
             lblLoadingStatus.MessageBackColor = SystemColors.ButtonHighlight;
-            lblLoadingStatus.MessageForeColor = Color.White;
+            lblLoadingStatus.MessageForeColor = Color.Black;
             lblLoadingStatus.Name = "lblLoadingStatus";
             lblLoadingStatus.Padding = new Padding(9, 0, 0, 0);
             lblLoadingStatus.Size = new Size(328, 33);

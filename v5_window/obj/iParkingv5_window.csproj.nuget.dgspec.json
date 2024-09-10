@@ -1371,6 +1371,10 @@
             "System.Management": {
               "target": "Package",
               "version": "[7.0.2, )"
+            },
+            "fontawesome.sharp": {
+              "target": "Package",
+              "version": "[6.3.0, )"
             }
           },
           "imports": [

@@ -284,7 +284,7 @@ namespace iParkingv5_window.Usercontrols
                 try
                 {
                     Bitmap? bmp = img == null ? null : new Bitmap(img.Clone() as Image);
-                    pictureBox.Image = bmp == null ? pictureBox.ErrorImage : bmp;
+                    pictureBox.Image = bmp == null ? pictureBox.ErrorImage : bmp.GetThumbnailImage(pictureBox.Width, pictureBox.Height, null, IntPtr.Zero);
                     //pictureBox.Refresh();
                 }
                 catch (Exception ex)

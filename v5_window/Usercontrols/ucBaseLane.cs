@@ -133,6 +133,7 @@ namespace iParkingv5_window.Usercontrols
         {
             cam.Name += "-OVERVIEW";
             uc.StartViewer(cam, CameraErrorFunc);
+            uc.BorderStyle = BorderStyle.None;
             if (panel.Controls.Count > 0)
             {
                 Control lastControl = panel.Controls[panel.Controls.Count - 1];

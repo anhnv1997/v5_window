@@ -31,6 +31,18 @@
           }
         }
       },
+      "FontAwesome.Sharp/6.3.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0-windows7.0/FontAwesome.Sharp.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0-windows7.0/FontAwesome.Sharp.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App"
+        ]
+      },
       "IdentityModel/7.0.0": {
         "type": "package",
         "compile": {
@@ -1338,6 +1350,21 @@
         "lib/netstandard1.3/DocumentFormat.OpenXml.xml",
         "lib/netstandard2.0/DocumentFormat.OpenXml.dll",
         "lib/netstandard2.0/DocumentFormat.OpenXml.xml"
+      ]
+    },
+    "FontAwesome.Sharp/6.3.0": {
+      "sha512": "3/Fb0N04yYK8An07oox5ISlUyNgsnWildHfoP69uqTEOsemQemRyciphMkXZOcdBupjUD+lVsRE3FqG41/dzPA==",
+      "type": "package",
+      "path": "fontawesome.sharp/6.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "fontawesome.sharp.6.3.0.nupkg.sha512",
+        "fontawesome.sharp.nuspec",
+        "lib/net472/FontAwesome.Sharp.dll",
+        "lib/net48/FontAwesome.Sharp.dll",
+        "lib/net6.0-windows7.0/FontAwesome.Sharp.dll",
+        "lib/netcoreapp3.1/FontAwesome.Sharp.dll"
       ]
     },
     "IdentityModel/7.0.0": {
@@ -3043,6 +3070,7 @@
       "Minio >= 5.0.0",
       "RabbitMQ.Client >= 6.8.1",
       "System.Management >= 7.0.2",
+      "fontawesome.sharp >= 6.3.0",
       "iPakrkingv5.Controls >= 1.0.0.1",
       "iParking.ConfigurationManager >= 1.0.0.2",
       "iParkingv5.ApiManager >= 6.0.0.1",
@@ -3187,6 +3215,10 @@
           "System.Management": {
             "target": "Package",
             "version": "[7.0.2, )"
+          },
+          "fontawesome.sharp": {
+            "target": "Package",
+            "version": "[6.3.0, )"
           }
         },
         "imports": [
