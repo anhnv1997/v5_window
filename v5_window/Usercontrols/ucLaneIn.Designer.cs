@@ -176,6 +176,7 @@ namespace iParkingv5_window.Usercontrols
             lblResult14.BackColor = SystemColors.ButtonHighlight;
             lblResult14.Dock = DockStyle.Fill;
             lblResult14.IsBold = true;
+            lblResult14.IsUpper = true;
             lblResult14.Location = new Point(0, 0);
             lblResult14.Margin = new Padding(0);
             lblResult14.MaxFontSize = 12;
@@ -226,6 +227,7 @@ namespace iParkingv5_window.Usercontrols
             // 
             label15.BackColor = Color.White;
             label15.IsBold = true;
+            label15.IsUpper = true;
             label15.Location = new Point(1, 1);
             label15.Margin = new Padding(0);
             label15.MaxFontSize = 12;
@@ -401,6 +403,7 @@ namespace iParkingv5_window.Usercontrols
             // 
             lblResult15.BackColor = Color.White;
             lblResult15.IsBold = true;
+            lblResult15.IsUpper = true;
             lblResult15.Location = new Point(1, 1);
             lblResult15.Margin = new Padding(0);
             lblResult15.MaxFontSize = 12;
@@ -482,6 +485,7 @@ namespace iParkingv5_window.Usercontrols
             // 
             lblResult16.BackColor = Color.White;
             lblResult16.IsBold = true;
+            lblResult16.IsUpper = true;
             lblResult16.Location = new Point(1, 1);
             lblResult16.Margin = new Padding(0);
             lblResult16.MaxFontSize = 12;
@@ -533,6 +537,7 @@ namespace iParkingv5_window.Usercontrols
             lblResult2.BackColor = Color.White;
             lblResult2.Dock = DockStyle.Fill;
             lblResult2.IsBold = true;
+            lblResult2.IsUpper = true;
             lblResult2.Location = new Point(0, 0);
             lblResult2.Margin = new Padding(0);
             lblResult2.MaxFontSize = 12;
@@ -623,6 +628,7 @@ namespace iParkingv5_window.Usercontrols
             lblEventMessage.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             lblEventMessage.ForeColor = SystemColors.ButtonHighlight;
             lblEventMessage.IsBold = true;
+            lblEventMessage.IsUpper = true;
             lblEventMessage.Location = new Point(0, 410);
             lblEventMessage.Margin = new Padding(0);
             lblEventMessage.MaxFontSize = -1;
@@ -636,7 +642,7 @@ namespace iParkingv5_window.Usercontrols
             // 
             // tblEventContent
             // 
-            tblEventContent.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
+            tblEventContent.CellBorderStyle = TableLayoutPanelCellBorderStyle.Inset;
             tblEventContent.ColumnCount = 6;
             tblEventContent.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 80F));
             tblEventContent.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333359F));
@@ -686,209 +692,222 @@ namespace iParkingv5_window.Usercontrols
             // 
             // lblRegisterVehicleValidTime
             // 
-            lblRegisterVehicleValidTime.BackColor = SystemColors.ButtonHighlight;
+            lblRegisterVehicleValidTime.BackColor = Color.FromArgb(255, 192, 255);
             lblRegisterVehicleValidTime.Dock = DockStyle.Fill;
             lblRegisterVehicleValidTime.IsBold = true;
-            lblRegisterVehicleValidTime.Location = new Point(992, 224);
+            lblRegisterVehicleValidTime.IsUpper = true;
+            lblRegisterVehicleValidTime.Location = new Point(992, 226);
             lblRegisterVehicleValidTime.Margin = new Padding(0);
             lblRegisterVehicleValidTime.MaxFontSize = 12;
             lblRegisterVehicleValidTime.Message = "_ _ _ _ _";
-            lblRegisterVehicleValidTime.MessageBackColor = SystemColors.ButtonHighlight;
+            lblRegisterVehicleValidTime.MessageBackColor = Color.FromArgb(255, 192, 255);
             lblRegisterVehicleValidTime.MessageForeColor = Color.DarkGreen;
             lblRegisterVehicleValidTime.Name = "lblRegisterVehicleValidTime";
-            lblRegisterVehicleValidTime.Size = new Size(373, 65);
+            lblRegisterVehicleValidTime.Size = new Size(372, 62);
             lblRegisterVehicleValidTime.TabIndex = 29;
             lblRegisterVehicleValidTime.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblResult12
             // 
-            lblResult12.BackColor = SystemColors.ButtonHighlight;
+            lblResult12.BackColor = Color.FromArgb(255, 192, 255);
             lblResult12.Dock = DockStyle.Fill;
             lblResult12.IsBold = true;
-            lblResult12.Location = new Point(911, 224);
+            lblResult12.IsUpper = true;
+            lblResult12.Location = new Point(910, 226);
             lblResult12.Margin = new Padding(0);
             lblResult12.MaxFontSize = 12;
             lblResult12.Message = "HSD";
-            lblResult12.MessageBackColor = SystemColors.ButtonHighlight;
+            lblResult12.MessageBackColor = Color.FromArgb(255, 192, 255);
             lblResult12.MessageForeColor = Color.Black;
             lblResult12.Name = "lblResult12";
-            lblResult12.Size = new Size(80, 65);
+            lblResult12.Size = new Size(80, 62);
             lblResult12.TabIndex = 28;
             lblResult12.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblCustomerName
             // 
-            lblCustomerName.BackColor = SystemColors.ButtonHighlight;
+            lblCustomerName.BackColor = Color.FromArgb(128, 255, 255);
             lblCustomerName.Dock = DockStyle.Fill;
             lblCustomerName.IsBold = true;
-            lblCustomerName.Location = new Point(537, 96);
+            lblCustomerName.IsUpper = true;
+            lblCustomerName.Location = new Point(538, 98);
             lblCustomerName.Margin = new Padding(0);
             lblCustomerName.MaxFontSize = 12;
             lblCustomerName.Message = "_ _ _ _ _";
-            lblCustomerName.MessageBackColor = SystemColors.ButtonHighlight;
+            lblCustomerName.MessageBackColor = Color.FromArgb(128, 255, 255);
             lblCustomerName.MessageForeColor = Color.DarkGreen;
             lblCustomerName.Name = "lblCustomerName";
-            lblCustomerName.Size = new Size(373, 63);
+            lblCustomerName.Size = new Size(370, 62);
             lblCustomerName.TabIndex = 6;
             lblCustomerName.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblIdentityGroupName
             // 
-            lblIdentityGroupName.BackColor = SystemColors.ButtonHighlight;
+            lblIdentityGroupName.BackColor = SystemColors.ActiveCaption;
             lblIdentityGroupName.Dock = DockStyle.Fill;
             lblIdentityGroupName.IsBold = false;
-            lblIdentityGroupName.Location = new Point(82, 32);
+            lblIdentityGroupName.IsUpper = true;
+            lblIdentityGroupName.Location = new Point(84, 34);
             lblIdentityGroupName.Margin = new Padding(0);
             lblIdentityGroupName.MaxFontSize = 12;
             lblIdentityGroupName.Message = "_ _ _ _ _";
-            lblIdentityGroupName.MessageBackColor = SystemColors.ButtonHighlight;
+            lblIdentityGroupName.MessageBackColor = SystemColors.ActiveCaption;
             lblIdentityGroupName.MessageForeColor = Color.Black;
             lblIdentityGroupName.Name = "lblIdentityGroupName";
-            lblIdentityGroupName.Size = new Size(373, 63);
+            lblIdentityGroupName.Size = new Size(370, 62);
             lblIdentityGroupName.TabIndex = 25;
             lblIdentityGroupName.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblResult3
             // 
-            lblResult3.BackColor = SystemColors.ButtonHighlight;
+            lblResult3.BackColor = Color.FromArgb(128, 255, 255);
             lblResult3.Dock = DockStyle.Fill;
             lblResult3.IsBold = true;
-            lblResult3.Location = new Point(456, 96);
+            lblResult3.IsUpper = true;
+            lblResult3.Location = new Point(456, 98);
             lblResult3.Margin = new Padding(0);
             lblResult3.MaxFontSize = 12;
             lblResult3.Message = "Tên";
-            lblResult3.MessageBackColor = SystemColors.ButtonHighlight;
+            lblResult3.MessageBackColor = Color.FromArgb(128, 255, 255);
             lblResult3.MessageForeColor = Color.Black;
             lblResult3.Name = "lblResult3";
-            lblResult3.Size = new Size(80, 63);
+            lblResult3.Size = new Size(80, 62);
             lblResult3.TabIndex = 5;
             lblResult3.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblTimeIn
             // 
-            lblTimeIn.BackColor = SystemColors.ButtonHighlight;
+            lblTimeIn.BackColor = SystemColors.ActiveCaption;
             lblTimeIn.Dock = DockStyle.Fill;
             lblTimeIn.IsBold = true;
-            lblTimeIn.Location = new Point(82, 224);
+            lblTimeIn.IsUpper = true;
+            lblTimeIn.Location = new Point(84, 226);
             lblTimeIn.Margin = new Padding(0);
             lblTimeIn.MaxFontSize = 12;
             lblTimeIn.Message = "_ _ _ _ _";
-            lblTimeIn.MessageBackColor = SystemColors.ButtonHighlight;
+            lblTimeIn.MessageBackColor = SystemColors.ActiveCaption;
             lblTimeIn.MessageForeColor = Color.DarkGreen;
             lblTimeIn.Name = "lblTimeIn";
-            lblTimeIn.Size = new Size(373, 65);
+            lblTimeIn.Size = new Size(370, 62);
             lblTimeIn.TabIndex = 4;
             lblTimeIn.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblResult1
             // 
-            lblResult1.BackColor = SystemColors.ButtonHighlight;
+            lblResult1.BackColor = SystemColors.ActiveCaption;
             lblResult1.Dock = DockStyle.Fill;
             lblResult1.IsBold = true;
-            lblResult1.Location = new Point(1, 224);
+            lblResult1.IsUpper = true;
+            lblResult1.Location = new Point(2, 226);
             lblResult1.Margin = new Padding(0);
             lblResult1.MaxFontSize = 12;
             lblResult1.Message = "Giờ Vào";
-            lblResult1.MessageBackColor = SystemColors.ButtonHighlight;
+            lblResult1.MessageBackColor = SystemColors.ActiveCaption;
             lblResult1.MessageForeColor = Color.Black;
             lblResult1.Name = "lblResult1";
-            lblResult1.Size = new Size(80, 65);
+            lblResult1.Size = new Size(80, 62);
             lblResult1.TabIndex = 3;
             lblResult1.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblCustomerAddr
             // 
-            lblCustomerAddr.BackColor = SystemColors.ButtonHighlight;
+            lblCustomerAddr.BackColor = Color.FromArgb(128, 255, 255);
             lblCustomerAddr.Dock = DockStyle.Fill;
             lblCustomerAddr.IsBold = false;
-            lblCustomerAddr.Location = new Point(537, 224);
+            lblCustomerAddr.IsUpper = true;
+            lblCustomerAddr.Location = new Point(538, 226);
             lblCustomerAddr.Margin = new Padding(0);
             lblCustomerAddr.MaxFontSize = 12;
             lblCustomerAddr.Message = "_ _ _ _ _";
-            lblCustomerAddr.MessageBackColor = SystemColors.ButtonHighlight;
+            lblCustomerAddr.MessageBackColor = Color.FromArgb(128, 255, 255);
             lblCustomerAddr.MessageForeColor = Color.Black;
             lblCustomerAddr.Name = "lblCustomerAddr";
-            lblCustomerAddr.Size = new Size(373, 65);
+            lblCustomerAddr.Size = new Size(370, 62);
             lblCustomerAddr.TabIndex = 27;
             lblCustomerAddr.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblResult19
             // 
-            lblResult19.BackColor = SystemColors.ButtonHighlight;
+            lblResult19.BackColor = Color.FromArgb(128, 255, 255);
             lblResult19.Dock = DockStyle.Fill;
             lblResult19.IsBold = true;
-            lblResult19.Location = new Point(456, 224);
+            lblResult19.IsUpper = true;
+            lblResult19.Location = new Point(456, 226);
             lblResult19.Margin = new Padding(0);
             lblResult19.MaxFontSize = 12;
             lblResult19.Message = "Địa chỉ";
-            lblResult19.MessageBackColor = SystemColors.ButtonHighlight;
+            lblResult19.MessageBackColor = Color.FromArgb(128, 255, 255);
             lblResult19.MessageForeColor = Color.Black;
             lblResult19.Name = "lblResult19";
-            lblResult19.Size = new Size(80, 65);
+            lblResult19.Size = new Size(80, 62);
             lblResult19.TabIndex = 26;
             lblResult19.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblCustomerPhone
             // 
-            lblCustomerPhone.BackColor = SystemColors.ButtonHighlight;
+            lblCustomerPhone.BackColor = Color.FromArgb(128, 255, 255);
             lblCustomerPhone.Dock = DockStyle.Fill;
             lblCustomerPhone.IsBold = false;
-            lblCustomerPhone.Location = new Point(537, 160);
+            lblCustomerPhone.IsUpper = true;
+            lblCustomerPhone.Location = new Point(538, 162);
             lblCustomerPhone.Margin = new Padding(0);
             lblCustomerPhone.MaxFontSize = 12;
             lblCustomerPhone.Message = "_ _ _ _ _";
-            lblCustomerPhone.MessageBackColor = SystemColors.ButtonHighlight;
+            lblCustomerPhone.MessageBackColor = Color.FromArgb(128, 255, 255);
             lblCustomerPhone.MessageForeColor = Color.Black;
             lblCustomerPhone.Name = "lblCustomerPhone";
-            lblCustomerPhone.Size = new Size(373, 63);
+            lblCustomerPhone.Size = new Size(370, 62);
             lblCustomerPhone.TabIndex = 21;
             lblCustomerPhone.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblResult13
             // 
-            lblResult13.BackColor = SystemColors.ButtonHighlight;
+            lblResult13.BackColor = Color.FromArgb(128, 255, 255);
             lblResult13.Dock = DockStyle.Fill;
             lblResult13.IsBold = true;
-            lblResult13.Location = new Point(456, 160);
+            lblResult13.IsUpper = true;
+            lblResult13.Location = new Point(456, 162);
             lblResult13.Margin = new Padding(0);
             lblResult13.MaxFontSize = 12;
             lblResult13.Message = "SĐT";
-            lblResult13.MessageBackColor = SystemColors.ButtonHighlight;
+            lblResult13.MessageBackColor = Color.FromArgb(128, 255, 255);
             lblResult13.MessageForeColor = Color.Black;
             lblResult13.Name = "lblResult13";
-            lblResult13.Size = new Size(80, 63);
+            lblResult13.Size = new Size(80, 62);
             lblResult13.TabIndex = 20;
             lblResult13.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblRegisterPlate
             // 
-            lblRegisterPlate.BackColor = SystemColors.ButtonHighlight;
+            lblRegisterPlate.BackColor = Color.FromArgb(255, 192, 255);
             lblRegisterPlate.Dock = DockStyle.Fill;
             lblRegisterPlate.IsBold = true;
-            lblRegisterPlate.Location = new Point(992, 32);
+            lblRegisterPlate.IsUpper = true;
+            lblRegisterPlate.Location = new Point(992, 34);
             lblRegisterPlate.Margin = new Padding(0);
             lblRegisterPlate.MaxFontSize = 12;
             lblRegisterPlate.Message = "_ _ _ _ _";
-            lblRegisterPlate.MessageBackColor = SystemColors.ButtonHighlight;
+            lblRegisterPlate.MessageBackColor = Color.FromArgb(255, 192, 255);
             lblRegisterPlate.MessageForeColor = Color.DarkGreen;
             lblRegisterPlate.Name = "lblRegisterPlate";
-            lblRegisterPlate.Size = new Size(373, 63);
+            lblRegisterPlate.Size = new Size(372, 62);
             lblRegisterPlate.TabIndex = 8;
             lblRegisterPlate.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblResult4
             // 
-            lblResult4.BackColor = SystemColors.ButtonHighlight;
+            lblResult4.BackColor = Color.FromArgb(255, 192, 255);
             tblEventContent.SetColumnSpan(lblResult4, 2);
             lblResult4.Dock = DockStyle.Fill;
             lblResult4.Image = (Image)resources.GetObject("lblResult4.Image");
             lblResult4.ImageAlign = ContentAlignment.MiddleRight;
             lblResult4.IsBold = true;
-            lblResult4.Location = new Point(911, 1);
+            lblResult4.IsUpper = true;
+            lblResult4.Location = new Point(910, 2);
             lblResult4.Margin = new Padding(0);
             lblResult4.MaxFontSize = 12;
             lblResult4.Message = "Phương tiện";
-            lblResult4.MessageBackColor = SystemColors.ButtonHighlight;
+            lblResult4.MessageBackColor = Color.FromArgb(255, 192, 255);
             lblResult4.MessageForeColor = Color.Black;
             lblResult4.Name = "lblResult4";
             lblResult4.Size = new Size(454, 30);
@@ -897,212 +916,225 @@ namespace iParkingv5_window.Usercontrols
             // 
             // lblResult6
             // 
-            lblResult6.BackColor = SystemColors.ButtonHighlight;
+            lblResult6.BackColor = Color.FromArgb(128, 255, 255);
             tblEventContent.SetColumnSpan(lblResult6, 2);
             lblResult6.Dock = DockStyle.Fill;
             lblResult6.Image = Properties.Resources.icons8_man_walking_32px;
             lblResult6.ImageAlign = ContentAlignment.MiddleRight;
             lblResult6.IsBold = true;
-            lblResult6.Location = new Point(456, 1);
+            lblResult6.IsUpper = true;
+            lblResult6.Location = new Point(456, 2);
             lblResult6.Margin = new Padding(0);
             lblResult6.MaxFontSize = 12;
             lblResult6.Message = "Khách hàng";
-            lblResult6.MessageBackColor = SystemColors.ButtonHighlight;
+            lblResult6.MessageBackColor = Color.FromArgb(128, 255, 255);
             lblResult6.MessageForeColor = Color.Black;
             lblResult6.Name = "lblResult6";
-            lblResult6.Size = new Size(454, 30);
+            lblResult6.Size = new Size(452, 30);
             lblResult6.TabIndex = 16;
             lblResult6.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblResult7
             // 
-            lblResult7.BackColor = SystemColors.ButtonHighlight;
+            lblResult7.BackColor = SystemColors.ActiveCaption;
             lblResult7.Dock = DockStyle.Fill;
             lblResult7.IsBold = true;
-            lblResult7.Location = new Point(1, 32);
+            lblResult7.IsUpper = true;
+            lblResult7.Location = new Point(2, 34);
             lblResult7.Margin = new Padding(0);
             lblResult7.MaxFontSize = 12;
             lblResult7.Message = "Nhóm";
-            lblResult7.MessageBackColor = SystemColors.ButtonHighlight;
+            lblResult7.MessageBackColor = SystemColors.ActiveCaption;
             lblResult7.MessageForeColor = Color.Black;
             lblResult7.Name = "lblResult7";
-            lblResult7.Size = new Size(80, 63);
+            lblResult7.Size = new Size(80, 62);
             lblResult7.TabIndex = 9;
             lblResult7.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblResult10
             // 
-            lblResult10.BackColor = SystemColors.ButtonHighlight;
+            lblResult10.BackColor = SystemColors.ActiveCaption;
             lblResult10.Dock = DockStyle.Fill;
             lblResult10.IsBold = true;
-            lblResult10.Location = new Point(1, 96);
+            lblResult10.IsUpper = true;
+            lblResult10.Location = new Point(2, 98);
             lblResult10.Margin = new Padding(0);
             lblResult10.MaxFontSize = 12;
             lblResult10.Message = "Tên";
-            lblResult10.MessageBackColor = SystemColors.ButtonHighlight;
+            lblResult10.MessageBackColor = SystemColors.ActiveCaption;
             lblResult10.MessageForeColor = Color.Black;
             lblResult10.Name = "lblResult10";
-            lblResult10.Size = new Size(80, 63);
+            lblResult10.Size = new Size(80, 62);
             lblResult10.TabIndex = 18;
             lblResult10.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblResult17
             // 
-            lblResult17.BackColor = SystemColors.ButtonHighlight;
+            lblResult17.BackColor = SystemColors.ActiveCaption;
             lblResult17.Dock = DockStyle.Fill;
             lblResult17.IsBold = true;
-            lblResult17.Location = new Point(1, 160);
+            lblResult17.IsUpper = true;
+            lblResult17.Location = new Point(2, 162);
             lblResult17.Margin = new Padding(0);
             lblResult17.MaxFontSize = 12;
             lblResult17.Message = "Mã";
-            lblResult17.MessageBackColor = SystemColors.ButtonHighlight;
+            lblResult17.MessageBackColor = SystemColors.ActiveCaption;
             lblResult17.MessageForeColor = Color.Black;
             lblResult17.Name = "lblResult17";
-            lblResult17.Size = new Size(80, 63);
+            lblResult17.Size = new Size(80, 62);
             lblResult17.TabIndex = 24;
             lblResult17.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblIdentityName
             // 
-            lblIdentityName.BackColor = SystemColors.ButtonHighlight;
+            lblIdentityName.BackColor = SystemColors.ActiveCaption;
             lblIdentityName.Dock = DockStyle.Fill;
             lblIdentityName.IsBold = true;
-            lblIdentityName.Location = new Point(82, 96);
+            lblIdentityName.IsUpper = true;
+            lblIdentityName.Location = new Point(84, 98);
             lblIdentityName.Margin = new Padding(0);
             lblIdentityName.MaxFontSize = 12;
             lblIdentityName.Message = "_ _ _ _ _";
-            lblIdentityName.MessageBackColor = SystemColors.ButtonHighlight;
+            lblIdentityName.MessageBackColor = SystemColors.ActiveCaption;
             lblIdentityName.MessageForeColor = Color.DarkGreen;
             lblIdentityName.Name = "lblIdentityName";
-            lblIdentityName.Size = new Size(373, 63);
+            lblIdentityName.Size = new Size(370, 62);
             lblIdentityName.TabIndex = 19;
             lblIdentityName.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblResult9
             // 
-            lblResult9.BackColor = SystemColors.ButtonHighlight;
+            lblResult9.BackColor = Color.FromArgb(128, 255, 255);
             lblResult9.Dock = DockStyle.Fill;
             lblResult9.IsBold = true;
-            lblResult9.Location = new Point(456, 32);
+            lblResult9.IsUpper = true;
+            lblResult9.Location = new Point(456, 34);
             lblResult9.Margin = new Padding(0);
             lblResult9.MaxFontSize = 12;
             lblResult9.Message = "Nhóm";
-            lblResult9.MessageBackColor = SystemColors.ButtonHighlight;
+            lblResult9.MessageBackColor = Color.FromArgb(128, 255, 255);
             lblResult9.MessageForeColor = Color.Black;
             lblResult9.Name = "lblResult9";
-            lblResult9.Size = new Size(80, 63);
+            lblResult9.Size = new Size(80, 62);
             lblResult9.TabIndex = 11;
             lblResult9.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblCustomerGroupName
             // 
-            lblCustomerGroupName.BackColor = SystemColors.ButtonHighlight;
+            lblCustomerGroupName.BackColor = Color.FromArgb(128, 255, 255);
             lblCustomerGroupName.Dock = DockStyle.Fill;
             lblCustomerGroupName.IsBold = false;
-            lblCustomerGroupName.Location = new Point(537, 32);
+            lblCustomerGroupName.IsUpper = true;
+            lblCustomerGroupName.Location = new Point(538, 34);
             lblCustomerGroupName.Margin = new Padding(0);
             lblCustomerGroupName.MaxFontSize = 12;
             lblCustomerGroupName.Message = "_ _ _ _ _";
-            lblCustomerGroupName.MessageBackColor = SystemColors.ButtonHighlight;
+            lblCustomerGroupName.MessageBackColor = Color.FromArgb(128, 255, 255);
             lblCustomerGroupName.MessageForeColor = Color.Black;
             lblCustomerGroupName.Name = "lblCustomerGroupName";
-            lblCustomerGroupName.Size = new Size(373, 63);
+            lblCustomerGroupName.Size = new Size(370, 62);
             lblCustomerGroupName.TabIndex = 12;
             lblCustomerGroupName.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblResult23
             // 
-            lblResult23.BackColor = SystemColors.ButtonHighlight;
+            lblResult23.BackColor = Color.FromArgb(255, 192, 255);
             lblResult23.Dock = DockStyle.Fill;
             lblResult23.IsBold = true;
-            lblResult23.Location = new Point(911, 96);
+            lblResult23.IsUpper = true;
+            lblResult23.Location = new Point(910, 98);
             lblResult23.Margin = new Padding(0);
             lblResult23.MaxFontSize = 12;
             lblResult23.Message = "Tên";
-            lblResult23.MessageBackColor = SystemColors.ButtonHighlight;
+            lblResult23.MessageBackColor = Color.FromArgb(255, 192, 255);
             lblResult23.MessageForeColor = Color.Black;
             lblResult23.Name = "lblResult23";
-            lblResult23.Size = new Size(80, 63);
+            lblResult23.Size = new Size(80, 62);
             lblResult23.TabIndex = 5;
             lblResult23.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblRegisterVehilceName
             // 
-            lblRegisterVehilceName.BackColor = SystemColors.ButtonHighlight;
+            lblRegisterVehilceName.BackColor = Color.FromArgb(255, 192, 255);
             lblRegisterVehilceName.Dock = DockStyle.Fill;
             lblRegisterVehilceName.IsBold = false;
-            lblRegisterVehilceName.Location = new Point(992, 96);
+            lblRegisterVehilceName.IsUpper = true;
+            lblRegisterVehilceName.Location = new Point(992, 98);
             lblRegisterVehilceName.Margin = new Padding(0);
             lblRegisterVehilceName.MaxFontSize = 12;
             lblRegisterVehilceName.Message = "_ _ _ _ _";
-            lblRegisterVehilceName.MessageBackColor = SystemColors.ButtonHighlight;
+            lblRegisterVehilceName.MessageBackColor = Color.FromArgb(255, 192, 255);
             lblRegisterVehilceName.MessageForeColor = Color.Black;
             lblRegisterVehilceName.Name = "lblRegisterVehilceName";
-            lblRegisterVehilceName.Size = new Size(373, 63);
+            lblRegisterVehilceName.Size = new Size(372, 62);
             lblRegisterVehilceName.TabIndex = 6;
             lblRegisterVehilceName.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblResult5
             // 
-            lblResult5.BackColor = SystemColors.ButtonHighlight;
+            lblResult5.BackColor = Color.FromArgb(255, 192, 255);
             lblResult5.Dock = DockStyle.Fill;
             lblResult5.IsBold = true;
-            lblResult5.Location = new Point(911, 32);
+            lblResult5.IsUpper = true;
+            lblResult5.Location = new Point(910, 34);
             lblResult5.Margin = new Padding(0);
             lblResult5.MaxFontSize = 12;
             lblResult5.Message = "BSĐK";
-            lblResult5.MessageBackColor = SystemColors.ButtonHighlight;
+            lblResult5.MessageBackColor = Color.FromArgb(255, 192, 255);
             lblResult5.MessageForeColor = Color.Black;
             lblResult5.Name = "lblResult5";
-            lblResult5.Size = new Size(80, 63);
+            lblResult5.Size = new Size(80, 62);
             lblResult5.TabIndex = 7;
             lblResult5.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblIdentityCode
             // 
-            lblIdentityCode.BackColor = SystemColors.ButtonHighlight;
+            lblIdentityCode.BackColor = SystemColors.ActiveCaption;
             lblIdentityCode.Dock = DockStyle.Fill;
             lblIdentityCode.IsBold = false;
-            lblIdentityCode.Location = new Point(82, 160);
+            lblIdentityCode.IsUpper = true;
+            lblIdentityCode.Location = new Point(84, 162);
             lblIdentityCode.Margin = new Padding(0);
             lblIdentityCode.MaxFontSize = 12;
             lblIdentityCode.Message = "_ _ _ _ _";
-            lblIdentityCode.MessageBackColor = SystemColors.ButtonHighlight;
+            lblIdentityCode.MessageBackColor = SystemColors.ActiveCaption;
             lblIdentityCode.MessageForeColor = Color.Black;
             lblIdentityCode.Name = "lblIdentityCode";
-            lblIdentityCode.Size = new Size(373, 63);
+            lblIdentityCode.Size = new Size(370, 62);
             lblIdentityCode.TabIndex = 10;
             lblIdentityCode.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblResult11
             // 
-            lblResult11.BackColor = SystemColors.ButtonHighlight;
+            lblResult11.BackColor = Color.FromArgb(255, 192, 255);
             lblResult11.Dock = DockStyle.Fill;
             lblResult11.IsBold = true;
-            lblResult11.Location = new Point(911, 160);
+            lblResult11.IsUpper = true;
+            lblResult11.Location = new Point(910, 162);
             lblResult11.Margin = new Padding(0);
             lblResult11.MaxFontSize = 12;
             lblResult11.Message = "Hết hạn";
-            lblResult11.MessageBackColor = SystemColors.ButtonHighlight;
+            lblResult11.MessageBackColor = Color.FromArgb(255, 192, 255);
             lblResult11.MessageForeColor = Color.Black;
             lblResult11.Name = "lblResult11";
-            lblResult11.Size = new Size(80, 63);
+            lblResult11.Size = new Size(80, 62);
             lblResult11.TabIndex = 13;
             lblResult11.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lblRegisterVehileExpireDate
             // 
-            lblRegisterVehileExpireDate.BackColor = SystemColors.ButtonHighlight;
+            lblRegisterVehileExpireDate.BackColor = Color.FromArgb(255, 192, 255);
             lblRegisterVehileExpireDate.Dock = DockStyle.Fill;
             lblRegisterVehileExpireDate.IsBold = true;
-            lblRegisterVehileExpireDate.Location = new Point(992, 160);
+            lblRegisterVehileExpireDate.IsUpper = true;
+            lblRegisterVehileExpireDate.Location = new Point(992, 162);
             lblRegisterVehileExpireDate.Margin = new Padding(0);
             lblRegisterVehileExpireDate.MaxFontSize = 12;
             lblRegisterVehileExpireDate.Message = "_ _ _ _ _";
-            lblRegisterVehileExpireDate.MessageBackColor = SystemColors.ButtonHighlight;
+            lblRegisterVehileExpireDate.MessageBackColor = Color.FromArgb(255, 192, 255);
             lblRegisterVehileExpireDate.MessageForeColor = Color.DarkGreen;
             lblRegisterVehileExpireDate.Name = "lblRegisterVehileExpireDate";
-            lblRegisterVehileExpireDate.Size = new Size(373, 63);
+            lblRegisterVehileExpireDate.Size = new Size(372, 62);
             lblRegisterVehileExpireDate.TabIndex = 14;
             lblRegisterVehileExpireDate.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -1111,27 +1143,28 @@ namespace iParkingv5_window.Usercontrols
             tblEventContent.SetColumnSpan(panel9, 2);
             panel9.Controls.Add(lblResult8);
             panel9.Dock = DockStyle.Fill;
-            panel9.Location = new Point(1, 1);
+            panel9.Location = new Point(2, 2);
             panel9.Margin = new Padding(0);
             panel9.Name = "panel9";
-            panel9.Size = new Size(454, 30);
+            panel9.Size = new Size(452, 30);
             panel9.TabIndex = 30;
             // 
             // lblResult8
             // 
-            lblResult8.BackColor = SystemColors.ButtonHighlight;
+            lblResult8.BackColor = SystemColors.ActiveCaption;
             lblResult8.Dock = DockStyle.Fill;
             lblResult8.Image = Properties.Resources.icons8_access_32px;
             lblResult8.ImageAlign = ContentAlignment.MiddleRight;
             lblResult8.IsBold = true;
+            lblResult8.IsUpper = true;
             lblResult8.Location = new Point(0, 0);
             lblResult8.Margin = new Padding(0);
             lblResult8.MaxFontSize = 12;
             lblResult8.Message = "Định danh";
-            lblResult8.MessageBackColor = SystemColors.ButtonHighlight;
+            lblResult8.MessageBackColor = SystemColors.ActiveCaption;
             lblResult8.MessageForeColor = Color.Black;
             lblResult8.Name = "lblResult8";
-            lblResult8.Size = new Size(454, 30);
+            lblResult8.Size = new Size(452, 30);
             lblResult8.TabIndex = 17;
             lblResult8.TextAlign = ContentAlignment.MiddleCenter;
             // 

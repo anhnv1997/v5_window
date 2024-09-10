@@ -7,6 +7,7 @@ namespace iPakrkingv5.Controls
     {
         public static void ShowImageUrlAsync(this PictureBox pic, string imageUrl)
         {
+            pic.Tag = null;
             if (string.IsNullOrEmpty(imageUrl))
             {
                 pic.Image = pic.ErrorImage;

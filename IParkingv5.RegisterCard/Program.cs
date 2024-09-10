@@ -79,12 +79,11 @@ namespace IParkingv5.RegisterCard
                         //DahuaAccessControl.Init();
                         LoadSystemConfig();
                         tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "OPEN MAIN PAGE");
-                        Application.Run(new frmLogin(AppData.ApiServer, KzParkingv5BaseApi.server, OpenMainPage));
+                        Application.Run(new frmLogin(AppData.ApiServer, KzParkingv5BaseApi.server, OpenMainPage, StaticPool.serverConfig.ParkingServerScope));
                     }
                     else
                     {
                         tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "Duplicate App Running");
-                        // ?ng d?ng ?ã ch?y, ?óng ?ng d?ng tr??c ?ó và ch?y ?ng d?ng m?i
                         Process currentProcess = Process.GetCurrentProcess();
                         foreach (Process process in Process.GetProcessesByName(currentProcess.ProcessName))
                         {

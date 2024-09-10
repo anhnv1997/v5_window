@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,10 +27,26 @@ namespace iPakrkingv5.Controls.Controls.Labels
             }
         }
 
+        private bool isUpper = true;
+        [Browsable(true)]
+        [Category("Custom Message")]
+        [Description("Sets the text of the Label")]
+        public bool IsUpper
+        {
+            get { return isUpper; }
+            set
+            {
+                this.isUpper = value;
+                this.Refresh();
+            }
+        }
+
+
         private string message = string.Empty;
         // Expose properties to design mode
         [Browsable(true)]
         [Category("Custom Message")]
+        [Editor("System.ComponentModel.Design.MultilineStringEditor, System.Design", typeof(UITypeEditor))]
         [Description("Sets the text of the Label")]
         public string Message
         {
@@ -105,7 +122,8 @@ namespace iPakrkingv5.Controls.Controls.Labels
             var useFont = isBold ? new Font(this.fontName, 10, FontStyle.Bold) : new Font(this.fontName, 10);
             using (useFont)
             {
-                DrawTextInCenter(g, this.message.ToUpper(), useFont, this.messageForeColor);
+                string displayMessage=  isUpper ? this.message.ToUpper() : this.message;
+                DrawTextInCenter(g, displayMessage, useFont, this.messageForeColor);
             }
 
         }

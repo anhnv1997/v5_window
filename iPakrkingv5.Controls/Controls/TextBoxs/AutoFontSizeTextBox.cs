@@ -120,7 +120,7 @@ namespace iPakrkingv5.Controls.Controls.TextBoxs
                     SizeF textSize = g.MeasureString(this.Text, new Font(this.Font.FontFamily, fontSize));
 
                     // Adjust the font size if the text is too large or too small
-                    if (textSize.Width > textBoxSize.Width || textSize.Height > textBoxSize.Height)
+                    if ((textSize.Width + 10) > textBoxSize.Width || textSize.Height > textBoxSize.Height)
                     {
                         fontSize -= 0.5f; // Decrease font size
                     }

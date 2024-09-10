@@ -7,6 +7,7 @@ namespace iParkingv5.Objects.Configs
     public class ServerConfig
     {
         public string ParkingServerUrl { get; set; } = string.Empty;
+        public string ParkingServerScope { get; set; } = "openid role-data user-data parking-data offline_access device-data invoice-data project-data payment-data tenant-data storage-data";
         //Thông tin Minio Server
         public string MinioServerUrl { get; set; } = string.Empty;
         public string MinioServerUsername { get; set; } = string.Empty;

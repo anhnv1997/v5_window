@@ -52,6 +52,8 @@
             label9 = new Label();
             txtMQTTUsername = new TextBox();
             label10 = new Label();
+            lblScope = new Label();
+            txtScope = new TextBox();
             groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -61,14 +63,16 @@
             // groupBox2
             // 
             groupBox2.AutoSize = true;
+            groupBox2.Controls.Add(txtScope);
             groupBox2.Controls.Add(txtParkingServerUrl);
+            groupBox2.Controls.Add(lblScope);
             groupBox2.Controls.Add(label2);
             groupBox2.Dock = DockStyle.Top;
             groupBox2.Location = new Point(0, 0);
             groupBox2.Margin = new Padding(4, 3, 4, 3);
             groupBox2.Name = "groupBox2";
             groupBox2.Padding = new Padding(4, 3, 4, 3);
-            groupBox2.Size = new Size(703, 78);
+            groupBox2.Size = new Size(703, 113);
             groupBox2.TabIndex = 5;
             groupBox2.TabStop = false;
             groupBox2.Text = "Thông tin Parking Server";
@@ -103,7 +107,7 @@
             groupBox1.Controls.Add(txtMinioServerUsername);
             groupBox1.Controls.Add(label4);
             groupBox1.Dock = DockStyle.Top;
-            groupBox1.Location = new Point(0, 78);
+            groupBox1.Location = new Point(0, 113);
             groupBox1.Margin = new Padding(4, 3, 4, 3);
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(4, 3, 4, 3);
@@ -184,7 +188,7 @@
             groupBox3.Controls.Add(txtRabbitMQUsername);
             groupBox3.Controls.Add(label7);
             groupBox3.Dock = DockStyle.Top;
-            groupBox3.Location = new Point(0, 225);
+            groupBox3.Location = new Point(0, 260);
             groupBox3.Margin = new Padding(4, 3, 4, 3);
             groupBox3.Name = "groupBox3";
             groupBox3.Padding = new Padding(4, 3, 4, 3);
@@ -265,7 +269,7 @@
             groupBox4.Controls.Add(txtMQTTUsername);
             groupBox4.Controls.Add(label10);
             groupBox4.Dock = DockStyle.Top;
-            groupBox4.Location = new Point(0, 372);
+            groupBox4.Location = new Point(0, 407);
             groupBox4.Margin = new Padding(4, 3, 4, 3);
             groupBox4.Name = "groupBox4";
             groupBox4.Padding = new Padding(4, 3, 4, 3);
@@ -336,6 +340,26 @@
             label10.TabIndex = 2;
             label10.Text = "Url";
             // 
+            // lblScope
+            // 
+            lblScope.AutoSize = true;
+            lblScope.Location = new Point(6, 54);
+            lblScope.Margin = new Padding(4, 0, 4, 0);
+            lblScope.Name = "lblScope";
+            lblScope.Size = new Size(52, 21);
+            lblScope.TabIndex = 2;
+            lblScope.Text = "Scope";
+            // 
+            // txtScope
+            // 
+            txtScope.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtScope.Location = new Point(166, 56);
+            txtScope.Margin = new Padding(4, 3, 4, 3);
+            txtScope.Name = "txtScope";
+            txtScope.PlaceholderText = "Scope";
+            txtScope.Size = new Size(513, 29);
+            txtScope.TabIndex = 1;
+            // 
             // ucServerConfig
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -387,5 +411,7 @@
         private Label label9;
         private TextBox txtMQTTUsername;
         private Label label10;
+        private TextBox txtScope;
+        private Label lblScope;
     }
 }

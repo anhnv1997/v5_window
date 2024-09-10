@@ -13,11 +13,13 @@ namespace iParkingv5.ApiManager.interfaces
         Task<Report<EventInReport>> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
                                     string identityGroupId, string vehicleTypeId, string laneId, string user, bool isPaging,
                                     int pageIndex = 0, int pageSize = 100, string eventId = "", bool isSaveLog = true);
+        Task<EventInData> GetEventInById(string id);
+        Task<EventOutData> GetEventOutById(string id);
         #endregion End Event In
 
         #region Event Out
         Task<Report<EventOutReport>> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId,
-                                                  string vehicleTypeId, string laneId, string user, bool isPaging, 
+                                                  string vehicleTypeId, string laneId, string user, bool isPaging,
                                                   int pageIndex = 0, int pageSize = 10000, string eventId = "", bool isSaveLog = true);
         #endregion End Event Out
 

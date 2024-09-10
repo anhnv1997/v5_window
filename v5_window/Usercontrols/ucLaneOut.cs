@@ -869,8 +869,18 @@ namespace iParkingv5_window.Usercontrols
             tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
                                  $"{this.lane.name}.EventOut.{eventOut.Id} - Display Event Out Info");
 
+            Customer? customer = null;
+            if (registeredVehicle != null)
+            {
+                var customerResponse = await AppData.ApiServer.parkingDataService.GetCustomerByIdAsync(registeredVehicle.CustomerId);
+                if (customerResponse != null)
+                {
+                    customer = customerResponse.Item1;
+                }
+            }
+
             DisplayEventOutInfo(eventOut.EventIn?.DateTimeIn, eventTime, detectedPlate, identity, identityGroup, vehicleType,
-                                eventOut.vehicle, (long)eventOut.Charge, eventOut.customer, null, "", "");
+                                eventOut.vehicle, (long)eventOut.Charge, customer, null, "", "");
 
             tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
                                  $"{this.lane.name}.EventOut.{eventOut.Id} - Display Led");
@@ -974,63 +984,50 @@ namespace iParkingv5_window.Usercontrols
 
                 tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
                                      $"{this.lane.name}.EventOut.{eventId}  - Get Report By EventOutId");
-                var report = await AppData.ApiServer.reportingService.GetEventOuts("", startTime, endTime, "", "", "", "", true, 0, 1, eventId);
-                if (report == null)
-                {
-                    tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
-                                     $"{this.lane.name}.EventOut.{eventId}  - Report NULL, End Process");
-                    ClearView();
-                    return;
-                }
-                if (report.data.Count == 0)
-                {
-                    tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
-                                     $"{this.lane.name}.EventOut.{eventId}  - Report Count = 0, End Process");
-                    ClearView();
-                    return;
-                }
-                var eventInfo = report.data[0];
+                var eventOutInfo = await AppData.ApiServer.reportingService.GetEventOutById(eventId);
+
                 tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
-                                     $"{this.lane.name}.EventOut.{eventId}  - Event Info", eventInfo);
+                                     $"{this.lane.name}.EventOut.{eventId}  - Event Info", eventOutInfo);
                 tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
                                      $"{this.lane.name}.EventOut.{eventId}  - Get EventIn Image");
-                if (eventInfo.EventIn.images != null)
+                if (eventOutInfo.EventIn.images != null)
                 {
-                    ImageData? overviewImgData = eventInfo.EventIn.images.ContainsKey(EmParkingImageType.Overview) ?
-                                                            eventInfo.EventIn.images[EmParkingImageType.Overview][0] : null;
-                    ImageData? vehicleImgData = eventInfo.EventIn.images.ContainsKey(EmParkingImageType.Vehicle) ?
-                                                            eventInfo.EventIn.images[EmParkingImageType.Vehicle][0] : null;
-                    ImageData? lprImgData = eventInfo.EventIn.images.ContainsKey(EmParkingImageType.Plate) ?
-                                                           eventInfo.EventIn.images[EmParkingImageType.Plate][0] : null;
+                    ImageData? overviewImgData = eventOutInfo.EventIn.images.ContainsKey(EmParkingImageType.Overview) ?
+                                                            eventOutInfo.EventIn.images[EmParkingImageType.Overview][0] : null;
+                    ImageData? vehicleImgData = eventOutInfo.EventIn.images.ContainsKey(EmParkingImageType.Vehicle) ?
+                                                            eventOutInfo.EventIn.images[EmParkingImageType.Vehicle][0] : null;
+                    ImageData? lprImgData = eventOutInfo.EventIn.images.ContainsKey(EmParkingImageType.Plate) ?
+                                                           eventOutInfo.EventIn.images[EmParkingImageType.Plate][0] : null;
                     picOverviewImageIn.ShowImageAsync(overviewImgData);
                     picVehicleImageIn.ShowImageAsync(vehicleImgData);
                     picLprImageIn.ShowImageAsync(lprImgData);
                 }
                 tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
                                      $"{this.lane.name}.EventOut.{eventId}  - Get EventOut Image");
-                if (eventInfo.images != null)
+                if (eventOutInfo.images != null)
                 {
-                    ImageData? overviewOutImgData = eventInfo.images.ContainsKey(EmParkingImageType.Overview) ?
-                                                            eventInfo.images[EmParkingImageType.Overview][0] : null;
-                    ImageData? vehicleImgOutData = eventInfo.images.ContainsKey(EmParkingImageType.Vehicle) ?
-                                                            eventInfo.images[EmParkingImageType.Vehicle][0] : null;
-                    ImageData? lprImgOutData = eventInfo.images.ContainsKey(EmParkingImageType.Plate) ?
-                                                           eventInfo.images[EmParkingImageType.Plate][0] : null;
+                    ImageData? overviewOutImgData = eventOutInfo.images.ContainsKey(EmParkingImageType.Overview) ?
+                                                            eventOutInfo.images[EmParkingImageType.Overview][0] : null;
+                    ImageData? vehicleImgOutData = eventOutInfo.images.ContainsKey(EmParkingImageType.Vehicle) ?
+                                                            eventOutInfo.images[EmParkingImageType.Vehicle][0] : null;
+                    ImageData? lprImgOutData = eventOutInfo.images.ContainsKey(EmParkingImageType.Plate) ?
+                                                           eventOutInfo.images[EmParkingImageType.Plate][0] : null;
                     picOverviewImageOut.ShowImageAsync(overviewOutImgData);
                     picVehicleImageOut.ShowImageAsync(vehicleImgOutData);
                     picLprImage.ShowImageAsync(lprImgOutData);
                 }
 
-                lastEvent = new EventOutData(eventInfo);
+                lastEvent = eventOutInfo;// new EventOutData(eventInfo);
                 tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
                                   $"{this.lane.name}.EventOut.{eventId}  - Display Event Info");
-                DisplayEventOutInfo(eventInfo.EventIn.DateTimeIn ?? DateTime.Now, eventInfo.DatetimeOut ?? DateTime.Now, eventInfo.PlateNumber,
-                                    eventInfo.Identity, eventInfo.IdentityGroup, eventInfo.IdentityGroup.VehicleType, eventInfo.vehicle, eventInfo.Charge, eventInfo.customer);
+                DisplayEventOutInfo(eventOutInfo.EventIn.DateTimeIn ?? DateTime.Now, eventOutInfo.DatetimeOut ?? DateTime.Now, eventOutInfo.PlateNumber,
+                                    eventOutInfo.Identity, eventOutInfo.IdentityGroup, eventOutInfo.IdentityGroup.VehicleType, eventOutInfo.vehicle,
+                                    eventOutInfo.Charge, eventOutInfo.customer);
 
                 this.Invoke(new Action(() =>
                 {
-                    lblPlateIn.Text = eventInfo.EventIn.PlateNumber;
-                    txtPlate.Text = eventInfo.PlateNumber;
+                    lblPlateIn.Text = eventOutInfo.EventIn.PlateNumber;
+                    txtPlate.Text = eventOutInfo.PlateNumber;
                 }));
             }
             catch (Exception ex)
@@ -1829,6 +1826,18 @@ namespace iParkingv5_window.Usercontrols
             lblIdentityCode.Message = identity?.Code ?? "";
             lblTimeIn.Message = timeIn.Value.ToString("dd/MM/yyyy HH:mm:ss");
             lblTimeOut.Message = timeOut.ToString("dd/MM/yyyy HH:mm:ss");
+
+            TimeSpan ParkingTime = (TimeSpan)(timeOut - timeIn)!;
+            string formattedTime = "";
+            if (ParkingTime.TotalDays > 1)
+            {
+                lblParkingTime.Message = string.Format("{0} ngày\r\n{1} giờ {2} phút", ParkingTime.Days, ParkingTime.Hours,
+                                                                           ParkingTime.Minutes, ParkingTime.Seconds);
+            }
+            else
+            {
+                lblParkingTime.Message = string.Format("{0} giờ {1} phút {2} giây", ParkingTime.Hours, ParkingTime.Minutes, ParkingTime.Seconds);
+            }
 
             if (StaticPool.appOption.IsDisplayCustomerInfo)
             {

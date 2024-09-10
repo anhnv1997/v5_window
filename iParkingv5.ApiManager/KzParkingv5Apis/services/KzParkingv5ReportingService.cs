@@ -21,6 +21,15 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 {
     public class KzParkingv5ReportingService : iReportingService
     {
+        public async Task<EventInData> GetEventInById(string id)
+        {
+            return (await GetObjectDetailByIdAsync<EventInData>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventIn, id))?.Item1;
+        }
+        public async Task<EventOutData> GetEventOutById(string id)
+        {
+            return (await GetObjectDetailByIdAsync<EventOutData>(KzParkingv5ApiUrlManagement.EmParkingv5ObjectType.EventOut, id))?.Item1;
+        }
+
         public async Task<Report<EventInReport>> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
                                     string identityGroupId, string vehicleTypeId, string laneId, string user, bool isPaging,
                                     int pageIndex = 0, int pageSize = 100, string eventInId = "", bool isSaveLog = true)

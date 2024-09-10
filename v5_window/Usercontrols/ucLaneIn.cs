@@ -975,29 +975,29 @@ namespace iParkingv5_window.Usercontrols
 
                 tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
                                      $"{this.lane.name}.EventIn.{eventId}  - Get Report By EventInId");
-                var report = await AppData.ApiServer.reportingService.GetEventIns("", startTime, endTime, "", "", "", "", true, 0, 1, eventId);
-                if (report == null || report.data.Count == 0)
+                var eventInInfo = await AppData.ApiServer.reportingService.GetEventInById(eventId);
+
+                if (eventInInfo == null)
                 {
                     tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
                                   $"{this.lane.name}.EventIn.{eventId}  - Report InValid, End Process");
                     ClearView();
                     return;
                 }
-                var eventInfo = report.data[0];
-                lastEvent = new EventInData(eventInfo);
+                lastEvent = eventInInfo;
                 tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
-                                   $"{this.lane.name}.EventIn.{eventId}  - Event Info", eventInfo);
+                                   $"{this.lane.name}.EventIn.{eventId}  - Event Info", eventInInfo);
                 tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
                                      $"{this.lane.name}.EventIn.{eventId}  - Get EventIn Image");
 
-                if (eventInfo.images != null)
+                if (eventInInfo.images != null)
                 {
-                    ImageData? overviewImgData = eventInfo.images.ContainsKey(EmParkingImageType.Overview) ?
-                                                            eventInfo.images[EmParkingImageType.Overview][0] : null;
-                    ImageData? vehicleImgData = eventInfo.images.ContainsKey(EmParkingImageType.Vehicle) ?
-                                                            eventInfo.images[EmParkingImageType.Vehicle][0] : null;
-                    ImageData? lprImgData = eventInfo.images.ContainsKey(EmParkingImageType.Plate) ?
-                                                           eventInfo.images[EmParkingImageType.Plate][0] : null;
+                    ImageData? overviewImgData = eventInInfo.images.ContainsKey(EmParkingImageType.Overview) ?
+                                                            eventInInfo.images[EmParkingImageType.Overview][0] : null;
+                    ImageData? vehicleImgData = eventInInfo.images.ContainsKey(EmParkingImageType.Vehicle) ?
+                                                            eventInInfo.images[EmParkingImageType.Vehicle][0] : null;
+                    ImageData? lprImgData = eventInInfo.images.ContainsKey(EmParkingImageType.Plate) ?
+                                                           eventInInfo.images[EmParkingImageType.Plate][0] : null;
 
                     var overviewInTask = AppData.ApiServer.parkingProcessService.GetImageUrl(overviewImgData?.bucket ?? "", overviewImgData?.objectKey ?? "");
                     var vehicleInTask = AppData.ApiServer.parkingProcessService.GetImageUrl(vehicleImgData?.bucket ?? "", vehicleImgData?.objectKey ?? "");
@@ -1011,11 +1011,11 @@ namespace iParkingv5_window.Usercontrols
                 }
                 tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
                                   $"{this.lane.name}.EventIn.{eventId}  - Display Event Info");
-                DisplayEventInfo(eventInfo.DateTimeIn ?? DateTime.Now, eventInfo.PlateNumber, eventInfo.Identity, eventInfo.IdentityGroup,
-                               eventInfo.IdentityGroup.VehicleType, eventInfo.customer, eventInfo.vehicle, null);
+                DisplayEventInfo(eventInInfo.DateTimeIn ?? DateTime.Now, eventInInfo.PlateNumber, eventInInfo.Identity, eventInInfo.IdentityGroup,
+                                 eventInInfo.IdentityGroup.VehicleType, eventInInfo.customer, eventInInfo.vehicle, null);
                 this.Invoke(new Action(() =>
                 {
-                    txtPlate.Text = eventInfo.PlateNumber;
+                    txtPlate.Text = eventInInfo.PlateNumber;
                 }));
             }
             catch (Exception ex)
@@ -1233,6 +1233,7 @@ namespace iParkingv5_window.Usercontrols
             if (e.Error != null)
             {
                 pictureBox.Image = defaultImg;
+                pictureBox.Tag = defaultImg;
             }
         }
         #endregion End EFFECT
@@ -1301,7 +1302,7 @@ namespace iParkingv5_window.Usercontrols
             {
                 try
                 {
-                    item.Image = item.InitialImage = item.ErrorImage = defaultImg;
+                    item.Tag = item.Image = item.InitialImage = item.ErrorImage = defaultImg;
                 }
                 catch (Exception)
                 {
@@ -1852,9 +1853,9 @@ namespace iParkingv5_window.Usercontrols
                  lblRegisterVehileExpireDate.Message =
                  lblRegisterVehicleValidTime.Message = "_ _ _ _ _";
 
-                picOverviewImage.Image = defaultImg;
-                picLprImage.Image = defaultImg;
-                picVehicleImage.Image = defaultImg;
+                picOverviewImage.Tag = picOverviewImage.Image = defaultImg;
+                picLprImage.Tag = picLprImage.Image = defaultImg;
+                picVehicleImage.Tag = picVehicleImage.Image = defaultImg;
 
                 txtPlate.Text = string.Empty;
                 hanetPlateNumber = "";

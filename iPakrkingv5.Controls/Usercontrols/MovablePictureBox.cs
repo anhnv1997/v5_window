@@ -22,7 +22,7 @@ namespace iPakrkingv5.Controls.Usercontrols
         public event OnMouseDownEvent? onMouseMoveEvent;
         public event OnMouseDownEvent? onMouseUpEvent;
         public event OnChangeSizeEvent? onChangeSizeEvent;
-        
+
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int LPAR);
         [DllImportAttribute("user32.dll")]
@@ -51,11 +51,33 @@ namespace iPakrkingv5.Controls.Usercontrols
 
         private void MovablePictureBox_MouseDoubleClick(object? sender, MouseEventArgs e)
         {
-            frmViewImage frmViewImage = new frmViewImage
+            if (this.Tag != null)
             {
-                CurrentImage = this.Image
-            };
-            frmViewImage.Show();
+                try
+                {
+                    frmViewImage frmViewImage = new frmViewImage
+                    {
+                        CurrentImage = (Image)this.Tag
+                    };
+                    frmViewImage.Show();
+                }
+                catch (Exception)
+                {
+                    frmViewImage frmViewImage = new frmViewImage
+                    {
+                        CurrentImage = this.Image
+                    };
+                    frmViewImage.Show();
+                }
+            }
+            else
+            {
+                frmViewImage frmViewImage = new frmViewImage
+                {
+                    CurrentImage = this.Image
+                };
+                frmViewImage.Show();
+            }
         }
 
         bool isWheeling = false;

@@ -285,6 +285,7 @@ namespace iParkingv5_window.Usercontrols
                 {
                     Bitmap? bmp = img == null ? null : new Bitmap(img.Clone() as Image);
                     pictureBox.Image = bmp == null ? pictureBox.ErrorImage : bmp.GetThumbnailImage(pictureBox.Width, pictureBox.Height, null, IntPtr.Zero);
+                    pictureBox.Tag = bmp;
                     //pictureBox.Refresh();
                 }
                 catch (Exception ex)
@@ -293,6 +294,25 @@ namespace iParkingv5_window.Usercontrols
                 }
             }));
         }
+
+        public static void ShowImage(PictureBox pictureBox, Image? img)
+        {
+            pictureBox.Invoke(new Action(() =>
+            {
+                try
+                {
+                    Bitmap? bmp = img == null ? null : new Bitmap(img.Clone() as Image);
+                    pictureBox.Image = bmp == null ? pictureBox.ErrorImage : bmp.GetThumbnailImage(pictureBox.Width, pictureBox.Height, null, IntPtr.Zero);
+                    pictureBox.Tag = bmp;
+                    //pictureBox.Refresh();
+                }
+                catch (Exception ex)
+                {
+                    pictureBox.Image = pictureBox.ErrorImage;
+                }
+            }));
+        }
+
         public static async Task ShowImageAsync(this MovablePictureBox pictureBox, ImageData? imageData)
         {
             if (imageData == null)

@@ -105,7 +105,7 @@ namespace v6_window
                             AppData.ApiServer.invoiceService = null;
                         }
                         tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "OPEN LOADING SCREEN");
-                        Application.Run(new frmLogin(AppData.ApiServer, KzParkingv5BaseApi.server, OpenLoadingPage));
+                        Application.Run(new frmLogin(AppData.ApiServer, KzParkingv5BaseApi.server, OpenLoadingPage, StaticPool.serverConfig.ParkingServerScope));
                     }
                     else
                     {
@@ -168,7 +168,7 @@ namespace v6_window
             {
                 tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "Load OEM Config");
                 StaticPool.oemConfig = NewtonSoftHelper<OEMConfig>.DeserializeObjectFromPath(PathManagement.oemConfigPath) ?? new OEMConfig();
-                if (string.IsNullOrEmpty(StaticPool.oemConfig.LogoPath) || 
+                if (string.IsNullOrEmpty(StaticPool.oemConfig.LogoPath) ||
                     !File.Exists(StaticPool.oemConfig.LogoPath))
                 {
                     StaticPool.oemConfig.LogoPath = Path.Combine(Application.StartupPath, @"Resources\defaultImage.png");

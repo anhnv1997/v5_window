@@ -287,7 +287,7 @@ namespace iParkingv5_window.Forms.DataForms
 
         private void Controller_DeviceInfoChangeEvent(object sender, DeviceInfoChangeArgs e)
         {
-            lblLoadingStatus.Message = "Nhận sự kiện thay đổi thông tin thiết bị\r\nController " + e.DeviceName;
+            lblLoadingStatus.Message = "Nhận sự kiện thay đổi thông tin thiết bị Controller: " + e.DeviceName;
             //lblLoadingStatus.UpdateResultMessage(
             //    "Nhận sự kiện thay đổi thông tin thiết bị Controller " + e.DeviceName,
             //    Color.DarkBlue);
@@ -299,7 +299,7 @@ namespace iParkingv5_window.Forms.DataForms
         }
         private void Controller_ConnectStatusChangeEvent(object sender, ConnectStatusCHangeEventArgs e)
         {
-            lblLoadingStatus.Message = "Nhận sự kiện thay đổi trạng thái kết nối\r\nController " + e.DeviceName;
+            lblLoadingStatus.Message = "Nhận sự kiện thay đổi trạng thái kết nối Controller: " + e.DeviceName;
 
             //lblLoadingStatus.UpdateResultMessage(
             //           "Nhận sự kiện thay đổi trạng thái kết nối Controller " + e.DeviceName,
@@ -316,7 +316,7 @@ namespace iParkingv5_window.Forms.DataForms
             // lblLoadingStatus.UpdateResultMessage(
             //$"Nhận sự kiện input {e.InputIndex} Controller " + e.DeviceName, Color.DarkBlue);
 
-            lblLoadingStatus.Message = $"Nhận sự kiện input {e.InputIndex}\r\nController " + e.DeviceName;
+            lblLoadingStatus.Message = $"Nhận sự kiện input {e.InputIndex} Controller " + e.DeviceName;
 
             lblLoadingStatus.BeginInvoke(new Action(() =>
             {
@@ -365,7 +365,7 @@ namespace iParkingv5_window.Forms.DataForms
                         }
                         e.AllCardFormats.Add(e.PreferCard);
 
-                        lblLoadingStatus.Message = $"{DateTime.Now:HH:mm:ss} READER: {e.ReaderIndex}, CARD: {e.PreferCard}\r\nController " + e.DeviceName;
+                        lblLoadingStatus.Message = $"{DateTime.Now:HH:mm:ss} READER: {e.ReaderIndex}, CARD: {e.PreferCard} Controller: " + e.DeviceName;
                         iLane.OnNewEvent(e);
                     }
                 }
@@ -612,7 +612,7 @@ namespace iParkingv5_window.Forms.DataForms
                 {
                     if (item.lane.code == ce.DeviceId)
                     {
-                        lblLoadingStatus.Message = $"{DateTime.Now:HH:mm:ss} READER: {ce.ReaderIndex}, CARD: {ce.PreferCard}\r\nController " + ce.DeviceName;
+                        lblLoadingStatus.Message = $"{DateTime.Now:HH:mm:ss} READER: {ce.ReaderIndex}, CARD: {ce.PreferCard} Controller: " + ce.DeviceName;
                         ce.DeviceId = item.lane.controlUnits[0].controlUnitId;
                         ce.ReaderIndex = item.lane.controlUnits[0].readers[0];
                         item.OnNewEvent(ce);

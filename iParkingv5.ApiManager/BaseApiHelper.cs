@@ -143,6 +143,7 @@ namespace iParkingv6.ApiManager
         public static async Task<Tuple<string, string>> GeneralJsonAPIAsync(string apiUrl, object data, Dictionary<string, string>? headerValues,
                                                                             Dictionary<string, string>? requiredParams, int timeOut, Method method, bool isSaveLog = true)
         {
+            int checkAuthIndex = 0;
             DataLog dataLog = new DataLog()
             {
                 Headers = headerValues,
@@ -221,7 +222,15 @@ namespace iParkingv6.ApiManager
                         var LoginResult = Newtonsoft.Json.JsonConvert.DeserializeObject<LoginResult>(_response.Content);
                         if (string.IsNullOrEmpty(LoginResult.access_token))
                         {
-                            goto GetToken;
+                            if (checkAuthIndex <= 1)
+                            {
+                                checkAuthIndex++;
+                                goto GetToken;
+                            }
+                            else
+                            {
+                                throw new Exception("Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại phần mềm!");
+                            }
                         }
                         else
                         {

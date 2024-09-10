@@ -28,7 +28,7 @@ namespace iParkingv5.FeeTest
 
             if (LoadSystemConfig())
             {
-                Application.Run(new frmLogin(AppData.ApiServer, KzParkingv5BaseApi.server, OpenHomePage));
+                Application.Run(new frmLogin(AppData.ApiServer, KzParkingv5BaseApi.server, OpenHomePage, StaticPool.serverConfig.ParkingServerScope));
             }
         }
         static void OpenHomePage()

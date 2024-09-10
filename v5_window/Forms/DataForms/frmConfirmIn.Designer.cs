@@ -1,4 +1,5 @@
-﻿using iPakrkingv5.Controls.Usercontrols;
+﻿using iPakrkingv5.Controls.Controls.Labels;
+using iPakrkingv5.Controls.Usercontrols;
 
 namespace iParkingv5_window.Forms.DataForms
 {
@@ -34,27 +35,27 @@ namespace iParkingv5_window.Forms.DataForms
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConfirmIn));
             panel1 = new Panel();
             tableLayoutPanel2 = new TableLayoutPanel();
+            txtDetectPlate = new iPakrkingv5.Controls.Controls.TextBoxs.AutoFontSizeTextBox();
             label7 = new Label();
-            txtDetectPlate = new TextBox();
             label1 = new Label();
             label4 = new Label();
-            lblTimeIn = new Label();
+            lblTimeIn = new lblResult();
             panel2 = new Panel();
-            lblRegisterPlate = new Label();
+            lblRegisterPlate = new lblResult();
             btnCopy = new Button();
             label3 = new Label();
-            lblIdentityCode = new Label();
+            lblIdentityCode = new lblResult();
             label5 = new Label();
-            lblIdentityGroup = new Label();
+            lblIdentityGroup = new lblResult();
             label6 = new Label();
-            lblVehicleType = new Label();
+            lblVehicleType = new lblResult();
             panelEventPic = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
             picOverview = new MovablePictureBox();
             picVehicle = new MovablePictureBox();
             lblMessage = new Label();
             panelAction = new Panel();
-            lblGuide = new Label();
+            lblGuide = new lblResult();
             lblCancel1 = new iPakrkingv5.Controls.Controls.Buttons.LblCancel();
             btnOk1 = new iPakrkingv5.Controls.Controls.Buttons.BtnOk();
             lblTimer = new Label();
@@ -86,8 +87,8 @@ namespace iParkingv5_window.Forms.DataForms
             tableLayoutPanel2.ColumnCount = 2;
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Controls.Add(label7, 0, 0);
             tableLayoutPanel2.Controls.Add(txtDetectPlate, 1, 0);
+            tableLayoutPanel2.Controls.Add(label7, 0, 0);
             tableLayoutPanel2.Controls.Add(label1, 0, 2);
             tableLayoutPanel2.Controls.Add(label4, 0, 1);
             tableLayoutPanel2.Controls.Add(lblTimeIn, 1, 2);
@@ -112,6 +113,21 @@ namespace iParkingv5_window.Forms.DataForms
             tableLayoutPanel2.Size = new Size(602, 300);
             tableLayoutPanel2.TabIndex = 5;
             // 
+            // txtDetectPlate
+            // 
+            txtDetectPlate.BackColor = SystemColors.Window;
+            txtDetectPlate.Dock = DockStyle.Bottom;
+            txtDetectPlate.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
+            txtDetectPlate.IsBold = true;
+            txtDetectPlate.Location = new Point(147, 7);
+            txtDetectPlate.MaxFontSize = 24;
+            txtDetectPlate.Message = "";
+            txtDetectPlate.MessageBackColor = SystemColors.Window;
+            txtDetectPlate.MessageForeColor = Color.White;
+            txtDetectPlate.Name = "txtDetectPlate";
+            txtDetectPlate.Size = new Size(451, 50);
+            txtDetectPlate.TabIndex = 9;
+            // 
             // label7
             // 
             label7.Dock = DockStyle.Fill;
@@ -122,15 +138,6 @@ namespace iParkingv5_window.Forms.DataForms
             label7.TabIndex = 5;
             label7.Text = "Biển Số Nhận Dạng";
             label7.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // txtDetectPlate
-            // 
-            txtDetectPlate.Dock = DockStyle.Bottom;
-            txtDetectPlate.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
-            txtDetectPlate.Location = new Point(147, 10);
-            txtDetectPlate.Name = "txtDetectPlate";
-            txtDetectPlate.Size = new Size(451, 47);
-            txtDetectPlate.TabIndex = 0;
             // 
             // label1
             // 
@@ -156,13 +163,19 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             // lblTimeIn
             // 
+            lblTimeIn.BackColor = SystemColors.Control;
             lblTimeIn.Dock = DockStyle.Fill;
             lblTimeIn.Font = new Font("Segoe UI", 12F);
+            lblTimeIn.IsBold = true;
+            lblTimeIn.IsUpper = false;
             lblTimeIn.Location = new Point(147, 111);
+            lblTimeIn.MaxFontSize = 14;
+            lblTimeIn.Message = "_ _ _ _ _";
+            lblTimeIn.MessageBackColor = SystemColors.Control;
+            lblTimeIn.MessageForeColor = Color.Black;
             lblTimeIn.Name = "lblTimeIn";
             lblTimeIn.Size = new Size(451, 46);
             lblTimeIn.TabIndex = 7;
-            lblTimeIn.Text = "_";
             lblTimeIn.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // panel2
@@ -178,13 +191,19 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             // lblRegisterPlate
             // 
+            lblRegisterPlate.BackColor = SystemColors.Control;
             lblRegisterPlate.Dock = DockStyle.Fill;
             lblRegisterPlate.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblRegisterPlate.IsBold = true;
+            lblRegisterPlate.IsUpper = false;
             lblRegisterPlate.Location = new Point(0, 0);
+            lblRegisterPlate.MaxFontSize = 14;
+            lblRegisterPlate.Message = "_ _ _ _ _";
+            lblRegisterPlate.MessageBackColor = SystemColors.Control;
+            lblRegisterPlate.MessageForeColor = Color.Black;
             lblRegisterPlate.Name = "lblRegisterPlate";
             lblRegisterPlate.Size = new Size(410, 49);
             lblRegisterPlate.TabIndex = 10;
-            lblRegisterPlate.Text = "_";
             lblRegisterPlate.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // btnCopy
@@ -212,13 +231,19 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             // lblIdentityCode
             // 
+            lblIdentityCode.BackColor = SystemColors.Control;
             lblIdentityCode.Dock = DockStyle.Fill;
             lblIdentityCode.Font = new Font("Segoe UI", 12F);
+            lblIdentityCode.IsBold = true;
+            lblIdentityCode.IsUpper = false;
             lblIdentityCode.Location = new Point(147, 158);
+            lblIdentityCode.MaxFontSize = 14;
+            lblIdentityCode.Message = "_ _ _ _ _";
+            lblIdentityCode.MessageBackColor = SystemColors.Control;
+            lblIdentityCode.MessageForeColor = Color.Black;
             lblIdentityCode.Name = "lblIdentityCode";
             lblIdentityCode.Size = new Size(451, 46);
             lblIdentityCode.TabIndex = 9;
-            lblIdentityCode.Text = "_";
             lblIdentityCode.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label5
@@ -234,13 +259,19 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             // lblIdentityGroup
             // 
+            lblIdentityGroup.BackColor = SystemColors.Control;
             lblIdentityGroup.Dock = DockStyle.Fill;
             lblIdentityGroup.Font = new Font("Segoe UI", 12F);
+            lblIdentityGroup.IsBold = true;
+            lblIdentityGroup.IsUpper = false;
             lblIdentityGroup.Location = new Point(147, 205);
+            lblIdentityGroup.MaxFontSize = 14;
+            lblIdentityGroup.Message = "_ _ _ _ _";
+            lblIdentityGroup.MessageBackColor = SystemColors.Control;
+            lblIdentityGroup.MessageForeColor = Color.Black;
             lblIdentityGroup.Name = "lblIdentityGroup";
             lblIdentityGroup.Size = new Size(451, 46);
             lblIdentityGroup.TabIndex = 13;
-            lblIdentityGroup.Text = "_";
             lblIdentityGroup.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label6
@@ -256,13 +287,19 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             // lblVehicleType
             // 
+            lblVehicleType.BackColor = SystemColors.Control;
             lblVehicleType.Dock = DockStyle.Fill;
             lblVehicleType.Font = new Font("Segoe UI", 12F);
+            lblVehicleType.IsBold = true;
+            lblVehicleType.IsUpper = false;
             lblVehicleType.Location = new Point(147, 252);
+            lblVehicleType.MaxFontSize = 14;
+            lblVehicleType.Message = "_ _ _ _ _";
+            lblVehicleType.MessageBackColor = SystemColors.Control;
+            lblVehicleType.MessageForeColor = Color.Black;
             lblVehicleType.Name = "lblVehicleType";
             lblVehicleType.Size = new Size(451, 47);
             lblVehicleType.TabIndex = 12;
-            lblVehicleType.Text = "_";
             lblVehicleType.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // panelEventPic
@@ -338,15 +375,19 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             // lblGuide
             // 
+            lblGuide.BackColor = SystemColors.Control;
             lblGuide.Dock = DockStyle.Left;
-            lblGuide.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             lblGuide.ForeColor = Color.FromArgb(255, 128, 0);
+            lblGuide.IsBold = true;
+            lblGuide.IsUpper = false;
             lblGuide.Location = new Point(0, 0);
+            lblGuide.MaxFontSize = 12;
+            lblGuide.Message = "Vui lòng kiểm tra và nhập biển số phương tiện vào ô biển số ra.\r\nNhấn Enter để xác nhận, Esc để hủy.";
+            lblGuide.MessageBackColor = SystemColors.Control;
+            lblGuide.MessageForeColor = Color.FromArgb(255, 128, 0);
             lblGuide.Name = "lblGuide";
-            lblGuide.Size = new Size(624, 46);
-            lblGuide.TabIndex = 6;
-            lblGuide.Text = "Vui lòng kiểm tra và nhập biển số phương tiện vào ô biển số ra.\r\nNhấn Enter để xác nhận, Esc để hủy.";
-            lblGuide.TextAlign = ContentAlignment.MiddleLeft;
+            lblGuide.Size = new Size(467, 46);
+            lblGuide.TabIndex = 8;
             // 
             // lblCancel1
             // 
@@ -435,22 +476,22 @@ namespace iParkingv5_window.Forms.DataForms
         private iPakrkingv5.Controls.Controls.Buttons.LblCancel lblCancel1;
         private iPakrkingv5.Controls.Controls.Buttons.BtnOk btnOk1;
         private TableLayoutPanel tableLayoutPanel2;
-        private Label lblIdentityGroup;
-        private Label lblVehicleType;
+        private lblResult lblIdentityGroup;
+        private lblResult lblVehicleType;
         private Label label6;
         private Label label5;
         private Label label7;
-        private TextBox txtDetectPlate;
         private Label label3;
         private Label label1;
         private Label label4;
-        private Label lblTimeIn;
-        private Label lblIdentityCode;
+        private lblResult lblTimeIn;
+        private lblResult lblIdentityCode;
         private Panel panel2;
-        private Label lblRegisterPlate;
+        private lblResult lblRegisterPlate;
         private Button btnCopy;
-        private Label lblGuide;
         private Label lblTimer;
         private System.Windows.Forms.Timer timerAutoConfirm;
+        private iPakrkingv5.Controls.Controls.Labels.lblResult lblGuide;
+        private iPakrkingv5.Controls.Controls.TextBoxs.AutoFontSizeTextBox txtDetectPlate;
     }
 }

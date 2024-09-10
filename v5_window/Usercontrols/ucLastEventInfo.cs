@@ -34,7 +34,8 @@ namespace iParkingv5_window.Usercontrols
         {
             InitializeComponent();
             this.DoubleBuffered = true;
-            picVehicle.Image = picVehicle.ErrorImage = defaultImg;
+            picVehicle.Image = picVehicle.ErrorImage = defaultImg.GetThumbnailImage(picVehicle.Image.Width, picVehicle.Image.Height, null, IntPtr.Zero);
+            picVehicle.Tag = defaultImg;
             this.Load += UcLastEventInfo_Load;
             this.SizeChanged += UcLastEventInfo_SizeChanged;
         }
@@ -98,7 +99,7 @@ namespace iParkingv5_window.Usercontrols
                 }));
                 if (displayImage != null)
                 {
-                    picVehicle.Image = displayImage;
+                    BaseLane.ShowImage(picVehicle, displayImage);
                 }
                 else
                 {
@@ -156,7 +157,8 @@ namespace iParkingv5_window.Usercontrols
             PictureBox pictureBox = (sender as PictureBox)!;
             if (e.Error != null)
             {
-                pictureBox.Image = defaultImg;
+                picVehicle.Image = defaultImg.GetThumbnailImage(picVehicle.Image.Width, picVehicle.Image.Height, null, IntPtr.Zero);
+                pictureBox.Tag = defaultImg;
             }
         }
         #endregion End Controls In Form

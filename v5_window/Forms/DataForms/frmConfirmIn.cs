@@ -23,15 +23,19 @@ namespace iParkingv5_window.Forms.DataForms
             lblMessage.Height = lblMessage.PreferredHeight;
             updatePlate = plateNumber;
 
-            txtDetectPlate.Text = plateNumber;
-            lblRegisterPlate.Text = vehicle?.PlateNumber ?? "";
-            lblTimeIn.Text = DateTime.Now.ToVNTime();
-            lblIdentityCode.Text = identity?.Name ?? "";
-            lblIdentityGroup.Text = identityGroup?.Name ?? "";
-            lblVehicleType.Text = VehicleType.GetDisplayStr(identityGroup?.VehicleType ?? 0);
+            txtDetectPlate.Message = plateNumber;
+            lblRegisterPlate.Message = vehicle?.PlateNumber ?? "";
+            lblTimeIn.Message = DateTime.Now.ToVNTime();
+            lblIdentityCode.Message = identity?.Name ?? "";
+            lblIdentityGroup.Message = identityGroup?.Name ?? "";
+            lblVehicleType.Message = VehicleType.GetDisplayStr(identityGroup?.VehicleType ?? 0);
 
-            picOverview.Image = overviewImage;
-            picVehicle.Image = vehicleImage;
+            picOverview.Image = overviewImage.GetThumbnailImage(picOverview.Width, picOverview.Height, null, IntPtr.Zero);
+            picOverview.Tag = overviewImage;
+
+            picVehicle.Image = vehicleImage?.GetThumbnailImage(picVehicle.Width, picVehicle.Height, null, IntPtr.Zero);
+            picVehicle.Tag = vehicleImage;
+
             this.Load += FrmConfirm_Load;
             this.FormClosing += FrmConfirmIn_FormClosing;
         }
@@ -84,7 +88,7 @@ namespace iParkingv5_window.Forms.DataForms
         #region Controls In Form
         private void btnCopy_Click(object sender, EventArgs e)
         {
-            txtDetectPlate.Text = lblRegisterPlate.Text;
+            txtDetectPlate.Text = lblRegisterPlate.Message;
             this.ActiveControl = txtDetectPlate;
             txtDetectPlate.SelectionStart = txtDetectPlate.Text.Length;
             txtDetectPlate.SelectionLength = 0;
