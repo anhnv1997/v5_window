@@ -555,7 +555,7 @@
           }
         }
       },
-      "iParkingv5.Objects/6.0.0.1": {
+      "iParkingv5.Objects/6.0.0.2": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
@@ -1545,7 +1545,7 @@
         "version.txt"
       ]
     },
-    "iParkingv5.Objects/6.0.0.1": {
+    "iParkingv5.Objects/6.0.0.2": {
       "type": "project",
       "path": "../iParkingv5.Objects/iParkingv5.Objects.csproj",
       "msbuildProject": "../iParkingv5.Objects/iParkingv5.Objects.csproj"
@@ -1562,7 +1562,7 @@
       "Kztek.Tool >= 1.0.0.2",
       "Newtonsoft.Json >= 13.0.3",
       "RestSharp >= 110.2.0",
-      "iParkingv5.Objects >= 6.0.0.1"
+      "iParkingv5.Objects >= 6.0.0.2"
     ]
   },
   "packageFolders": {

@@ -60,6 +60,7 @@ namespace iParkingv5_window.Usercontrols
         public ucLaneOut(Lane lane, LaneDisplayConfig? laneDisplayConfig, LaneDirectionConfig laneDirectionConfig)
         {
             InitializeComponent();
+            tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "Init Lane");
 
             this.DoubleBuffered = true;
 
@@ -86,13 +87,19 @@ namespace iParkingv5_window.Usercontrols
             {
                 spliter.ToggleDoubleBuffered(true);
                 spliter.Paint += SpliterCamera_Paint;
+                spliter.DoubleClick += Spliter_DoubleClick;
+                spliter.SplitterMoved += Spliter_SplitterMoved;
             }
             activeSpliters.Clear();
 
-
-            tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "Init Lane");
+            if (!StaticPool.appOption.IsDisplayCustomerInfo)
+            {
+                tblEventContent.ColumnStyles[2].SizeType = SizeType.Absolute;
+                tblEventContent.ColumnStyles[2].Width = 0;
+                tblEventContent.ColumnStyles[3].SizeType = SizeType.Absolute;
+                tblEventContent.ColumnStyles[3].Width = 0;
+            }
         }
-
 
         private void SpliterCamera_Paint(object? sender, PaintEventArgs e)
         {
@@ -115,6 +122,141 @@ namespace iParkingv5_window.Usercontrols
                     e.Graphics.FillRectangle(brush, spliter.SplitterDistance, 0, spliter.SplitterWidth, spliter.Height);
                 }
             }
+        }
+
+        private void Spliter_SplitterMoved(object? sender, SplitterEventArgs e)
+        {
+            var spliter = sender as SplitContainer;
+            if (spliter!.Name == splitContainerMain.Name)
+            {
+                frmMain.preferMainDistance = spliter.SplitterDistance;
+            }
+            if (spliter!.Name == spliterCamera.Name)
+            {
+                frmMain.preferCameraDistance = spliter.SplitterDistance;
+            }
+            else if (spliter!.Name == spliterCamera_PicEv_PicPlate.Name)
+            {
+                frmMain.preferCamera_PicEv_PicPlateDistance = spliter.SplitterDistance;
+            }
+            else if (spliter!.Name == spliterPicEv_PicPlate.Name)
+            {
+                frmMain.preferPicEv_PicPlateDistance = spliter.SplitterDistance;
+            }
+            else if (spliter!.Name == spliterCamera_top3Event.Name)
+            {
+                frmMain.preferCamera_TopEvent_Distance = spliter.SplitterDistance;
+            }
+            else if (spliter!.Name == spliterTopEvent_Actions.Name)
+            {
+                frmMain.preferTopEvent_Action_Distance = spliter.SplitterDistance;
+            }
+            else if (spliter!.Name == spliterEvInPlate.Name)
+            {
+                frmMain.preferEvOutPlateDistance = spliter.SplitterDistance;
+            }
+            else if (spliter!.Name == spliterEvOutPlate.Name)
+            {
+                frmMain.preferEvOutPlateDistance = spliter.SplitterDistance;
+            }
+            spliter.Refresh();
+        }
+
+        private void Spliter_DoubleClick(object? sender, EventArgs e)
+        {
+            var spliter = sender as SplitContainer;
+            spliter!.SplitterMoved -= Spliter_SplitterMoved;
+
+            if (spliter.Name == splitContainerMain.Name)
+            {
+                if (frmMain.preferMainDistance > 0)
+                {
+                    spliter.SplitterDistance = frmMain.preferMainDistance;
+                }
+                else
+                {
+                    spliter.SplitterDistance = spliter.Width / 2;
+                }
+            }
+            if (spliter.Name == spliterCamera.Name)
+            {
+                if (frmMain.preferCameraDistance > 0)
+                {
+                    spliter.SplitterDistance = frmMain.preferCameraDistance;
+                }
+                else
+                {
+                    spliter.SplitterDistance = spliter.Width / 2;
+                }
+            }
+            else if (spliter.Name == spliterCamera_PicEv_PicPlate.Name)
+            {
+                if (frmMain.preferCamera_PicEv_PicPlateDistance > 0)
+                {
+                    spliter.SplitterDistance = frmMain.preferCamera_PicEv_PicPlateDistance;
+                }
+                else
+                {
+                    spliter.SplitterDistance = spliter.Width / 2;
+                }
+            }
+            else if (spliter!.Name == spliterPicEv_PicPlate.Name)
+            {
+                if (frmMain.preferPicEv_PicPlateDistance > 0)
+                {
+                    spliter.SplitterDistance = frmMain.preferPicEv_PicPlateDistance;
+                }
+                else
+                {
+                    spliter.SplitterDistance = spliter.Width / 2;
+                }
+            }
+            else if (spliter!.Name == spliterCamera_top3Event.Name)
+            {
+                if (frmMain.preferCamera_TopEvent_Distance > 0)
+                {
+                    spliter.SplitterDistance = frmMain.preferCamera_TopEvent_Distance;
+                }
+                else
+                {
+                    spliter.SplitterDistance = spliter.Width / 2;
+                }
+            }
+            else if (spliter!.Name == spliterTopEvent_Actions.Name)
+            {
+                if (frmMain.preferTopEvent_Action_Distance > 0)
+                {
+                    spliter.SplitterDistance = frmMain.preferTopEvent_Action_Distance;
+                }
+                else
+                {
+                    spliter.SplitterDistance = spliter.Width / 2;
+                }
+            }
+            else if (spliter!.Name == spliterEvInPlate.Name)
+            {
+                if (frmMain.preferEvOutPlateDistance > 0)
+                {
+                    spliter.SplitterDistance = frmMain.preferEvOutPlateDistance;
+                }
+                else
+                {
+                    spliter.SplitterDistance = spliter.Width / 2;
+                }
+            }
+            else if (spliter!.Name == spliterEvOutPlate.Name)
+            {
+                if (frmMain.preferEvOutPlateDistance > 0)
+                {
+                    spliter.SplitterDistance = frmMain.preferEvOutPlateDistance;
+                }
+                else
+                {
+                    spliter.SplitterDistance = spliter.Width / 2;
+                }
+            }
+            spliter.SplitterMoved += Spliter_SplitterMoved;
+            spliter.Refresh();
         }
 
         /// <summary> 
@@ -969,13 +1111,14 @@ namespace iParkingv5_window.Usercontrols
         {
             try
             {
+                ClearView();
+
                 tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
                                      $"{this.lane.name}.EventOut.{eventId}  - User Click To UcTopEvent");
                 tblUserLog.SaveLog(this.lane.name, $"User Click To UC {eventId}");
                 StopTimeRefreshUI();
                 if (string.IsNullOrEmpty(eventId))
                 {
-                    ClearView();
                     return;
                 }
                 DateTime now = DateTime.Now;
@@ -1048,10 +1191,14 @@ namespace iParkingv5_window.Usercontrols
         private void picSetting_Click(object sender, EventArgs e)
         {
             tblUserLog.SaveLog(this.lane.name, $"User Click To Open Setting Screen");
-            var frm = new frmConfirmPassword();
-            if (frm.ShowDialog() != DialogResult.OK)
+            if (frmMain.IsNeedToConfirmPassword)
             {
-                return;
+                var frmConfirmPassword = new frmConfirmPassword();
+                if (frmConfirmPassword.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+                frmMain.IsNeedToConfirmPassword = false;
             }
             List<Camera> cameraList = new List<Camera>();
             foreach (KeyValuePair<CameraPurposeType.EmCameraPurposeType, List<Camera>> item in this.cameras)
@@ -1072,7 +1219,6 @@ namespace iParkingv5_window.Usercontrols
                 return;
             }
             laneDirectionConfig = newConfig;
-            panelLastEvent.Visible = laneDirectionConfig.IsDisplayLastEvent;
             SetUserDisplayConfig();
         }
 
@@ -1270,14 +1416,14 @@ namespace iParkingv5_window.Usercontrols
         #region EFFECT
         private void PicRetakePhoto_MouseHover(object? sender, EventArgs e)
         {
-            this.Cursor = Cursors.Hand;
+            //this.Cursor = Cursors.Hand;
             var pictureBox = (sender as PictureBox)!;
             pictureBox.BackColor = Color.Red;
             pictureBox.Refresh();
         }
         private void picSetting_MouseLeave(object? sender, EventArgs e)
         {
-            this.Cursor = Cursors.Default;
+            //this.Cursor = Cursors.Default;
             var pictureBox = (sender as PictureBox)!;
             pictureBox.BackColor = ErrorColor;
             pictureBox.BorderStyle = BorderStyle.None;
@@ -1352,9 +1498,30 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
             toolTipOpenBarrie.SetupToolTip(picOpenBarrie, "Mở Barrie", string.Join(",", controllserShortcut));
-            toolTipReTakePhoto.SetupToolTip(picRetakePhoto, "Chụp Lại", () => ((Keys)laneOutShortcutConfig?.ReSnapshotKey).ToString());
-            toolTipWriteOut.SetupToolTip(picWriteOut, "Ghi Vé Ra", () => ((Keys)laneOutShortcutConfig?.WriteOut).ToString());
-            toolTipPrint.SetupToolTip(picPrint, "In Vé Xe", () => ((Keys)laneOutShortcutConfig?.PrintKey).ToString());
+
+            if (laneOutShortcutConfig != null)
+            {
+                if ((Keys)laneOutShortcutConfig.ReSnapshotKey == Keys.None)
+                    toolTipReTakePhoto.SetupToolTip(picRetakePhoto, "Chụp Lại", () => "");
+                else
+                    toolTipReTakePhoto.SetupToolTip(picRetakePhoto, "Chụp Lại", () => ((Keys)laneOutShortcutConfig.ReSnapshotKey).ToString());
+
+                if ((Keys)laneOutShortcutConfig.WriteOut == Keys.None)
+                    toolTipWriteOut.SetupToolTip(picWriteOut, "Ghi Vé Ra", () => "");
+                else
+                    toolTipWriteOut.SetupToolTip(picWriteOut, "Ghi Vé Ra", () => ((Keys)laneOutShortcutConfig.WriteOut).ToString());
+
+                if ((Keys)laneOutShortcutConfig.PrintKey == Keys.None)
+                    toolTipPrint.SetupToolTip(picPrint, "In Vé Xe", () => "");
+                else
+                    toolTipPrint.SetupToolTip(picPrint, "In Vé Xe", () => ((Keys)laneOutShortcutConfig.PrintKey).ToString());
+            }
+            else
+            {
+                toolTipReTakePhoto.SetupToolTip(picRetakePhoto, "Chụp Lại", () => "");
+                toolTipWriteOut.SetupToolTip(picWriteOut, "Ghi Vé Ra", () => "");
+                toolTipPrint.SetupToolTip(picPrint, "In Vé Xe", () => "");
+            }
         }
         private void SetDefaultImage()
         {
@@ -1448,19 +1615,19 @@ namespace iParkingv5_window.Usercontrols
             switch (laneDirectionConfig.displayDirection)
             {
                 case LaneDirectionConfig.EmDisplayDirection.Vertical:
-                    //splitterEventInfoWithCamera.Dock = DockStyle.Bottom;
-                    //panelEventData.Dock = DockStyle.Bottom;
-                    //splitContainerCamera.Height = 200;
+                    splitContainerMain.Orientation = Orientation.Horizontal;
+                    splitContainerMain.Panel1.Controls.Add(spliterCamera_top3Event);
+                    splitContainerMain.Panel2.Controls.Add(panelEventStatus);
                     break;
                 case LaneDirectionConfig.EmDisplayDirection.HorizontalLeftToRight:
-                    //splitterEventInfoWithCamera.Dock = DockStyle.Right;
-                    //panelEventData.Dock = DockStyle.Right;
-                    //splitContainerCamera.Width = 200;
+                    splitContainerMain.Orientation = Orientation.Vertical;
+                    splitContainerMain.Panel1.Controls.Add(spliterCamera_top3Event);
+                    splitContainerMain.Panel2.Controls.Add(panelEventStatus);
                     break;
                 case LaneDirectionConfig.EmDisplayDirection.HorizontalRightToLeft:
-                    //splitterEventInfoWithCamera.Dock = DockStyle.Left;
-                    //panelEventData.Dock = DockStyle.Left;
-                    //splitContainerCamera.Width = 200;
+                    splitContainerMain.Orientation = Orientation.Vertical;
+                    splitContainerMain.Panel1.Controls.Add(panelEventStatus);
+                    splitContainerMain.Panel2.Controls.Add(spliterCamera_top3Event);
                     break;
                 default:
                     break;
@@ -1509,8 +1676,10 @@ namespace iParkingv5_window.Usercontrols
                 default:
                     break;
             }
-            splitContainerMain.Panel2Collapsed = laneDirectionConfig.IsDisplayLastEvent ? false : true;
-            panelLastEvent.Visible = laneDirectionConfig.IsDisplayLastEvent;
+
+            spliterCamera_top3Event.Panel2Collapsed = !laneDirectionConfig.IsDisplayLastEvent;
+            spliterTopEvent_Actions.Visible = laneDirectionConfig.IsDisplayLastEvent;
+
             PanelCameras_SizeChanged(null, null);
         }
         #endregion End LOADING
@@ -1521,7 +1690,13 @@ namespace iParkingv5_window.Usercontrols
             tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
                                   $"{this.lane.name}  - Change Design Mode To {isAllow}");
             this.IsAllowDesignRealtime = isAllow;
-
+            if (!this.IsAllowDesignRealtime)
+            {
+                if (spliterCamera.Panel2.Height <= 5)
+                {
+                    spliterCamera.Panel2Collapsed = true;
+                }
+            }
             var activeSpliters = new List<SplitContainer>()
             {
                 spliterCamera ,
@@ -1814,29 +1989,69 @@ namespace iParkingv5_window.Usercontrols
                 picOverviewImageIn.ShowImageUrlAsync(overviewInTask.Result);
             }));
         }
-        private void DisplayEventOutInfo(DateTime? timeIn, DateTime timeOut, string plateNumber, Identity identity, IdentityGroup? identityGroup, VehicleBaseType vehicle,
+        private void DisplayEventOutInfo(DateTime? timeIn, DateTime timeOut, string plateNumber, Identity identity, IdentityGroup identityGroup, VehicleBaseType vehicle,
                                         RegisteredVehicle? registerVehicle, long fee, Customer? customer, WeighingDetail? weighingDetail = null, string thirdPartyNote = "", string note = "")
         {
             laneDirectionConfig = NewtonSoftHelper<LaneDirectionConfig>.DeserializeObjectFromPath(
                                                      PathManagement.appLaneDirectionConfigPath(this.lane.Id)) ?? LaneDirectionConfig.CreateDefault();
 
+            if (identityGroup != null)
+            {
+                tblEventContent.SuspendLayout();
+                if (identityGroup.Type == IdentityGroupType.Daily)
+                {
+                    for (int i = 2; i < tblEventContent.ColumnCount; i++)
+                    {
+                        tblEventContent.ColumnStyles[i].SizeType = SizeType.Absolute;
+                        tblEventContent.ColumnStyles[i].Width = 0;
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < tblEventContent.ColumnCount; i++)
+                    {
+                        if (i % 2 == 0)
+                        {
+                            tblEventContent.ColumnStyles[i].SizeType = SizeType.Absolute;
+                            tblEventContent.ColumnStyles[i].Width = 80;
+                        }
+                        else
+                        {
+                            tblEventContent.ColumnStyles[i] = new ColumnStyle(SizeType.Percent, 50F);
+                        }
+                    }
+                    if (!StaticPool.appOption.IsDisplayCustomerInfo)
+                    {
+                        tblEventContent.ColumnStyles[2].SizeType = SizeType.Absolute;
+                        tblEventContent.ColumnStyles[2].Width = 0;
+                        tblEventContent.ColumnStyles[3].SizeType = SizeType.Absolute;
+                        tblEventContent.ColumnStyles[3].Width = 0;
+                    }
+                }
+                tblEventContent.PerformLayout();
+                tblEventContent.ResumeLayout(true);
+            }
+
             lblFee.Message = TextFormatingTool.GetMoneyFormat(fee.ToString());
             lblIdentityGroupName.Message = identityGroup?.Name ?? "";
             lblIdentityName.Message = identity?.Name ?? "";
             lblIdentityCode.Message = identity?.Code ?? "";
-            lblTimeIn.Message = timeIn.Value.ToString("dd/MM/yyyy HH:mm:ss");
-            lblTimeOut.Message = timeOut.ToString("dd/MM/yyyy HH:mm:ss");
 
-            TimeSpan ParkingTime = (TimeSpan)(timeOut - timeIn)!;
-            string formattedTime = "";
-            if (ParkingTime.TotalDays > 1)
+            if (timeIn != null)
             {
-                lblParkingTime.Message = string.Format("{0} ngày\r\n{1} giờ {2} phút", ParkingTime.Days, ParkingTime.Hours,
-                                                                           ParkingTime.Minutes, ParkingTime.Seconds);
-            }
-            else
-            {
-                lblParkingTime.Message = string.Format("{0} giờ {1} phút {2} giây", ParkingTime.Hours, ParkingTime.Minutes, ParkingTime.Seconds);
+                lblTimeOut.Message = timeOut.ToString("dd/MM/yyyy HH:mm:ss");
+                lblTimeIn.Message = timeIn.Value.ToString("dd/MM/yyyy HH:mm:ss");
+                TimeSpan ParkingTime = (TimeSpan)(timeOut - timeIn)!;
+                string formattedTime = "";
+                if (ParkingTime.TotalDays > 1)
+                {
+                    lblParkingTime.Message = string.Format("{0} ngày\r\n{1} giờ {2} phút", ParkingTime.Days, ParkingTime.Hours,
+                                                                               ParkingTime.Minutes, ParkingTime.Seconds);
+                }
+                else
+                {
+                    lblParkingTime.Message = string.Format("{0} giờ {1} phút {2} giây", ParkingTime.Hours, ParkingTime.Minutes, ParkingTime.Seconds);
+                }
             }
 
             if (StaticPool.appOption.IsDisplayCustomerInfo)
@@ -2011,9 +2226,8 @@ namespace iParkingv5_window.Usercontrols
             lblLaneName.Text = lane.name;
             lblLaneName.BackColor = ErrorColor;
 
-
-            splitContainerMain.Panel2Collapsed = !laneDirectionConfig.IsDisplayLastEvent;
-            panelLastEvent.Visible = laneDirectionConfig.IsDisplayLastEvent;
+            spliterCamera_top3Event.Panel2Collapsed = !laneDirectionConfig.IsDisplayLastEvent;
+            spliterTopEvent_Actions.Visible = laneDirectionConfig.IsDisplayLastEvent;
 
             txtPlate.Enabled = StaticPool.appOption.IsAllowEditPlateOut;
 
@@ -2066,7 +2280,7 @@ namespace iParkingv5_window.Usercontrols
                 this.spliterEvOutPlate.SplitterDistance = this.laneDisplayConfig.spliterEvOutPlate;
                 this.spliterCamera.SplitterDistance = this.laneDisplayConfig.SplitterCameraPosition;
 
-                this.spliterTopEvent_Actions.SplitterDistance = this.laneDisplayConfig.spliterCamera_PicEv_PicPlate;
+                this.spliterTopEvent_Actions.SplitterDistance = this.laneDisplayConfig.spliterTopEvent_Actions;
             }
             catch (Exception ex)
             {

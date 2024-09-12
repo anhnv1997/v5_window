@@ -33,12 +33,21 @@ namespace iParkingv5_window.Forms.DataForms
         private void FrmSetShortCutKey_Load(object? sender, EventArgs e)
         {
             BtnOk btnOk1 = new BtnOk();
+            LblCancel btnCancel = new LblCancel();
             panelActions.Controls.Add(btnOk1);
+            panelActions.Controls.Add(btnCancel);
 
             btnOk1.InitControl(BtnOk1_Click);
+            btnCancel.InitControl(BtnCancel_Click);
+
+            btnCancel.Text = "Xóa thiết lập";
+            btnCancel.Width = btnCancel.PreferredSize.Width;
+
             lblTitle.Padding = new Padding(StaticPool.baseSize * 2);
             panelActions.Height = btnOk1.Height + StaticPool.baseSize * 3;
-            btnOk1.Location = new Point(panelActions.Width - btnOk1.Width - StaticPool.baseSize * 2,
+            btnCancel.Location = new Point(panelActions.Width - btnCancel.Width - StaticPool.baseSize * 2,
+                                        StaticPool.baseSize);
+            btnOk1.Location = new Point(btnCancel.Location.X - btnOk1.Width - 3,
                                         StaticPool.baseSize);
         }
 
@@ -46,6 +55,12 @@ namespace iParkingv5_window.Forms.DataForms
         {
             this.DialogResult = DialogResult.OK;
         }
+        private void BtnCancel_Click(object? sender, EventArgs e)
+        {
+            this.keySet = Keys.None;
+            this.DialogResult = DialogResult.OK;
+        }
+
         #endregion END FORMS
     }
 }

@@ -34,10 +34,13 @@ namespace iParking.ConfigurationManager.UserControls
                 txtRabbitMqServer.Text = this.serverConfig.RabbitMqUrl;
                 txtRabbitMQUsername.Text = this.serverConfig.RabbitMqUsername;
                 txtRabbitMQPassword.Text = this.serverConfig.RabbitMqPassword;
+                txtRabbitMQRoutingKey.Text = this.serverConfig.RabbitMQRoutingKey;
+                txtRabbitMQExchangeName.Text = this.serverConfig.RabbitMQExchangeName;
 
                 txtMQTTServer.Text = this.serverConfig.MQTTUrl;
                 txtMQTTUsername.Text = this.serverConfig.MQTTUsername;
                 txtMQTTPassword.Text = this.serverConfig.MQTTPassword;
+                txtMQTTTopic.Text = this.serverConfig.MQTTTopic;
             }
         }
         #endregion End Forms
@@ -48,16 +51,22 @@ namespace iParking.ConfigurationManager.UserControls
             return new ServerConfig()
             {
                 ParkingServerUrl = txtParkingServerUrl.Text,
+                ParkingServerScope = txtScope.Text,
+
                 MinioServerUrl = txtMinioServerUrl.Text,
                 MinioServerUsername = txtMinioServerUsername.Text,
                 MinioServerPassword = txtMinioServerPassword.Text,
+
                 RabbitMqUrl = txtRabbitMqServer.Text,
                 RabbitMqUsername = txtRabbitMQUsername.Text,
                 RabbitMqPassword = txtRabbitMQPassword.Text,
+                RabbitMQExchangeName = txtRabbitMQExchangeName.Text,
+                RabbitMQRoutingKey = txtRabbitMQRoutingKey.Text,
+
                 MQTTUsername = txtMQTTUsername.Text,
                 MQTTPassword = txtMQTTPassword.Text,
                 MQTTUrl = txtMQTTServer.Text,
-                ParkingServerScope = txtScope.Text,
+                MQTTTopic = txtMQTTTopic.Text,
             };
         }
         #endregion End Public Function

@@ -36,11 +36,6 @@ namespace iParkingv5_window.Forms.DataForms
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSelectCard));
             lblTittle = new Label();
             dgvData = new DataGridView();
-            Column2 = new DataGridViewTextBoxColumn();
-            Column3 = new DataGridViewTextBoxColumn();
-            Column6 = new DataGridViewTextBoxColumn();
-            Column4 = new DataGridViewTextBoxColumn();
-            Column1 = new DataGridViewTextBoxColumn();
             btnSearch = new BtnSearch();
             txtIdentity = new TextBox();
             lblCardNumber = new Label();
@@ -48,6 +43,12 @@ namespace iParkingv5_window.Forms.DataForms
             btnSelectCard = new BtnOk();
             panelData = new Panel();
             lblGuide = new Label();
+            Column2 = new DataGridViewTextBoxColumn();
+            Column3 = new DataGridViewTextBoxColumn();
+            Column6 = new DataGridViewTextBoxColumn();
+            Column4 = new DataGridViewTextBoxColumn();
+            col_identity_group_id = new DataGridViewTextBoxColumn();
+            Column1 = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgvData).BeginInit();
             panelData.SuspendLayout();
             SuspendLayout();
@@ -83,7 +84,7 @@ namespace iParkingv5_window.Forms.DataForms
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvData.Columns.AddRange(new DataGridViewColumn[] { Column2, Column3, Column6, Column4, Column1 });
+            dgvData.Columns.AddRange(new DataGridViewColumn[] { Column2, Column3, Column6, Column4, col_identity_group_id, Column1 });
             dgvData.Location = new Point(13, 65);
             dgvData.Margin = new Padding(3, 2, 3, 2);
             dgvData.Name = "dgvData";
@@ -96,42 +97,6 @@ namespace iParkingv5_window.Forms.DataForms
             dgvData.Size = new Size(675, 221);
             dgvData.TabIndex = 7;
             dgvData.CellDoubleClick += DgvCard_CellDoubleClick;
-            // 
-            // Column2
-            // 
-            Column2.HeaderText = "STT";
-            Column2.Name = "Column2";
-            Column2.ReadOnly = true;
-            Column2.Width = 76;
-            // 
-            // Column3
-            // 
-            Column3.HeaderText = "Tên";
-            Column3.Name = "Column3";
-            Column3.ReadOnly = true;
-            Column3.Width = 74;
-            // 
-            // Column6
-            // 
-            Column6.HeaderText = "Mã";
-            Column6.Name = "Column6";
-            Column6.ReadOnly = true;
-            Column6.Width = 71;
-            // 
-            // Column4
-            // 
-            Column4.HeaderText = "Loại";
-            Column4.Name = "Column4";
-            Column4.ReadOnly = true;
-            Column4.Width = 80;
-            // 
-            // Column1
-            // 
-            Column1.HeaderText = "ID";
-            Column1.Name = "Column1";
-            Column1.ReadOnly = true;
-            Column1.Visible = false;
-            Column1.Width = 63;
             // 
             // btnSearch
             // 
@@ -217,6 +182,49 @@ namespace iParkingv5_window.Forms.DataForms
             lblGuide.Text = "Enter để tìm kiếm.\r\nKích đúp chuột hoặc bấm xác nhận để chọn định danh.";
             lblGuide.TextAlign = ContentAlignment.MiddleLeft;
             // 
+            // Column2
+            // 
+            Column2.HeaderText = "STT";
+            Column2.Name = "Column2";
+            Column2.ReadOnly = true;
+            Column2.Width = 76;
+            // 
+            // Column3
+            // 
+            Column3.HeaderText = "Tên";
+            Column3.Name = "Column3";
+            Column3.ReadOnly = true;
+            Column3.Width = 74;
+            // 
+            // Column6
+            // 
+            Column6.HeaderText = "Mã";
+            Column6.Name = "Column6";
+            Column6.ReadOnly = true;
+            Column6.Width = 71;
+            // 
+            // Column4
+            // 
+            Column4.HeaderText = "Loại";
+            Column4.Name = "Column4";
+            Column4.ReadOnly = true;
+            Column4.Width = 80;
+            // 
+            // col_identity_group_id
+            // 
+            col_identity_group_id.HeaderText = "Nhóm";
+            col_identity_group_id.Name = "col_identity_group_id";
+            col_identity_group_id.ReadOnly = true;
+            col_identity_group_id.Width = 98;
+            // 
+            // Column1
+            // 
+            Column1.HeaderText = "ID";
+            Column1.Name = "Column1";
+            Column1.ReadOnly = true;
+            Column1.Visible = false;
+            Column1.Width = 63;
+            // 
             // frmSelectCard
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -241,15 +249,16 @@ namespace iParkingv5_window.Forms.DataForms
         private DataGridView dgvData;
         private TextBox txtIdentity;
         private Label lblCardNumber;
-        private DataGridViewTextBoxColumn Column2;
-        private DataGridViewTextBoxColumn Column3;
-        private DataGridViewTextBoxColumn Column6;
-        private DataGridViewTextBoxColumn Column4;
-        private DataGridViewTextBoxColumn Column1;
         private LblCancel btnCancel;
         private BtnOk btnSelectCard;
         private BtnSearch btnSearch;
         private Panel panelData;
         private Label lblGuide;
+        private DataGridViewTextBoxColumn Column2;
+        private DataGridViewTextBoxColumn Column3;
+        private DataGridViewTextBoxColumn Column6;
+        private DataGridViewTextBoxColumn Column4;
+        private DataGridViewTextBoxColumn col_identity_group_id;
+        private DataGridViewTextBoxColumn Column1;
     }
 }

@@ -29,7 +29,9 @@
         private void InitializeComponent()
         {
             groupBox2 = new GroupBox();
+            txtScope = new TextBox();
             txtParkingServerUrl = new TextBox();
+            lblScope = new Label();
             label2 = new Label();
             groupBox1 = new GroupBox();
             label1 = new Label();
@@ -39,21 +41,25 @@
             txtMinioServerUsername = new TextBox();
             label4 = new Label();
             groupBox3 = new GroupBox();
+            label12 = new Label();
+            label11 = new Label();
             label5 = new Label();
             txtRabbitMqServer = new TextBox();
+            txtRabbitMQRoutingKey = new TextBox();
+            txtRabbitMQExchangeName = new TextBox();
             txtRabbitMQPassword = new TextBox();
             label6 = new Label();
             txtRabbitMQUsername = new TextBox();
             label7 = new Label();
             groupBox4 = new GroupBox();
+            label13 = new Label();
             label8 = new Label();
             txtMQTTServer = new TextBox();
+            txtMQTTTopic = new TextBox();
             txtMQTTPassword = new TextBox();
             label9 = new Label();
             txtMQTTUsername = new TextBox();
             label10 = new Label();
-            lblScope = new Label();
-            txtScope = new TextBox();
             groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -77,6 +83,16 @@
             groupBox2.TabStop = false;
             groupBox2.Text = "Thông tin Parking Server";
             // 
+            // txtScope
+            // 
+            txtScope.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtScope.Location = new Point(166, 56);
+            txtScope.Margin = new Padding(4, 3, 4, 3);
+            txtScope.Name = "txtScope";
+            txtScope.PlaceholderText = "Scope";
+            txtScope.Size = new Size(513, 29);
+            txtScope.TabIndex = 1;
+            // 
             // txtParkingServerUrl
             // 
             txtParkingServerUrl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -86,6 +102,16 @@
             txtParkingServerUrl.PlaceholderText = "Url của server";
             txtParkingServerUrl.Size = new Size(513, 29);
             txtParkingServerUrl.TabIndex = 1;
+            // 
+            // lblScope
+            // 
+            lblScope.AutoSize = true;
+            lblScope.Location = new Point(6, 54);
+            lblScope.Margin = new Padding(4, 0, 4, 0);
+            lblScope.Name = "lblScope";
+            lblScope.Size = new Size(52, 21);
+            lblScope.TabIndex = 2;
+            lblScope.Text = "Scope";
             // 
             // label2
             // 
@@ -181,8 +207,12 @@
             // groupBox3
             // 
             groupBox3.AutoSize = true;
+            groupBox3.Controls.Add(label12);
+            groupBox3.Controls.Add(label11);
             groupBox3.Controls.Add(label5);
             groupBox3.Controls.Add(txtRabbitMqServer);
+            groupBox3.Controls.Add(txtRabbitMQRoutingKey);
+            groupBox3.Controls.Add(txtRabbitMQExchangeName);
             groupBox3.Controls.Add(txtRabbitMQPassword);
             groupBox3.Controls.Add(label6);
             groupBox3.Controls.Add(txtRabbitMQUsername);
@@ -192,10 +222,30 @@
             groupBox3.Margin = new Padding(4, 3, 4, 3);
             groupBox3.Name = "groupBox3";
             groupBox3.Padding = new Padding(4, 3, 4, 3);
-            groupBox3.Size = new Size(703, 147);
+            groupBox3.Size = new Size(703, 217);
             groupBox3.TabIndex = 7;
             groupBox3.TabStop = false;
             groupBox3.Text = "Thông tin Rabbit MQ Server";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(6, 163);
+            label12.Margin = new Padding(4, 0, 4, 0);
+            label12.Name = "label12";
+            label12.Size = new Size(93, 21);
+            label12.TabIndex = 6;
+            label12.Text = "Routing key";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(6, 128);
+            label11.Margin = new Padding(4, 0, 4, 0);
+            label11.Name = "label11";
+            label11.Size = new Size(102, 21);
+            label11.TabIndex = 6;
+            label11.Text = "Tên Exchange";
             // 
             // label5
             // 
@@ -213,9 +263,29 @@
             txtRabbitMqServer.Location = new Point(166, 21);
             txtRabbitMqServer.Margin = new Padding(4, 3, 4, 3);
             txtRabbitMqServer.Name = "txtRabbitMqServer";
-            txtRabbitMqServer.PlaceholderText = "Địa chỉ IP của Server";
+            txtRabbitMqServer.PlaceholderText = "Địa chỉ IP của Server, không cần điền http:// và port";
             txtRabbitMqServer.Size = new Size(513, 29);
             txtRabbitMqServer.TabIndex = 1;
+            // 
+            // txtRabbitMQRoutingKey
+            // 
+            txtRabbitMQRoutingKey.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtRabbitMQRoutingKey.Location = new Point(166, 160);
+            txtRabbitMQRoutingKey.Margin = new Padding(4, 3, 4, 3);
+            txtRabbitMQRoutingKey.Name = "txtRabbitMQRoutingKey";
+            txtRabbitMQRoutingKey.PlaceholderText = "Routing key";
+            txtRabbitMQRoutingKey.Size = new Size(513, 29);
+            txtRabbitMQRoutingKey.TabIndex = 5;
+            // 
+            // txtRabbitMQExchangeName
+            // 
+            txtRabbitMQExchangeName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtRabbitMQExchangeName.Location = new Point(167, 125);
+            txtRabbitMQExchangeName.Margin = new Padding(4, 3, 4, 3);
+            txtRabbitMQExchangeName.Name = "txtRabbitMQExchangeName";
+            txtRabbitMQExchangeName.PlaceholderText = "Exchange name";
+            txtRabbitMQExchangeName.Size = new Size(513, 29);
+            txtRabbitMQExchangeName.TabIndex = 4;
             // 
             // txtRabbitMQPassword
             // 
@@ -262,21 +332,33 @@
             // groupBox4
             // 
             groupBox4.AutoSize = true;
+            groupBox4.Controls.Add(label13);
             groupBox4.Controls.Add(label8);
             groupBox4.Controls.Add(txtMQTTServer);
+            groupBox4.Controls.Add(txtMQTTTopic);
             groupBox4.Controls.Add(txtMQTTPassword);
             groupBox4.Controls.Add(label9);
             groupBox4.Controls.Add(txtMQTTUsername);
             groupBox4.Controls.Add(label10);
             groupBox4.Dock = DockStyle.Top;
-            groupBox4.Location = new Point(0, 407);
+            groupBox4.Location = new Point(0, 477);
             groupBox4.Margin = new Padding(4, 3, 4, 3);
             groupBox4.Name = "groupBox4";
             groupBox4.Padding = new Padding(4, 3, 4, 3);
-            groupBox4.Size = new Size(703, 147);
+            groupBox4.Size = new Size(703, 182);
             groupBox4.TabIndex = 8;
             groupBox4.TabStop = false;
             groupBox4.Text = "Thông tin MQTT";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(6, 128);
+            label13.Margin = new Padding(4, 0, 4, 0);
+            label13.Name = "label13";
+            label13.Size = new Size(45, 21);
+            label13.TabIndex = 6;
+            label13.Text = "Topic";
             // 
             // label8
             // 
@@ -297,6 +379,17 @@
             txtMQTTServer.PlaceholderText = "Địa chỉ IP của Server";
             txtMQTTServer.Size = new Size(512, 29);
             txtMQTTServer.TabIndex = 1;
+            // 
+            // txtMQTTTopic
+            // 
+            txtMQTTTopic.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtMQTTTopic.Location = new Point(166, 125);
+            txtMQTTTopic.Margin = new Padding(4, 3, 4, 3);
+            txtMQTTTopic.Name = "txtMQTTTopic";
+            txtMQTTTopic.PlaceholderText = "# - đại diện cho tất cả";
+            txtMQTTTopic.Size = new Size(512, 29);
+            txtMQTTTopic.TabIndex = 4;
+            txtMQTTTopic.UseSystemPasswordChar = true;
             // 
             // txtMQTTPassword
             // 
@@ -340,26 +433,6 @@
             label10.TabIndex = 2;
             label10.Text = "Url";
             // 
-            // lblScope
-            // 
-            lblScope.AutoSize = true;
-            lblScope.Location = new Point(6, 54);
-            lblScope.Margin = new Padding(4, 0, 4, 0);
-            lblScope.Name = "lblScope";
-            lblScope.Size = new Size(52, 21);
-            lblScope.TabIndex = 2;
-            lblScope.Text = "Scope";
-            // 
-            // txtScope
-            // 
-            txtScope.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtScope.Location = new Point(166, 56);
-            txtScope.Margin = new Padding(4, 3, 4, 3);
-            txtScope.Name = "txtScope";
-            txtScope.PlaceholderText = "Scope";
-            txtScope.Size = new Size(513, 29);
-            txtScope.TabIndex = 1;
-            // 
             // ucServerConfig
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -372,7 +445,7 @@
             Font = new Font("Segoe UI", 12F);
             Margin = new Padding(4, 3, 4, 3);
             Name = "ucServerConfig";
-            Size = new Size(703, 529);
+            Size = new Size(703, 673);
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             groupBox1.ResumeLayout(false);
@@ -413,5 +486,11 @@
         private Label label10;
         private TextBox txtScope;
         private Label lblScope;
+        private Label label12;
+        private Label label11;
+        private TextBox txtRabbitMQRoutingKey;
+        private TextBox txtRabbitMQExchangeName;
+        private Label label13;
+        private TextBox txtMQTTTopic;
     }
 }

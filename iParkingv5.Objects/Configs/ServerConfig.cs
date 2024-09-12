@@ -17,10 +17,13 @@ namespace iParkingv5.Objects.Configs
         public string RabbitMqUrl { get; set; }
         public string RabbitMqUsername { get; set; }
         public string RabbitMqPassword { get; set; }
+        public string RabbitMQExchangeName { get; set; }
+        public string RabbitMQRoutingKey { get; set; }
 
         //Thông tin MQTT Server
         public string MQTTUrl { get; set; }
         public string MQTTUsername { get; set; }
         public string MQTTPassword { get; set; }
+        public string MQTTTopic { get; set; } = "#";
     }
 }

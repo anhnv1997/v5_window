@@ -1,9 +1,12 @@
 ﻿using IPaking.Ultility;
 using iPakrkingv5.Controls.Controls.Buttons;
 using iParkingv5.Objects;
+using iParkingv5.Objects.Configs;
 using iParkingv5.Objects.Datas.Device_service;
 using iParkingv5_window.Forms.DataForms;
+using iParkingv5_window.Usercontrols;
 using Kztek.Tool;
+using static iParkingv5.Objects.Configs.AppViewModeConfig;
 
 namespace iParkingv5_window.Forms.SystemForms
 {
@@ -20,6 +23,17 @@ namespace iParkingv5_window.Forms.SystemForms
             InitializeComponent();
             this.Load += FrmSelectLaneMode_Load;
             this.FormClosing += FrmSelectLaneMode_FormClosing;
+
+            ucViewMode1.RowCount = StaticPool.appViewModeConfig.RowCount;
+            ucViewMode1.ColumnCount = StaticPool.appViewModeConfig.ColumnCount;
+            ucViewMode1.ViewMode = (EmAppViewMode)StaticPool.appViewModeConfig.ViewMode;
+            ucViewMode1.onEdit += UcViewMode1_onEdit;
+        }
+
+        private void UcViewMode1_onEdit(object sender, EventArgs e)
+        {
+            timer1.Enabled = false;
+            lblStatus.Visible = false;
         }
 
         private void FrmSelectLaneMode_FormClosing(object? sender, FormClosingEventArgs e)
@@ -44,13 +58,13 @@ namespace iParkingv5_window.Forms.SystemForms
                                        this.DisplayRectangle.Height - btnOk.Height - TextManagement.ROOT_SIZE);
             btnOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
 
-            panelActiveLanes.Location = new Point(lblTitle.Location.X, chbSelectAll.Location.Y + chbSelectAll.Height + TextManagement.ROOT_SIZE);
-            panelActiveLanes.Width = this.DisplayRectangle.Width - TextManagement.ROOT_SIZE * 2;
-            panelActiveLanes.Height = btnOk.Location.Y - panelActiveLanes.Location.Y - TextManagement.ROOT_SIZE;
-            panelActiveLanes.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
+            panel1.Location = new Point(lblTitle.Location.X, chbSelectAll.Location.Y + chbSelectAll.Height + TextManagement.ROOT_SIZE);
+            panel1.Width = this.DisplayRectangle.Width - TextManagement.ROOT_SIZE * 2;
+            panel1.Height = btnOk.Location.Y - panel1.Location.Y - TextManagement.ROOT_SIZE;
+            panel1.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
             panelActiveLanes.AutoScroll = true;
 
-           List<string> activeLaneIds = NewtonSoftHelper<List<string>>.DeserializeObjectFromPath(PathManagement.appActiveLaneConfigPath()) ?? new List<string>();
+            List<string> activeLaneIds = NewtonSoftHelper<List<string>>.DeserializeObjectFromPath(PathManagement.appActiveLaneConfigPath()) ?? new List<string>();
             for (int i = 0; i < StaticPool.lanes.Count; i++)
             {
                 CheckBox chb = new CheckBox();
@@ -110,6 +124,11 @@ namespace iParkingv5_window.Forms.SystemForms
         {
             this.FormClosing -= FrmSelectLaneMode_FormClosing;
 
+            StaticPool.appViewModeConfig.ViewMode = (int)ucViewMode1.ViewMode;
+            StaticPool.appViewModeConfig.RowCount = (int)ucViewMode1.RowCount;
+            StaticPool.appViewModeConfig.ColumnCount = (int)ucViewMode1.ColumnCount;
+            NewtonSoftHelper<AppViewModeConfig>.SaveConfig(StaticPool.appViewModeConfig, PathManagement.appViewModeConfigPath());
+
             timer1.Enabled = false;
             lblStatus.Visible = false;
 
@@ -155,7 +174,7 @@ namespace iParkingv5_window.Forms.SystemForms
         private void timer1_Tick(object sender, EventArgs e)
         {
             waitTimes++;
-            if (waitTimes >= 10)
+            if (waitTimes >= 60)
             {
                 timer1.Enabled = false;
                 lblStatus.Visible = false;
@@ -163,7 +182,7 @@ namespace iParkingv5_window.Forms.SystemForms
             }
             else
             {
-                lblStatus.Text = $"Tự động mở giao diện phần mềm sau {10 - waitTimes} s";
+                lblStatus.Text = $"Tự động mở giao diện phần mềm sau {60 - waitTimes} s";
             }
         }
         #endregion End Timer

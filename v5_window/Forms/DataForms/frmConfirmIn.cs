@@ -23,7 +23,7 @@ namespace iParkingv5_window.Forms.DataForms
             lblMessage.Height = lblMessage.PreferredHeight;
             updatePlate = plateNumber;
 
-            txtDetectPlate.Message = plateNumber;
+            txtDetectPlate.Text = plateNumber;
             lblRegisterPlate.Message = vehicle?.PlateNumber ?? "";
             lblTimeIn.Message = DateTime.Now.ToVNTime();
             lblIdentityCode.Message = identity?.Name ?? "";

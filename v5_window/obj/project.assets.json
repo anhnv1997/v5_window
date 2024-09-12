@@ -1009,7 +1009,7 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
-      "IPaking.Ultility/1.0.0.2": {
+      "IPaking.Ultility/1.0.0.3": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "compile": {
@@ -1023,7 +1023,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "IPaking.Ultility": "1.0.0.2"
+          "IPaking.Ultility": "1.0.0.3"
         },
         "compile": {
           "bin/placeholder/iPakrkingv5.Controls.dll": {}
@@ -1039,7 +1039,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "IPaking.Ultility": "1.0.0.2",
+          "IPaking.Ultility": "1.0.0.3",
           "Kztek.Scale_net6": "1.0.0.10",
           "iParkingv5.ApiManager": "6.0.0.1",
           "iParkingv5.Controller": "1.0.0.2"
@@ -1062,7 +1062,7 @@
           "Kztek.Tool": "1.0.0.2",
           "Newtonsoft.Json": "13.0.3",
           "RestSharp": "110.2.0",
-          "iParkingv5.Objects": "6.0.0.1"
+          "iParkingv5.Objects": "6.0.0.2"
         },
         "compile": {
           "bin/placeholder/iParkingv5.ApiManager.dll": {}
@@ -1075,7 +1075,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "IPaking.Ultility": "1.0.0.2",
+          "IPaking.Ultility": "1.0.0.3",
           "IdentityModel": "7.0.0",
           "IdentityModel.OidcClient": "6.0.0",
           "Kztek.Helper": "1.0.0",
@@ -1084,7 +1084,7 @@
           "Minio": "5.0.0",
           "iPakrkingv5.Controls": "1.0.0.1",
           "iParkingv5.ApiManager": "6.0.0.1",
-          "iParkingv5.Objects": "6.0.0.1"
+          "iParkingv5.Objects": "6.0.0.2"
         },
         "compile": {
           "bin/placeholder/iParkingv5.Auth.dll": {}
@@ -1102,7 +1102,7 @@
         "dependencies": {
           "Kztek.Tool": "1.0.0.2",
           "System.IO.Ports": "8.0.0",
-          "iParkingv5.Objects": "6.0.0.1"
+          "iParkingv5.Objects": "6.0.0.2"
         },
         "compile": {
           "bin/placeholder/iParkingv5.Controller.dll": {}
@@ -1140,7 +1140,7 @@
         "dependencies": {
           "Kztek.Tool": "1.0.0.2",
           "iParkingv5.Lpr": "1.0.0.1",
-          "iParkingv5.Objects": "6.0.0.1"
+          "iParkingv5.Objects": "6.0.0.2"
         },
         "compile": {
           "bin/placeholder/iParkingv5.LedDisplay.dll": {}
@@ -1156,7 +1156,7 @@
           "Newtonsoft.Json": "13.0.3",
           "OpenCvSharp4": "4.10.0.20240616",
           "System.Drawing.Common": "8.0.7",
-          "iParkingv5.Objects": "6.0.0.1"
+          "iParkingv5.Objects": "6.0.0.2"
         },
         "compile": {
           "bin/placeholder/iParkingv5.Lpr.dll": {}
@@ -1165,7 +1165,7 @@
           "bin/placeholder/iParkingv5.Lpr.dll": {}
         }
       },
-      "iParkingv5.Objects/6.0.0.1": {
+      "iParkingv5.Objects/6.0.0.2": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
@@ -1185,10 +1185,10 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "IPaking.Ultility": "1.0.0.2",
+          "IPaking.Ultility": "1.0.0.3",
           "Kztek.Tool": "1.0.0.2",
           "QRCoder": "1.6.0",
-          "iParkingv5.Objects": "6.0.0.1"
+          "iParkingv5.Objects": "6.0.0.2"
         },
         "compile": {
           "bin/placeholder/iParkingv5.Printer.dll": {}
@@ -1208,7 +1208,7 @@
           "Kztek.Tool": "1.0.0.2",
           "iPakrkingv5.Controls": "1.0.0.1",
           "iParkingv5.ApiManager": "6.0.0.1",
-          "iParkingv5.Objects": "6.0.0.1",
+          "iParkingv5.Objects": "6.0.0.2",
           "iParkingv5.Printer": "6.0.0.1"
         },
         "compile": {
@@ -2969,7 +2969,7 @@
         "version.txt"
       ]
     },
-    "IPaking.Ultility/1.0.0.2": {
+    "IPaking.Ultility/1.0.0.3": {
       "type": "project",
       "path": "../IPaking.Ultility/IPaking.Ultility.csproj",
       "msbuildProject": "../IPaking.Ultility/IPaking.Ultility.csproj"
@@ -3014,7 +3014,7 @@
       "path": "../iParkingv5.Lpr/iParkingv5.Lpr.csproj",
       "msbuildProject": "../iParkingv5.Lpr/iParkingv5.Lpr.csproj"
     },
-    "iParkingv5.Objects/6.0.0.1": {
+    "iParkingv5.Objects/6.0.0.2": {
       "type": "project",
       "path": "../iParkingv5.Objects/iParkingv5.Objects.csproj",
       "msbuildProject": "../iParkingv5.Objects/iParkingv5.Objects.csproj"
@@ -3057,7 +3057,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0-windows7.0": [
-      "IPaking.Ultility >= 1.0.0.2",
+      "IPaking.Ultility >= 1.0.0.3",
       "IdentityModel >= 7.0.0",
       "IdentityModel.OidcClient >= 6.0.0",
       "Kztek.Cameras >= 1.0.0.2",
@@ -3079,7 +3079,7 @@
       "iParkingv5.FeeTest >= 1.0.0",
       "iParkingv5.LedDisplay >= 1.0.0.1",
       "iParkingv5.Lpr >= 1.0.0.1",
-      "iParkingv5.Objects >= 6.0.0.1",
+      "iParkingv5.Objects >= 6.0.0.2",
       "iParkingv5.Printer >= 6.0.0.1",
       "iParkingv5.Reporting >= 1.0.0"
     ]
@@ -3090,7 +3090,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "6.0.0.1",
+    "version": "6.0.0.4",
     "restore": {
       "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\v5_window\\iParkingv5_window.csproj",
       "projectName": "iParkingv5_window",

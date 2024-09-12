@@ -144,11 +144,39 @@ namespace iParkingv5_window.Usercontrols
                 Control control = table.GetControlFromPosition(i, 0);
                 if (control is ucLaneIn)
                 {
-                    table.ColumnStyles[i] = new ColumnStyle(SizeType.Percent, 40);
+                    try
+                    {
+                        table.ColumnStyles[i] = new ColumnStyle(SizeType.Percent, 40);
+                    }
+                    catch (Exception)
+                    {
+                        try
+                        {
+                            table.RowStyles[i] = new RowStyle(SizeType.Percent, 40);
+                        }
+                        catch (Exception)
+                        {
+
+                        }
+                    }
                 }
                 else
                 {
-                    table.ColumnStyles[i] = new ColumnStyle(SizeType.Percent, 60);
+                    try
+                    {
+                        table.ColumnStyles[i] = new ColumnStyle(SizeType.Percent, 60);
+                    }
+                    catch (Exception)
+                    {
+                        try
+                        {
+                            table.RowStyles[i] = new RowStyle(SizeType.Percent, 60);
+                        }
+                        catch (Exception)
+                        {
+
+                        }
+                    }
                 }
             }
             this.ResumeLayout();

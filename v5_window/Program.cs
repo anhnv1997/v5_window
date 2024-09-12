@@ -189,6 +189,9 @@ namespace v6_window
                 MessageBox.Show("LoadServer2: " + ex.Message + "\r\n" + ex.InnerException?.Message);
             }
 
+            StaticPool.appViewModeConfig = NewtonSoftHelper<AppViewModeConfig>.DeserializeObjectFromPath(PathManagement.appViewModeConfigPath()) ?? new AppViewModeConfig();
+
+
         }
         private static void CheckForUpdate()
         {

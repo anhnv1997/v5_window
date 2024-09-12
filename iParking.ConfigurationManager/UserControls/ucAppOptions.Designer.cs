@@ -30,11 +30,14 @@
         {
             groupBox2 = new GroupBox();
             chbDisplayCustomer = new CheckBox();
+            chbDisplayStatusBar = new CheckBox();
             chbIsCheckKey = new CheckBox();
             chbIsUseInvoice = new CheckBox();
             chbIsIntergratedScaleStation = new CheckBox();
+            numLogKeepDays = new NumericUpDown();
             numRetakePhotoDelayTime = new NumericUpDown();
             numRetakePhotoTurn = new NumericUpDown();
+            label17 = new Label();
             label12 = new Label();
             chbIsAllowEditPlateOut = new CheckBox();
             chbIsSaveLog = new CheckBox();
@@ -52,26 +55,25 @@
             cbPrintTemplate = new ComboBox();
             txtUpdatePath = new TextBox();
             txtWaitSwipeCardTime = new TextBox();
+            label16 = new Label();
             label15 = new Label();
             txtAllowOpenBarrieTime = new TextBox();
             label5 = new Label();
             label1 = new Label();
             label2 = new Label();
-            label16 = new Label();
-            numLogKeepDays = new NumericUpDown();
-            label17 = new Label();
             groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numLogKeepDays).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoDelayTime).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoTurn).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numAutoReturnDialogTime).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numLoopDelay).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numLogKeepDays).BeginInit();
             SuspendLayout();
             // 
             // groupBox2
             // 
             groupBox2.AutoSize = true;
             groupBox2.Controls.Add(chbDisplayCustomer);
+            groupBox2.Controls.Add(chbDisplayStatusBar);
             groupBox2.Controls.Add(chbIsCheckKey);
             groupBox2.Controls.Add(chbIsUseInvoice);
             groupBox2.Controls.Add(chbIsIntergratedScaleStation);
@@ -107,7 +109,7 @@
             groupBox2.Margin = new Padding(4, 3, 4, 3);
             groupBox2.Name = "groupBox2";
             groupBox2.Padding = new Padding(4, 3, 4, 3);
-            groupBox2.Size = new Size(742, 604);
+            groupBox2.Size = new Size(742, 637);
             groupBox2.TabIndex = 5;
             groupBox2.TabStop = false;
             groupBox2.Text = "Tùy chọn";
@@ -122,10 +124,21 @@
             chbDisplayCustomer.Text = "Hiển thị thông tin khách hàng";
             chbDisplayCustomer.UseVisualStyleBackColor = true;
             // 
+            // chbDisplayStatusBar
+            // 
+            chbDisplayStatusBar.AutoSize = true;
+            chbDisplayStatusBar.Location = new Point(246, 550);
+            chbDisplayStatusBar.Margin = new Padding(4);
+            chbDisplayStatusBar.Name = "chbDisplayStatusBar";
+            chbDisplayStatusBar.Size = new Size(198, 25);
+            chbDisplayStatusBar.TabIndex = 14;
+            chbDisplayStatusBar.Text = "Hiển thị thanh trạng thái";
+            chbDisplayStatusBar.UseVisualStyleBackColor = true;
+            // 
             // chbIsCheckKey
             // 
             chbIsCheckKey.AutoSize = true;
-            chbIsCheckKey.Location = new Point(246, 550);
+            chbIsCheckKey.Location = new Point(246, 583);
             chbIsCheckKey.Margin = new Padding(4);
             chbIsCheckKey.Name = "chbIsCheckKey";
             chbIsCheckKey.Size = new Size(115, 25);
@@ -156,6 +169,16 @@
             chbIsIntergratedScaleStation.Text = "Tích hợp hệ thống cân";
             chbIsIntergratedScaleStation.UseVisualStyleBackColor = true;
             // 
+            // numLogKeepDays
+            // 
+            numLogKeepDays.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            numLogKeepDays.Location = new Point(246, 359);
+            numLogKeepDays.Margin = new Padding(4, 3, 4, 3);
+            numLogKeepDays.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            numLogKeepDays.Name = "numLogKeepDays";
+            numLogKeepDays.Size = new Size(437, 29);
+            numLogKeepDays.TabIndex = 5;
+            // 
             // numRetakePhotoDelayTime
             // 
             numRetakePhotoDelayTime.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -175,6 +198,16 @@
             numRetakePhotoTurn.Name = "numRetakePhotoTurn";
             numRetakePhotoTurn.Size = new Size(437, 29);
             numRetakePhotoTurn.TabIndex = 4;
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new Point(693, 361);
+            label17.Margin = new Padding(4, 0, 4, 0);
+            label17.Name = "label17";
+            label17.Size = new Size(44, 21);
+            label17.TabIndex = 7;
+            label17.Text = "ngày";
             // 
             // label12
             // 
@@ -351,6 +384,16 @@
             txtWaitSwipeCardTime.Size = new Size(489, 29);
             txtWaitSwipeCardTime.TabIndex = 1;
             // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Location = new Point(8, 361);
+            label16.Margin = new Padding(4, 0, 4, 0);
+            label16.Name = "label16";
+            label16.Size = new Size(103, 21);
+            label16.TabIndex = 2;
+            label16.Text = "Giữ log tối đa";
+            // 
             // label15
             // 
             label15.AutoSize = true;
@@ -401,36 +444,6 @@
             label2.TabIndex = 2;
             label2.Text = "Thời gian cho phép mở barrie";
             // 
-            // label16
-            // 
-            label16.AutoSize = true;
-            label16.Location = new Point(8, 361);
-            label16.Margin = new Padding(4, 0, 4, 0);
-            label16.Name = "label16";
-            label16.Size = new Size(103, 21);
-            label16.TabIndex = 2;
-            label16.Text = "Giữ log tối đa";
-            // 
-            // numLogKeepDays
-            // 
-            numLogKeepDays.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            numLogKeepDays.Location = new Point(246, 359);
-            numLogKeepDays.Margin = new Padding(4, 3, 4, 3);
-            numLogKeepDays.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-            numLogKeepDays.Name = "numLogKeepDays";
-            numLogKeepDays.Size = new Size(437, 29);
-            numLogKeepDays.TabIndex = 5;
-            // 
-            // label17
-            // 
-            label17.AutoSize = true;
-            label17.Location = new Point(693, 361);
-            label17.Margin = new Padding(4, 0, 4, 0);
-            label17.Name = "label17";
-            label17.Size = new Size(44, 21);
-            label17.TabIndex = 7;
-            label17.Text = "ngày";
-            // 
             // ucAppOptions
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -440,14 +453,14 @@
             Font = new Font("Segoe UI", 12F);
             Margin = new Padding(4, 3, 4, 3);
             Name = "ucAppOptions";
-            Size = new Size(742, 601);
+            Size = new Size(742, 620);
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numLogKeepDays).EndInit();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoDelayTime).EndInit();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoTurn).EndInit();
             ((System.ComponentModel.ISupportInitialize)numAutoReturnDialogTime).EndInit();
             ((System.ComponentModel.ISupportInitialize)numLoopDelay).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numLogKeepDays).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -490,5 +503,6 @@
         private NumericUpDown numLogKeepDays;
         private Label label17;
         private Label label16;
+        private CheckBox chbDisplayStatusBar;
     }
 }

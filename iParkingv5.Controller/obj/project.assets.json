@@ -643,7 +643,7 @@
           "buildTransitive/net6.0/System.Text.Json.targets": {}
         }
       },
-      "iParkingv5.Objects/6.0.0.1": {
+      "iParkingv5.Objects/6.0.0.2": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
@@ -1691,7 +1691,7 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "iParkingv5.Objects/6.0.0.1": {
+    "iParkingv5.Objects/6.0.0.2": {
       "type": "project",
       "path": "../iParkingv5.Objects/iParkingv5.Objects.csproj",
       "msbuildProject": "../iParkingv5.Objects/iParkingv5.Objects.csproj"
@@ -1706,7 +1706,7 @@
     "net6.0-windows7.0": [
       "Kztek.Tool >= 1.0.0.2",
       "System.IO.Ports >= 8.0.0",
-      "iParkingv5.Objects >= 6.0.0.1"
+      "iParkingv5.Objects >= 6.0.0.2"
     ]
   },
   "packageFolders": {

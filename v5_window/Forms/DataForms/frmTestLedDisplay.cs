@@ -4,6 +4,7 @@ namespace iParkingv5_window.Forms.DataForms
 {
     public partial class frmTestLedDisplay : Form
     {
+        #region Properties
         public ParkingData TestData
         {
             get
@@ -19,17 +20,27 @@ namespace iParkingv5_window.Forms.DataForms
                 return new ParkingData(cardNumber, cardNo, cardType, eventStatus, plate, datetimeIn, datetimeOut, money);
             }
         }
+        #endregion
+
+        #region Controls In Form
         public frmTestLedDisplay()
         {
             InitializeComponent();
             this.Load += FrmTestLedDisplay_Load;
         }
-
         private void FrmTestLedDisplay_Load(object? sender, EventArgs e)
         {
             btnOk1.InitControl(BtnOk1_Click);
             btnCancel1.InitControl(BtnCancel1_Click);
+
+            btnCancel1.Location = new Point(this.DisplayRectangle.Width - btnCancel1.Width - 3, this.DisplayRectangle.Height - btnCancel1.Height - 3);
+            btnOk1.Location = new Point(btnCancel1.Location.X - btnOk1.Width - 3, btnCancel1.Location.Y);
+
+            this.ActiveControl = btnOk1;
         }
+        #endregion
+
+        #region Forms
         private void BtnOk1_Click(object? sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
@@ -38,10 +49,6 @@ namespace iParkingv5_window.Forms.DataForms
         {
             this.DialogResult = DialogResult.Cancel;
         }
-
-        private void btnOk1_Click_1(object sender, EventArgs e)
-        {
-
-        }
+        #endregion
     }
 }

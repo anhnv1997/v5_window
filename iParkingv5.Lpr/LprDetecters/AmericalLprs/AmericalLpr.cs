@@ -47,43 +47,51 @@ namespace iParkingv5.Lpr.LprDetecters.AmericalLprs
 
         public string GetPlateNumber(Image? originalImage, bool isCar, Rectangle? detectRegion, out Image? lprImage)
         {
-            LicensePlateCollection licensePlateList = new LicensePlateCollection();
-            lprImage = null;
-            if (originalImage == null)
+            try
             {
-                return string.Empty;
-            }
-            Bitmap bitmapCut = detectRegion != null ? CropBitmap((Bitmap)originalImage, (Rectangle)detectRegion!) : (Bitmap)originalImage;
-
-            //Bitmap detectBitmap = bitmapCut.Clone(new Rectangle(0, 0, originalImage.Width, originalImage.Height), PixelFormat.Format24bppRgb);
-
-            MemoryStream ms = new MemoryStream();
-            bitmapCut.Save(ms, ImageFormat.Jpeg);
-            byte[] bytearray = ms.ToArray();
-
-            PlateReaderResult plateReaderResult = Read(lprConfig.Url, bytearray, "");
-
-            licensePlateList = GetBestResult(plateReaderResult, bitmapCut);
-            if (licensePlateList.Count > 0)
-            {
-                lprImage = licensePlateList[0].Bitmap;
-                onLprDetectCompleteEvent?.Invoke(this, new Events.LprDetectEventArgs()
+                LicensePlateCollection licensePlateList = new LicensePlateCollection();
+                lprImage = null;
+                if (originalImage == null)
                 {
-                    LprImage = licensePlateList[0].Bitmap,
-                    OriginalImage = originalImage,
-                    Result = licensePlateList[0].Text,
-                });
-                return licensePlateList[0].Text;
-            }
-            else
-            {
-                onLprDetectCompleteEvent?.Invoke(this, new Events.LprDetectEventArgs()
+                    return string.Empty;
+                }
+                Bitmap bitmapCut = detectRegion != null ? CropBitmap((Bitmap)originalImage, (Rectangle)detectRegion!) : (Bitmap)originalImage;
+
+                //Bitmap detectBitmap = bitmapCut.Clone(new Rectangle(0, 0, originalImage.Width, originalImage.Height), PixelFormat.Format24bppRgb);
+
+                MemoryStream ms = new MemoryStream();
+                bitmapCut.Save(ms, ImageFormat.Jpeg);
+                byte[] bytearray = ms.ToArray();
+
+                PlateReaderResult plateReaderResult = Read(lprConfig.Url, bytearray, "");
+
+                licensePlateList = GetBestResult(plateReaderResult, bitmapCut);
+                if (licensePlateList.Count > 0)
                 {
-                    LprImage = null,
-                    OriginalImage = originalImage,
-                    Result = "",
-                });
-                return string.Empty;
+                    lprImage = licensePlateList[0].Bitmap;
+                    onLprDetectCompleteEvent?.Invoke(this, new Events.LprDetectEventArgs()
+                    {
+                        LprImage = licensePlateList[0].Bitmap,
+                        OriginalImage = originalImage,
+                        Result = licensePlateList[0].Text,
+                    });
+                    return licensePlateList[0].Text;
+                }
+                else
+                {
+                    onLprDetectCompleteEvent?.Invoke(this, new Events.LprDetectEventArgs()
+                    {
+                        LprImage = null,
+                        OriginalImage = originalImage,
+                        Result = "",
+                    });
+                    return string.Empty;
+                }
+            }
+            catch (Exception)
+            {
+                lprImage = null;
+                return "";
             }
         }
 
@@ -269,7 +277,7 @@ namespace iParkingv5.Lpr.LprDetecters.AmericalLprs
             }
             catch
             {
-                throw;
+                return new LicensePlateCollection();
             }
         }
         static Bitmap CropBitmap(Bitmap source, Rectangle? cutRect)
@@ -290,8 +298,7 @@ namespace iParkingv5.Lpr.LprDetecters.AmericalLprs
             }
             catch (Exception ex)
             {
-
-                throw;
+                return null;
             }
 
         }

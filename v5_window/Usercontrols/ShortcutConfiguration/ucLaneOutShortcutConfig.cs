@@ -27,11 +27,46 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
                                        ?? new LaneOutShortcutConfig();
 
 
-            lblConfirmPlateKey.Text = ((Keys)ShortcutConfig.ConfirmPlateKey).ToString();
-            lblWriteOutKey.Text = ((Keys)ShortcutConfig.WriteOut).ToString();
-            lblReserveLaneKey.Text = ((Keys)ShortcutConfig.ReverseLane).ToString();
-            lblReSnapshotLaneKey.Text = ((Keys)ShortcutConfig.ReSnapshotKey).ToString();
-            lblPrintKey.Text = ((Keys)ShortcutConfig.PrintKey).ToString();
+            if ((Keys)ShortcutConfig.ConfirmPlateKey != Keys.None)
+            {
+                lblConfirmPlateKey.Text = ((Keys)ShortcutConfig.ConfirmPlateKey).ToString();
+            }
+            else
+            {
+                lblConfirmPlateKey.Text = "Hãy cấu hình phím tắt";
+            }
+            if ((Keys)ShortcutConfig.WriteOut != Keys.None)
+            {
+                lblWriteOutKey.Text = ((Keys)ShortcutConfig.WriteOut).ToString();
+            }
+            else
+            {
+                lblWriteOutKey.Text = "Hãy cấu hình phím tắt";
+            }
+            if ((Keys)ShortcutConfig.ReverseLane != Keys.None)
+            {
+                lblReserveLaneKey.Text = ((Keys)ShortcutConfig.ReverseLane).ToString();
+            }
+            else
+            {
+                lblReserveLaneKey.Text = "Hãy cấu hình phím tắt";
+            }
+            if ((Keys)ShortcutConfig.ReSnapshotKey != Keys.None)
+            {
+                lblReSnapshotLaneKey.Text = ((Keys)ShortcutConfig.ReSnapshotKey).ToString();
+            }
+            else
+            {
+                lblReSnapshotLaneKey.Text = "Hãy cấu hình phím tắt";
+            }
+            if ((Keys)ShortcutConfig.PrintKey != Keys.None)
+            {
+                lblPrintKey.Text = ((Keys)ShortcutConfig.PrintKey).ToString();
+            }
+            else
+            {
+                lblPrintKey.Text = "Hãy cấu hình phím tắt";
+            }
 
             picChangeConfirmPlateKey.InitControl(PicChangeConfirmPlateKey_Click);
             picWriteOut.InitControl(PicChangeWriteOutKey_Click);
@@ -50,7 +85,15 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
             if (frm.DialogResult == DialogResult.OK)
             {
                 ShortcutConfig!.ConfirmPlateKey = (int)frm.KeySet;
-                lblConfirmPlateKey.Text = ((Keys)ShortcutConfig.ConfirmPlateKey).ToString();
+
+                if ( frm.KeySet != Keys.None)
+                {
+                    lblConfirmPlateKey.Text = ((Keys)ShortcutConfig.ConfirmPlateKey).ToString();
+                }
+                else
+                {
+                    lblConfirmPlateKey.Text = "Hãy cấu hình phím tắt";
+                }
             }
             frm.Dispose();
         }
@@ -61,7 +104,14 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
             if (frm.DialogResult == DialogResult.OK)
             {
                 ShortcutConfig!.WriteOut = (int)frm.KeySet;
-                lblWriteOutKey.Text = ((Keys)ShortcutConfig.WriteOut).ToString();
+                if (frm.KeySet != Keys.None)
+                {
+                    lblWriteOutKey.Text = ((Keys)ShortcutConfig.WriteOut).ToString();
+                }
+                else
+                {
+                    lblWriteOutKey.Text = "Hãy cấu hình phím tắt";
+                }
             }
         }
         private void PicChangeReserverLane_Click(object? sender, EventArgs e)
@@ -71,7 +121,14 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
             if (frm.DialogResult == DialogResult.OK)
             {
                 ShortcutConfig!.ReverseLane = (int)frm.KeySet;
-                lblReserveLaneKey.Text = ((Keys)ShortcutConfig.ReverseLane).ToString();
+                if (frm.KeySet != Keys.None)
+                {
+                    lblReserveLaneKey.Text = ((Keys)ShortcutConfig.ReverseLane).ToString();
+                }
+                else
+                {
+                    lblReserveLaneKey.Text = "Hãy cấu hình phím tắt";
+                }
             }
         }
         private void PicReSnapshot_Click(object? sender, EventArgs e)
@@ -81,7 +138,14 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
             if (frm.DialogResult == DialogResult.OK)
             {
                 ShortcutConfig!.ReSnapshotKey = (int)frm.KeySet;
-                lblReSnapshotLaneKey.Text = ((Keys)ShortcutConfig.ReSnapshotKey).ToString();
+                if (frm.KeySet != Keys.None)
+                {
+                    lblReSnapshotLaneKey.Text = ((Keys)ShortcutConfig.ReSnapshotKey).ToString();
+                }
+                else
+                {
+                    lblReSnapshotLaneKey.Text = "Hãy cấu hình phím tắt";
+                }
             }
             frm.Dispose();
         }
@@ -93,7 +157,14 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
             if (frm.DialogResult == DialogResult.OK)
             {
                 ShortcutConfig!.PrintKey = (int)frm.KeySet;
-                lblPrintKey.Text = ((Keys)ShortcutConfig.PrintKey).ToString();
+                if (frm.KeySet != Keys.None)
+                {
+                    lblPrintKey.Text = ((Keys)ShortcutConfig.PrintKey).ToString();
+                }
+                else
+                {
+                    lblPrintKey.Text = "Hãy cấu hình phím tắt";
+                }
             }
             frm.Dispose();
         }

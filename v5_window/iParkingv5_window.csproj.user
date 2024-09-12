@@ -43,7 +43,7 @@
     <Compile Update="Forms\SystemForms\frmLoading.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\SystemForms\frmMainViewDisplayConfig.cs">
+    <Compile Update="Forms\SystemForms\frmOptionViewMode.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\SystemForms\frmSelectLaneMode.cs">
@@ -104,6 +104,9 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Usercontrols\ucCameraView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Usercontrols\ucViewMode.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Usercontrols\ucEventCount.cs">

@@ -41,7 +41,6 @@ namespace iPakrkingv5.Controls.Controls.Labels
             }
         }
 
-
         private string message = string.Empty;
         // Expose properties to design mode
         [Browsable(true)]

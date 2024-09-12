@@ -8,6 +8,7 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
         public int barrieIndex { get; set; }
         public Keys? keySet { get; set; }
         #endregion End Properties
+
         #region Forms
         public ucControllerConfigBarrieItem(int barrieIndex, Keys? keySet)
         {
@@ -22,7 +23,7 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
         {
             picChangeConfig.InitControl(PicChangeConfig_MouseClick);
             lblBarrieName.Text = "Barrie " + this.barrieIndex;
-            if (this.keySet != null)
+            if (this.keySet != null && this.keySet != Keys.None)
             {
                 lblCurrentConfig.Text = this.keySet.ToString();
             }
@@ -41,7 +42,14 @@ namespace iParkingv5_window.Usercontrols.ShortcutConfiguration
             if (frm.DialogResult == DialogResult.OK)
             {
                 this.keySet = frm.KeySet;
-                lblCurrentConfig.Text = frm.KeySet.ToString();
+                if (this.keySet != null && this.keySet != Keys.None)
+                {
+                    lblCurrentConfig.Text = this.keySet.ToString();
+                }
+                else
+                {
+                    lblCurrentConfig.Text = "Hãy cấu hình phím tắt";
+                }
             }
             frm.Dispose();
         }

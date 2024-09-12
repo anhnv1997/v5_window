@@ -32,8 +32,7 @@ namespace iParkingv5.Objects
         public static AppOption appOption = new AppOption();
         public static OEMConfig oemConfig = new OEMConfig();
         public static EInvoiceConfig eInvoiceConfig = new EInvoiceConfig();
-   
-
+        public static AppViewModeConfig appViewModeConfig = new AppViewModeConfig();
 
         public static CustomerGroupCollection customerGroupCollection = new CustomerGroupCollection();
         public static Mdb mdb;

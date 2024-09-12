@@ -656,7 +656,7 @@
           "buildTransitive/net6.0/System.Text.Json.targets": {}
         }
       },
-      "IPaking.Ultility/1.0.0.2": {
+      "IPaking.Ultility/1.0.0.3": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "compile": {
@@ -674,7 +674,7 @@
           "Kztek.Tool": "1.0.0.2",
           "Newtonsoft.Json": "13.0.3",
           "RestSharp": "110.2.0",
-          "iParkingv5.Objects": "6.0.0.1"
+          "iParkingv5.Objects": "6.0.0.2"
         },
         "compile": {
           "bin/placeholder/iParkingv5.ApiManager.dll": {}
@@ -689,7 +689,7 @@
         "dependencies": {
           "Kztek.Tool": "1.0.0.2",
           "System.IO.Ports": "8.0.0",
-          "iParkingv5.Objects": "6.0.0.1"
+          "iParkingv5.Objects": "6.0.0.2"
         },
         "compile": {
           "bin/placeholder/iParkingv5.Controller.dll": {}
@@ -701,7 +701,7 @@
           "Microsoft.WindowsDesktop.App.WindowsForms"
         ]
       },
-      "iParkingv5.Objects/6.0.0.1": {
+      "iParkingv5.Objects/6.0.0.2": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
@@ -1787,7 +1787,7 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "IPaking.Ultility/1.0.0.2": {
+    "IPaking.Ultility/1.0.0.3": {
       "type": "project",
       "path": "../IPaking.Ultility/IPaking.Ultility.csproj",
       "msbuildProject": "../IPaking.Ultility/IPaking.Ultility.csproj"
@@ -1802,7 +1802,7 @@
       "path": "../iParkingv5.Controller/iParkingv5.Controller.csproj",
       "msbuildProject": "../iParkingv5.Controller/iParkingv5.Controller.csproj"
     },
-    "iParkingv5.Objects/6.0.0.1": {
+    "iParkingv5.Objects/6.0.0.2": {
       "type": "project",
       "path": "../iParkingv5.Objects/iParkingv5.Objects.csproj",
       "msbuildProject": "../iParkingv5.Objects/iParkingv5.Objects.csproj"
@@ -1820,7 +1820,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0-windows7.0": [
-      "IPaking.Ultility >= 1.0.0.2",
+      "IPaking.Ultility >= 1.0.0.3",
       "Kztek.Scale_net6 >= 1.0.0.10",
       "iParkingv5.ApiManager >= 6.0.0.1",
       "iParkingv5.Controller >= 1.0.0.2"

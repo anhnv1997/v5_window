@@ -14,6 +14,7 @@
         public static string tokenPath => baseBath + "/configs/app/refreshToken.txt";
         public static string thirtPartyConfigPath => baseBath + "/configs/app/thirtParty.txt";
         public static string appDisplayConfigPath(string laneID) => baseBath + $"/configs/app/{laneID}/displayConfig.txt";
+        public static string appViewModeConfigPath() => baseBath + $"/configs/app/viewMode.txt";
         public static string appLaneDirectionConfigPath(string laneId) => baseBath + $"/configs/app/{laneId}/displayDirection.txt";
         public static string databaseConfigPath => baseBath + "/configs/app/database.xml";
         public static string appActiveLaneConfigPath() => baseBath + $"/configs/app/activeLane.txt";

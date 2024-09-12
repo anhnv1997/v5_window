@@ -50,9 +50,8 @@ namespace iParkingv5_window.Forms.DataForms
             panelAppStatus = new Panel();
             lblLoadingStatus = new lblResult();
             lblTime = new Label();
-            lblServerName = new Label();
             lblSoftwareName = new Label();
-            lblUserNaem = new Label();
+            lblUserName = new Label();
             ucEventCount1 = new Usercontrols.ucEventCount();
             timerUpdateTime = new System.Windows.Forms.Timer(components);
             panelDevelopeMode = new Panel();
@@ -203,9 +202,8 @@ namespace iParkingv5_window.Forms.DataForms
             panelAppStatus.BorderStyle = BorderStyle.Fixed3D;
             panelAppStatus.Controls.Add(lblLoadingStatus);
             panelAppStatus.Controls.Add(lblTime);
-            panelAppStatus.Controls.Add(lblServerName);
             panelAppStatus.Controls.Add(lblSoftwareName);
-            panelAppStatus.Controls.Add(lblUserNaem);
+            panelAppStatus.Controls.Add(lblUserName);
             panelAppStatus.Controls.Add(ucEventCount1);
             panelAppStatus.Dock = DockStyle.Bottom;
             panelAppStatus.Location = new Point(0, 471);
@@ -221,14 +219,15 @@ namespace iParkingv5_window.Forms.DataForms
             lblLoadingStatus.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
             lblLoadingStatus.ForeColor = Color.FromArgb(192, 64, 0);
             lblLoadingStatus.IsBold = true;
-            lblLoadingStatus.Location = new Point(291, 0);
+            lblLoadingStatus.IsUpper = true;
+            lblLoadingStatus.Location = new Point(189, 0);
             lblLoadingStatus.MaxFontSize = 12;
             lblLoadingStatus.Message = "Event Message";
             lblLoadingStatus.MessageBackColor = SystemColors.ButtonHighlight;
             lblLoadingStatus.MessageForeColor = Color.Black;
             lblLoadingStatus.Name = "lblLoadingStatus";
             lblLoadingStatus.Padding = new Padding(9, 0, 0, 0);
-            lblLoadingStatus.Size = new Size(328, 33);
+            lblLoadingStatus.Size = new Size(430, 33);
             lblLoadingStatus.TabIndex = 4;
             lblLoadingStatus.TextAlign = ContentAlignment.MiddleCenter;
             // 
@@ -244,18 +243,6 @@ namespace iParkingv5_window.Forms.DataForms
             lblTime.Text = "16:04:04";
             lblTime.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // lblServerName
-            // 
-            lblServerName.Dock = DockStyle.Left;
-            lblServerName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblServerName.Location = new Point(189, 0);
-            lblServerName.Name = "lblServerName";
-            lblServerName.Padding = new Padding(9, 0, 0, 0);
-            lblServerName.Size = new Size(102, 33);
-            lblServerName.TabIndex = 1;
-            lblServerName.Text = "VIETANHPC";
-            lblServerName.TextAlign = ContentAlignment.MiddleLeft;
-            // 
             // lblSoftwareName
             // 
             lblSoftwareName.Dock = DockStyle.Left;
@@ -268,17 +255,17 @@ namespace iParkingv5_window.Forms.DataForms
             lblSoftwareName.Text = "KZTEK-Parking";
             lblSoftwareName.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // lblUserNaem
+            // lblUserName
             // 
-            lblUserNaem.Dock = DockStyle.Left;
-            lblUserNaem.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            lblUserNaem.Location = new Point(0, 0);
-            lblUserNaem.Name = "lblUserNaem";
-            lblUserNaem.Padding = new Padding(9, 0, 0, 0);
-            lblUserNaem.Size = new Size(59, 33);
-            lblUserNaem.TabIndex = 6;
-            lblUserNaem.Text = "_";
-            lblUserNaem.TextAlign = ContentAlignment.MiddleLeft;
+            lblUserName.Dock = DockStyle.Left;
+            lblUserName.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
+            lblUserName.Location = new Point(0, 0);
+            lblUserName.Name = "lblUserName";
+            lblUserName.Padding = new Padding(9, 0, 0, 0);
+            lblUserName.Size = new Size(59, 33);
+            lblUserName.TabIndex = 6;
+            lblUserName.Text = "_";
+            lblUserName.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // ucEventCount1
             // 
@@ -405,7 +392,6 @@ namespace iParkingv5_window.Forms.DataForms
         private Panel panelAppStatus;
         private lblResult lblLoadingStatus;
         private Label lblTime;
-        private Label lblServerName;
         private Label lblSoftwareName;
         private System.Windows.Forms.Timer timerUpdateTime;
         private Panel panelDevelopeMode;
@@ -417,7 +403,7 @@ namespace iParkingv5_window.Forms.DataForms
         private ToolStripMenuItem tsmiActiveLanesConfig;
         private System.Windows.Forms.Timer timerRestartSockerServer;
         private System.Windows.Forms.Timer timerClearLog;
-        private Label lblUserNaem;
+        private Label lblUserName;
         private ToolStripMenuItem chứcNăngToolStripMenuItem;
         private ToolStripMenuItem btnRegister;
         private ToolStripMenuItem btnPrintQR;

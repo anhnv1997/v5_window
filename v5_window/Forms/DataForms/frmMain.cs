@@ -39,11 +39,40 @@ using iParkingv5.Objects.Datas.ThirtParty.Hanet;
 using DocumentFormat.OpenXml.VariantTypes;
 using iParkingv5.ApiManager;
 using iParkingv5_window.Forms.ThirdPartyForms.HANETForms;
+using static iParkingv5.Objects.Configs.AppViewModeConfig;
 
 namespace iParkingv5_window.Forms.DataForms
 {
+    //public int SplitterCameraPosition { get; set; }
+    //public int spliterCamera_top3Event { get; set; }
+    //public int spliterPicEv_PicPlate { get; set; }
+    //public int spliterEventPlate { get; set; }
+    //public int spliterTopEvent_Actions { get; set; }
+    //public int spliterEvInPlate { get; set; }
+    //public int spliterEvOutPlate { get; set; }
+
     public partial class frmMain : Form
     {
+        #region Display config
+        public static LaneDisplayConfig preferLaneDisplayConfigIn;
+
+
+        public static int preferMainDistance = 0;
+        public static int preferCameraDistance = 0;
+
+        public static int preferCamera_PicEv_PicPlateDistance = 0;
+        public static int preferPicEv_PicPlateDistance = 0;
+
+        public static int preferCamera_TopEvent_Distance = 0;
+        public static int preferTopEvent_Action_Distance = 0;
+
+        public static int preferEvInPlateDistance = 0;
+        public static int preferEvOutPlateDistance = 0;
+
+
+        public static bool IsNeedToConfirmPassword = true;
+        #endregion
+
         public static ControlSizeChangedEventArgs? splitContainerMainLocation;
         public static EmLanguage language = EmLanguage.Vietnamese;
         #region Properties
@@ -106,11 +135,11 @@ namespace iParkingv5_window.Forms.DataForms
 
             AppData.printer = PrinterFactory.CreatePrinter((EmPrintTemplate)StaticPool.appOption.PrintTemplate);
 
-            lblServerName.Text = Environment.MachineName;
             this.Text = StaticPool.oemConfig.AppName;
 
             controllerEventInitQueueName = "queue.ControllerEvent";
-            controllerEventInitQueueName = controllerEventInitQueueName + " - " + StaticPool.selectedComputer.IpAddress + StaticPool.selectedComputer.Id;
+            controllerEventInitQueueName = controllerEventInitQueueName + " - " + StaticPool.selectedComputer.IpAddress +
+                                                                                  StaticPool.selectedComputer.Id;
             this.activeLanes = activeLanes;
 
             bool isNeedToChooseLane = false;
@@ -152,12 +181,12 @@ namespace iParkingv5_window.Forms.DataForms
             {
                 this.Invoke(new Action(() =>
                 {
-                    lblUserNaem.Text = StaticPool.user_name;
-                    lblUserNaem.Width = lblUserNaem.PreferredSize.Width;
+                    lblUserName.Text = StaticPool.user_name;
+                    lblUserName.Width = lblUserName.PreferredSize.Width;
                 }));
                 var screenBound = Screen.FromControl(this).WorkingArea;
-                //this.Size = new Size(screenBound.Width, screenBound.Height);
-                this.Size = new Size(1366, 768);
+                this.Size = new Size(screenBound.Width, screenBound.Height);
+                //this.Size = new Size(1366, 768);
                 this.Location = new Point(0, 0);
 
                 LoadAppDisplayConfig();
@@ -170,8 +199,8 @@ namespace iParkingv5_window.Forms.DataForms
 
                 ConnectMQTT();
                 lblSoftwareName.Width = lblSoftwareName.PreferredWidth;
-                lblServerName.Width = lblServerName.PreferredWidth;
                 lblTime.Width = lblTime.PreferredWidth;
+                panelAppStatus.Visible = StaticPool.appOption.IsDisplayStatusBar;
             }
             catch (Exception ex)
             {
@@ -412,7 +441,25 @@ namespace iParkingv5_window.Forms.DataForms
             ucViewGrid1.ToggleDoubleBuffered(true);
 
             ucViewGrid1.SuspendLayout();
-            ucViewGrid1.UpdateRowSetting(1, this.activeLanes.Count);
+            switch (StaticPool.appViewModeConfig.ViewMode)
+            {
+                default:
+                    break;
+            }
+            switch ((EmAppViewMode)StaticPool.appViewModeConfig.ViewMode)
+            {
+                case EmAppViewMode.Optional:
+                    ucViewGrid1.UpdateRowSetting(StaticPool.appViewModeConfig.RowCount, StaticPool.appViewModeConfig.ColumnCount);
+                    break;
+                case EmAppViewMode.Horizontal:
+                    ucViewGrid1.UpdateRowSetting(1, this.activeLanes.Count);
+                    break;
+                case EmAppViewMode.Vertical:
+                    ucViewGrid1.UpdateRowSetting(this.activeLanes.Count, 1);
+                    break;
+                default:
+                    break;
+            }
             lanes.Clear();
             foreach (Lane lane in this.activeLanes)
             {
@@ -430,18 +477,54 @@ namespace iParkingv5_window.Forms.DataForms
                 ucViewGrid1.Refresh();
             }
             TableLayoutPanel table = (ucViewGrid1.Controls[0] as TableLayoutPanel)!;
-            for (int i = 0; i < table.Controls.Count; i++)
+            switch ((EmAppViewMode)StaticPool.appViewModeConfig.ViewMode)
             {
-                var item = table.Controls[i];
-                if (item is ucLaneIn)
-                {
-                    table.ColumnStyles[i] = new ColumnStyle(SizeType.Percent, 40);
-                }
-                else
-                {
-                    table.ColumnStyles[i] = new ColumnStyle(SizeType.Percent, 60);
-                }
+                case EmAppViewMode.Optional:
+                    for (int i = 0; i < table.ColumnStyles.Count; i++)
+                    {
+                        var item = table.GetControlFromPosition(i, 0);
+                        if (item is ucLaneIn)
+                        {
+                            table.ColumnStyles[i] = new ColumnStyle(SizeType.Percent, 40);
+                        }
+                        else
+                        {
+                            table.ColumnStyles[i] = new ColumnStyle(SizeType.Percent, 60);
+                        }
+                    }
+                    break;
+                case EmAppViewMode.Horizontal:
+                    for (int i = 0; i < table.ColumnStyles.Count; i++)
+                    {
+                        var item = table.GetControlFromPosition(i, 0);
+                        if (item is ucLaneIn)
+                        {
+                            table.ColumnStyles[i] = new ColumnStyle(SizeType.Percent, 40);
+                        }
+                        else
+                        {
+                            table.ColumnStyles[i] = new ColumnStyle(SizeType.Percent, 60);
+                        }
+                    }
+                    break;
+                case EmAppViewMode.Vertical:
+                    for (int i = 0; i < table.RowStyles.Count; i++)
+                    {
+                        var item = table.GetControlFromPosition(0, i);
+                        if (item is ucLaneIn)
+                        {
+                            table.RowStyles[i] = new RowStyle(SizeType.Percent, 40);
+                        }
+                        else
+                        {
+                            table.RowStyles[i] = new RowStyle(SizeType.Percent, 60);
+                        }
+                    }
+                    break;
+                default:
+                    break;
             }
+
             ucViewGrid1.ResumeLayout();
             foreach (var item in lanes)
             {
@@ -555,12 +638,12 @@ namespace iParkingv5_window.Forms.DataForms
 
         private async Task ConnectToRabbitMQ()
         {
+            if (string.IsNullOrEmpty(StaticPool.serverConfig.RabbitMqUrl))
+            {
+                return;
+            }
             await Task.Run(() =>
             {
-                if (string.IsNullOrEmpty(StaticPool.serverConfig.RabbitMqUrl))
-                {
-                    return;
-                }
                 try
                 {
                     ConnectionFactory factory = new ConnectionFactory();
@@ -585,13 +668,14 @@ namespace iParkingv5_window.Forms.DataForms
 
         private void CreateRequireExchange()
         {
-            channel.ExchangeDeclare("integrations", "topic");
+            channel.ExchangeDeclare(StaticPool.serverConfig.RabbitMQExchangeName, "topic");
         }
 
         public void CreateRequiredQueue()
         {
             channel.QueueDeclare(controllerEventInitQueueName, true, false, false, null);
-            channel.QueueBind(controllerEventInitQueueName, "integrations", "integration.application.event.transaction");
+            channel.QueueBind(controllerEventInitQueueName, StaticPool.serverConfig.RabbitMQExchangeName,
+                                                            StaticPool.serverConfig.RabbitMQRoutingKey);
         }
         public void MonitorControllerEvent()
         {

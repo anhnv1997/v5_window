@@ -3,6 +3,7 @@ using iPakrkingv5.Controls.Controls.Buttons;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Datas.parking_service;
 using iParkingv5_window.Usercontrols.BuildControls;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace iParkingv5_window.Forms.DataForms
@@ -20,6 +21,7 @@ namespace iParkingv5_window.Forms.DataForms
         } = string.Empty;
         public string SelectIdentityId { get; set; } = string.Empty;
         Point position = new Point(0);
+        private Dictionary<string, string> identityGroups = new Dictionary<string, string>();
         #endregion END PROPERTIES
 
         #region FORMS
@@ -39,7 +41,7 @@ namespace iParkingv5_window.Forms.DataForms
                 BtnSearch_Click(null, EventArgs.Empty);
             }
         }
-        private void FrmSelectCard_Load(object? sender, EventArgs e)
+        private async void FrmSelectCard_Load(object? sender, EventArgs e)
         {
             this.Location = this.position;
             this.Font = panelData.Font = new Font(this.Font.Name, StaticPool.baseSize);
@@ -68,6 +70,13 @@ namespace iParkingv5_window.Forms.DataForms
 
             lblGuide.Location = new Point(StaticPool.baseSize * 2, btnSelectCard.Location.Y + (btnSelectCard.Height - lblGuide.Height) / 2);
             lblGuide.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+
+            var identityGroupResponse = (await AppData.ApiServer.parkingDataService.GetIdentityGroupsAsync()).Item1 ?? new List<IdentityGroup>();
+            foreach (var item in identityGroupResponse)
+            {
+                identityGroups.Add(item.Id.ToString().ToLower(), item.Name);
+            }
+
             this.ActiveControl = btnSearch;
         }
         #endregion END FORMS
@@ -81,34 +90,18 @@ namespace iParkingv5_window.Forms.DataForms
             SendMessage(dgvData.Handle, WM_SETREDRAW, false, 0);
             dgvData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
             dgvData.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+            List<Identity> identities = (await AppData.ApiServer.parkingDataService.GetIdentitiesAsync(txtIdentity.Text)).Item1;
+            if (identities != null)
+            {
+                for (int i = 0; i < identities.Count; i++)
+                {
+                    dgvData.Rows.Add(i + 1, identities[i].Name, identities[i].Code, toString(identities[i].Type),
+                                    getIdentityGroupName(identities[i].IdentityGroupId.ToLower(), identityGroups), identities[i].Id);
+                }
+                identities.Clear();
+                GC.Collect();
+            }
 
-            if (!string.IsNullOrEmpty(txtIdentity.Text))
-            {
-                var identityResponse = await AppData.ApiServer.parkingDataService.GetIdentityByCodeAsync(txtIdentity.Text);
-                Identity? identity = identityResponse.Item1;
-                if (identity == null)
-                {
-                    MessageBox.Show("Mã định danh không có trong hệ thống", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-                if (identity != null)
-                {
-                    dgvData.Rows.Add("1", identity.Name, identity.Code, identity.Type.ToString(), identity.Id);
-                }
-            }
-            else
-            {
-                List<Identity> identities = (await AppData.ApiServer.parkingDataService.GetIdentitiesAsync("")).Item1;
-                if (identities != null)
-                {
-                    for (int i = 0; i < identities.Count; i++)
-                    {
-                        dgvData.Rows.Add(i + 1, identities[i].Name, identities[i].Code, identities[i].Type.ToString(), identities[i].Id);
-                    }
-                    identities.Clear();
-                    GC.Collect();
-                }
-            }
             if (dgvData.Rows.Count > 0)
             {
                 dgvData.CurrentCell = dgvData.Rows[0].Cells[0];
@@ -149,6 +142,30 @@ namespace iParkingv5_window.Forms.DataForms
             this.SelectIdentity = dgvData.CurrentRow.Cells[2]?.Value?.ToString() ?? string.Empty;
             this.SelectIdentityId = dgvData.CurrentRow.Cells[dgvData.ColumnCount - 1]?.Value?.ToString() ?? string.Empty;
             this.DialogResult = DialogResult.OK;
+        }
+        public string toString(IdentityType type)
+        {
+            switch (type)
+            {
+                case IdentityType.Card:
+                    return "Thẻ";
+                case IdentityType.QrCode:
+                    return "QR";
+                case IdentityType.FingerPrint:
+                    return "Vân tay";
+                case IdentityType.FaceId:
+                    return "Gương mặt";
+                case IdentityType.PlateNumber:
+                    return "Biển số xe";
+                case IdentityType.QR_1Times:
+                    return "QR sử dụng 1 lần";
+                default:
+                    return "";
+            }
+        }
+        public string getIdentityGroupName(string identityGroupId, Dictionary<string, string> identityGroups)
+        {
+            return identityGroups.ContainsKey(identityGroupId) ? identityGroups[identityGroupId] : string.Empty;
         }
         #endregion END PRIVATE FUNCTION
     }
