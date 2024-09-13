@@ -28,7 +28,6 @@ namespace iParkingv5.Reporting
 {
     public partial class frmReportInOut : Form
     {
-
         const string col_event_out_id = "event_out_id";
         const string col_event_in_id = "event_in_id";
         const string col_invoice_pending_id = "invoice_pending_id";
@@ -69,6 +68,7 @@ namespace iParkingv5.Reporting
         List<EventOutReport> eventOutData = new List<EventOutReport>();
         private iPrinter printer;
         #endregion End Properties
+
         #region Forms
         public frmReportInOut(iParkingApi ApiServer, Image defaultImg, iPrinter printer)
         {
@@ -173,6 +173,97 @@ namespace iParkingv5.Reporting
         #endregion End Forms
 
         #region Controls In Form
+        private void dgvData_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenuStrip ctx = new ContextMenuStrip();
+                ctx.Items.Add("Sửa ghi chú BSX").Name = "UpdateNote";
+                if (StaticPool.appOption.IsAllowEditPlateOut)
+                {
+                    ctx.Items.Add("Sửa biển số vào").Name = "UpdatePlateIn";
+                    ctx.Items.Add("Sửa biển số ra").Name = "UpdatePlateOut";
+                }
+                string pendingOrderId = dgvData.Rows[e.RowIndex].Cells[col_invoice_pending_id].Value.ToString() ?? "";
+                if (!string.IsNullOrEmpty(pendingOrderId))
+                {
+                    ctx.Items.Add("Gửi hóa đơn").Name = "SendPendingEInvoice";
+                }
+                ctx.Font = new Font(dgvData.Font.Name, 16, FontStyle.Bold);
+                ctx.BackColor = Color.DarkOrange;
+                ctx.ItemClicked += async (sender, ctx_e) =>
+                {
+                    string eventInId = dgvData.Rows[e.RowIndex].Cells[col_event_in_id].Value.ToString() ?? "";
+                    string eventOutId = dgvData.Rows[e.RowIndex].Cells[col_event_out_id].Value.ToString() ?? "";
+                    string currentPlateIn = dgvData.Rows[e.RowIndex].Cells[col_plate_in].Value.ToString() ?? "";
+                    string currentPlateOut = dgvData.Rows[e.RowIndex].Cells[col_plate_out].Value.ToString() ?? "";
+                    string currentNote = dgvData.Rows[e.RowIndex].Cells[col_note].Value.ToString() ?? "";
+                    switch (ctx_e.ClickedItem.Name.ToString())
+                    {
+                        case "UpdateNote":
+                            var frmUpdateNote = new frmEditNote(currentNote, eventOutId, false, this.ApiServer);
+                            if (frmUpdateNote.ShowDialog() == DialogResult.OK)
+                            {
+                                dgvData.Rows[e.RowIndex].Cells[col_note].Value = frmUpdateNote.newNote;
+                                frmUpdateNote.Dispose();
+                            }
+                            break;
+                        case "UpdatePlateIn":
+                            {
+                                var frmUpdatePlate = new frmEditPlate(currentPlateIn, eventInId, true, this.ApiServer);
+                                if (frmUpdatePlate.ShowDialog() == DialogResult.OK)
+                                {
+                                    dgvData.Rows[e.RowIndex].Cells[col_plate_in].Value = frmUpdatePlate.UpdatePlate;
+                                    frmUpdatePlate.Dispose();
+                                }
+                            }
+                            break;
+                        case "UpdatePlateOut":
+                            {
+                                var frmUpdatePlate = new frmEditPlate(currentPlateOut, eventOutId, false, this.ApiServer);
+                                if (frmUpdatePlate.ShowDialog() == DialogResult.OK)
+                                {
+                                    dgvData.Rows[e.RowIndex].Cells[col_plate_out].Value = frmUpdatePlate.UpdatePlate;
+                                    frmUpdatePlate.Dispose();
+                                }
+                            }
+                            break;
+                        case "SendPendingEInvoice":
+                            {
+                                bool isSendSuccess = await ApiServer.invoiceService.sendPendingEInvoice(pendingOrderId);
+                                if (isSendSuccess)
+                                {
+                                    MessageBox.Show("Gửi hóa đơn thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    btnSearch_Click(null, null);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Gửi hóa đơn không thành công, vui lòng thử lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
+                                break;
+                            }
+                        default:
+                            break;
+                    }
+                };
+                var location = dgvData.PointToScreen(dgvData.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false).Location);
+                ctx.Show(dgvData, new Point(location.X - dgvData.Location.X, location.Y - dgvData.Location.Y));
+            }
+        }
+
+        private void dgvData_MouseClick(object sender, MouseEventArgs e)
+        {
+
+        }
+        private void Pic_LoadCompleted(object? sender, AsyncCompletedEventArgs e)
+        {
+            PictureBox pictureBox = (sender as PictureBox)!;
+            if (e.Error != null)
+            {
+                pictureBox.Image = defaultImg;
+            }
+        }
+
         private void LblTotalEvents_TextChanged(object? sender, EventArgs e)
         {
             lblTotalEvents.Height = lblTotalEvents.PreferredHeight;
@@ -234,9 +325,36 @@ namespace iParkingv5.Reporting
         {
             this.Close();
         }
-        private void btnExportExcel_Click(object? sender, EventArgs e)
+        private async void btnExportExcel_Click(object? sender, EventArgs e)
         {
-            ExcelTools.CreatReportFile(dgvData, "Báo cáo Xe Ra Khỏi Bãi", new List<string>() { lblTotalEvents.Text });
+            string keyword = txtKeyword.Text;
+            DateTime startTime = dtpStartTime.Value;
+            DateTime endTime = dtpEndTime.Value;
+            string vehicleTypeId = ((ListItem)cbVehicleType.SelectedItem)?.Value ?? "";
+            string identityGroupId = ((ListItem)cbIdentityGroup.SelectedItem)?.Value ?? "";
+            string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
+            string user = string.IsNullOrEmpty(((ListItem)cbUser.SelectedItem)?.Value) ? "" : cbUser.Text;
+
+            try
+            {
+                var report = await ApiServer.reportingService.GetEventOuts(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user, false, 0, Filter.PAGE_SIZE, "", true, -1);
+
+                DataGridView dgvExport = new DataGridView();
+                foreach (DataGridViewColumn column in dgvData.Columns)
+                {
+                    DataGridViewColumn newColumn = (DataGridViewColumn)column.Clone();
+
+                    dgvExport.Columns.Add(newColumn);
+                }
+                DisplayExportData(report.data, dgvExport);
+
+                ExcelTools.CreatReportFile(dgvExport, "Báo cáo Xe Ra Khỏi Bãi", new List<string>() { lblTotalEvents.Text });
+                report.data.Clear();
+                dgvExport.Dispose();
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private void BtnPrintPhieuThu_Click(object? sender, EventArgs e)
@@ -543,6 +661,66 @@ namespace iParkingv5.Reporting
             {
             }
         }
+        private void DisplayExportData(List<EventOutReport> eventOutData, DataGridView dgv)
+        {
+            try
+            {
+                List<DataGridViewRow> rows = new List<DataGridViewRow>();
+                foreach (var item in eventOutData)
+                {
+                    DataGridViewRow row = new DataGridViewRow();
+                    this.Invoke(new Action(() =>
+                    {
+                        row.CreateCells(dgv);
+                    }));
+                    DateTime? timeIn = item.EventIn.DateTimeIn == null ? null : item.EventIn.DateTimeIn.Value;
+                    string moneyStr = TextFormatingTool.GetMoneyFormat(item.Charge.ToString());
+
+                    row.Cells[dgv.Columns[col_event_out_id].Index].Value = item.Id;
+                    row.Cells[dgv.Columns[col_event_in_id].Index].Value = item.EventIn.Id;
+                    row.Cells[dgv.Columns[col_invoice_pending_id].Index].Value = "";
+                    row.Cells[dgv.Columns[col_invoice_id].Index].Value = "";
+                    row.Cells[dgv.Columns[col_file_keys_in].Index].Value = item.EventIn.images == null ? "[]" : Newtonsoft.Json.JsonConvert.SerializeObject(item.EventIn.images);
+                    row.Cells[dgv.Columns[col_file_keys_out].Index].Value = item.images == null ? "[]" : Newtonsoft.Json.JsonConvert.SerializeObject(item.images);
+                    row.Cells[dgv.Columns[col_index].Index].Value = rows.Count + 1;
+                    row.Cells[dgv.Columns[col_plate_in].Index].Value = item.EventIn.PlateNumber;
+                    row.Cells[dgv.Columns[col_plate_out].Index].Value = item.PlateNumber;
+                    row.Cells[dgv.Columns[col_time_in].Index].Value = timeIn.ToVNTime();
+                    row.Cells[dgv.Columns[col_time_out].Index].Value = item.DatetimeOut.ToVNTime();
+                    row.Cells[dgv.Columns[col_parking_time].Index].Value = item.DatetimeOut!.Value - item.EventIn.DateTimeIn!.Value;
+                    row.Cells[dgv.Columns[col_identity_group_name].Index].Value = item.IdentityGroup.Name;
+                    row.Cells[dgv.Columns[col_parking_fee].Index].Value = moneyStr.Substring(0, moneyStr.Length - 1);
+                    row.Cells[dgv.Columns[col_identity_code].Index].Value = item.Identity.Code;
+                    row.Cells[dgv.Columns[col_user_in].Index].Value = item.EventIn.CreatedBy;
+                    row.Cells[dgv.Columns[col_user_out].Index].Value = item.CreatedBy;
+                    row.Cells[dgv.Columns[col_invoice_template].Index].Value = "";
+                    row.Cells[dgv.Columns[col_invoice_no].Index].Value = "";
+                    row.Cells[dgv.Columns[col_lane_in_name].Index].Value = item.EventIn.Lane.name;
+                    row.Cells[dgv.Columns[col_lane_out_name].Index].Value = item.Lane.name;
+                    row.Cells[dgv.Columns[col_note].Index].Value = item.EventIn.Note;
+                    rows.Add(row);
+                }
+                this.Invoke(new Action(() =>
+                {
+                    dgv.Rows.AddRange(rows.ToArray());
+                    if (dgv.Rows.Count > 0)
+                    {
+                        dgv.CurrentCell = dgv.Rows[0].Cells[col_index];
+                    }
+                    else
+                    {
+                        dgv.CurrentCell = null;
+                    }
+                    DgvData_SelectionChanged(null, EventArgs.Empty);
+                }));
+                eventOutData.Clear();
+                InvoiceDatas.Clear();
+            }
+            catch (Exception)
+            {
+            }
+        }
+
         private void LoadVehicleTypeData()
         {
             cbVehicleType.Invoke(new Action(() =>
@@ -648,103 +826,5 @@ namespace iParkingv5.Reporting
             }));
         }
         #endregion End Private Function
-
-        private void dgvData_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                ContextMenuStrip ctx = new ContextMenuStrip();
-                ctx.Items.Add("Sửa ghi chú BSX").Name = "UpdateNote";
-                if (StaticPool.appOption.IsAllowEditPlateOut)
-                {
-                    ctx.Items.Add("Sửa biển số vào").Name = "UpdatePlateIn";
-                    ctx.Items.Add("Sửa biển số ra").Name = "UpdatePlateOut";
-                }
-                string pendingOrderId = dgvData.Rows[e.RowIndex].Cells[col_invoice_pending_id].Value.ToString() ?? "";
-                if (!string.IsNullOrEmpty(pendingOrderId))
-                {
-                    ctx.Items.Add("Gửi hóa đơn").Name = "SendPendingEInvoice";
-                }
-                ctx.Font = new Font(dgvData.Font.Name, 16, FontStyle.Bold);
-                ctx.BackColor = Color.DarkOrange;
-                ctx.ItemClicked += async (sender, ctx_e) =>
-                {
-                    string eventInId = dgvData.Rows[e.RowIndex].Cells[col_event_in_id].Value.ToString() ?? "";
-                    string eventOutId = dgvData.Rows[e.RowIndex].Cells[col_event_out_id].Value.ToString() ?? "";
-                    string currentPlateIn = dgvData.Rows[e.RowIndex].Cells[col_plate_in].Value.ToString() ?? "";
-                    string currentPlateOut = dgvData.Rows[e.RowIndex].Cells[col_plate_out].Value.ToString() ?? "";
-                    string currentNote = dgvData.Rows[e.RowIndex].Cells[col_note].Value.ToString() ?? "";
-                    switch (ctx_e.ClickedItem.Name.ToString())
-                    {
-                        case "UpdateNote":
-                            var frmUpdateNote = new frmEditNote(currentNote, eventOutId, false, this.ApiServer);
-                            if (frmUpdateNote.ShowDialog() == DialogResult.OK)
-                            {
-                                dgvData.Rows[e.RowIndex].Cells[col_note].Value = frmUpdateNote.newNote;
-                                frmUpdateNote.Dispose();
-                            }
-                            break;
-                        case "UpdatePlateIn":
-                            {
-                                var frmUpdatePlate = new frmEditPlate(currentPlateIn, eventInId, true, this.ApiServer);
-                                if (frmUpdatePlate.ShowDialog() == DialogResult.OK)
-                                {
-                                    dgvData.Rows[e.RowIndex].Cells[col_plate_in].Value = frmUpdatePlate.UpdatePlate;
-                                    frmUpdatePlate.Dispose();
-                                }
-                            }
-                            break;
-                        case "UpdatePlateOut":
-                            {
-                                var frmUpdatePlate = new frmEditPlate(currentPlateOut, eventOutId, false, this.ApiServer);
-                                if (frmUpdatePlate.ShowDialog() == DialogResult.OK)
-                                {
-                                    dgvData.Rows[e.RowIndex].Cells[col_plate_out].Value = frmUpdatePlate.UpdatePlate;
-                                    frmUpdatePlate.Dispose();
-                                }
-                            }
-                            break;
-                        case "SendPendingEInvoice":
-                            {
-                                bool isSendSuccess = await ApiServer.invoiceService.sendPendingEInvoice(pendingOrderId);
-                                if (isSendSuccess)
-                                {
-                                    MessageBox.Show("Gửi hóa đơn thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    btnSearch_Click(null, null);
-                                }
-                                else
-                                {
-                                    MessageBox.Show("Gửi hóa đơn không thành công, vui lòng thử lại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                }
-                                break;
-                            }
-                        default:
-                            break;
-                    }
-                };
-                var location = dgvData.PointToScreen(dgvData.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false).Location);
-                ctx.Show(dgvData, new Point(location.X - dgvData.Location.X, location.Y - dgvData.Location.Y));
-            }
-        }
-
-
-        private void dgvData_MouseClick(object sender, MouseEventArgs e)
-        {
-
-        }
-        private void Pic_LoadCompleted(object? sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        {
-            PictureBox pictureBox = (sender as PictureBox)!;
-            if (e.Error != null)
-            {
-                pictureBox.Image = defaultImg;
-            }
-        }
-
-        private void btnPrintInternet_Click_1(object sender, EventArgs e)
-        {
-
-        }
     }
-
 }

@@ -49,13 +49,13 @@
             lblMaxPage.Dock = DockStyle.Fill;
             lblMaxPage.IsBold = true;
             lblMaxPage.IsUpper = true;
-            lblMaxPage.Location = new Point(451, 0);
+            lblMaxPage.Location = new Point(453, 0);
             lblMaxPage.MaxFontSize = 32;
             lblMaxPage.Message = "00";
             lblMaxPage.MessageBackColor = SystemColors.ButtonHighlight;
             lblMaxPage.MessageForeColor = Color.Black;
             lblMaxPage.Name = "lblMaxPage";
-            lblMaxPage.Size = new Size(34, 35);
+            lblMaxPage.Size = new Size(34, 39);
             lblMaxPage.TabIndex = 1;
             // 
             // picNext
@@ -68,10 +68,10 @@
             picNext.IconColor = SystemColors.ControlText;
             picNext.IconFont = FontAwesome.Sharp.IconFont.Auto;
             picNext.IconSize = 34;
-            picNext.Location = new Point(491, 0);
+            picNext.Location = new Point(493, 0);
             picNext.Margin = new Padding(3, 0, 3, 0);
             picNext.Name = "picNext";
-            picNext.Size = new Size(34, 35);
+            picNext.Size = new Size(34, 39);
             picNext.SizeMode = PictureBoxSizeMode.Zoom;
             picNext.TabIndex = 2;
             picNext.TabStop = false;
@@ -87,10 +87,10 @@
             picLast.IconColor = SystemColors.ControlText;
             picLast.IconFont = FontAwesome.Sharp.IconFont.Auto;
             picLast.IconSize = 34;
-            picLast.Location = new Point(531, 0);
+            picLast.Location = new Point(533, 0);
             picLast.Margin = new Padding(3, 0, 3, 0);
             picLast.Name = "picLast";
-            picLast.Size = new Size(34, 35);
+            picLast.Size = new Size(34, 39);
             picLast.SizeMode = PictureBoxSizeMode.Zoom;
             picLast.TabIndex = 2;
             picLast.TabStop = false;
@@ -106,10 +106,10 @@
             picBack.IconColor = SystemColors.ControlText;
             picBack.IconFont = FontAwesome.Sharp.IconFont.Auto;
             picBack.IconSize = 34;
-            picBack.Location = new Point(311, 0);
+            picBack.Location = new Point(313, 0);
             picBack.Margin = new Padding(3, 0, 3, 0);
             picBack.Name = "picBack";
-            picBack.Size = new Size(34, 35);
+            picBack.Size = new Size(34, 39);
             picBack.SizeMode = PictureBoxSizeMode.Zoom;
             picBack.TabIndex = 2;
             picBack.TabStop = false;
@@ -125,10 +125,10 @@
             picFirst.IconColor = SystemColors.ControlText;
             picFirst.IconFont = FontAwesome.Sharp.IconFont.Auto;
             picFirst.IconSize = 34;
-            picFirst.Location = new Point(271, 0);
+            picFirst.Location = new Point(273, 0);
             picFirst.Margin = new Padding(3, 0, 3, 0);
             picFirst.Name = "picFirst";
-            picFirst.Size = new Size(34, 35);
+            picFirst.Size = new Size(34, 39);
             picFirst.SizeMode = PictureBoxSizeMode.Zoom;
             picFirst.TabIndex = 2;
             picFirst.TabStop = false;
@@ -159,7 +159,7 @@
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(837, 35);
+            tableLayoutPanel1.Size = new Size(841, 39);
             tableLayoutPanel1.TabIndex = 3;
             // 
             // lblResult1
@@ -168,13 +168,13 @@
             lblResult1.Dock = DockStyle.Fill;
             lblResult1.IsBold = true;
             lblResult1.IsUpper = true;
-            lblResult1.Location = new Point(431, 0);
+            lblResult1.Location = new Point(433, 0);
             lblResult1.MaxFontSize = 32;
             lblResult1.Message = "/";
             lblResult1.MessageBackColor = SystemColors.ButtonHighlight;
             lblResult1.MessageForeColor = Color.Black;
             lblResult1.Name = "lblResult1";
-            lblResult1.Size = new Size(14, 35);
+            lblResult1.Size = new Size(14, 39);
             lblResult1.TabIndex = 4;
             // 
             // txtCurrentPage
@@ -182,7 +182,7 @@
             txtCurrentPage.BackColor = Color.FromArgb(128, 255, 255);
             txtCurrentPage.Dock = DockStyle.Bottom;
             txtCurrentPage.Font = new Font("Segoe UI", 13F, FontStyle.Bold, GraphicsUnit.Point);
-            txtCurrentPage.Location = new Point(351, 4);
+            txtCurrentPage.Location = new Point(353, 8);
             txtCurrentPage.Margin = new Padding(3, 0, 3, 0);
             txtCurrentPage.Name = "txtCurrentPage";
             txtCurrentPage.Size = new Size(74, 31);
@@ -195,12 +195,11 @@
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ButtonHighlight;
-            BorderStyle = BorderStyle.Fixed3D;
             Controls.Add(tableLayoutPanel1);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             Margin = new Padding(4, 3, 4, 3);
             Name = "ucPages";
-            Size = new Size(837, 35);
+            Size = new Size(841, 39);
             ((System.ComponentModel.ISupportInitialize)picNext).EndInit();
             ((System.ComponentModel.ISupportInitialize)picLast).EndInit();
             ((System.ComponentModel.ISupportInitialize)picBack).EndInit();

@@ -32,7 +32,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 
         public async Task<Report<EventInReport>> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
                                     string identityGroupId, string vehicleTypeId, string laneId, string user, bool isPaging,
-                                    int pageIndex = 0, int pageSize = 100, string eventInId = "", bool isSaveLog = true)
+                                    int pageIndex = 0, int pageSize = 100, string eventInId = "", bool isSaveLog = true, int timeout = 10000)
         {
             server = server.StandardlizeServerName();
             string apiUrl = server + "event-in/search";
@@ -75,7 +75,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                                             pageIndex: pageIndex,
                                             pageSize: pageSize);
 
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, RestSharp.Method.Post, isSaveLog);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeout, Method.Post, isSaveLog);
 
             if (!string.IsNullOrEmpty(response.Item1))
             {
@@ -107,7 +107,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 
         public async Task<Report<EventOutReport>> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId,
                                                                string vehicleTypeId, string laneId, string user, bool isPaging,
-                                                               int pageIndex = 1, int pageSize = 10000, string eventId = "", bool isSaveLog = true)
+                                                               int pageIndex = 1, int pageSize = 10000, string eventId = "", bool isSaveLog = true, int timeout = 10000)
         {
             server = server.StandardlizeServerName();
             string apiUrl = server + "event-out/search";
@@ -148,7 +148,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
             var filter = Filter.CreateFilter(new List<Dictionary<string, List<FilterModel>>>() { filter1, filter2 }, isPaging,
                                             pageIndex: pageIndex,
                                             pageSize: pageSize);
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeOut, Method.Post, isSaveLog);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, filter, headers, null, timeout, Method.Post, isSaveLog);
             if (!string.IsNullOrEmpty(response.Item1))
             {
                 var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventOutReport>>>.GetBaseResponse(response.Item1);

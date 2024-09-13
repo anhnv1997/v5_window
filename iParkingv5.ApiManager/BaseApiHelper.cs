@@ -166,9 +166,16 @@ namespace iParkingv6.ApiManager
                 var request = new RestRequest
                 {
                     Method = method,
-                    Timeout = timeOut,
                     RequestFormat = DataFormat.Json
                 };
+                if (timeOut > 0)
+                {
+                    request.Timeout = timeOut;
+                }
+                else
+                {
+
+                }
                 if (data != null)
                     request.AddJsonBody(data);
 

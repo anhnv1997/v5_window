@@ -12,7 +12,7 @@ namespace iParkingv5.ApiManager.interfaces
         #region Event In
         Task<Report<EventInReport>> GetEventIns(string keyword, DateTime startTime, DateTime endTime,
                                     string identityGroupId, string vehicleTypeId, string laneId, string user, bool isPaging,
-                                    int pageIndex = 0, int pageSize = 100, string eventId = "", bool isSaveLog = true);
+                                    int pageIndex = 0, int pageSize = 100, string eventId = "", bool isSaveLog = true, int timeout = 10000);
         Task<EventInData> GetEventInById(string id);
         Task<EventOutData> GetEventOutById(string id);
         #endregion End Event In
@@ -20,7 +20,7 @@ namespace iParkingv5.ApiManager.interfaces
         #region Event Out
         Task<Report<EventOutReport>> GetEventOuts(string keyword, DateTime startTime, DateTime endTime, string identityGroupId,
                                                   string vehicleTypeId, string laneId, string user, bool isPaging,
-                                                  int pageIndex = 0, int pageSize = 10000, string eventId = "", bool isSaveLog = true);
+                                                  int pageIndex = 0, int pageSize = 10000, string eventId = "", bool isSaveLog = true, int timeout = 10000);
         #endregion End Event Out
 
         #region Alarm

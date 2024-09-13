@@ -344,9 +344,36 @@ namespace iParkingv5.Reporting
             }));
 
         }
-        private void btnExportExcel_Click(object? sender, EventArgs e)
+        private async void btnExportExcel_Click(object? sender, EventArgs e)
         {
-            ExcelTools.CreatReportFile(dgvData, "Báo cáo Xe Đang Trong Bãi", new List<string>() { lblTotalEvents.Text });
+            string keyword = txtKeyword.Text;
+            DateTime startTime = dtpStartTime.Value;
+            DateTime endTime = dtpEndTime.Value;
+            string vehicleTypeId = ((ListItem)cbVehicleType.SelectedItem)?.Value ?? "";
+            string identityGroupId = ((ListItem)cbIdentityGroupType.SelectedItem)?.Value ?? "";
+            string laneId = ((ListItem)cbLane.SelectedItem)?.Value ?? "";
+            string user = string.IsNullOrEmpty(((ListItem)cbUser.SelectedItem)?.Value) ? "" : cbUser.Text;
+
+            try
+            {
+                var report = await ApiServer.reportingService.GetEventIns(keyword, startTime, endTime, identityGroupId, vehicleTypeId, laneId, user, false, pageIndex: 0, pageSize: Filter.PAGE_SIZE, "", true, -1);
+
+                DataGridView dgvExport = new DataGridView();
+                foreach (DataGridViewColumn column in dgvData.Columns)
+                {
+                    DataGridViewColumn newColumn = (DataGridViewColumn)column.Clone();
+
+                    dgvExport.Columns.Add(newColumn);
+                }
+                DisplayExportData(report.data, dgvExport);
+
+                ExcelTools.CreatReportFile(dgvExport, "Báo cáo Xe Đang Trong Bãi", new List<string>() { lblTotalEvents.Text });
+                report.data.Clear();
+                dgvExport.Dispose();
+            }
+            catch (Exception)
+            {
+            }
         }
         private void btnCancel_Click(object? sender, EventArgs e)
         {
@@ -562,10 +589,68 @@ namespace iParkingv5.Reporting
             }
             catch (Exception ex)
             {
-                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, 
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
                                      "Display Event In Report", ex);
             }
         }
+        private void DisplayExportData(List<EventInReport> eventInReports, DataGridView dgv)
+        {
+            try
+            {
+                dgv.CurrentCell = null;
+                List<DataGridViewRow> rows = new List<DataGridViewRow>();
+                foreach (var item in eventInReports)
+                {
+                    DataGridViewRow row = new DataGridViewRow();
+                    this.Invoke(new Action(() =>
+                    {
+                        row.CreateCells(dgvData);
+                    }));
+
+                    row.Cells[dgv.Columns[col_event_id].Index].Value = item.Id;
+                    row.Cells[dgv.Columns[col_identity_id].Index].Value = item.Identity.Id;
+                    row.Cells[dgv.Columns[col_lane_in_id].Index].Value = item.Lane.Id;
+                    row.Cells[dgv.Columns[col_file_keys].Index].Value = item.images == null ?
+                                                                                    "[]" :
+                                                                                    Newtonsoft.Json.JsonConvert.SerializeObject(item.images);
+                    row.Cells[dgv.Columns[col_customer_id].Index].Value = item.customer?.Id;
+                    row.Cells[dgv.Columns[col_register_vehicle_id].Index].Value = item.vehicle?.Id;
+                    row.Cells[dgv.Columns[col_index].Index].Value = (rows.Count + 1).ToString();
+                    row.Cells[dgv.Columns[col_plate].Index].Value = item.PlateNumber;
+                    row.Cells[dgv.Columns[col_time_in].Index].Value = item.DateTimeIn.ToVNTime();
+                    row.Cells[dgv.Columns[col_note].Index].Value = item.Note;
+                    row.Cells[dgv.Columns[col_identity_group_name].Index].Value = item.IdentityGroup?.Name ?? "";
+                    row.Cells[dgv.Columns[col_user].Index].Value = item.CreatedBy;
+                    row.Cells[dgv.Columns[col_lane_in_name].Index].Value = item.Lane.name;
+                    row.Cells[dgv.Columns[col_identity_name].Index].Value = item.Identity.Name;
+                    row.Cells[dgv.Columns[col_identity_code].Index].Value = item.Identity.Code;
+                    row.Cells[dgv.Columns[col_register_plate].Index].Value = item.vehicle?.PlateNumber ?? "";
+                    row.Cells[dgv.Columns[col_customer].Index].Value = item.customer?.Name ?? "";
+                    row.Cells[dgv.Columns[col_see_more].Index].Value = "Xem Thêm";
+
+                    rows.Add(row);
+                }
+
+                this.Invoke(new Action(() =>
+                {
+                    dgv.Rows.AddRange(rows.ToArray());
+                    if (dgv.Rows.Count > 0)
+                    {
+                        dgv.CurrentCell = dgv.Rows[0].Cells[col_index];
+                    }
+                    else
+                    {
+                        dgv.CurrentCell = null;
+                    }
+                }));
+            }
+            catch (Exception ex)
+            {
+                tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS,
+                                     "Display Event In Report", ex);
+            }
+        }
+
         private void LoadVehicleTypeData()
         {
             cbVehicleType.Invoke(new Action(() =>
