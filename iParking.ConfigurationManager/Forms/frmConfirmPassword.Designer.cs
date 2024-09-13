@@ -1,4 +1,4 @@
-﻿namespace iParkingv5_window.Forms.SystemForms
+﻿namespace iParking.ConfigurationManager.Forms
 {
     partial class frmConfirmPassword
     {
@@ -151,4 +151,5 @@
         private Button btnCancel;
         private TableLayoutPanel tableLayoutPanel1;
     }
+
 }

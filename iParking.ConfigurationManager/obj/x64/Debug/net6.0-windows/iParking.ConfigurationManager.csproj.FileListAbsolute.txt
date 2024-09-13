@@ -189,3 +189,4 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.Configurat
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\iParking.ConfigurationManager.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\iParking.ConfigurationManager.genruntimeconfig.cache
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\ref\iParking.ConfigurationManager.dll
+E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\iParking.ConfigurationManager.Forms.frmConfirmPassword.resources

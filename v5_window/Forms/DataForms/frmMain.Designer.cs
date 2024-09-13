@@ -308,7 +308,8 @@ namespace iParkingv5_window.Forms.DataForms
             btnShowSystemLog.Name = "btnShowSystemLog";
             btnShowSystemLog.Size = new Size(316, 37);
             btnShowSystemLog.TabIndex = 2;
-            btnShowSystemLog.Text = "Xem log hệ thống";
+            btnShowSystemLog.Text = "+ Xem log hệ thống";
+            btnShowSystemLog.TextAlign = ContentAlignment.MiddleLeft;
             btnShowSystemLog.UseVisualStyleBackColor = true;
             btnShowSystemLog.Click += btnShowSystemLog_Click;
             // 
@@ -319,7 +320,8 @@ namespace iParkingv5_window.Forms.DataForms
             btnCheckVersion.Name = "btnCheckVersion";
             btnCheckVersion.Size = new Size(316, 37);
             btnCheckVersion.TabIndex = 1;
-            btnCheckVersion.Text = "Kiểm tra phiên bản";
+            btnCheckVersion.Text = "+ Kiểm tra phiên bản";
+            btnCheckVersion.TextAlign = ContentAlignment.MiddleLeft;
             btnCheckVersion.UseVisualStyleBackColor = true;
             btnCheckVersion.Click += btnCheckVersion_Click;
             // 
@@ -330,7 +332,8 @@ namespace iParkingv5_window.Forms.DataForms
             btnShowConnectionConfig.Name = "btnShowConnectionConfig";
             btnShowConnectionConfig.Size = new Size(316, 37);
             btnShowConnectionConfig.TabIndex = 3;
-            btnShowConnectionConfig.Text = "Xem cài đặt hệ thống";
+            btnShowConnectionConfig.Text = "+ Xem cài đặt hệ thống";
+            btnShowConnectionConfig.TextAlign = ContentAlignment.MiddleLeft;
             btnShowConnectionConfig.UseVisualStyleBackColor = true;
             btnShowConnectionConfig.Click += btnShowConnectionConfig_Click;
             // 

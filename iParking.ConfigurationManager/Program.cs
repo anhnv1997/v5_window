@@ -1,4 +1,5 @@
 using IPaking.Ultility;
+using iParking.ConfigurationManager.Forms;
 using iParking.ConfigurationManager.Forms.SystemForms;
 using Kztek.Tools;
 
@@ -16,7 +17,10 @@ namespace iParking.ConfigurationManager
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             PathManagement.baseBath = LogHelper.SaveLogFolder = Application.StartupPath;
-            Application.Run(new frmConnectionConfig());
+            if (new frmConfirmPassword().ShowDialog() == DialogResult.OK)
+            {
+                Application.Run(new frmConnectionConfig());
+            }
         }
     }
 }
