@@ -115,7 +115,7 @@ namespace iParkingv5.Reporting
 
                 CreateUI();
                 this.ActiveControl = btnSearch;
-                btnSearch.PerformClick();
+                //btnSearch.PerformClick();
 
                 cbVehicleType.SelectedIndexChanged += ChangeSearchConditionEvent;
                 cbIdentityGroup.SelectedIndexChanged += ChangeSearchConditionEvent;
@@ -178,7 +178,7 @@ namespace iParkingv5.Reporting
             if (e.Button == MouseButtons.Right)
             {
                 ContextMenuStrip ctx = new ContextMenuStrip();
-                ctx.Items.Add("Sửa ghi chú BSX").Name = "UpdateNote";
+                ctx.Items.Add("Sửa ghi chú").Name = "UpdateNote";
                 if (StaticPool.appOption.IsAllowEditPlateOut)
                 {
                     ctx.Items.Add("Sửa biển số vào").Name = "UpdatePlateIn";

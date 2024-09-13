@@ -10,9 +10,6 @@
     <Compile Update="Forms\DataForms\frmConfirmOut.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\DataForms\frmEventInDetail.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Forms\DataForms\frmLaneSetting.cs">
       <SubType>Form</SubType>
     </Compile>

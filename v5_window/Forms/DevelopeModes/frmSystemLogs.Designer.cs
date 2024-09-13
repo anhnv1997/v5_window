@@ -91,6 +91,9 @@
             // 
             // txtCmd
             // 
+            txtCmd.AutoCompleteCustomSource.AddRange(new string[] { "SELECT", "FROM", "tblAPILog", "tblAPILogDetail", "tblDeviceStatus", "tblLog", "tblSystemLog", "tblUserLog", "WHERE", "LIMIT", "ORDER", "BY" });
+            txtCmd.AutoCompleteMode = AutoCompleteMode.Suggest;
+            txtCmd.AutoCompleteSource = AutoCompleteSource.CustomSource;
             txtCmd.BackColor = SystemColors.InactiveCaption;
             txtCmd.Dock = DockStyle.Fill;
             txtCmd.Location = new Point(0, 0);

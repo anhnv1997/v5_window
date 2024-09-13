@@ -68,7 +68,7 @@
             // 
             lblCustomer.AutoSize = true;
             lblCustomer.BackColor = Color.Transparent;
-            lblCustomer.Location = new Point(45, 67);
+            lblCustomer.Location = new Point(21, 56);
             lblCustomer.Name = "lblCustomer";
             lblCustomer.Size = new Size(90, 15);
             lblCustomer.TabIndex = 0;
@@ -76,7 +76,7 @@
             // 
             // txtCustomerCode
             // 
-            txtCustomerCode.Location = new Point(126, 46);
+            txtCustomerCode.Location = new Point(117, 53);
             txtCustomerCode.Margin = new Padding(3, 2, 3, 2);
             txtCustomerCode.Name = "txtCustomerCode";
             txtCustomerCode.Size = new Size(320, 23);
@@ -103,7 +103,7 @@
             dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvData.Columns.AddRange(new DataGridViewColumn[] { Column2, Column3, Column8, Column5, Column6, Column4, Column7, Column1 });
-            dgvData.Location = new Point(45, 89);
+            dgvData.Location = new Point(21, 80);
             dgvData.Margin = new Padding(3, 2, 3, 2);
             dgvData.Name = "dgvData";
             dgvData.ReadOnly = true;
@@ -112,7 +112,7 @@
             dgvData.RowsDefaultCellStyle = dataGridViewCellStyle3;
             dgvData.RowTemplate.Height = 29;
             dgvData.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvData.Size = new Size(618, 188);
+            dgvData.Size = new Size(725, 334);
             dgvData.TabIndex = 2;
             // 
             // Column2

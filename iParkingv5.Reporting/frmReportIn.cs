@@ -118,7 +118,7 @@ namespace iParkingv5.Reporting
             cbLane.SelectedIndexChanged += ChangeSearchConditionEvent;
             cbUser.SelectedIndexChanged += ChangeSearchConditionEvent;
 
-            btnSearch.PerformClick();
+            //btnSearch.PerformClick();
 
             this.FormClosing += FrmReportIn_FormClosing;
         }
@@ -261,7 +261,7 @@ namespace iParkingv5.Reporting
             if (e.Button == MouseButtons.Right)
             {
                 ContextMenuStrip ctx = new ContextMenuStrip();
-                ctx.Items.Add("Sửa ghi chú BSX").Name = "UpdateNote";
+                ctx.Items.Add("Sửa ghi chú").Name = "UpdateNote";
                 ctx.Items.Add("Sửa biển số").Name = "UpdatePlateIn";
 
                 ctx.Font = new Font(dgvData.Font.Name, 16, FontStyle.Bold);

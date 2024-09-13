@@ -35,8 +35,10 @@
             panel2 = new Panel();
             btnConfirm = new Button();
             btnCancel = new Button();
+            tableLayoutPanel1 = new TableLayoutPanel();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -55,19 +57,17 @@
             // 
             txtPassword.Dock = DockStyle.Fill;
             txtPassword.Font = new Font("Segoe UI", 32F);
-            txtPassword.Location = new Point(120, 60);
+            txtPassword.Location = new Point(103, 75);
             txtPassword.Name = "txtPassword";
-            txtPassword.Size = new Size(420, 64);
+            txtPassword.Size = new Size(454, 64);
             txtPassword.TabIndex = 0;
             txtPassword.UseSystemPasswordChar = true;
             // 
             // panel1
             // 
-            panel1.Controls.Add(txtPassword);
-            panel1.Dock = DockStyle.Fill;
+            panel1.Controls.Add(tableLayoutPanel1);
             panel1.Location = new Point(0, 77);
             panel1.Name = "panel1";
-            panel1.Padding = new Padding(120, 60, 120, 100);
             panel1.Size = new Size(660, 215);
             panel1.TabIndex = 2;
             // 
@@ -111,6 +111,23 @@
             btnCancel.UseVisualStyleBackColor = true;
             btnCancel.Click += btnCancel_Click;
             // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 3;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 460F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Controls.Add(txtPassword, 1, 1);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 3;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Size = new Size(660, 215);
+            tableLayoutPanel1.TabIndex = 1;
+            // 
             // frmConfirmPassword
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -123,13 +140,16 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
             Margin = new Padding(4);
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "frmConfirmPassword";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Xác thực thông tin";
             panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -141,5 +161,6 @@
         private Panel panel2;
         private Button btnConfirm;
         private Button btnCancel;
+        private TableLayoutPanel tableLayoutPanel1;
     }
 }

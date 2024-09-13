@@ -57,7 +57,7 @@
             panelActiveLanes.Location = new Point(0, 0);
             panelActiveLanes.Margin = new Padding(3, 2, 3, 2);
             panelActiveLanes.Name = "panelActiveLanes";
-            panelActiveLanes.Size = new Size(646, 292);
+            panelActiveLanes.Size = new Size(646, 266);
             panelActiveLanes.TabIndex = 1;
             // 
             // chbSelectAll
@@ -85,7 +85,7 @@
             lblStatus.BackColor = Color.Transparent;
             lblStatus.Font = new Font("Segoe UI", 11.25F, FontStyle.Italic);
             lblStatus.ForeColor = Color.Green;
-            lblStatus.Location = new Point(20, 428);
+            lblStatus.Location = new Point(20, 415);
             lblStatus.Name = "lblStatus";
             lblStatus.Size = new Size(0, 20);
             lblStatus.TabIndex = 7;
@@ -95,7 +95,7 @@
             ucViewMode1.BackColor = SystemColors.ButtonHighlight;
             ucViewMode1.ColumnCount = 0;
             ucViewMode1.Dock = DockStyle.Bottom;
-            ucViewMode1.Location = new Point(0, 292);
+            ucViewMode1.Location = new Point(0, 266);
             ucViewMode1.Margin = new Padding(0);
             ucViewMode1.Name = "ucViewMode1";
             ucViewMode1.RowCount = 0;
@@ -109,14 +109,14 @@
             panel1.Controls.Add(ucViewMode1);
             panel1.Location = new Point(20, 68);
             panel1.Name = "panel1";
-            panel1.Size = new Size(646, 452);
+            panel1.Size = new Size(646, 426);
             panel1.TabIndex = 9;
             // 
             // frmSelectLaneMode
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(678, 546);
+            ClientSize = new Size(678, 533);
             Controls.Add(panel1);
             Controls.Add(lblStatus);
             Controls.Add(chbSelectAll);

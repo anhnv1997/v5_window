@@ -74,18 +74,20 @@ namespace iParkingv5_CustomerRegister.Forms
             panelData.Controls.Add(dgvData);
             panelData.Dock = DockStyle.Fill;
             panelData.Location = new Point(0, 0);
+            panelData.Margin = new Padding(3, 2, 3, 2);
             panelData.Name = "panelData";
-            panelData.Size = new Size(894, 496);
+            panelData.Size = new Size(782, 372);
             panelData.TabIndex = 0;
             // 
             // ucLoading1
             // 
             ucLoading1.BackColor = Color.FromArgb(255, 224, 192);
             ucLoading1.Language = IPaking.Ultility.TextManagement.EmLanguage.Vietnamese;
-            ucLoading1.Location = new Point(27, 316);
+            ucLoading1.Location = new Point(24, 237);
+            ucLoading1.Margin = new Padding(3, 2, 3, 2);
             ucLoading1.Message = "Preparing to download";
             ucLoading1.Name = "ucLoading1";
-            ucLoading1.Size = new Size(392, 188);
+            ucLoading1.Size = new Size(343, 141);
             ucLoading1.TabIndex = 28;
             // 
             // lblTitle
@@ -93,7 +95,7 @@ namespace iParkingv5_CustomerRegister.Forms
             lblTitle.AutoSize = true;
             lblTitle.BackColor = Color.Transparent;
             lblTitle.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
-            lblTitle.Location = new Point(83, 35);
+            lblTitle.Location = new Point(73, 26);
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(367, 45);
             lblTitle.TabIndex = 26;
@@ -103,9 +105,10 @@ namespace iParkingv5_CustomerRegister.Forms
             // 
             btnCancel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnCancel1.AutoSize = true;
-            btnCancel1.Location = new Point(552, 355);
+            btnCancel1.Location = new Point(693, 336);
+            btnCancel1.Margin = new Padding(3, 2, 3, 2);
             btnCancel1.Name = "btnCancel1";
-            btnCancel1.Size = new Size(88, 30);
+            btnCancel1.Size = new Size(77, 25);
             btnCancel1.TabIndex = 4;
             btnCancel1.Text = "Đóng";
             // 
@@ -114,17 +117,19 @@ namespace iParkingv5_CustomerRegister.Forms
             btnOk1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnOk1.AutoSize = true;
             btnOk1.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            btnOk1.Location = new Point(490, 355);
+            btnOk1.Location = new Point(639, 339);
+            btnOk1.Margin = new Padding(3, 2, 3, 2);
             btnOk1.Name = "btnOk1";
-            btnOk1.Size = new Size(64, 30);
+            btnOk1.Size = new Size(56, 22);
             btnOk1.TabIndex = 3;
             // 
-            // lblSearch
+            // btnSearch
             // 
             btnSearch.AutoSize = true;
             btnSearch.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold);
-            btnSearch.Location = new Point(560, 98);
-            btnSearch.Name = "lblSearch";
+            btnSearch.Location = new Point(491, 70);
+            btnSearch.Margin = new Padding(3, 2, 3, 2);
+            btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(91, 30);
             btnSearch.TabIndex = 1;
             btnSearch.Text = "lblSearch1";
@@ -132,31 +137,33 @@ namespace iParkingv5_CustomerRegister.Forms
             // ucNotify1
             // 
             ucNotify1.BackColor = Color.FromArgb(255, 224, 192);
-            ucNotify1.Location = new Point(579, 96);
-            ucNotify1.MaximumSize = new Size(333, 356);
+            ucNotify1.Location = new Point(507, 72);
+            ucNotify1.Margin = new Padding(3, 2, 3, 2);
+            ucNotify1.MaximumSize = new Size(291, 267);
             ucNotify1.Message = "Nội dung thông báo";
-            ucNotify1.MinimumSize = new Size(333, 356);
+            ucNotify1.MinimumSize = new Size(291, 267);
             ucNotify1.Name = "ucNotify1";
             ucNotify1.NotiType = ucNotify.EmNotiType.Information;
-            ucNotify1.Size = new Size(333, 356);
+            ucNotify1.Size = new Size(291, 267);
             ucNotify1.TabIndex = 27;
             // 
             // lblKeyword
             // 
             lblKeyword.AutoSize = true;
             lblKeyword.BackColor = Color.Transparent;
-            lblKeyword.Location = new Point(83, 105);
+            lblKeyword.Location = new Point(73, 79);
             lblKeyword.Name = "lblKeyword";
-            lblKeyword.Size = new Size(62, 20);
+            lblKeyword.Size = new Size(49, 15);
             lblKeyword.TabIndex = 20;
             lblKeyword.Text = "Từ khóa";
             // 
             // txtKeyword
             // 
-            txtKeyword.Location = new Point(170, 98);
+            txtKeyword.Location = new Point(149, 74);
+            txtKeyword.Margin = new Padding(3, 2, 3, 2);
             txtKeyword.Name = "txtKeyword";
             txtKeyword.PlaceholderText = "Tên/Biển số xe";
-            txtKeyword.Size = new Size(365, 27);
+            txtKeyword.Size = new Size(320, 23);
             txtKeyword.TabIndex = 0;
             // 
             // dgvData
@@ -180,7 +187,8 @@ namespace iParkingv5_CustomerRegister.Forms
             dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvData.Columns.AddRange(new DataGridViewColumn[] { Column2, Column3, Column8, Column5, Column6, Column11, Column10, Column12, Column1, Column4, Column7, Column9 });
-            dgvData.Location = new Point(170, 143);
+            dgvData.Location = new Point(12, 115);
+            dgvData.Margin = new Padding(3, 2, 3, 2);
             dgvData.Name = "dgvData";
             dgvData.ReadOnly = true;
             dgvData.RowHeadersVisible = false;
@@ -188,7 +196,7 @@ namespace iParkingv5_CustomerRegister.Forms
             dgvData.RowsDefaultCellStyle = dataGridViewCellStyle3;
             dgvData.RowTemplate.Height = 29;
             dgvData.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvData.Size = new Size(457, 193);
+            dgvData.Size = new Size(758, 217);
             dgvData.TabIndex = 2;
             // 
             // Column2
@@ -281,12 +289,13 @@ namespace iParkingv5_CustomerRegister.Forms
             // 
             // frmSearchPlateNumber
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(894, 496);
+            ClientSize = new Size(782, 372);
             Controls.Add(panelData);
             DoubleBuffered = true;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(3, 2, 3, 2);
             Name = "frmSearchPlateNumber";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Tìm kiếm biển số xe";
