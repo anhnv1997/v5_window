@@ -55,8 +55,10 @@ namespace iParkingv5_window.Forms.DataForms
             ucEventCount1 = new Usercontrols.ucEventCount();
             timerUpdateTime = new System.Windows.Forms.Timer(components);
             panelDevelopeMode = new Panel();
-            dgvWaitingEvents = new DataGridView();
+            btnShowSystemLog = new Button();
+            btnCheckVersion = new Button();
             label1 = new Label();
+            btnShowConnectionConfig = new Button();
             splitterDevelopeMode = new Splitter();
             timerUpdateControllerConnection = new System.Windows.Forms.Timer(components);
             timerRestartSockerServer = new System.Windows.Forms.Timer(components);
@@ -65,7 +67,6 @@ namespace iParkingv5_window.Forms.DataForms
             panelMain.SuspendLayout();
             panelAppStatus.SuspendLayout();
             panelDevelopeMode.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvWaitingEvents).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -287,9 +288,12 @@ namespace iParkingv5_window.Forms.DataForms
             // panelDevelopeMode
             // 
             panelDevelopeMode.BackColor = SystemColors.Control;
-            panelDevelopeMode.Controls.Add(dgvWaitingEvents);
+            panelDevelopeMode.Controls.Add(btnShowSystemLog);
+            panelDevelopeMode.Controls.Add(btnCheckVersion);
+            panelDevelopeMode.Controls.Add(btnShowConnectionConfig);
             panelDevelopeMode.Controls.Add(label1);
             panelDevelopeMode.Dock = DockStyle.Right;
+            panelDevelopeMode.Font = new Font("Segoe UI", 12F);
             panelDevelopeMode.Location = new Point(742, 29);
             panelDevelopeMode.Margin = new Padding(3, 2, 3, 2);
             panelDevelopeMode.Name = "panelDevelopeMode";
@@ -297,20 +301,27 @@ namespace iParkingv5_window.Forms.DataForms
             panelDevelopeMode.TabIndex = 3;
             panelDevelopeMode.Visible = false;
             // 
-            // dgvWaitingEvents
+            // btnShowSystemLog
             // 
-            dgvWaitingEvents.AllowUserToAddRows = false;
-            dgvWaitingEvents.AllowUserToDeleteRows = false;
-            dgvWaitingEvents.BackgroundColor = SystemColors.Control;
-            dgvWaitingEvents.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvWaitingEvents.Dock = DockStyle.Fill;
-            dgvWaitingEvents.Location = new Point(0, 35);
-            dgvWaitingEvents.Margin = new Padding(3, 2, 3, 2);
-            dgvWaitingEvents.Name = "dgvWaitingEvents";
-            dgvWaitingEvents.ReadOnly = true;
-            dgvWaitingEvents.RowTemplate.Height = 29;
-            dgvWaitingEvents.Size = new Size(316, 407);
-            dgvWaitingEvents.TabIndex = 1;
+            btnShowSystemLog.Dock = DockStyle.Top;
+            btnShowSystemLog.Location = new Point(0, 109);
+            btnShowSystemLog.Name = "btnShowSystemLog";
+            btnShowSystemLog.Size = new Size(316, 37);
+            btnShowSystemLog.TabIndex = 2;
+            btnShowSystemLog.Text = "Xem log hệ thống";
+            btnShowSystemLog.UseVisualStyleBackColor = true;
+            btnShowSystemLog.Click += btnShowSystemLog_Click;
+            // 
+            // btnCheckVersion
+            // 
+            btnCheckVersion.Dock = DockStyle.Top;
+            btnCheckVersion.Location = new Point(0, 72);
+            btnCheckVersion.Name = "btnCheckVersion";
+            btnCheckVersion.Size = new Size(316, 37);
+            btnCheckVersion.TabIndex = 1;
+            btnCheckVersion.Text = "Kiểm tra phiên bản";
+            btnCheckVersion.UseVisualStyleBackColor = true;
+            btnCheckVersion.Click += btnCheckVersion_Click;
             // 
             // label1
             // 
@@ -324,6 +335,17 @@ namespace iParkingv5_window.Forms.DataForms
             label1.TabIndex = 0;
             label1.Text = "Chế độ cho nhà phát triển";
             label1.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // btnShowConnectionConfig
+            // 
+            btnShowConnectionConfig.Dock = DockStyle.Top;
+            btnShowConnectionConfig.Location = new Point(0, 35);
+            btnShowConnectionConfig.Name = "btnShowConnectionConfig";
+            btnShowConnectionConfig.Size = new Size(316, 37);
+            btnShowConnectionConfig.TabIndex = 3;
+            btnShowConnectionConfig.Text = "Xem cài đặt hệ thống";
+            btnShowConnectionConfig.UseVisualStyleBackColor = true;
+            btnShowConnectionConfig.Click += btnShowConnectionConfig_Click;
             // 
             // splitterDevelopeMode
             // 
@@ -374,7 +396,6 @@ namespace iParkingv5_window.Forms.DataForms
             panelMain.ResumeLayout(false);
             panelAppStatus.ResumeLayout(false);
             panelDevelopeMode.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvWaitingEvents).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -397,7 +418,6 @@ namespace iParkingv5_window.Forms.DataForms
         private Panel panelDevelopeMode;
         private Splitter splitterDevelopeMode;
         private Label label1;
-        private DataGridView dgvWaitingEvents;
         private ToolStripMenuItem tsmiAlarmReport;
         private System.Windows.Forms.Timer timerUpdateControllerConnection;
         private ToolStripMenuItem tsmiActiveLanesConfig;
@@ -410,5 +430,8 @@ namespace iParkingv5_window.Forms.DataForms
         private ToolStripMenuItem tsmiRegister;
         private ToolStripMenuItem inQRToolStripMenuItem;
         private Usercontrols.ucEventCount ucEventCount1;
+        private Button btnShowSystemLog;
+        private Button btnCheckVersion;
+        private Button btnShowConnectionConfig;
     }
 }

@@ -37,6 +37,12 @@
     <Compile Update="Forms\DataForms\frmTestLedDisplay.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\DevelopeModes\frmSystemLogs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\DevelopeModes\frmVersions.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\SystemForms\frmConfirmPassword.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +110,9 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Usercontrols\ucCameraView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Usercontrols\ucFileInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Usercontrols\ucViewMode.cs">

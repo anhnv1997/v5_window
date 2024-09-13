@@ -40,6 +40,8 @@ using DocumentFormat.OpenXml.VariantTypes;
 using iParkingv5.ApiManager;
 using iParkingv5_window.Forms.ThirdPartyForms.HANETForms;
 using static iParkingv5.Objects.Configs.AppViewModeConfig;
+using iParkingv5_window.Forms.DevelopeModes;
+using iParking.ConfigurationManager.Forms.SystemForms;
 
 namespace iParkingv5_window.Forms.DataForms
 {
@@ -696,11 +698,17 @@ namespace iParkingv5_window.Forms.DataForms
                 {
                     if (item.lane.code == ce.DeviceId)
                     {
-                        lblLoadingStatus.Message = $"{DateTime.Now:HH:mm:ss} READER: {ce.ReaderIndex}, CARD: {ce.PreferCard} Controller: " + ce.DeviceName;
-                        ce.DeviceId = item.lane.controlUnits[0].controlUnitId;
-                        ce.ReaderIndex = item.lane.controlUnits[0].readers[0];
-                        item.OnNewEvent(ce);
-                        break;
+                        foreach (var controlUnit in item.lane.controlUnits)
+                        {
+                            if (controlUnit.readers.Length > 0)
+                            {
+                                ce.DeviceId = controlUnit.controlUnitId;
+                                ce.ReaderIndex = controlUnit.readers[0];
+                                lblLoadingStatus.Message = $"{DateTime.Now:HH:mm:ss} READER: {ce.ReaderIndex}, CARD: {ce.PreferCard} Controller: " + ce.DeviceName;
+                                item.OnNewEvent(ce);
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -950,20 +958,20 @@ namespace iParkingv5_window.Forms.DataForms
                 {
                     if (lane.lane.type + 1 == (int)EmLaneDirection.IN)
                     {
-                        if (lane.lane.controlUnits[0].readers.Length > 0)
+                        foreach (var item in lane.lane.controlUnits)
                         {
-                            CardEventArgs ce = new CardEventArgs();
-                            ce.DeviceId = lane.lane.controlUnits[0].controlUnitId;
-                            ce.ReaderIndex = lane.lane.controlUnits[0].readers[0];
-                            ce.PreferCard = lastHausVistor.IdentityCode;
-                            lane.printQR(ce, qrData);
-                            break;
+                            if (item.readers.Length > 0)
+                            {
+                                CardEventArgs ce = new CardEventArgs();
+                                ce.DeviceId = item.controlUnitId;
+                                ce.ReaderIndex = item.readers[0];
+                                ce.PreferCard = lastHausVistor.IdentityCode;
+                                lane.printQR(ce, qrData);
+                                break;
+                            }
                         }
                     }
                 }
-                //var printer = new OfficeHausPrinter();
-                //string baseContent = File.ReadAllText(PathManagement.hausQRPath());
-                //printer.printQR(baseContent, qrData.QrCode ?? "");
             }
         }
 
@@ -1033,5 +1041,21 @@ namespace iParkingv5_window.Forms.DataForms
                 }
             }
         }
+
+        #region Develope mode
+        private void btnCheckVersion_Click(object sender, EventArgs e)
+        {
+            new frmVersions().Show(this);
+        }
+
+        private void btnShowSystemLog_Click(object sender, EventArgs e)
+        {
+            new frmSystemLogs().Show(this);
+        }
+        private void btnShowConnectionConfig_Click(object sender, EventArgs e)
+        {
+            new frmConnectionConfig().Show(this);
+        }
+        #endregion End Develope mode
     }
 }
