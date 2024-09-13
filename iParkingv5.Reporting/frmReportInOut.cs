@@ -133,7 +133,7 @@ namespace iParkingv5.Reporting
         }
         private void FrmReportInOut_SizeChanged(object? sender, EventArgs e)
         {
-            if (ucPages1.Visible)
+            if (ucPages1.MaxPage > 1)
             {
                 dgvData.Height = btnCancel.Location.Y - dgvData.Location.Y - TextManagement.ROOT_SIZE * 2 - ucPages1.Height;
             }
@@ -152,6 +152,8 @@ namespace iParkingv5.Reporting
                                                btnPrintPhieuThu.Location.Y - lblTotalEvents.Height + btnPrintPhieuThu.Height);
             ucPages1.Width = panelData.Width - TextManagement.ROOT_SIZE * 4;
             ucPages1.Location = new Point(dgvData.Location.X, dgvData.Location.Y + dgvData.Height + TextManagement.ROOT_SIZE);
+            if (ucPages1.MaxPage > 1)
+                ucPages1.Visible = true;
         }
         private void FrmReportInOut_KeyDown(object? sender, KeyEventArgs e)
         {
@@ -475,12 +477,8 @@ namespace iParkingv5.Reporting
         }
         private void DisplayNavigation()
         {
-            if (totalPages > 1)
-            {
-                ucPages1.Visible = true;
-                ucPages1.UpdateMaxPage(totalPages);
-            }
-            else
+            ucPages1.UpdateMaxPage(totalPages);
+            if (totalPages <= 1)
             {
                 ucPages1.Visible = false;
             }

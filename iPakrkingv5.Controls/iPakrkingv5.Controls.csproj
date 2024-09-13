@@ -12,6 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="fontawesome.sharp" Version="6.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\IPaking.Ultility\IPaking.Ultility.csproj" />
   </ItemGroup>
 

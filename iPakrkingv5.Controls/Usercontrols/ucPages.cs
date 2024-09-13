@@ -15,84 +15,155 @@ namespace iPakrkingv5.Controls.Usercontrols
     public partial class ucPages : UserControl
     {
         #region Properties
-        private int maxPage = 0;
-        private int currentPage = 0;
         public event OnpageSelect OnpageSelect;
+
+        private int maxPage = 0;
+        // Expose properties to design mode
+        [Browsable(true)]
+        [Category("Custom maxPage")]
+        [Description("Sets the text of the Label")]
+        public int MaxPage
+        {
+            get { return maxPage; }
+            set
+            {
+                this.maxPage = value;
+                lblMaxPage.Message = value.ToString();
+                this.Refresh();
+            }
+        }
+
+        private int currentPage = 0;
+        // Expose properties to design mode
+        [Browsable(true)]
+        [Category("Custom current page")]
+        [Description("Sets the text of the Label")]
+        public int CurrentPage
+        {
+            get { return currentPage; }
+            set
+            {
+                if (value <= 1)
+                {
+                    this.currentPage = 1;
+                }
+                else
+                {
+                    if (value <= maxPage)
+                    {
+                        this.currentPage = value;
+                    }
+                }
+                if (this.currentPage == 1)
+                {
+                    EnableFirstPageMode();
+                }
+                else if (this.currentPage == maxPage)
+                {
+                    EnableLastPageMode();
+                }
+                else
+                {
+                    EnableNormalPageMode();
+                }
+
+                txtCurrentPage.Text = this.currentPage.ToString();
+                txtCurrentPage.Refresh();
+                OnpageSelect?.Invoke(int.Parse(txtCurrentPage.Text.Trim()));
+            }
+        }
+
+        private void EnableNormalPageMode()
+        {
+            picLast.Enabled = true;
+            picNext.Enabled = true;
+            picFirst.Enabled = true;
+            picBack.Enabled = true;
+            picLast.BackColor = SystemColors.ButtonHighlight;
+            picNext.BackColor = SystemColors.ButtonHighlight;
+            picFirst.BackColor = SystemColors.ButtonHighlight;
+            picBack.BackColor = SystemColors.ButtonHighlight;
+        }
+
+        private void EnableLastPageMode()
+        {
+            picLast.Enabled = false;
+            picNext.Enabled = false;
+            picFirst.Enabled = true;
+            picBack.Enabled = true;
+            picLast.BackColor = SystemColors.Control;
+            picNext.BackColor = SystemColors.Control;
+            picFirst.BackColor = SystemColors.ButtonHighlight;
+            picBack.BackColor = SystemColors.ButtonHighlight;
+        }
+
+        private void EnableFirstPageMode()
+        {
+            picFirst.Enabled = false;
+            picBack.Enabled = false;
+            picLast.Enabled = true;
+            picNext.Enabled = true;
+            picFirst.BackColor = SystemColors.Control;
+            picBack.BackColor = SystemColors.Control;
+            picLast.BackColor = SystemColors.ButtonHighlight;
+            picNext.BackColor = SystemColors.ButtonHighlight;
+        }
+
         #endregion
 
         #region Forms
         public ucPages()
         {
             InitializeComponent();
+            txtCurrentPage.KeyDown += TxtCurrentPage_KeyDown;
             this.ToggleDoubleBuffered(true);
-            panelPages.ToggleDoubleBuffered(true);
-            panelPages.Font = new Font(this.Font, FontStyle.Underline);
-            panelPages.Height = 44;
-            panelPages.MinimumSize = new Size(0, 44);
+            //panelPages.ToggleDoubleBuffered(true);
+            //panelPages.Font = new Font(this.Font, FontStyle.Underline);
+            //panelPages.Height = 44;
+            this.BackColor = SystemColors.Control;
+            this.MinimumSize = new Size(0, 44);
+        }
+
+        private void TxtCurrentPage_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                int pageIndex = 0;
+                int.TryParse(txtCurrentPage.Text.Trim(), out pageIndex);
+                this.currentPage = pageIndex;
+            }
         }
         #endregion End Forms
 
         #region Public Function
         public void UpdateMaxPage(int maxPage)
         {
-            this.SuspendLayout();
-            panelPages.SuspendLayout();
             this.maxPage = maxPage;
-            foreach (Control item in panelPages.Controls)
-            {
-                if (item is lblPageIndex lbl)
-                {
-                    lbl.Click -= LblPageIndex_Click;
-                    lbl.Dispose();
-                }
-            }
-
-            panelPages.Controls.Clear();
-            panelPages.AutoScroll = false;
-            Control[] list = new Control[maxPage];
-            for (int i = 0; i < maxPage; i++)
-            {
-                lblPageIndex lblPageIndex = new lblPageIndex(maxPage - i);
-                lblPageIndex.Click += LblPageIndex_Click;
-                lblPageIndex.Dock = DockStyle.Left;
-                //lblPageIndex.BackColor = Color.Transparent;
-                if (i == maxPage - 1)
-                {
-                    lblPageIndex.BorderStyle = BorderStyle.Fixed3D;
-                    lblPageIndex.ForeColor = Color.FromArgb(253, 149, 40);
-                }
-                list[i] = lblPageIndex;
-            }
-            panelPages.Controls.AddRange(list.ToArray());
-            currentPage = 0;
-            panelPages.AutoScroll = true;
-            this.Height = panelPages.Height;
-            panelPages.ResumeLayout(false);
-            panelPages.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-        }
-        private void LblPageIndex_Click(object? sender, EventArgs e)
-        {
-            lblPageIndex lblPageIndex = (sender as lblPageIndex)!;
-            foreach (lblPageIndex item in panelPages.Controls)
-            {
-                if (item.BorderStyle == BorderStyle.Fixed3D)
-                {
-                    if (currentPage != lblPageIndex.PageIndex)
-                    {
-                        item.BorderStyle = BorderStyle.None;
-                        item.ForeColor = Color.Black;
-                    }
-                    break;
-                }
-            }
-            lblPageIndex.BorderStyle = BorderStyle.Fixed3D;
-            lblPageIndex.ForeColor = Color.FromArgb(253, 149, 40);
-            lblPageIndex.Size = lblPageIndex.PreferredSize;
-            panelPages.Refresh();
-            OnpageSelect?.Invoke(lblPageIndex!.PageIndex);
+            this.currentPage = 1;
+            txtCurrentPage.Text = "1";
+            lblMaxPage.Message = maxPage.ToString();
+            EnableFirstPageMode();
         }
         #endregion End Public Function
+
+        #region Controls In Form
+        private void picNext_Click(object sender, EventArgs e)
+        {
+            this.CurrentPage++;
+        }
+        private void picLast_Click(object sender, EventArgs e)
+        {
+            this.CurrentPage = this.maxPage;
+        }
+
+        private void picBack_Click(object sender, EventArgs e)
+        {
+            this.CurrentPage--;
+        }
+        private void picFirst_Click(object sender, EventArgs e)
+        {
+            this.CurrentPage = 1;
+        }
+        #endregion End Controls In Form
     }
 }

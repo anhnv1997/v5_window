@@ -1023,7 +1023,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "IPaking.Ultility": "1.0.0.3"
+          "IPaking.Ultility": "1.0.0.3",
+          "fontawesome.sharp": "6.3.0"
         },
         "compile": {
           "bin/placeholder/iPakrkingv5.Controls.dll": {}

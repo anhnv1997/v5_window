@@ -57,8 +57,8 @@ namespace iParkingv5_window.Forms.DataForms
             panelDevelopeMode = new Panel();
             btnShowSystemLog = new Button();
             btnCheckVersion = new Button();
-            label1 = new Label();
             btnShowConnectionConfig = new Button();
+            label1 = new Label();
             splitterDevelopeMode = new Splitter();
             timerUpdateControllerConnection = new System.Windows.Forms.Timer(components);
             timerRestartSockerServer = new System.Windows.Forms.Timer(components);
@@ -323,6 +323,17 @@ namespace iParkingv5_window.Forms.DataForms
             btnCheckVersion.UseVisualStyleBackColor = true;
             btnCheckVersion.Click += btnCheckVersion_Click;
             // 
+            // btnShowConnectionConfig
+            // 
+            btnShowConnectionConfig.Dock = DockStyle.Top;
+            btnShowConnectionConfig.Location = new Point(0, 35);
+            btnShowConnectionConfig.Name = "btnShowConnectionConfig";
+            btnShowConnectionConfig.Size = new Size(316, 37);
+            btnShowConnectionConfig.TabIndex = 3;
+            btnShowConnectionConfig.Text = "Xem cài đặt hệ thống";
+            btnShowConnectionConfig.UseVisualStyleBackColor = true;
+            btnShowConnectionConfig.Click += btnShowConnectionConfig_Click;
+            // 
             // label1
             // 
             label1.BackColor = Color.Navy;
@@ -335,17 +346,6 @@ namespace iParkingv5_window.Forms.DataForms
             label1.TabIndex = 0;
             label1.Text = "Chế độ cho nhà phát triển";
             label1.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // btnShowConnectionConfig
-            // 
-            btnShowConnectionConfig.Dock = DockStyle.Top;
-            btnShowConnectionConfig.Location = new Point(0, 35);
-            btnShowConnectionConfig.Name = "btnShowConnectionConfig";
-            btnShowConnectionConfig.Size = new Size(316, 37);
-            btnShowConnectionConfig.TabIndex = 3;
-            btnShowConnectionConfig.Text = "Xem cài đặt hệ thống";
-            btnShowConnectionConfig.UseVisualStyleBackColor = true;
-            btnShowConnectionConfig.Click += btnShowConnectionConfig_Click;
             // 
             // splitterDevelopeMode
             // 

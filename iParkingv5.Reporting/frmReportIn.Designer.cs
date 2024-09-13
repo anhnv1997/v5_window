@@ -598,9 +598,12 @@ namespace iParkingv5.Reporting
             ucPages1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             ucPages1.BackColor = Color.Transparent;
             ucPages1.BorderStyle = BorderStyle.Fixed3D;
+            ucPages1.CurrentPage = 1;
             ucPages1.Font = new Font("Segoe UI", 12F);
             ucPages1.Location = new Point(9, 652);
             ucPages1.Margin = new Padding(4, 3, 4, 3);
+            ucPages1.MaxPage = 0;
+            ucPages1.MinimumSize = new Size(0, 44);
             ucPages1.Name = "ucPages1";
             ucPages1.Size = new Size(1551, 50);
             ucPages1.TabIndex = 43;

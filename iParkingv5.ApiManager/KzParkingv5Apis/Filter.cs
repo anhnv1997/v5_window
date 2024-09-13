@@ -36,7 +36,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
 
     public class Filter
     {
-        public const int PAGE_SIZE = 50;
+        public const int PAGE_SIZE = 1;
         public enum EmMainOperation
         {
             and,
