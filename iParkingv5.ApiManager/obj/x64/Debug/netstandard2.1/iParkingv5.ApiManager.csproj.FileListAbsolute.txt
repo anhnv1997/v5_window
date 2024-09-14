@@ -18,23 +18,9 @@ F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\obj\x64\Debug\netstand
 F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\iParkingv5.ApiManager.deps.json
 F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\iParkingv5.ApiManager.dll
 F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\iParkingv5.ApiManager.pdb
-F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\iParkingv5.Lpr.dll
 F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\iParkingv5.Objects.dll
 F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Kztek.Tool.dll
-F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\NXT.Net6.LPR_AI.dll
-F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\DarknetYolo.dll
-F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Sdcb.PaddleOCR.dll
-F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Emgu.CV.Platform.NetStandard.dll
-F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Sdcb.PaddleOCR.Models.Local.dll
-F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Sdcb.PaddleInference.dll
-F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Emgu.CV.Bitmap.dll
-F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Sdcb.PaddleOCR.Models.Shared.dll
-F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Sdcb.PaddleOCR.Models.LocalV3.dll
-F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Sdcb.PaddleOCR.Models.LocalV4.dll
 F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\iParkingv5.Objects.pdb
-F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\iParkingv5.Lpr.pdb
-F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\NXT.Net6.LPR_AI.pdb
-F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\DarknetYolo.pdb
 F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\obj\x64\Debug\netstandard2.1\iParkingv5.ApiManager.csproj.AssemblyReference.cache
 F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\obj\x64\Debug\netstandard2.1\iParkingv5.ApiManager.GeneratedMSBuildEditorConfig.editorconfig
 F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\obj\x64\Debug\netstandard2.1\iParkingv5.ApiManager.AssemblyInfoInputs.cache
@@ -60,3 +46,7 @@ E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManag
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\obj\x64\Debug\netstandard2.1\iParking.27C041DC.Up2Date
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\obj\x64\Debug\netstandard2.1\iParkingv5.ApiManager.dll
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\iParkingv5.ApiManager\obj\x64\Debug\netstandard2.1\iParkingv5.ApiManager.pdb
+F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\LogFormat\log.html
+F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\LogFormat\log_item.html
+F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\LogFormat\style.css
+F:\KZTEK\Source ParkingV5\v5_window\iParkingv5.ApiManager\bin\x64\Debug\netstandard2.1\Kztek.Tool.pdb

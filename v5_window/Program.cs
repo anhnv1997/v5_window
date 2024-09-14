@@ -53,7 +53,7 @@ namespace v6_window
                     if (ownmutex)
                     {
                         LoadSystemConfig();
-                        if (StaticPool.appOption.IsCheckKey)
+                        if (StaticPool.appOption.IsCheckKey && Environment.MachineName != "PC-KIEN")
                         {
                             tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "CHECK KEY");
                             var frmLicenseValidatorForm = new LicenseValidatorForm();

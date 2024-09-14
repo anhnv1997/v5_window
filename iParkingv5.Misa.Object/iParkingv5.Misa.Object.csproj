@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <Reference Include="SayMoney">
-      <HintPath>..\packages\Extension\SayMoney.dll</HintPath>
+      <HintPath>..\packages\iParkingv5_Package\Extension\SayMoney.dll</HintPath>
     </Reference>
   </ItemGroup>
 

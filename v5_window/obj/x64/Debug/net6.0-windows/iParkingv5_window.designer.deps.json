@@ -244,14 +244,6 @@
           }
         }
       },
-      "RtspClientSharpSPG/0.0.3": {
-        "runtime": {
-          "lib/netstandard2.0/RtspClientSharp.dll": {
-            "assemblyVersion": "0.0.3.0",
-            "fileVersion": "0.0.3.0"
-          }
-        }
-      },
       "runtime.linux-arm.runtime.native.System.IO.Ports/8.0.0": {
         "runtimeTargets": {
           "runtimes/linux-arm/native/libSystem.IO.Ports.Native.so": {
@@ -907,13 +899,6 @@
       "sha512": "sha512-wcoXyVbko3WppcsF5te1DwiklKmG6tup9LP3h4CAIPeOQxPC4Ct63jEy+s826Wj2gwuohAs9BUTNLNofl1yfeg==",
       "path": "restsharp.authenticators.digest/1.6.0",
       "hashPath": "restsharp.authenticators.digest.1.6.0.nupkg.sha512"
-    },
-    "RtspClientSharpSPG/0.0.3": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-zynym3QRbFwgZhuiu2KvroJ2HnT0M+Y/Io7SbI8V/w0X3hS3YrpfN4OwxsyLa/Je981NSeOFsaT1pe2bEgtoEQ==",
-      "path": "rtspclientsharpspg/0.0.3",
-      "hashPath": "rtspclientsharpspg.0.0.3.nupkg.sha512"
     },
     "runtime.linux-arm.runtime.native.System.IO.Ports/8.0.0": {
       "type": "package",

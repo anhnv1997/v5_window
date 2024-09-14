@@ -34,7 +34,7 @@
 
   <ItemGroup>
     <Reference Include="DahuaLib">
-      <HintPath>..\packages\CameraLib\Dahua\DahuaLib.dll</HintPath>
+      <HintPath>..\packages\iParkingv5_Package\CameraLib\Dahua\DahuaLib.dll</HintPath>
     </Reference>
   </ItemGroup>
 
