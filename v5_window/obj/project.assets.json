@@ -356,15 +356,6 @@
           "lib/netstandard2.0/RestSharp.Authenticators.Digest.dll": {}
         }
       },
-      "RtspClientSharpSPG/0.0.3": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/RtspClientSharp.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/RtspClientSharp.dll": {}
-        }
-      },
       "runtime.linux-arm.runtime.native.System.IO.Ports/8.0.0": {
         "type": "package",
         "runtimeTargets": {
@@ -1222,22 +1213,6 @@
           "Microsoft.WindowsDesktop.App.WindowsForms"
         ]
       },
-      "Kztek.Cameras/1.0.0.2": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v5.0",
-        "dependencies": {
-          "Kztek.RtspPlayer": "1.0.0.2"
-        },
-        "compile": {
-          "bin/placeholder/Kztek.Cameras.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Kztek.Cameras.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.WindowsDesktop.App.WindowsForms"
-        ]
-      },
       "Kztek.Helper/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -1251,22 +1226,6 @@
         },
         "runtime": {
           "bin/placeholder/Kztek.Helper.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.WindowsDesktop.App.WindowsForms"
-        ]
-      },
-      "Kztek.RtspPlayer/1.0.0.2": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v5.0",
-        "dependencies": {
-          "RtspClientSharpSPG": "0.0.3"
-        },
-        "compile": {
-          "bin/placeholder/Kztek.RtspPlayer.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Kztek.RtspPlayer.dll": {}
         },
         "frameworkReferences": [
           "Microsoft.WindowsDesktop.App.WindowsForms"
@@ -1917,18 +1876,6 @@
         "lib/netstandard2.0/RestSharp.Authenticators.Digest.dll",
         "restsharp.authenticators.digest.1.6.0.nupkg.sha512",
         "restsharp.authenticators.digest.nuspec"
-      ]
-    },
-    "RtspClientSharpSPG/0.0.3": {
-      "sha512": "zynym3QRbFwgZhuiu2KvroJ2HnT0M+Y/Io7SbI8V/w0X3hS3YrpfN4OwxsyLa/Je981NSeOFsaT1pe2bEgtoEQ==",
-      "type": "package",
-      "path": "rtspclientsharpspg/0.0.3",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netstandard2.0/RtspClientSharp.dll",
-        "rtspclientsharpspg.0.0.3.nupkg.sha512",
-        "rtspclientsharpspg.nuspec"
       ]
     },
     "runtime.linux-arm.runtime.native.System.IO.Ports/8.0.0": {
@@ -3030,20 +2977,10 @@
       "path": "../iParkingv5.Reporting/iParkingv5.Reporting.csproj",
       "msbuildProject": "../iParkingv5.Reporting/iParkingv5.Reporting.csproj"
     },
-    "Kztek.Cameras/1.0.0.2": {
-      "type": "project",
-      "path": "../../../../../../../KZTEK/CODE/18.BaseLib/Kztek.Cameras/Kztek.Cameras.csproj",
-      "msbuildProject": "../../../../../../../KZTEK/CODE/18.BaseLib/Kztek.Cameras/Kztek.Cameras.csproj"
-    },
     "Kztek.Helper/1.0.0": {
       "type": "project",
       "path": "../Kztek.Helper/Kztek.Helper.csproj",
       "msbuildProject": "../Kztek.Helper/Kztek.Helper.csproj"
-    },
-    "Kztek.RtspPlayer/1.0.0.2": {
-      "type": "project",
-      "path": "../../../../../../../KZTEK/CODE/18.BaseLib/Kztek.RtspPlayer/Kztek.RtspPlayer/Kztek.RtspPlayer.csproj",
-      "msbuildProject": "../../../../../../../KZTEK/CODE/18.BaseLib/Kztek.RtspPlayer/Kztek.RtspPlayer/Kztek.RtspPlayer.csproj"
     },
     "Kztek.Scale_net6/1.0.0.10": {
       "type": "project",
@@ -3052,8 +2989,8 @@
     },
     "Kztek.Tool/1.0.0.2": {
       "type": "project",
-      "path": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/Kztek.Tool/Kztek.Tool.csproj",
-      "msbuildProject": "../../../../3.Lotte_TayHo/1.source/iPGS_2023_NET6/Kztek.Tool/Kztek.Tool.csproj"
+      "path": "../../../iPGS_2023_NET6/Kztek.Tool/Kztek.Tool.csproj",
+      "msbuildProject": "../../../iPGS_2023_NET6/Kztek.Tool/Kztek.Tool.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -3061,9 +2998,7 @@
       "IPaking.Ultility >= 1.0.0.3",
       "IdentityModel >= 7.0.0",
       "IdentityModel.OidcClient >= 6.0.0",
-      "Kztek.Cameras >= 1.0.0.2",
       "Kztek.Helper >= 1.0.0",
-      "Kztek.RtspPlayer >= 1.0.0.2",
       "Kztek.Scale_net6 >= 1.0.0.10",
       "Kztek.Tool >= 1.0.0.2",
       "M2Mqtt >= 4.3.0",
@@ -3086,25 +3021,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Admin\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\PC_Kien\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "6.0.0.4",
     "restore": {
-      "projectUniqueName": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\v5_window\\iParkingv5_window.csproj",
+      "projectUniqueName": "F:\\KZTEK\\Source ParkingV5\\v5_window\\v5_window\\iParkingv5_window.csproj",
       "projectName": "iParkingv5_window",
-      "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\v5_window\\iParkingv5_window.csproj",
-      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\v5_window\\obj\\",
+      "projectPath": "F:\\KZTEK\\Source ParkingV5\\v5_window\\v5_window\\iParkingv5_window.csproj",
+      "packagesPath": "C:\\Users\\PC_Kien\\.nuget\\packages\\",
+      "outputPath": "F:\\KZTEK\\Source ParkingV5\\v5_window\\v5_window\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\PC_Kien\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -3113,63 +3042,56 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "projectReferences": {
-            "E:\\2.Workspace\\2.Projects\\2023\\3.Lotte_TayHo\\1.source\\iPGS_2023_NET6\\Kztek.Tool\\Kztek.Tool.csproj": {
-              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\3.Lotte_TayHo\\1.source\\iPGS_2023_NET6\\Kztek.Tool\\Kztek.Tool.csproj"
+            "F:\\KZTEK\\iPGS_2023_NET6\\Kztek.Tool\\Kztek.Tool.csproj": {
+              "projectPath": "F:\\KZTEK\\iPGS_2023_NET6\\Kztek.Tool\\Kztek.Tool.csproj"
             },
-            "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\IPaking.Ultility\\IPaking.Ultility.csproj": {
-              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\IPaking.Ultility\\IPaking.Ultility.csproj"
+            "F:\\KZTEK\\Source ParkingV5\\v5_window\\IPaking.Ultility\\IPaking.Ultility.csproj": {
+              "projectPath": "F:\\KZTEK\\Source ParkingV5\\v5_window\\IPaking.Ultility\\IPaking.Ultility.csproj"
             },
-            "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iPakrkingv5.Controls\\iPakrkingv5.Controls.csproj": {
-              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iPakrkingv5.Controls\\iPakrkingv5.Controls.csproj"
+            "F:\\KZTEK\\Source ParkingV5\\v5_window\\iPakrkingv5.Controls\\iPakrkingv5.Controls.csproj": {
+              "projectPath": "F:\\KZTEK\\Source ParkingV5\\v5_window\\iPakrkingv5.Controls\\iPakrkingv5.Controls.csproj"
             },
-            "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParking.ConfigurationManager\\iParking.ConfigurationManager.csproj": {
-              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParking.ConfigurationManager\\iParking.ConfigurationManager.csproj"
+            "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParking.ConfigurationManager\\iParking.ConfigurationManager.csproj": {
+              "projectPath": "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParking.ConfigurationManager\\iParking.ConfigurationManager.csproj"
             },
-            "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.ApiManager\\iParkingv5.ApiManager.csproj": {
-              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.ApiManager\\iParkingv5.ApiManager.csproj"
+            "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.ApiManager\\iParkingv5.ApiManager.csproj": {
+              "projectPath": "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.ApiManager\\iParkingv5.ApiManager.csproj"
             },
-            "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Auth\\iParkingv5.Auth.csproj": {
-              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Auth\\iParkingv5.Auth.csproj"
+            "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.Auth\\iParkingv5.Auth.csproj": {
+              "projectPath": "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.Auth\\iParkingv5.Auth.csproj"
             },
-            "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Controller\\iParkingv5.Controller.csproj": {
-              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Controller\\iParkingv5.Controller.csproj"
+            "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.Controller\\iParkingv5.Controller.csproj": {
+              "projectPath": "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.Controller\\iParkingv5.Controller.csproj"
             },
-            "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.FeeTest\\iParkingv5.FeeTest.csproj": {
-              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.FeeTest\\iParkingv5.FeeTest.csproj"
+            "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.FeeTest\\iParkingv5.FeeTest.csproj": {
+              "projectPath": "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.FeeTest\\iParkingv5.FeeTest.csproj"
             },
-            "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.LedDisplay\\iParkingv5.LedDisplay.csproj": {
-              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.LedDisplay\\iParkingv5.LedDisplay.csproj"
+            "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.LedDisplay\\iParkingv5.LedDisplay.csproj": {
+              "projectPath": "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.LedDisplay\\iParkingv5.LedDisplay.csproj"
             },
-            "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Lpr\\iParkingv5.Lpr.csproj": {
-              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Lpr\\iParkingv5.Lpr.csproj"
+            "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.Lpr\\iParkingv5.Lpr.csproj": {
+              "projectPath": "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.Lpr\\iParkingv5.Lpr.csproj"
             },
-            "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj": {
-              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj"
+            "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj": {
+              "projectPath": "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj"
             },
-            "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Printer\\iParkingv5.Printer.csproj": {
-              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Printer\\iParkingv5.Printer.csproj"
+            "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.Printer\\iParkingv5.Printer.csproj": {
+              "projectPath": "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.Printer\\iParkingv5.Printer.csproj"
             },
-            "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Reporting\\iParkingv5.Reporting.csproj": {
-              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\iParkingv5.Reporting\\iParkingv5.Reporting.csproj"
+            "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.Reporting\\iParkingv5.Reporting.csproj": {
+              "projectPath": "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.Reporting\\iParkingv5.Reporting.csproj"
             },
-            "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Helper\\Kztek.Helper.csproj": {
-              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Helper\\Kztek.Helper.csproj"
+            "F:\\KZTEK\\Source ParkingV5\\v5_window\\Kztek.Helper\\Kztek.Helper.csproj": {
+              "projectPath": "F:\\KZTEK\\Source ParkingV5\\v5_window\\Kztek.Helper\\Kztek.Helper.csproj"
             },
-            "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Scale\\Net6\\Kztek.Scale\\Kztek.Scale_net6.csproj": {
-              "projectPath": "E:\\2.Workspace\\2.Projects\\2023\\9.Parking\\v5_window\\v5_window\\Kztek.Scale\\Net6\\Kztek.Scale\\Kztek.Scale_net6.csproj"
-            },
-            "E:\\KZTEK\\CODE\\18.BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj": {
-              "projectPath": "E:\\KZTEK\\CODE\\18.BaseLib\\Kztek.Cameras\\Kztek.Cameras.csproj"
-            },
-            "E:\\KZTEK\\CODE\\18.BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj": {
-              "projectPath": "E:\\KZTEK\\CODE\\18.BaseLib\\Kztek.RtspPlayer\\Kztek.RtspPlayer\\Kztek.RtspPlayer.csproj"
+            "F:\\KZTEK\\Source ParkingV5\\v5_window\\Kztek.Scale\\Net6\\Kztek.Scale\\Kztek.Scale_net6.csproj": {
+              "projectPath": "F:\\KZTEK\\Source ParkingV5\\v5_window\\Kztek.Scale\\Net6\\Kztek.Scale\\Kztek.Scale_net6.csproj"
             }
           }
         }
@@ -3178,11 +3100,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -3241,7 +3158,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   },

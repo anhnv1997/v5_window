@@ -11,7 +11,9 @@ namespace iParkingv5.Objects.Enums
             Loop,
             Exit,
             CardbeTaken,
-            Alarm
+            Alarm,
+            Button,
+            Card,
         }
     }
 }

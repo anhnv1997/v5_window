@@ -320,6 +320,14 @@ namespace iParkingv5_window.Usercontrols
                                          $"Get New Input Event", inputEvent);
                     await ExcecuteInputEvent(inputEvent, lblEventMessage);
                 }
+                else if(e is ControllerErrorEventArgs errorEvent)
+                {
+                    await ExcecuteEventError(errorEvent);
+                }
+                else if (e is CardCancelEventArgs cancelEvent)
+                {
+                    await ExcecuteEventCancel(cancelEvent);
+                }
             }
             catch (Exception ex)
             {
@@ -331,7 +339,11 @@ namespace iParkingv5_window.Usercontrols
                 StartTimerRefreshUI();
             }
         }
-
+        public async Task ExcecuteEventCancel(CardCancelEventArgs ec)
+        {
+            // Xử lý hủy thẻ vào bãi
+        }
+        
         /// <summary>
         /// Sự kiện xảy ra khi xe đi qua vòng từ
         /// </summary>

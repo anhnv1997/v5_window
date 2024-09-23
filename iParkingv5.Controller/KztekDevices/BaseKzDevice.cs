@@ -31,11 +31,14 @@ namespace iParkingv5.Controller.KztekDevices
         public event InputEventHandler? InputEvent;
         public event ConnectStatusChangeEventHandler? ConnectStatusChangeEvent;
         public event DeviceInfoChangeEventHandler? DeviceInfoChangeEvent;
+        public event CancelEventHandler? CancelEvent;
+
 
         public abstract void PollingStart();
         public abstract void PollingStop();
         public abstract void DeleteCardEvent();
         public abstract Task<bool> OpenDoor(int timeInMilisecond, int relayIndex);
+        public abstract Task<bool> SetAudio(int relayIndex);
         #endregion End Event
 
         #region: CONNECT
@@ -369,6 +372,10 @@ namespace iParkingv5.Controller.KztekDevices
         protected void OnInputEvent(InputEventArgs e)
         {
             InputEvent?.Invoke(this, e);
+        }
+        protected void OnCardEventCancel(CardCancelEventArgs e)
+        {
+            CancelEvent?.Invoke(this, e);
         }
         public int GetBaudrate(string GetDateTimeCMD)
         {

@@ -23,7 +23,8 @@ namespace iParkingv5.Controller
                 EmControllerType.IDTECK => null,
                 EmControllerType.KZE02_NET => new KzE02Netv2() { ControllerInfo = bdk },
                 EmControllerType.KZE16_NET => new KzE16Net() { ControllerInfo = bdk },
-                EmControllerType.MT166 => new MT166_CardDispenser() { ControllerInfo = bdk },
+                // Fixmex: Fix cung BDK
+                EmControllerType.MT166 => new MT166_CardDispenserv8() { ControllerInfo = bdk },
                 EmControllerType.INGRESSUS => new ZktecoPull() { ControllerInfo = bdk },
                 EmControllerType.E02_NET => new AopuController() { ControllerInfo = bdk },
                 EmControllerType.SC200 => new SC200Devices.SC200() { ControllerInfo = bdk },

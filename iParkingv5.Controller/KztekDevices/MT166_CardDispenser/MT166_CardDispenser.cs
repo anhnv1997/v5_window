@@ -281,5 +281,10 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
             });
             return false;
         }
+
+        public override Task<bool> SetAudio(int relayIndex)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

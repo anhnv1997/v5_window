@@ -261,6 +261,34 @@ namespace iParkingv5_window.Usercontrols
         {
 
         }
+        public virtual async Task ExcecuteEventCancel(CardCancelEventArgs ec)
+        {
+            // Xử lý hủy thẻ vào bãi
+        }
+
+        public async Task ExcecuteEventError(ControllerErrorEventArgs error)
+        {
+            string nameError = error.ErrorFunc.ToString();
+            // Cảnh báo với máy nhả thẻ
+            if (error.DispenserError != null)
+            {
+                if (error.DispenserError.IsCardErrorDispenser)
+                {
+                    // Play Sound nhả thẻ bị lỗi
+                    BaseLane.PlaySound(error.DeviceId, SoundType.EmSoundType.CARD_DISPENSING_ERROR);
+                }
+                else if (error.DispenserError.IsCardEmptyDispenser)
+                {
+                    // Play sound hết thẻ
+                    BaseLane.PlaySound(error.DeviceId, SoundType.EmSoundType.CARD_EMPTY);
+                }
+                else if (error.DispenserError.IsLessCardDispenser)
+                {
+                    // Play sound gần hết thẻ
+                }
+                await Task.Delay(100);
+            }
+        }
 
         public Image? GetPlate(CardEventArgs ce, ref Image? overviewImg, ref Image? vehicleImg, VehicleBaseType vehicleBaseType,
                                 lblResult lblResult, TextBox txtPlate,

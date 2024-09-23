@@ -2,11 +2,14 @@
 using iPakrkingv5.Controls.Controls.Labels;
 using iPakrkingv5.Controls.Usercontrols;
 using iParkingv5.Controller;
+using iParkingv5.Controller.KztekDevices.MT166_CardDispenser;
+using iParkingv5.Controller.KztekDevices;
 using iParkingv5.LedDisplay.LEDs;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
 using iParkingv5.Objects.Datas.Device_service;
 using iParkingv5.Objects.Datas.parking_service;
+using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.EventDatas;
 using iParkingv5.Objects.Events;
 using iParkingv5_window.Forms.DataForms;
@@ -14,6 +17,7 @@ using Kztek.Tool;
 using Kztek.Tool.LogDatabases;
 using Kztek.Tools;
 using static iParkingv5.Objects.Enums.ParkingImageType;
+using static iParkingv5.Objects.Enums.SoundType;
 
 namespace iParkingv5_window.Usercontrols
 {
@@ -113,6 +117,73 @@ namespace iParkingv5_window.Usercontrols
                     }
                 }
             }
+        }
+        static List<Type> allowedTypes = new List<Type>
+        {
+            typeof(MT166_CardDispenser),
+            typeof(MT166_CardDispenserv8),
+        };
+        public static async void PlaySound(string controllerId, EmSoundType soundType)
+        {
+            try
+            {
+                foreach (IController item in frmMain.controllers)
+                {
+                    if (item.ControllerInfo.Id.ToLower() == controllerId.ToLower())
+                    {
+                        if (allowedTypes.Contains(item.GetType()) && item is BaseKzDevice baseKzDevice)
+                        {
+                            int mappedSoundType = MapSoundType(soundType, baseKzDevice);
+
+                            bool isOpenSuccess = false;
+                            isOpenSuccess = await baseKzDevice.SetAudio(mappedSoundType);
+                            if (!isOpenSuccess)
+                            {
+                                LogHelper.Log(
+                                    logType: LogHelper.EmLogType.ERROR,
+                                    doi_tuong_tac_dong: LogHelper.EmObjectLogType.Controller,
+                                    hanh_dong: "PLAY SOUND",
+                                    mo_ta_them: "THẤT BẠI",
+                                    specailName: "");        //controllerInLane.controlUnitId);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+
+        }
+        public static int MapSoundType(SoundType.EmSoundType globalSoundType, BaseKzDevice device)
+        {
+            if (device is MT166_CardDispenser)
+            {
+                /// Map sound bộ V1
+                //return globalSoundType switch
+                //{
+                //    SoundType.EmSoundType.LOOP_PULSE_ON_SOUND => (int)MT166_CardDispenser.EmSoundType.LOOP_PULSE_ON_SOUND,
+                //    SoundType.EmSoundType.OPEN_BARRIER_SOUND => (int)MT166_CardDispenser.EmSoundType.OPEN_BARRIER_SOUND,
+                //    _ => throw new ArgumentException("Invalid sound type"),
+                //};
+            }
+            if (device is MT166_CardDispenserv8)
+            {
+                /// Map sound bộ V8
+                return globalSoundType switch
+                {
+                    SoundType.EmSoundType.LOOP_PULSE_ON_SOUND => (int)MT166_CardDispenserv8.EmSoundType.LOOP_PULSE_ON_SOUND,
+                    SoundType.EmSoundType.OPEN_BARRIER_SOUND => (int)MT166_CardDispenserv8.EmSoundType.OPEN_BARRIER_SOUND,
+                    SoundType.EmSoundType.INVALID_PLATE => (int)MT166_CardDispenserv8.EmSoundType.INVALID_PLATE,
+                    SoundType.EmSoundType.CARD_NOT_EXIST => (int)MT166_CardDispenserv8.EmSoundType.CARD_NOT_EXIST,
+                    SoundType.EmSoundType.CARD_EXPIRED => (int)MT166_CardDispenserv8.EmSoundType.CARD_EXPIRED,
+                    SoundType.EmSoundType.THE_CHUA_RA_KHOI_BAI => (int)MT166_CardDispenserv8.EmSoundType.THE_CHUA_RA_KHOI_BAI,
+                    SoundType.EmSoundType.CARD_EMPTY => (int)MT166_CardDispenserv8.EmSoundType.CARD_EMPTY,
+                    SoundType.EmSoundType.CARD_DISPENSING_ERROR => (int)MT166_CardDispenserv8.EmSoundType.CARD_DISPENSING_ERROR,
+                    _ => throw new ArgumentException("Invalid sound type"),
+                };
+            }
+            return (int)globalSoundType;
         }
         public static void UpdateResultMessage(this lblResult lblResult, string message, Color backColor)
         {

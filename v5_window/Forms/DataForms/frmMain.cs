@@ -347,10 +347,10 @@ namespace iParkingv5_window.Forms.DataForms
             // lblLoadingStatus.UpdateResultMessage(
             //$"Nhận sự kiện input {e.InputIndex} Controller " + e.DeviceName, Color.DarkBlue);
 
-            lblLoadingStatus.Message = $"Nhận sự kiện input {e.InputIndex} Controller " + e.DeviceName;
 
             lblLoadingStatus.BeginInvoke(new Action(() =>
             {
+                lblLoadingStatus.Message = $"Nhận sự kiện input {e.InputIndex} Controller " + e.DeviceName;
                 //lblLoadingStatus.Text = $"Nhận sự kiện input {e.InputIndex} Controller " + e.DeviceName;
                 //lblLoadingStatus.Refresh();
                 foreach (iLane iLane in lanes)
@@ -361,16 +361,21 @@ namespace iParkingv5_window.Forms.DataForms
         }
         private void Controller_ErrorEvent(object sender, ControllerErrorEventArgs e)
         {
-            lblLoadingStatus.Message = $"Nhận sự kiện error Controller " + e.DeviceName;
+            //lblLoadingStatus.Message = $"Nhận sự kiện error Controller " + e.DeviceName;
 
-            //lblLoadingStatus.UpdateResultMessage(
-            //   $"Nhận sự kiện error Controller " + e.DeviceName, Color.DarkBlue);
+            lblLoadingStatus.UpdateResultMessage(
+               $"Nhận sự kiện error Controller " + e.DeviceName, Color.DarkBlue);
 
-            //lblLoadingStatus.BeginInvoke(new Action(() =>
-            //{
-            //    lblLoadingStatus.Text = $"Nhận sự kiện error Controller " + e.DeviceName;
-            //    lblLoadingStatus.Refresh();
-            //}));
+            lblLoadingStatus.BeginInvoke(new Action(() =>
+            {
+                lblLoadingStatus.Text = $"Nhận sự kiện error Controller " + e.DeviceName;
+                lblLoadingStatus.Refresh();
+
+                foreach (iLane iLane in lanes)
+                {
+                    iLane.OnNewEvent(e);
+                }
+            }));
         }
         private void Controller_CardEvent(object sender, CardEventArgs e)
         {

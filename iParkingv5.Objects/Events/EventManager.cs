@@ -1,4 +1,5 @@
-﻿using System;
+﻿using iParkingv5.Objects.Datas.device_service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace iParkingv5.Objects.Events
     public delegate void ControllerErrorEventHandler(object sender, ControllerErrorEventArgs e);
     public delegate void InputEventHandler(object sender, InputEventArgs e);
     public delegate void CardEventHandler(object sender, CardEventArgs e);
+    public delegate void CancelEventHandler(object sender, CardCancelEventArgs e);
     public delegate void ConnectStatusChangeEventHandler(object sender, ConnectStatusCHangeEventArgs e);
     public delegate void DeviceInfoChangeEventHandler(object sender, DeviceInfoChangeArgs e);
     public delegate void DisplayTextChangeEventHandler(object? sender, TextChangeEventArgs e);
@@ -37,6 +39,7 @@ namespace iParkingv5.Objects.Events
         public string ErrorFunc { get; set; } = string.Empty;
         public string ErrorLine { get; set; } = string.Empty;
         public string CMD { get; set; } = string.Empty;
+        public CardDispenserError DispenserError { get; set; }
     }
     public class InputEventArgs : GeneralEventArgs
     {
@@ -51,6 +54,7 @@ namespace iParkingv5.Objects.Events
         public int ReaderIndex { get; set; }
         public string Doors { get; set; }
         public string PlateNumber { get; set; } = string.Empty;
+        public EmInputType InputType { get; set; } = EmInputType.Card;
         public bool IsInWaitingTime(CardEventArgs e, int waitingTime, out int thoiGianCho)
         {
             thoiGianCho = 0;
@@ -82,6 +86,19 @@ namespace iParkingv5.Objects.Events
             }
             return false;
         }
+    }
+    public class CardCancelEventArgs : GeneralEventArgs
+    {
+        public string PreferCard { get; set; } = "";
+
+        public int FunctionKey { get; set; } = 0;
+
+        public int InputIndex { get; set; }
+
+        public EmInputType InputType { get; set; }
+
+        public string Status { get; set; }
+
     }
     public class FingerEventArgs : GeneralEventArgs
     {

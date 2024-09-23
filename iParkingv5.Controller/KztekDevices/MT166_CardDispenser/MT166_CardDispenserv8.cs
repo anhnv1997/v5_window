@@ -1,15 +1,18 @@
-﻿using iParkingv5.Objects.Enums;
+﻿using iParkingv5.Objects.Datas.device_service;
+using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.Events;
 using iParkingv6.Objects.Datas;
 using Kztek.Tool.SocketHelpers;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
+using static iParkingv5.Objects.Enums.InputTupe;
 
 namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
 {
     public class MT166_CardDispenserv8 : BaseKzDevice
     {
-        private enum MT166EventType
+        private enum MT166V8EventType
         {
             /// <summary>
             /// ( Nút nhấn BTN1) thẻ được nhả ra sau khi nhấn nút trên BTN1 và có sự kiện thẻ
@@ -121,7 +124,17 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
             /// </summary>
             Close = 33,
         }
-
+        public enum EmSoundType
+        {
+            LOOP_PULSE_ON_SOUND = 1,     // Xin moi nhan nut lay the
+            OPEN_BARRIER_SOUND = 2,      // Xin moi vao
+            INVALID_PLATE = 3,           // Sai biển số vui lòng nhấn nút gọi hỗ trợ
+            CARD_NOT_EXIST = 4,          // Thẻ không tồn tại vui lòng gọi hỗ trợ
+            CARD_EXPIRED = 5,            // Thẻ hết hạn vui lòng gọi hỗ trợ
+            THE_CHUA_RA_KHOI_BAI = 6,    // Thẻ chưa ra khỏi bãi vui lòng gọi hỗ trợ
+            CARD_EMPTY = 7,              // Hết thẻ vui lòng gọi hỗ trợ
+            CARD_DISPENSING_ERROR = 8,   // Lỗi phát thẻ vui lòng nhấn nút gọi hỗ trợ
+        }
         private Thread thread = null;
         private ManualResetEvent stopEvent = null;
         public bool Running
@@ -144,7 +157,7 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
             string comport = this.ControllerInfo.Comport;
             int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
             string cmd = KZTEK_CMD.DeleteEventCMD();
-            UdpTools.ExecuteCommand(comport, baudrate, cmd, 500, UdpTools.STX, Encoding.ASCII);
+            UdpTools.ExecuteCommand(comport, baudrate, cmd, 500, Encoding.ASCII);
         }
 
         public override void PollingStart()
@@ -220,45 +233,73 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
                     string response = string.Empty;
                     await Task.Run(() =>
                     {
-                        response = UdpTools.ExecuteCommand(comport, baudrate, getEventCmd, 500, UdpTools.STX, Encoding.ASCII);
+                        //response = UdpTools.ExecuteCommand(comport, baudrate, getEventCmd, 500, UdpTools.STX, Encoding.ASCII);
+                        response = UdpTools.ExecuteCommand(comport, baudrate, getEventCmd, 500, Encoding.ASCII);
                     });
                     this.IsBusy = false;
                     // Trang thai thiet bij
                     this.ControllerInfo.IsConnect = response != "";
                     //GetEvent?/LenCard=4/Card=7C19F640/Input=1/ArrayInput=X/Com=Com1/StateCardDispenserCom1=Y/StateCardDispenserCom2=Z/
 
-                    if (response != "" && (response.Contains("GetEvent?/")) && !response.Contains("NotEvent"))
+                    if (response != "" && (response.Contains("GetEvent?/")))
                     {
                         string[] data = response.Split('/');
                         Dictionary<string, string> map = GetEventContent(data);
 
-                        string eventType = map.ContainsKey("input") ? map["input"] : "";
-                        if (string.IsNullOrEmpty(eventType))
+                        // Cảnh báo máy nhả thẻ
+                        if (map.ContainsKey("statecarddispensercom1") || map.ContainsKey("statecarddispensercom2"))
                         {
-                            DeleteCardEvent();
+                            CallDispenserErrorEvent(this.ControllerInfo, map);
                         }
-                        MT166EventType _eventType = (MT166EventType)int.Parse(eventType);
-                        bool isCardEvent = _eventType == MT166EventType.Reader1 || _eventType == MT166EventType.Reader2 ||
-                                           _eventType == MT166EventType.Button1 || _eventType == MT166EventType.Button2;
 
-                        bool isLoopEvent = _eventType == MT166EventType.CardbeTaken ||
-                                           _eventType == MT166EventType.Loop1 || _eventType == MT166EventType.Loop2 ||
-                                           _eventType == MT166EventType.Loop3 || _eventType == MT166EventType.Loop4;
+                        // Trạng thái sử dụng các chân input
+                        if (map.ContainsKey("arrayinput"))
+                        {
+                            CallArrayInputEvent(map);
+                        }
 
-                        //bool isExitEvent = _eventType == MT166EventType.Exit1 || _eventType == MT166EventType.Exit2;
-                        if (isCardEvent)
+                        // Sự kiện Reader/Input/Loop
+                        if (!response.Contains("NotEvent"))
                         {
-                            CallCardEvent(this.ControllerInfo, map);
+                            string eventType = map.ContainsKey("input") ? map["input"] : "";
+
+                            if (string.IsNullOrEmpty(eventType))
+                            {
+                                DeleteCardEvent();
+                            }
+
+                            MT166V8EventType _eventType = (MT166V8EventType)int.Parse(eventType);
+
+                            bool isCardEvent = _eventType == MT166V8EventType.Reader1 || _eventType == MT166V8EventType.Reader2 ||
+                                               _eventType == MT166V8EventType.Button1 || _eventType == MT166V8EventType.Button2 ||
+                                               _eventType == MT166V8EventType.CardOut;
+
+                            bool isLoopEvent = _eventType == MT166V8EventType.CardbeTaken ||
+                                               _eventType == MT166V8EventType.Loop1 || _eventType == MT166V8EventType.Loop2 ||
+                                               _eventType == MT166V8EventType.Loop3 || _eventType == MT166V8EventType.Loop4 ||
+                                               _eventType == MT166V8EventType.Open || _eventType == MT166V8EventType.Close ||
+                                               _eventType == MT166V8EventType.Stop_Start || _eventType == MT166V8EventType.Stop_End;
+
+                            bool isCardCancel = _eventType == MT166V8EventType.CardRevertedInTray1 || _eventType == MT166V8EventType.CardRevertedInTray2;
+
+                            if (isCardEvent)
+                            {
+                                CallCardEvent(this.ControllerInfo, map, _eventType);
+                            }
+                            else if (isLoopEvent)
+                            {
+                                CallInputEvent(this.ControllerInfo, map, _eventType);
+                            }
+                            else if (isCardCancel)
+                            {
+                                CallCardEventCancel(this.ControllerInfo, map, _eventType);
+                            }
+                            else
+                            {
+                                DeleteCardEvent();
+                            }
+
                         }
-                        else if (isCardEvent)
-                        {
-                            CallInputEvent(this.ControllerInfo, map);
-                        }
-                        //else if (isExitEvent)
-                        //{
-                        //    string inputport = _eventType == MT166EventType.Exit1 ? "1" : "2";
-                        //    CallExitEvent(this.ControllerInfo, inputport);
-                        //}
                     }
                     await Task.Delay(300);
                 }
@@ -268,7 +309,21 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
             }
         }
 
-        private void CallInputEvent(Bdk controller, Dictionary<string, string> map)
+        private static void CallArrayInputEvent(Dictionary<string, string> map)
+        {
+            string arrayinput = map["arrayinput"];
+            string binaryValue = HexToBinary(arrayinput);
+            bool In5 = binaryValue[0] == '1';
+            bool In6 = binaryValue[1] == '1';
+            bool Loop1 = binaryValue[2] == '1';
+            bool loop2 = binaryValue[3] == '1';
+            bool loop3 = binaryValue[4] == '1';
+            bool loop4 = binaryValue[5] == '1';
+
+            // Chưa sử dụng
+        }
+
+        private void CallInputEvent(Bdk controller, Dictionary<string, string> map, MT166V8EventType eventType)
         {
             InputEventArgs ie = new InputEventArgs
             {
@@ -280,11 +335,12 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
                 string str_inputIndex = str_inputName.Replace("INPUT", "");
                 ie.InputIndex = Regex.IsMatch(str_inputIndex, @"^\d+$") ? int.Parse(str_inputIndex) : -1;
             }
-            ie.InputType = InputTupe.EmInputType.Loop;
+            ie.InputType = eventType == MT166V8EventType.CardbeTaken ? EmInputType.CardbeTaken : InputTupe.EmInputType.Loop;
+
             DeleteCardEvent();
             OnInputEvent(ie);
         }
-        private void CallCardEvent(Bdk controller, Dictionary<string, string> map)
+        private void CallCardEvent(Bdk controller, Dictionary<string, string> map, MT166V8EventType eventType)
         {
             CardEventArgs e = new CardEventArgs
             {
@@ -292,10 +348,17 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
                 AllCardFormats = new List<string>(),
             };
             string cardNumberHEX = map.ContainsKey("card") ? map["card"] : "";
+            string lenCard = map.ContainsKey("lencard") ? map["lencard"] : "";
+
             if (!string.IsNullOrEmpty(cardNumberHEX))
             {
+                if (lenCard == "4") cardNumberHEX = cardNumberHEX.PadLeft(8, '0');
+                else if (lenCard == "3") cardNumberHEX = cardNumberHEX.PadLeft(6, '0');
+                else if (lenCard == "7") cardNumberHEX = cardNumberHEX.PadLeft(14, '0');
+
                 e.AllCardFormats.Add(cardNumberHEX);
 
+                /// Mã thẻ 3 byte
                 if (cardNumberHEX.Length == 6)
                 {
                     string maTruocToiGian = long.Parse(cardNumberHEX, System.Globalization.NumberStyles.HexNumber).ToString();
@@ -319,12 +382,103 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
                 {
                     string maInt = Convert.ToInt64(cardNumberHEX, 16).ToString();
                     e.AllCardFormats.Add(maInt);
+                    e.PreferCard = maInt;
                 }
             }
             string str_readerIndex = map.ContainsKey("reader") ? map["reader"] : "";
             e.ReaderIndex = Regex.IsMatch(str_readerIndex, @"^\d+$") ? Convert.ToInt32(str_readerIndex) : -1;
+            e.InputType = ((eventType == MT166V8EventType.Button1) || (eventType == MT166V8EventType.Button2))
+                            ? EmInputType.Button : EmInputType.Card;
+
+            //e.dispenserService = new Objects.Datas.device_service.CardDispenserService()
+            //{
+            //    ButtonIndex = (int)eventType,
+            //};
+
             OnCardEvent(e);
             DeleteCardEvent();
+        }
+        private void CallCardEventCancel(Bdk controller, Dictionary<string, string> map, MT166V8EventType eventType)
+        {
+            CardCancelEventArgs ce = new CardCancelEventArgs
+            {
+                DeviceId = controller.Id
+            };
+
+            string cardHex = map.ContainsKey("card") ? map["card"] : "";
+            string lenCard = map.ContainsKey("lencard") ? map["lencard"] : "";
+
+            if (lenCard == "4") cardHex = cardHex.PadLeft(8, '0');
+            else if (lenCard == "3") cardHex = cardHex.PadLeft(6, '0');
+            else if (lenCard == "7") cardHex = cardHex.PadLeft(14, '0');
+
+            // Format Card int
+            //.........
+
+            ce.PreferCard = cardHex;
+            ce.FunctionKey = (int)eventType;
+
+            DeleteCardEvent();
+            OnCardEventCancel(ce);
+        }
+        private void CallDispenserErrorEvent(Bdk controller, Dictionary<string, string> map)
+        {
+            ControllerErrorEventArgs error = new ControllerErrorEventArgs
+            {
+                DeviceId = controller.Id,
+            };
+
+
+            string dispenser1_title = "statecarddispensercom1";
+            string dispenser2_title = "statecarddispensercom2";
+
+            var items = new[] { dispenser1_title, dispenser2_title };
+            foreach (var item in items)
+            {
+                if (!map.ContainsKey(item))
+                {
+                    continue;
+                }
+
+                string Dispenserstr = map[item];
+                int dispenserIndex = item == dispenser1_title ? 1 : 2;
+
+                if (Dispenserstr == "" || Dispenserstr == "NotConnect")
+                {
+                    continue;
+                }
+
+                string binaryValue = HexToBinary(Dispenserstr);
+                bool isHetThe = binaryValue[0] == '1';          // b7
+                bool isTheTrenBezel = binaryValue[1] == '1';    // b6
+                bool isTheODoc = binaryValue[2] == '1';         // b5
+                bool isSapHetThe = binaryValue[3] == '1';       // b4
+                bool isPhatThe = binaryValue[4] == '1';         // b3
+                bool isThuThapThe = binaryValue[5] == '1';      // b2
+                bool isNhaTheBiLoi = binaryValue[6] == '1';     // b1
+                bool isTaiCheNgoaiGio = binaryValue[7] == '1';  // b0
+
+
+                CardDispenserError dispenserError = new CardDispenserError
+                {
+                    DispenserIndex = dispenserIndex,
+                    IsCardEmptyDispenser = isHetThe,
+                    IsLessCardDispenser = isSapHetThe,
+                    IsCardErrorDispenser = isNhaTheBiLoi,
+                };
+
+                error.ErrorString = "CallErrorEvent";
+                error.DispenserError = dispenserError;
+
+                // Fixme: Fix auto het the
+                //isHetThe = true;
+                //dispenserError.IsCardEmptyDispenser = true;
+
+                if (isHetThe || isSapHetThe || isNhaTheBiLoi)
+                {
+                    OnErrorEvent(error);
+                }
+            }
         }
         private void CallExitEvent(Bdk controller, string doorNo)
         {
@@ -337,7 +491,15 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
             ie.InputType = InputTupe.EmInputType.Exit;
             OnInputEvent(ie);
         }
-
+        static string HexToBinary(string hex)
+        {
+            string binary = string.Empty;
+            foreach (char hexChar in hex)
+            {
+                binary += Convert.ToString(Convert.ToInt32(hexChar.ToString(), 16), 2).PadLeft(4, '0');
+            }
+            return binary.PadLeft(8, '0');
+        }
         public override async Task<bool> OpenDoor(int timeInMilisecond, int relayIndex)
         {
             string comport = this.ControllerInfo.Comport;
@@ -459,11 +621,11 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
         /// </summary>
         /// <param name="readerIndex"></param>
         /// <returns></returns>
-        public async Task<bool> SetAudio(int readerIndex)
+        public override async Task<bool> SetAudio(int relayIndex)
         {
             string comport = this.ControllerInfo.Comport;
             int baudrate = GetBaudrate(this.ControllerInfo.Baudrate);
-            string setAudioCmd = $"SetAudio?/Audio={readerIndex}/State=ON/";
+            string setAudioCmd = $"SetAudio?/Audio={relayIndex}/State=ON/";
 
             this.IsBusy = true;
             string response = string.Empty;
@@ -720,9 +882,9 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
             this.IsBusy = true;
             string response = string.Empty;
             await Task.Run(() =>
-                {
-                    response = UdpTools.ExecuteCommand(comport, baudrate, setTimeOutAutoCollectCardCmd, 500, UdpTools.STX, Encoding.ASCII);
-                });
+            {
+                response = UdpTools.ExecuteCommand(comport, baudrate, setTimeOutAutoCollectCardCmd, 500, UdpTools.STX, Encoding.ASCII);
+            });
             this.IsBusy = false;
             //SetTimeOutAutoCollectCard?/OK/
             //SetTimeOutAutoCollectCard?/ERROR/
@@ -975,6 +1137,93 @@ namespace iParkingv5.Controller.KztekDevices.MT166_CardDispenser
                 CMD = setPauseDispenseCardCmd
             });
             return false;
+        }
+        private T getValue<T>(Dictionary<string, string> dict, string key, object returnIfFail)
+        {
+            try
+            {
+                object val;
+                if (dict.TryGetValue(key, out string valueAsString))
+                {
+                    val = valueAsString;
+                    if (typeof(T) == typeof(string))
+                    {
+                        //do nothing
+                    }
+                    else if (typeof(T) == typeof(int))
+                    {
+                        if (int.TryParse(valueAsString, out int intValue))
+                        {
+                            val = intValue;
+                        }
+                        else
+                        {
+                            val = returnIfFail;
+                        }
+                    }
+                    else if (typeof(T) == typeof(DateTime))
+                    {
+                        try
+                        {
+                            val = DateTime.ParseExact(valueAsString, "yyyyMMddHHmmss", CultureInfo.InvariantCulture);
+                        }
+                        catch
+                        {
+                            val = returnIfFail;
+                        }
+                    }
+                    else if (typeof(T) == typeof(bool[]))
+                    {
+                        try
+                        {
+                            var byteData = Convert.ToByte(String.Format("{0:X2}", valueAsString, 2), 16);
+                            var data = new bool[8];
+                            for (int i = 0; i < 8; i++)
+                            {
+                                data[i] = (byteData & (1 << i)) != 0;
+                            }
+                            val = data;
+                        }
+                        catch
+                        {
+                            val = returnIfFail;
+                        }
+                    }
+                    else if (typeof(T) == typeof(byte))
+                    {
+                        try
+                        {
+                            var byteData = Convert.ToByte(String.Format("{0:X2}", valueAsString, 2), 16);
+                            val = byteData;
+                        }
+                        catch
+                        {
+                            val = returnIfFail;
+                        }
+                    }
+                    else if (typeof(T) == typeof(MT166V8EventType))
+                    {
+                        if (int.TryParse(valueAsString, out int intValue))
+                        {
+                            val = (MT166V8EventType)intValue;
+                        }
+                        else
+                        {
+                            val = MT166V8EventType.Close;
+                        }
+                    }
+                }
+                else
+                {
+                    return (T)Convert.ChangeType(returnIfFail, typeof(T));
+                }
+
+                return (T)Convert.ChangeType(val, typeof(T));
+            }
+            catch
+            {
+                return (T)Convert.ChangeType(returnIfFail, typeof(T));
+            }
         }
     }
 }

@@ -280,5 +280,9 @@ namespace iParkingv5.Controller.KztekDevices.KZE02NETController
             return result;
         }
 
+        public override Task<bool> SetAudio(int relayIndex)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
