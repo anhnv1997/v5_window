@@ -1244,7 +1244,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 paging = pageSize <= 0 ? false : true
             };
 
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, 120000, RestSharp.Method.Post);
 
             if (!string.IsNullOrEmpty(response.Item1))
             {
@@ -1286,7 +1286,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis
                 paging = pageSize <= 0 ? false : true
             };
 
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, timeOut, RestSharp.Method.Post);
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, data, headers, null, 120000, RestSharp.Method.Post);
             if (!string.IsNullOrEmpty(response.Item1))
             {
                 var baseResponse = NewtonSoftHelper<KzParkingv5BaseResponse<List<EventOutReport>>>.GetBaseResponse(response.Item1);
