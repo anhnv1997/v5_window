@@ -62,7 +62,7 @@
 
   <ItemGroup>
     <Reference Include="DahuaLib">
-      <HintPath>..\packages\DahuaLib.dll</HintPath>
+      <HintPath>..\packages\iParkingv5_Package\CameraLib\Dahua\DahuaLib.dll</HintPath>
     </Reference>
     <Reference Include="Kztek.Tool">
       <HintPath>..\packages\Kztek.Tool.dll</HintPath>

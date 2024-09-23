@@ -183,12 +183,21 @@ namespace iParkingv5_CustomerRegister
         public static IModel controllerEventChannel;
         private void ConnectToRabbitMQ()
         {
+            //ConnectionFactory factory = new ConnectionFactory
+            //{
+            //    HostName = "192.168.21.20",
+            //    Port = 5672,
+            //    UserName = "admin",
+            //    Password = "Kztek123456",
+            //    VirtualHost = "/"
+            //};
+
             ConnectionFactory factory = new ConnectionFactory
             {
-                HostName = "192.168.21.20",
+                HostName = "192.168.20.135",
                 Port = 5672,
-                UserName = "admin",
-                Password = "Kztek123456",
+                UserName = "guest",
+                Password = "guest",
                 VirtualHost = "/"
             };
             conn = factory.CreateConnection();
