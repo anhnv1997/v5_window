@@ -11,7 +11,7 @@
     <ApplicationIcon>icons8_settings.ico</ApplicationIcon>
     <PackageIcon>configuration.png</PackageIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,7 +28,6 @@
   <ItemGroup>
     <ProjectReference Include="..\IPaking.Ultility\IPaking.Ultility.csproj" />
     <ProjectReference Include="..\iParkingv5.ApiManager\iParkingv5.ApiManager.csproj" />
-    <ProjectReference Include="..\iParkingv5.Controller\iParkingv5.Controller.csproj" />
     <ProjectReference Include="..\iParkingv5.Objects\iParkingv5.Objects.csproj" />
     <ProjectReference Include="..\Kztek.Scale\Net6\Kztek.Scale\Kztek.Scale_net6.csproj" />
   </ItemGroup>

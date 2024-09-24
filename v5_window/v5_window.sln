@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iParking.ConfigurationManag
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iParkingv5.ApiManager", "..\iParkingv5.ApiManager\iParkingv5.ApiManager.csproj", "{4DEBA3A4-D7E1-485B-AC2B-F3634BD058D0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iParkingv5.Controller", "..\iParkingv5.Controller\iParkingv5.Controller.csproj", "{4CC2ACFA-09FF-4E57-9EAC-692981C8AE71}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iParkingv5.Objects", "..\iParkingv5.Objects\iParkingv5.Objects.csproj", "{DEC60049-9B58-48EF-98CE-B453E82F5562}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iParkingv5.LedDisplay", "..\iParkingv5.LedDisplay\iParkingv5.LedDisplay.csproj", "{CA848DDD-2199-47D5-87AE-7709FC586FD6}"
@@ -40,6 +38,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kztek.Scale_net6", "..\Kztek.Scale\Net6\Kztek.Scale\Kztek.Scale_net6.csproj", "{18F7EBDF-EF76-47DD-9ECF-CBE519FA33FF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "v5_IScale", "..\v5_IScale\v5_IScale.csproj", "{75E28B6A-12DA-4D31-AAAB-84183AC96CD0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DahuaLib", "..\..\..\iPGS_2023_NET6\DahuaLib\DahuaLib.csproj", "{DE462216-6BE9-4AA0-AF16-A46580EC867C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,18 +87,6 @@ Global
 		{4DEBA3A4-D7E1-485B-AC2B-F3634BD058D0}.Release|x64.Build.0 = Release|x64
 		{4DEBA3A4-D7E1-485B-AC2B-F3634BD058D0}.Release|x86.ActiveCfg = Release|x86
 		{4DEBA3A4-D7E1-485B-AC2B-F3634BD058D0}.Release|x86.Build.0 = Release|x86
-		{4CC2ACFA-09FF-4E57-9EAC-692981C8AE71}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{4CC2ACFA-09FF-4E57-9EAC-692981C8AE71}.Debug|Any CPU.Build.0 = Debug|x64
-		{4CC2ACFA-09FF-4E57-9EAC-692981C8AE71}.Debug|x64.ActiveCfg = Debug|x86
-		{4CC2ACFA-09FF-4E57-9EAC-692981C8AE71}.Debug|x64.Build.0 = Debug|x86
-		{4CC2ACFA-09FF-4E57-9EAC-692981C8AE71}.Debug|x86.ActiveCfg = Debug|x86
-		{4CC2ACFA-09FF-4E57-9EAC-692981C8AE71}.Debug|x86.Build.0 = Debug|x86
-		{4CC2ACFA-09FF-4E57-9EAC-692981C8AE71}.Release|Any CPU.ActiveCfg = Release|x64
-		{4CC2ACFA-09FF-4E57-9EAC-692981C8AE71}.Release|Any CPU.Build.0 = Release|x64
-		{4CC2ACFA-09FF-4E57-9EAC-692981C8AE71}.Release|x64.ActiveCfg = Release|x64
-		{4CC2ACFA-09FF-4E57-9EAC-692981C8AE71}.Release|x64.Build.0 = Release|x64
-		{4CC2ACFA-09FF-4E57-9EAC-692981C8AE71}.Release|x86.ActiveCfg = Release|x86
-		{4CC2ACFA-09FF-4E57-9EAC-692981C8AE71}.Release|x86.Build.0 = Release|x86
 		{DEC60049-9B58-48EF-98CE-B453E82F5562}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{DEC60049-9B58-48EF-98CE-B453E82F5562}.Debug|Any CPU.Build.0 = Debug|x64
 		{DEC60049-9B58-48EF-98CE-B453E82F5562}.Debug|x64.ActiveCfg = Debug|x86
@@ -272,6 +260,18 @@ Global
 		{75E28B6A-12DA-4D31-AAAB-84183AC96CD0}.Release|x64.Build.0 = Release|Any CPU
 		{75E28B6A-12DA-4D31-AAAB-84183AC96CD0}.Release|x86.ActiveCfg = Release|Any CPU
 		{75E28B6A-12DA-4D31-AAAB-84183AC96CD0}.Release|x86.Build.0 = Release|Any CPU
+		{DE462216-6BE9-4AA0-AF16-A46580EC867C}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{DE462216-6BE9-4AA0-AF16-A46580EC867C}.Debug|Any CPU.Build.0 = Debug|x64
+		{DE462216-6BE9-4AA0-AF16-A46580EC867C}.Debug|x64.ActiveCfg = Debug|x64
+		{DE462216-6BE9-4AA0-AF16-A46580EC867C}.Debug|x64.Build.0 = Debug|x64
+		{DE462216-6BE9-4AA0-AF16-A46580EC867C}.Debug|x86.ActiveCfg = Debug|x86
+		{DE462216-6BE9-4AA0-AF16-A46580EC867C}.Debug|x86.Build.0 = Debug|x86
+		{DE462216-6BE9-4AA0-AF16-A46580EC867C}.Release|Any CPU.ActiveCfg = Release|x64
+		{DE462216-6BE9-4AA0-AF16-A46580EC867C}.Release|Any CPU.Build.0 = Release|x64
+		{DE462216-6BE9-4AA0-AF16-A46580EC867C}.Release|x64.ActiveCfg = Release|x64
+		{DE462216-6BE9-4AA0-AF16-A46580EC867C}.Release|x64.Build.0 = Release|x64
+		{DE462216-6BE9-4AA0-AF16-A46580EC867C}.Release|x86.ActiveCfg = Release|x86
+		{DE462216-6BE9-4AA0-AF16-A46580EC867C}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

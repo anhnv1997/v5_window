@@ -8,7 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>AnyCPU;x86;x64</Platforms>
     <ApplicationIcon>icons8_racism.ico</ApplicationIcon>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -62,7 +62,10 @@
 
   <ItemGroup>
     <Reference Include="DahuaLib">
-      <HintPath>..\packages\iParkingv5_Package\CameraLib\Dahua\DahuaLib.dll</HintPath>
+      <HintPath>..\packages\DahuaLib.dll</HintPath>
+    </Reference>
+    <Reference Include="iParkingv5.Controller">
+      <HintPath>..\packages\dll_86\iParkingv5.Controller.dll</HintPath>
     </Reference>
     <Reference Include="Kztek.Tool">
       <HintPath>..\packages\Kztek.Tool.dll</HintPath>

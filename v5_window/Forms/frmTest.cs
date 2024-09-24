@@ -93,16 +93,16 @@ namespace iParkingv5_window.Forms
 
         private async void button4_Click(object sender, EventArgs e)
         {
-            DahuaAccessControl dahuaAccessControl = new DahuaAccessControl();
-            dahuaAccessControl.ControllerInfo = new iParkingv6.Objects.Datas.Bdk()
-            {
-                Comport = "192.168.1.108",
-                Baudrate = "37777",
-                CommunicationType = (int)CommunicationTypes.EM_CommunicationType.TCP_IP
-            };
-            //dahuaAccessControl.Init();
-            bool isSuccess = await dahuaAccessControl.ConnectAsync();
-            dahuaAccessControl.PollingStart();
+            //DahuaAccessControl dahuaAccessControl = new DahuaAccessControl();
+            //dahuaAccessControl.ControllerInfo = new iParkingv6.Objects.Datas.Bdk()
+            //{
+            //    Comport = "192.168.1.108",
+            //    Baudrate = "37777",
+            //    CommunicationType = (int)CommunicationTypes.EM_CommunicationType.TCP_IP
+            //};
+            ////dahuaAccessControl.Init();
+            //bool isSuccess = await dahuaAccessControl.ConnectAsync();
+            //dahuaAccessControl.PollingStart();
         }
 
         //private void Cam_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs)

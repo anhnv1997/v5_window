@@ -413,6 +413,16 @@
           }
         }
       },
+      "DahuaLib/1.0.0.1": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.1",
+        "compile": {
+          "bin/placeholder/DahuaLib.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DahuaLib.dll": {}
+        }
+      },
       "iParkingv5.Lpr/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
@@ -428,7 +438,7 @@
           "bin/placeholder/iParkingv5.Lpr.dll": {}
         }
       },
-      "iParkingv5.Objects/1.0.0.1": {
+      "iParkingv5.Objects/1.0.0.5": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
@@ -1207,12 +1217,17 @@
         "version.txt"
       ]
     },
+    "DahuaLib/1.0.0.1": {
+      "type": "project",
+      "path": "../../../iPGS_2023_NET6/DahuaLib/DahuaLib.csproj",
+      "msbuildProject": "../../../iPGS_2023_NET6/DahuaLib/DahuaLib.csproj"
+    },
     "iParkingv5.Lpr/1.0.0": {
       "type": "project",
       "path": "../iParkingv5.Lpr/iParkingv5.Lpr.csproj",
       "msbuildProject": "../iParkingv5.Lpr/iParkingv5.Lpr.csproj"
     },
-    "iParkingv5.Objects/1.0.0.1": {
+    "iParkingv5.Objects/1.0.0.5": {
       "type": "project",
       "path": "../iParkingv5.Objects/iParkingv5.Objects.csproj",
       "msbuildProject": "../iParkingv5.Objects/iParkingv5.Objects.csproj"
@@ -1220,8 +1235,9 @@
   },
   "projectFileDependencyGroups": {
     "net6.0-windows7.0": [
+      "DahuaLib >= 1.0.0.1",
       "System.IO.Ports >= 8.0.0",
-      "iParkingv5.Objects >= 1.0.0.1"
+      "iParkingv5.Objects >= 1.0.0.5"
     ]
   },
   "packageFolders": {
@@ -1252,6 +1268,9 @@
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "projectReferences": {
+            "F:\\KZTEK\\iPGS_2023_NET6\\DahuaLib\\DahuaLib.csproj": {
+              "projectPath": "F:\\KZTEK\\iPGS_2023_NET6\\DahuaLib\\DahuaLib.csproj"
+            },
             "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj": {
               "projectPath": "F:\\KZTEK\\Source ParkingV5\\v5_window\\iParkingv5.Objects\\iParkingv5.Objects.csproj"
             }
