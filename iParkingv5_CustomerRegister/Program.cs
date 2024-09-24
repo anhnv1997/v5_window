@@ -1,5 +1,4 @@
-﻿using DahuaLib.DahuaFuntion;
-using IPaking.Ultility;
+﻿using IPaking.Ultility;
 using iParking.ConfigurationManager;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
@@ -86,6 +85,8 @@ namespace iParkingv5_CustomerRegister
                                 return;
                             }
                             KzParkingApiHelper.server = serverConfig.ParkingServerUrl;
+                            // Fixme
+                            StaticPool.serverConfig = serverConfig;
                         }
                         catch (Exception ex)
                         {
@@ -125,9 +126,16 @@ namespace iParkingv5_CustomerRegister
                             Application.Exit();
                             return;
                         }
-
-                        NETClient.Init(DisConnectCallBack, IntPtr.Zero, null);
-                        NETClient.SetAutoReconnect(ReConnectCallBack, IntPtr.Zero);
+                        try
+                        {
+                            DahuaLib.DahuaFuntion.NETClient.Init(DisConnectCallBack, IntPtr.Zero, null);
+                            DahuaLib.DahuaFuntion.NETClient.SetAutoReconnect(ReConnectCallBack, IntPtr.Zero);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw;
+                        }
+                       
 
                         LogHelper.Log(LogHelper.EmLogType.INFOR, LogHelper.EmObjectLogType.System, "Start", "Mở giao diện đăng nhập hệ thống");
                         Application.Run(new frmLogin());

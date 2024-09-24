@@ -132,7 +132,16 @@ namespace iParkingv5_CustomerRegister
         }
         private void Controller_CardEvent(object sender, iParkingv5.Objects.Events.CardEventArgs e)
         {
-            UpdateEventMessage(e.EventTime.ToString("HH:mm:ss") + " Nhận sự kiện quẹt thẻ " + e.PreferCard);
+            foreach (var item in controllers)
+            {
+                if (item.ControllerInfo.Comport == e.DeviceId)
+                {
+                    e.DeviceId = item.ControllerInfo.Id;
+                    break;
+                }
+            }
+
+            UpdateEventMessage(e.EventTime.ToString("HH:mm:ss") + e.DeviceId + " - " + e.PreferCard + "Device: ");
             if (computers != null)
             {
                 foreach (var computer in computers)
@@ -147,11 +156,27 @@ namespace iParkingv5_CustomerRegister
             if (e.UserId == "0")
             {
                 UpdateEventMessage(e.EventTime.ToString("HH:mm:ss") + " Vân tay chưa được đăng ký ");
+                return;
             }
             string customerId = tblFingerControlUnit.GetCustomerId(e.DeviceId, e.UserId.ToString());
             if (string.IsNullOrEmpty(customerId))
             {
-                return;
+                foreach (var item in controllers)
+                {
+                    if (item.ControllerInfo.Comport == e.DeviceId)
+                    {
+                        e.DeviceId = item.ControllerInfo.Id;
+                        break;
+                    }
+                }
+                //MessageBox.Show("usser ID" + e.UserId);
+                //MessageBox.Show("DeviceId ID" + e.DeviceId);
+
+                customerId = tblFingerControlUnit.GetCustomerId(e.DeviceId, e.UserId.ToString());
+                if (string.IsNullOrEmpty(customerId))
+                {
+                    return;
+                }
             }
             string fingerCustomerCode = tblFingerCustomer.GetFingerCustomeCode(customerId, out bool valid);
             if (!string.IsNullOrWhiteSpace(fingerCustomerCode))
@@ -163,7 +188,7 @@ namespace iParkingv5_CustomerRegister
                     ReaderIndex = e.ReaderIndex,
                     EventTime = e.EventTime,
                     PreferCard = fingerCustomerCode,
-                    AllCardFormats = new List<string>() { fingerCustomerCode}
+                    AllCardFormats = new List<string>() { fingerCustomerCode }
                 };
 
                 if (computers != null)
@@ -192,12 +217,20 @@ namespace iParkingv5_CustomerRegister
             //    VirtualHost = "/"
             //};
 
+            //ConnectionFactory factory = new ConnectionFactory
+            //{
+            //    HostName =  "192.168.20.135",
+            //    Port = 5672,
+            //    UserName = "guest",
+            //    Password = "guest",
+            //    VirtualHost = "/"
+            //};
             ConnectionFactory factory = new ConnectionFactory
             {
-                HostName = "192.168.20.135",
+                HostName = StaticPool.serverConfig.RabbitMqUrl,
                 Port = 5672,
-                UserName = "guest",
-                Password = "guest",
+                UserName = StaticPool.serverConfig.RabbitMqUsername,
+                Password = StaticPool.serverConfig.RabbitMqPassword,
                 VirtualHost = "/"
             };
             conn = factory.CreateConnection();

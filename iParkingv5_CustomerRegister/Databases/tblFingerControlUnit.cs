@@ -42,7 +42,7 @@ namespace iParkingv5_CustomerRegister.Databases
         }
         public static bool Insert(string controlUnitId, int controlUnitUserId, string customerId)
         {
-            string deleteCMD = $"DELETE {tblName} WHERE {tblColCustomerId} = '{customerId}'";
+            string deleteCMD = $"DELETE {tblName} WHERE {tblColCustomerId} = '{customerId}' and {tblColControlUnitUserId} = {controlUnitUserId}";
             StaticPool.mdb.ExecuteCommand(deleteCMD);
             string insertCMD = $@"INSERT INTO {tblName}({tblColControlUnitId}, {tblColControlUnitUserId}, {tblColCustomerId})
                                   VALUES('{controlUnitId}', '{controlUnitUserId}', '{customerId}')";
