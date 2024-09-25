@@ -1,31 +1,39 @@
-﻿using iParkingv5.Objects;
+﻿using AForge.Imaging;
+using AForge.Vision.Motion;
+using IPaking.Ultility;
+using iParkingv5.Objects;
+using iParkingv5.Objects.Configs;
 using iParkingv5.Objects.Enums;
-using iParkingv6.Objects.Datas;
 using Kztek.Cameras;
+using Kztek.Tool;
+using Kztek.Tool.LogDatabases;
 using Kztek.Tools;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace iParkingv5_window.Usercontrols
 {
     public partial class ucCameraView : UserControl
     {
+        public delegate void MotionDetectEventHandler(object sender, MotionDetectEventArgs e);
+        public event MotionDetectEventHandler MotionDetectEvent;
+        public class MotionDetectEventArgs : EventArgs
+        {
+            public DateTime EventTime { get; set; }
+
+            public Kztek.Cameras.Camera DetectCamera { get; init; }
+        }
         #region Properties
         public Kztek.Cameras.Camera? _Camera { get; set; }
+        private MotionDetector MotionDetector { get; set; }
+        private CancellationTokenSource _ctsDetectMotion;
+        private string laneId;
+
         #endregion End Properties
 
         #region Forms
-        public ucCameraView()
+        public ucCameraView(string laneId)
         {
             InitializeComponent();
+            this.laneId = laneId;
         }
 
         public void ChangeByHeight(Size newSize, EmCameraResolutionDisplay cameraResolutionDisplay)
@@ -127,7 +135,7 @@ namespace iParkingv5_window.Usercontrols
         {
         }
 
-        public Image? GetFullCurrentImage()
+        public System.Drawing.Image? GetFullCurrentImage()
         {
             var bmp = _Camera!.GetCurrentVideoFrame();
             if (bmp == null)
@@ -163,5 +171,124 @@ namespace iParkingv5_window.Usercontrols
             }
             base.Dispose(disposing);
         }
+        private async Task DetectMotionCam(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
+            {
+                try
+                {
+                    await Task.Delay(1000, token);
+
+                    var currentFrame = GetFullCurrentImage();
+
+                    if (currentFrame != null)
+                    {
+                        Rectangle? config = null;
+                        try
+                        {
+                            if (File.Exists(PathManagement.laneCameraLoopConfigPath(this.laneId, this._Camera.ID)))
+                            {
+                                CameraDetectRegion? cameraDetectRegion = NewtonSoftHelper<CameraDetectRegion>.DeserializeObjectFromPath(PathManagement.laneCameraLoopConfigPath(laneId, this._Camera.ID));
+                                if (cameraDetectRegion != null)
+                                {
+                                    config = new Rectangle()
+                                    {
+                                        X = cameraDetectRegion.X,
+                                        Y = cameraDetectRegion.Y,
+                                        Width = cameraDetectRegion.Width,
+                                        Height = cameraDetectRegion.Height
+                                    };
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+
+                        if (config != null)
+                        {
+                            using Bitmap bmp = CropBitmap(new(currentFrame), config.Value);// new(currentFrame);
+                            UnmanagedImage currentVideoFrame = UnmanagedImage.FromManagedImage(bmp);
+                            if (this.MotionDetector != null && currentVideoFrame != null)
+                            {
+                                float motionLevel = MotionDetector.ProcessFrame(currentVideoFrame);
+                                float alarmLevel = (float)AppData.alarmLLevel / 1000f;
+                                label1.Invoke(new Action(() =>
+                                {
+                                    label1.Text = motionLevel + "-" + alarmLevel;
+                                }));
+                                if (motionLevel > alarmLevel)
+                                {
+                                    
+                                    MotionDetectEvent?.Invoke(this, new MotionDetectEventArgs { DetectCamera = this._Camera, EventTime = DateTime.Now });
+                                }
+                            }
+
+                            if (currentVideoFrame != null)
+                            {
+                                currentVideoFrame.Dispose();
+                            }
+                        }
+                        else
+                        {
+                            using Bitmap bmp = new(currentFrame);
+                            UnmanagedImage currentVideoFrame = UnmanagedImage.FromManagedImage(bmp);
+                            if (this.MotionDetector != null && currentVideoFrame != null)
+                            {
+                                float motionLevel = MotionDetector.ProcessFrame(currentVideoFrame);
+                                float alarmLevel = (float)AppData.alarmLLevel / 1000f;
+                                label1.Invoke(new Action(() =>
+                                {
+                                    label1.Text = motionLevel + "-" + alarmLevel;
+                                }));
+                                if (motionLevel > alarmLevel)
+                                {
+                                    
+                                    MotionDetectEvent?.Invoke(this, new MotionDetectEventArgs { DetectCamera = this._Camera, EventTime = DateTime.Now });
+                                }
+                            }
+
+                            if (currentVideoFrame != null)
+                            {
+                                currentVideoFrame.Dispose();
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                }
+            }
+        }
+        public void StartMotionDetection()
+        {
+            this.MotionDetector = new MotionDetector(new TwoFramesDifferenceDetector(true), null);
+            PollingStart();
+        }
+
+        private void PollingStart()
+        {
+            _ctsDetectMotion = new CancellationTokenSource();
+
+            Task.Run(() =>
+                DetectMotionCam(_ctsDetectMotion.Token), _ctsDetectMotion.Token
+            );
+        }
+
+        static Bitmap CropBitmap(Bitmap source, Rectangle section)
+        {
+            // Tạo một Bitmap mới với kích thước được xác định bởi Rectangle
+            Bitmap bmp = new Bitmap(section.Width, section.Height);
+
+            // Tạo đối tượng Graphics để vẽ Bitmap mới
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                // Vẽ phần cắt của Bitmap gốc lên Bitmap mới
+                g.DrawImage(source, 0, 0, section, GraphicsUnit.Pixel);
+            }
+
+            return bmp;
+        }
+
     }
 }

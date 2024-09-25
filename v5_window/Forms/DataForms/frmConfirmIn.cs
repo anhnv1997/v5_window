@@ -30,7 +30,7 @@ namespace iParkingv5_window.Forms.DataForms
             lblIdentityGroup.Message = identityGroup?.Name ?? "";
             lblVehicleType.Message = VehicleType.GetDisplayStr(identityGroup?.VehicleType ?? 0);
 
-            picOverview.Image = overviewImage.GetThumbnailImage(picOverview.Width, picOverview.Height, null, IntPtr.Zero);
+            picOverview.Image = overviewImage?.GetThumbnailImage(picOverview.Width, picOverview.Height, null, IntPtr.Zero);
             picOverview.Tag = overviewImage;
 
             picVehicle.Image = vehicleImage?.GetThumbnailImage(picVehicle.Width, picVehicle.Height, null, IntPtr.Zero);

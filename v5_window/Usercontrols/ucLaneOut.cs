@@ -343,6 +343,35 @@ namespace iParkingv5_window.Usercontrols
                 StartTimerRefreshUI();
             }
         }
+        private bool isExcecute = false;
+        public override async void UcMotoLpr_MotionDetectEvent(object sender, ucCameraView.MotionDetectEventArgs e)
+        {
+            if (isExcecute)
+            {
+                return;
+            }
+            foreach (ControllerInLane controllerInLane in lane.controlUnits)
+            {
+                if (controllerInLane.inputs.Length == 0)
+                {
+                    continue;
+                }
+
+                InputEventArgs ce = new()
+                {
+                    EventTime = DateTime.Now,
+                    DeviceId = controllerInLane.controlUnitId,
+                    InputIndex = controllerInLane.inputs[0],
+                };
+                isExcecute = true;
+                await OnNewEvent(ce);
+                if (lastEvent != null)
+                {
+                    await Task.Delay(StaticPool.appOption.MotionAlarmDelayMilisecond);
+                }
+                isExcecute = false;
+            }
+        }
 
         /// <summary>
         /// Sự kiện xảy ra khi xe đi qua vòng từ

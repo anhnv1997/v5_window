@@ -2,7 +2,6 @@
 using iParking.ConfigurationManager.UserControls;
 using iParkingv5.Objects.Configs;
 using iParkingv5.Objects.Databases;
-using Kztek.Scale_net6.Objects;
 using Kztek.Tool;
 using Kztek.Tools;
 
@@ -165,19 +164,19 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
         }
         private void AddTabScaleConfig()
         {
-            TabPage tabScaleConfig = new TabPage();
-            tabScaleConfig.Text = "Thiết bị cân";
-            tabControl1.TabPages.Add(tabScaleConfig);
-            tabScaleConfig.BackColor = SystemColors.ButtonHighlight;
+            //TabPage tabScaleConfig = new TabPage();
+            //tabScaleConfig.Text = "Thiết bị cân";
+            //tabControl1.TabPages.Add(tabScaleConfig);
+            //tabScaleConfig.BackColor = SystemColors.ButtonHighlight;
 
-            ScaleConfig? scaleConfig = NewtonSoftHelper<ScaleConfig>.DeserializeObjectFromPath(PathManagement.scaleConfigPath) ?? new ScaleConfig();
+            //ScaleConfig? scaleConfig = NewtonSoftHelper<ScaleConfig>.DeserializeObjectFromPath(PathManagement.scaleConfigPath) ?? new ScaleConfig();
 
-            ucScaleConfig = new ucScaleConfig(scaleConfig);
+            //ucScaleConfig = new ucScaleConfig(scaleConfig);
 
-            tabScaleConfig.Controls.Add(ucScaleConfig);
-            ucScaleConfig.Dock = DockStyle.Fill;
-            tabScaleConfig.AutoScroll = true;
-            ucScaleConfig.Dock = DockStyle.None;
+            //tabScaleConfig.Controls.Add(ucScaleConfig);
+            //ucScaleConfig.Dock = DockStyle.Fill;
+            //tabScaleConfig.AutoScroll = true;
+            //ucScaleConfig.Dock = DockStyle.None;
         }
         private void AddTabThirdParty()
         {
@@ -260,7 +259,7 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
         }
         private void SaveScaleConfig()
         {
-            NewtonSoftHelper<ScaleConfig>.SaveConfig(ucScaleConfig.GetScaleConfig(), PathManagement.scaleConfigPath);
+            //NewtonSoftHelper<ScaleConfig>.SaveConfig(ucScaleConfig.GetScaleConfig(), PathManagement.scaleConfigPath);
         }
         private void SaveThirdPartyConfig()
         {

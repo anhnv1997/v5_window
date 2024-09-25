@@ -16,6 +16,7 @@
             lblCameraName = new Label();
             panelCameraView = new Panel();
             toolTip1 = new ToolTip(components);
+            label1 = new Label();
             SuspendLayout();
             // 
             // lblCameraName
@@ -30,7 +31,6 @@
             lblCameraName.TabIndex = 0;
             lblCameraName.Text = "label1";
             lblCameraName.TextAlign = ContentAlignment.MiddleLeft;
-            lblCameraName.Visible = false;
             // 
             // panelCameraView
             // 
@@ -42,16 +42,28 @@
             panelCameraView.Size = new Size(524, 249);
             panelCameraView.TabIndex = 1;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Dock = DockStyle.Bottom;
+            label1.Location = new Point(0, 259);
+            label1.Name = "label1";
+            label1.Size = new Size(98, 15);
+            label1.TabIndex = 2;
+            label1.Text = "MOTION-ALARM";
+            // 
             // ucCameraView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(label1);
             Controls.Add(panelCameraView);
             Controls.Add(lblCameraName);
             Margin = new Padding(3, 2, 3, 2);
             Name = "ucCameraView";
             Size = new Size(524, 274);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -59,5 +71,6 @@
         private Label lblCameraName;
         private Panel panelCameraView;
         private ToolTip toolTip1;
+        private Label label1;
     }
 }

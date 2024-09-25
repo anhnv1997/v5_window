@@ -36,6 +36,9 @@ namespace iParking.ConfigurationManager.UserControls
                 chbDisplayCustomer.Checked = appOption.IsDisplayCustomerInfo;
                 numLogKeepDays.Value = appOption.NumLogKeepDays;
                 chbDisplayStatusBar.Checked = appOption.IsDisplayStatusBar;
+                cbVirtualLoopMode.SelectedIndex = (int)appOption.VirtualLoopMode;
+                numVirtualLoopAlarmLevel.Value = appOption.MotionAlarmLevel;
+                numVirtualLoopDelay.Value = appOption.MotionAlarmDelayMilisecond;
             }
             txtWaitSwipeCardTime.TextChanged += TxtWaitSwipeCardTime_TextChanged;
             txtAllowOpenBarrieTime.TextChanged += TxtAllowOpenBarrieTime_TextChanged;
@@ -98,6 +101,9 @@ namespace iParking.ConfigurationManager.UserControls
                 IsDisplayCustomerInfo = chbDisplayCustomer.Checked,
                 NumLogKeepDays = (int)numLogKeepDays.Value,
                 IsDisplayStatusBar = chbDisplayStatusBar.Checked,
+                VirtualLoopMode = (EmVirtualLoopMode)cbVirtualLoopMode.SelectedIndex,
+                MotionAlarmLevel = (int)numVirtualLoopAlarmLevel.Value,
+                MotionAlarmDelayMilisecond = (int)numVirtualLoopAlarmLevel.Value,
             };
         }
         #endregion End Public Function

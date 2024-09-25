@@ -44,6 +44,7 @@ namespace iParkingv5_window.Usercontrols
             picCutVehicleImage = new MovablePictureBox();
             picLprImage = new MovablePictureBox();
             lblDetectPlate = new Label();
+            btnVirtualLoop = new Button();
             panel2.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picCutVehicleImage).BeginInit();
@@ -104,20 +105,22 @@ namespace iParkingv5_window.Usercontrols
             // 
             // btnDraw
             // 
-            btnDraw.Location = new Point(464, 43);
+            btnDraw.Location = new Point(551, 43);
             btnDraw.Margin = new Padding(4, 3, 4, 3);
             btnDraw.Name = "btnDraw";
-            btnDraw.Size = new Size(167, 29);
+            btnDraw.Size = new Size(80, 29);
             btnDraw.TabIndex = 3;
-            btnDraw.Text = "Vẽ vùng nhận diện";
+            btnDraw.Text = "LPR";
             btnDraw.UseVisualStyleBackColor = true;
             btnDraw.Visible = false;
+            btnDraw.Click += btnDraw_Click_1;
             // 
             // panel2
             // 
             panel2.Controls.Add(cbCamera);
             panel2.Controls.Add(btnClearConfig);
             panel2.Controls.Add(btnSave);
+            panel2.Controls.Add(btnVirtualLoop);
             panel2.Controls.Add(btnDraw);
             panel2.Controls.Add(label1);
             panel2.Controls.Add(btnMotorLprDetect);
@@ -217,6 +220,18 @@ namespace iParkingv5_window.Usercontrols
             lblDetectPlate.Text = "_";
             lblDetectPlate.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // btnVirtualLoop
+            // 
+            btnVirtualLoop.Location = new Point(464, 43);
+            btnVirtualLoop.Margin = new Padding(4, 3, 4, 3);
+            btnVirtualLoop.Name = "btnVirtualLoop";
+            btnVirtualLoop.Size = new Size(80, 29);
+            btnVirtualLoop.TabIndex = 3;
+            btnVirtualLoop.Text = "Loop";
+            btnVirtualLoop.UseVisualStyleBackColor = true;
+            btnVirtualLoop.Visible = false;
+            btnVirtualLoop.Click += btnVirtualLoop_Click;
+            // 
             // ucCameraConfig
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -253,5 +268,6 @@ namespace iParkingv5_window.Usercontrols
         private Button btnSave;
         private Button btnMotorLprDetect;
         private Button btnClearConfig;
+        private Button btnVirtualLoop;
     }
 }

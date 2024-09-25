@@ -172,6 +172,7 @@ namespace iParkingv5_window.Usercontrols
             // 
             txtPlate.BackColor = SystemColors.ActiveCaption;
             txtPlate.BorderStyle = BorderStyle.None;
+            txtPlate.Dock = DockStyle.Fill;
             txtPlate.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
             txtPlate.IsBold = true;
             txtPlate.Location = new Point(2, 70);

@@ -30,6 +30,7 @@
         public static string laneControllerShortcutConfigPath(string laneId) => baseBath + $"/configs/{laneId}/lane/controllerShortcut.txt";
         public static string laneLedConfigPath(string laneId, string ledId) => baseBath + $"/configs/{laneId}/led/{ledId}.txt";
         public static string laneCameraConfigPath(string laneId, string cameraId) => baseBath + $"/configs/{laneId}/camera/{cameraId}.txt";
+        public static string laneCameraLoopConfigPath(string laneId, string cameraId) => baseBath + $"/configs/{laneId}/camera/loop/{cameraId}.txt";
         public static string sharedPreferencesPath() => baseBath + "/configs/app/sharedPreferences.txt";
         public static string laneControllerReaderConfigPath(string laneId, string controllerId, int readerIndex) => baseBath + $"/configs/{laneId}/{controllerId}_{readerIndex}/reader_config.txt";
         #endregion END LANE CONFIG PATH

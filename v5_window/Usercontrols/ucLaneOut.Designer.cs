@@ -551,6 +551,7 @@ namespace iParkingv5_window.Usercontrols
             // 
             lblPlateIn.BackColor = SystemColors.ActiveCaption;
             lblPlateIn.BorderStyle = BorderStyle.None;
+            lblPlateIn.Dock = DockStyle.Fill;
             lblPlateIn.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
             lblPlateIn.IsBold = true;
             lblPlateIn.Location = new Point(2, 76);

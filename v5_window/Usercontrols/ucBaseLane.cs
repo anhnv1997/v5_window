@@ -114,19 +114,37 @@ namespace iParkingv5_window.Usercontrols
 
             if (mainOverviewCamera != null)
             {
-                ucOverView = new ucCameraView();
+                ucOverView = new ucCameraView(this.lane.Id);
                 AddCamera(panelCameras, mainOverviewCamera, ucOverView);
+                if (AppData.isUseVirtualLoop == EmVirtualLoopMode.Overview || AppData.isUseVirtualLoop == EmVirtualLoopMode.Both)
+                {
+                    ucOverView.MotionDetectEvent += UcMotoLpr_MotionDetectEvent;
+                    ucOverView.StartMotionDetection();
+                }
             }
             if (motorLprCamera != null)
             {
-                ucMotoLpr = new ucCameraView();
+                ucMotoLpr = new ucCameraView(this.lane.Id);
                 AddCamera(panelCameras, motorLprCamera, ucMotoLpr);
             }
             if (carLprCamera != null)
             {
-                ucCarLpr = new ucCameraView();
+                ucCarLpr = new ucCameraView(this.lane.Id);
                 AddCamera(panelCameras, carLprCamera, ucCarLpr);
+                if (AppData.isUseVirtualLoop == EmVirtualLoopMode.Lpr || AppData.isUseVirtualLoop == EmVirtualLoopMode.Both)
+                {
+                    ucCarLpr.MotionDetectEvent += UcMotoLpr_MotionDetectEvent;
+                    ucCarLpr.StartMotionDetection();
+                }
             }
+        }
+
+        public virtual void UcMotoLpr_MotionDetectEvent(object sender, ucCameraView.MotionDetectEventArgs e)
+        {
+        }
+
+        private void VideoSourcePlayer_Alarm(object? sender, EventArgs e)
+        {
         }
 
         private void AddCamera(Panel panel, Kztek.Cameras.Camera cam, ucCameraView uc)
@@ -146,6 +164,7 @@ namespace iParkingv5_window.Usercontrols
                 panel.Controls.Add(uc);
                 uc.Location = new Point(0);
             }
+
         }
 
         public Kztek.Cameras.Camera? GetCameraConfig(CameraPurposeType.EmCameraPurposeType key, Dictionary<CameraPurposeType.EmCameraPurposeType, List<Camera>> cameras)
@@ -164,7 +183,7 @@ namespace iParkingv5_window.Usercontrols
                         cam_du_phong.Login = cameras[key][i].Username;
                         cam_du_phong.Password = cameras[key][i].Password;
                         cam_du_phong.Chanel = cameras[key][i].Channel;
-                        string _camType = cameras[key][i].GetCameraType() == "HIK" ? "HIKVISION" : cameras[key][i].GetCameraType();
+                        string _camType = cameras[key][i].GetCameraType() == "HIK" ? "HIKVISION2" : cameras[key][i].GetCameraType();
                         cam_du_phong.CameraType = Kztek.Cameras.CameraTypes.GetType(_camType);
                         cam_du_phong.StreamType = Kztek.Cameras.StreamTypes.GetType("H264");
                         cam_du_phong.Resolution = string.IsNullOrEmpty(cameras[key][0].Resolution) ? "1280x720" : cameras[key][i].Resolution;
@@ -236,6 +255,10 @@ namespace iParkingv5_window.Usercontrols
                                 lbl.UpdateResultMessage($"Nhận sự kiên Loop {ie.InputIndex}, chờ {StaticPool.appOption.LoopDelay} ms ", Color.DarkBlue);
                             }
                             await ExcecuteLoopEvent(ie);
+                        }
+                        else
+                        {
+                            lbl.UpdateResultMessage($"Làn không cấu hình sử dụng loop ", Color.DarkBlue);
                         }
                         break;
                     case InputTupe.EmInputType.Exit:

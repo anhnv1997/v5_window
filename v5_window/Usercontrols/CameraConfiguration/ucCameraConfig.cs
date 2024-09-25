@@ -14,7 +14,8 @@ namespace iParkingv5_window.Usercontrols
         private string laneId = string.Empty;
         private List<Camera> cameras = new List<Camera>();
         Kztek.Cameras.Camera? camView = null;
-        private Rectangle? config = null;
+        private Rectangle? LprConfig = null;
+        private Rectangle? LoopConfig = null;
         #endregion End Properties
 
         #region Forms
@@ -45,7 +46,7 @@ namespace iParkingv5_window.Usercontrols
         private void CbCamera_SelectedIndexChanged(object? sender, EventArgs e)
         {
             currentCamera = null;
-            config = null;
+            LprConfig = null;
             foreach (Camera camera in this.cameras)
             {
                 if (camera.Name == cbCamera.Text)
@@ -62,7 +63,7 @@ namespace iParkingv5_window.Usercontrols
                     camView.Login = currentCamera.Username;
                     camView.Password = currentCamera.Password;
                     camView.Chanel = currentCamera.Channel;
-                    string _camType = currentCamera.GetCameraType() == "HIK" ? "HIKVISION" : currentCamera.GetCameraType();
+                    string _camType = currentCamera.GetCameraType() == "HIK" ? "HIKVISION2" : currentCamera.GetCameraType();
                     camView.CameraType = Kztek.Cameras.CameraTypes.GetType(_camType);
                     camView.StreamType = Kztek.Cameras.StreamTypes.GetType("H264");
                     camView.Resolution = string.IsNullOrEmpty(currentCamera.Resolution) ? "1280x720" : currentCamera.Resolution;
@@ -70,7 +71,13 @@ namespace iParkingv5_window.Usercontrols
                     var oldConfig = NewtonSoftHelper<CameraDetectRegion>.DeserializeObjectFromPath(PathManagement.laneCameraConfigPath(laneId, this.currentCamera!.Id));
                     if (oldConfig != null)
                     {
-                        config = new Rectangle(oldConfig.X, oldConfig.Y, oldConfig.Width, oldConfig.Height);
+                        LprConfig = new Rectangle(oldConfig.X, oldConfig.Y, oldConfig.Width, oldConfig.Height);
+                    }
+
+                    var oldLoopConfig = NewtonSoftHelper<CameraDetectRegion>.DeserializeObjectFromPath(PathManagement.laneCameraLoopConfigPath(laneId, this.currentCamera!.Id));
+                    if (oldLoopConfig != null)
+                    {
+                        LoopConfig = new Rectangle(oldLoopConfig.X, oldLoopConfig.Y, oldLoopConfig.Width, oldLoopConfig.Height);
                     }
                     break;
                 }
@@ -89,6 +96,7 @@ namespace iParkingv5_window.Usercontrols
             btnMotorLprDetect.Visible = false;
             btnSave.Visible = false;
             btnClearConfig.Visible = false;
+            btnVirtualLoop.Visible = false;
         }
         private void btnLiveview_Click(object? sender, EventArgs e)
         {
@@ -102,6 +110,7 @@ namespace iParkingv5_window.Usercontrols
             btnMotorLprDetect.Visible = true;
             btnSave.Visible = true;
             btnClearConfig.Visible = true;
+            btnVirtualLoop.Visible = AppData.isUseVirtualLoop != EmVirtualLoopMode.UnUsed;
 
             camView!.Start();
 
@@ -127,9 +136,9 @@ namespace iParkingv5_window.Usercontrols
             Image image = camView!.GetCurrentVideoFrame();
             if (image != null)
             {
-                if (config != null)
+                if (LprConfig != null)
                 {
-                    Bitmap bitmapCut = CropBitmap((Bitmap)image, (Rectangle)config!);
+                    Bitmap bitmapCut = CropBitmap((Bitmap)image, (Rectangle)LprConfig!);
 
                     string carPlate = AppData.LprDetect.GetPlateNumber(bitmapCut, true, null, out Image? lprImage);
                     lblDetectPlate.Text = carPlate;
@@ -155,9 +164,9 @@ namespace iParkingv5_window.Usercontrols
             Image image = camView!.GetCurrentVideoFrame();
             if (image != null)
             {
-                if (config != null)
+                if (LprConfig != null)
                 {
-                    Bitmap bitmapCut = CropBitmap((Bitmap)image, (Rectangle)config!);
+                    Bitmap bitmapCut = CropBitmap((Bitmap)image, (Rectangle)LprConfig!);
 
                     string carPlate = AppData.LprDetect.GetPlateNumber(bitmapCut, false, null, out Image? lprImage);
                     lblDetectPlate.Text = carPlate;
@@ -181,44 +190,57 @@ namespace iParkingv5_window.Usercontrols
                 return;
             }
             Image image = camView!.GetCurrentVideoFrame();
-            frmCameraConfigSet frmCameraConfigSet = new frmCameraConfigSet(image, config);
+            frmCameraConfigSet frmCameraConfigSet = new frmCameraConfigSet(image, LprConfig);
             frmCameraConfigSet.ShowDialog();
             if (frmCameraConfigSet.DialogResult == DialogResult.OK)
             {
-                this.config = frmCameraConfigSet.GetSaveConfig();
+                this.LprConfig = frmCameraConfigSet.GetSaveConfig();
                 panelCamera.Controls[0].Invalidate();
             }
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (this.config != null)
+            if (this.LprConfig != null)
             {
                 CameraDetectRegion cameraDetectRegion = new CameraDetectRegion()
                 {
-                    X = this.config.Value.X,
-                    Y = this.config.Value.Y,
-                    Width = this.config.Value.Width,
-                    Height = this.config.Value.Height,
+                    X = this.LprConfig.Value.X,
+                    Y = this.LprConfig.Value.Y,
+                    Width = this.LprConfig.Value.Width,
+                    Height = this.LprConfig.Value.Height,
                 };
                 NewtonSoftHelper<CameraDetectRegion>.SaveConfig(cameraDetectRegion, PathManagement.laneCameraConfigPath(laneId, this.currentCamera!.Id));
             }
-            else
+
+            if (this.LoopConfig != null)
             {
-                MessageBox.Show("Chưa có thông tin cấu hình", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
+                CameraDetectRegion cameraDetectRegion = new CameraDetectRegion()
+                {
+                    X = this.LoopConfig.Value.X,
+                    Y = this.LoopConfig.Value.Y,
+                    Width = this.LoopConfig.Value.Width,
+                    Height = this.LoopConfig.Value.Height,
+                };
+                NewtonSoftHelper<CameraDetectRegion>.SaveConfig(cameraDetectRegion, PathManagement.laneCameraLoopConfigPath(laneId, this.currentCamera!.Id));
             }
 
         }
         private void btnClearConfig_Click(object sender, EventArgs e)
         {
-            string configPath = PathManagement.laneCameraConfigPath(laneId, this.currentCamera!.Id);
+            string lprConfigPath = PathManagement.laneCameraConfigPath(laneId, this.currentCamera!.Id);
+            string loopConfigPath = PathManagement.laneCameraLoopConfigPath(laneId, this.currentCamera!.Id);
             try
             {
-                if (File.Exists(configPath))
+                if (File.Exists(lprConfigPath))
                 {
-                    File.Delete(configPath);
+                    File.Delete(lprConfigPath);
                 }
-                this.config = null;
+                if (File.Exists(loopConfigPath))
+                {
+                    File.Delete(loopConfigPath);
+                }
+                this.LprConfig = null;
+                this.LoopConfig = null;
             }
             catch (Exception)
             {
@@ -253,6 +275,28 @@ namespace iParkingv5_window.Usercontrols
         private void btnCarLprDetect_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnDraw_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnVirtualLoop_Click(object sender, EventArgs e)
+        {
+            if (!IsExistCamera())
+            {
+                MessageBox.Show("Hãy chọn camera!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            Image image = camView!.GetCurrentVideoFrame();
+            frmCameraVirtualLoopConfigSet frmCameraConfigSet = new frmCameraVirtualLoopConfigSet(image, LoopConfig);
+            frmCameraConfigSet.ShowDialog();
+            if (frmCameraConfigSet.DialogResult == DialogResult.OK)
+            {
+                this.LoopConfig = frmCameraConfigSet.GetSaveConfig();
+                panelCamera.Controls[0].Invalidate();
+            }
         }
     }
 }

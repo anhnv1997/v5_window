@@ -17,7 +17,6 @@ using iParkingv5_window.Forms.SystemForms;
 using iParkingv5_window.Forms.ThirdPartyForms.OfficeHausForms;
 using iParkingv5_window.Usercontrols;
 using iParkingv6.Objects.Datas;
-using Kztek.Scale_net6.Interfaces;
 using Kztek.Tool;
 using Kztek.Tool.LogDatabases;
 using Kztek.Tools;
@@ -80,7 +79,7 @@ namespace iParkingv5_window.Forms.DataForms
         #region Properties
         public static List<IController> controllers = new List<IController>();
         private static List<iLane> lanes = new List<iLane>();
-        private static IScale scaleController;
+        //private static IScale scaleController;
         public static ConcurrentQueue<CardEventArgs> cardEvents = new ConcurrentQueue<CardEventArgs>();
         public static ConcurrentQueue<InputEventArgs> inputEvents = new ConcurrentQueue<InputEventArgs>();
         List<LaneDisplayConfig>? laneDisplayConfigs = null;
@@ -400,7 +399,6 @@ namespace iParkingv5_window.Forms.DataForms
                             e.PreferCard = "0" + e.PreferCard;
                         }
                         e.AllCardFormats.Add(e.PreferCard);
-
                         lblLoadingStatus.Message = $"{DateTime.Now:HH:mm:ss} READER: {e.ReaderIndex}, CARD: {e.PreferCard} Controller: " + e.DeviceName;
                         iLane.OnNewEvent(e);
                     }

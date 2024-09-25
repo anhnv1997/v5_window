@@ -29,7 +29,7 @@ namespace iParkingv6.Objects.Datas
         public object UpdatedBy { get; set; }
 
         public bool IsConnect { get; set; }
-
+        public int OutputCount { get; set; }
         public List<CardFormatConfig> configs { get; set; } = new List<CardFormatConfig>();
     }
 }

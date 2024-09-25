@@ -29,13 +29,6 @@
     <ProjectReference Include="..\IPaking.Ultility\IPaking.Ultility.csproj" />
     <ProjectReference Include="..\iParkingv5.ApiManager\iParkingv5.ApiManager.csproj" />
     <ProjectReference Include="..\iParkingv5.Controller\iParkingv5.Controller.csproj" />
-    <ProjectReference Include="..\Kztek.Scale\Net6\Kztek.Scale\Kztek.Scale_net6.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="DahuaLib">
-      <HintPath>..\packages\iParkingv5_Package\CameraLib\Dahua\DahuaLib.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>

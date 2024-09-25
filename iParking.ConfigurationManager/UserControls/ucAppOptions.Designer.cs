@@ -34,6 +34,7 @@
             chbIsCheckKey = new CheckBox();
             chbIsUseInvoice = new CheckBox();
             chbIsIntergratedScaleStation = new CheckBox();
+            numVirtualLoopAlarmLevel = new NumericUpDown();
             numLogKeepDays = new NumericUpDown();
             numRetakePhotoDelayTime = new NumericUpDown();
             numRetakePhotoTurn = new NumericUpDown();
@@ -51,22 +52,30 @@
             label13 = new Label();
             label8 = new Label();
             label7 = new Label();
+            cbVirtualLoopMode = new ComboBox();
             cbAutoReturnDialogResult = new ComboBox();
             cbPrintTemplate = new ComboBox();
             txtUpdatePath = new TextBox();
             txtWaitSwipeCardTime = new TextBox();
+            label19 = new Label();
+            label18 = new Label();
             label16 = new Label();
             label15 = new Label();
             txtAllowOpenBarrieTime = new TextBox();
             label5 = new Label();
             label1 = new Label();
             label2 = new Label();
+            label20 = new Label();
+            numVirtualLoopDelay = new NumericUpDown();
+            label21 = new Label();
             groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numVirtualLoopAlarmLevel).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numLogKeepDays).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoDelayTime).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoTurn).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numAutoReturnDialogTime).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numLoopDelay).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numVirtualLoopDelay).BeginInit();
             SuspendLayout();
             // 
             // groupBox2
@@ -77,9 +86,12 @@
             groupBox2.Controls.Add(chbIsCheckKey);
             groupBox2.Controls.Add(chbIsUseInvoice);
             groupBox2.Controls.Add(chbIsIntergratedScaleStation);
+            groupBox2.Controls.Add(numVirtualLoopDelay);
+            groupBox2.Controls.Add(numVirtualLoopAlarmLevel);
             groupBox2.Controls.Add(numLogKeepDays);
             groupBox2.Controls.Add(numRetakePhotoDelayTime);
             groupBox2.Controls.Add(numRetakePhotoTurn);
+            groupBox2.Controls.Add(label21);
             groupBox2.Controls.Add(label17);
             groupBox2.Controls.Add(label12);
             groupBox2.Controls.Add(chbIsAllowEditPlateOut);
@@ -94,10 +106,14 @@
             groupBox2.Controls.Add(label13);
             groupBox2.Controls.Add(label8);
             groupBox2.Controls.Add(label7);
+            groupBox2.Controls.Add(cbVirtualLoopMode);
             groupBox2.Controls.Add(cbAutoReturnDialogResult);
             groupBox2.Controls.Add(cbPrintTemplate);
             groupBox2.Controls.Add(txtUpdatePath);
+            groupBox2.Controls.Add(label20);
             groupBox2.Controls.Add(txtWaitSwipeCardTime);
+            groupBox2.Controls.Add(label19);
+            groupBox2.Controls.Add(label18);
             groupBox2.Controls.Add(label16);
             groupBox2.Controls.Add(label15);
             groupBox2.Controls.Add(txtAllowOpenBarrieTime);
@@ -109,7 +125,7 @@
             groupBox2.Margin = new Padding(4, 3, 4, 3);
             groupBox2.Name = "groupBox2";
             groupBox2.Padding = new Padding(4, 3, 4, 3);
-            groupBox2.Size = new Size(742, 637);
+            groupBox2.Size = new Size(742, 741);
             groupBox2.TabIndex = 5;
             groupBox2.TabStop = false;
             groupBox2.Text = "Tùy chọn";
@@ -117,32 +133,32 @@
             // chbDisplayCustomer
             // 
             chbDisplayCustomer.AutoSize = true;
-            chbDisplayCustomer.Location = new Point(246, 518);
+            chbDisplayCustomer.Location = new Point(246, 622);
             chbDisplayCustomer.Name = "chbDisplayCustomer";
             chbDisplayCustomer.Size = new Size(234, 25);
-            chbDisplayCustomer.TabIndex = 13;
+            chbDisplayCustomer.TabIndex = 16;
             chbDisplayCustomer.Text = "Hiển thị thông tin khách hàng";
             chbDisplayCustomer.UseVisualStyleBackColor = true;
             // 
             // chbDisplayStatusBar
             // 
             chbDisplayStatusBar.AutoSize = true;
-            chbDisplayStatusBar.Location = new Point(246, 550);
+            chbDisplayStatusBar.Location = new Point(246, 654);
             chbDisplayStatusBar.Margin = new Padding(4);
             chbDisplayStatusBar.Name = "chbDisplayStatusBar";
             chbDisplayStatusBar.Size = new Size(198, 25);
-            chbDisplayStatusBar.TabIndex = 14;
+            chbDisplayStatusBar.TabIndex = 17;
             chbDisplayStatusBar.Text = "Hiển thị thanh trạng thái";
             chbDisplayStatusBar.UseVisualStyleBackColor = true;
             // 
             // chbIsCheckKey
             // 
             chbIsCheckKey.AutoSize = true;
-            chbIsCheckKey.Location = new Point(246, 583);
+            chbIsCheckKey.Location = new Point(246, 687);
             chbIsCheckKey.Margin = new Padding(4);
             chbIsCheckKey.Name = "chbIsCheckKey";
             chbIsCheckKey.Size = new Size(115, 25);
-            chbIsCheckKey.TabIndex = 14;
+            chbIsCheckKey.TabIndex = 18;
             chbIsCheckKey.Text = "Kiểm tra key";
             chbIsCheckKey.UseVisualStyleBackColor = true;
             chbIsCheckKey.Visible = false;
@@ -150,24 +166,34 @@
             // chbIsUseInvoice
             // 
             chbIsUseInvoice.AutoSize = true;
-            chbIsUseInvoice.Location = new Point(246, 486);
+            chbIsUseInvoice.Location = new Point(246, 590);
             chbIsUseInvoice.Margin = new Padding(4);
             chbIsUseInvoice.Name = "chbIsUseInvoice";
             chbIsUseInvoice.Size = new Size(203, 25);
-            chbIsUseInvoice.TabIndex = 12;
+            chbIsUseInvoice.TabIndex = 15;
             chbIsUseInvoice.Text = "Tích hợp hóa đơn điện tử";
             chbIsUseInvoice.UseVisualStyleBackColor = true;
             // 
             // chbIsIntergratedScaleStation
             // 
             chbIsIntergratedScaleStation.AutoSize = true;
-            chbIsIntergratedScaleStation.Location = new Point(246, 457);
+            chbIsIntergratedScaleStation.Location = new Point(246, 561);
             chbIsIntergratedScaleStation.Margin = new Padding(4);
             chbIsIntergratedScaleStation.Name = "chbIsIntergratedScaleStation";
             chbIsIntergratedScaleStation.Size = new Size(183, 25);
-            chbIsIntergratedScaleStation.TabIndex = 11;
+            chbIsIntergratedScaleStation.TabIndex = 14;
             chbIsIntergratedScaleStation.Text = "Tích hợp hệ thống cân";
             chbIsIntergratedScaleStation.UseVisualStyleBackColor = true;
+            // 
+            // numVirtualLoopAlarmLevel
+            // 
+            numVirtualLoopAlarmLevel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            numVirtualLoopAlarmLevel.Location = new Point(246, 430);
+            numVirtualLoopAlarmLevel.Margin = new Padding(4, 3, 4, 3);
+            numVirtualLoopAlarmLevel.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            numVirtualLoopAlarmLevel.Name = "numVirtualLoopAlarmLevel";
+            numVirtualLoopAlarmLevel.Size = new Size(486, 29);
+            numVirtualLoopAlarmLevel.TabIndex = 11;
             // 
             // numLogKeepDays
             // 
@@ -177,7 +203,7 @@
             numLogKeepDays.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numLogKeepDays.Name = "numLogKeepDays";
             numLogKeepDays.Size = new Size(437, 29);
-            numLogKeepDays.TabIndex = 5;
+            numLogKeepDays.TabIndex = 9;
             // 
             // numRetakePhotoDelayTime
             // 
@@ -222,22 +248,22 @@
             // chbIsAllowEditPlateOut
             // 
             chbIsAllowEditPlateOut.AutoSize = true;
-            chbIsAllowEditPlateOut.Location = new Point(246, 428);
+            chbIsAllowEditPlateOut.Location = new Point(246, 532);
             chbIsAllowEditPlateOut.Margin = new Padding(4, 3, 4, 3);
             chbIsAllowEditPlateOut.Name = "chbIsAllowEditPlateOut";
             chbIsAllowEditPlateOut.Size = new Size(196, 25);
-            chbIsAllowEditPlateOut.TabIndex = 10;
+            chbIsAllowEditPlateOut.TabIndex = 13;
             chbIsAllowEditPlateOut.Text = "Cho phép sửa biển số ra";
             chbIsAllowEditPlateOut.UseVisualStyleBackColor = true;
             // 
             // chbIsSaveLog
             // 
             chbIsSaveLog.AutoSize = true;
-            chbIsSaveLog.Location = new Point(246, 396);
+            chbIsSaveLog.Location = new Point(246, 500);
             chbIsSaveLog.Margin = new Padding(4, 3, 4, 3);
             chbIsSaveLog.Name = "chbIsSaveLog";
             chbIsSaveLog.Size = new Size(147, 25);
-            chbIsSaveLog.TabIndex = 9;
+            chbIsSaveLog.TabIndex = 12;
             chbIsSaveLog.Text = "Lưu log hệ thống";
             chbIsSaveLog.UseVisualStyleBackColor = true;
             // 
@@ -341,6 +367,18 @@
             label7.TabIndex = 7;
             label7.Text = "Loop Delay";
             // 
+            // cbVirtualLoopMode
+            // 
+            cbVirtualLoopMode.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            cbVirtualLoopMode.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbVirtualLoopMode.FormattingEnabled = true;
+            cbVirtualLoopMode.Items.AddRange(new object[] { "Không sử dụng", "Sử dụng cam toàn cảnh", "Sử dụng cam biển số", "Sử dụng cả 2" });
+            cbVirtualLoopMode.Location = new Point(246, 395);
+            cbVirtualLoopMode.Margin = new Padding(4, 3, 4, 3);
+            cbVirtualLoopMode.Name = "cbVirtualLoopMode";
+            cbVirtualLoopMode.Size = new Size(486, 29);
+            cbVirtualLoopMode.TabIndex = 10;
+            // 
             // cbAutoReturnDialogResult
             // 
             cbAutoReturnDialogResult.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -358,6 +396,7 @@
             cbPrintTemplate.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             cbPrintTemplate.DropDownStyle = ComboBoxStyle.DropDownList;
             cbPrintTemplate.FormattingEnabled = true;
+            cbPrintTemplate.IntegralHeight = false;
             cbPrintTemplate.Location = new Point(246, 97);
             cbPrintTemplate.Margin = new Padding(4, 3, 4, 3);
             cbPrintTemplate.Name = "cbPrintTemplate";
@@ -383,6 +422,26 @@
             txtWaitSwipeCardTime.PlaceholderText = "Thời gian giữa 2 lần quẹt thẻ liên tiếp (s)";
             txtWaitSwipeCardTime.Size = new Size(489, 29);
             txtWaitSwipeCardTime.TabIndex = 1;
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Location = new Point(8, 432);
+            label19.Margin = new Padding(4, 0, 4, 0);
+            label19.Name = "label19";
+            label19.Size = new Size(135, 21);
+            label19.TabIndex = 2;
+            label19.Text = "Ngưỡng cảnh báo";
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Location = new Point(8, 398);
+            label18.Margin = new Padding(4, 0, 4, 0);
+            label18.Name = "label18";
+            label18.Size = new Size(66, 21);
+            label18.TabIndex = 2;
+            label18.Text = "Loop ảo";
             // 
             // label16
             // 
@@ -444,6 +503,36 @@
             label2.TabIndex = 2;
             label2.Text = "Thời gian cho phép mở barrie";
             // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Location = new Point(8, 467);
+            label20.Margin = new Padding(4, 0, 4, 0);
+            label20.Name = "label20";
+            label20.Size = new Size(86, 21);
+            label20.TabIndex = 2;
+            label20.Text = "Loop delay";
+            // 
+            // numVirtualLoopDelay
+            // 
+            numVirtualLoopDelay.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            numVirtualLoopDelay.Location = new Point(246, 465);
+            numVirtualLoopDelay.Margin = new Padding(4, 3, 4, 3);
+            numVirtualLoopDelay.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            numVirtualLoopDelay.Name = "numVirtualLoopDelay";
+            numVirtualLoopDelay.Size = new Size(437, 29);
+            numVirtualLoopDelay.TabIndex = 11;
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Location = new Point(693, 467);
+            label21.Margin = new Padding(4, 0, 4, 0);
+            label21.Name = "label21";
+            label21.Size = new Size(31, 21);
+            label21.TabIndex = 7;
+            label21.Text = "ms";
+            // 
             // ucAppOptions
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -453,14 +542,16 @@
             Font = new Font("Segoe UI", 12F);
             Margin = new Padding(4, 3, 4, 3);
             Name = "ucAppOptions";
-            Size = new Size(742, 620);
+            Size = new Size(742, 730);
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numVirtualLoopAlarmLevel).EndInit();
             ((System.ComponentModel.ISupportInitialize)numLogKeepDays).EndInit();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoDelayTime).EndInit();
             ((System.ComponentModel.ISupportInitialize)numRetakePhotoTurn).EndInit();
             ((System.ComponentModel.ISupportInitialize)numAutoReturnDialogTime).EndInit();
             ((System.ComponentModel.ISupportInitialize)numLoopDelay).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numVirtualLoopDelay).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -504,5 +595,12 @@
         private Label label17;
         private Label label16;
         private CheckBox chbDisplayStatusBar;
+        private ComboBox cbVirtualLoopMode;
+        private Label label18;
+        private NumericUpDown numVirtualLoopAlarmLevel;
+        private Label label19;
+        private NumericUpDown numVirtualLoopDelay;
+        private Label label21;
+        private Label label20;
     }
 }

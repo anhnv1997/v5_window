@@ -58,6 +58,9 @@
     <Compile Update="Forms\ThirdPartyForms\OfficeHausForms\frmAddVisitor.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Usercontrols\CameraConfiguration\frmCameraVirtualLoopConfigSet.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Usercontrols\CameraConfiguration\frmCameraConfigSet.cs">
       <SubType>Form</SubType>
     </Compile>

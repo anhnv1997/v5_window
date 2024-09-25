@@ -104,6 +104,9 @@ namespace v6_window
                         {
                             AppData.ApiServer.invoiceService = null;
                         }
+                        AppData.isUseVirtualLoop = StaticPool.appOption.VirtualLoopMode;
+                        AppData.alarmLLevel = StaticPool.appOption.MotionAlarmLevel;
+
                         tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "OPEN LOADING SCREEN");
                         Application.Run(new frmLogin(AppData.ApiServer, KzParkingv5BaseApi.server, OpenLoadingPage, StaticPool.serverConfig.ParkingServerScope));
                     }

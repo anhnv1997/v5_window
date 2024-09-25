@@ -2,6 +2,13 @@
 
 namespace iParkingv5.Objects.Configs
 {
+    public enum EmVirtualLoopMode
+    {
+        UnUsed,
+        Overview,
+        Lpr,
+        Both
+    }
     public class AppOption
     {
         /// <summary>
@@ -31,5 +38,8 @@ namespace iParkingv5.Objects.Configs
         public bool IsDisplayCustomerInfo { get; set; } = false;
         public int NumLogKeepDays { get; set; } = 10;
         public bool IsDisplayStatusBar { get; set; } = true;
+        public int MotionAlarmLevel = 5;
+        public int MotionAlarmDelayMilisecond = 0;
+        public EmVirtualLoopMode VirtualLoopMode { get; set; } = EmVirtualLoopMode.UnUsed;
     }
 }
