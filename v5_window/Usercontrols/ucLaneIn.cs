@@ -2,6 +2,7 @@
 using iPakrkingv5.Controls;
 using iParkingv5.ApiManager;
 using iParkingv5.ApiManager.KzParkingv5Apis.services;
+using iParkingv5.ApiManager.TienPhong;
 using iParkingv5.Controller;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
@@ -9,6 +10,7 @@ using iParkingv5.Objects.Datas;
 using iParkingv5.Objects.Datas.Device_service;
 using iParkingv5.Objects.Datas.parking_service;
 using iParkingv5.Objects.Datas.ThirtParty.OfficeHaus;
+using iParkingv5.Objects.Datas.ThirtParty.TienPhong;
 using iParkingv5.Objects.Datas.weighing_service;
 using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.EventDatas;
@@ -598,6 +600,26 @@ namespace iParkingv5_window.Usercontrols
                     txtPlate.Refresh();
                 }));
             }
+            // Fixme: Sau khi nhan dang BS -> call Api AskOpen
+            lblEventMessage.UpdateResultMessage($"Kiểm tra biển được phép vào...." + ce.PreferCard, ProcessColor);
+            AskOpenData data = new AskOpenData()
+            {
+                warehouse = "NCT3",
+                truck_reg_no = ce.PlateNumber,
+                status = "IN",
+                update_user = "abc@1",
+            };
+            if(await TienPhongApiHelper.AskOpen(data))
+            {
+
+            }
+            else
+            {
+                // View Fail - Vehicle not permission in/out
+                lblEventMessage.UpdateResultMessage($"Phương tiện {ce.PlateNumber} không được phép vào" + ce.PreferCard, ProcessColor);
+                return;
+            }
+            // End Fixme
 
             //Đọc thông tin loại phương tiện
             lblEventMessage.UpdateResultMessage("Đang kiểm tra thông tin..." + ce.PreferCard, ProcessColor);
@@ -891,7 +913,9 @@ namespace iParkingv5_window.Usercontrols
             {
                 tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                               $"{this.lane.name}.Card.{ce.PreferCard} - Open Barrie");
+                // Fixme: Api ParkingBarrier
 
+                // End Fixme
                 _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
             }
             else
