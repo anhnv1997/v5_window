@@ -100,6 +100,11 @@ namespace iParkingv5_window.Forms.SystemForms
                 {
                     lanes.Add(item);
                 }
+                //var frm = new frmDemo()
+                //{
+                //    Owner = this.Owner
+                //};
+                //frm.Show();
 
                 frmMain frm = new(lanes)
                 {
@@ -109,6 +114,11 @@ namespace iParkingv5_window.Forms.SystemForms
             }
             else
             {
+                //var frm = new frmDemo()
+                //{
+                //    Owner = this.Owner
+                //};
+                //frm.Show();
                 frmSelectLaneMode frm = new frmSelectLaneMode()
                 {
                     Owner = this.Owner,

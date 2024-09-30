@@ -40,6 +40,9 @@
     <Compile Update="Forms\DevelopeModes\frmVersions.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\frmDemo.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\SystemForms\frmConfirmPassword.cs">
       <SubType>Form</SubType>
     </Compile>

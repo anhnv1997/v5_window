@@ -3049,6 +3049,7 @@
       "M2Mqtt >= 4.3.0",
       "Microsoft.Web.WebView2 >= 1.0.2420.47",
       "Minio >= 5.0.0",
+      "QRCoder >= 1.6.0",
       "RabbitMQ.Client >= 6.8.1",
       "System.Management >= 7.0.2",
       "fontawesome.sharp >= 6.3.0",
@@ -3185,6 +3186,10 @@
           "Minio": {
             "target": "Package",
             "version": "[5.0.0, )"
+          },
+          "QRCoder": {
+            "target": "Package",
+            "version": "[1.6.0, )"
           },
           "RabbitMQ.Client": {
             "target": "Package",

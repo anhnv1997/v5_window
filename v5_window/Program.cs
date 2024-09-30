@@ -11,6 +11,9 @@ using Kztek.Helper;
 using KztekKeyRegister;
 using iParkingv5_window;
 using Kztek.Tool.LogDatabases;
+using iParkingv5_window.Forms;
+using iParkingv5.Controller;
+using iParkingv5.Controller.ZktecoDevices.PULL;
 
 namespace v6_window
 {
@@ -109,6 +112,7 @@ namespace v6_window
 
                         tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "OPEN LOADING SCREEN");
                         Application.Run(new frmLogin(AppData.ApiServer, KzParkingv5BaseApi.server, OpenLoadingPage, StaticPool.serverConfig.ParkingServerScope));
+                        //Application.Run(new frmDemo());
                     }
                     else
                     {

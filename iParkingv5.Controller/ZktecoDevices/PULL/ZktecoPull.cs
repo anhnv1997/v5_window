@@ -422,7 +422,7 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
         {
             int operationID = 1;
             int doorId = 1;
-            int result = pullHelper.ControlDevice(userID, operationID, doorId, relayIndex, 1, 1, "");
+            int result = pullHelper.ControlDevice(userID, 1, relayIndex, 1, 1, 1, "");
             await Task.Delay(1);
             return result == 0;
         }

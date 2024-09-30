@@ -31,6 +31,7 @@
             lblCameraName.TabIndex = 0;
             lblCameraName.Text = "label1";
             lblCameraName.TextAlign = ContentAlignment.MiddleLeft;
+            lblCameraName.Visible = false;
             // 
             // panelCameraView
             // 
@@ -51,6 +52,7 @@
             label1.Size = new Size(98, 15);
             label1.TabIndex = 2;
             label1.Text = "MOTION-ALARM";
+            label1.Visible = false;
             // 
             // ucCameraView
             // 

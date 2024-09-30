@@ -219,7 +219,7 @@ namespace iParkingv5_window.Usercontrols
                                 }));
                                 if (motionLevel > alarmLevel)
                                 {
-                                    
+
                                     MotionDetectEvent?.Invoke(this, new MotionDetectEventArgs { DetectCamera = this._Camera, EventTime = DateTime.Now });
                                 }
                             }
@@ -243,7 +243,7 @@ namespace iParkingv5_window.Usercontrols
                                 }));
                                 if (motionLevel > alarmLevel)
                                 {
-                                    
+
                                     MotionDetectEvent?.Invoke(this, new MotionDetectEventArgs { DetectCamera = this._Camera, EventTime = DateTime.Now });
                                 }
                             }
@@ -262,6 +262,7 @@ namespace iParkingv5_window.Usercontrols
         }
         public void StartMotionDetection()
         {
+            label1.Visible = true;
             this.MotionDetector = new MotionDetector(new TwoFramesDifferenceDetector(true), null);
             PollingStart();
         }
