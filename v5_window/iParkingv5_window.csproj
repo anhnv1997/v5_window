@@ -38,9 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\..\KZTEK\CODE\18.BaseLib\Kztek.Cameras\Kztek.Cameras.csproj" />
-    <ProjectReference Include="..\..\..\..\..\..\..\KZTEK\CODE\18.BaseLib\Kztek.RtspPlayer\Kztek.RtspPlayer\Kztek.RtspPlayer.csproj" />
-    <ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\Kztek.Tool\Kztek.Tool.csproj" />
+    <ProjectReference Include="..\..\..\iPGS_2023_NET6\Kztek.Tool\Kztek.Tool.csproj" />
     <ProjectReference Include="..\IPaking.Ultility\IPaking.Ultility.csproj" />
     <ProjectReference Include="..\iPakrkingv5.Controls\iPakrkingv5.Controls.csproj" />
     <ProjectReference Include="..\iParking.ConfigurationManager\iParking.ConfigurationManager.csproj" />
@@ -85,52 +83,58 @@
 
   <ItemGroup>
     <Reference Include="AForge">
-      <HintPath>..\packages\CameraLib\GeneralCam\AForge.dll</HintPath>
+      <HintPath>..\packages\iParkingv5_Package\CameraLib\GeneralCam\AForge.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Imaging">
-      <HintPath>..\packages\CameraLib\GeneralCam\AForge.Imaging.dll</HintPath>
+      <HintPath>..\packages\iParkingv5_Package\CameraLib\GeneralCam\AForge.Imaging.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Video.DirectShowEx">
-      <HintPath>..\packages\CameraLib\GeneralCam\AForge.Video.DirectShowEx.dll</HintPath>
+      <HintPath>..\packages\iParkingv5_Package\CameraLib\GeneralCam\AForge.Video.DirectShowEx.dll</HintPath>
     </Reference>
     <Reference Include="AForge.VideoEx">
-      <HintPath>..\packages\CameraLib\GeneralCam\AForge.VideoEx.dll</HintPath>
+      <HintPath>..\packages\iParkingv5_Package\CameraLib\GeneralCam\AForge.VideoEx.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Vision">
-      <HintPath>..\packages\CameraLib\GeneralCam\AForge.Vision.dll</HintPath>
+      <HintPath>..\packages\iParkingv5_Package\CameraLib\GeneralCam\AForge.Vision.dll</HintPath>
+    </Reference>
+    <Reference Include="Kztek.Cameras">
+      <HintPath>..\packages\iParkingv5_Package\CameraLib\GeneralCam\Kztek.Cameras.dll</HintPath>
+    </Reference>
+    <Reference Include="Kztek.RtspPlayer">
+      <HintPath>..\packages\iParkingv5_Package\CameraLib\GeneralCam\Kztek.RtspPlayer.dll</HintPath>
     </Reference>
     <Reference Include="Kztek.Security">
-      <HintPath>..\packages\KeyLib\Kztek.Security.dll</HintPath>
+      <HintPath>..\packages\iParkingv5_Package\KeyLib\Kztek.Security.dll</HintPath>
     </Reference>
     <Reference Include="Kztek.Utilities">
-      <HintPath>..\packages\KeyLib\Kztek.Utilities.dll</HintPath>
+      <HintPath>..\packages\iParkingv5_Package\KeyLib\Kztek.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="KztekKeyRegister">
-      <HintPath>..\packages\KeyLib\KztekKeyRegister.dll</HintPath>
+      <HintPath>..\packages\iParkingv5_Package\KeyLib\KztekKeyRegister.dll</HintPath>
     </Reference>
     <Reference Include="NXT.Net6.LPR_AI">
-      <HintPath>..\packages\LprLib\LPR_09082024\NXT.Net6.LPR_AI.dll</HintPath>
+      <HintPath>..\packages\iParkingv5_Package\LprLib\LPR_09082024\NXT.Net6.LPR_AI.dll</HintPath>
     </Reference>
     <Reference Include="SayMoney">
-      <HintPath>..\packages\Extension\SayMoney.dll</HintPath>
+      <HintPath>..\packages\iParkingv5_Package\Extension\SayMoney.dll</HintPath>
     </Reference>
     <Reference Include="Sdcb.PaddleInference">
-      <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleInference.dll</HintPath>
+      <HintPath>..\packages\iParkingv5_Package\LprLib\LPR_09082024\Sdcb.PaddleInference.dll</HintPath>
     </Reference>
     <Reference Include="Sdcb.PaddleOCR">
-      <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleOCR.dll</HintPath>
+      <HintPath>..\packages\iParkingv5_Package\LprLib\LPR_09082024\Sdcb.PaddleOCR.dll</HintPath>
     </Reference>
     <Reference Include="Sdcb.PaddleOCR.Models.Local">
-      <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.Local.dll</HintPath>
+      <HintPath>..\packages\iParkingv5_Package\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.Local.dll</HintPath>
     </Reference>
     <Reference Include="Sdcb.PaddleOCR.Models.LocalV3">
-      <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.LocalV3.dll</HintPath>
+      <HintPath>..\packages\iParkingv5_Package\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.LocalV3.dll</HintPath>
     </Reference>
     <Reference Include="Sdcb.PaddleOCR.Models.LocalV4">
-      <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.LocalV4.dll</HintPath>
+      <HintPath>..\packages\iParkingv5_Package\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.LocalV4.dll</HintPath>
     </Reference>
     <Reference Include="Sdcb.PaddleOCR.Models.Shared">
-      <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.Shared.dll</HintPath>
+      <HintPath>..\packages\iParkingv5_Package\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.Shared.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

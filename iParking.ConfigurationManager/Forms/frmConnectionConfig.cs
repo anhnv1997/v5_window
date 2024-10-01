@@ -18,6 +18,7 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
         ucScaleConfig ucScaleConfig;
         ucThirdParty ucThirdParty;
         ucOEM ucOEM;
+        ucTienPhong ucTienPhong;
         #endregion End Properties
 
         #region Forms
@@ -36,6 +37,7 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             //AddTabScaleConfig();
             AddTabThirdParty();
             AddTabOEM();
+            AddTabTienPhong();
 
             this.Size = new Size(Properties.Settings.Default.prefer_width, Properties.Settings.Default.prefer_height);
             this.SizeChanged += FrmConnectionConfig_SizeChanged;
@@ -82,6 +84,7 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             //SaveScaleConfig();
             SaveThirdPartyConfig();
             SaveOEMConfig();
+            SaveTienPhongConfig();
             MessageBox.Show("Lưu cấu hình thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion End Controls In Form
@@ -210,6 +213,22 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
             tabOEM.AutoScroll = true;
             ucOEM.Dock = DockStyle.None;
         }
+        private void AddTabTienPhong()
+        {
+            TabPage tabTienPhong = new TabPage();
+            tabTienPhong.Text = "Tiên Phong";
+            tabControl1.TabPages.Add(tabTienPhong);
+            tabTienPhong.BackColor = SystemColors.ButtonHighlight;
+
+            TienPhongConfig? tienphongConfig = NewtonSoftHelper<TienPhongConfig>.DeserializeObjectFromPath(PathManagement.tienphongConfigPath) ?? new TienPhongConfig();
+
+            ucTienPhong = new ucTienPhong(tienphongConfig);
+
+            tabTienPhong.Controls.Add(ucTienPhong);
+            ucTienPhong.Dock = DockStyle.Fill;
+            tabTienPhong.AutoScroll = true;
+            ucTienPhong.Dock = DockStyle.None;
+        }
 
         private void SaveEInvoiceConfig()
         {
@@ -268,6 +287,10 @@ namespace iParking.ConfigurationManager.Forms.SystemForms
         private void SaveOEMConfig()
         {
             NewtonSoftHelper<OEMConfig>.SaveConfig(ucOEM.GetConfig(), PathManagement.oemConfigPath);
+        }
+        private void SaveTienPhongConfig()
+        {
+            NewtonSoftHelper<TienPhongConfig>.SaveConfig(ucTienPhong.GetConfig(), PathManagement.tienphongConfigPath);
         }
         #endregion End Private Function
 

@@ -18,6 +18,8 @@ using Kztek.Tool.LogDatabases;
 using Kztek.Tools;
 using static iParkingv5.Objects.Enums.ParkingImageType;
 using static iParkingv5.Objects.Enums.SoundType;
+using iParkingv5.ApiManager.TienPhong;
+using iParkingv5.Objects.Datas.ThirtParty.TienPhong;
 
 namespace iParkingv5_window.Usercontrols
 {
@@ -199,8 +201,12 @@ namespace iParkingv5_window.Usercontrols
             return imageKey;
         }
 
-        public static async Task OpenBarrieByControllerId(string controllerId, ControllerInLane? controllerInLane, iLane iLane)
+        public static async Task OpenBarrieByControllerId(string controllerId, ControllerInLane? controllerInLane, iLane iLane, string plate = "", bool isIn = false)
         {
+            // Fixme
+            
+            TienPhongConFirmOpenBarrier(plate, isIn);
+
             foreach (IController item in frmMain.controllers)
             {
                 if (item.ControllerInfo.Id.ToLower() == controllerId.ToLower())
@@ -255,7 +261,30 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
         }
+        public static async void TienPhongConFirmOpenBarrier(string plate, bool isIn)
+        {
+            
+            AskOpenData data = new AskOpenData()
+            {
+                warehouse = "NCT3",
+                truck_reg_no = plate,
+                status = isIn ? "IN" : "OUT",
+                update_user = "abc@1",
+            };
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                       $"Bắt đầu call api ParkingLotBarrier - plate = {plate}"); 
 
+            if (await TienPhongApiHelper.ParkingLotBarrier(data))
+            {
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                       $"Response api ParkingLotBarrier success - data = {Newtonsoft.Json.JsonConvert.SerializeObject(data)}");
+            }
+            else
+            {
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                       $"Response api ParkingLotBarrier fail - data = {Newtonsoft.Json.JsonConvert.SerializeObject(data)}");
+            }
+        }
         public static void GetPlate(string laneId, out Image? vehicleImg, out string plate, out Image? lprImage, ucCameraView? ucCameraView, List<Kztek.Cameras.Camera> camDuPhongs, bool isCar)
         {
             Rectangle? config = null;

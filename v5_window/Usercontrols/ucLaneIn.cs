@@ -2,6 +2,7 @@
 using iPakrkingv5.Controls;
 using iParkingv5.ApiManager;
 using iParkingv5.ApiManager.KzParkingv5Apis.services;
+using iParkingv5.ApiManager.TienPhong;
 using iParkingv5.Controller;
 using iParkingv5.Objects;
 using iParkingv5.Objects.Configs;
@@ -9,6 +10,7 @@ using iParkingv5.Objects.Datas;
 using iParkingv5.Objects.Datas.Device_service;
 using iParkingv5.Objects.Datas.parking_service;
 using iParkingv5.Objects.Datas.ThirtParty.OfficeHaus;
+using iParkingv5.Objects.Datas.ThirtParty.TienPhong;
 using iParkingv5.Objects.Datas.weighing_service;
 using iParkingv5.Objects.Enums;
 using iParkingv5.Objects.EventDatas;
@@ -598,7 +600,7 @@ namespace iParkingv5_window.Usercontrols
                 ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
                                                       where _controllerInLane.controlUnitId == ie.DeviceId
                                                       select _controllerInLane).FirstOrDefault();
-                _ = BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
+                _ = BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this, lprResult.PlateNumber, true);
             }
             else
             {
@@ -612,7 +614,7 @@ namespace iParkingv5_window.Usercontrols
                     ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
                                                           where _controllerInLane.controlUnitId == ie.DeviceId
                                                           select _controllerInLane).FirstOrDefault();
-                    _ = BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
+                    _ = BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this, lprResult.PlateNumber, true);
                 }
                 else
                 {
@@ -751,6 +753,34 @@ namespace iParkingv5_window.Usercontrols
                     txtPlate.Refresh();
                 }));
             }
+            // Fixme: call askOpen
+            if(ce.PlateNumber != "")
+            {
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                 $"{this.lane.name}.Card.{ce.PreferCard} - Bắt đầu call api AskOpen");
+                lblEventMessage.UpdateResultMessage($"Đang yêu cầu quyền vào bãi....!" + ce.PreferCard, ProcessColor);
+                AskOpenData data = new AskOpenData()
+                {
+                    warehouse = "NCT3",
+                    truck_reg_no = ce.PlateNumber,
+                    status = "IN",
+                    update_user = "abc@1",
+                };
+                string json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+                if (await TienPhongApiHelper.AskOpen(data))
+                {
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                     $"{this.lane.name}.Card.{ce.PreferCard} - Call api AskOpen success - {json}");
+                }
+                else
+                {
+                    lblEventMessage.UpdateResultMessage($"Phương tiện {ce.PlateNumber} không được phép vào!" + ce.PreferCard, ProcessColor);
+                    tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                     $"{this.lane.name}.Card.{ce.PreferCard} - Call api AskOpen fail - {json}");
+                    return;
+                }
+            }
+            // EndFixme
 
             //Đọc thông tin loại phương tiện
             lblEventMessage.UpdateResultMessage("Đang kiểm tra thông tin..." + ce.PreferCard, ProcessColor);
@@ -934,7 +964,7 @@ namespace iParkingv5_window.Usercontrols
                 tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                        $"{this.lane.name}.Card.{ce.PreferCard} - Open Barrie");
 
-                _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
+                _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this, ce.PlateNumber, true);
             }
             else
             {
@@ -946,7 +976,7 @@ namespace iParkingv5_window.Usercontrols
                 bool isOpenBarrie = frmConfirm.ShowDialog() == DialogResult.OK;
                 if (isOpenBarrie)
                 {
-                    _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
+                    _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this, ce.PlateNumber, true);
                 }
                 else
                 {
@@ -1045,7 +1075,7 @@ namespace iParkingv5_window.Usercontrols
                 tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                               $"{this.lane.name}.Card.{ce.PreferCard} - Open Barrie");
 
-                _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
+                _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this, ce.PlateNumber, true);
             }
             else
             {
@@ -1059,7 +1089,7 @@ namespace iParkingv5_window.Usercontrols
                     tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                $"{this.lane.name}.Card.{ce.PreferCard} - Confirm Open Barrie");
 
-                    _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
+                    _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this, ce.PlateNumber, true);
                 }
                 else
                 {

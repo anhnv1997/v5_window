@@ -11,6 +11,7 @@
         public static string appServicesConfigPath => baseBath + "/configs/app/services.txt";
         public static string scaleConfigPath => baseBath + "/configs/app/scale.txt";
         public static string oemConfigPath => baseBath + "/configs/app/oem.txt";
+        public static string tienphongConfigPath => baseBath + "/configs/app/tienphong.txt";
         public static string tokenPath => baseBath + "/configs/app/refreshToken.txt";
         public static string thirtPartyConfigPath => baseBath + "/configs/app/thirtParty.txt";
         public static string appDisplayConfigPath(string laneID) => baseBath + $"/configs/app/{laneID}/displayConfig.txt";

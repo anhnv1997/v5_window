@@ -44,13 +44,11 @@ F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\bin\x64\Debug\
 F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\iParkingv5.ApiManager.dll
 F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\iParkingv5.Controller.dll
 F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\iParkingv5.Objects.dll
-F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\Kztek.Scale_net6.dll
 F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\Kztek.Tool.dll
 F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\IPaking.Ultility.pdb
 F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\iParkingv5.ApiManager.pdb
 F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\iParkingv5.Controller.pdb
 F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\iParkingv5.Objects.pdb
-F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\Kztek.Scale_net6.pdb
 F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\iParking.ConfigurationManager.csproj.AssemblyReference.cache
 F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\iParking.ConfigurationManager.Forms.SystemForms.frmConnectionConfig.resources
 F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\iParking.ConfigurationManager.UserControls.ucAppOptions.resources
@@ -205,3 +203,4 @@ F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\bin\x64\Debug\
 F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\bin\x64\Debug\net6.0-windows\Kztek.Tool.pdb
 F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\iParking.ConfigurationManager.Forms.frmConfirmPassword.resources
 F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\iParking.ConfigurationManager.UserControls.ucOEM.resources
+F:\KZTEK\Source ParkingV5\v5_window\iParking.ConfigurationManager\obj\x64\Debug\net6.0-windows\iParking.ConfigurationManager.UserControls.ucTienPhong.resources

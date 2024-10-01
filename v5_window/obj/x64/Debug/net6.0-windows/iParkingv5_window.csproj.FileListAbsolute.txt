@@ -146,7 +146,6 @@ F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iPark
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.Lpr.dll
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.Objects.dll
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Cameras.dll
-F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Scale_net6.dll
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Security.dll
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Tool.dll
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\KztekKeyRegister.dll
@@ -173,7 +172,6 @@ F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iPark
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.LedDisplay.pdb
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.Lpr.pdb
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iParkingv5.Objects.pdb
-F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Scale_net6.pdb
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\NXT.Net6.LPR_AI.pdb
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\DarknetYolo.pdb
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.csproj.CopyComplete
@@ -486,3 +484,5 @@ F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\iPark
 F:\KZTEK\Source ParkingV5\v5_window\v5_window\bin\x64\Debug\net6.0-windows\Kztek.Helper.pdb
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Usercontrols.CameraConfiguration.frmCameraVirtualLoopConfigSet.resources
 E:\2.Workspace\2.Projects\2023\9.Parking\v5_window\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.frmDemo.resources
+F:\KZTEK\Source ParkingV5\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Forms.frmDemo.resources
+F:\KZTEK\Source ParkingV5\v5_window\v5_window\obj\x64\Debug\net6.0-windows\iParkingv5_window.Usercontrols.CameraConfiguration.frmCameraVirtualLoopConfigSet.resources

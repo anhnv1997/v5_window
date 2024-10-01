@@ -189,6 +189,9 @@ namespace v6_window
                 tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "Load Lpr Config");
                 AppData.lprConfig = NewtonSoftHelper<LprConfig>.DeserializeObjectFromPath(PathManagement.lprConfigPath) ?? new LprConfig();
                 LogHelper.isSaveLog = StaticPool.appOption.IsSaveLog;
+
+                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.PROCESS, "Load TienPhong Config");
+                StaticPool.tienPhongConfig = NewtonSoftHelper<TienPhongConfig>.DeserializeObjectFromPath(PathManagement.tienphongConfigPath) ?? new TienPhongConfig();
             }
             catch (Exception ex)
             {

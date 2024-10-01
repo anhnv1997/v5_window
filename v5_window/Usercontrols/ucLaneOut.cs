@@ -466,7 +466,7 @@ namespace iParkingv5_window.Usercontrols
                 {
                     tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
                            $"{this.lane.name}.Loop.{ie.InputIndex} - OPEN BARRIE");
-                    _ = BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
+                    _ = BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this, lprResult.PlateNumber, false);
                     _ = AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
                 }
                 else
@@ -496,7 +496,7 @@ namespace iParkingv5_window.Usercontrols
                            $"{this.lane.name}.Loop.{ie.InputIndex} - CONFIRM OPEN BARRIE");
 
                         eventOut.PlateNumber = frmConfirmOut.updatePlate.ToUpper();
-                        _ = BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
+                        _ = BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this, lprResult.PlateNumber, false);
                         _ = AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
                     }
                 }
@@ -616,7 +616,7 @@ namespace iParkingv5_window.Usercontrols
                 ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
                                                       where _controllerInLane.controlUnitId == ie.DeviceId
                                                       select _controllerInLane).FirstOrDefault();
-                _ = BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
+                _ = BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this, lprResult.PlateNumber, false);
                 _ = AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
             }
             else
@@ -649,7 +649,7 @@ namespace iParkingv5_window.Usercontrols
                     ControllerInLane? controllerInLane = (from _controllerInLane in this.lane.controlUnits
                                                           where _controllerInLane.controlUnitId == ie.DeviceId
                                                           select _controllerInLane).FirstOrDefault();
-                    _ = BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this);
+                    _ = BaseLane.OpenBarrieByControllerId(ie.DeviceId, controllerInLane, this, lprResult.PlateNumber, false);
                     _ = AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
                 }
             }
@@ -931,7 +931,7 @@ namespace iParkingv5_window.Usercontrols
             {
                 tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                $"{this.lane.name}.Card.{ce.PreferCard} - Open Barrie");
-                _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
+                _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this, ce.PlateNumber, false);
                 _ = AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
             }
             else
@@ -959,7 +959,7 @@ namespace iParkingv5_window.Usercontrols
                     tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                $"{this.lane.name}.Card.{ce.PreferCard} - Confirm Open Barrie");
                     plateNumber = frmConfirmOut.updatePlate.ToUpper();
-                    _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
+                    _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this, ce.PlateNumber, false);
                     eventOut.PlateNumber = plateNumber;
                     _ = AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
                 }
@@ -1115,7 +1115,7 @@ namespace iParkingv5_window.Usercontrols
                 tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                         $"{this.lane.name}.Card.{ce.PreferCard} - Open Barrie");
 
-                _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
+                _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this, ce.PlateNumber, false);
                 _ = AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
             }
             else
@@ -1143,7 +1143,7 @@ namespace iParkingv5_window.Usercontrols
                     tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                             $"{this.lane.name}.Card.{ce.PreferCard} - Confirm Open Barrie");
                     plateNumber = frmConfirmOut.updatePlate.ToUpper();
-                    _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this);
+                    _ = BaseLane.OpenBarrieByControllerId(ce.DeviceId, controllerInLane, this, ce.PlateNumber, false);
                     eventOut.PlateNumber = plateNumber;
                     _ = AppData.ApiServer.parkingProcessService.CommitOutAsync(eventOut);
                 }

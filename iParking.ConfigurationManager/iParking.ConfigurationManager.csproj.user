@@ -31,5 +31,8 @@
     <Compile Update="UserControls\ucThirdParty.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="UserControls\ucTienPhong.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
 </Project>
