@@ -273,6 +273,7 @@
             btnDetect1Image.TabIndex = 6;
             btnDetect1Image.Text = "Check";
             btnDetect1Image.UseVisualStyleBackColor = true;
+            btnDetect1Image.Click += btnDetect1Image_Click;
             // 
             // Form1
             // 

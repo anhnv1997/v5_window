@@ -78,7 +78,7 @@ namespace iParkingv5_window.Forms.DataForms
             if (StaticPool.appOption.AutoRejectDialogTime > 0)
             {
                 lblTimer.Visible = true;
-                lblTimer.BringToFront();
+                panel1.BringToFront();
                 lblTimer.Text = "";
                 timerAutoConfirm.Enabled = true;
             }
@@ -190,6 +190,7 @@ namespace iParkingv5_window.Forms.DataForms
                     lblPlateIn.Text = plateIn;
                     lblIdentityGroup.Text = identityGroupName;
                     lblVehicleType.Text = VehicleType.GetDisplayStr(vehicleType);
+                    lblParkingFee.Text = TextFormatingTool.GetMoneyFormat(this.charge.ToString());
                 }));
 
 

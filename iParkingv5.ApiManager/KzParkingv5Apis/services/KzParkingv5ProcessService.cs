@@ -387,6 +387,7 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 
         public async Task<bool> SaveEventImage(string bucketName, string objKey, EmParkingImageType objType, List<byte> imageData)
         {
+            
             server = server.StandardlizeServerName();
 
             var options = new RestClientOptions(server)
@@ -407,6 +408,10 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 
         public async Task<string> GetImageUrl(string bucketName, string objKey)
         {
+            if (string.IsNullOrEmpty(bucketName) || string.IsNullOrEmpty(objKey))
+            {
+                return "";
+            }
             server = server.StandardlizeServerName();
             string apiUrl = $"{server}s3/presigned-url";
 

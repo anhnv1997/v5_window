@@ -313,7 +313,7 @@ namespace iParkingv5_window.Usercontrols
             }
         }
 
-        public Image? GetPlate(CardEventArgs ce, ref Image? overviewImg, ref Image? vehicleImg, VehicleBaseType vehicleBaseType,
+        public Image? GetPlate(CardEventArgs ce, Image? overviewImg, ref Image? vehicleImg, VehicleBaseType vehicleBaseType,
                                 lblResult lblResult, TextBox txtPlate,
                                 MovablePictureBox picOverview, MovablePictureBox picVehicle, MovablePictureBox picLpr)
         {

@@ -35,5 +35,6 @@ namespace iParkingv5.Objects.Datas.parking_service
         public Guid CreatedBy { get; set; }
         public Guid? UpdatedBy { get; set; }
         public List<RegisteredVehicle> Vehicles { get; set; } = new List<RegisteredVehicle>();
+        public IdentityGroup IdentityGroup { get; set; }
     }
 }

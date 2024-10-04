@@ -177,5 +177,10 @@ namespace KztekLprDetectionTest
         {
             dgvData.SelectionChanged += DgvData_SelectionChanged;
         }
+
+        private void btnDetect1Image_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

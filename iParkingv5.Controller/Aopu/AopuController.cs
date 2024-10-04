@@ -92,6 +92,7 @@ namespace iParkingv5.Controller.Aopu
         private void TcpipObj_OnDisconnect()
         {
             ControllerInfo.IsConnect = false;
+            ConnectAsync();
         }
 
         DateTime _olddatetime = DateTime.Now.AddMinutes(-1);
@@ -104,8 +105,9 @@ namespace iParkingv5.Controller.Aopu
                            byte DoorStatus,
                            byte Ver, byte FuntionByte, bool Online, byte CardsofPackage, string CardNo, string QRCode, byte Door, byte EventType,
                            ushort CardIndex, byte CardStatus, byte reader, out byte relay, out bool OpenDoor, out bool Ack)
-        
+
         {
+            this.ControllerInfo.IsConnect = true;
             Ack = true;
             OpenDoor = false;
             relay = 0;

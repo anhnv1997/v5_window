@@ -51,9 +51,8 @@ namespace iParkingv5_window.Forms.DevelopeModes
 
         private void BtnSearch_Click(object? sender, EventArgs e)
         {
-
-            //var data = LogHelper.GetLogData(txtCmd.Text);
-            //dgvData.DataSource = data;
+            var data = LogHelper.GetLogData(txtCmd.Text);
+            dgvData.DataSource = data;
         }
 
         private void BtnCancel_Click(object? sender, EventArgs e)

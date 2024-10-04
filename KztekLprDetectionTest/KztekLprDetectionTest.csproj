@@ -17,25 +17,25 @@
 
 	<ItemGroup>
 	  <Reference Include="NXT.Net6.LPR_AI">
-	    <HintPath>..\packages\iParkingv5_Package\LprLib\LPR_09082024\NXT.Net6.LPR_AI.dll</HintPath>
+	    <HintPath>..\packages\LprLib\LPR_09082024\NXT.Net6.LPR_AI.dll</HintPath>
 	  </Reference>
 	  <Reference Include="Sdcb.PaddleInference">
-	    <HintPath>..\packages\iParkingv5_Package\LprLib\LPR_09082024\Sdcb.PaddleInference.dll</HintPath>
+	    <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleInference.dll</HintPath>
 	  </Reference>
 	  <Reference Include="Sdcb.PaddleOCR">
-	    <HintPath>..\packages\iParkingv5_Package\LprLib\LPR_09082024\Sdcb.PaddleOCR.dll</HintPath>
+	    <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleOCR.dll</HintPath>
 	  </Reference>
 	  <Reference Include="Sdcb.PaddleOCR.Models.Local">
-	    <HintPath>..\packages\iParkingv5_Package\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.Local.dll</HintPath>
+	    <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.Local.dll</HintPath>
 	  </Reference>
 	  <Reference Include="Sdcb.PaddleOCR.Models.LocalV3">
-	    <HintPath>..\packages\iParkingv5_Package\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.LocalV3.dll</HintPath>
+	    <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.LocalV3.dll</HintPath>
 	  </Reference>
 	  <Reference Include="Sdcb.PaddleOCR.Models.LocalV4">
-	    <HintPath>..\packages\iParkingv5_Package\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.LocalV4.dll</HintPath>
+	    <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.LocalV4.dll</HintPath>
 	  </Reference>
 	  <Reference Include="Sdcb.PaddleOCR.Models.Shared">
-	    <HintPath>..\packages\iParkingv5_Package\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.Shared.dll</HintPath>
+	    <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.Shared.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 

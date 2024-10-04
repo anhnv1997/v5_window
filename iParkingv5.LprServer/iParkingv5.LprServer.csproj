@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Management" Version="7.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\Kztek.Tool\Kztek.Tool.csproj" />
     <ProjectReference Include="..\iParkingv5.Lpr\iParkingv5.Lpr.csproj" />
     <ProjectReference Include="..\iParkingv5.Objects\iParkingv5.Objects.csproj" />
@@ -16,6 +20,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Kztek.Security">
+      <HintPath>..\packages\KeyLib\Kztek.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Kztek.Utilities">
+      <HintPath>..\packages\KeyLib\Kztek.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="KztekKeyRegister">
+      <HintPath>..\packages\KeyLib\KztekKeyRegister.dll</HintPath>
+    </Reference>
     <Reference Include="NXT.Net6.LPR_AI">
       <HintPath>..\packages\LprLib\LPR_09082024\NXT.Net6.LPR_AI.dll</HintPath>
     </Reference>

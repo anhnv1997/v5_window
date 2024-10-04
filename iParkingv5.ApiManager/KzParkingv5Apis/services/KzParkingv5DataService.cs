@@ -10,6 +10,7 @@ using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5BaseApi;
 using Kztek.Tools;
 using static iParkingv5.ApiManager.KzParkingv5Apis.KzParkingv5ApiUrlManagement;
 using Kztek.Tool.LogDatabases;
+using iParkingv6.ApiManager;
 
 namespace iParkingv5.ApiManager.KzParkingv5Apis.services
 {
@@ -54,8 +55,36 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
         }
         public async Task<Tuple<Identity, string>> GetIdentityByCodeAsync(string code)
         {
-            return await GetTop1ObjectAsync<Identity>(EmParkingv5ObjectType.Identity, EmPageSearchType.TEXT,
-                                                      EmPageSearchKey.code, code);
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.MainServer,
+                                 tblSystemLog.EmSystemActionDetail.GET,
+                                 $"Get Detail Identity By Code ", code);
+
+            server = server.StandardlizeServerName();
+            string apiUrl = server + "identity/get-by-code";
+
+            Dictionary<string, string> headers = new Dictionary<string, string>()
+            {
+                { "Authorization","Bearer " + token  }
+            };
+            var body = new
+            {
+                code = code,
+            };
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, body, headers, null,
+                                                                   timeOut, RestSharp.Method.Post);
+            if (!string.IsNullOrEmpty(response.Item1))
+            {
+                try
+                {
+                    var data = Newtonsoft.Json.JsonConvert.DeserializeObject<Identity>(response.Item1);
+                    return Tuple.Create<Identity, string>(data, response.Item2);
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
+            }
+            return Tuple.Create<Identity, string>(null, "Empty Data");
         }
         public async Task<Tuple<Identity, string>> CreateIdentityAsync(Identity identity)
         {

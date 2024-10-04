@@ -32,7 +32,8 @@ namespace iParkingv5.LprDetecter.LprDetecters
                 if (originalImage == null) { goto ReturnResult; }
                 if (isCar && carANPR == null) { goto ReturnResult; }
                 if (!isCar && motorANPR == null) { goto ReturnResult; }
-                Bitmap bitmapCut = detectRegion != null ? CropBitmap((Bitmap)originalImage, (Rectangle)detectRegion!) : (Bitmap)originalImage;
+                Bitmap bitmapCut = detectRegion != null ? CropBitmap((Bitmap)originalImage, (Rectangle)detectRegion!) :
+                                                          CropBitmap((Bitmap)originalImage, new Rectangle(0, 0, originalImage.Width, originalImage.Height));
 
                 var lPRObject_Result = new LPR_Result_Object
                 {

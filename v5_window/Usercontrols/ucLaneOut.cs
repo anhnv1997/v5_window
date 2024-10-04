@@ -378,6 +378,7 @@ namespace iParkingv5_window.Usercontrols
                         overviewImg = ucOverView?.GetFullCurrentImage();
                         BaseLane.ShowImage(picVehicleImageOut, lprResult.VehicleImage);
                         BaseLane.ShowImage(picOverviewImageOut, overviewImg);
+                        BaseLane.ShowImage(picLprImage, lprResult.VehicleImage);
                     }
                     tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
                                     $"{this.lane.name}.Loop.{ie.InputIndex} - VEHICLE NULL - END");
@@ -443,6 +444,8 @@ namespace iParkingv5_window.Usercontrols
                     {
                         tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
                                      $"{this.lane.name}.Loop.{ie.InputIndex} - NOT CONFIRM, END PROCES");
+                        lblEventMessage.UpdateResultMessage(StaticPool.oemConfig.AppName, SuccessColor);
+
                         return;
                     }
                     tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
@@ -590,6 +593,8 @@ namespace iParkingv5_window.Usercontrols
                 {
                     tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
                                  $"{this.lane.name}.Loop.{ie.InputIndex} - NOT CONFIRM, END PROCES");
+                    lblEventMessage.UpdateResultMessage(StaticPool.oemConfig.AppName, SuccessColor);
+
                     return;
                 }
                 tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.LOOP_EVENT,
@@ -677,7 +682,7 @@ namespace iParkingv5_window.Usercontrols
                 tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.EXIT_EVENT,
                                 $"{this.lane.name}.Exit.{ie.InputIndex} - SAVE EXIT ABNOMAL EVENT");
 
-                var imageData = GetAllCameraImage();
+                var imageData = GetAllCameraImage(true);
                 await SaveManualAbnormalEvent(plateNumber, lastEvent?.Identity, lastEvent?.IdentityGroup, imageData, true, abnormalCode: AbnormalCode.OpenBarrierByButton);
             }
         }
@@ -725,14 +730,14 @@ namespace iParkingv5_window.Usercontrols
             }
             Identity? identity = identityResponse.Item2!;
 
-            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
-                        $"{this.lane.name}.Card.{ce.PreferCard} - Check Identity Detail & Identity Group");
-            var identityTask = AppData.ApiServer.parkingDataService.GetIdentityByIdAsync(identity.Id);
-            var identityGroupTask = AppData.ApiServer.parkingDataService.GetIdentityGroupByIdAsync(identity.IdentityGroupId.ToString());
-            await Task.WhenAll(identityTask, identityGroupTask);
+            //tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+            //            $"{this.lane.name}.Card.{ce.PreferCard} - Check Identity Detail & Identity Group");
+            //var identityTask = AppData.ApiServer.parkingDataService.GetIdentityByIdAsync(identity.Id);
+            //var identityGroupTask = AppData.ApiServer.parkingDataService.GetIdentityGroupByIdAsync(identity.IdentityGroupId.ToString());
+            //await Task.WhenAll(identityTask, identityGroupTask);
 
             //Cần gọi GET by ID để lấy thông tin phương tiện đăng ký
-            identity = identityTask.Result.Item1;
+            //identity = identityTask.Result.Item1;
             if (identity == null || string.IsNullOrEmpty(identity.Id) || identity.Id == Guid.Empty.ToString())
             {
                 tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
@@ -744,7 +749,7 @@ namespace iParkingv5_window.Usercontrols
             #endregion End kiểm tra thông tin định danh
 
             #region Kiểm tra thông tin nhóm định danh
-            IdentityGroup? identityGroup = identityGroupTask.Result.Item1;
+            IdentityGroup? identityGroup = identity.IdentityGroup;// identityGroupTask.Result.Item1;
             if (identityGroup == null || identityGroup.Id == Guid.Empty)
             {
                 tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
@@ -804,26 +809,22 @@ namespace iParkingv5_window.Usercontrols
             //còn nếu là sự kiện loop chuyển qua quẹt thẻ thì hiển thị thông tin biển số đã đọc trước đó chứ không đọc lại tránh tốn lượt nhận dạng
             tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                  $"{this.lane.name}.Card.{ce.PreferCard} - Get Plate");
-            Image? lprImage = GetPlate(ce, ref overviewImg, ref vehicleImg, vehicleBaseType, lblEventMessage, txtPlate,
+            Image? lprImage = GetPlate(ce, overviewImg, ref vehicleImg, vehicleBaseType, lblEventMessage, txtPlate,
                                        picOverviewImageOut, picVehicleImageOut, picLprImage);
 
             //Đọc thông tin loại phương tiện
             lblEventMessage.UpdateResultMessage("Đang check out..." + ce.PreferCard, ProcessColor);
             bool isMonthCard = identityGroup.Type == IdentityGroupType.Monthly;
+            tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
+                                 $"{this.lane.name}.Card.{ce.PreferCard} - Start {identityGroup.Type} Card Process");
             if (isMonthCard)
             {
-                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
-                                 $"{this.lane.name}.Card.{ce.PreferCard} - Start Month Card Process");
-
                 await ExcecuteMonthCardEventOut(identity, identityGroup, vehicleBaseType, ce.PlateNumber,
                                                ce, controllerInLane,
                                                overviewImg, vehicleImg, lprImage);
             }
             else
             {
-                tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
-                                 $"{this.lane.name}.Card.{ce.PreferCard} - Start Non Month Card Process");
-
                 await ExcecuteNonMonthCardEventOut(identity, identityGroup, vehicleBaseType, ce.PlateNumber,
                                                   ce, controllerInLane,
                                                   overviewImg, vehicleImg, lprImage);
@@ -1088,6 +1089,8 @@ namespace iParkingv5_window.Usercontrols
                 {
                     tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.CARD_EVENT,
                                          $"{this.lane.name}.Card.{ce.PreferCard} - Not Confirm, End Process");
+                    lblEventMessage.UpdateResultMessage(StaticPool.oemConfig.AppName, SuccessColor);
+
                     return;
                 }
 
@@ -1405,6 +1408,7 @@ namespace iParkingv5_window.Usercontrols
 
             if (frm.ShowDialog() != DialogResult.OK)
             {
+                lblEventMessage.UpdateResultMessage(StaticPool.oemConfig.AppName, SuccessColor);
                 return;
             }
 
@@ -1435,7 +1439,7 @@ namespace iParkingv5_window.Usercontrols
                     continue;
                 }
                 //Lưu sự kiện cảnh báo
-                var imageDatas = GetAllCameraImage();
+                var imageDatas = GetAllCameraImage(false);
 
                 var response = await AppData.ApiServer.parkingProcessService.CreateAlarmAsync(lastEvent.Identity?.Code, this.lane.Id, lastEvent.PlateNumber, AbnormalCode.ManualEvent,
                                                              imageDatas, false,
@@ -1487,7 +1491,7 @@ namespace iParkingv5_window.Usercontrols
 
             if (lastEvent == null || isOverAllowTime)
             {
-                var imageDatas = GetAllCameraImage();
+                var imageDatas = GetAllCameraImage(true);
                 string plateNumber = lastEvent?.PlateNumber ?? "";
                 await SaveManualAbnormalEvent(plateNumber, lastEvent?.Identity, lastEvent?.IdentityGroup, imageDatas, false);
             }
@@ -1521,6 +1525,7 @@ namespace iParkingv5_window.Usercontrols
 
             if (!isConfirm)
             {
+                lblEventMessage.UpdateResultMessage(StaticPool.oemConfig.AppName, SuccessColor);
                 return;
             }
             AppData.printer.PrintPhieuThu(File.ReadAllText(printTemplatePath), lastEvent.Identity.Name, lastEvent.IdentityGroup.Name, null,
@@ -1916,7 +1921,7 @@ namespace iParkingv5_window.Usercontrols
                             bool isOverAllowTime = ((DateTime.Now - lastEvent?.DatetimeOut)?.TotalSeconds ?? -1) >= StaticPool.appOption.AllowBarrieDelayOpenTime;
                             if (lastEvent == null || isOverAllowTime)
                             {
-                                var imageDatas = GetAllCameraImage();
+                                var imageDatas = GetAllCameraImage(true);
                                 string plateNumber = lastEvent?.PlateNumber ?? "";
                                 await SaveManualAbnormalEvent(plateNumber, lastEvent?.Identity, lastEvent?.IdentityGroup, imageDatas, false);
                             }
@@ -2092,7 +2097,7 @@ namespace iParkingv5_window.Usercontrols
                 }
             }
         }
-        private Dictionary<EmParkingImageType, List<List<byte>>> GetAllCameraImage()
+        private Dictionary<EmParkingImageType, List<List<byte>>> GetAllCameraImage(bool isDisplay)
         {
             var imageData = new Dictionary<EmParkingImageType, List<List<byte>>>();
             //--Lưu hình ảnh sự kiện
@@ -2107,16 +2112,46 @@ namespace iParkingv5_window.Usercontrols
                     case CameraPurposeType.EmCameraPurposeType.MainOverView:
                         overviewImg = ucOverView?.GetFullCurrentImage();
                         imageData.Add(EmParkingImageType.Overview, new List<List<byte>>() { overviewImg.ImageToByteArray() });
+                        if (isDisplay)
+                        {
+                            try
+                            {
+                                picOverviewImageOut.Image = overviewImg;
+                            }
+                            catch (Exception)
+                            {
+                            }
+                        }
                         break;
                     case CameraPurposeType.EmCameraPurposeType.CarLPR:
                         carVehicleImage = ucCarLpr?.GetFullCurrentImage();
                         if (!imageData.ContainsKey(EmParkingImageType.Vehicle))
                             imageData.Add(EmParkingImageType.Vehicle, new List<List<byte>>() { carVehicleImage.ImageToByteArray() });
+                        if (isDisplay)
+                        {
+                            try
+                            {
+                                picVehicleImageOut.Image = carVehicleImage;
+                            }
+                            catch (Exception)
+                            {
+                            }
+                        }
                         break;
                     case CameraPurposeType.EmCameraPurposeType.MotorLPR:
                         motorVehicleImage = ucMotoLpr?.GetFullCurrentImage();
                         if (!imageData.ContainsKey(EmParkingImageType.Vehicle))
                             imageData.Add(EmParkingImageType.Vehicle, new List<List<byte>>() { motorVehicleImage.ImageToByteArray() });
+                        if (isDisplay)
+                        {
+                            try
+                            {
+                                picVehicleImageOut.Image = motorVehicleImage;
+                            }
+                            catch (Exception)
+                            {
+                            }
+                        }
                         break;
                     default:
                         break;

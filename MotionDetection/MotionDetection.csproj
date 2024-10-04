@@ -1,0 +1,106 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Management" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\..\KZTEK\CODE\18.BaseLib\Kztek.Cameras\Kztek.Cameras.csproj" />
+    <ProjectReference Include="..\..\..\..\..\..\..\KZTEK\CODE\18.BaseLib\Kztek.RtspPlayer\Kztek.RtspPlayer\Kztek.RtspPlayer.csproj" />
+    <ProjectReference Include="..\..\..\..\3.Lotte_TayHo\1.source\iPGS_2023_NET6\Kztek.Tool\Kztek.Tool.csproj" />
+    <ProjectReference Include="..\iParkingv5.Lpr\iParkingv5.Lpr.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="AForge">
+      <HintPath>..\packages\CameraLib\GeneralCam\AForge.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Imaging">
+      <HintPath>..\packages\CameraLib\GeneralCam\AForge.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video.DirectShowEx">
+      <HintPath>..\packages\CameraLib\GeneralCam\AForge.Video.DirectShowEx.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.VideoEx">
+      <HintPath>..\packages\CameraLib\GeneralCam\AForge.VideoEx.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Vision">
+      <HintPath>..\packages\CameraLib\GeneralCam\AForge.Vision.dll</HintPath>
+    </Reference>
+    <Reference Include="Kztek.Security">
+      <HintPath>..\packages\KeyLib\Kztek.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Kztek.Utilities">
+      <HintPath>..\packages\KeyLib\Kztek.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="KztekKeyRegister">
+      <HintPath>..\packages\KeyLib\KztekKeyRegister.dll</HintPath>
+    </Reference>
+    <Reference Include="NXT.Net6.LPR_AI">
+      <HintPath>..\packages\LprLib\LPR_09082024\NXT.Net6.LPR_AI.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenCvSharp.Extensions">
+      <HintPath>..\packages\LprLib\LPR_09082024\OpenCvSharp.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Sdcb.PaddleInference">
+      <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleInference.dll</HintPath>
+    </Reference>
+    <Reference Include="Sdcb.PaddleOCR">
+      <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleOCR.dll</HintPath>
+    </Reference>
+    <Reference Include="Sdcb.PaddleOCR.Models.Local">
+      <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.Local.dll</HintPath>
+    </Reference>
+    <Reference Include="Sdcb.PaddleOCR.Models.LocalV3">
+      <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.LocalV3.dll</HintPath>
+    </Reference>
+    <Reference Include="Sdcb.PaddleOCR.Models.LocalV4">
+      <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.LocalV4.dll</HintPath>
+    </Reference>
+    <Reference Include="Sdcb.PaddleOCR.Models.Shared">
+      <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.Shared.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="frmCameraVirtualLoopConfigSet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="frmSystemLogs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>

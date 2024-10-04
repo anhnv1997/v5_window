@@ -93,6 +93,31 @@ namespace iParkingv5_window.Forms.DataForms
                     break;
                 }
             }
+            panelLedConfigs.Controls.Clear();
+
+            LedDisplayConfig? configData = NewtonSoftHelper<LedDisplayConfig>.DeserializeObjectFromPath(
+                                              PathManagement.laneLedConfigPath(laneId, this.currentLed?.id ?? ""));
+            if (configData != null)
+            {
+                foreach (var item in configData.LedDisplaySteps)
+                {
+                    stepOrder = item.Key;
+
+                    panelLedConfigs.SuspendLayout();
+                    ucLedLineConfig uc = new ucLedLineConfig(currentLed?.row ?? 1, stepOrder);
+                    uc.LoadOldConfig(item.Value);
+
+                    panelLedConfigs.Controls.Add(uc);
+
+                    uc.Dock = DockStyle.Top;
+                    uc.BorderStyle = BorderStyle.Fixed3D;
+                    uc.OnDeleteItemEvent += Uc_OnDeleteItemEvent;
+                    uc.BringToFront();
+                    UCConfigs.Add(uc);
+                    panelLedConfigs.ResumeLayout();
+
+                }
+            }
         }
         private void btnAddStep_Click(object sender, EventArgs e)
         {
