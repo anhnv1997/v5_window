@@ -133,4 +133,8 @@
       <HintPath>..\packages\LprLib\LPR_09082024\Sdcb.PaddleOCR.Models.Shared.dll</HintPath>
     </Reference>
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="C:\Users\Admin\.nuget\packages\microsoft.web.webview2\1.0.2420.47\build\\..\runtimes\win-x64\native\WebView2Loader.dll" />
+  </ItemGroup>
 </Project>

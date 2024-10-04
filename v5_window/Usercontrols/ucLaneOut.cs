@@ -677,7 +677,7 @@ namespace iParkingv5_window.Usercontrols
 
             string plateNumber = lastEvent?.PlateNumber ?? "";
             bool isOverAllowTime = ((DateTime.Now - lastEvent?.DatetimeOut)?.TotalSeconds ?? -1) >= StaticPool.appOption.AllowBarrieDelayOpenTime;
-            if (lastEvent == null || isOverAllowTime)
+            //if (lastEvent == null || isOverAllowTime)
             {
                 tblSystemLog.SaveLog(tblSystemLog.EmSystemAction.Application, tblSystemLog.EmSystemActionDetail.EXIT_EVENT,
                                 $"{this.lane.name}.Exit.{ie.InputIndex} - SAVE EXIT ABNOMAL EVENT");
@@ -1555,10 +1555,26 @@ namespace iParkingv5_window.Usercontrols
                                                     - /*item.Margin.Left - item.Margin.Right -*/ item.Padding.Left - item.Padding.Right;
                     item.ChangeByWidth(new Size(newWidth, (displayRegionHeight) / count), this.laneDirectionConfig.cameraResolutionDisplay);
                 }
-                else
+                else if (laneDirectionConfig.cameraDirection == LaneDirectionConfig.EmCameraDirection.Horizontal)
                 {
                     item.ChangeByHeight(new Size((panelCameras.Width - panelCameras.Margin.Left - panelCameras.Margin.Right - panelCameras.Padding.Left - panelCameras.Padding.Right
-                                                /*- item.Margin.Left - item.Margin.Right*/ - item.Padding.Left - item.Padding.Right) / count, panelCameras.Height - 50), this.laneDirectionConfig.cameraResolutionDisplay);
+                                                /*- item.Margin.Left - item.Margin.Right*/ - item.Padding.Left - item.Padding.Right) / count, panelCameras.Height), this.laneDirectionConfig.cameraResolutionDisplay);
+                }
+                else
+                {
+                    if (count >= 3 && tblCamTest.Visible == false)
+                    {
+                        tblCamTest.Visible = true;
+                        var uc1 = panelCameras.Controls.OfType<ucCameraView>().ToList()[0];
+                        var uc2 = panelCameras.Controls.OfType<ucCameraView>().ToList()[1];
+                        var uc3 = panelCameras.Controls.OfType<ucCameraView>().ToList()[2];
+                        panel1Cam.Controls.Add(uc1);
+                        panel2Cam.Controls.Add(uc2);
+                        panel3Cam.Controls.Add(uc3);
+                        uc1.Dock = DockStyle.Fill;
+                        uc2.Dock = DockStyle.Fill;
+                        uc3.Dock = DockStyle.Fill;
+                    }
                 }
             }
             for (int i = 0; i < panelCameras.Controls.OfType<ucCameraView>().ToList().Count; i++)
@@ -2471,7 +2487,7 @@ namespace iParkingv5_window.Usercontrols
             {
                 return;
             }
-
+            AllowDesignRealtime(false);
             try
             {
                 this.splitContainerMain.SplitterDistance = this.laneDisplayConfig.splitContainerMain;
@@ -2491,7 +2507,6 @@ namespace iParkingv5_window.Usercontrols
                 tblSystemLog.SaveLog(EmSystemAction.Application, EmSystemActionDetail.PROCESS, "LoadSavedUIConfig", ex);
             }
 
-            AllowDesignRealtime(false);
             this.ResumeLayout();
         }
 

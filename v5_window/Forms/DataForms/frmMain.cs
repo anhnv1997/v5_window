@@ -173,6 +173,8 @@ namespace iParkingv5_window.Forms.DataForms
             lblLoadingStatus.MessageBackColor = SystemColors.ButtonHighlight;
 
             this.FormClosing += frmMain_FormClosing;
+
+          
         }
         public static bool isNeedToRestart = true;
 
@@ -1060,5 +1062,15 @@ namespace iParkingv5_window.Forms.DataForms
             new frmConnectionConfig().Show(this);
         }
         #endregion End Develope mode
+
+        private void tToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InputEventArgs ex = new InputEventArgs()
+            {
+                InputType = InputTupe.EmInputType.Exit,
+                InputIndex = 1
+            };
+            Controller_InputEvent(null, ex);
+        }
     }
 }

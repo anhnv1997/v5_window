@@ -17,6 +17,10 @@ namespace iParkingv5_window.Usercontrols
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucLaneOut));
             lblLaneName = new Label();
             panelCameras = new Panel();
+            tblCamTest = new TableLayoutPanel();
+            panel1Cam = new Panel();
+            panel2Cam = new Panel();
+            panel3Cam = new Panel();
             lblCamOutTitle = new lblResult();
             splitContainerMain = new SplitContainer();
             spliterCamera_top3Event = new SplitContainer();
@@ -102,6 +106,8 @@ namespace iParkingv5_window.Usercontrols
             toolTipWriteOut = new ToolTip(components);
             toolTipPrint = new ToolTip(components);
             timerRefreshUI = new System.Windows.Forms.Timer(components);
+            panelCameras.SuspendLayout();
+            tblCamTest.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainerMain).BeginInit();
             splitContainerMain.Panel1.SuspendLayout();
             splitContainerMain.Panel2.SuspendLayout();
@@ -175,6 +181,7 @@ namespace iParkingv5_window.Usercontrols
             // panelCameras
             // 
             panelCameras.BackColor = SystemColors.ButtonHighlight;
+            panelCameras.Controls.Add(tblCamTest);
             panelCameras.Dock = DockStyle.Fill;
             panelCameras.Font = new Font("Segoe UI", 12F);
             panelCameras.Location = new Point(1, 29);
@@ -182,6 +189,54 @@ namespace iParkingv5_window.Usercontrols
             panelCameras.Name = "panelCameras";
             panelCameras.Size = new Size(451, 327);
             panelCameras.TabIndex = 3;
+            // 
+            // tblCamTest
+            // 
+            tblCamTest.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
+            tblCamTest.ColumnCount = 2;
+            tblCamTest.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tblCamTest.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tblCamTest.Controls.Add(panel1Cam, 0, 0);
+            tblCamTest.Controls.Add(panel2Cam, 1, 0);
+            tblCamTest.Controls.Add(panel3Cam, 0, 1);
+            tblCamTest.Dock = DockStyle.Fill;
+            tblCamTest.Location = new Point(0, 0);
+            tblCamTest.Margin = new Padding(0);
+            tblCamTest.Name = "tblCamTest";
+            tblCamTest.RowCount = 2;
+            tblCamTest.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tblCamTest.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tblCamTest.Size = new Size(451, 327);
+            tblCamTest.TabIndex = 1;
+            tblCamTest.Visible = false;
+            // 
+            // panel1Cam
+            // 
+            panel1Cam.Dock = DockStyle.Fill;
+            panel1Cam.Location = new Point(1, 1);
+            panel1Cam.Margin = new Padding(0);
+            panel1Cam.Name = "panel1Cam";
+            panel1Cam.Size = new Size(224, 162);
+            panel1Cam.TabIndex = 0;
+            // 
+            // panel2Cam
+            // 
+            panel2Cam.Dock = DockStyle.Fill;
+            panel2Cam.Location = new Point(226, 1);
+            panel2Cam.Margin = new Padding(0);
+            panel2Cam.Name = "panel2Cam";
+            panel2Cam.Size = new Size(224, 162);
+            panel2Cam.TabIndex = 1;
+            // 
+            // panel3Cam
+            // 
+            tblCamTest.SetColumnSpan(panel3Cam, 2);
+            panel3Cam.Dock = DockStyle.Fill;
+            panel3Cam.Location = new Point(1, 164);
+            panel3Cam.Margin = new Padding(0);
+            panel3Cam.Name = "panel3Cam";
+            panel3Cam.Size = new Size(449, 162);
+            panel3Cam.TabIndex = 2;
             // 
             // lblCamOutTitle
             // 
@@ -736,65 +791,73 @@ namespace iParkingv5_window.Usercontrols
             // 
             // btnRetakePhoto
             // 
-            btnRetakePhoto.BackColor = Color.FromArgb(224, 224, 224);
+            btnRetakePhoto.BackColor = SystemColors.ButtonHighlight;
             btnRetakePhoto.Dock = DockStyle.Fill;
             btnRetakePhoto.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            btnRetakePhoto.ImageAlign = ContentAlignment.BottomCenter;
+            btnRetakePhoto.Image = (Image)resources.GetObject("btnRetakePhoto.Image");
+            btnRetakePhoto.ImageAlign = ContentAlignment.MiddleLeft;
             btnRetakePhoto.Location = new Point(0, 0);
             btnRetakePhoto.Margin = new Padding(0);
             btnRetakePhoto.Name = "btnRetakePhoto";
             btnRetakePhoto.Size = new Size(456, 63);
             btnRetakePhoto.TabIndex = 2;
             btnRetakePhoto.Text = "Chụp lại";
-            btnRetakePhoto.TextImageRelation = TextImageRelation.ImageAboveText;
+            btnRetakePhoto.TextAlign = ContentAlignment.MiddleRight;
+            btnRetakePhoto.TextImageRelation = TextImageRelation.TextBeforeImage;
             btnRetakePhoto.UseVisualStyleBackColor = false;
             btnRetakePhoto.Click += BtnReTakePhoto_Click;
             // 
             // btnOpenBarrie
             // 
-            btnOpenBarrie.BackColor = Color.FromArgb(224, 224, 224);
+            btnOpenBarrie.BackColor = SystemColors.ButtonHighlight;
             btnOpenBarrie.Dock = DockStyle.Fill;
             btnOpenBarrie.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            btnOpenBarrie.ImageAlign = ContentAlignment.BottomCenter;
+            btnOpenBarrie.Image = (Image)resources.GetObject("btnOpenBarrie.Image");
+            btnOpenBarrie.ImageAlign = ContentAlignment.MiddleLeft;
             btnOpenBarrie.Location = new Point(0, 63);
             btnOpenBarrie.Margin = new Padding(0);
             btnOpenBarrie.Name = "btnOpenBarrie";
             btnOpenBarrie.Size = new Size(456, 63);
             btnOpenBarrie.TabIndex = 1;
             btnOpenBarrie.Text = "Mở barrie";
-            btnOpenBarrie.TextImageRelation = TextImageRelation.ImageAboveText;
+            btnOpenBarrie.TextAlign = ContentAlignment.MiddleRight;
+            btnOpenBarrie.TextImageRelation = TextImageRelation.TextBeforeImage;
             btnOpenBarrie.UseVisualStyleBackColor = false;
             btnOpenBarrie.Click += btnOpenBarrie_Click;
             // 
             // btnPrintTicket
             // 
-            btnPrintTicket.BackColor = Color.FromArgb(224, 224, 224);
+            btnPrintTicket.BackColor = SystemColors.ButtonHighlight;
             btnPrintTicket.Dock = DockStyle.Fill;
             btnPrintTicket.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            btnPrintTicket.ImageAlign = ContentAlignment.BottomCenter;
+            btnPrintTicket.Image = (Image)resources.GetObject("btnPrintTicket.Image");
+            btnPrintTicket.ImageAlign = ContentAlignment.MiddleLeft;
             btnPrintTicket.Location = new Point(456, 63);
             btnPrintTicket.Margin = new Padding(0);
             btnPrintTicket.Name = "btnPrintTicket";
             btnPrintTicket.Size = new Size(457, 63);
             btnPrintTicket.TabIndex = 1;
             btnPrintTicket.Text = "In vé xe";
-            btnPrintTicket.TextImageRelation = TextImageRelation.ImageAboveText;
+            btnPrintTicket.TextAlign = ContentAlignment.MiddleRight;
+            btnPrintTicket.TextImageRelation = TextImageRelation.TextBeforeImage;
             btnPrintTicket.UseVisualStyleBackColor = false;
             btnPrintTicket.Click += btnPrintTicket_Click;
             // 
             // btnWriteOut
             // 
-            btnWriteOut.BackColor = Color.FromArgb(224, 224, 224);
+            btnWriteOut.BackColor = SystemColors.ButtonHighlight;
             btnWriteOut.Dock = DockStyle.Fill;
             btnWriteOut.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            btnWriteOut.ImageAlign = ContentAlignment.BottomCenter;
+            btnWriteOut.Image = (Image)resources.GetObject("btnWriteOut.Image");
+            btnWriteOut.ImageAlign = ContentAlignment.MiddleLeft;
             btnWriteOut.Location = new Point(456, 0);
             btnWriteOut.Margin = new Padding(0);
             btnWriteOut.Name = "btnWriteOut";
             btnWriteOut.Size = new Size(457, 63);
             btnWriteOut.TabIndex = 1;
             btnWriteOut.Text = "Ghi vé ra";
-            btnWriteOut.TextImageRelation = TextImageRelation.ImageAboveText;
+            btnWriteOut.TextAlign = ContentAlignment.MiddleRight;
+            btnWriteOut.TextImageRelation = TextImageRelation.TextBeforeImage;
             btnWriteOut.UseVisualStyleBackColor = false;
             btnWriteOut.Click += BtnWriteOut_Click;
             // 
@@ -1608,6 +1671,8 @@ namespace iParkingv5_window.Usercontrols
             Margin = new Padding(0);
             Name = "ucLaneOut";
             Size = new Size(1366, 768);
+            panelCameras.ResumeLayout(false);
+            tblCamTest.ResumeLayout(false);
             splitContainerMain.Panel1.ResumeLayout(false);
             splitContainerMain.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainerMain).EndInit();
@@ -1756,5 +1821,9 @@ namespace iParkingv5_window.Usercontrols
         private Panel panelEventStatus;
         private lblResult lblResult4;
         private lblResult lblResult3;
+        private TableLayoutPanel tblCamTest;
+        private Panel panel1Cam;
+        private Panel panel2Cam;
+        private Panel panel3Cam;
     }
 }

@@ -63,6 +63,7 @@ namespace iParkingv5_window.Forms.DataForms
             timerUpdateControllerConnection = new System.Windows.Forms.Timer(components);
             timerRestartSockerServer = new System.Windows.Forms.Timer(components);
             timerClearLog = new System.Windows.Forms.Timer(components);
+            tToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             panelMain.SuspendLayout();
             panelAppStatus.SuspendLayout();
@@ -84,7 +85,7 @@ namespace iParkingv5_window.Forms.DataForms
             // 
             // miSystem
             // 
-            miSystem.DropDownItems.AddRange(new ToolStripItem[] { tsmiActiveLanesConfig, tsmiExit });
+            miSystem.DropDownItems.AddRange(new ToolStripItem[] { tsmiActiveLanesConfig, tsmiExit, tToolStripMenuItem });
             miSystem.Name = "miSystem";
             miSystem.Size = new Size(86, 25);
             miSystem.Text = "Hệ thống";
@@ -378,6 +379,13 @@ namespace iParkingv5_window.Forms.DataForms
             timerClearLog.Interval = 60000;
             timerClearLog.Tick += timerClearLog_Tick;
             // 
+            // tToolStripMenuItem
+            // 
+            tToolStripMenuItem.Name = "tToolStripMenuItem";
+            tToolStripMenuItem.Size = new Size(242, 26);
+            tToolStripMenuItem.Text = "t";
+            tToolStripMenuItem.Click += tToolStripMenuItem_Click;
+            // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -436,5 +444,6 @@ namespace iParkingv5_window.Forms.DataForms
         private Button btnShowSystemLog;
         private Button btnCheckVersion;
         private Button btnShowConnectionConfig;
+        private ToolStripMenuItem tToolStripMenuItem;
     }
 }

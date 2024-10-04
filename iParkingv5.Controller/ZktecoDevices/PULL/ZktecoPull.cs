@@ -348,10 +348,12 @@ namespace iParkingv5.Controller.ZktecoDevices.PULL
                                     //--Input Event
                                     else if (eventType == "102")
                                     {
+                                        MessageBox.Show("102");
                                         CallInputEvent(ControllerInfo, doorNo);
                                     }
                                     else if (eventType == "202")
                                     {
+                                        MessageBox.Show("202");
                                         CallExitEvent(ControllerInfo, doorNo);
                                     }
                                     //--Card Event

@@ -22,6 +22,7 @@ namespace iParkingv5.Objects.Configs
         {
             Vertical = 0,
             Horizontal = 1,
+            Table
         }
         public enum EmPicDirection
         {

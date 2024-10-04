@@ -60,18 +60,15 @@ namespace iParkingv5.ApiManager.KzParkingv5Apis.services
                                  $"Get Detail Identity By Code ", code);
 
             server = server.StandardlizeServerName();
-            string apiUrl = server + "identity/get-by-code";
+            string apiUrl = server + $"identity/code/{code}";
 
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
                 { "Authorization","Bearer " + token  }
             };
-            var body = new
-            {
-                code = code,
-            };
-            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, body, headers, null,
-                                                                   timeOut, RestSharp.Method.Post);
+            var parameters = new Dictionary<string, string>();
+            var response = await BaseApiHelper.GeneralJsonAPIAsync(apiUrl, null, headers, null,
+                                                                   timeOut, RestSharp.Method.Get);
             if (!string.IsNullOrEmpty(response.Item1))
             {
                 try

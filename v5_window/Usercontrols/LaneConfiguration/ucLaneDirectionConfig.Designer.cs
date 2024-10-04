@@ -89,7 +89,7 @@
             // cbCameraDirection
             // 
             cbCameraDirection.FormattingEnabled = true;
-            cbCameraDirection.Items.AddRange(new object[] { "Dọc", "Ngang" });
+            cbCameraDirection.Items.AddRange(new object[] { "Dọc", "Ngang", "Bảng" });
             cbCameraDirection.Location = new Point(199, 46);
             cbCameraDirection.Margin = new Padding(4, 3, 4, 3);
             cbCameraDirection.Name = "cbCameraDirection";
